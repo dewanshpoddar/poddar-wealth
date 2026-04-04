@@ -1,0 +1,387 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { @apply font-sans text-13 text-gray-900 bg-white antialiased; }
+  h1,h2,h3,h4 { @apply font-display; }
+  a { @apply no-underline; }
+  img,svg { @apply block max-w-full; }
+  input,textarea,select,button { font-family: inherit; }
+  input[type=range] { accent-color: #C8960C; }
+}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+@layer components {
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .pw-container  { @apply px-8 w-full; }
+  .pw-section    { @apply py-10 px-8; }
+  .pw-section--warm  { @apply bg-warm; }
+  .pw-section--dark  { @apply bg-navy; }
+  .pw-section--green { @apply bg-agent-bg; }
+  .pw-section--gold  { @apply bg-gold; }
+
+  /* ── Section anatomy ─────────────────────────────────────── */
+  .pw-eyebrow {
+    @apply text-10 font-medium tracking-eyebrow-lg uppercase mb-1.5 text-gold;
+  }
+  .pw-eyebrow--muted  { @apply text-gray-400; }
+  .pw-eyebrow--green  { @apply text-agent-mid; }
+
+  .pw-title {
+    @apply font-display text-20 font-medium leading-snug text-gray-900 mb-2;
+  }
+  .pw-title--white { @apply text-white; }
+  .pw-title--green { @apply text-agent-dark; }
+
+  .pw-subtitle {
+    @apply text-13 text-gray-500 leading-relaxed mb-6;
+  }
+  .pw-subtitle--muted { @apply text-muted; }
+  .pw-subtitle--green { @apply text-agent-mid; }
+
+  /* ── Navigation ──────────────────────────────────────────── */
+  .pw-nav {
+    @apply bg-navy px-8 flex items-center justify-between h-14 sticky top-0 z-50;
+  }
+  .pw-logo-area  { @apply flex items-center gap-2.5; }
+  .pw-logo-icon  {
+    @apply w-8 h-8 rounded-sm bg-gold flex items-center justify-center
+           text-12 font-medium text-white flex-shrink-0;
+  }
+  .pw-logo-text  { @apply text-15 font-medium text-white tracking-logo block; }
+  .pw-logo-sub   { @apply text-10 text-muted tracking-logo-sub block font-normal; }
+  .pw-nav-link   { @apply text-12 text-muted hover:text-white transition-colors duration-150; }
+  .pw-nav-cta    {
+    @apply text-12 font-medium bg-gold text-white px-3.5 py-1.5 rounded-sm
+           hover:bg-gold-hover transition-colors duration-150;
+  }
+  .pw-lang-toggle {
+    @apply flex items-center border-half border-navy-border2 rounded-sm overflow-hidden ml-2;
+  }
+  .pw-lang-btn {
+    @apply text-11 font-medium text-muted px-2.5 py-1 bg-transparent border-none
+           cursor-pointer transition-all duration-150;
+  }
+  .pw-lang-btn--active { @apply bg-gold text-white; }
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  .pw-btn {
+    @apply inline-flex items-center justify-center gap-1.5 font-medium font-sans
+           cursor-pointer rounded-md px-5 py-2.5 text-13
+           transition-all duration-200 whitespace-nowrap border-none;
+  }
+  .pw-btn--gold         { @apply bg-gold text-white hover:bg-gold-hover; }
+  .pw-btn--outline      {
+    @apply bg-transparent text-white border-half border-navy-border2
+           hover:border-gold hover:text-gold;
+  }
+  .pw-btn--outline-dark {
+    @apply bg-transparent text-navy border-half border-navy text-11 px-3 py-1.5
+           hover:bg-navy hover:text-white;
+  }
+  .pw-btn--green   { @apply bg-agent-mid text-white hover:bg-agent-light; }
+  .pw-btn--whatsapp {
+    @apply bg-green-500 text-white text-11 px-3.5 py-1.5 rounded-pill hover:bg-green-600;
+  }
+  .pw-btn--navy    { @apply bg-navy text-white hover:bg-navy-mid; }
+  .pw-btn--sm      { @apply text-11 px-3 py-1.5; }
+  .pw-btn--full    { @apply w-full justify-center; }
+
+  /* ── Cards ───────────────────────────────────────────────── */
+  .pw-card {
+    @apply bg-white border-half border-gray-200 rounded-lg p-[1.1rem]
+           transition-all duration-200 hover:border-gold;
+  }
+  .pw-card--dark  {
+    @apply bg-navy-mid border-half border-navy-border rounded-lg p-[1.25rem];
+  }
+  .pw-card--green { @apply bg-white border-half border-agent-border rounded-lg p-[1.25rem]; }
+  .pw-card--featured { @apply border-1.5 border-gold; }
+
+  .pw-svc-card {
+    @apply bg-white border-half border-gray-200 rounded-lg p-[1.1rem]
+           cursor-pointer transition-colors duration-200 hover:border-gold;
+  }
+  .pw-calc-card  { @apply bg-white border-half border-gray-200 rounded-lg p-[1.1rem]; }
+  .pw-card-name  { @apply text-13 font-medium text-gray-900 mb-1; }
+  .pw-card-desc  { @apply text-11 text-gray-500 leading-relaxed; }
+
+  /* ── Hero ────────────────────────────────────────────────── */
+  .pw-hero {
+    @apply bg-navy px-8 pt-14 pb-12 grid gap-8 items-center;
+    grid-template-columns: 1fr 320px;
+  }
+  .pw-hero-eyebrow { @apply text-11 font-medium tracking-eyebrow-lg text-gold uppercase mb-3; }
+  .pw-hero-h1      { @apply font-display text-32 font-medium text-white leading-snug mb-2; }
+  .pw-hero-h1 span { @apply text-gold; }
+  .pw-hero-sub     { @apply text-14 text-muted leading-loose mb-6; }
+  .pw-hero-btns    { @apply flex gap-2.5 flex-wrap; }
+
+  /* ── Quick-intent widget ─────────────────────────────────── */
+  .pw-hero-card       { @apply bg-navy-mid border-half border-navy-border rounded-lg p-[1.25rem]; }
+  .pw-hero-card-title { @apply text-11 text-gold font-medium tracking-partner uppercase mb-4; }
+  .pw-quick-item {
+    @apply flex items-center gap-2.5 bg-navy rounded-md px-3 py-2.5
+           cursor-pointer border-half border-navy-border
+           transition-colors duration-150 hover:border-gold;
+  }
+  .pw-quick-icon  { @apply w-8 h-8 rounded-sm bg-navy-light flex items-center justify-center flex-shrink-0; }
+  .pw-quick-label { @apply text-12 text-white font-medium; }
+  .pw-quick-sub   { @apply text-10 text-muted; }
+
+  /* ── Trust / Stats bar ───────────────────────────────────── */
+  .pw-trust-bar   { @apply bg-gold px-8 py-4 grid grid-cols-4 gap-4; }
+  .pw-trust-item  { @apply text-center; }
+  .pw-trust-num   { @apply font-display text-22 font-medium text-white leading-tight; }
+  .pw-trust-label { @apply text-10 font-medium tracking-badge uppercase mt-0.5; color: #7a5400; }
+
+  /* ── Partner bar ─────────────────────────────────────────── */
+  .pw-partner-bar     { @apply bg-warm px-8 py-4 flex items-center justify-center gap-12 flex-wrap; }
+  .pw-partners-label  { @apply text-10 text-gray-400 font-medium tracking-partner uppercase; }
+  .pw-partner-badge   {
+    @apply bg-white border-half border-gray-300 rounded-sm px-4 py-1.5 text-12 font-medium;
+  }
+
+  /* ── Badges & Tags ───────────────────────────────────────── */
+  .pw-badge       {
+    @apply inline-block text-10 font-medium px-2 py-0.5 rounded-pill border-half tracking-badge;
+  }
+  .pw-badge--gold   { @apply bg-gold-bg text-gold-dark border-gold-light; }
+  .pw-badge--blue   { @apply bg-blue-50 text-blue-800 border-blue-300; }
+  .pw-badge--green  { background:#0F4C3A; color:#1D9E75; border-color:#1D9E75; }
+  .pw-badge--new    { @apply bg-gold text-white; }
+  .pw-badge--updated { background:#1a3a5c; color:#C8960C; border-color:#C8960C; }
+
+  /* ── Icon boxes ──────────────────────────────────────────── */
+  .pw-icon-box     { @apply w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0; }
+  .pw-icon-box--sm { @apply w-8 h-8 rounded-sm; }
+  .pw-icon-box--blue   { background: #E6F1FB; }
+  .pw-icon-box--red    { background: #FCEBEB; }
+  .pw-icon-box--orange { background: #FAEEDA; }
+  .pw-icon-box--green  { @apply bg-agent-bg; }
+  .pw-icon-box--purple { background: #EEEDFE; }
+  .pw-icon-box--grey   { background: #F1EFE8; }
+  .pw-icon-box--navy   { @apply bg-navy-light; }
+
+  /* ── Score / Progress bars ───────────────────────────────── */
+  .pw-score-widget { @apply bg-navy-mid border-half border-navy-border rounded-lg p-[1.25rem]; }
+  .pw-score-title  { @apply text-11 text-gold font-medium tracking-partner uppercase mb-4; }
+  .pw-score-row    { @apply mb-2.5; }
+  .pw-score-labels { @apply flex justify-between text-11 mb-1; }
+  .pw-score-track  { @apply rounded-full overflow-hidden; background:#1a3a5c; height:6px; }
+  .pw-score-fill   { @apply h-full rounded-full bg-gold transition-all duration-500; }
+  .pw-score-total  { @apply flex justify-between items-center mt-3 pt-2.5 border-t-half border-navy-border; }
+  .pw-score-total-label { @apply text-11 text-muted; }
+  .pw-score-total-num   { @apply font-display text-20 font-medium text-gold; }
+
+  /* ── Progress steps (moat score / multi-step forms) ─────── */
+  .pw-step {
+    @apply text-11 px-3.5 py-1.5 rounded-pill border-half border-gray-200 text-gray-400;
+  }
+  .pw-step--done   { @apply bg-agent-bg text-agent-light border-agent-border; }
+  .pw-step--active { @apply bg-navy text-white border-navy; }
+  .pw-step-div     { @apply w-5 border-t-half border-gray-200; }
+
+  .pw-progress-bar   { @apply h-[3px] bg-gray-100 rounded-full overflow-hidden mb-6; }
+  .pw-progress-fill  { @apply h-full bg-gold rounded-full transition-all duration-400; }
+
+  /* ── Form option tiles (moat / calculator) ───────────────── */
+  .pw-opt {
+    @apply border-half border-gray-200 rounded-md p-2.5 cursor-pointer
+           text-12 text-gray-500 transition-all duration-150
+           hover:border-gold;
+  }
+  .pw-opt--sel {
+    @apply border-gold bg-gold-bg text-gold-dark font-medium;
+  }
+
+  /* ── Calculator tabs ─────────────────────────────────────── */
+  .pw-tab {
+    @apply text-12 px-3.5 py-1.5 rounded-pill border-half border-gray-200
+           cursor-pointer text-gray-500 bg-transparent transition-all duration-150;
+  }
+  .pw-tab--active { @apply bg-navy text-white border-navy; }
+
+  /* ── Form elements ───────────────────────────────────────── */
+  .pw-label        { @apply block text-11 text-agent-mid mb-1; }
+  .pw-label--dark  { @apply text-muted; }
+  .pw-label--light { @apply text-gray-500; }
+  .pw-input {
+    @apply w-full px-2.5 py-2 border-half border-agent-border rounded-sm
+           text-12 bg-white text-agent-dark outline-none
+           focus:border-agent-mid transition-colors duration-150;
+  }
+  .pw-input--dark {
+    @apply bg-navy border-navy-border2 text-white rounded-md px-3 py-2.5
+           focus:border-gold placeholder:text-ink;
+  }
+  .pw-textarea {
+    @apply w-full px-2.5 py-2 border-half border-agent-border rounded-sm
+           text-12 bg-white text-agent-dark outline-none resize-y min-h-[80px]
+           focus:border-agent-mid transition-colors duration-150;
+  }
+  .pw-select {
+    @apply w-full px-2.5 py-2 border-half border-agent-border rounded-sm
+           text-12 bg-white text-agent-dark outline-none cursor-pointer;
+  }
+  .pw-field { @apply mb-2.5; }
+  .pw-range-limits { @apply flex justify-between text-10 text-gray-400 mt-0.5; }
+
+  /* ── Chat window ─────────────────────────────────────────── */
+  .pw-chat-window    { @apply bg-navy rounded-lg overflow-hidden flex flex-col; }
+  .pw-chat-header    {
+    @apply bg-navy-mid px-4 py-3 flex items-center justify-between
+           border-b-half border-navy-border;
+  }
+  .pw-chat-avatar    {
+    @apply w-[34px] h-[34px] rounded-full bg-gold flex items-center justify-center
+           text-12 font-medium text-white flex-shrink-0;
+  }
+  .pw-chat-name      { @apply text-13 font-medium text-white; }
+  .pw-chat-status    { @apply text-10 text-online flex items-center gap-1; }
+  .pw-chat-dot       { @apply w-[5px] h-[5px] rounded-full bg-online inline-block; }
+  .pw-chat-msgs      {
+    @apply p-4 flex flex-col gap-2.5 overflow-y-auto;
+    min-height: 320px;
+    max-height: 420px;
+  }
+  .pw-chat-msg       { @apply flex gap-2 items-end; }
+  .pw-chat-msg--user { @apply flex-row-reverse; }
+  .pw-msg-avatar     {
+    @apply w-6 h-6 rounded-full bg-gold flex items-center justify-center
+           text-[9px] font-medium text-white flex-shrink-0;
+  }
+  .pw-msg-avatar--user { @apply bg-navy-light text-muted; }
+  .pw-msg-bot {
+    @apply text-12 leading-relaxed px-3 py-2.5 max-w-[80%];
+    background: #0F2D4A;
+    color: #d0e4f7;
+    border-radius: 0 12px 12px 12px;
+  }
+  .pw-msg-user {
+    @apply bg-gold text-white text-12 leading-relaxed px-3 py-2.5 max-w-[80%];
+    border-radius: 12px 0 12px 12px;
+  }
+  .pw-msg-thinking   { @apply text-muted italic; }
+  .pw-chat-chips     { @apply px-4 pb-3 flex flex-wrap gap-1.5; }
+  .pw-chat-chip {
+    @apply text-11 px-3 py-1.5 rounded-pill border-half border-navy-border2
+           text-muted cursor-pointer bg-transparent transition-colors duration-150
+           hover:border-gold hover:text-gold;
+  }
+  .pw-chat-input-area {
+    @apply bg-navy-mid px-3 py-2.5 flex gap-2 items-end border-t-half border-navy-border;
+  }
+  .pw-chat-input     { @apply pw-input--dark flex-1 resize-none min-h-[36px] max-h-[90px]; }
+  .pw-chat-send      {
+    @apply bg-gold text-white text-12 font-medium px-4 py-2 rounded-md border-none
+           cursor-pointer hover:bg-gold-hover transition-colors duration-150 flex-shrink-0;
+  }
+  .pw-chat-send:disabled { @apply bg-navy-border2 cursor-not-allowed; }
+  .pw-chat-disclaimer    { @apply text-10 text-ink text-center px-4 py-2; }
+
+  /* ── Quick topic grid (chatbot) ──────────────────────────── */
+  .pw-qt-grid { @apply grid grid-cols-3 gap-1.5; }
+  .pw-qt {
+    @apply bg-gray-50 border-half border-gray-200 rounded-md px-2.5 py-2
+           text-11 text-gray-500 cursor-pointer leading-snug
+           transition-all duration-150 hover:border-gold hover:text-gray-900;
+  }
+
+  /* ── Testimonials ────────────────────────────────────────── */
+  .pw-ts-card {
+    @apply bg-white border-half border-gray-200 rounded-lg p-[1.1rem]
+           transition-all duration-200 hover:border-gold hover:shadow-card;
+  }
+  .pw-ts-star { @apply inline-block w-3 h-3 bg-gold; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+  .pw-ts-text { @apply text-12 text-gray-500 leading-relaxed mb-2.5 italic; }
+  .pw-ts-avatar {
+    @apply w-8 h-8 rounded-full flex items-center justify-center
+           text-12 font-medium flex-shrink-0;
+  }
+  .pw-ts-name { @apply text-12 font-medium text-gray-900; }
+  .pw-ts-meta { @apply text-10 text-gray-400; }
+
+  /* ── New plans banner ────────────────────────────────────── */
+  .pw-banner {
+    @apply bg-gold px-8 py-2.5 flex items-center justify-between;
+  }
+  .pw-banner-pulse { @apply w-2 h-2 rounded-full bg-white animate-pulse-dot; }
+  .pw-banner-plan  {
+    @apply text-11 bg-white/20 text-white px-2.5 py-0.5 rounded-pill border-half border-white/40;
+  }
+
+  /* ── Emotional hero section ──────────────────────────────── */
+  .pw-emotional-hero {
+    @apply bg-navy px-8 py-12 grid gap-10 items-center;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pw-he-stat {
+    @apply text-center p-3 bg-navy-mid rounded-md border-half border-navy-border;
+  }
+  .pw-he-stat-num   { @apply font-display text-20 font-medium text-gold; }
+  .pw-he-stat-label { @apply text-10 text-muted mt-0.5; }
+  .pw-promise-card  { @apply bg-gold rounded-lg p-4; }
+  .pw-promise-item  { @apply text-11 flex gap-1.5 items-center; color: rgba(255,255,255,0.85); }
+  .pw-promise-check {
+    @apply w-[14px] h-[14px] rounded-full flex items-center justify-center
+           text-[8px] text-white flex-shrink-0;
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* ── Agent section ───────────────────────────────────────── */
+  .pw-perk     { @apply flex items-center gap-2.5 text-12 text-agent-light; }
+  .pw-perk-dot { @apply w-1.5 h-1.5 rounded-full bg-agent-mid flex-shrink-0; }
+
+  /* ── Result / CTA box ────────────────────────────────────── */
+  .pw-result-box  { @apply bg-navy rounded-lg p-6; }
+  .pw-cta-box     {
+    @apply bg-gold rounded-md px-3.5 py-2.5 flex justify-between items-center cursor-pointer;
+  }
+
+  /* ── Footer ──────────────────────────────────────────────── */
+  .pw-footer          { @apply bg-navy px-8 py-6 flex items-center justify-between flex-wrap gap-4; }
+  .pw-footer-brand    { @apply text-13 font-medium text-white mb-0.5; }
+  .pw-footer-address  { @apply text-11 text-muted; }
+  .pw-footer-contact  { @apply text-11 text-gold mt-1; }
+  .pw-footer-disclaimer { @apply text-10 text-muted opacity-70 mt-1; }
+
+  /* ── WhatsApp float ──────────────────────────────────────── */
+  .pw-wa-float {
+    @apply fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-green-500
+           border-none cursor-pointer flex items-center justify-center
+           shadow-wa animate-wa-pulse hover:scale-110 transition-transform duration-150;
+  }
+
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+@layer utilities {
+  .border-half   { border-width: 0.5px; }
+  .border-t-half { border-top-width: 0.5px; }
+  .border-b-half { border-bottom-width: 0.5px; }
+  .border-1\.5   { border-width: 1.5px; }
+
+  /* Chat scrollbar */
+  .pw-chat-msgs::-webkit-scrollbar       { width: 4px; }
+  .pw-chat-msgs::-webkit-scrollbar-track { background: transparent; }
+  .pw-chat-msgs::-webkit-scrollbar-thumb { background: #1e4068; border-radius: 2px; }
+
+  /* Global scrollbar */
+  ::-webkit-scrollbar       { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: #C8960C; border-radius: 3px; }
+}

@@ -1,0 +1,338 @@
+{
+  "nav": {
+    "home": "होम",
+    "products": "प्रॉडक्ट्स",
+    "calculators": "कैलकुलेटर",
+    "about": "परिचय",
+    "becomeAgent": "एजेंट बनें",
+    "contact": "संपर्क करें",
+    "getQuote": "मुफ्त कोटेशन लें",
+    "lifeInsurance": "जीवन बीमा",
+    "healthInsurance": "स्वास्थ्य बीमा",
+    "retirement": "रिटायरमेंट प्लानिंग",
+    "childPlanning": "बच्चों की योजना",
+    "taxPlanning": "टैक्स प्लानिंग",
+    "services": "सेवाएं"
+  },
+  "banner": {
+    "text": "नए LIC और Star Health प्लान लॉन्च हुए — अप्रैल 2025",
+    "plans": ["LIC जीवन उत्सव", "Star आरोग्य संजीवनी", "LIC धन वृद्धि"],
+    "cta": "और जानें →"
+  },
+  "hero": {
+    "eyebrow": "गोरखपुर के सबसे भरोसेमंद बीमा एडवाइज़र",
+    "headline": "आपके परिवार की सुरक्षा,",
+    "headlineGold": "31 साल का भरोसा।",
+    "subtitle": "पूर्वी यूपी के परिवारों के लिए जीवन बीमा, स्वास्थ्य बीमा और वेल्थ प्लानिंग — अजय कुमार पोद्दार, MDRT सदस्य और चेयरमैन क्लब अवार्डी द्वारा।",
+    "cta1": "प्रीमियम कैलकुलेट करें",
+    "cta2": "सभी प्रॉडक्ट्स देखें",
+    "quickTitle": "आप किस लिए प्लानिंग कर रहे हैं?",
+    "quickItems": [
+      { "icon": "shield", "title": "जीवन सुरक्षा", "sub": "टर्म और एंडोमेंट प्लान" },
+      { "icon": "heart", "title": "स्वास्थ्य बीमा", "sub": "Star Health व्यक्तिगत व पारिवारिक" },
+      { "icon": "check", "title": "रिटायरमेंट प्लानिंग", "sub": "पेंशन और ULIP विकल्प" },
+      { "icon": "education", "title": "बच्चे की शिक्षा व शादी", "sub": "लक्ष्य-आधारित बचत योजनाएं" }
+    ]
+  },
+  "trust": {
+    "title": "परिवार अजय पोद्दार पर क्यों भरोसा करते हैं",
+    "subtitle": "तीन दशकों से भारतीय परिवारों के लिए बीमा को सरल बनाते हुए",
+    "credentials": [
+      { "icon": "🏆", "title": "MDRT सदस्य", "desc": "मिलियन डॉलर राउंड टेबल — विश्व के शीर्ष 1% एडवाइजर" },
+      { "icon": "⭐", "title": "27+ साल", "desc": "1997 से निरंतर उत्कृष्टता" },
+      { "icon": "👨‍👩‍👧‍👦", "title": "10,000+ परिवार", "desc": "राजस्थान व भारत के परिवारों का भरोसा" },
+      { "icon": "✅", "title": "₹500Cr+ क्लेम", "desc": "जरूरत के वक्त परिवारों के लिए क्लेम सफलतापूर्वक सेटल" }
+    ],
+    "stats": [
+      { "num": "31+", "label": "सेवा के साल" },
+      { "num": "5000+", "label": "परिवार सुरक्षित" },
+      { "num": "MDRT", "label": "USA सदस्य" },
+      { "num": "चेयरमैन", "label": "क्लब अवार्डी" }
+    ],
+    "partnersLabel": "अधिकृत पार्टनर",
+    "partners": [
+      { "name": "LIC ऑफ़ इंडिया — अधिकृत एजेंट", "color": "#003087" },
+      { "name": "Star Health Insurance", "color": "#c8000a" },
+      { "name": "MDRT सदस्य (USA)", "color": "#1a5276" }
+    ]
+  },
+  "services": {
+    "eyebrow": "हमारी सेवाएं",
+    "title": "आपके परिवार के लिए वह सब कुछ जो आपको चाहिए",
+    "subtitle": "जीवन बीमा से लेकर हेल्थ प्लान, टैक्स बचत से लेकर कीमैन इन्श्योरेंस तक — सब कुछ गोरखपुर में एक ही छत के नीचे।",
+    "items": [
+      { "icon": "shield", "color": "blue", "title": "जीवन बीमा", "desc": "LIC के टर्म, एंडोमेंट, मनी-बैक, होल लाइफ़ प्लान", "tag": "LIC", "href": "/services/life-insurance" },
+      { "icon": "heart", "color": "red", "title": "स्वास्थ्य बीमा", "desc": "Star Health के व्यक्तिगत, फैमिली फ्लोटर, सीनियर सिटीजन प्लान", "tag": "Star Health", "href": "/services/health-insurance" },
+      { "icon": "money", "color": "orange", "title": "टैक्स प्लानिंग", "desc": "सही बीमा के साथ 80C, 80D के तहत टैक्स बचाएं", "tag": "ELSS + LIC", "href": "/services/tax-planning" },
+      { "icon": "education", "color": "green", "title": "चाइल्ड प्लान", "desc": "गारंटीड मैच्योरिटी बेनिफिट के साथ शिक्षा व शादी की प्लानिंग", "tag": "Child + Education", "href": "/services/child-planning" }
+    ]
+  },
+  "calculator": {
+    "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — मुफ़्त टूल",
+    "title": "LIC और Star Health प्रीमियम कैलकुलेटर",
+    "subtitle": "किसी भी प्लान का तुरंत अनुमान प्राप्त करें। असल प्रीमियम मेडिकल हिस्ट्री पर निर्भर करता है — अजय सर कन्फर्म करेंगे।",
+    "tabs": { "life": "जीवन बीमा", "health": "स्वास्थ्य बीमा" },
+    "age": "आपकी आयु",
+    "sumAssured": "सम एश्योर्ड",
+    "policyTerm": "पॉलिसी टर्म",
+    "planType": "प्लान का प्रकार",
+    "frequency": "प्रीमियम फ्रीक्वेंसी",
+    "planTypes": ["टर्म प्लान", "एंडोमेंट", "मनी-बैक", "ULIP", "पेंशन", "चाइल्ड प्लान"],
+    "frequencies": ["मासिक", "तिमाही", "छमाही", "वार्षिक"],
+    "recommended": "आपकी प्रोफ़ाइल के लिए अनुशंसित LIC प्लान",
+    "plans": [
+      { "name": "LIC जीवन अमर", "type": "प्योर टर्म — कोई मैच्योरिटी नहीं", "desc": "सबसे कम प्रीमियम में अधिकतम कवर। आय सुरक्षा के लिए सबसे अच्छा।", "badge": "सबसे लोकप्रिय" },
+      { "name": "LIC न्यू जीवन आनंद", "type": "एंडोमेंट + होल लाइफ़", "desc": "दोगुना लाभ — टर्म खत्म होने पर सुरक्षा + मैच्योरिटी बोनस।", "badge": "रिटर्न के साथ" },
+      { "name": "LIC जीवन उमंग", "type": "होल लाइफ़ + वार्षिक भुगतान", "desc": "हर साल सर्वाइवल बेनिफिट — जीवन भर की आय।", "badge": "लाइफटाइम कवर" }
+    ],
+    "resultTitle": "आपका प्रीमियम अनुमान",
+    "resultCta": "अजय सर से सटीक कोटेशन लें ↗",
+    "resultFields": {
+      "annualPremium": "वार्षिक प्रीमियम",
+      "sumAssured": "सम एश्योर्ड",
+      "policyTerm": "पॉलिसी अवधी",
+      "totalPay": "कुल भुगतान",
+      "coverRatio": "कवर-टू-कॉस्ट रेशियो"
+    },
+    "incomeReplacement": "साल की इनकम रिप्लेसमेंट"
+  },
+  "moat": {
+    "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — एक्सक्लूसिव टूल",
+    "title": "आपके परिवार का फाइनेंसियल मोट स्कोर",
+    "subtitle": "12 आसान सवालों के जवाब दें — 4 पिलर्स पर पर्सनलाइज़्ड स्कोर पाएं। पूरी तरह फ्री, कोई रजिस्ट्रेशन नहीं।",
+    "steps": ["लाइफ कवर", "हेल्थ कवर", "इनकम सेफ्टी", "रिटायरमेंट", "आपका स्कोर"],
+    "gapsTitle": "पहचानी गई मुख्य कमियां",
+    "ctaTitle": "इन कमियों को अजय सर से ठीक कराएं — फ्री कंसल्टेशन",
+    "ctaSub": "9415313434 पर कॉल करें या अपना स्कोर भेजने के लिए क्लिक करें"
+  },
+  "emotional": {
+    "quote": "आपके जाने के बाद भी,",
+    "quoteGold": "आपका परिवार सुरक्षित रहे।",
+    "story": "31 सालों से, अजय कुमार पोद्दार गोरखपुर के परिवारों के साथ बैठकर उनके सपनों, उनके डर को समझते आ रहे हैं — और दोनों के इर्द-गिर्द सुरक्षा घेरा बनाते हैं। सिर्फ़ पॉलिसी नहीं। सुकून और शांति देते हैं।",
+    "stats": [
+      { "num": "5000+", "label": "परिवार सुरक्षित" },
+      { "num": "₹200Cr+", "label": "क्लेम सेटल" },
+      { "num": "31", "label": "सेवा के साल" }
+    ],
+    "trustCard": {
+      "title": "गोरखपुर की फैमिलीज़ का भरोसा",
+      "desc": "हमारे रजिस्टर में दर्ज़ हर परिवार की एक कहानी है — एक लक्ष्य सुरक्षित हुआ, एक क्लेम सेटल हुआ, एक भविष्य संवरा।"
+    },
+    "promise": {
+      "title": "पोद्दार प्रॉमिस",
+      "items": [
+        "पॉलिसी समझाने के लिए घर पर विजिट — हिंदी में",
+        "क्लेम के हर कदम पर साथ — हम आपके साथ बैठते हैं",
+        "कोई दबाव नहीं, कोई टारगेट नहीं — बस जो आपके परिवार के लिए सही हो",
+        "विजय चौक सेंटर पर प्रीमियम कलेक्शन"
+      ]
+    }
+  },
+  "testimonials": {
+    "eyebrow": "असली परिवार, असली कहानियां",
+    "title": "गोरखपुर के परिवार क्या कहते हैं",
+    "subtitle": "वादे निभाने के 31 साल — हर एक परिवार के साथ।",
+    "items": [
+      {
+        "name": "सुनीता देवी",
+        "location": "गोरखपुर · LIC जीवन अमर",
+        "text": "मेरे पति के जाने के बाद अजय सर ने 45 दिन में ₹25 लाख का क्लेम दिलवाया। उनके बिना यह संभव नहीं होता।",
+        "badge": "क्लेम सेटल ✓",
+        "color": "#FEF9EC",
+        "textColor": "#C8960C"
+      },
+      {
+        "name": "रमेश गुप्ता",
+        "location": "देवरिया · LIC जीवन तरुण",
+        "text": "बच्चे की पढ़ाई के लिए 15 साल पहले अजय सर ने प्लान बनाया था। आज मेरा बेटा IIT में है। थैंक यू सर।",
+        "badge": "चाइल्ड प्लान मैच्योर ✓",
+        "color": "#E1F5EE",
+        "textColor": "#0F6E56"
+      },
+      {
+        "name": "आलोक श्रीवास्तव",
+        "location": "कुशीनगर · Star Health",
+        "text": "हॉस्पिटल का ₹3.8 लाख का बिल आया। स्टार हेल्थ ने 7 दिन में कैशलेस सेटल कर दिया। अजय सर ने सही प्लान दिलाया था।",
+        "badge": "कैशलेस क्लेम ✓",
+        "color": "#E6F1FB",
+        "textColor": "#185FA5"
+      }
+    ]
+  },
+  "chatbot": {
+    "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — AI एडवाइज़र",
+    "title": "बीमा से जुड़ा कुछ भी पूछें — हिंदी या अंग्रेजी में",
+    "subtitle": "Claude AI द्वारा संचालित, LIC और Star Health की जानकारी से प्रशिक्षित। सेकंडों में जवाब, 24/7। जब आप तैयार हों, सीधा अजय सर से जुड़ें।",
+    "topicsLabel": "आम सवाल — तुरंत पूछने के लिए क्लिक करें:",
+    "topics": [
+      "उम्र 35, ₹6 लाख आय के लिए टर्म कवर",
+      "LIC बनाम प्राइवेट टर्म प्लान",
+      "4 लोगों के परिवार के लिए हेल्थ कवर",
+      "बीमा के माध्यम से टैक्स बचत",
+      "सर्वश्रेष्ठ LIC रिटायरमेंट प्लान",
+      "चाइल्ड एजुकेशन और मैरिज प्लान्स"
+    ],
+    "headerName": "पोद्दार वेल्थ AI एडवाइज़र",
+    "statusText": "ऑनलाइन — सेकंडों में जवाब",
+    "badges": ["LIC एक्सपर्ट", "Star Health", "हिंदी + English"],
+    "greeting": "नमस्ते! मैं पोद्दार वेल्थ मैनेजमेंट का AI एडवाइज़र हूँ। 🙏\n\nमैं आपको LIC लाइफ इन्श्योरेंस, Star Health इन्श्योरेंस, टैक्स प्लानिंग, रिटायरमेंट, और बच्चों के प्लान्स के बारे में हिंदी या इंग्लिश में मदद कर सकता हूँ।\n\nआप क्या जानना चाहते हैं?",
+    "chips": ["टर्म प्लान क्या है?", "MDRT का मतलब?", "क्लेम प्रोसेस"],
+    "chipQueries": ["टर्म प्लान क्या होता है?", "MDRT क्या होता है?", "LIC में क्लेम प्रोसेस कैसे होता है?"],
+    "placeholder": "अपना सवाल यहाँ लिखें — हिंदी या इंग्लिश में...",
+    "disclaimer": "AI के जवाब सांकेतिक हैं। अजय सर सटीक प्रीमियम की पुष्टि करेंगे — 9415313434"
+  },
+  "agent": {
+    "eyebrow": "करियर का अवसर",
+    "title": "अजय कुमार पोद्दार के अंडर LIC एजेंट बनें",
+    "subtitle": "पूर्वी यूपी के सबसे अनुभवी एजेंसी रिक्रूटमेंट ऑफिसर से जुड़ें और ज़िंदगी भर की कमाई का ज़रिया बनाएं। पूरी ट्रेनिंग, मेंटरशिप और 31 साल के भरोसे का साथ।",
+    "perks": [
+      "आजीवन रिन्यूअल कमीशन — सोते हुए भी कमाएं",
+      "एक MDRT प्रोफ़ेशनल से पूरी ट्रेनिंग और मेंटरशिप",
+      "गोरखपुर, देवरिया, कुशीनगर या यूपी में कहीं से भी काम करें",
+      "अपनी सुविधा अनुसार काम — गृहणियों, रिटायर्ड लोगों, ग्रेजुएट्स के लिए आदर्श",
+      "बोनस, प्रतियोगिताएं और चेयरमैन क्लब का सम्मान"
+    ],
+    "formTitle": "अपना इंटरेस्ट रजिस्टर करें",
+    "fields": {
+      "name": "पूरा नाम",
+      "phone": "मोबाइल नंबर",
+      "city": "शहर / जिला",
+      "profession": "शिक्षा / पेशा"
+    },
+    "placeholders": {
+      "name": "आपका नाम",
+      "phone": "10 अंकों का नंबर",
+      "city": "जैसे: गोरखपुर, देवरिया",
+      "profession": "जैसे: ग्रेजुएट, गृहिणी, रिटायर्ड"
+    },
+    "submit": "इंटरेस्ट भेजें — अजय सर आपको कॉल करेंगे"
+  },
+  "aboutSection": {
+    "eyebrow": "अपने एडवाइज़र से मिलें",
+    "name": "अजय कुमार पोद्दार",
+    "badges": [
+      { "text": "MDRT मेंबर — USA", "type": "gold" },
+      { "text": "चेयरमैन क्लब", "type": "gold" },
+      { "text": "चीफ़ लाइफ इन्श्योरेंस एडवाइज़र", "type": "blue" },
+      { "text": "एजेंसी रिक्रूटमेंट ऑफिसर", "type": "blue" }
+    ],
+    "bio": "एडी मॉल कंपाउंड, विजय चौक, गोरखपुर — पूर्वी यूपी के हृदय में स्थित — अजय कुमार पोद्दार 1994 से परिवारों के भविष्य को सुरक्षित करने में मदद कर रहे हैं। तीन दशक से अधिक के अनुभव के साथ, वह उत्तर प्रदेश के सबसे सम्मानित LIC एजेंटों में से एक हैं, जिन्हें मिलियन डॉलर राउंड टेबल (MDRT, USA) द्वारा वैश्विक मान्यता प्राप्त है।"
+  },
+  "footer": {
+    "brand": "पोद्दार वेल्थ मैनेजमेंट",
+    "address": "एडी मॉल कंपाउंड, विजय चौक, गोरखपुर, यूपी 273001",
+    "contact": "9415313434  |  7007937104  |  poddarwealth@gmail.com",
+    "phone": "9415313434",
+    "email": "poddarwealth@gmail.com",
+    "disclaimer": "बीमा आग्रह का विषय है। IRDAI रजि. सं. XXXXXXXXXX",
+    "whatsapp": "WhatsApp: 9415313434",
+    "rights": "© 2025 पोद्दार वेल्थ मैनेजमेंट"
+  },
+  "whatsapp": {
+    "tooltip": "WhatsApp: 9415313434",
+    "number": "919415313434"
+  },
+  "about": {
+    "heroTitle": "31 Years of Putting Families First",
+    "heroSubtitle": "Meet Ajay Kumar Poddar — Gorakhpur's most trusted insurance advisor",
+    "storyTitle": "The Story Behind Poddar Wealth",
+    "story": "Since 1994, Ajay Kumar Poddar has been helping families in Eastern UP secure their future. Today, Poddar Wealth is a name synonymous with trust, simplicity, and genuine care — protecting 5000+ families across Gorakhpur, Deoria, Kushinagar, and beyond.",
+    "missionTitle": "Our Mission",
+    "mission": "To make insurance simple, honest, and accessible for every Indian family — regardless of income or education level.",
+    "valuesTitle": "Our Values",
+    "values": [
+      { "icon": "🤝", "title": "Honesty First", "desc": "We recommend what's right for you, not what pays us more" },
+      { "icon": "💡", "title": "Simplicity", "desc": "We explain complex products in plain, simple language — in Hindi" },
+      { "icon": "❤️", "title": "Genuine Care", "desc": "We're here at claim time, not just at policy time" },
+      { "icon": "📞", "title": "Always Available", "desc": "Personal advisor who picks up your calls — 9415313434" }
+    ]
+  },
+  "lifeInsurance": {
+    "heroTitle": "Life Insurance: The Ultimate Gift to Your Family",
+    "heroSubtitle": "If something happens to you, your family's dreams shouldn't die too.",
+    "whyTitle": "Why Every Earning Member Needs Life Insurance",
+    "typesTitle": "Types of Life Insurance",
+    "types": [
+      { "title": "Term Insurance (Jeevan Amar)", "desc": "Maximum coverage at minimum cost. Pure protection for your family.", "tag": "Most Popular" },
+      { "title": "Endowment (New Jeevan Anand)", "desc": "Protection + savings. Get sum assured + bonuses at maturity.", "tag": "With Returns" },
+      { "title": "ULIPs (Nivesh Plus)", "desc": "Insurance + market-linked investment returns in one product.", "tag": "Investment" },
+      { "title": "Money-Back Plans", "desc": "Periodic payouts during policy term + full coverage.", "tag": "Regular Income" }
+    ]
+  },
+  "becomeAdvisor": {
+    "heroTitle": "Build a Career That Protects Families",
+    "heroSubtitle": "Join Ajay Kumar Poddar's team — Eastern UP's most experienced Agency Recruitment Officer",
+    "whyTitle": "Why Become an LIC Agent?",
+    "benefits": [
+      { "icon": "💰", "title": "Lifetime Commission", "desc": "Renewal commission keeps coming — earn while you sleep." },
+      { "icon": "⏰", "title": "Flexible Hours", "desc": "Suitable for housewives, retired persons, graduates." },
+      { "icon": "🎓", "title": "Full Training", "desc": "Ajay sir personally mentors every new agent." },
+      { "icon": "🏆", "title": "Recognition", "desc": "Bonus, contests, and Chairman's Club recognition." },
+      { "icon": "🔒", "title": "Job Security", "desc": "Insurance is always needed, regardless of economy." },
+      { "icon": "❤️", "title": "Meaningful Work", "desc": "Your work directly protects families." }
+    ],
+    "incomeTitle": "Income Potential",
+    "incomeData": [
+      { "level": "Starter", "policies": "5-10 policies/month", "income": "₹15,000 – ₹30,000/month" },
+      { "level": "Growing", "policies": "10-20 policies/month", "income": "₹30,000 – ₹75,000/month" },
+      { "level": "Established", "policies": "20+ policies/month", "income": "₹75,000 – ₹2,00,000/month" },
+      { "level": "MDRT Level", "policies": "Top performer", "income": "₹2,00,000+/month" }
+    ],
+    "formTitle": "Express Your Interest",
+    "formSubtitle": "Fill this form and Ajay sir will personally call you within 24 hours"
+  },
+  "contact": {
+    "heroTitle": "Let's Talk — We're Here for You",
+    "heroSubtitle": "A real person will answer. No bots, no call centers.",
+    "formTitle": "Send Us a Message",
+    "infoTitle": "Contact Information",
+    "officeTitle": "Office Hours",
+    "officeHours": "Monday – Saturday: 9 AM to 7 PM\nSunday: 10 AM to 2 PM",
+    "whatsappCta": "Chat on WhatsApp",
+    "callCta": "Call Now"
+  },
+  "lifeCalc": {
+    "title": "Life Insurance Coverage Calculator",
+    "subtitle": "Find out how much life insurance your family truly needs",
+    "age": "Your Age",
+    "income": "Annual Income (₹)",
+    "dependents": "Number of Dependents",
+    "existing": "Existing Insurance (₹)",
+    "calculate": "Calculate My Coverage",
+    "resultTitle": "Recommended Coverage",
+    "resultSubtitle": "Based on your profile, your family needs:",
+    "breakdown": "How We Calculated This",
+    "cta": "Get This Coverage →"
+  },
+  "retirementCalc": {
+    "title": "Retirement Corpus Calculator",
+    "subtitle": "Plan exactly how much you need to retire comfortably",
+    "currentAge": "Current Age",
+    "retirementAge": "Retirement Age",
+    "monthlyExpense": "Current Monthly Expense (₹)",
+    "inflation": "Expected Inflation (%)",
+    "calculate": "Calculate My Corpus",
+    "resultTitle": "Retirement Corpus Needed",
+    "cta": "Start Planning Now →"
+  },
+  "leadForm": {
+    "title": "Get Your Free Insurance Review",
+    "subtitle": "Tell us about yourself — we'll recommend the best plan",
+    "name": "Your Name",
+    "phone": "WhatsApp Number",
+    "age": "Your Age",
+    "goal": "Your Primary Goal",
+    "goalOptions": ["Life Protection", "Health Coverage", "Child's Education", "Retirement Planning", "Tax Saving"],
+    "submit": "Get Free Advice →",
+    "privacy": "We never share your details. No spam, ever.",
+    "successTitle": "🎉 Thank You!",
+    "successMsg": "Ajay sir will personally call you within 24 hours."
+  },
+  "finalCta": {
+    "title": "Don't Wait for a Tragedy to Think About Protection",
+    "subtitle": "The best time to get insured was yesterday. The second best time is right now.",
+    "cta1": "Protect My Family Now",
+    "cta2": "Chat on WhatsApp",
+    "note": "Free consultation • No obligation • Hindi & English support"
+  }
+}

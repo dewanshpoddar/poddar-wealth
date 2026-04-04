@@ -1,0 +1,129 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans:    ['Plus Jakarta Sans', 'Segoe UI', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
+      },
+      colors: {
+        navy: {
+          DEFAULT: '#0C2340',
+          mid:     '#0F2D4A',
+          light:   '#1a3a5c',
+          border:  '#1e4068',
+          border2: '#2d4a6b',
+          deep:    '#071828',
+        },
+        gold: {
+          DEFAULT: '#C8960C',
+          light:   '#FAC775',
+          bg:      '#FEF9EC',
+          dark:    '#633806',
+          darker:  '#7a5400',
+          hover:   '#b07e08',
+          muted:   '#EF9F27',
+        },
+        muted:  '#90aac4',
+        warm:   '#F8F6F0',
+        ink:    '#4a6a8a',
+        agent: {
+          bg:     '#EAF3DE',
+          dark:   '#173404',
+          mid:    '#3B6D11',
+          light:  '#27500A',
+          border: '#C0DD97',
+        },
+        online:  '#1D9E75',
+        danger:  '#E24B4A',
+        warning: '#EF9F27',
+      },
+      fontSize: {
+        '10': ['10px', { lineHeight: '1.4' }],
+        '11': ['11px', { lineHeight: '1.5' }],
+        '12': ['12px', { lineHeight: '1.6' }],
+        '13': ['13px', { lineHeight: '1.6' }],
+        '14': ['14px', { lineHeight: '1.7' }],
+        '15': ['15px', { lineHeight: '1.5' }],
+        '18': ['18px', { lineHeight: '1.4' }],
+        '20': ['20px', { lineHeight: '1.35' }],
+        '22': ['22px', { lineHeight: '1.2' }],
+        '28': ['28px', { lineHeight: '1.2' }],
+        '32': ['32px', { lineHeight: '1.3' }],
+        '36': ['36px', { lineHeight: '1.1' }],
+        '48': ['48px', { lineHeight: '1.0' }],
+      },
+      letterSpacing: {
+        'eyebrow':    '0.08em',
+        'eyebrow-lg': '0.10em',
+        'badge':      '0.04em',
+        'partner':    '0.06em',
+        'logo-sub':   '0.03em',
+        'logo':       '0.01em',
+      },
+      borderRadius: {
+        'sm':   '6px',
+        'md':   '8px',
+        'lg':   '12px',
+        'xl':   '16px',
+        'pill': '20px',
+      },
+      borderWidth: {
+        'half': '0.5px',
+        '1.5':  '1.5px',
+      },
+      boxShadow: {
+        'card':       '0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04)',
+        'card-hover': '0 4px 20px rgba(0,0,0,0.12)',
+        'gold':       '0 4px 16px rgba(200,150,12,0.25)',
+        'wa':         '0 4px 16px rgba(37,211,102,0.4)',
+        'navy':       '0 4px 20px rgba(12,35,64,0.3)',
+      },
+      keyframes: {
+        'wa-pulse': {
+          '0%':   { boxShadow: '0 0 0 0 rgba(37,211,102,0.5)' },
+          '70%':  { boxShadow: '0 0 0 12px rgba(37,211,102,0)' },
+          '100%': { boxShadow: '0 0 0 0 rgba(37,211,102,0)' },
+        },
+        'pulse-dot': {
+          '0%,100%': { opacity: '1' },
+          '50%':     { opacity: '0.3' },
+        },
+        'fade-up': {
+          'from': { opacity: '0', transform: 'translateY(16px)' },
+          'to':   { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in': {
+          'from': { opacity: '0' },
+          'to':   { opacity: '1' },
+        },
+        'typing': {
+          '0%, 60%, 100%': { transform: 'translateY(0)',    opacity: '0.4' },
+          '30%':           { transform: 'translateY(-4px)', opacity: '1'   },
+        },
+        'progress': {
+          'from': { width: '0%' },
+          'to':   { width: '100%' },
+        },
+      },
+      animation: {
+        'wa-pulse':   'wa-pulse 2.5s infinite',
+        'pulse-dot':  'pulse-dot 1.5s infinite',
+        'fade-up':    'fade-up 0.5s ease forwards',
+        'fade-in':    'fade-in 0.4s ease forwards',
+        'typing':     'typing 1.2s infinite ease-in-out',
+      },
+      transitionDuration: {
+        '150': '150ms',
+        '200': '200ms',
+        '400': '400ms',
+      },
+    },
+  },
+  plugins: [],
+}
