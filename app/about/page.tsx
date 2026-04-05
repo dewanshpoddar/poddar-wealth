@@ -35,15 +35,15 @@ export default function AboutPage() {
                 Get Free Advice <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="relative aspect-[4/5] md:aspect-[3/4] w-full max-w-sm mx-auto rounded-3xl overflow-hidden border border-gold/10 shadow-2xl group/photo bg-white">
+            <div className="relative aspect-[4/5] md:aspect-[3/4] w-full max-w-sm mx-auto rounded-3xl overflow-hidden border border-gold/10 shadow-2xl group/photo bg-slate-900">
               <Image
                 src="/assets/ajay-poddar.svg"
                 alt="Ajay Kumar Poddar"
                 fill
-                className="object-cover object-top transition-transform duration-700 group-hover/photo:scale-105"
+                className="object-cover object-top scale-[1.2] origin-top transition-transform duration-700 group-hover/photo:scale-[1.25]"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-80" />
               <div className="absolute -bottom-6 -left-6 bg-brand-700 text-white rounded-2xl p-5 shadow-card-hover">
                 <div className="font-display font-bold text-3xl">27+</div>
                 <div className="text-white/80 text-sm">Years of Trust</div>

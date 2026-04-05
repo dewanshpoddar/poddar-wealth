@@ -11,12 +11,12 @@ export default function FinalCTA() {
       <div className="max-w-5xl mx-auto grid gap-8 md:gap-12 items-center" style={{ gridTemplateColumns: 'revert' }}>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start bg-white/40 p-8 rounded-[32px] border border-gold/10 shadow-sm">
           {/* Photo container */}
-          <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-white border border-gold/10 shadow-inner relative overflow-hidden group/photo">
+          <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-slate-900 border border-gold/10 shadow-inner relative overflow-hidden group/photo">
             <Image 
               src="/assets/ajay-poddar.svg" 
               alt={t.aboutSection.name}
               fill
-              className="object-cover object-top transition-transform duration-500 group-hover/photo:scale-105"
+              className="object-cover object-top scale-[1.25] origin-top transition-transform duration-500 group-hover/photo:scale-[1.3]"
               priority
             />
           </div>
