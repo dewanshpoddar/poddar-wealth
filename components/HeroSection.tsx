@@ -13,8 +13,6 @@ const heroImages = [
   '/assets/hero-marriage.png'
 ]
 
-
-
 export default function HeroSection() {
   const { t } = useLang()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -28,90 +26,87 @@ export default function HeroSection() {
 
   return (
     <>
-      {/* ═══ HERO GRID ═══ */}
-      <div className="grid lg:grid-cols-2 min-h-[640px]">
+      {/* ═══ HERO GRID — locked to viewport below navbar+ticker ═══ */}
+      <div className="grid lg:grid-cols-2" style={{ height: 'calc(100vh - 110px)', minHeight: 520 }}>
 
         {/* ── LEFT ── */}
-        <div className="flex flex-col justify-center px-8 lg:px-[52px] py-14 lg:py-16">
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] py-6 lg:py-8 overflow-hidden">
 
           {/* Eyebrow */}
-          <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-6 animate-fade-up">
+          <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-3 animate-fade-up">
             <span className="w-7 h-px bg-gold inline-block" />
             {t.hero.eyebrow}
           </div>
 
           {/* Headlines */}
-          <h1 className="font-display text-[32px] md:text-[38px] lg:text-[42px] font-normal italic leading-[1.2] text-gray-900 mb-1 animate-fade-up"
+          <h1 className="font-display text-[28px] md:text-[34px] lg:text-[38px] font-normal italic leading-[1.2] text-gray-900 mb-0.5 animate-fade-up"
               style={{ animationDelay: '0.05s' }}>
             {t.hero.headline}
           </h1>
-          <div className="font-display text-[30px] md:text-[36px] lg:text-[40px] font-bold leading-[1.18] text-gold animate-fade-up"
+          <div className="font-display text-[26px] md:text-[32px] lg:text-[36px] font-bold leading-[1.18] text-gold animate-fade-up"
                style={{ animationDelay: '0.1s' }}>
             {t.hero.headlineGold}
           </div>
 
           {/* Description */}
-          <p className="text-14 text-muted leading-[1.75] mt-5 mb-8 max-w-[400px] animate-fade-up"
+          <p className="text-[13px] text-muted leading-[1.65] mt-3 mb-5 max-w-[400px] animate-fade-up"
              style={{ animationDelay: '0.2s' }}>
             {t.hero.subtitle}
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-wrap gap-3 mb-10 animate-fade-up" style={{ animationDelay: '0.25s' }}>
+          <div className="flex flex-wrap gap-3 mb-6 animate-fade-up" style={{ animationDelay: '0.25s' }}>
             <Link href="/calculators/life-insurance"
-              className="bg-gold text-white border-none py-3.5 px-7 rounded-full text-13 font-medium
+              className="bg-gold text-white border-none py-3 px-6 rounded-full text-[13px] font-medium
                          hover:bg-gold-hover transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta1}
             </Link>
             <Link href="/services/life-insurance"
-              className="bg-transparent text-gray-900 border border-gray-300 py-3.5 px-7 rounded-full text-13
+              className="bg-transparent text-gray-900 border border-gray-300 py-3 px-6 rounded-full text-[13px]
                          hover:border-gold hover:text-gold transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta2}
             </Link>
           </div>
 
-          {/* Trust stats Grid (2x2) */}
-          <div className="grid grid-cols-2 gap-y-10 gap-x-12 pt-8 mt-6 border-t border-[rgba(184,134,11,0.18)] animate-fade-up max-w-[400px]" style={{ animationDelay: '0.35s' }}>
-            {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className="flex flex-col items-start relative">
-                {/* Decorative dots above */}
-                <div className="flex gap-[3px] mb-3">
-                  <span className="w-1 h-1 rounded-full bg-gold/40 inline-block" />
-                  <span className="w-1 h-1 rounded-full bg-gold/20 inline-block" />
-                </div>
-                
-                <div className="font-display text-[26px] lg:text-[32px] font-bold text-gray-900 leading-none mb-2 tracking-tight">
-                  {stat.num}
-                </div>
-                <div className="text-[10px] lg:text-[11px] text-muted tracking-[0.06em] uppercase font-medium leading-tight max-w-[140px]">
-                  {stat.label}
-                </div>
+          {/* ── Trust stats 2×2 ── */}
+          <div className="pt-5 mt-1 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 max-w-[360px]">
+              {t.trust.stats.map((stat: any, i: number) => (
+                <div key={i} className={`relative flex flex-col items-start
+                  ${i % 2 === 0 ? 'pr-6 border-r border-[rgba(184,134,11,0.14)]' : ''}
+                  ${i < 2       ? 'pb-4 border-b border-[rgba(184,134,11,0.14)]' : ''}
+                `}>
+                  {/* 2 dots above */}
+                  <div className="flex gap-[3px] mb-1.5">
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/50 inline-block" />
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/20 inline-block" />
+                  </div>
 
-                {/* Decorative dots below */}
-                <div className="flex gap-[3px] mt-3">
-                  <span className="w-1 h-1 rounded-full bg-gold/20 inline-block" />
-                  <span className="w-1 h-1 rounded-full bg-gold/40 inline-block" />
-                </div>
+                  <div className="font-display text-[22px] lg:text-[25px] font-bold text-gray-900 leading-none tracking-tight">
+                    {stat.num}
+                  </div>
+                  <div className="text-[9px] text-muted tracking-[0.06em] uppercase font-medium leading-tight mt-[3px]">
+                    {stat.label}
+                  </div>
 
-                {/* Separators */}
-                {i % 2 === 0 && (
-                  <div className="absolute -right-6 top-2 bottom-2 w-px bg-gradient-to-b from-transparent via-[rgba(184,134,11,0.15)] to-transparent" />
-                )}
-                {i < 2 && (
-                  <div className="absolute -bottom-5 left-0 right-0 h-px bg-gradient-to-r from-[rgba(184,134,11,0.15)] via-[rgba(184,134,11,0.15)] to-transparent" />
-                )}
-              </div>
-            ))}
+                  {/* 2 dots below */}
+                  <div className="flex gap-[3px] mt-1.5">
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/20 inline-block" />
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/50 inline-block" />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* ── RIGHT ── */}
-        <div className="relative bg-navy min-h-[380px] lg:min-h-[640px]">
+        <div className="relative bg-navy h-full">
 
           {/* Geometric circles */}
-          <div className="absolute w-[320px] h-[320px] rounded-full border border-[rgba(245,200,66,0.12)]
+          <div className="absolute w-[300px] h-[300px] rounded-full border border-[rgba(245,200,66,0.12)]
                           top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-          <div className="absolute w-[480px] h-[480px] rounded-full border border-[rgba(245,200,66,0.06)]
+          <div className="absolute w-[460px] h-[460px] rounded-full border border-[rgba(245,200,66,0.06)]
                           top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
           {/* Photos (Slideshow) */}
@@ -128,7 +123,7 @@ export default function HeroSection() {
           </div>
 
           {/* Dot Navigation */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
@@ -139,76 +134,72 @@ export default function HeroSection() {
             ))}
           </div>
 
-
-
-
-
           {/* Plan card — bottom left, overlapping into left column */}
-          <div className="hidden lg:block absolute bottom-6 -left-16 w-[220px] bg-white rounded-2xl p-4
+          <div className="hidden lg:block absolute bottom-5 -left-14 w-[210px] bg-white rounded-2xl p-3.5
                           border border-[rgba(184,134,11,0.12)] z-20 shadow-xl animate-slide-in">
-            <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3.5 uppercase">
+            <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
               {t.hero.quickTitle}
             </p>
             {t.hero.quickItems.map((item: any, i: number) => (
               <button key={i} onClick={() => setCurrentImageIndex(i)}
-                className={`w-full flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                className={`w-full flex items-center gap-2 py-[7px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
                            last:border-b-0 rounded-md transition-colors duration-300 group no-underline text-left
                            ${i === currentImageIndex ? 'bg-gold/10' : 'hover:bg-gold-pale'}`}>
-                <div className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-13 flex-shrink-0 transition-colors duration-300
+                <div className={`w-[26px] h-[26px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors duration-300
                                 ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
                   {quickIcons[i]}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-12 font-medium text-gray-900 leading-tight">{item.title}</div>
-                  <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
+                  <div className="text-[11px] font-medium text-gray-900 leading-tight">{item.title}</div>
+                  <div className="text-[10px] text-muted mt-0.5 truncate">{item.sub}</div>
                 </div>
-                <span className={`text-14 text-gold transition-opacity ml-auto ${i === currentImageIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>›</span>
+                <span className={`text-13 text-gold transition-opacity ml-auto ${i === currentImageIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>›</span>
               </button>
             ))}
-            <div className="pt-3 mt-1 5 border-t border-[rgba(184,134,11,0.1)]">
-              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-12 font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
-                Get a free quote
+            <div className="pt-2.5 mt-1 border-t border-[rgba(184,134,11,0.1)]">
+              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[11px] font-medium py-2.5 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+                {t.hero.cta3}
               </Link>
             </div>
           </div>
 
           {/* "Why families trust us" chip — bottom right */}
-          <div className="absolute bottom-9 right-6 bg-white/[0.07] border border-white/[0.12]
+          <div className="absolute bottom-10 right-6 bg-white/[0.07] border border-white/[0.12]
                           rounded-xl px-4 py-3 max-w-[170px] z-10 animate-fade-up"
                style={{ animationDelay: '0.55s' }}>
-            <div className="text-[9px] text-[rgba(245,200,66,0.7)] tracking-[0.1em] mb-1.5 font-medium">
-              WHY FAMILIES TRUST US
+            <div className="text-[10px] text-[rgba(245,200,66,0.7)] tracking-[0.1em] mb-1.5 font-medium uppercase">
+              {t.trust.title.split(' ').slice(0, 3).join(' ')}
             </div>
-            <div className="text-11 text-white/75 leading-relaxed italic font-display">
-              &ldquo;31 years of showing up — not just selling.&rdquo;
+            <div className="text-[12px] text-white/75 leading-relaxed italic font-display">
+              &ldquo;{t.hero.trustQuote}&rdquo;
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile-only plan card (shown below the image on small screens) */}
-      <div className="lg:hidden bg-white mx-4 -mt-6 relative z-20 rounded-2xl p-5 border border-[rgba(184,134,11,0.12)] shadow-xl mb-4">
-        <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3.5 uppercase">
+      {/* Mobile-only plan card */}
+      <div className="lg:hidden bg-white mx-4 -mt-6 relative z-20 rounded-2xl p-4 border border-[rgba(184,134,11,0.12)] shadow-xl mb-4">
+        <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
           {t.hero.quickTitle}
         </p>
         {t.hero.quickItems.map((item: any, i: number) => (
           <button key={i} onClick={() => setCurrentImageIndex(i)}
-            className="w-full flex items-center text-left gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+            className="w-full flex items-center text-left gap-2.5 py-[8px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
                        last:border-b-0 rounded-md hover:bg-gold-pale transition-colors group no-underline">
-            <div className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-13 flex-shrink-0 transition-colors
+            <div className={`w-[28px] h-[28px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors
                             ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
               {quickIcons[i]}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-12 font-medium text-gray-900 leading-tight">{item.title}</div>
-              <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
+              <div className="text-[12px] font-medium text-gray-900 leading-tight">{item.title}</div>
+              <div className="text-[10px] text-muted mt-0.5 truncate">{item.sub}</div>
             </div>
-            <span className="text-14 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
+            <span className="text-13 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
           </button>
         ))}
         <div className="pt-3 mt-1.5 border-t border-[rgba(184,134,11,0.1)]">
-          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-12 font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
-            Get a free quote
+          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[12px] font-medium py-2.5 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+            {t.hero.cta3}
           </Link>
         </div>
       </div>

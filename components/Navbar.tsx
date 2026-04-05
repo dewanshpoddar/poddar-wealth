@@ -11,12 +11,12 @@ export default function Navbar() {
     <nav className="pw-nav">
       {/* Logo */}
       <Link href="/" className="pw-logo-area">
-        <div className="pw-logo-icon bg-transparent w-auto h-10 -ml-1">
-          <img src="/assets/logo.svg" alt="LIC Logo" className="h-full w-auto object-contain" />
+        <div className="pw-logo-icon bg-transparent w-auto h-11 -ml-1">
+          <img src="/assets/lic-logo.svg" alt="Poddar Wealth Logo" className="h-full w-auto object-contain" />
         </div>
         <div>
-          <span className="pw-logo-text">Poddar Wealth Management</span>
-          <span className="pw-logo-sub">Excellence in Service Since 1994</span>
+          <span className="pw-logo-text text-navy">Poddar Wealth Management</span>
+          <span className="pw-logo-sub text-gold/80">Excellence in Protection Since 1994</span>
         </div>
       </Link>
 

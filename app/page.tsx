@@ -4,27 +4,21 @@ import ServicesSection from '@/components/ServicesSection'
 import CalculatorSection from '@/components/CalculatorSection'
 import IntentSection from '@/components/IntentSection'
 import TestimonialsSection from '@/components/TestimonialsSection'
-import LeadForm from '@/components/LeadForm'
+import ChatBot from '@/components/ChatBot'
 import FinalCTA from '@/components/FinalCTA'
+import LeadForm from '@/components/LeadForm'
 
 export default function HomePage() {
   return (
     <>
-      {/* 2. Hero + Quick Intent */}
       <HeroSection />
-      {/* 3. Trust Bar + Partner Bar */}
       <TrustSection />
-      {/* 4. Services Grid */}
       <ServicesSection />
-      {/* 5. Premium Calculator */}
       <CalculatorSection />
-      {/* 6. Emotional Hero (was IntentSection) */}
       <IntentSection />
-      {/* 7. Testimonials */}
       <TestimonialsSection />
-      {/* 8. About Ajay */}
+      <ChatBot />
       <FinalCTA />
-      {/* 9. Agent Recruitment */}
       <LeadForm />
     </>
   )

@@ -27,7 +27,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
           <WhatsAppButton />
-          <ChatBot />
         </LangProvider>
       </body>
     </html>
