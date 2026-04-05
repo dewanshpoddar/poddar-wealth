@@ -127,7 +127,7 @@ module.exports = {
         'fade-up':    'fade-up 0.5s ease forwards',
         'fade-in':    'fade-in 0.4s ease forwards',
         'typing':     'typing 1.2s infinite ease-in-out',
-        'marquee':    'marquee 25s linear infinite',
+        'marquee':    'marquee 50s linear infinite',
         'slide-in':   'slide-in 0.7s 0.5s ease both',
       },
       transitionDuration: {

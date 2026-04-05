@@ -21,15 +21,20 @@ export default function Navbar() {
       </Link>
 
       {/* Desktop Nav */}
-      <div className="hidden lg:flex items-center gap-6">
+      <div className="hidden lg:flex items-center gap-5 xl:gap-6">
         <Link href="/" className="pw-nav-link">{t.nav.products}</Link>
-        <Link href="/services/life-insurance" className="pw-nav-link">Services</Link>
-        <Link href="/calculators/life-insurance" className="pw-nav-link">{t.nav.calculators}</Link>
-        <Link href="/about" className="pw-nav-link">About Us</Link>
-        <Link href="/become-advisor" className="pw-nav-link">{t.nav.becomeAgent}</Link>
+        <Link href="/services/life-insurance" className="pw-nav-link">{t.nav.services}</Link>
+        <div className="hidden xl:block">
+          <Link href="/calculators/life-insurance" className="pw-nav-link">{t.nav.calculators}</Link>
+        </div>
+        <Link href="/about" className="pw-nav-link">{t.nav.about}</Link>
+        
+        {/* Support Links */}
+        <Link href="/contact" className="pw-nav-link text-gray-500">{t.nav.renewPolicy}</Link>
+        <Link href="/contact" className="pw-nav-link text-gray-500">{t.nav.claimSupport}</Link>
 
         {/* Language toggle */}
-        <div className="pw-lang-toggle">
+        <div className="pw-lang-toggle ml-1">
           <button
             onClick={() => setLang('en')}
             className={`pw-lang-btn ${lang === 'en' ? 'pw-lang-btn--active' : ''}`}
@@ -40,7 +45,8 @@ export default function Navbar() {
           >हिंदी</button>
         </div>
 
-        <Link href="/contact" className="pw-nav-cta">{t.nav.getQuote}</Link>
+        <Link href="#" className="pw-nav-link font-medium text-navy">{t.nav.login}</Link>
+        <Link href="/contact" className="pw-nav-cta hidden xl:block">{t.nav.getQuote}</Link>
       </div>
 
       {/* Mobile toggle */}
@@ -54,12 +60,15 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="fixed top-[72px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-4 border-t border-gray-100 lg:hidden">
+        <div className="fixed top-[72px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-4 border-t border-gray-100 lg:hidden max-h-[85vh] overflow-y-auto">
           <Link href="/" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.products}</Link>
-          <Link href="/services/life-insurance" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">Services</Link>
+          <Link href="/services/life-insurance" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.services}</Link>
           <Link href="/calculators/life-insurance" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.calculators}</Link>
-          <Link href="/about" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">About Us</Link>
-          <Link href="/become-advisor" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.becomeAgent}</Link>
+          <Link href="/about" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.about}</Link>
+          <Link href="/contact" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.renewPolicy}</Link>
+          <Link href="/contact" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.claimSupport}</Link>
+          <div className="h-px bg-gray-100 my-1 w-full"></div>
+          <Link href="#" onClick={() => setOpen(false)} className="text-14 font-semibold text-navy">{t.nav.login}</Link>
           <Link href="/contact" onClick={() => setOpen(false)} className="pw-btn pw-btn--gold pw-btn--full mt-2 shadow-sm">{t.nav.getQuote}</Link>
         </div>
       )}

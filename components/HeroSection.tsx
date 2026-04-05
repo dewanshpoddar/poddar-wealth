@@ -4,12 +4,7 @@ import Link from 'next/link'
 
 const quickIcons = ['🛡', '❤️', '📈', '🎓']
 
-const whyItems = [
-  { icon: '🤝', title: 'Personal advisor', sub: 'One advisor, your whole family, for life.' },
-  { icon: '⚡', title: 'Fast claim support', sub: 'We guide you through every step of claims.' },
-  { icon: '📋', title: 'Tailored planning', sub: 'Plans built around your goals, not commissions.' },
-  { icon: '🏆', title: 'Award-winning trust', sub: 'MDRT Member & Chairman\'s Club — since 1994.' },
-]
+
 
 export default function HeroSection() {
   const { t } = useLang()
@@ -29,11 +24,11 @@ export default function HeroSection() {
           </div>
 
           {/* Headlines */}
-          <h1 className="font-display text-[36px] md:text-[42px] lg:text-[46px] font-normal italic leading-[1.2] text-gray-900 mb-1 animate-fade-up"
+          <h1 className="font-display text-[32px] md:text-[38px] lg:text-[42px] font-normal italic leading-[1.2] text-gray-900 mb-1 animate-fade-up"
               style={{ animationDelay: '0.05s' }}>
             {t.hero.headline}
           </h1>
-          <div className="font-display text-[34px] md:text-[40px] lg:text-[44px] font-bold leading-[1.18] text-gold animate-fade-up"
+          <div className="font-display text-[30px] md:text-[36px] lg:text-[40px] font-bold leading-[1.18] text-gold animate-fade-up"
                style={{ animationDelay: '0.1s' }}>
             {t.hero.headlineGold}
           </div>
@@ -61,9 +56,9 @@ export default function HeroSection() {
           {/* Trust stats inline */}
           <div className="flex flex-wrap gap-0 animate-fade-up" style={{ animationDelay: '0.35s' }}>
             {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className={`pr-7 mr-7 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
-                <div className="font-display text-[26px] font-bold text-gray-900 leading-none">{stat.num}</div>
-                <div className="text-10 text-muted tracking-[0.05em] mt-1">{stat.label}</div>
+              <div key={i} className={`pr-6 mr-6 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
+                <div className="font-display text-[24px] font-bold text-gray-900 leading-none">{stat.num}</div>
+                <div className="text-[9px] text-muted tracking-[0.05em] mt-1.5 uppercase">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -84,9 +79,9 @@ export default function HeroSection() {
               src="/assets/hero-family.png"
               alt="Happy Indian family"
               className="w-full h-full object-cover"
-              style={{ opacity: 0.55 }}
+              style={{ opacity: 0.8 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-navy/10" />
           </div>
 
           {/* Award badge — top left */}
@@ -163,10 +158,10 @@ export default function HeroSection() {
 
       {/* ═══ WHY US STRIP ═══ */}
       <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)]">
-        {whyItems.map((item, i) => (
+        {t.whyUs && t.whyUs.map((item: any, i: number) => (
           <div key={i}
             className={`flex items-start gap-3.5 px-5 lg:px-8 py-5
-                        ${i < whyItems.length - 1 ? 'lg:border-r border-[rgba(184,134,11,0.18)]' : ''}
+                        ${i < t.whyUs.length - 1 ? 'lg:border-r border-[rgba(184,134,11,0.18)]' : ''}
                         ${i < 2 ? 'border-b lg:border-b-0 border-[rgba(184,134,11,0.18)]' : ''}`}>
             <div className="w-9 h-9 rounded-[10px] bg-gold-pale flex items-center justify-center text-base flex-shrink-0 mt-0.5">
               {item.icon}

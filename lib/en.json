@@ -2,17 +2,20 @@
   "nav": {
     "home": "Home",
     "products": "Products",
+    "services": "Services",
     "calculators": "Calculators",
-    "about": "About",
+    "about": "About Us",
     "becomeAgent": "Join as Agent",
     "contact": "Contact",
     "getQuote": "Get a free quote",
+    "login": "Login",
+    "claimSupport": "Claim Support",
+    "renewPolicy": "Renew Policy",
     "lifeInsurance": "Life Insurance",
     "healthInsurance": "Health Insurance",
     "retirement": "Retirement Planning",
     "childPlanning": "Child Plans",
-    "taxPlanning": "Tax Planning",
-    "services": "Services"
+    "taxPlanning": "Tax Planning"
   },
   "banner": {
     "text": "New LIC & Star Health plans launched — April 2025",
@@ -34,6 +37,12 @@
       { "icon": "education", "title": "Child education & marriage", "sub": "Goal-based savings plans" }
     ]
   },
+  "whyUs": [
+    { "icon": "🤝", "title": "Personal advisor", "sub": "One advisor, your whole family, for life." },
+    { "icon": "⚡", "title": "Fast claim support", "sub": "We guide you through every step of claims." },
+    { "icon": "📋", "title": "Tailored planning", "sub": "Plans built around your goals, not commissions." },
+    { "icon": "🏆", "title": "Award-winning trust", "sub": "MDRT Member & Chairman's Club — since 1994." }
+  ],
   "trust": {
     "title": "Why Families Trust Ajay Poddar",
     "subtitle": "Three decades of simplifying insurance for Indian families",
