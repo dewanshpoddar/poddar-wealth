@@ -29,7 +29,7 @@ export default function HeroSection() {
   return (
     <>
       {/* ═══ HERO GRID ═══ */}
-      <div className="grid lg:grid-cols-2 min-h-[560px]">
+      <div className="grid lg:grid-cols-2 min-h-[640px]">
 
         {/* ── LEFT ── */}
         <div className="flex flex-col justify-center px-8 lg:px-[52px] py-14 lg:py-16">
@@ -71,18 +71,18 @@ export default function HeroSection() {
           </div>
 
           {/* Trust stats inline */}
-          <div className="flex flex-wrap lg:flex-nowrap items-center gap-x-3 gap-y-3 pt-6 mt-2 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
+          <div className="flex justify-between items-start gap-3 pt-8 mt-4 border-t border-[rgba(184,134,11,0.18)] animate-fade-up w-full" style={{ animationDelay: '0.35s' }}>
             {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className={`flex items-center gap-2 pr-3 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
-                <div className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 leading-none">{stat.num}</div>
-                <div className="text-[8px] lg:text-[9px] text-muted tracking-[0.05em] uppercase leading-[1.2] whitespace-nowrap">{stat.label}</div>
+              <div key={i} className="flex flex-col items-start gap-1.5 flex-1">
+                <div className="font-display text-[24px] lg:text-[28px] font-bold text-gray-900 leading-none">{stat.num}</div>
+                <div className="text-[9px] lg:text-[10px] text-muted tracking-[0.05em] uppercase leading-[1.3] pr-2">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── RIGHT ── */}
-        <div className="relative bg-navy min-h-[380px] lg:min-h-[560px]">
+        <div className="relative bg-navy min-h-[380px] lg:min-h-[640px]">
 
           {/* Geometric circles */}
           <div className="absolute w-[320px] h-[320px] rounded-full border border-[rgba(245,200,66,0.12)]
@@ -141,6 +141,11 @@ export default function HeroSection() {
                 <span className={`text-14 text-gold transition-opacity ml-auto ${i === currentImageIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>›</span>
               </button>
             ))}
+            <div className="pt-3 mt-1 5 border-t border-[rgba(184,134,11,0.1)]">
+              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-12 font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+                Get a free quote
+              </Link>
+            </div>
           </div>
 
           {/* "Why families trust us" chip — bottom right */}
@@ -163,10 +168,11 @@ export default function HeroSection() {
           {t.hero.quickTitle}
         </p>
         {t.hero.quickItems.map((item: any, i: number) => (
-          <Link key={i} href="#"
-            className="flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+          <button key={i} onClick={() => setCurrentImageIndex(i)}
+            className="w-full flex items-center text-left gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
                        last:border-b-0 rounded-md hover:bg-gold-pale transition-colors group no-underline">
-            <div className="w-[30px] h-[30px] rounded-lg bg-gold-pale flex items-center justify-center text-13 flex-shrink-0">
+            <div className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-13 flex-shrink-0 transition-colors
+                            ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
               {quickIcons[i]}
             </div>
             <div className="flex-1 min-w-0">
@@ -174,15 +180,20 @@ export default function HeroSection() {
               <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
             </div>
             <span className="text-14 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
-          </Link>
+          </button>
         ))}
+        <div className="pt-3 mt-1.5 border-t border-[rgba(184,134,11,0.1)]">
+          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-12 font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+            Get a free quote
+          </Link>
+        </div>
       </div>
 
       {/* ═══ WHY US STRIP ═══ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)] bg-warm">
+      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)] bg-warm pb-6 lg:pb-0">
         {t.whyUs && t.whyUs.map((item: any, i: number) => (
           <div key={i}
-            className={`flex items-start gap-3.5 px-5 lg:px-8 py-5
+            className={`flex items-start gap-3.5 px-5 lg:px-8 py-5 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_10px_20px_-10px_rgba(184,134,11,0.15)] hover:bg-white/60 cursor-default rounded-lg m-1
                         ${i < t.whyUs.length - 1 ? 'lg:border-r border-[rgba(184,134,11,0.18)]' : ''}
                         ${i < 2 ? 'border-b lg:border-b-0 border-[rgba(184,134,11,0.18)]' : ''}`}>
             <div className="w-9 h-9 rounded-[10px] bg-gold-pale flex items-center justify-center text-base flex-shrink-0 mt-0.5">
