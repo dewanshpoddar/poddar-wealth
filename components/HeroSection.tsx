@@ -1,92 +1,183 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import Image from 'next/image'
 
-const quickIcons = [
-  <svg key="shield" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2C9.24 2 7 4.24 7 7s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z" fill="#C8960C"/></svg>,
-  <svg key="heart" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#C8960C"/></svg>,
-  <svg key="check" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z" fill="#C8960C"/></svg>,
-  <svg key="edu" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18V17h2v-4.82l2 1.09V17c0 1.1 2.24 2 5 2s5-.9 5-2v-3.73L23 9l-11-6zm5 13c0 .5-2 1-5 1s-5-.5-5-1v-1.95l5 2.73 5-2.73V16z" fill="#C8960C"/></svg>,
+const quickIcons = ['🛡', '❤️', '📈', '🎓']
+
+const whyItems = [
+  { icon: '🤝', title: 'Personal advisor', sub: 'One advisor, your whole family, for life.' },
+  { icon: '⚡', title: 'Fast claim support', sub: 'We guide you through every step of claims.' },
+  { icon: '📋', title: 'Tailored planning', sub: 'Plans built around your goals, not commissions.' },
+  { icon: '🏆', title: 'Award-winning trust', sub: 'MDRT Member & Chairman\'s Club — since 1994.' },
 ]
 
 export default function HeroSection() {
   const { t } = useLang()
 
   return (
-    <section className="relative bg-navy pt-20 pb-24 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-navy-light opacity-30 transform skew-x-[-15deg] origin-bottom-right" />
+    <>
+      {/* ═══ HERO GRID ═══ */}
+      <div className="grid lg:grid-cols-2 min-h-[560px]">
 
-      <div className="pw-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          
-          {/* Left content */}
-          <div className="max-w-xl">
-            {/* Logo/Brand Header */}
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 bg-white rounded-md flex items-center justify-center p-1 shadow-md">
-                <img src="/assets/logo.svg" alt="LIC Logo" className="w-full h-full object-contain" />
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="font-display font-bold text-lg md:text-xl text-white leading-tight">Poddar Wealth Management</span>
-                <span className="text-11 md:text-xs text-gold uppercase tracking-wider font-semibold">{t.hero.eyebrow}</span>
-              </div>
-            </div>
+        {/* ── LEFT ── */}
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] py-14 lg:py-16">
 
-            <h1 className="font-display text-4xl md:text-5xl lg:text-[54px] font-bold text-white leading-[1.15] mb-6">
-              {t.hero.headline}<br />
-              <span className="text-gold">{t.hero.headlineGold}</span>
-            </h1>
-            
-            <p className="text-15 md:text-base text-gray-300 leading-relaxed mb-10 max-w-lg font-light">
-              {t.hero.subtitle}
+          {/* Eyebrow */}
+          <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-6 animate-fade-up">
+            <span className="w-7 h-px bg-gold inline-block" />
+            {t.hero.eyebrow}
+          </div>
+
+          {/* Headlines */}
+          <h1 className="font-display text-[36px] md:text-[42px] lg:text-[46px] font-normal italic leading-[1.2] text-gray-900 mb-1 animate-fade-up"
+              style={{ animationDelay: '0.05s' }}>
+            {t.hero.headline}
+          </h1>
+          <div className="font-display text-[34px] md:text-[40px] lg:text-[44px] font-bold leading-[1.18] text-gold animate-fade-up"
+               style={{ animationDelay: '0.1s' }}>
+            {t.hero.headlineGold}
+          </div>
+
+          {/* Description */}
+          <p className="text-14 text-muted leading-[1.75] mt-5 mb-8 max-w-[400px] animate-fade-up"
+             style={{ animationDelay: '0.2s' }}>
+            {t.hero.subtitle}
+          </p>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 mb-10 animate-fade-up" style={{ animationDelay: '0.25s' }}>
+            <Link href="/calculators/life-insurance"
+              className="bg-gold text-white border-none py-3.5 px-7 rounded-full text-13 font-medium
+                         hover:bg-gold-hover transition-all duration-200 hover:-translate-y-px">
+              {t.hero.cta1}
+            </Link>
+            <Link href="/services/life-insurance"
+              className="bg-transparent text-gray-900 border border-gray-300 py-3.5 px-7 rounded-full text-13
+                         hover:border-gold hover:text-gold transition-all duration-200 hover:-translate-y-px">
+              {t.hero.cta2}
+            </Link>
+          </div>
+
+          {/* Trust stats inline */}
+          <div className="flex flex-wrap gap-0 animate-fade-up" style={{ animationDelay: '0.35s' }}>
+            {t.trust.stats.map((stat: any, i: number) => (
+              <div key={i} className={`pr-7 mr-7 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
+                <div className="font-display text-[26px] font-bold text-gray-900 leading-none">{stat.num}</div>
+                <div className="text-10 text-muted tracking-[0.05em] mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT ── */}
+        <div className="relative bg-navy min-h-[380px] lg:min-h-[560px]">
+
+          {/* Geometric circles */}
+          <div className="absolute w-[320px] h-[320px] rounded-full border border-[rgba(245,200,66,0.12)]
+                          top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+          <div className="absolute w-[480px] h-[480px] rounded-full border border-[rgba(245,200,66,0.06)]
+                          top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+
+          {/* Family photo (covers the panel) */}
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              src="/assets/hero-family.png"
+              alt="Happy Indian family"
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.55 }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/30" />
+          </div>
+
+          {/* Award badge — top left */}
+          <div className="absolute top-7 left-7 bg-[rgba(245,200,66,0.1)] border border-[rgba(245,200,66,0.25)]
+                          rounded-[10px] px-4 py-2.5 z-10 animate-fade-up"
+               style={{ animationDelay: '0.4s' }}>
+            <p className="text-10 text-gold-light tracking-[0.1em] font-medium mb-0.5">MDRT MEMBER</p>
+            <p className="text-11 text-white/50">Chairman&apos;s Club Awardee</p>
+          </div>
+
+          {/* Year pill — top right */}
+          <div className="absolute top-7 right-7 bg-gold rounded-full px-5 py-2 text-center z-10">
+            <div className="font-display text-[22px] font-bold text-white leading-none">31</div>
+            <div className="text-[9px] text-white/75 tracking-[0.1em] mt-0.5">YEARS TRUST</div>
+          </div>
+
+          {/* Plan card — bottom left, overlapping into left column */}
+          <div className="hidden lg:block absolute bottom-9 -left-6 w-[248px] bg-white rounded-2xl p-5
+                          border border-[rgba(184,134,11,0.12)] z-20 shadow-xl animate-slide-in">
+            <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3.5 uppercase">
+              {t.hero.quickTitle}
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/calculators/life-insurance" className="bg-gold hover:bg-yellow-500 text-navy font-bold py-3.5 px-8 rounded-lg shadow-lg shadow-gold/20 transition-all text-center">
-                {t.hero.cta1}
+            {t.hero.quickItems.map((item: any, i: number) => (
+              <Link key={i} href="#"
+                className="flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                           last:border-b-0 rounded-md hover:bg-gold-pale transition-colors duration-150 group no-underline">
+                <div className="w-[30px] h-[30px] rounded-lg bg-gold-pale flex items-center justify-center
+                                text-13 flex-shrink-0">
+                  {quickIcons[i]}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-12 font-medium text-gray-900 leading-tight">{item.title}</div>
+                  <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
+                </div>
+                <span className="text-14 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
               </Link>
-              <Link href="/services/life-insurance" className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium py-3.5 px-8 rounded-lg transition-all text-center backdrop-blur-sm">
-                {t.hero.cta2}
-              </Link>
-            </div>
+            ))}
           </div>
 
-          {/* Right Content - Family Image + Floating widget */}
-          <div className="relative w-full ml-auto xl:w-[110%]">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] md:aspect-video lg:aspect-[4/3] w-full">
-              <img 
-                src="/assets/hero-family.png" 
-                alt="Happy family" 
-                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent pointer-events-none" />
+          {/* "Why families trust us" chip — bottom right */}
+          <div className="absolute bottom-9 right-6 bg-white/[0.07] border border-white/[0.12]
+                          rounded-xl px-4 py-3 max-w-[170px] z-10 animate-fade-up"
+               style={{ animationDelay: '0.55s' }}>
+            <div className="text-[9px] text-[rgba(245,200,66,0.7)] tracking-[0.1em] mb-1.5 font-medium">
+              WHY FAMILIES TRUST US
             </div>
-
-            {/* Quick Intent Widget - Floating Card */}
-            <div className="relative lg:absolute lg:-bottom-10 lg:-left-12 bg-white rounded-xl p-5 shadow-2xl border border-gray-100 z-20 mt-[-30px] mx-4 lg:mx-0 max-w-[340px]">
-              <div className="text-xs font-bold text-navy uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
-                {t.hero.quickTitle}
-              </div>
-              <div className="flex flex-col gap-3">
-                {t.hero.quickItems.map((item: any, i: number) => (
-                  <div key={i} className="flex items-center gap-3 group cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-gold/20 transition-colors">
-                      {quickIcons[i]}
-                    </div>
-                    <div>
-                      <div className="text-13 font-semibold text-gray-900 group-hover:text-navy transition-colors">{item.title}</div>
-                      <div className="text-11 text-gray-500 line-clamp-1">{item.sub}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="text-11 text-white/75 leading-relaxed italic font-display">
+              &ldquo;31 years of showing up — not just selling.&rdquo;
             </div>
           </div>
-
         </div>
       </div>
-    </section>
+
+      {/* Mobile-only plan card (shown below the image on small screens) */}
+      <div className="lg:hidden bg-white mx-4 -mt-6 relative z-20 rounded-2xl p-5 border border-[rgba(184,134,11,0.12)] shadow-xl mb-4">
+        <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3.5 uppercase">
+          {t.hero.quickTitle}
+        </p>
+        {t.hero.quickItems.map((item: any, i: number) => (
+          <Link key={i} href="#"
+            className="flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                       last:border-b-0 rounded-md hover:bg-gold-pale transition-colors group no-underline">
+            <div className="w-[30px] h-[30px] rounded-lg bg-gold-pale flex items-center justify-center text-13 flex-shrink-0">
+              {quickIcons[i]}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-12 font-medium text-gray-900 leading-tight">{item.title}</div>
+              <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
+            </div>
+            <span className="text-14 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
+          </Link>
+        ))}
+      </div>
+
+      {/* ═══ WHY US STRIP ═══ */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)]">
+        {whyItems.map((item, i) => (
+          <div key={i}
+            className={`flex items-start gap-3.5 px-5 lg:px-8 py-5
+                        ${i < whyItems.length - 1 ? 'lg:border-r border-[rgba(184,134,11,0.18)]' : ''}
+                        ${i < 2 ? 'border-b lg:border-b-0 border-[rgba(184,134,11,0.18)]' : ''}`}>
+            <div className="w-9 h-9 rounded-[10px] bg-gold-pale flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+              {item.icon}
+            </div>
+            <div>
+              <div className="text-13 font-medium text-gray-900 mb-1">{item.title}</div>
+              <div className="text-11 text-muted leading-relaxed">{item.sub}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }

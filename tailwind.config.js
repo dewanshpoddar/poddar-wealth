@@ -13,7 +13,7 @@ module.exports = {
       },
       colors: {
         navy: {
-          DEFAULT: '#0C2340',
+          DEFAULT: '#12152a',
           mid:     '#0F2D4A',
           light:   '#1a3a5c',
           border:  '#1e4068',
@@ -21,15 +21,17 @@ module.exports = {
           deep:    '#071828',
         },
         gold: {
-          DEFAULT: '#C8960C',
-          light:   '#FAC775',
-          bg:      '#FEF9EC',
+          DEFAULT: '#b8860b',
+          light:   '#f5c842',
+          bg:      '#fdf3d6',
           dark:    '#633806',
           darker:  '#7a5400',
-          hover:   '#b07e08',
+          hover:   '#9a6f08',
           muted:   '#EF9F27',
+          pale:    '#fdf3d6',
         },
-        muted:  '#90aac4',
+        cream:  '#faf6ef',
+        muted:  '#7a7260',
         warm:   '#F8F6F0',
         ink:    '#4a6a8a',
         agent: {
@@ -110,6 +112,14 @@ module.exports = {
           'from': { width: '0%' },
           'to':   { width: '100%' },
         },
+        'marquee': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'slide-in': {
+          'from': { opacity: '0', transform: 'translateX(-20px)' },
+          'to':   { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       animation: {
         'wa-pulse':   'wa-pulse 2.5s infinite',
@@ -117,6 +127,8 @@ module.exports = {
         'fade-up':    'fade-up 0.5s ease forwards',
         'fade-in':    'fade-in 0.4s ease forwards',
         'typing':     'typing 1.2s infinite ease-in-out',
+        'marquee':    'marquee 25s linear infinite',
+        'slide-in':   'slide-in 0.7s 0.5s ease both',
       },
       transitionDuration: {
         '150': '150ms',

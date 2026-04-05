@@ -6,16 +6,6 @@ export default function TrustSection() {
 
   return (
     <>
-      {/* Trust Bar */}
-      <div className="pw-trust-bar">
-        {t.trust.stats.map((stat: any, i: number) => (
-          <div key={i} className="pw-trust-item">
-            <div className="pw-trust-num">{stat.num}</div>
-            <div className="pw-trust-label">{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
       {/* Partner Bar */}
       <div className="pw-partner-bar">
         <span className="pw-partners-label">{t.trust.partnersLabel}</span>

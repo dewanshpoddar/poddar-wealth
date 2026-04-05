@@ -6,9 +6,14 @@ import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ChatBot from '@/components/ChatBot'
 
+import ProblemSolutionSection from '@/components/ProblemSolutionSection'
+
 export const metadata: Metadata = {
   title: 'Poddar Wealth Management — Excellence in Service Since 1994',
-  description: 'Insurance advisory by Ajay Kumar Poddar. 31+ years experience, MDRT member, Chairman\'s Club awardee. Life, Health, Retirement & Child Planning. Gorakhpur, UP.',
+  description: 'Life insurance, health insurance, and wealth planning tailored for families in Eastern UP — by Ajay Kumar Poddar, MDRT Member & Chairman\'s Club awardee.',
+  icons: {
+    icon: '/assets/logo.svg',
+  },
   keywords: 'insurance advisor Gorakhpur, LIC agent Gorakhpur, Ajay Kumar Poddar, MDRT advisor India, Star Health insurance, term insurance, health insurance',
 }
 
@@ -17,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="font-sans text-13 text-gray-900 bg-white antialiased">
         <LangProvider>
+          <ProblemSolutionSection />
           <Navbar />
           <main>{children}</main>
           <Footer />
