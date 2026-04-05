@@ -27,10 +27,10 @@ export default function HeroSection() {
   return (
     <>
       {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
-      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(560px, calc(100vh - 110px), 660px)' }}>
+      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(620px, calc(100vh - 120px), 740px)' }}>
 
         {/* ── LEFT ── */}
-        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-8 pb-6 lg:pt-10 lg:pb-8">
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-10 pb-8 lg:pt-12 lg:pb-10 bg-warm/30 relative">
 
           {/* Eyebrow */}
           <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-3 animate-fade-up">
@@ -101,7 +101,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT ── */}
-        <div className="relative bg-navy h-full overflow-hidden">
+        <div className="relative bg-navy h-full">
 
           {/* Geometric circles */}
           <div className="absolute w-[300px] h-[300px] rounded-full border border-[rgba(245,200,66,0.12)]
@@ -135,8 +135,8 @@ export default function HeroSection() {
           </div>
 
           {/* Plan card — bottom left, overlapping into left column */}
-          <div className="hidden lg:block absolute bottom-5 -left-14 w-[210px] bg-white rounded-2xl p-3.5
-                          border border-[rgba(184,134,11,0.12)] z-20 shadow-xl animate-slide-in">
+          <div className="hidden lg:block absolute bottom-6 -left-16 w-[230px] bg-white rounded-2xl p-4
+                          border border-[rgba(184,134,11,0.12)] z-20 shadow-2xl animate-slide-in">
             <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
               {t.hero.quickTitle}
             </p>

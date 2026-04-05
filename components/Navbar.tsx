@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="pw-nav">
       {/* Logo */}
       <Link href="/" className="pw-logo-area">
-        <div className="pw-logo-icon bg-transparent w-auto h-11 -ml-1">
+        <div className="pw-logo-icon bg-transparent w-auto h-12 -ml-1">
           <img src="/assets/lic-logo.svg" alt="Poddar Wealth Logo" className="h-full w-auto object-contain" />
         </div>
         <div>
@@ -60,7 +60,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="fixed top-[72px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-4 border-t border-gray-100 lg:hidden max-h-[85vh] overflow-y-auto">
+        <div className="fixed top-[84px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-4 border-t border-gray-100 lg:hidden max-h-[85vh] overflow-y-auto">
           <Link href="/" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.products}</Link>
           <Link href="/services/life-insurance" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.services}</Link>
           <Link href="/calculators/life-insurance" onClick={() => setOpen(false)} className="text-14 font-semibold text-gray-800">{t.nav.calculators}</Link>
