@@ -70,12 +70,36 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          {/* Trust stats inline */}
-          <div className="flex justify-between items-start gap-3 pt-8 mt-4 border-t border-[rgba(184,134,11,0.18)] animate-fade-up w-full" style={{ animationDelay: '0.35s' }}>
+          {/* Trust stats Grid (2x2) */}
+          <div className="grid grid-cols-2 gap-y-10 gap-x-12 pt-8 mt-6 border-t border-[rgba(184,134,11,0.18)] animate-fade-up max-w-[400px]" style={{ animationDelay: '0.35s' }}>
             {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className="flex flex-col items-start gap-1.5 flex-1">
-                <div className="font-display text-[24px] lg:text-[28px] font-bold text-gray-900 leading-none">{stat.num}</div>
-                <div className="text-[9px] lg:text-[10px] text-muted tracking-[0.05em] uppercase leading-[1.3] pr-2">{stat.label}</div>
+              <div key={i} className="flex flex-col items-start relative">
+                {/* Decorative dots above */}
+                <div className="flex gap-[3px] mb-3">
+                  <span className="w-1 h-1 rounded-full bg-gold/40 inline-block" />
+                  <span className="w-1 h-1 rounded-full bg-gold/20 inline-block" />
+                </div>
+                
+                <div className="font-display text-[26px] lg:text-[32px] font-bold text-gray-900 leading-none mb-2 tracking-tight">
+                  {stat.num}
+                </div>
+                <div className="text-[10px] lg:text-[11px] text-muted tracking-[0.06em] uppercase font-medium leading-tight max-w-[140px]">
+                  {stat.label}
+                </div>
+
+                {/* Decorative dots below */}
+                <div className="flex gap-[3px] mt-3">
+                  <span className="w-1 h-1 rounded-full bg-gold/20 inline-block" />
+                  <span className="w-1 h-1 rounded-full bg-gold/40 inline-block" />
+                </div>
+
+                {/* Separators */}
+                {i % 2 === 0 && (
+                  <div className="absolute -right-6 top-2 bottom-2 w-px bg-gradient-to-b from-transparent via-[rgba(184,134,11,0.15)] to-transparent" />
+                )}
+                {i < 2 && (
+                  <div className="absolute -bottom-5 left-0 right-0 h-px bg-gradient-to-r from-[rgba(184,134,11,0.15)] via-[rgba(184,134,11,0.15)] to-transparent" />
+                )}
               </div>
             ))}
           </div>

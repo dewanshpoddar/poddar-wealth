@@ -9,12 +9,12 @@ import ChatBot from '@/components/ChatBot'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 
 export const metadata: Metadata = {
-  title: 'Poddar Wealth Management — Excellence in Service Since 1994',
-  description: 'Life insurance, health insurance, and wealth planning tailored for families in Eastern UP — by Ajay Kumar Poddar, MDRT Member & Chairman\'s Club awardee.',
+  title: 'Poddar Wealth Management — Excellence in Protection Since 1994',
+  description: 'India\'s most trusted insurance advisor specializing in LIC, Star Health, and wealth planning by Mr. Ajay Kumar Poddar, MDRT Member & Chairman\'s Club awardee.',
   icons: {
-    icon: '/assets/logo.svg',
+    icon: '/favicon.svg',
   },
-  keywords: 'insurance advisor Gorakhpur, LIC agent Gorakhpur, Ajay Kumar Poddar, MDRT advisor India, Star Health insurance, term insurance, health insurance',
+  keywords: 'insurance advisor India, LIC agent, Ajay Kumar Poddar wealth, MDRT advisor, Star Health insurance expert, financial planner India',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
