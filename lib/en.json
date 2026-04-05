@@ -63,9 +63,8 @@
     ],
     "partnersLabel": "Authorised partner",
     "partners": [
-      { "name": "LIC of India — Authorised Agent", "color": "#003087" },
-      { "name": "Star Health Insurance", "color": "#c8000a" },
-      { "name": "MDRT Member (USA)", "color": "#1a5276" }
+      { "name": "LIC of India — Authorised Agent", "color": "#003087", "logo": "/assets/lic-logo-updated.svg" },
+      { "name": "Star Health Insurance", "color": "#c8000a", "logo": "/assets/star-health-logo.svg" }
     ]
   },
   "services": {

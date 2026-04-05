@@ -63,9 +63,8 @@
     ],
     "partnersLabel": "अधिकृत पार्टनर",
     "partners": [
-      { "name": "LIC ऑफ़ इंडिया — अधिकृत एजेंट", "color": "#003087" },
-      { "name": "Star Health Insurance", "color": "#c8000a" },
-      { "name": "MDRT सदस्य (USA)", "color": "#1a5276" }
+      { "name": "LIC ऑफ़ इंडिया — अधिकृत एजेंट", "color": "#003087", "logo": "/assets/lic-logo-updated.svg" },
+      { "name": "Star Health Insurance", "color": "#c8000a", "logo": "/assets/star-health-logo.svg" }
     ]
   },
   "services": {

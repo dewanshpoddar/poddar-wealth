@@ -21,10 +21,18 @@ export default function TrustSection() {
               <div key={listIdx} className="flex gap-16 items-center min-w-full justify-around">
                 {t.trust.partners.map((partner: any, i: number) => (
                   <div key={i} className="flex items-center gap-3.5 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default group/partner">
-                    <div className="w-10 h-10 rounded-xl bg-warm flex items-center justify-center p-2 border border-gold/10 group-hover/partner:border-gold/30 shadow-sm">
-                      <div className="w-full h-full flex items-center justify-center font-bold text-14" style={{ color: partner.color }}>
-                        {partner.name[0]}
-                      </div>
+                    <div className="w-10 h-10 rounded-xl bg-warm flex items-center justify-center p-2 border border-gold/10 group-hover/partner:border-gold/30 shadow-sm relative overflow-hidden">
+                      {partner.logo ? (
+                        <img 
+                          src={partner.logo} 
+                          alt={partner.name}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-bold text-14" style={{ color: partner.color }}>
+                          {partner.name[0]}
+                        </div>
+                      )}
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[13px] font-bold text-navy tracking-tight">{partner.name}</span>

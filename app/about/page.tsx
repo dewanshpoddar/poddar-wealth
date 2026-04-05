@@ -38,11 +38,12 @@ export default function AboutPage() {
             <div className="relative">
               <div className="rounded-3xl overflow-hidden shadow-card-hover">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+                  src="/assets/ajay-poddar.svg"
                   alt="Ajay Poddar"
                   width={600}
-                  height={500}
-                  className="w-full object-cover"
+                  height={600}
+                  className="w-full h-auto object-contain bg-slate-50"
+                  priority
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-brand-700 text-white rounded-2xl p-5 shadow-card-hover">
