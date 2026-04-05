@@ -42,123 +42,177 @@ export default function CalculatorSection() {
   const incomeYears = (sa * 100000 / annual / 1).toFixed(1)
 
   return (
-    <section className="pw-section pw-section--warm">
-      <div className="pw-eyebrow">{t.calculator.eyebrow}</div>
-      <div className="pw-title">{t.calculator.title}</div>
-      <div className="pw-subtitle">{t.calculator.subtitle}</div>
-
-      <div className="grid gap-6" style={{ gridTemplateColumns: '1fr 280px', alignItems: 'start' }}>
-        <div>
-          {/* Calculator inputs */}
-          <div className="bg-white border-half border-gray-200 rounded-lg p-5">
-            {/* Tabs */}
-            <div className="flex gap-1.5 mb-5">
-              <button className="pw-tab pw-tab--active">{t.calculator.tabs.life}</button>
-              <button className="pw-tab">{t.calculator.tabs.health}</button>
-            </div>
-
-            {/* Age slider */}
-            <div className="mb-4">
-              <div className="flex justify-between items-center mb-1.5">
-                <span className="text-12 text-gray-500">{t.calculator.age}</span>
-                <span className="text-13 font-medium text-gray-900">{age} years</span>
-              </div>
-              <input type="range" min={18} max={60} value={age} onChange={e => setAge(+e.target.value)} className="w-full" />
-              <div className="pw-range-limits"><span>18 yrs</span><span>60 yrs</span></div>
-            </div>
-
-            {/* Sum assured slider */}
-            <div className="mb-4">
-              <div className="flex justify-between items-center mb-1.5">
-                <span className="text-12 text-gray-500">{t.calculator.sumAssured}</span>
-                <span className="text-13 font-medium text-gray-900">₹{sa} Lakh</span>
-              </div>
-              <input type="range" min={5} max={200} step={5} value={sa} onChange={e => setSa(+e.target.value)} className="w-full" />
-              <div className="pw-range-limits"><span>₹5L</span><span>₹2 Cr</span></div>
-            </div>
-
-            {/* Term slider */}
-            <div className="mb-4">
-              <div className="flex justify-between items-center mb-1.5">
-                <span className="text-12 text-gray-500">{t.calculator.policyTerm}</span>
-                <span className="text-13 font-medium text-gray-900">{term} years</span>
-              </div>
-              <input type="range" min={10} max={40} step={5} value={term} onChange={e => setTerm(+e.target.value)} className="w-full" />
-              <div className="pw-range-limits"><span>10 yrs</span><span>40 yrs</span></div>
-            </div>
-
-            {/* Plan type */}
-            <div className="mb-4">
-              <div className="text-12 text-gray-500 mb-2">{t.calculator.planType}</div>
-              <div className="grid grid-cols-3 gap-1.5">
-                {planKeys.map((k, i) => (
-                  <div
-                    key={k}
-                    onClick={() => setPlan(k)}
-                    className={`pw-opt ${plan === k ? 'pw-opt--sel' : ''}`}
-                  >
-                    {t.calculator.planTypes[i]}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Frequency */}
-            <div>
-              <div className="text-12 text-gray-500 mb-2">{t.calculator.frequency}</div>
-              <div className="grid grid-cols-4 gap-1.5">
-                {freqKeys.map((k, i) => (
-                  <div
-                    key={k}
-                    onClick={() => setFreq(k)}
-                    className={`pw-opt ${freq === k ? 'pw-opt--sel' : ''}`}
-                  >
-                    {t.calculator.frequencies[i]}
-                  </div>
-                ))}
-              </div>
-            </div>
+    <section className="bg-white py-24 relative overflow-hidden">
+      <div className="max-w-[1240px] mx-auto px-8">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
+            <span className="w-8 h-px bg-gold" />
+            {t.calculator.eyebrow}
+            <span className="w-8 h-px bg-gold" />
           </div>
-
-          {/* Recommended plans */}
-          <div className="mt-6">
-            <div className="text-11 text-gray-400 font-medium uppercase mb-2.5" style={{ letterSpacing: '0.06em' }}>
-              {t.calculator.recommended}
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              {t.calculator.plans.map((p: any, i: number) => (
-                <div key={i} className={`bg-white rounded-lg p-3 cursor-pointer ${i === 0 ? 'border-1.5 border-gold' : 'border-half border-gray-200 hover:border-gold transition-colors'}`}>
-                  <div className="text-12 font-medium text-gray-900 mb-0.5">{p.name}</div>
-                  <div className="text-10 text-gray-400 mb-1.5">{p.type}</div>
-                  <div className="text-10 text-gray-500 leading-relaxed">{p.desc}</div>
-                  <span className="pw-badge pw-badge--gold mt-1.5" style={{ fontSize: '9px' }}>{p.badge}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <h2 className="font-display text-[32px] lg:text-[42px] font-normal italic text-navy leading-tight mb-4">
+            {t.calculator.title}
+          </h2>
+          <p className="text-[14px] text-muted leading-relaxed max-w-2xl mx-auto">
+            {t.calculator.subtitle}
+          </p>
         </div>
 
-        {/* Result panel */}
-        <div className="pw-result-box sticky top-4">
-          <div className="text-11 text-muted font-medium uppercase mb-4" style={{ letterSpacing: '0.06em' }}>
-            {t.calculator.resultTitle}
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          {/* Left — Inputs Dashboard */}
+          <div className="lg:col-span-8 bg-warm/30 rounded-3xl p-8 border border-[rgba(184,134,11,0.1)] shadow-sm">
+            <div className="flex gap-2 mb-10 overflow-x-auto pb-2 scrollbar-none">
+              <button className="flex-shrink-0 px-6 py-2.5 rounded-full text-13 font-bold bg-navy text-white shadow-lg transition-all duration-300">
+                {t.calculator.tabs.life}
+              </button>
+              <button className="flex-shrink-0 px-6 py-2.5 rounded-full text-13 font-medium bg-white/60 text-navy/60 hover:bg-white hover:text-navy transition-all duration-300 border border-navy/5">
+                {t.calculator.tabs.health}
+              </button>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+              {/* Age */}
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-13 font-bold text-navy tracking-tight">{t.calculator.age}</label>
+                  <span className="text-15 font-display italic font-medium text-gold">{age} yrs</span>
+                </div>
+                <input
+                  type="range"
+                  min={18}
+                  max={60}
+                  value={age}
+                  onChange={e => setAge(+e.target.value)}
+                  className="pw-gold-range"
+                />
+              </div>
+
+              {/* Sum Assured */}
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-13 font-bold text-navy tracking-tight">{t.calculator.sumAssured}</label>
+                  <span className="text-15 font-display italic font-medium text-gold">₹{sa} Lakh</span>
+                </div>
+                <input
+                  type="range"
+                  min={5}
+                  max={200}
+                  step={5}
+                  value={sa}
+                  onChange={e => setSa(+e.target.value)}
+                  className="pw-gold-range"
+                />
+              </div>
+
+              {/* Policy Term */}
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-13 font-bold text-navy tracking-tight">{t.calculator.policyTerm}</label>
+                  <span className="text-15 font-display italic font-medium text-gold">{term} yrs</span>
+                </div>
+                <input
+                  type="range"
+                  min={10}
+                  max={40}
+                  step={5}
+                  value={term}
+                  onChange={e => setTerm(+e.target.value)}
+                  className="pw-gold-range"
+                />
+              </div>
+
+              {/* Frequency */}
+              <div className="flex flex-col gap-4">
+                <label className="text-13 font-bold text-navy tracking-tight">{t.calculator.frequency}</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {freqKeys.map((k, i) => (
+                    <button
+                      key={k}
+                      onClick={() => setFreq(k)}
+                      className={`px-4 py-2 rounded-xl text-11 font-bold transition-all duration-300 border ${freq === k ? 'bg-navy text-white border-navy shadow-md' : 'bg-white/60 text-navy/60 border-navy/5 hover:border-gold/30 hover:bg-white'}`}
+                    >
+                      {t.calculator.frequencies[i]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Plan Type — Full Width Row */}
+              <div className="md:col-span-2 flex flex-col gap-4 pt-4 border-t border-[rgba(184,134,11,0.08)]">
+                <label className="text-13 font-bold text-navy tracking-tight">{t.calculator.planType}</label>
+                <div className="flex flex-wrap gap-2">
+                  {planKeys.map((k, i) => (
+                    <button
+                      key={k}
+                      onClick={() => setPlan(k)}
+                      className={`px-6 py-2.5 rounded-xl text-11 font-bold transition-all duration-300 border ${plan === k ? 'bg-gold text-white border-gold shadow-md' : 'bg-white/60 text-navy/60 border-navy/5 hover:border-gold/30 hover:bg-white'}`}
+                    >
+                      {t.calculator.planTypes[i]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mb-4 pb-4 border-b-half border-navy-border">
-            <div className="text-11 text-gold font-medium mb-1">{planNames[plan]}</div>
-            <div className="font-display text-28 font-medium text-white">₹{fmt(freqPrem)}</div>
-            <div className="text-11 text-muted">{freqNames[freq]}</div>
+
+          {/* Right — Live Result Box */}
+          <div className="lg:col-span-4 sticky top-32">
+            <div className="bg-navy rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden group">
+              {/* Decorative accent */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+              <div className="relative z-10">
+                <div className="text-[10px] tracking-[0.2em] text-gold/80 font-bold uppercase mb-8">
+                  {t.calculator.resultTitle}
+                </div>
+
+                <div className="mb-10 flex flex-col items-center text-center">
+                  <div className="text-[13px] text-white/60 mb-2 font-medium tracking-tight">
+                    {planNames[plan]}
+                  </div>
+                  <div className="text-[44px] font-display font-medium text-white mb-1 leading-none group-hover:scale-105 transition-transform duration-500">
+                    ₹{fmt(freqPrem)}
+                  </div>
+                  <div className="text-[12px] text-gold/90 font-bold tracking-widest uppercase">
+                    {freqNames[freq]}
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  <div className="flex justify-between py-2 border-b border-white/5">
+                    <span className="text-[12px] text-white/50">{t.calculator.resultFields.sumAssured}</span>
+                    <span className="text-[13px] font-bold">₹{sa} Lakh</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-white/5">
+                    <span className="text-[12px] text-white/50">{t.calculator.resultFields.totalPay}</span>
+                    <span className="text-[13px] font-bold">~₹{fmt(total)}</span>
+                  </div>
+                  <div className="flex justify-between py-2 border-b border-white/5">
+                    <span className="text-[12px] text-white/50">{t.calculator.resultFields.coverRatio}</span>
+                    <span className="text-[13px] font-bold text-gold">{ratio}x</span>
+                  </div>
+                </div>
+
+                <div className="bg-white/10 rounded-2xl p-5 mb-8 border border-white/10">
+                  <div className="text-[12px] text-white/80 leading-relaxed text-center">
+                    Providing your family <span className="text-gold font-bold">{incomeYears} years</span> of {t.calculator.incomeReplacement}.
+                  </div>
+                </div>
+
+                <button className="w-full py-4 rounded-2xl bg-gold text-white font-bold text-14 hover:bg-gold-hover hover:-translate-y-1 transition-all duration-300 shadow-xl shadow-gold/20">
+                  {t.calculator.resultCta}
+                </button>
+              </div>
+            </div>
+
+            {/* Recommendation Hint */}
+            <div className="mt-6 flex items-center gap-3 px-4 py-3 bg-warm rounded-2xl border border-[rgba(184,134,11,0.1)]">
+              <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-gold text-18">🛡</div>
+              <div className="text-[11px] text-muted leading-snug">
+                <strong>{t.calculator.recommended}:</strong> LIC Dhan Vridhhi and Term insurance offer the best cover-to-cost ratio for your age.
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 mb-4">
-            <div className="flex justify-between"><span className="text-11 text-muted">{t.calculator.resultFields.annualPremium}</span><span className="text-12 font-medium text-white">~₹{fmt(annual)}</span></div>
-            <div className="flex justify-between"><span className="text-11 text-muted">{t.calculator.resultFields.sumAssured}</span><span className="text-12 font-medium text-white">₹{sa} Lakh</span></div>
-            <div className="flex justify-between"><span className="text-11 text-muted">{t.calculator.resultFields.policyTerm}</span><span className="text-12 font-medium text-white">{term} years</span></div>
-            <div className="flex justify-between"><span className="text-11 text-muted">{t.calculator.resultFields.totalPay}</span><span className="text-12 font-medium text-white">~₹{fmt(total)}</span></div>
-            <div className="flex justify-between"><span className="text-11 text-muted">{t.calculator.resultFields.coverRatio}</span><span className="text-12 font-medium text-white">{ratio}x</span></div>
-          </div>
-          <div className="rounded-md p-2.5 mb-4 text-11 text-muted leading-relaxed" style={{ background: '#1a3a5c' }}>
-            At this cover, your family gets <span className="text-gold font-medium">{incomeYears} years</span> {t.calculator.incomeReplacement}.
-          </div>
-          <button className="pw-btn pw-btn--gold pw-btn--full">{t.calculator.resultCta}</button>
         </div>
       </div>
     </section>
