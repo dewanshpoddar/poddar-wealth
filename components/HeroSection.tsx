@@ -84,13 +84,7 @@ export default function HeroSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-navy/10" />
           </div>
 
-          {/* Award badge — top left */}
-          <div className="absolute top-7 left-7 bg-[rgba(245,200,66,0.1)] border border-[rgba(245,200,66,0.25)]
-                          rounded-[10px] px-4 py-2.5 z-10 animate-fade-up"
-               style={{ animationDelay: '0.4s' }}>
-            <p className="text-10 text-gold-light tracking-[0.1em] font-medium mb-0.5">MDRT MEMBER</p>
-            <p className="text-11 text-white/50">Chairman&apos;s Club Awardee</p>
-          </div>
+
 
           {/* Year pill — top right */}
           <div className="absolute top-7 right-7 bg-gold rounded-full px-5 py-2 text-center z-10">
@@ -99,7 +93,7 @@ export default function HeroSection() {
           </div>
 
           {/* Plan card — bottom left, overlapping into left column */}
-          <div className="hidden lg:block absolute bottom-9 -left-6 w-[248px] bg-white rounded-2xl p-5
+          <div className="hidden lg:block absolute bottom-6 -left-16 w-[220px] bg-white rounded-2xl p-4
                           border border-[rgba(184,134,11,0.12)] z-20 shadow-xl animate-slide-in">
             <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3.5 uppercase">
               {t.hero.quickTitle}

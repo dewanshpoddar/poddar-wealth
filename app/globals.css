@@ -10,7 +10,7 @@
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { @apply font-sans text-13 text-gray-900 bg-cream antialiased; }
+  body { @apply font-sans text-13 text-gray-900 bg-white antialiased; }
   h1,h2,h3,h4 { @apply font-display; }
   a { @apply no-underline; }
   img,svg { @apply block max-w-full; }
@@ -52,7 +52,7 @@
 
   /* ── Navigation ──────────────────────────────────────────── */
   .pw-nav {
-    @apply bg-cream px-8 flex items-center justify-between h-[72px] sticky top-0 z-50 shadow-sm transition-all duration-300;
+    @apply bg-white px-8 flex items-center justify-between h-[72px] sticky top-0 z-50 shadow-sm transition-all duration-300;
     border-bottom: 1px solid rgba(184,134,11,0.18);
   }
   .pw-logo-area  { @apply flex items-center gap-3; }
