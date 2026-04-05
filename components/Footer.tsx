@@ -11,13 +11,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1.5 shadow-gold-sm">
-                <img src="/assets/lic-logo-updated.svg" alt="LIC Logo" className="w-full h-full object-contain" />
+            <div className="flex items-center gap-4">
+              <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center p-2 shadow-gold-sm overflow-hidden">
+                <img src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" className="w-full h-full object-contain scale-110" />
               </div>
               <div>
-                <span className="text-white font-bold text-lg leading-none block">Poddar Wealth</span>
-                <span className="text-gold/60 text-[10px] uppercase tracking-widest font-semibold">Excellence Since 1994</span>
+                <span className="text-white font-bold text-2xl leading-none block uppercase">PODDAR WEALTH MANAGEMENT</span>
+                <span className="text-gold/60 text-[11px] uppercase tracking-widest font-semibold mt-1">Excellence in Protection Since 1994</span>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
