@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   title: 'Poddar Wealth Management — Excellence in Protection Since 1994',
   description: 'India\'s most trusted insurance advisor specializing in LIC, Star Health, and wealth planning by Mr. Ajay Kumar Poddar, MDRT Member & Chairman\'s Club awardee.',
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.svg',
   },
   keywords: 'insurance advisor India, LIC agent, Ajay Kumar Poddar wealth, MDRT advisor, Star Health insurance expert, financial planner India',
 }

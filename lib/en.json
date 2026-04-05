@@ -79,7 +79,7 @@
     ]
   },
   "calculator": {
-    "eyebrow": "Poddar Wealth Management — free tool",
+    "eyebrow": "PODDAR WEALTH MANAGEMENT — free tool",
     "title": "LIC & Star Health premium calculator",
     "subtitle": "Get an instant estimate for any plan. Actual premium depends on medical history — Ajay sir will confirm.",
     "tabs": { "life": "Life insurance", "health": "Health insurance" },
@@ -108,7 +108,7 @@
     "incomeReplacement": "of income replacement"
   },
   "moat": {
-    "eyebrow": "Poddar Wealth Management — exclusive tool",
+    "eyebrow": "PODDAR WEALTH MANAGEMENT — exclusive tool",
     "title": "Your family's financial moat score",
     "subtitle": "Answer 12 quick questions — get a personalised protection score across 4 pillars. Free, instant, no registration.",
     "steps": ["Life cover", "Health cover", "Income safety", "Retirement", "Your score"],
@@ -230,14 +230,14 @@
     "bio": "Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994. With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognised by the Million Dollar Round Table (MDRT, USA)."
   },
   "footer": {
-    "brand": "Poddar Wealth Management",
+    "brand": "PODDAR WEALTH MANAGEMENT",
     "address": "AD Mall Compound, Vijay Chowk, Gorakhpur, U.P. 273001",
     "contact": "9415313434  |  7007937104  |  poddarwealth@gmail.com",
     "phone": "9415313434",
     "email": "poddarwealth@gmail.com",
     "disclaimer": "Insurance is the subject matter of solicitation. IRDAI Reg. No. XXXXXXXXXX",
     "whatsapp": "WhatsApp: 9415313434",
-    "rights": "© 2025 Poddar Wealth Management"
+    "rights": "© 2025 PODDAR WEALTH MANAGEMENT"
   },
   "whatsapp": {
     "tooltip": "WhatsApp: 9415313434",
