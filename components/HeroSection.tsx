@@ -27,10 +27,10 @@ export default function HeroSection() {
   return (
     <>
       {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
-      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(620px, calc(100vh - 120px), 740px)' }}>
+      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(580px, calc(100vh - 200px), 700px)' }}>
 
         {/* ── LEFT ── */}
-        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-10 pb-8 lg:pt-12 lg:pb-10 bg-warm/30 relative">
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-8 pb-6 lg:pt-10 lg:pb-8 bg-warm/30 relative">
 
           {/* Eyebrow */}
           <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-3 animate-fade-up">
