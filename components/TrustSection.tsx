@@ -15,39 +15,31 @@ export default function TrustSection() {
           </div>
         </div>
 
-        <div className="flex overflow-hidden group">
-          <div className="flex animate-marquee-slow whitespace-nowrap gap-16 items-center hover:[animation-play-state:paused]">
-            {[...Array(2)].map((_, listIdx) => (
-              <div key={listIdx} className="flex gap-16 items-center min-w-full justify-around">
-                {t.trust.partners.map((partner: any, i: number) => (
-                  <div key={i} className="flex items-center gap-3.5 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default group/partner">
-                    <div className="w-10 h-10 rounded-xl bg-warm flex items-center justify-center p-2 border border-gold/10 group-hover/partner:border-gold/30 shadow-sm relative overflow-hidden">
-                      {partner.logo ? (
-                        <img 
-                          src={partner.logo} 
-                          alt={partner.name}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center font-bold text-14" style={{ color: partner.color }}>
-                          {partner.name[0]}
-                        </div>
-                      )}
+        <div className="max-w-4xl mx-auto px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24">
+            {t.trust.partners.map((partner: any, i: number) => (
+              <div key={i} className="flex flex-col items-center gap-6 group/partner text-center">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-warm flex items-center justify-center p-4 border border-gold/10 group-hover/partner:border-gold/30 shadow-sm relative overflow-hidden transition-all duration-300 transform group-hover/partner:scale-105">
+                  {partner.logo ? (
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center font-bold text-24" style={{ color: partner.color }}>
+                      {partner.name[0]}
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-[13px] font-bold text-navy tracking-tight">{partner.name}</span>
-                      <span className="text-[9px] text-muted uppercase tracking-[0.05em] font-medium leading-none">Official Partner</span>
-                    </div>
-                  </div>
-                ))}
+                  )}
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-sm sm:text-base font-bold text-navy tracking-tight">{partner.name}</span>
+                  <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.1em] font-medium leading-none mt-1">Official Partner</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Gradient overlays for smooth fade */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
       </div>
     </>
   )
