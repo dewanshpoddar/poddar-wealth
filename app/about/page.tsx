@@ -35,17 +35,15 @@ export default function AboutPage() {
                 Get Free Advice <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-card-hover">
-                <Image
-                  src="/assets/ajay-poddar.svg"
-                  alt="Ajay Poddar"
-                  width={600}
-                  height={600}
-                  className="w-full h-auto object-contain bg-slate-50"
-                  priority
-                />
-              </div>
+            <div className="relative aspect-[4/5] md:aspect-[3/4] w-full max-w-sm mx-auto rounded-3xl overflow-hidden border border-gold/10 shadow-2xl group/photo bg-white">
+              <Image
+                src="/assets/ajay-poddar.svg"
+                alt="Ajay Kumar Poddar"
+                fill
+                className="object-cover object-top transition-transform duration-700 group-hover/photo:scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent opacity-60" />
               <div className="absolute -bottom-6 -left-6 bg-brand-700 text-white rounded-2xl p-5 shadow-card-hover">
                 <div className="font-display font-bold text-3xl">27+</div>
                 <div className="text-white/80 text-sm">Years of Trust</div>
