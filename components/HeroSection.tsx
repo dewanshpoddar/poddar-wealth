@@ -26,11 +26,11 @@ export default function HeroSection() {
 
   return (
     <>
-      {/* ═══ HERO GRID — locked to viewport below navbar+ticker ═══ */}
-      <div className="grid lg:grid-cols-2" style={{ height: 'calc(100vh - 110px)', minHeight: 520 }}>
+      {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
+      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(560px, calc(100vh - 110px), 660px)' }}>
 
         {/* ── LEFT ── */}
-        <div className="flex flex-col justify-center px-8 lg:px-[52px] py-6 lg:py-8 overflow-hidden">
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-8 pb-6 lg:pt-10 lg:pb-8">
 
           {/* Eyebrow */}
           <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-3 animate-fade-up">
@@ -101,7 +101,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT ── */}
-        <div className="relative bg-navy h-full">
+        <div className="relative bg-navy h-full overflow-hidden">
 
           {/* Geometric circles */}
           <div className="absolute w-[300px] h-[300px] rounded-full border border-[rgba(245,200,66,0.12)]
@@ -116,7 +116,7 @@ export default function HeroSection() {
                 key={idx}
                 src={src}
                 alt="Happy Indian family planning their future"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
             <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/5 to-transparent pointer-events-none" />
