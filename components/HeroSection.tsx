@@ -1,13 +1,30 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 
 const quickIcons = ['🛡', '❤️', '📈', '🎓']
 
+const heroImages = [
+  '/assets/hero-family.png',
+  '/assets/hero-education.png',
+  '/assets/hero-retirement.png',
+  '/assets/hero-health.png',
+  '/assets/hero-marriage.png'
+]
+
 
 
 export default function HeroSection() {
   const { t } = useLang()
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+    }, 4500)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -54,11 +71,11 @@ export default function HeroSection() {
           </div>
 
           {/* Trust stats inline */}
-          <div className="flex flex-wrap gap-0 animate-fade-up" style={{ animationDelay: '0.35s' }}>
+          <div className="flex flex-wrap gap-x-5 gap-y-4 pt-6 mt-2 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
             {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className={`pr-6 mr-6 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
-                <div className="font-display text-[24px] font-bold text-gray-900 leading-none">{stat.num}</div>
-                <div className="text-[9px] text-muted tracking-[0.05em] mt-1.5 uppercase">{stat.label}</div>
+              <div key={i} className={`flex items-center gap-2.5 pr-5 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
+                <div className="font-display text-[26px] font-bold text-gray-900 leading-none">{stat.num}</div>
+                <div className="text-[10px] text-muted tracking-[0.05em] uppercase leading-[1.2] w-[60px]">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -73,15 +90,17 @@ export default function HeroSection() {
           <div className="absolute w-[480px] h-[480px] rounded-full border border-[rgba(245,200,66,0.06)]
                           top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-          {/* Family photo (covers the panel) */}
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="/assets/hero-family.png"
-              alt="Happy Indian family"
-              className="w-full h-full object-cover"
-              style={{ opacity: 0.8 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-navy/10" />
+          {/* Photos (Slideshow) */}
+          <div className="absolute inset-0 overflow-hidden bg-navy">
+            {heroImages.map((src, idx) => (
+              <img
+                key={idx}
+                src={src}
+                alt="Happy Indian family planning their future"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-80' : 'opacity-0'}`}
+              />
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-navy/10 pointer-events-none" />
           </div>
 
 
@@ -151,7 +170,7 @@ export default function HeroSection() {
       </div>
 
       {/* ═══ WHY US STRIP ═══ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)] bg-warm">
         {t.whyUs && t.whyUs.map((item: any, i: number) => (
           <div key={i}
             className={`flex items-start gap-3.5 px-5 lg:px-8 py-5
