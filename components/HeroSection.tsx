@@ -76,12 +76,6 @@ export default function HeroSection() {
                   ${i % 2 === 0 ? 'pr-6 border-r border-[rgba(184,134,11,0.14)]' : ''}
                   ${i < 2       ? 'pb-4 border-b border-[rgba(184,134,11,0.14)]' : ''}
                 `}>
-                  {/* 2 dots above */}
-                  <div className="flex gap-[3px] mb-1.5">
-                    <span className="w-[5px] h-[5px] rounded-full bg-gold/50 inline-block" />
-                    <span className="w-[5px] h-[5px] rounded-full bg-gold/20 inline-block" />
-                  </div>
-
                   <div className="font-display text-[22px] lg:text-[25px] font-bold text-gray-900 leading-none tracking-tight">
                     {stat.num}
                   </div>
