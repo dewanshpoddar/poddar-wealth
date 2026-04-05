@@ -32,9 +32,10 @@
     "quickTitle": "What are you planning for?",
     "quickItems": [
       { "icon": "shield", "title": "Life protection", "sub": "Term & endowment plans" },
-      { "icon": "heart", "title": "Health insurance", "sub": "Star Health individual & family" },
+      { "icon": "education", "title": "Child education", "sub": "Secure your child's schooling" },
       { "icon": "check", "title": "Retirement planning", "sub": "Pension & ULIP options" },
-      { "icon": "education", "title": "Child education & marriage", "sub": "Goal-based savings plans" }
+      { "icon": "heart", "title": "Health insurance", "sub": "Family medical coverage" },
+      { "icon": "ring", "title": "Child marriage", "sub": "Goal-based wedding corpus" }
     ]
   },
   "whyUs": [

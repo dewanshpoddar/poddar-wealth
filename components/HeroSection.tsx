@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 
-const quickIcons = ['🛡', '❤️', '📈', '🎓']
+const quickIcons = ['🛡', '🎓', '📈', '❤️', '💍']
 
 const heroImages = [
   '/assets/hero-family.png',
@@ -71,11 +71,11 @@ export default function HeroSection() {
           </div>
 
           {/* Trust stats inline */}
-          <div className="flex flex-wrap gap-x-5 gap-y-4 pt-6 mt-2 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-x-3 gap-y-3 pt-6 mt-2 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
             {t.trust.stats.map((stat: any, i: number) => (
-              <div key={i} className={`flex items-center gap-2.5 pr-5 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
-                <div className="font-display text-[26px] font-bold text-gray-900 leading-none">{stat.num}</div>
-                <div className="text-[10px] text-muted tracking-[0.05em] uppercase leading-[1.2] w-[60px]">{stat.label}</div>
+              <div key={i} className={`flex items-center gap-2 pr-3 ${i < t.trust.stats.length - 1 ? 'border-r border-[rgba(184,134,11,0.18)]' : ''}`}>
+                <div className="font-display text-[20px] lg:text-[24px] font-bold text-gray-900 leading-none">{stat.num}</div>
+                <div className="text-[8px] lg:text-[9px] text-muted tracking-[0.05em] uppercase leading-[1.2] whitespace-nowrap">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -97,19 +97,27 @@ export default function HeroSection() {
                 key={idx}
                 src={src}
                 alt="Happy Indian family planning their future"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-80' : 'opacity-0'}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-navy/10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/5 to-transparent pointer-events-none" />
+          </div>
+
+          {/* Dot Navigation */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentImageIndex(idx)}
+                className={`transition-all duration-300 rounded-full h-1.5 ${idx === currentImageIndex ? 'w-6 bg-gold' : 'w-1.5 bg-white/40 hover:bg-white/80'}`}
+                aria-label={`Slide ${idx + 1}`}
+              />
+            ))}
           </div>
 
 
 
-          {/* Year pill — top right */}
-          <div className="absolute top-7 right-7 bg-gold rounded-full px-5 py-2 text-center z-10">
-            <div className="font-display text-[22px] font-bold text-white leading-none">31</div>
-            <div className="text-[9px] text-white/75 tracking-[0.1em] mt-0.5">YEARS TRUST</div>
-          </div>
+
 
           {/* Plan card — bottom left, overlapping into left column */}
           <div className="hidden lg:block absolute bottom-6 -left-16 w-[220px] bg-white rounded-2xl p-4
@@ -118,19 +126,20 @@ export default function HeroSection() {
               {t.hero.quickTitle}
             </p>
             {t.hero.quickItems.map((item: any, i: number) => (
-              <Link key={i} href="#"
-                className="flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
-                           last:border-b-0 rounded-md hover:bg-gold-pale transition-colors duration-150 group no-underline">
-                <div className="w-[30px] h-[30px] rounded-lg bg-gold-pale flex items-center justify-center
-                                text-13 flex-shrink-0">
+              <button key={i} onClick={() => setCurrentImageIndex(i)}
+                className={`w-full flex items-center gap-2.5 py-[9px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                           last:border-b-0 rounded-md transition-colors duration-300 group no-underline text-left
+                           ${i === currentImageIndex ? 'bg-gold/10' : 'hover:bg-gold-pale'}`}>
+                <div className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-13 flex-shrink-0 transition-colors duration-300
+                                ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
                   {quickIcons[i]}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-12 font-medium text-gray-900 leading-tight">{item.title}</div>
                   <div className="text-10 text-muted mt-0.5 truncate">{item.sub}</div>
                 </div>
-                <span className="text-14 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
-              </Link>
+                <span className={`text-14 text-gold transition-opacity ml-auto ${i === currentImageIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>›</span>
+              </button>
             ))}
           </div>
 
