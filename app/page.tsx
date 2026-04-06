@@ -1,5 +1,6 @@
 import HeroSection from '@/components/HeroSection'
 import TrustSection from '@/components/TrustSection'
+import ProductTeaser from '@/components/ProductTeaser'
 import ServicesSection from '@/components/ServicesSection'
 import CalculatorSection from '@/components/CalculatorSection'
 import IntentSection from '@/components/IntentSection'
@@ -13,6 +14,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <TrustSection />
+      <ProductTeaser />
       <ServicesSection />
       <CalculatorSection />
       <IntentSection />

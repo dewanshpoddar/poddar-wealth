@@ -1,12 +1,16 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
+
+  const isActive = (path: string) => pathname === path
 
   return (
     <nav className="pw-nav">
@@ -17,16 +21,31 @@ export default function Navbar() {
           <img src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" className="w-full h-full object-contain scale-110" />
         </div>
         <div>
-          <span className="pw-logo-text text-navy text-xl">PODDAR WEALTH MANAGEMENT</span>
-          <span className="pw-logo-sub text-gold/80">Excellence in Protection Since 1994</span>
+          <span className="pw-logo-text text-navy text-xl uppercase">PoddaR Wealth Management</span>
+          <span className="pw-logo-sub text-gold/80 italic">Excellence in Protection Since 1994</span>
         </div>
       </Link>
 
       {/* Desktop Nav */}
       <div className="hidden lg:flex items-center gap-5 xl:gap-8">
-        <Link href="/about" className="pw-nav-link">{t.nav.about}</Link>
-        <Link href="/products" className="pw-nav-link">{t.nav.products}</Link>
-        <Link href="/services" className="pw-nav-link">{t.nav.services}</Link>
+        <Link 
+          href="/about" 
+          className={`pw-nav-link ${isActive('/about') ? 'text-navy font-bold' : 'text-gray-500 hover:text-navy'}`}
+        >
+          {t.nav.about}
+        </Link>
+        <Link 
+          href="/products" 
+          className={`pw-nav-link ${isActive('/products') ? 'text-navy font-bold' : 'text-gray-500 hover:text-navy'}`}
+        >
+          {t.nav.products}
+        </Link>
+        <Link 
+          href="/services" 
+          className={`pw-nav-link ${isActive('/services') ? 'text-navy font-bold' : 'text-gray-500 hover:text-navy'}`}
+        >
+          {t.nav.services}
+        </Link>
 
 
         
@@ -82,9 +101,27 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="fixed top-[78px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-5 border-t border-gray-100 lg:hidden max-h-[85vh] overflow-y-auto">
-          <Link href="/about" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.about}</Link>
-          <Link href="/products" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.products}</Link>
-          <Link href="/services" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.services}</Link>
+          <Link 
+            href="/about" 
+            onClick={() => setOpen(false)} 
+            className={`text-16 font-bold ${isActive('/about') ? 'text-navy underline underline-offset-4' : 'text-navy/60'}`}
+          >
+            {t.nav.about}
+          </Link>
+          <Link 
+            href="/products" 
+            onClick={() => setOpen(false)} 
+            className={`text-16 font-bold ${isActive('/products') ? 'text-navy underline underline-offset-4' : 'text-navy/60'}`}
+          >
+            {t.nav.products}
+          </Link>
+          <Link 
+            href="/services" 
+            onClick={() => setOpen(false)} 
+            className={`text-16 font-bold ${isActive('/services') ? 'text-navy underline underline-offset-4' : 'text-navy/60'}`}
+          >
+            {t.nav.services}
+          </Link>
 
           <div className="h-px bg-gray-100 my-1 w-full"></div>
 
