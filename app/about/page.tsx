@@ -307,16 +307,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ 35MM CINEMATIC FILM REELS (MOVED TO BOTTOM) ═══ */}
-      <section className="py-24 bg-slate-900 border-y-8 border-navy-deep relative overflow-hidden">
+      {/* ═══ MEMORY LANE (35MM STRIPS) ═══ */}
+      <section className="py-24 bg-slate-50 border-t border-slate-100 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />
         
         <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-16">
           <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
             <Camera size={20} />
-            <span className="text-[12px] font-bold uppercase tracking-[0.4em]">Cinematic Memory Reels</span>
+            <span className="text-[12px] font-bold uppercase tracking-[0.4em]">Memory Lane</span>
           </div>
-          <h2 className="text-36 font-display font-bold text-white tracking-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
+          <h2 className="text-36 font-display font-bold text-navy tracking-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
         </div>
 
         <div className="relative group/reel mb-1">
