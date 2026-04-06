@@ -38,27 +38,29 @@ export default function ServicesSection() {
               {t.services.subtitle}
             </p>
           </div>
-          <Link href="/services/life-insurance" className="hidden md:flex items-center gap-2 group text-13 font-bold text-navy hover:text-gold transition-colors">
-            Explore All Solutions
+          <Link href="/services" className="hidden md:flex items-center gap-2 group text-13 font-bold text-navy hover:text-gold transition-colors">
+            Explore All Services
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {t.services.items.map((svc: any, i: number) => (
+          {t.services.items.slice(0, 8).map((svc: any, i: number) => (
             <div key={i}
               className="bg-white/80 backdrop-blur-md border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
                          hover:shadow-2xl hover:shadow-[rgba(184,134,11,0.15)] hover:border-gold/30 hover:-translate-y-2
                          transition-all duration-500 group cursor-default">
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 relative
-                           bg-warm group-hover:bg-gold/10 transition-colors duration-500"
+                           bg-warm group-hover:bg-gold/10 transition-colors duration-500 text-2xl"
               >
                 <div className="absolute inset-0 bg-gold/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                  {iconSvgs[svc.color] || iconSvgs.blue}
+                  {svc.icon}
                 </div>
               </div>
+
 
               <div className="text-[17px] font-bold text-navy mb-3 tracking-tight group-hover:text-gold transition-colors duration-300">
                 {svc.title}

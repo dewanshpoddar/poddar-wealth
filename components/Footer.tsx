@@ -33,7 +33,8 @@ export default function Footer() {
                 { name: 'Home', href: '/' },
                 { name: 'About Us', href: '/about' },
                 { name: t.nav.products, href: '/' },
-                { name: t.nav.services, href: '/services/life-insurance' },
+                { name: t.nav.services, href: '/services' },
+
                 { name: 'Testimonials', href: '/#testimonials' },
               ].map((link) => (
                 <li key={link.name}>
