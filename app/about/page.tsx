@@ -69,8 +69,8 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       
-      {/* ═══ MINIMALIST LUXURY HERO ═══ */}
-      <section className="relative overflow-hidden bg-warm/30 pt-12 pb-10 lg:pt-20 lg:pb-16 border-b border-gold/5">
+      {/* ═══ MINIMALIST LUXURY HERO (CLIPPED FIX) ═══ */}
+      <section className="relative overflow-hidden bg-warm/30 pt-12 pb-12 lg:pt-24 lg:pb-24 border-b border-gold/5">
         <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
@@ -82,30 +82,14 @@ export default function AboutPage() {
                 Proven Institutional Legacy
               </div>
               
-              <h1 className="font-display text-[28px] md:text-[34px] lg:text-[42px] font-normal italic leading-[1.2] text-slate-900 mb-1">
+              <h1 className="font-display text-[30px] md:text-[36px] lg:text-[44px] font-normal italic leading-[1.2] text-slate-900 mb-1">
                 31 Years of <br />
                 <span className="font-bold text-gold not-italic">Institutional Trust</span>
               </h1>
               
-              <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-4 mb-12 font-medium">
+              <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-6 font-medium">
                 Building financial fortresses for Gorakhpur families since 1994. We secure your life&apos;s most precious work with three decades of on-ground excellence and Million Dollar Round Table (USA) credentials.
               </p>
-
-              {/* ACTION: SINGLE-LINE Linear Trust Strip */}
-              <div className="flex flex-row flex-wrap md:flex-nowrap items-center gap-x-6 lg:gap-x-10 pt-10 border-t border-gold/10">
-                {stats.map((stat, i) => (
-                  <div key={i} className="flex items-center">
-                    <div className="flex flex-col">
-                       <div className="font-display text-[16px] md:text-18 font-bold text-slate-900 leading-none">{stat.num}</div>
-                       <div className="text-[8px] md:text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 whitespace-nowrap">{stat.label}</div>
-                    </div>
-                    {i < stats.length - 1 && (
-                      <div className="h-6 w-px bg-gold/10 ml-6 lg:ml-10 hidden md:block" />
-                    )}
-                  </div>
-                ))}
-              </div>
-
             </div>
 
             {/* Right: Institutional Visual Frame */}
@@ -134,18 +118,37 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ═══ NEW: FULL-WIDTH INSTITUTIONAL TRUST BAR ═══ */}
+      <section className="bg-white border-b border-gold/10 py-6 relative z-20">
+         <div className="max-w-7xl mx-auto px-8">
+            <div className="flex flex-row flex-wrap justify-between items-center gap-y-6">
+               {stats.map((stat, i) => (
+                  <div key={i} className="flex items-center group">
+                    <div className="flex flex-col">
+                       <div className="font-display text-[18px] md:text-22 font-bold text-slate-900 leading-none group-hover:text-gold transition-colors">{stat.num}</div>
+                       <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-2">{stat.label}</div>
+                    </div>
+                    {i < stats.length - 1 && (
+                      <div className="h-8 w-px bg-gold/10 mx-8 lg:mx-16 hidden md:block" />
+                    )}
+                  </div>
+               ))}
+            </div>
+         </div>
+      </section>
+
       {/* ═══ LUXURY FOUNDER SPOTLIGHT (MINIMALIST) ═══ */}
-      <section className="py-16 md:py-20 bg-white relative overflow-hidden">
+      <section className="py-16 bg-white relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-8 relative z-10">
           <div className="bg-slate-50 border border-slate-100 rounded-[48px] p-8 lg:p-14 shadow-sm">
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
-              <div className="lg:col-span-5">
+              <div className="lg:col-span-12 xl:col-span-5">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="relative aspect-[3/4] w-full max-w-[380px] mx-auto rounded-[40px] bg-slate-900 border border-gold/10 shadow-xl overflow-hidden group"
+                  className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-slate-900 border border-gold/10 shadow-xl overflow-hidden group"
                 >
                   <Image
                     src="/assets/ajay-poddar.svg"
@@ -157,7 +160,7 @@ export default function AboutPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent opacity-60" />
                 </motion.div>
                 
-                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
                    <div className="px-5 py-2 border border-gold/20 rounded-full text-[10px] font-bold text-gold uppercase tracking-widest">
                      MDRT USA Member
                    </div>
@@ -167,7 +170,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-7">
+              <div className="lg:col-span-12 xl:col-span-7">
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -178,7 +181,7 @@ export default function AboutPage() {
                     <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">Institutional Presence</span>
                   </div>
                   
-                  <h2 className="text-[32px] md:text-[36px] font-display font-bold text-navy mb-8 leading-tight">Mr. Ajay Kumar Poddar</h2>
+                  <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mb-8 leading-tight">Mr. Ajay Kumar Poddar</h2>
                   
                   <div className="space-y-6 text-[15px] md:text-[16px] text-slate-600 leading-relaxed italic">
                     <p className="not-italic font-medium text-slate-800">
@@ -199,7 +202,7 @@ export default function AboutPage() {
                       </div>
                       <div>
                         <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">Service Area</div>
-                        <div className="text-[13px] font-bold text-navy">Gorakhpur, Eastern UP</div>
+                        <div className="text-[14px] font-bold text-navy">Gorakhpur, Eastern UP</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -208,7 +211,7 @@ export default function AboutPage() {
                       </div>
                       <div>
                         <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">Experience</div>
-                        <div className="text-[13px] font-bold text-navy">31+ Years Excellence</div>
+                        <div className="text-[14px] font-bold text-navy">31+ Years Excellence</div>
                       </div>
                     </div>
                   </div>
@@ -265,7 +268,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ VALUES IN FOCUS (REDUCED PADDING) ═══ */}
-      <section className="py-16 md:py-20 bg-slate-50 relative">
+      <section className="py-16 md:py-20 bg-slate-50 relative border-t border-gold/10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-[28px] md:text-[32px] font-display font-bold text-slate-900 mb-4 tracking-tight leading-tight">
