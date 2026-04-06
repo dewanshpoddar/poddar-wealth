@@ -50,11 +50,17 @@ export default function ServicesSection() {
             <div key={i}
               className="bg-white/80 backdrop-blur-md border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
                          hover:shadow-2xl hover:shadow-[rgba(184,134,11,0.15)] hover:border-gold/30 hover:-translate-y-2
-                         transition-all duration-500 group cursor-default">
+                         transition-all duration-500 group cursor-default relative overflow-hidden">
+              {svc.badge && (
+                <div className="absolute top-0 right-0 py-1.5 px-4 bg-gold text-white text-[9px] font-bold uppercase tracking-widest rounded-bl-xl shadow-lg z-20">
+                  {svc.badge}
+                </div>
+              )}
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 relative
                            bg-warm group-hover:bg-gold/10 transition-colors duration-500 text-2xl"
               >
+
                 <div className="absolute inset-0 bg-gold/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
                   {svc.icon}

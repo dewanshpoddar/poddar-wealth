@@ -72,16 +72,17 @@
     "title": "आपके परिवार के लिए वह सब कुछ जो आपको चाहिए",
     "subtitle": "जीवन बीमा से लेकर हेल्थ प्लान, टैक्स बचत से लेकर कीमैन इन्श्योरेंस तक — सब कुछ गोरखपुर में एक ही छत के नीचे।",
     "items": [
-      { "icon": "👨‍👩‍👧‍👦", "color": "blue", "title": "जीवन सुरक्षा", "desc": "LIC के टर्म और एंडोमेंट प्लान", "tag": "LIC", "href": "/services/life-insurance" },
-      { "icon": "👨‍⚕️", "color": "red", "title": "स्वास्थ्य बीमा", "desc": "Star Health के व्यक्तिगत और फैमिली फ्लोटर प्लान", "tag": "Star Health", "href": "/services/health-insurance" },
+      { "icon": "👨‍👩‍👧‍👦", "color": "blue", "title": "जीवन सुरक्षा", "desc": "LIC के टर्म और एंडोमेंट प्लान", "tag": "LIC", "href": "/services/life-insurance", "badge": "लोकप्रिय" },
+      { "icon": "👨‍⚕️", "color": "red", "title": "स्वास्थ्य बीमा", "desc": "Star Health के व्यक्तिगत और फैमिली फ्लोटर प्लान", "tag": "Star Health", "href": "/services/health-insurance", "badge": "बेहतरीन" },
       { "icon": "💼", "color": "orange", "title": "टैक्स प्लानिंग", "desc": "80C और 80D के तहत टैक्स बचत के सही विकल्प", "tag": "बचत", "href": "/services/tax-planning" },
-      { "icon": "👧", "color": "green", "title": "चाइल्ड प्लान", "desc": "बच्चों की शिक्षा और उज्ज्वल भविष्य के लिए बचत", "tag": "भविष्य", "href": "/services/child-planning" },
+      { "icon": "👧", "color": "green", "title": "चाइल्ड प्लान", "desc": "बच्चों की शिक्षा और उज्ज्वल भविष्य के लिए बचत", "tag": "भविष्य", "href": "/services/child-planning", "badge": "बच्चों के लिए" },
       { "icon": "👴", "color": "blue", "title": "रिटायरमेंट", "desc": "बुढ़ापे में नियमित आय और पेंशन की गारंटी", "tag": "पेंशन", "href": "/services/retirement" },
       { "icon": "🩺", "color": "red", "title": "क्रिटिकल इलनेस", "desc": "कैंसर और दिल जैसी बीमारियों के लिए आर्थिक सुरक्षा", "tag": "हेल्थ+", "href": "/services/health-insurance" },
       { "icon": "🏢", "color": "orange", "title": "कीमैन इंश्योरेंस", "desc": "बिजनेस चलाने वाले मुख्य व्यक्तियों का बीमा", "tag": "Business", "href": "/services/life-insurance" },
       { "icon": "🚶‍♂️", "color": "green", "title": "एक्सीडेंट कवर", "desc": "दुर्घटना, विकलांगता और अस्पताल खर्च का कवर", "tag": "सुरक्षा", "href": "/services/health-insurance" },
       { "icon": "🎗️", "color": "blue", "title": "कैंसर कवर", "desc": "कैंसर की बीमारी के लिए विशेष LIC सुरक्षा प्लान", "tag": "LIC", "href": "/services/life-insurance" },
-      { "icon": "🧔", "color": "red", "title": "टर्म लाइफ", "desc": "कम प्रीमियम में परिवार के लिए बड़ा लाइफ कवर", "tag": "सुरक्षा", "href": "/services/life-insurance" },
+      { "icon": "🧔", "color": "red", "title": "टर्म लाइफ", "desc": "कम प्रीमियम में परिवार के लिए बड़ा लाइफ कवर", "tag": "सुरक्षा", "href": "/services/life-insurance", "badge": "मिलेनियल्स की पसंद" },
+
       { "icon": "👰", "color": "orange", "title": "बेटी की शादी", "desc": "शादी और भविष्य के खर्चों के लिए वेल्थ बिल्डिंग", "tag": "बचत", "href": "/services/child-planning" },
       { "icon": "👥", "color": "green", "title": "ग्रुप हेल्थ", "desc": "बिजनेस टीम और कर्मचारियों के लिए मेडिकल बेनिफिट्स", "tag": "टीम", "href": "/services/health-insurance" }
     ]

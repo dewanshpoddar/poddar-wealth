@@ -72,16 +72,17 @@
     "title": "Everything your family needs",
     "subtitle": "From life cover to health plans, tax saving to keyman insurance — all under one roof in Gorakhpur.",
     "items": [
-      { "icon": "👨‍👩‍👧‍👦", "color": "blue", "title": "Life protection", "desc": "Term & endowment plans from LIC of India", "tag": "LIC", "href": "/services/life-insurance" },
-      { "icon": "👨‍⚕️", "color": "red", "title": "Health insurance", "desc": "Individual & family floater plans from Star Health", "tag": "Star Health", "href": "/services/health-insurance" },
+      { "icon": "👨‍👩‍👧‍👦", "color": "blue", "title": "Life protection", "desc": "Term & endowment plans from LIC of India", "tag": "LIC", "href": "/services/life-insurance", "badge": "Most Popular" },
+      { "icon": "👨‍⚕️", "color": "red", "title": "Health insurance", "desc": "Individual & family floater plans from Star Health", "tag": "Star Health", "href": "/services/health-insurance", "badge": "Best Seller" },
       { "icon": "💼", "color": "orange", "title": "Tax planning", "desc": "Save tax under 80C, 80D with the right insurance mix", "tag": "Tax Save", "href": "/services/tax-planning" },
-      { "icon": "👧", "color": "green", "title": "Child plans", "desc": "Education & marriage planning with guaranteed maturity", "tag": "Future", "href": "/services/child-planning" },
+      { "icon": "👧", "color": "green", "title": "Child plans", "desc": "Education & marriage planning with guaranteed maturity", "tag": "Future", "href": "/services/child-planning", "badge": "For Parents" },
       { "icon": "👴", "color": "blue", "title": "Retirement income", "desc": "Lifetime pension & regular payout plans for peace", "tag": "Pension", "href": "/services/retirement" },
       { "icon": "🩺", "color": "red", "title": "Critical illness", "desc": "Lump sum payout for heart, cancer & major ailments", "tag": "Health+", "href": "/services/health-insurance" },
       { "icon": "🏢", "color": "orange", "title": "Keyman insurance", "desc": "Protect business continuity by insuring key employees", "tag": "Business", "href": "/services/life-insurance" },
       { "icon": "🚶‍♂️", "color": "green", "title": "Personal accident", "desc": "Coverage for accidental death, disability & hospital bills", "tag": "Safety", "href": "/services/health-insurance" },
       { "icon": "🎗️", "color": "blue", "title": "Cancer cover", "desc": "Dedicated cancer-only protection for early & major stages", "tag": "Cancer", "href": "/services/life-insurance" },
-      { "icon": "🧔", "color": "red", "title": "Term life (high cover)", "desc": "Large life cover at low premiums for your family", "tag": "Protection", "href": "/services/life-insurance" },
+      { "icon": "🧔", "color": "red", "title": "Term life (high cover)", "desc": "Large life cover at low premiums for your family", "tag": "Protection", "href": "/services/life-insurance", "badge": "Millennials Choice" },
+
       { "icon": "👰", "color": "orange", "title": "Child marriage", "desc": "Goal-based wealth building for your child's wedding", "tag": "Savings", "href": "/services/child-planning" },
       { "icon": "👥", "color": "green", "title": "Group health", "desc": "Medical benefits for small & large business teams", "tag": "Team", "href": "/services/health-insurance" }
     ]

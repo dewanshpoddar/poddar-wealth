@@ -39,8 +39,14 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-2xl hover:shadow-gold/10 hover:border-gold/30 hover:-translate-y-2 transition-all duration-500 group"
+              className="bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-2xl hover:shadow-gold/10 hover:border-gold/30 hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden"
             >
+              {svc.badge && (
+                <div className="absolute top-0 right-0 py-1.5 px-4 bg-gold text-white text-[9px] font-bold uppercase tracking-widest rounded-bl-xl shadow-lg z-20">
+                  {svc.badge}
+                </div>
+              )}
+
               <div className="w-16 h-16 rounded-2xl bg-warm flex items-center justify-center text-3xl mb-8 group-hover:bg-gold/10 transition-colors">
                 {svc.icon}
               </div>
