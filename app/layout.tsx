@@ -8,6 +8,7 @@ import AIChatButton from '@/components/AIChatButton'
 import ChatBot from '@/components/ChatBot'
 import LeadPopup from '@/components/LeadPopup'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
+import WhatsAppButton from '@/components/WhatsAppButton'
 
 export const metadata: Metadata = {
   title: 'Poddar Wealth Management — Excellence in Protection Since 1994',
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
           <AIChatButton />
+          <WhatsAppButton />
           <LeadPopup />
         </LangProvider>
       </body>
