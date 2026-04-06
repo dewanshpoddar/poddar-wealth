@@ -16,8 +16,9 @@ export default function LeadPopup() {
 
   useEffect(() => {
     // Check if user already dismissed the popup
-    const isDismissed = localStorage.getItem('poddar_lead_popup_status')
-    if (isDismissed) return
+    // const isDismissed = localStorage.getItem('poddar_lead_popup_status')
+    // if (isDismissed) return
+
 
     // Show popup after 4 seconds
     const timer = setTimeout(() => {
