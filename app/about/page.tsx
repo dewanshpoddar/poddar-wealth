@@ -18,7 +18,10 @@ import {
   Briefcase,
   Trophy,
   Star,
-  CheckCircle2
+  CheckCircle2,
+  Medal,
+  Gem,
+  Globe
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -31,17 +34,15 @@ export default function AboutPage() {
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता', icon: <Briefcase className="text-green-500" size={24} /> }
   ]
 
-  const timeline = [
-    { year: '1994', title: 'The Vision Begins', desc: 'Ajay Kumar Poddar started his journey to redefine family protection in Gorakhpur.' },
-    { year: '2005', title: 'Global Recognition', desc: 'Qualified for the Million Dollar Round Table (MDRT, USA) for the first time.' },
-    { year: '2015', title: 'Institutional Leader', desc: 'Awarded the prestigious Chairman\'s Club membership for consistent excellence.' },
-    { year: 'Today', title: '31 Years of Trust', desc: 'Now serving over 5000 families with a team of professional advisors.' }
-  ]
-
-  const gallery = [
-    { src: '/assets/gorakhpur_office_trust.png', title: 'Our Gorakhpur Headquarters', size: 'lg' },
-    { src: '/assets/advisors_awards_wall.png', title: 'Institutional Excellence', size: 'sm' },
-    { src: '/assets/hero-family.png', title: 'Protecting Every Milestone', size: 'sm' }
+  const achievements = [
+    { icon: <Medal size={32} />, title: 'MDRT USA', desc: 'Top 1% Global Performance' },
+    { icon: <Trophy size={32} />, title: 'Chairman\'s Club', desc: 'Highest LIC Distinction' },
+    { icon: <Globe size={32} />, title: '31yr Legacy', desc: 'Serving since 1994' },
+    { icon: <Users size={32} />, title: '5000+ Families', desc: 'Protected & Growing' },
+    { icon: <Gem size={32} />, title: 'Trust Factor', desc: '₹500Cr+ Claims Settled' },
+    { icon: <Medal size={32} />, title: 'MDRT USA', desc: 'Top 1% Global Performance' },
+    { icon: <Trophy size={32} />, title: 'Chairman\'s Club', desc: 'Highest LIC Distinction' },
+    { icon: <Globe size={32} />, title: '31yr Legacy', desc: 'Serving since 1994' },
   ]
 
   const valuesIcons = [
@@ -53,230 +54,194 @@ export default function AboutPage() {
 
   return (
     <div className="bg-white">
-      {/* ═══ PREMIUM HERO ═══ */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-navy overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-white/[0.02] -z-0 skew-x-12 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/10 blur-[120px] rounded-full -z-0" />
+      {/* ═══ IMPROVISED MATERIAL HERO ═══ */}
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-slate-50">
+        {/* Background Material Patterns */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-navy -z-0 skew-x-[-12deg] translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 blur-[120px] rounded-full -z-0" />
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center lg:text-left">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-4 py-2 border border-gold/20 rounded-full bg-gold/5 mb-8"
-          >
-            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-[11px] font-bold text-gold uppercase tracking-[0.2em]">
-              {t.about.heroSubtitle}
-            </span>
-          </motion.div>
-          
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-42 md:text-64 font-display font-bold text-white leading-[1.1] tracking-tight"
-            >
-              {lang === 'en' ? (
-                <>
-                  31 Years of <span className="text-gold">Proven</span> Legacy
-                </>
-              ) : (
-                <>
-                  31 वर्षों की <span className="text-gold">सिद्ध</span> विरासत
-                </>
-              )}
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-16 md:text-20 text-white/60 leading-relaxed lg:border-l border-white/10 lg:pl-12"
-            >
-              Building financial fortresses for families since 1994. We are not just selling insurance; we are securing your life&apos;s most precious work.
-            </motion.p>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ LEGACY GRID: THE STORY ═══ */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-7">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="mb-12"
-              >
-                <h2 className="text-32 md:text-42 font-display font-bold text-slate-900 mb-6 tracking-tight">
-                  {t.about.storyTitle}
-                </h2>
-                <p className="text-16 md:text-18 text-slate-500 leading-loose mb-8">
-                  {t.about.story}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-6">
-                  <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex-1">
-                    <h3 className="text-20 font-bold text-slate-900 mb-4 flex items-center gap-3">
-                       <ShieldCheck className="text-gold" size={24} />
-                       {t.about.missionTitle}
-                    </h3>
-                    <p className="text-15 text-slate-600 leading-relaxed">
-                      {t.about.mission}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="lg:col-span-5">
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="p-8 rounded-[40px] bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 text-center group transition-all hover:border-gold/30 hover:-translate-y-2"
-                  >
-                    <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gold/10 transition-colors">
-                      {stat.icon}
-                    </div>
-                    <div className="text-32 font-display font-bold text-slate-900">{stat.num}</div>
-                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-2">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ LEGACY TIMELINE ═══ */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-32 md:text-48 font-display font-bold text-slate-900 mb-4">Our Milestones</h2>
-            <div className="w-20 h-1 bg-gold mx-auto" />
-          </div>
-          
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 -translate-x-1/2 hidden md:block" />
-            <div className="space-y-12">
-              {timeline.map((item, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}
-                >
-                  <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 text-right">
-                    <div className={`max-w-sm ${i % 2 !== 0 ? 'text-left md:ml-12 md:pl-0' : 'text-right'}`}>
-                      <div className="text-gold font-display font-bold text-24 mb-2">{item.year}</div>
-                      <h4 className="text-18 font-bold text-slate-900 mb-2">{item.title}</h4>
-                      <p className="text-14 text-slate-500 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                  <div className="relative z-10 w-12 h-12 rounded-full bg-white border-4 border-gold shadow-lg flex items-center justify-center text-gold font-bold">
-                    {i + 1}
-                  </div>
-                  <div className="md:w-1/2 hidden md:block" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ THE FOUNDER SPOTLIGHT ═══ */}
-      <section className="py-24 bg-navy relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-full h-full bg-white/[0.02] skew-x-12 translate-x-1/2 -z-0" />
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
-            {/* Portrait Card - REFINED FOR VISIBILITY */}
+            {/* Left: Content */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative aspect-[1/1] max-w-lg mx-auto group"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-center lg:text-left"
             >
-               <div className="absolute inset-0 bg-gold translate-x-4 translate-y-4 rounded-[60px] -z-10 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-500 opacity-20" />
-               <div className="relative w-full h-full rounded-[60px] overflow-hidden border-4 border-white/10 shadow-3xl bg-slate-800">
-                 <Image
-                    src="/assets/ajay-poddar.svg"
-                    alt="Ajay Kumar Poddar"
-                    fill
-                    className="object-contain object-center scale-[1.05] transition-transform duration-1000 group-hover:scale-[1.1]"
-                    priority
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-60" />
-                 
-                 <div className="absolute bottom-8 left-8 right-8 p-8 backdrop-blur-2xl bg-navy/60 border border-white/10 rounded-[40px]">
-                    <div className="text-[12px] font-bold text-gold uppercase tracking-[0.2em] mb-2">Founding Advisor</div>
-                    <div className="text-32 font-display font-bold text-white mb-4">Ajay Kumar Poddar</div>
-                    <div className="flex flex-wrap gap-3">
-                       <span className="px-4 py-1.5 bg-gold text-navy text-[11px] font-bold rounded-full uppercase shadow-lg">🏆 MDRT USA</span>
-                       <span className="px-4 py-1.5 bg-white/10 text-white text-[11px] font-bold rounded-full uppercase border border-white/10">Chairman&apos;s Club</span>
-                    </div>
-                 </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 border border-gold/20 rounded-full mb-6">
+                <Star className="text-gold fill-gold" size={14} />
+                <span className="text-[11px] font-bold text-gold uppercase tracking-[0.2em]">Established 1994</span>
+              </div>
+              
+              <h1 className="text-[42px] lg:text-[64px] font-display font-bold text-slate-900 leading-[1.05] tracking-tight mb-8">
+                31 Years of <span className="italic font-normal text-gold">Proven</span> <br /> 
+                Institutional Legacy
+              </h1>
+              
+              <p className="text-16 lg:text-18 text-slate-500 leading-relaxed max-w-xl mb-10">
+                Building financial fortresses for Gorakhpur families since 1994. We don&apos;t just sell insurance; we secure your life&apos;s most precious work with 31 years of on-ground trust.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="/contact" className="px-8 py-4 bg-navy text-white rounded-full font-bold shadow-xl hover:bg-navy-light transition-all hover:-translate-y-1">
+                  Connect with Ajay Sir
+                </Link>
+                <div className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-full">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-14 font-semibold text-slate-600">Available Today</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right: Abstract Material Graphic */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative hidden lg:block"
+            >
+               <div className="relative w-full aspect-square max-w-[500px] ml-auto">
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-3xl rounded-[60px] border border-white/10 shadow-2xl rotate-3" />
+                  <div className="absolute inset-4 bg-white/10 backdrop-blur-2xl rounded-[60px] border border-white/10 shadow-2xl -rotate-3" />
+                  
+                  <div className="absolute inset-0 flex flex-col justify-center p-12">
+                     <div className="grid grid-cols-2 gap-8">
+                        {stats.map((stat, i) => (
+                           <div key={i} className="p-6 rounded-3xl bg-white/5 border border-white/20 hover:bg-white/10 transition-colors">
+                              {stat.icon}
+                              <div className="text-32 font-display font-bold text-white mt-4">{stat.num}</div>
+                              <div className="text-[10px] font-bold text-white/50 uppercase tracking-widest mt-1">{stat.label}</div>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
                </div>
             </motion.div>
 
-            <div>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-8"
-              >
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="w-12 h-px bg-gold" />
-                  <span className="text-[12px] font-bold text-gold uppercase tracking-[0.3em]">{t.aboutSection.eyebrow}</span>
-                </div>
-                <h2 className="text-42 md:text-56 font-display font-bold text-white mb-8 tracking-tight leading-tight">
-                   The Heart of <span className="text-gold">Poddar Wealth</span>
-                </h2>
-                <div className="space-y-8 text-18 text-white/70 leading-loose italic">
-                  <p className="text-24 font-display text-white border-l-4 border-gold pl-6">
-                    &ldquo;My mission is not to sell policies, but to build financial fortresses for families who trust us with their life&apos;s work.&rdquo;
-                  </p>
-                  <p className="not-italic text-white/60 text-16">
-                    {t.aboutSection.bio}
-                  </p>
-                </div>
-                
-                <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="flex items-center gap-4 text-white">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-gold border border-white/10 shadow-xl">
-                      <MapPin size={24} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">Service Area</div>
-                      <span className="text-14 font-bold opacity-90">Gorakhpur, Deoria & Kushinagar</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 text-white">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-gold border border-white/10 shadow-xl">
-                      <Trophy size={24} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] text-white/40 uppercase font-bold tracking-widest mb-1">Global Status</div>
-                      <span className="text-14 font-bold opacity-90">MDRT Top 1% Worldwide</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+          </div>
+        </div>
+      </section>
 
+      {/* ═══ ACHIEVEMENTS MARQUEE ═══ */}
+      <section className="py-20 bg-white border-y border-slate-100 overflow-hidden relative">
+        <div className="text-center mb-12">
+          <div className="text-[11px] font-bold text-gold uppercase tracking-[0.3em] mb-2">Recognitions & Awards</div>
+          <h2 className="text-28 font-display font-bold text-slate-900">A Journey of Global Excellence</h2>
+        </div>
+        
+        <div className="flex overflow-hidden group select-none">
+          <div className="flex animate-marquee whitespace-nowrap gap-8 py-4 group-hover:[animation-play-state:paused]">
+            {achievements.map((item, i) => (
+              <div key={i} className="inline-flex items-center gap-6 px-10 py-6 bg-slate-50 border border-slate-100 rounded-[32px] hover:border-gold/30 hover:bg-white transition-all transform hover:-translate-y-1">
+                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-gold shadow-sm border border-slate-100">
+                  {item.icon}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[18px] font-bold text-slate-900 leading-tight">{item.title}</span>
+                  <span className="text-[12px] text-slate-400 font-medium uppercase tracking-wider">{item.desc}</span>
+                </div>
+              </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {achievements.map((item, i) => (
+              <div key={`dup-${i}`} className="inline-flex items-center gap-6 px-10 py-6 bg-slate-50 border border-slate-100 rounded-[32px] hover:border-gold/30 hover:bg-white transition-all transform hover:-translate-y-1">
+                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-gold shadow-sm border border-slate-100">
+                  {item.icon}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[18px] font-bold text-slate-900 leading-tight">{item.title}</span>
+                  <span className="text-[12px] text-slate-400 font-medium uppercase tracking-wider">{item.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FOUNDER SPOTLIGHT (MATERIAL CARD STYLE) ═══ */}
+      <section className="py-24 bg-warm relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-8 relative z-10">
+          <div className="bg-white/60 backdrop-blur-xl border border-gold/10 rounded-[48px] p-8 lg:p-16 shadow-4xl">
+            <div className="grid lg:grid-cols-12 gap-16 items-center">
+              
+              {/* Photo Container - REPLICATING FinalCTA Styling */}
+              <div className="lg:col-span-5">
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="relative aspect-[3/4] w-full max-w-[400px] mx-auto rounded-[40px] bg-slate-900 border border-gold/10 shadow-2xl overflow-hidden group"
+                >
+                  <Image
+                    src="/assets/ajay-poddar.svg"
+                    alt="Ajay Kumar Poddar"
+                    fill
+                    className="object-cover object-top scale-[1.25] origin-top transition-transform duration-700 group-hover:scale-[1.3]"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-60" />
+                </motion.div>
+                
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                   <div className="px-5 py-2 bg-gold/5 border border-gold/20 rounded-full text-[11px] font-bold text-gold uppercase tracking-widest">
+                     MDRT USA Member
+                   </div>
+                   <div className="px-5 py-2 bg-gold/5 border border-gold/20 rounded-full text-[11px] font-bold text-gold uppercase tracking-widest">
+                     Chairman&apos;s Club
+                   </div>
+                </div>
+              </div>
+
+              {/* Info Container */}
+              <div className="lg:col-span-7">
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="w-12 h-px bg-gold" />
+                    <span className="text-[12px] font-bold text-gold uppercase tracking-[0.3em]">The Heart of Poddar Wealth</span>
+                  </div>
+                  
+                  <h2 className="text-42 font-display font-bold text-navy mb-8">Ajay Kumar Poddar</h2>
+                  
+                  <div className="space-y-6 text-18 text-slate-600 leading-relaxed italic">
+                    <p className="not-italic font-medium text-slate-800">
+                      Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994.
+                    </p>
+                    <p className="border-l-4 border-gold pl-6 py-2 bg-gold/5 rounded-r-2xl">
+                      &ldquo;My mission is not to sell policies, but to build financial fortresses for families who trust us with their life&apos;s work.&rdquo;
+                    </p>
+                    <p className="not-italic text-16 text-slate-500">
+                      With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognized by the Million Dollar Round Table (MDRT, USA).
+                    </p>
+                  </div>
+
+                  <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-slate-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold">
+                        <MapPin size={24} />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Service Area</div>
+                        <div className="text-14 font-bold text-navy">Gorakhpur, Eastern UP</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold">
+                        <Trophy size={24} />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Experience</div>
+                        <div className="text-14 font-bold text-navy">31+ Years Excellence</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
@@ -306,46 +271,6 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-22 font-bold text-slate-900 mb-6 tracking-tight">{v.title}</h3>
                 <p className="text-15 text-slate-500 leading-relaxed font-medium">{v.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ GALLERY OF TRUST ═══ */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
-            <div className="max-w-2xl">
-               <div className="flex items-center gap-3 mb-4">
-                  <Star className="text-gold fill-gold" size={16} />
-                  <span className="text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">Our Presence</span>
-               </div>
-               <h2 className="text-36 md:text-48 font-display font-bold text-slate-900 tracking-tight">Moments of Excellence</h2>
-            </div>
-            <Link href="/contact" className="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-full font-bold hover:border-gold transition-colors shadow-sm">
-               Visit Our Office
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {gallery.map((img, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, scale: 0.98 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className={`relative rounded-[32px] overflow-hidden group shadow-xl ${img.size === 'lg' ? 'md:col-span-2' : ''} aspect-video md:aspect-auto h-[350px] md:h-[500px]`}
-              >
-                <Image src={img.src} alt={img.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-6 left-8 right-8">
-                  <h4 className="text-white font-bold text-20 mb-1">{img.title}</h4>
-                  <div className="flex items-center gap-2 text-gold">
-                    <CheckCircle2 size={16} />
-                    <span className="text-[12px] font-bold uppercase tracking-widest">Verified Presence</span>
-                  </div>
-                </div>
               </motion.div>
             ))}
           </div>
