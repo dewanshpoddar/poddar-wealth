@@ -366,13 +366,20 @@
 
   .pw-ai-float {
     @apply fixed bottom-24 right-6 z-50 px-5 py-3 rounded-pill 
-           bg-gradient-to-r from-gold via-gold-light to-gold
-           border-none cursor-pointer flex items-center gap-2.5
-           shadow-gold hover:scale-105 transition-all duration-300
+           bg-gradient-to-r from-navy via-navy-light to-navy
+           border border-gold/30 cursor-pointer flex items-center gap-2.5
+           shadow-navy hover:scale-105 transition-all duration-300
            text-white font-bold text-11 uppercase tracking-widest
-           overflow-hidden animate-shimmer-gold;
+           overflow-hidden/relative;
+  }
+  /* Shimmer effect for Navy */
+  .pw-ai-float::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent
+           -translate-x-full animate-shimmer-gold;
   }
   .pw-ai-float span { @apply hidden md:block; }
+
 
   /* Curiosity Bubble */
   .pw-ai-bubble {
