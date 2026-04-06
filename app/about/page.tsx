@@ -39,8 +39,8 @@ export default function AboutPage() {
   ]
 
   const gallery = [
-    { src: '/artifacts/gorakhpur_office_trust_1775497102678.png', title: 'Our Gorakhpur Headquarters', size: 'lg' },
-    { src: '/artifacts/advisors_awards_wall_1775497127068.png', title: 'Institutional Excellence', size: 'sm' },
+    { src: '/assets/gorakhpur_office_trust.png', title: 'Our Gorakhpur Headquarters', size: 'lg' },
+    { src: '/assets/advisors_awards_wall.png', title: 'Institutional Excellence', size: 'sm' },
     { src: '/assets/hero-family.png', title: 'Protecting Every Milestone', size: 'sm' }
   ]
 
