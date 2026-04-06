@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import LeadForm from '@/components/LeadForm'
 import { 
   ArrowRight, 
   ShieldCheck, 
@@ -18,11 +17,10 @@ import {
   Briefcase,
   Trophy,
   Star,
-  CheckCircle2,
+  Camera,
   Medal,
-  Gem,
   Globe,
-  Camera
+  Gem
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -33,6 +31,13 @@ export default function AboutPage() {
     { num: '5000+', label: lang === 'en' ? 'Protected Families' : 'सुरक्षित परिवार', icon: <Users className="text-blue-400" size={24} /> },
     { num: 'MDRT', label: lang === 'en' ? 'USA Member' : 'यूएसए सदस्य', icon: <Award className="text-gold" size={24} /> },
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता', icon: <Briefcase className="text-green-500" size={24} /> }
+  ]
+
+  const timeline = [
+    { year: '1994', title: 'The Vision Begins', desc: 'Ajay Kumar Poddar started his journey to redefine family protection in Gorakhpur.' },
+    { year: '2005', title: 'MDRT Recognition', desc: 'First induction into the Million Dollar Round Table, USA — the gold standard in insurance.' },
+    { year: '2015', title: 'Chairman\'s Club', desc: 'Inducted into the premier LIC Chairman\'s Club, recognizing top-tier performance in India.' },
+    { year: '2024', title: '30+ Year Legacy', desc: 'Protecting 5,000+ families with ₹500Cr+ in wealth and security managed.' }
   ]
 
   const filmStrip1 = [
@@ -68,9 +73,8 @@ export default function AboutPage() {
     <div className="bg-white">
       {/* ═══ IMPROVISED MATERIAL HERO ═══ */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-slate-50">
-        {/* Background Material Patterns */}
         <div className="absolute top-0 right-0 w-1/2 h-full bg-navy -z-0 skew-x-[-12deg] translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 blur-[120px] rounded-full -z-0" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 blur-[120px] rounded-full -z-10" />
         
         <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -134,92 +138,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ 35MM CINEMATIC FILM REELS ═══ */}
-      <section className="py-24 bg-slate-900 border-y-8 border-navy-deep relative overflow-hidden">
-        {/* Background Film Grain */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />
-        
-        <div className="text-center mb-16 relative z-10">
-          <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
-            <Camera size={20} />
-            <span className="text-[12px] font-bold uppercase tracking-[0.4em]">Cinematic Memory Reels</span>
-          </div>
-          <h2 className="text-36 font-display font-bold text-white tracking-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
-        </div>
-
-        {/* TOP REEL: Left to Right */}
-        <div className="relative group/reel mb-1">
-          {/* Film Borders & Sprockets */}
-          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
-            {[...Array(60)].map((_, i) => (
-              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
-            ))}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
-            {[...Array(60)].map((_, i) => (
-              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
-            ))}
-          </div>
-
-          <div className="flex overflow-hidden">
-            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel:[animation-play-state:paused]" style={{ animationDirection: 'reverse', animationDuration: '40s' }}>
-              {filmStrip1.concat(filmStrip1).map((item, i) => (
-                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
-                   <Image 
-                    src={item.src} 
-                    alt={item.label} 
-                    fill 
-                    className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" 
-                   />
-                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
-                   {/* Film Burn/Glow */}
-                   <div className="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* BOTTOM REEL: Right to Left */}
-        <div className="relative group/reel2">
-          {/* Film Borders & Sprockets */}
-          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
-            {[...Array(60)].map((_, i) => (
-              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
-            ))}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
-            {[...Array(60)].map((_, i) => (
-              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
-            ))}
-          </div>
-
-          <div className="flex overflow-hidden">
-            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel2:[animation-play-state:paused]" style={{ animationDuration: '45s' }}>
-              {filmStrip2.concat(filmStrip2).map((item, i) => (
-                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
-                   <Image 
-                    src={item.src} 
-                    alt={item.label} 
-                    fill 
-                    className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" 
-                   />
-                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
-                   <div className="absolute inset-0 bg-gradient-to-bl from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ FOUNDER SPOTLIGHT (MATERIAL CARD STYLE) ═══ */}
       <section className="py-24 bg-warm relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-8 relative z-10">
           <div className="bg-white/60 backdrop-blur-xl border border-gold/10 rounded-[48px] p-8 lg:p-16 shadow-4xl">
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
-              {/* Photo Container - REPLICATING FinalCTA Styling */}
               <div className="lg:col-span-5">
                 <motion.div 
                   initial={{ opacity: 0, y: 30 }}
@@ -247,7 +171,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Info Container */}
               <div className="lg:col-span-7">
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
@@ -301,8 +224,40 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ═══ RESTORED LEGACY TIMELINE ═══ */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 relative z-10">
+          <div className="text-center mb-16">
+            <span className="text-gold font-bold uppercase tracking-[0.3em] text-[11px]">Chronological Excellence</span>
+            <h2 className="text-36 font-display font-bold text-navy mt-2">31 Years of Excellence</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {timeline.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:border-gold/30 hover:bg-white hover:shadow-xl transition-all"
+              >
+                <div className="text-32 font-display font-bold text-gold/30 mb-4">{item.year}</div>
+                <h3 className="text-20 font-bold text-navy mb-3">{item.title}</h3>
+                <p className="text-14 text-slate-500 leading-relaxed font-medium">
+                  {item.desc}
+                </p>
+                {i < timeline.length - 1 && (
+                  <div className="hidden lg:block absolute top-[25%] -right-4 w-8 h-px bg-gold/20" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ VALUES IN FOCUS ═══ */}
-      <section className="py-32 bg-white relative">
+      <section className="py-24 bg-slate-50 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
             <h2 className="text-42 md:text-56 font-display font-bold text-slate-900 mb-6 tracking-tighter">
@@ -319,9 +274,9 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-10 rounded-[48px] bg-slate-50 border border-slate-100 hover:bg-white hover:border-gold/30 hover:shadow-4xl transition-all group"
+                className="p-10 rounded-[48px] bg-white border border-slate-100 hover:border-gold/30 hover:shadow-4xl transition-all group"
               >
-                <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-10 shadow-md group-hover:scale-110 group-hover:bg-gold/5 transition-all">
+                <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-10 shadow-md group-hover:scale-110 group-hover:bg-gold/5 transition-all">
                   {valuesIcons[i]}
                 </div>
                 <h3 className="text-22 font-bold text-slate-900 mb-6 tracking-tight">{v.title}</h3>
@@ -333,35 +288,87 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ BOLD INSTITUTIONAL BADGES ═══ */}
-      <section className="py-24 border-t border-slate-100 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-16 lg:gap-32">
-             <motion.div 
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center gap-3 group"
-             >
-                <div className="text-36 md:text-48 font-display font-bold text-navy group-hover:text-gold transition-colors">MDRT USA</div>
+             <motion.div whileHover={{ y: -5 }} className="flex flex-col items-center gap-3">
+                <div className="text-36 md:text-48 font-display font-bold text-navy">MDRT USA</div>
                 <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-slate-900">Highest Global Quality</div>
              </motion.div>
-             <motion.div 
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center gap-3 group"
-             >
-                <div className="text-36 md:text-48 font-display font-bold text-navy group-hover:text-gold transition-colors">LIC CHAIRMAN&apos;S</div>
+             <motion.div whileHover={{ y: -5 }} className="flex flex-col items-center gap-3">
+                <div className="text-36 md:text-48 font-display font-bold text-navy">LIC CHAIRMAN&apos;S</div>
                 <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-slate-900">Premier Club Member</div>
              </motion.div>
-             <motion.div 
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center gap-3 group"
-             >
-                <div className="text-36 md:text-48 font-display font-bold text-navy group-hover:text-brand-blue transition-colors">IRDAI</div>
+             <motion.div whileHover={{ y: -5 }} className="flex flex-col items-center gap-3">
+                <div className="text-36 md:text-48 font-display font-bold text-navy leading-none">IRDAI</div>
                 <div className="text-[12px] font-bold uppercase tracking-[0.3em] text-slate-900">Registered Authority</div>
              </motion.div>
           </div>
         </div>
       </section>
 
-      <LeadForm />
+      {/* ═══ 35MM CINEMATIC FILM REELS (MOVED TO BOTTOM) ═══ */}
+      <section className="py-24 bg-slate-900 border-y-8 border-navy-deep relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />
+        
+        <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-16">
+          <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
+            <Camera size={20} />
+            <span className="text-[12px] font-bold uppercase tracking-[0.4em]">Cinematic Memory Reels</span>
+          </div>
+          <h2 className="text-36 font-display font-bold text-white tracking-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
+        </div>
+
+        <div className="relative group/reel mb-1">
+          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+
+          <div className="flex overflow-hidden">
+            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel:[animation-play-state:paused]" style={{ animationDirection: 'reverse', animationDuration: '40s' }}>
+              {filmStrip1.concat(filmStrip1).map((item, i) => (
+                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
+                   <Image src={item.src} alt={item.label} fill className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" />
+                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
+                   <div className="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative group/reel2">
+          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+
+          <div className="flex overflow-hidden">
+            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel2:[animation-play-state:paused]" style={{ animationDuration: '45s' }}>
+              {filmStrip2.concat(filmStrip2).map((item, i) => (
+                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
+                   <Image src={item.src} alt={item.label} fill className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" />
+                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
+                   <div className="absolute inset-0 bg-gradient-to-bl from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* FINAL CTA STRIP */}
       <section className="bg-gold py-16 px-6 relative overflow-hidden">
