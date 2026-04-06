@@ -44,7 +44,7 @@ export default function ProductTeaser() {
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background Accents */}
+      {/* Background Accents - Material consistency */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-navy/[0.02] -z-10 skew-x-12 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gold/[0.01] -z-10 -skew-x-12 -translate-x-1/3" />
       
@@ -57,9 +57,12 @@ export default function ProductTeaser() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="pw-eyebrow text-gold mb-4"
+              className="flex items-center justify-center lg:justify-start gap-3 mb-4"
             >
-              {lang === 'en' ? 'Institutional Wealth Solutions' : 'संस्थागत वेल्थ समाधान'}
+              <span className="w-8 h-px bg-gold/30" />
+              <span className="text-[11px] tracking-[0.14em] text-gold font-medium uppercase">
+                {lang === 'en' ? 'Institutional Wealth Solutions' : 'संस्थागत वेल्थ समाधान'}
+              </span>
             </motion.div>
             
             <motion.h2 
@@ -82,8 +85,8 @@ export default function ProductTeaser() {
               className="text-16 md:text-18 text-gray-500 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
               {lang === 'en'
-                ? 'From guaranteed income to future security, we combine the best of LIC and Star Health to build your family\'s financial fortress. Pure protection, no compromises.'
-                : 'गारंटीड आय से लेकर भविष्य की सुरक्षा तक, हम आपके परिवार के वित्तीय किले के निर्माण के लिए एलआईसी और स्टार हेल्थ के सर्वश्रेष्ठ को मिलाते हैं। शुद्ध सुरक्षा, कोई समझौता नहीं।'}
+                ? 'From guaranteed income to future security, we combine the best of LIC and Star Health to build your family\'s financial fortress.'
+                : 'गारंटीड आय से लेकर भविष्य की सुरक्षा तक, हम आपके परिवार के वित्तीय किले के निर्माण के लिए एलआईसी और स्टार हेल्थ के सर्वश्रेष्ठ को मिलाते हैं।'}
             </motion.p>
             
             <motion.div
@@ -136,9 +139,6 @@ export default function ProductTeaser() {
                   
                   <h4 className="text-18 font-bold text-navy mb-2 group-hover:text-gold transition-colors">{item.title}</h4>
                   <p className="text-14 text-gray-400 leading-snug">{item.desc}</p>
-
-                  {/* Gradient Glow */}
-                  <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-navy/[0.03] rounded-full blur-2xl group-hover:bg-gold/10 transition-colors" />
                 </motion.div>
               ))}
             </div>
@@ -146,23 +146,25 @@ export default function ProductTeaser() {
 
         </div>
 
-        {/* Ticker Row - High Impact */}
-        <div className="border-t border-gray-100 pt-10">
-           <div className="flex items-center gap-6 mb-6">
-              <span className="text-12 font-bold text-gold uppercase tracking-widest whitespace-nowrap">Popular Solution In-Focus</span>
-              <div className="h-px bg-gray-100 w-full" />
+        {/* Ticker Row - Refined Header & Separators */}
+        <div className="pt-8">
+           <div className="flex items-center gap-4 mb-6">
+              <span className="text-[11px] font-bold text-gold/60 uppercase tracking-[0.2em] whitespace-nowrap">
+                {lang === 'en' ? 'Popular Solution In-Focus' : 'लोकप्रिय समाधान इन-फोकस'}
+              </span>
+              <div className="h-px bg-gold/30 w-12" /> {/* Short golden highlight line after */}
            </div>
            
            <div className="overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700 cursor-default opacity-60 hover:opacity-100">
              <motion.div 
                animate={{ x: [0, -1500] }}
-               transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
+               transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
                className="flex gap-16 items-center whitespace-nowrap"
              >
                {[...tickerPlans, ...tickerPlans].map((plan, i) => (
-                 <div key={i} className="flex items-center gap-3">
+                 <div key={i} className="flex items-center gap-16">
                    <span className="text-20 font-display font-bold text-navy/80 hover:text-navy transition-colors">{plan}</span>
-                   <span className="text-gold opacity-30">✦</span>
+                   <span className="text-gold/20 text-12">✦</span> {/* Stars in between two moving plans */}
                  </div>
                ))}
              </motion.div>
