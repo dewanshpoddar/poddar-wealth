@@ -1,8 +1,7 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import Link from 'next/link'
+
 import { motion } from 'framer-motion'
 
 export default function ServicesPage() {
@@ -10,7 +9,7 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+
       
       {/* Hero Header */}
       <section className="pt-32 pb-20 bg-navy relative overflow-hidden text-center px-6">
@@ -83,8 +82,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }
+
+
