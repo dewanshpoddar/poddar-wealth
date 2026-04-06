@@ -120,6 +120,18 @@ module.exports = {
           'from': { opacity: '0', transform: 'translateX(-20px)' },
           'to':   { opacity: '1', transform: 'translateX(0)' },
         },
+        'shimmer-gold': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'bubble-pop': {
+          '0%': { transform: 'scale(0.8) translateY(10px)', opacity: '0' },
+          '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
+        },
+        'mascot-float': {
+          '0%, 100%': { transform: 'translateY(0) rotate(0)' },
+          '50%': { transform: 'translateY(-4px) rotate(5deg)' },
+        },
       },
       animation: {
         'wa-pulse':   'wa-pulse 2.5s infinite',
@@ -129,6 +141,9 @@ module.exports = {
         'typing':     'typing 1.2s infinite ease-in-out',
         'marquee':    'marquee 50s linear infinite',
         'slide-in':   'slide-in 0.7s 0.5s ease both',
+        'shimmer-gold': 'shimmer-gold 3s linear infinite',
+        'bubble-pop':   'bubble-pop 0.4s ease forwards',
+        'mascot-float': 'mascot-float 3s ease-in-out infinite',
       },
       transitionDuration: {
         '150': '150ms',
