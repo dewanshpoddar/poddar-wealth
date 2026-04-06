@@ -67,13 +67,16 @@
            hover:bg-gold-hover transition-all duration-150 hover:-translate-y-px;
   }
   .pw-lang-toggle {
-    @apply flex items-center bg-gray-50 rounded-md overflow-hidden ml-2 border border-gray-200 p-0.5;
+    @apply flex items-center bg-gray-50/50 rounded-lg overflow-hidden ml-2 border border-gray-100 p-1;
   }
   .pw-lang-btn {
-    @apply text-10 font-bold text-gray-500 px-3 py-1.5 bg-transparent border-none rounded-sm
-           cursor-pointer transition-all duration-150;
+    @apply text-[10px] font-bold text-gray-400 px-4 py-2 bg-transparent border-none rounded-md
+           cursor-pointer transition-all duration-300;
   }
-  .pw-lang-btn--active { @apply bg-white text-navy shadow-sm; }
+  .pw-lang-btn--active { 
+    @apply bg-gradient-to-br from-navy to-navy-light text-white shadow-md;
+  }
+
 
   /* ── Buttons ─────────────────────────────────────────────── */
   .pw-btn {
