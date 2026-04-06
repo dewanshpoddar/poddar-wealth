@@ -20,7 +20,9 @@ import {
   Camera,
   Medal,
   Globe,
-  Gem
+  Gem,
+  ArrowDown,
+  ArrowUp
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -35,9 +37,9 @@ export default function AboutPage() {
 
   const timeline = [
     { year: '1994', title: 'The Vision Begins', desc: 'Ajay Kumar Poddar started his journey to redefine family protection in Gorakhpur.' },
-    { year: '2005', title: 'MDRT Recognition', desc: 'First induction into the Million Dollar Round Table, USA — the gold standard in insurance.' },
-    { year: '2015', title: 'Chairman\'s Club', desc: 'Inducted into the premier LIC Chairman\'s Club, recognizing top-tier performance in India.' },
-    { year: '2024', title: '30+ Year Legacy', desc: 'Protecting 5,000+ families with ₹500Cr+ in wealth and security managed.' }
+    { year: '2005', title: 'MDRT Recognition', desc: 'First induction into the Million Dollar Round Table, USA — the gold standard.' },
+    { year: '2015', title: 'Chairman\'s Club', desc: 'Inducted into the premier LIC Chairman\'s Club for top-tier Indian performance.' },
+    { year: '2024', title: '31yr Legacy', desc: 'Protecting 5,000+ families with ₹500Cr+ in wealth and security managed.' }
   ]
 
   const filmStrip1 = [
@@ -224,34 +226,57 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ RESTORED LEGACY TIMELINE ═══ */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
-          <div className="text-center mb-16">
-            <span className="text-gold font-bold uppercase tracking-[0.3em] text-[11px]">Chronological Excellence</span>
-            <h2 className="text-36 font-display font-bold text-navy mt-2">31 Years of Excellence</h2>
-          </div>
+      {/* ═══ STRAIGHT-LINE HORIZONTAL TIMELINE ═══ */}
+      <section className="py-32 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-24">
+          <span className="text-gold font-bold uppercase tracking-[0.3em] text-[11px]">31-Year Chronology</span>
+          <h2 className="text-36 md:text-48 font-display font-bold text-navy mt-2">The Legacy Timeline</h2>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {timeline.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:border-gold/30 hover:bg-white hover:shadow-xl transition-all"
-              >
-                <div className="text-32 font-display font-bold text-gold/30 mb-4">{item.year}</div>
-                <h3 className="text-20 font-bold text-navy mb-3">{item.title}</h3>
-                <p className="text-14 text-slate-500 leading-relaxed font-medium">
-                  {item.desc}
-                </p>
-                {i < timeline.length - 1 && (
-                  <div className="hidden lg:block absolute top-[25%] -right-4 w-8 h-px bg-gold/20" />
-                )}
-              </motion.div>
-            ))}
+        <div className="max-w-7xl mx-auto px-8 relative overflow-x-auto pb-12 scrollbar-hide">
+          <div className="min-w-[1000px] relative h-[450px] flex items-center">
+            
+            {/* The Central Axis */}
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gold/20 -translate-y-1/2 z-0" />
+            
+            {/* Timeline Items */}
+            <div className="w-full flex justify-between relative z-10 px-10">
+              {timeline.map((item, i) => {
+                const isTop = i % 2 === 0;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: isTop ? -30 : 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className={`relative w-[220px] flex flex-col items-center ${isTop ? 'justify-end pb-[225px]' : 'justify-start pt-[225px]'}`}
+                  >
+                    {/* Content Block */}
+                    <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all group">
+                       <h4 className="text-18 font-bold text-navy mb-2 group-hover:text-gold transition-colors">{item.title}</h4>
+                       <p className="text-12 text-slate-500 leading-relaxed font-medium">{item.desc}</p>
+                    </div>
+
+                    {/* Arrow/Line Connector */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-px h-[180px] bg-gold/10 ${isTop ? 'bottom-[45px]' : 'top-[45px]'}`}>
+                       <div className={`absolute left-1/2 -translate-x-1/2 w-4 h-4 text-gold/30 ${isTop ? 'bottom-0 translate-y-1/2 scale-x-125' : 'top-0 -translate-y-1/2 scale-x-125'}`}>
+                          {isTop ? <ArrowDown size={16} /> : <ArrowUp size={16} />}
+                       </div>
+                    </div>
+
+                    {/* Year on the axis */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                       <div className="w-10 h-10 rounded-full bg-white border-2 border-gold flex items-center justify-center text-14 font-bold text-navy shadow-sm z-20">
+                          {item.year.slice(-2)}
+                       </div>
+                       <div className="absolute -bottom-8 whitespace-nowrap text-14 font-bold text-gold tracking-widest">{item.year}</div>
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+
           </div>
         </div>
       </section>
