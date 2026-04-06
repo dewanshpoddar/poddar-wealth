@@ -199,18 +199,19 @@ export default function HeroSection() {
       </div>
 
       {/* ═══ WHY US STRIP ═══ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-[rgba(184,134,11,0.18)] bg-warm pb-6 lg:pb-0">
+      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-gold/10 bg-warm/50 px-2 lg:px-4 py-2">
         {t.whyUs && t.whyUs.map((item: any, i: number) => (
-          <div key={i}
-            className={`flex items-start gap-3.5 px-5 lg:px-8 py-5 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_10px_20px_-10px_rgba(184,134,11,0.15)] hover:bg-white/60 cursor-default rounded-lg m-1
-                        ${i < t.whyUs.length - 1 ? 'lg:border-r border-[rgba(184,134,11,0.18)]' : ''}
-                        ${i < 2 ? 'border-b lg:border-b-0 border-[rgba(184,134,11,0.18)]' : ''}`}>
-            <div className="w-9 h-9 rounded-[10px] bg-gold-pale flex items-center justify-center text-base flex-shrink-0 mt-0.5">
-              {item.icon}
-            </div>
-            <div>
-              <div className="text-13 font-medium text-gray-900 mb-1">{item.title}</div>
-              <div className="text-11 text-muted leading-relaxed">{item.sub}</div>
+          <div key={i} className="p-1">
+            <div className={`flex items-start gap-3.5 px-4 lg:px-6 py-4 transition-all duration-300 
+                            hover:bg-white hover:shadow-xl hover:shadow-gold/5 cursor-default rounded-2xl
+                            ${i < t.whyUs.length - 1 ? 'lg:border-r border-gold/5' : ''}`}>
+              <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center text-lg flex-shrink-0 mt-0.5 shadow-sm">
+                {item.icon}
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-slate-900 mb-0.5 tracking-tight">{item.title}</div>
+                <div className="text-[11px] text-slate-500 leading-relaxed font-medium">{item.sub}</div>
+              </div>
             </div>
           </div>
         ))}
