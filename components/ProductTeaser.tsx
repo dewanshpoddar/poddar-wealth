@@ -96,10 +96,10 @@ export default function ProductTeaser() {
               transition={{ delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
             >
-              <NavLink href="/products" className="pw-btn--gold h-14 px-10 inline-flex items-center gap-2 group shadow-lg shadow-gold/20 rounded-full">
+              <Link href="/products" className="pw-btn--gold h-14 px-10 inline-flex items-center gap-2 group shadow-lg shadow-gold/20 rounded-full">
                 {lang === 'en' ? 'Explore 26+ Wealth Plans' : '26+ वेल्थ प्लान्स देखें'}
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </NavLink>
+              </Link>
               
               <div className="flex items-center gap-2 text-13 font-bold text-gold/40">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
