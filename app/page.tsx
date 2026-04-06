@@ -17,8 +17,8 @@ export default function HomePage() {
       <CalculatorSection />
       <IntentSection />
       <TestimonialsSection />
-      <ChatBot />
       <FinalCTA />
+
       <LeadForm />
     </>
   )
