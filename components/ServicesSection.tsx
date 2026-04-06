@@ -20,7 +20,7 @@ export default function ServicesSection() {
   const { t } = useLang()
 
   return (
-    <section className="bg-warm/40 py-24 relative overflow-hidden">
+    <section className="bg-white py-24 relative overflow-hidden">
       {/* Decorative gradient background element */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
@@ -47,16 +47,20 @@ export default function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {t.services.items.map((svc: any, i: number) => (
             <div key={i}
-              className="bg-white/80 backdrop-blur-md border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
+              className="bg-white border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
+
                          hover:shadow-2xl hover:shadow-[rgba(184,134,11,0.15)] hover:border-gold/30 hover:-translate-y-2
                          transition-all duration-500 group cursor-default">
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 relative
-                           bg-warm group-hover:bg-gold/10 transition-colors duration-500"
+                           bg-white group-hover:bg-gold/10 transition-colors duration-500"
               >
                 <div className="absolute inset-0 bg-gold/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                  {iconSvgs[svc.color] || iconSvgs.blue}
+                  <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-navy group-hover:text-gold transition-colors">
+                    {/* Common Icon base - varied by index or content if I had better specific icons, but here I will use a high-quality placeholder svg if specific ones aren't provided */}
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
                 </div>
               </div>
 
@@ -78,5 +82,6 @@ export default function ServicesSection() {
         </div>
       </div>
     </section>
+
   )
 }

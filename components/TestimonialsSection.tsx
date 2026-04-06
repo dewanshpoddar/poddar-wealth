@@ -5,7 +5,7 @@ export default function TestimonialsSection() {
   const { t } = useLang()
 
   return (
-    <section className="pw-section pw-section--warm">
+    <section className="bg-white py-24 relative overflow-hidden">
       <div className="pw-eyebrow">{t.testimonials.eyebrow}</div>
       <div className="pw-title">{t.testimonials.title}</div>
       <div className="pw-subtitle">{t.testimonials.subtitle}</div>
