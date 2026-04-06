@@ -5,12 +5,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { 
-  ArrowRight, 
   ShieldCheck, 
   Eye, 
   Heart, 
   PhoneCall, 
-  Award, 
   MapPin, 
   Calendar,
   Users,
@@ -18,9 +16,6 @@ import {
   Trophy,
   Star,
   Camera,
-  Medal,
-  Globe,
-  Gem,
   ArrowDown,
   ArrowUp
 } from 'lucide-react'
@@ -29,8 +24,8 @@ export default function AboutPage() {
   const { t, lang } = useLang()
 
   const stats = [
-    { num: '31+', label: lang === 'en' ? 'Years of Excellence' : 'उत्कृष्टता के वर्ष' },
-    { num: '5000+', label: lang === 'en' ? 'Protected Families' : 'सुरक्षित परिवार' },
+    { num: '31+', label: lang === 'en' ? 'Years Professional' : 'पेशेवर साल' },
+    { num: '5000+', label: lang === 'en' ? 'Families Protected' : 'सुरक्षित परिवार' },
     { num: 'MDRT', label: lang === 'en' ? 'USA Member' : 'यूएसए सदस्य' },
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता' }
   ]
@@ -75,7 +70,7 @@ export default function AboutPage() {
     <div className="bg-white">
       
       {/* ═══ MINIMALIST LUXURY HERO ═══ */}
-      <section className="relative overflow-hidden bg-warm/30 pt-12 pb-8 lg:pt-20 lg:pb-12 border-b border-gold/5">
+      <section className="relative overflow-hidden bg-warm/30 pt-12 pb-10 lg:pt-20 lg:pb-16 border-b border-gold/5">
         <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
@@ -92,20 +87,20 @@ export default function AboutPage() {
                 <span className="font-bold text-gold not-italic">Institutional Trust</span>
               </h1>
               
-              <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-4 mb-10 font-medium">
+              <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-4 mb-12 font-medium">
                 Building financial fortresses for Gorakhpur families since 1994. We secure your life&apos;s most precious work with three decades of on-ground excellence and Million Dollar Round Table (USA) credentials.
               </p>
 
-              {/* ACTION: Horizontal Linear Trust Strip (Replacing Grid) */}
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-10 border-t border-gold/10">
+              {/* ACTION: SINGLE-LINE Linear Trust Strip */}
+              <div className="flex flex-row flex-wrap md:flex-nowrap items-center gap-x-6 lg:gap-x-10 pt-10 border-t border-gold/10">
                 {stats.map((stat, i) => (
-                  <div key={i} className="flex items-center gap-3">
+                  <div key={i} className="flex items-center">
                     <div className="flex flex-col">
-                       <div className="font-display text-18 font-bold text-slate-900 leading-none">{stat.num}</div>
-                       <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1.5">{stat.label}</div>
+                       <div className="font-display text-[16px] md:text-18 font-bold text-slate-900 leading-none">{stat.num}</div>
+                       <div className="text-[8px] md:text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 whitespace-nowrap">{stat.label}</div>
                     </div>
                     {i < stats.length - 1 && (
-                      <div className="h-6 w-px bg-gold/10 ml-8 hidden md:block" />
+                      <div className="h-6 w-px bg-gold/10 ml-6 lg:ml-10 hidden md:block" />
                     )}
                   </div>
                 ))}
@@ -380,7 +375,7 @@ export default function AboutPage() {
         </div>
       </section>
       
-      {/* FINAL CTA STRIP (REDUCED HEIGHT) */}
+      {/* FINAL CTA STRIP */}
       <section className="bg-gold py-12 px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[100px] rounded-full -z-0" />
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
@@ -388,9 +383,8 @@ export default function AboutPage() {
               <h3 className="text-[24px] md:text-[28px] font-display font-bold text-navy mb-2 tracking-tight leading-tight">Ready to plan your family&apos;s future?</h3>
               <p className="text-navy/60 text-[14px] font-medium">Book a direct consultation with Mr. Ajay Poddar.</p>
            </div>
-           <Link href="/contact" className="h-12 md:h-14 px-8 md:px-10 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-3 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1">
+           <Link href="/contact" className="h-12 md:h-14 px-8 md:px-10 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-3 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1 text-center">
               Start Your Journey Now
-              <ArrowRight size={20} />
            </Link>
         </div>
       </section>
