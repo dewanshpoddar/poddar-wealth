@@ -29,10 +29,16 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 px-1 border-l-2 border-gold/40 ml-[-2px]">Quick Links</h4>
             <ul className="space-y-4">
-              {['Home', 'Products', 'Services', 'Calculators', 'About Us', 'Contact'].map((link) => (
-                <li key={link}>
-                  <Link href={`/${link.toLowerCase().replace(' ', '-')}`} className="text-gray-400 hover:text-gold text-sm transition-colors duration-200">
-                    {link}
+              {[
+                { name: 'Home', href: '/' },
+                { name: 'About Us', href: '/about' },
+                { name: t.nav.products, href: '/' },
+                { name: t.nav.services, href: '/services/life-insurance' },
+                { name: 'Testimonials', href: '/#testimonials' },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="text-gray-400 hover:text-gold text-sm transition-colors duration-200">
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -43,6 +49,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
 
           {/* Contact Column */}
           <div>
@@ -65,7 +72,24 @@ export default function Footer() {
 
           {/* Action Column */}
           <div className="space-y-6">
-            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 px-1 border-l-2 border-gold/40 ml-[-2px]">Support</h4>
+            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 px-1 border-l-2 border-gold/40 ml-[-2px]">Support & Tools</h4>
+            <ul className="space-y-4 mb-6">
+              <li>
+                <Link href="/calculators/life-insurance" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
+                   <span>📊</span> {t.nav.calculators}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
+                  <span>📄</span> {t.nav.renewPolicy}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
+                  <span>🏥</span> {t.nav.claimSupport}
+                </Link>
+              </li>
+            </ul>
             <div className="flex flex-col gap-3">
               <a
                 href={`https://wa.me/${t.whatsapp.number}`}
@@ -76,14 +100,9 @@ export default function Footer() {
                 <span className="text-lg">💬</span>
                 WhatsApp Support
               </a>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <p className="text-gray-500 text-[10px] leading-tight flex items-start gap-2">
-                  <span className="text-gold font-bold">✓</span>
-                  Licensed IRDAI Advisor serving 5000+ happy families.
-                </p>
-              </div>
             </div>
           </div>
+
         </div>
 
         {/* Bottom Bar */}
