@@ -36,6 +36,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/ai-advisor" className="text-gold hover:text-white text-sm font-semibold transition-colors duration-200 flex items-center gap-2">
+                  <span className="animate-pulse">✨</span> AI Advisor (Poddar Ji)
+                </Link>
+              </li>
             </ul>
           </div>
 

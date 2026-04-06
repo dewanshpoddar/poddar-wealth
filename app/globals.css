@@ -364,6 +364,14 @@
            shadow-wa animate-wa-pulse hover:scale-110 transition-transform duration-150;
   }
 
+  .pw-ai-float {
+    @apply fixed bottom-24 right-6 z-50 px-5 py-3 rounded-pill bg-gold
+           border-none cursor-pointer flex items-center gap-2.5
+           shadow-gold animate-wa-pulse hover:scale-105 transition-all duration-300
+           text-white font-bold text-11 uppercase tracking-widest;
+  }
+  .pw-ai-float span { @apply hidden md:block; }
+
 }
 
 /* ============================================================

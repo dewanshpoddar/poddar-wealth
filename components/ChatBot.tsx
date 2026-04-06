@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 
 type Message = { from: 'bot' | 'user'; text: string }
@@ -27,7 +27,7 @@ function getFallbackReply(msg: string): string {
   return fallbackReplies.default
 }
 
-export default function ChatBot() {
+export default function ChatBot({ fullPage = false }: { fullPage?: boolean }) {
   const { t } = useLang()
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
@@ -47,18 +47,18 @@ export default function ChatBot() {
     const text = preset || input.trim()
     if (!text || typing) return
     setInput('')
-    setMessages(prev => [...prev, { from: 'user', text }])
+    setMessages((prev: Message[]) => [...prev, { from: 'user', text }])
     setTyping(true)
     await new Promise(r => setTimeout(r, 800 + Math.random() * 700))
     setTyping(false)
-    setMessages(prev => [...prev, { from: 'bot', text: getFallbackReply(text) }])
+    setMessages((prev: Message[]) => [...prev, { from: 'bot', text: getFallbackReply(text) }])
   }
 
   return (
     <>
       {/* Chatbot section on homepage */}
-      <section className="pw-section">
-        <div className="grid gap-8" style={{ gridTemplateColumns: '1fr 420px', alignItems: 'start' }}>
+      <section className={`pw-section ${fullPage ? 'min-h-[80vh] flex items-center' : ''}`}>
+        <div className={`grid gap-8 w-full ${fullPage ? 'max-w-6xl mx-auto' : ''}`} style={{ gridTemplateColumns: fullPage ? '1fr 1.2fr' : '1fr 420px', alignItems: 'start' }}>
           {/* Left — info */}
           <div>
             <div className="pw-eyebrow">{t.chatbot.eyebrow}</div>
@@ -101,7 +101,7 @@ export default function ChatBot() {
                     {m.from === 'user' ? 'You' : 'AK'}
                   </div>
                   <div className={m.from === 'user' ? 'pw-msg-user' : 'pw-msg-bot'}>
-                    {m.text.split('\n').map((line, j) => (
+                    {m.text.split('\n').map((line: string, j: number) => (
                       <span key={j}>{line}{j < m.text.split('\n').length - 1 && <br />}</span>
                     ))}
                   </div>

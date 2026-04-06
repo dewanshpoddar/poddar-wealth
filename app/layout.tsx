@@ -4,7 +4,7 @@ import './globals.css'
 import { LangProvider } from '@/lib/LangContext'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import WhatsAppButton from '@/components/WhatsAppButton'
+import AIChatButton from '@/components/AIChatButton'
 import ChatBot from '@/components/ChatBot'
 import LeadPopup from '@/components/LeadPopup'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main>{children}</main>
           <Footer />
-          <WhatsAppButton />
+          <AIChatButton />
           <LeadPopup />
         </LangProvider>
       </body>
