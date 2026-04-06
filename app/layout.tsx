@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ChatBot from '@/components/ChatBot'
 import LeadPopup from '@/components/LeadPopup'
+import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 
 export const metadata: Metadata = {
   title: 'Poddar Wealth Management — Excellence in Protection Since 1994',
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="font-sans text-13 text-gray-900 bg-white antialiased">
         <LangProvider>
+          <ProblemSolutionSection />
           <Navbar />
           <main>{children}</main>
           <Footer />
