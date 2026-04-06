@@ -15,17 +15,25 @@ export default function LeadPopup() {
   })
 
   useEffect(() => {
-    // Check if user already dismissed the popup
-    // const isDismissed = localStorage.getItem('poddar_lead_popup_status')
-    // if (isDismissed) return
-
-
-    // Show popup after 4 seconds
+    // Show popup after 4 seconds automatically if not dismissed
     const timer = setTimeout(() => {
-      setIsOpen(true)
+      const isDismissed = localStorage.getItem('poddar_lead_popup_status')
+      if (!isDismissed) setIsOpen(true)
     }, 4000)
 
-    return () => clearTimeout(timer)
+    // Global listener to open popup from any button
+    const handleOpenRequest = (e: any) => {
+      if (e.detail?.intent) {
+        setFormData(prev => ({ ...prev, intent: e.detail.intent }))
+      }
+      setIsOpen(true)
+    }
+
+    window.addEventListener('open-lead-popup', handleOpenRequest)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('open-lead-popup', handleOpenRequest)
+    }
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {

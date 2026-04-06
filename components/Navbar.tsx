@@ -25,7 +25,7 @@ export default function Navbar() {
       {/* Desktop Nav */}
       <div className="hidden lg:flex items-center gap-5 xl:gap-8">
         <Link href="/about" className="pw-nav-link">{t.nav.about}</Link>
-        <Link href="/" className="pw-nav-link">{t.nav.products}</Link>
+        <Link href="/products" className="pw-nav-link">{t.nav.products}</Link>
         <Link href="/services" className="pw-nav-link">{t.nav.services}</Link>
 
 
@@ -83,7 +83,7 @@ export default function Navbar() {
       {open && (
         <div className="fixed top-[78px] left-0 right-0 bg-white shadow-md z-40 px-8 py-6 flex flex-col gap-5 border-t border-gray-100 lg:hidden max-h-[85vh] overflow-y-auto">
           <Link href="/about" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.about}</Link>
-          <Link href="/" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.products}</Link>
+          <Link href="/products" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.products}</Link>
           <Link href="/services" onClick={() => setOpen(false)} className="text-16 font-bold text-navy">{t.nav.services}</Link>
 
           <div className="h-px bg-gray-100 my-1 w-full"></div>
