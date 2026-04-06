@@ -22,13 +22,13 @@ export default function ChildPlanningPage() {
             <div>
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🎓 Child Planning</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
-                Secure Your Child's Dreams — No Matter What
+                Secure Your Child&apos;s Dreams — No Matter What
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
-                Education costs are doubling every 7 years. Start a child plan today so your child's future is fully funded — even if you're not there.
+                Education costs are doubling every 7 years. Start a child plan today so your child&apos;s future is fully funded — even if you&apos;re not there.
               </p>
               <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-violet-800 font-bold px-6 py-3.5 rounded-xl hover:bg-violet-50 transition-colors">
-                Plan My Child's Future <ArrowRight className="w-4 h-4" />
+                Plan My Child&apos;s Future <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <div className="hidden lg:block">
@@ -65,7 +65,7 @@ export default function ChildPlanningPage() {
         <div className="section-container">
           <div className="text-center mb-10">
             <h2 className="section-title">Education Cost Reality Check</h2>
-            <p className="section-subtitle">Plan today for tomorrow's costs</p>
+            <p className="section-subtitle">Plan today for tomorrow&apos;s costs</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
@@ -79,7 +79,7 @@ export default function ChildPlanningPage() {
                 <h3 className="font-bold text-slate-900 mb-3">{edu.goal}</h3>
                 <div className="space-y-2">
                   <div>
-                    <div className="text-xs text-slate-400">Today's Cost</div>
+                    <div className="text-xs text-slate-400">Today&apos;s Cost</div>
                     <div className="font-semibold text-slate-700">{edu.now}</div>
                   </div>
                   <div>

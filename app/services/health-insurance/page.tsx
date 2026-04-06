@@ -32,7 +32,7 @@ export default function HealthInsurancePage() {
             <div>
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🏥 Health Insurance</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
-                Medical Bills Shouldn't Wipe Out Your Savings
+                Medical Bills Shouldn&apos;t Wipe Out Your Savings
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
                 One hospitalization can cost ₹2–10 lakhs. Health insurance ensures your family gets the best care without financial stress.

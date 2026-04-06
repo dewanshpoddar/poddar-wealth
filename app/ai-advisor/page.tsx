@@ -12,7 +12,7 @@ export default function AIAdvisorPage() {
             Meet the Poddar Wealth <span>AI Advisor</span>
           </h1>
           <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">
-            Trained on 31 years of on-ground experience in Gorakhpur. Our AI combines deep knowledge of LIC of India and Star Health policies with Mr. Ajay Kumar Poddar's legendary customer-first approach.
+            Trained on 31 years of on-ground experience in Gorakhpur. Our AI combines deep knowledge of LIC of India and Star Health policies with Mr. Ajay Kumar Poddar&apos;s legendary customer-first approach.
           </p>
           <div className="flex gap-4 mt-8">
             <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-lg">
@@ -39,7 +39,7 @@ export default function AIAdvisorPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="pw-title text-3xl mb-6">How it works?</h2>
           <p className="pw-subtitle text-lg max-w-2xl mx-auto mb-12">
-            This isn't just another chatbot. It's a digital extension of Poddar Wealth Management's three-decade legacy.
+            This isn&apos;t just another chatbot. It&apos;s a digital extension of Poddar Wealth Management&apos;s three-decade legacy.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="pw-card bg-white shadow-sm border-none">
@@ -50,7 +50,7 @@ export default function AIAdvisorPage() {
             <div className="pw-card bg-white shadow-sm border-none">
               <div className="text-3xl mb-4">🤝</div>
               <h3 className="font-bold mb-2">Human Centric</h3>
-              <p className="text-12 text-gray-500">Trained to prioritize your family's safety over basic sales.</p>
+              <p className="text-12 text-gray-500">Trained to prioritize your family&apos;s safety over basic sales.</p>
             </div>
             <div className="pw-card bg-white shadow-sm border-none">
               <div className="text-3xl mb-4">⚡</div>

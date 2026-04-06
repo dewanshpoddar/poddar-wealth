@@ -25,7 +25,7 @@ export default function RetirementPage() {
                 Retire with Dignity — On Your Own Terms
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
-                Don't depend on your children in old age. Start planning today and enjoy financial freedom in your golden years.
+                Don&apos;t depend on your children in old age. Start planning today and enjoy financial freedom in your golden years.
               </p>
               <div className="flex gap-4 flex-wrap">
                 <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-amber-800 font-bold px-6 py-3.5 rounded-xl hover:bg-amber-50 transition-colors">

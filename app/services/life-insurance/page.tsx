@@ -59,8 +59,8 @@ export default function LifeInsurancePage() {
                 ))}
               </ul>
               <div className="mt-8 bg-brand-50 border border-brand-100 rounded-2xl p-5">
-                <div className="font-display font-bold text-brand-900 text-lg mb-1">🏆 Ajay's Advice</div>
-                <p className="text-brand-800 text-sm leading-relaxed">"The best time to buy life insurance is when you're young and healthy. Your premiums will be lowest and your family will be protected the longest."</p>
+                <div className="font-display font-bold text-brand-900 text-lg mb-1">🏆 Ajay&apos;s Advice</div>
+                <p className="text-brand-800 text-sm leading-relaxed">&quot;The best time to buy life insurance is when you&apos;re young and healthy. Your premiums will be lowest and your family will be protected the longest.&quot;</p>
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">

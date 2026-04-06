@@ -108,7 +108,7 @@ export default function LeadPopup() {
                     </div>
                     <div className="pw-eyebrow text-gold/80 mb-2">Poddar Wealth Management</div>
                     <h3 className="text-xl md:text-2xl font-display font-bold text-white leading-tight">
-                      Secure Your Family's <span className="text-gold">Financial Future</span>
+                      Secure Your Family&apos;s <span className="text-gold">Financial Future</span>
                     </h3>
                   </div>
 
@@ -199,7 +199,7 @@ export default function LeadPopup() {
                       onClick={handleClose}
                       className="w-full text-gray-400 text-[12px] font-medium hover:text-gray-600 transition-colors pt-2"
                     >
-                      Maybe later, I'll explore first
+                      Maybe later, I&apos;ll explore first
                     </button>
                   </form>
                 </div>
