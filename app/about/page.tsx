@@ -21,7 +21,8 @@ import {
   CheckCircle2,
   Medal,
   Gem,
-  Globe
+  Globe,
+  Camera
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -34,15 +35,26 @@ export default function AboutPage() {
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता', icon: <Briefcase className="text-green-500" size={24} /> }
   ]
 
-  const achievements = [
-    { icon: <Medal size={32} />, title: 'MDRT USA', desc: 'Top 1% Global Performance' },
-    { icon: <Trophy size={32} />, title: 'Chairman\'s Club', desc: 'Highest LIC Distinction' },
-    { icon: <Globe size={32} />, title: '31yr Legacy', desc: 'Serving since 1994' },
-    { icon: <Users size={32} />, title: '5000+ Families', desc: 'Protected & Growing' },
-    { icon: <Gem size={32} />, title: 'Trust Factor', desc: '₹500Cr+ Claims Settled' },
-    { icon: <Medal size={32} />, title: 'MDRT USA', desc: 'Top 1% Global Performance' },
-    { icon: <Trophy size={32} />, title: 'Chairman\'s Club', desc: 'Highest LIC Distinction' },
-    { icon: <Globe size={32} />, title: '31yr Legacy', desc: 'Serving since 1994' },
+  const filmStrip1 = [
+    { src: '/assets/legacy-award-1994.png', label: '1994 MDRT Success' },
+    { src: '/assets/team-mentorship.png', label: 'Mentoring 2024' },
+    { src: '/assets/gorakhpur-office-render.png', label: 'Institutional Trust' },
+    { src: '/assets/hero-family.png', label: 'Family Protection' },
+    { src: '/assets/hero-education.png', label: 'Child Future' },
+    { src: '/assets/hero-marriage.png', label: 'Goal Planning' },
+    { src: '/assets/legacy-award-1994.png', label: 'Founding Mission' },
+    { src: '/assets/team-mentorship.png', label: 'Team Excellence' },
+  ]
+
+  const filmStrip2 = [
+    { src: '/assets/gorakhpur-office-render.png', label: 'Vijay Chowk HQ' },
+    { src: '/assets/hero-retirement.png', label: 'Legacy Wealth' },
+    { src: '/assets/hero-health.png', label: 'Health Security' },
+    { src: '/assets/legacy-award-1994.png', label: '31yr Dedication' },
+    { src: '/assets/team-mentorship.png', label: 'Global MDRT' },
+    { src: '/assets/gorakhpur-office-render.png', label: 'Financial Fortress' },
+    { src: '/assets/hero-family.png', label: 'Core Values' },
+    { src: '/assets/team-mentorship.png', label: 'Chairman\'s Club' },
   ]
 
   const valuesIcons = [
@@ -122,38 +134,81 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ ACHIEVEMENTS MARQUEE ═══ */}
-      <section className="py-20 bg-white border-y border-slate-100 overflow-hidden relative">
-        <div className="text-center mb-12">
-          <div className="text-[11px] font-bold text-gold uppercase tracking-[0.3em] mb-2">Recognitions & Awards</div>
-          <h2 className="text-28 font-display font-bold text-slate-900">A Journey of Global Excellence</h2>
-        </div>
+      {/* ═══ 35MM CINEMATIC FILM REELS ═══ */}
+      <section className="py-24 bg-slate-900 border-y-8 border-navy-deep relative overflow-hidden">
+        {/* Background Film Grain */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />
         
-        <div className="flex overflow-hidden group select-none">
-          <div className="flex animate-marquee whitespace-nowrap gap-8 py-4 group-hover:[animation-play-state:paused]">
-            {achievements.map((item, i) => (
-              <div key={i} className="inline-flex items-center gap-6 px-10 py-6 bg-slate-50 border border-slate-100 rounded-[32px] hover:border-gold/30 hover:bg-white transition-all transform hover:-translate-y-1">
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-gold shadow-sm border border-slate-100">
-                  {item.icon}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[18px] font-bold text-slate-900 leading-tight">{item.title}</span>
-                  <span className="text-[12px] text-slate-400 font-medium uppercase tracking-wider">{item.desc}</span>
-                </div>
-              </div>
+        <div className="text-center mb-16 relative z-10">
+          <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
+            <Camera size={20} />
+            <span className="text-[12px] font-bold uppercase tracking-[0.4em]">Cinematic Memory Reels</span>
+          </div>
+          <h2 className="text-36 font-display font-bold text-white tracking-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
+        </div>
+
+        {/* TOP REEL: Left to Right */}
+        <div className="relative group/reel mb-1">
+          {/* Film Borders & Sprockets */}
+          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
             ))}
-            {/* Duplicate for seamless loop */}
-            {achievements.map((item, i) => (
-              <div key={`dup-${i}`} className="inline-flex items-center gap-6 px-10 py-6 bg-slate-50 border border-slate-100 rounded-[32px] hover:border-gold/30 hover:bg-white transition-all transform hover:-translate-y-1">
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-gold shadow-sm border border-slate-100">
-                  {item.icon}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[18px] font-bold text-slate-900 leading-tight">{item.title}</span>
-                  <span className="text-[12px] text-slate-400 font-medium uppercase tracking-wider">{item.desc}</span>
-                </div>
-              </div>
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
             ))}
+          </div>
+
+          <div className="flex overflow-hidden">
+            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel:[animation-play-state:paused]" style={{ animationDirection: 'reverse', animationDuration: '40s' }}>
+              {filmStrip1.concat(filmStrip1).map((item, i) => (
+                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
+                   <Image 
+                    src={item.src} 
+                    alt={item.label} 
+                    fill 
+                    className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" 
+                   />
+                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
+                   {/* Film Burn/Glow */}
+                   <div className="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM REEL: Right to Left */}
+        <div className="relative group/reel2">
+          {/* Film Borders & Sprockets */}
+          <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-black border-t border-white/10 z-20 flex items-center gap-1.5 px-1 overflow-hidden opacity-80">
+            {[...Array(60)].map((_, i) => (
+              <div key={i} className="w-4 h-5 bg-white/10 rounded-sm flex-shrink-0" />
+            ))}
+          </div>
+
+          <div className="flex overflow-hidden">
+            <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel2:[animation-play-state:paused]" style={{ animationDuration: '45s' }}>
+              {filmStrip2.concat(filmStrip2).map((item, i) => (
+                <div key={i} className="relative w-[300px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-2xl">
+                   <Image 
+                    src={item.src} 
+                    alt={item.label} 
+                    fill 
+                    className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" 
+                   />
+                   <div className="absolute top-4 left-4 right-4 text-[10px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
+                   <div className="absolute inset-0 bg-gradient-to-bl from-gold/5 via-transparent to-transparent pointer-events-none group-hover/frame:opacity-0 transition-opacity" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
