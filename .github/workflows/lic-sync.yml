@@ -1,0 +1,29 @@
+name: LIC Plans Auto-Sync
+
+on:
+  schedule:
+    - cron: '30 0 * * *'   # Daily 6AM IST (00:30 UTC)
+  workflow_dispatch:         # Manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - run: npm install cheerio node-fetch@2
+      
+      - name: Run LIC sync
+        run: npm run sync:lic:now
+        
+      - name: Commit updated data if changed
+        run: |
+          git config user.name "LIC Sync Bot"
+          git config user.email "bot@poddarwealth.com"
+          git add lib/data/lic-plans.json lib/data/sync-log.json
+          git diff --staged --quiet || git commit -m "🔄 Auto-sync LIC plans $(date +'%Y-%m-%d')"
+          git push

@@ -3,184 +3,360 @@
     "source": "licindia.in",
     "lastUpdated": "2026-04-06",
     "version": "1.1.0",
-    "totalPlans": 26,
-    "categories": ["endowment", "wholeLife", "moneyBack", "term"]
+    "totalPlans": 9,
+    "categories": [
+      "endowment",
+      "wholeLife",
+      "moneyBack",
+      "term"
+    ]
   },
   "categories": {
     "endowment": {
-      "label": { "en": "Endowment Plans", "hi": "बंदोबस्ती (Endowment) योजनाएं" },
-      "tagline": { "en": "Save steadily. Grow securely.", "hi": "नियमित बचत। सुरक्षित भविष्य।" },
+      "label": {
+        "en": "Endowment Plans",
+        "hi": "बंदोबस्ती (Endowment) योजनाएं"
+      },
+      "tagline": {
+        "en": "Save steadily. Grow securely.",
+        "hi": "नियमित बचत। सुरक्षित भविष्य।"
+      },
       "icon": "🏦",
       "color": "#1B4F72",
       "plans": [
         {
           "id": "lic-717",
-          "name": { "en": "LIC's Single Premium Endowment Plan", "hi": "एलआईसी सिंगल प्रीमियम एंडोमेंट प्लान" },
+          "name": {
+            "en": "LIC's Single Premium Endowment Plan",
+            "hi": "एलआईसी सिंगल प्रीमियम एंडोमेंट प्लान"
+          },
           "planNo": "717",
-          "tagline": { "en": "Pay once. Stay protected for life.", "hi": "एक बार भुगतान। जीवन भर सुरक्षा।" },
-          "keyBenefit": { "en": "One-time premium for guaranteed maturity + life cover", "hi": "गारंटीड मैच्योरिटी + लाइफ कवर के लिए एकमुश्त प्रीमियम" },
+          "tagline": {
+            "en": "Pay once. Stay protected for life.",
+            "hi": "एक बार भुगतान। जीवन भर सुरक्षा।"
+          },
+          "keyBenefit": {
+            "en": "One-time premium for guaranteed maturity + life cover",
+            "hi": "गारंटीड मैच्योरिटी + लाइफ कवर के लिए एकमुश्त प्रीमियम"
+          },
           "category": "endowment",
           "entryAge": "90d - 65yr",
           "sumAssured": "₹50,000+",
           "premiumPayment": "Single",
           "highlights": [
-            { "en": "No recurring payments", "hi": "कोई बार-बार भुगतान नहीं" },
-            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" },
-            { "en": "Tax benefits under 80C", "hi": "धारा 80C के तहत आयकर लाभ" }
+            {
+              "en": "No recurring payments",
+              "hi": "कोई बार-बार भुगतान नहीं"
+            },
+            {
+              "en": "Loan facility available",
+              "hi": "ऋण सुविधा उपलब्ध"
+            },
+            {
+              "en": "Tax benefits under 80C",
+              "hi": "धारा 80C के तहत आयकर लाभ"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-single-premium-endowment-plan-717-512n283v03"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-single-premium-endowment-plan-717-512n283v03",
+          "status": "withdrawn"
         },
         {
           "id": "lic-714",
-          "name": { "en": "LIC's New Endowment Plan", "hi": "एलआईसी न्यू एंडोमेंट प्लान" },
+          "name": {
+            "en": "LIC's New Endowment Plan",
+            "hi": "एलआईसी न्यू एंडोमेंट प्लान"
+          },
           "planNo": "714",
-          "tagline": { "en": "Savings + protection in one smart plan.", "hi": "बचत + सुरक्षा, एक स्मार्ट प्लान में।" },
-          "keyBenefit": { "en": "Guaranteed returns with bonus participation", "hi": "बोनस के साथ गारंटीड रिटर्न" },
+          "tagline": {
+            "en": "Savings + protection in one smart plan.",
+            "hi": "बचत + सुरक्षा, एक स्मार्ट प्लान में।"
+          },
+          "keyBenefit": {
+            "en": "Guaranteed returns with bonus participation",
+            "hi": "बोनस के साथ गारंटीड रिटर्न"
+          },
           "category": "endowment",
           "entryAge": "8 - 55yr",
           "sumAssured": "₹1,00,000+",
           "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Plan for 12-35 years", "hi": "12-35 वर्षों के लिए योजना" },
-            { "en": "Ideal for long-term goals", "hi": "दीर्घकालिक लक्ष्यों के लिए आदर्श" }
+            {
+              "en": "Plan for 12-35 years",
+              "hi": "12-35 वर्षों के लिए योजना"
+            },
+            {
+              "en": "Ideal for long-term goals",
+              "hi": "दीर्घकालिक लक्ष्यों के लिए आदर्श"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-endowment-plan-714-512n277v03"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-endowment-plan-714-512n277v03",
+          "status": "withdrawn"
         },
         {
           "id": "lic-715",
-          "name": { "en": "LIC's New Jeevan Anand", "hi": "एलआईसी न्यू जीवन आनंद" },
+          "name": {
+            "en": "LIC's New Jeevan Anand",
+            "hi": "एलआईसी न्यू जीवन आनंद"
+          },
           "planNo": "715",
-          "tagline": { "en": "Protection that never ends.", "hi": "सुरक्षा जो कभी खत्म नहीं होती।" },
-          "keyBenefit": { "en": "Whole life cover + lump sum at maturity", "hi": "मैच्योरिटी पर एकमुश्त राशि + आजीवन कवर" },
+          "tagline": {
+            "en": "Protection that never ends.",
+            "hi": "सुरक्षा जो कभी खत्म नहीं होती।"
+          },
+          "keyBenefit": {
+            "en": "Whole life cover + lump sum at maturity",
+            "hi": "मैच्योरिटी पर एकमुश्त राशि + आजीवन कवर"
+          },
           "category": "endowment",
           "entryAge": "18 - 50yr",
           "sumAssured": "₹1,00,000+",
           "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Death benefit even after maturity", "hi": "मैच्योरिटी के बाद भी मृत्यु लाभ" },
-            { "en": "Double benefit plan", "hi": "दोहरा लाभ प्लान" }
+            {
+              "en": "Death benefit even after maturity",
+              "hi": "मैच्योरिटी के बाद भी मृत्यु लाभ"
+            },
+            {
+              "en": "Double benefit plan",
+              "hi": "दोहरा लाभ प्लान"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-anand-715%09512n279v03"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-anand-715%09512n279v03",
+          "status": "withdrawn"
         }
       ]
     },
     "wholeLife": {
-      "label": { "en": "Whole Life Plans", "hi": "आजीवन बीमा (Whole Life) योजनाएं" },
-      "tagline": { "en": "Protection for a lifetime and beyond.", "hi": "जीवन भर और उसके बाद भी सुरक्षा।" },
+      "label": {
+        "en": "Whole Life Plans",
+        "hi": "आजीवन बीमा (Whole Life) योजनाएं"
+      },
+      "tagline": {
+        "en": "Protection for a lifetime and beyond.",
+        "hi": "जीवन भर और उसके बाद भी सुरक्षा।"
+      },
       "icon": "♾️",
       "color": "#196F3D",
       "plans": [
         {
           "id": "lic-745",
-          "name": { "en": "LIC's Jeevan Umang", "hi": "एलआईसी जीवन उमंग" },
+          "name": {
+            "en": "LIC's Jeevan Umang",
+            "hi": "एलआईसी जीवन उमंग"
+          },
           "planNo": "745",
-          "tagline": { "en": "Income every year. Protection for life.", "hi": "हर साल आय। जीवन भर सुरक्षा।" },
-          "keyBenefit": { "en": "8% annual cash back after premium term", "hi": "प्रीमियम अवधि के बाद 8% वार्षिक कैशबैक" },
+          "tagline": {
+            "en": "Income every year. Protection for life.",
+            "hi": "हर साल आय। जीवन भर सुरक्षा।"
+          },
+          "keyBenefit": {
+            "en": "8% annual cash back after premium term",
+            "hi": "प्रीमियम अवधि के बाद 8% वार्षिक कैशबैक"
+          },
           "category": "wholeLife",
           "entryAge": "90d - 55yr",
           "sumAssured": "₹2,00,000+",
           "premiumPayment": "15-30 years",
           "highlights": [
-            { "en": "Guaranteed income for life", "hi": "जीवन भर के लिए गारंटीड आय" },
-            { "en": "Coverage up to 100 years", "hi": "100 वर्ष की आयु तक कवर" }
+            {
+              "en": "Guaranteed income for life",
+              "hi": "जीवन भर के लिए गारंटीड आय"
+            },
+            {
+              "en": "Coverage up to 100 years",
+              "hi": "100 वर्ष की आयु तक कवर"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-sjeevanumang-745%09512n312v03"
+          "officialUrl": "https://licindia.in/web/guest/lic-sjeevanumang-745%09512n312v03",
+          "status": "withdrawn"
         },
         {
           "id": "lic-771",
-          "name": { "en": "LIC's Jeevan Utsav", "hi": "एलआईसी जीवन उत्सव" },
+          "name": {
+            "en": "LIC's Jeevan Utsav",
+            "hi": "एलआईसी जीवन उत्सव"
+          },
           "planNo": "771",
-          "tagline": { "en": "Celebrate life with guaranteed income.", "hi": "गारंटीड आय के साथ जीवन का उत्सव मनाएं।" },
-          "keyBenefit": { "en": "Guaranteed 10% annual payout lifelong", "hi": "जीवन भर गारंटीड 10% वार्षिक भुगतान" },
+          "tagline": {
+            "en": "Celebrate life with guaranteed income.",
+            "hi": "गारंटीड आय के साथ जीवन का उत्सव मनाएं।"
+          },
+          "keyBenefit": {
+            "en": "Guaranteed 10% annual payout lifelong",
+            "hi": "जीवन भर गारंटीड 10% वार्षिक भुगतान"
+          },
           "category": "wholeLife",
           "entryAge": "90d - 65yr",
           "sumAssured": "₹5,00,000+",
           "premiumPayment": "5-16 years",
           "highlights": [
-            { "en": "Short premium payment terms", "hi": "कम प्रीमियम भुगतान अवधि" },
-            { "en": "Lifetime guaranteed additions", "hi": "लाइफटाइम गारंटीड एडिशन्स" }
+            {
+              "en": "Short premium payment terms",
+              "hi": "कम प्रीमियम भुगतान अवधि"
+            },
+            {
+              "en": "Lifetime guaranteed additions",
+              "hi": "लाइफटाइम गारंटीड एडिशन्स"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav1"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav1",
+          "status": "withdrawn"
         }
       ]
     },
     "moneyBack": {
-      "label": { "en": "Money Back Plans", "hi": "मनी बैक (Money Back) योजनाएं" },
-      "tagline": { "en": "Regular payouts while staying covered.", "hi": "सुरक्षा के साथ नियमित भुगतान।" },
+      "label": {
+        "en": "Money Back Plans",
+        "hi": "मनी बैक (Money Back) योजनाएं"
+      },
+      "tagline": {
+        "en": "Regular payouts while staying covered.",
+        "hi": "सुरक्षा के साथ नियमित भुगतान।"
+      },
       "icon": "💸",
       "color": "#7D3C98",
       "plans": [
         {
           "id": "lic-720",
-          "name": { "en": "LIC's New Money Back – 20 Years", "hi": "एलआईसी न्यू मनी बैक - 20 वर्ष" },
+          "name": {
+            "en": "LIC's New Money Back – 20 Years",
+            "hi": "एलआईसी न्यू मनी बैक - 20 वर्ष"
+          },
           "planNo": "720",
-          "tagline": { "en": "Cash in hand every 5 years.", "hi": "हर 5 साल में नकद हाथ में।" },
-          "keyBenefit": { "en": "20% sum assured every 5 years", "hi": "हर 5 साल में 20% बीमा राशि का भुगतान" },
+          "tagline": {
+            "en": "Cash in hand every 5 years.",
+            "hi": "हर 5 साल में नकद हाथ में।"
+          },
+          "keyBenefit": {
+            "en": "20% sum assured every 5 years",
+            "hi": "हर 5 साल में 20% बीमा राशि का भुगतान"
+          },
           "category": "moneyBack",
           "entryAge": "13 - 50yr",
           "sumAssured": "₹1,00,000+",
           "premiumPayment": "20 years",
           "highlights": [
-            { "en": "Best for periodic cash needs", "hi": "आवधिक नकद जरूरतों के लिए सर्वश्रेष्ठ" },
-            { "en": "Lump sum at final maturity", "hi": "अंतिम मैच्योरिटी पर एकमुश्त राशि" }
+            {
+              "en": "Best for periodic cash needs",
+              "hi": "आवधिक नकद जरूरतों के लिए सर्वश्रेष्ठ"
+            },
+            {
+              "en": "Lump sum at final maturity",
+              "hi": "अंतिम मैच्योरिटी पर एकमुश्त राशि"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-money-back-plan-20-years"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-money-back-plan-20-years",
+          "status": "withdrawn"
         },
         {
           "id": "lic-733",
-          "name": { "en": "LIC's Jeevan Lakshya", "hi": "एलआईसी जीवन लक्ष्य" },
+          "name": {
+            "en": "LIC's Jeevan Lakshya",
+            "hi": "एलआईसी जीवन लक्ष्य"
+          },
           "planNo": "733",
-          "tagline": { "en": "Your family's goal, guaranteed.", "hi": "आपके परिवार का लक्ष्य, गारंटीड।" },
-          "keyBenefit": { "en": "Annual income for family after death + lump sum", "hi": "मृत्यु के बाद परिवार के लिए वार्षिक आय + एकमुश्त राशि" },
+          "tagline": {
+            "en": "Your family's goal, guaranteed.",
+            "hi": "आपके परिवार का लक्ष्य, गारंटीड।"
+          },
+          "keyBenefit": {
+            "en": "Annual income for family after death + lump sum",
+            "hi": "मृत्यु के बाद परिवार के लिए वार्षिक आय + एकमुश्त राशि"
+          },
           "category": "moneyBack",
           "entryAge": "18 - 50yr",
           "sumAssured": "₹1,00,000+",
           "premiumPayment": "Limited",
           "highlights": [
-            { "en": "Ideal for children's education", "hi": "बच्चों की शिक्षा के लिए आदर्श" },
-            { "en": "Waives future premiums on death", "hi": "मृत्यु पर भविष्य के प्रीमियम माफ" }
+            {
+              "en": "Ideal for children's education",
+              "hi": "बच्चों की शिक्षा के लिए आदर्श"
+            },
+            {
+              "en": "Waives future premiums on death",
+              "hi": "मृत्यु पर भविष्य के प्रीमियम माफ"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-lakshya-733-512n297v03"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-lakshya-733-512n297v03",
+          "status": "withdrawn"
         }
       ]
     },
     "term": {
-      "label": { "en": "Term Assurance Plans", "hi": "टर्म इंश्योरेंस (Term Assurance) योजनाएं" },
-      "tagline": { "en": "Maximum protection. Minimum cost.", "hi": "अधिकतम सुरक्षा। न्यूनतम लागत।" },
+      "label": {
+        "en": "Term Assurance Plans",
+        "hi": "टर्म इंश्योरेंस (Term Assurance) योजनाएं"
+      },
+      "tagline": {
+        "en": "Maximum protection. Minimum cost.",
+        "hi": "अधिकतम सुरक्षा। न्यूनतम लागत।"
+      },
       "icon": "🛡️",
       "color": "#C0392B",
       "plans": [
         {
           "id": "lic-954",
-          "name": { "en": "LIC's New Tech-Term", "hi": "एलआईसी न्यू टेक-टर्म" },
+          "name": {
+            "en": "LIC's New Tech-Term",
+            "hi": "एलआईसी न्यू टेक-टर्म"
+          },
           "planNo": "954",
-          "tagline": { "en": "Pure protection. 100% digital.", "hi": "पूर्ण सुरक्षा। 100% डिजिटल।" },
-          "keyBenefit": { "en": "High life cover at very low premium", "hi": "बहुत कम प्रीमियम पर उच्च जीवन कवर" },
+          "tagline": {
+            "en": "Pure protection. 100% digital.",
+            "hi": "पूर्ण सुरक्षा। 100% डिजिटल।"
+          },
+          "keyBenefit": {
+            "en": "High life cover at very low premium",
+            "hi": "बहुत कम प्रीमियम पर उच्च जीवन कवर"
+          },
           "category": "term",
           "entryAge": "18 - 65yr",
           "sumAssured": "₹50,00,000+",
           "premiumPayment": "Regular/Single",
           "highlights": [
-            { "en": "Lower rates for non-smokers", "hi": "गैर-धूम्रपान करने वालों के लिए कम दरें" },
-            { "en": "Available online only", "hi": "केवल ऑनलाइन उपलब्ध" }
+            {
+              "en": "Lower rates for non-smokers",
+              "hi": "गैर-धूम्रपान करने वालों के लिए कम दरें"
+            },
+            {
+              "en": "Available online only",
+              "hi": "केवल ऑनलाइन उपलब्ध"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-tech-term-954-512n351v01"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-tech-term-954-512n351v01",
+          "status": "withdrawn"
         },
         {
           "id": "lic-859",
-          "name": { "en": "LIC's Saral Jeevan Bima", "hi": "एलआईसी सरल जीवन बीमा" },
+          "name": {
+            "en": "LIC's Saral Jeevan Bima",
+            "hi": "एलआईसी सरल जीवन बीमा"
+          },
           "planNo": "859",
-          "tagline": { "en": "Simple. Standard. Affordable.", "hi": "सरल। मानक। वहन करने योग्य।" },
-          "keyBenefit": { "en": "Standardized term plan for easy understanding", "hi": "आसान समझ के लिए मानकीकृत टर्म प्लान" },
+          "tagline": {
+            "en": "Simple. Standard. Affordable.",
+            "hi": "सरल। मानक। वहन करने योग्य।"
+          },
+          "keyBenefit": {
+            "en": "Standardized term plan for easy understanding",
+            "hi": "आसान समझ के लिए मानकीकृत टर्म प्लान"
+          },
           "category": "term",
           "entryAge": "18 - 65yr",
           "sumAssured": "₹5L - ₹25L",
           "premiumPayment": "Regular/Limited/Single",
           "highlights": [
-            { "en": "Standard terms for all", "hi": "सभी के लिए मानक शर्तें" },
-            { "en": "Ideal for new insurance buyers", "hi": "नए बीमा खरीदारों के लिए आदर्श" }
+            {
+              "en": "Standard terms for all",
+              "hi": "सभी के लिए मानक शर्तें"
+            },
+            {
+              "en": "Ideal for new insurance buyers",
+              "hi": "नए बीमा खरीदारों के लिए आदर्श"
+            }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-saral-jeevan-bima"
+          "officialUrl": "https://licindia.in/web/guest/lic-s-saral-jeevan-bima",
+          "status": "withdrawn"
         }
       ]
     }

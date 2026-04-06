@@ -11,11 +11,11 @@
     "login": "Login",
     "claimSupport": "Claim Support",
     "renewPolicy": "Renew Policy",
-    "lifeInsurance": "Life Insurance",
-    "healthInsurance": "Health Insurance",
-    "retirement": "Retirement Planning",
-    "childPlanning": "Child Plans",
-    "taxPlanning": "Tax Planning"
+    "lifeInsurance": "Life Solutions",
+    "healthInsurance": "Health Solutions",
+    "retirement": "Retirement Wealth",
+    "childPlanning": "Child wealth Future",
+    "taxPlanning": "Wealth & Tax saving"
   },
   "banner": {
     "text": "New LIC & Star Health plans launched — April 2025",
@@ -24,12 +24,12 @@
   },
   "hero": {
     "eyebrow": "India's most trusted insurance advisor",
-    "headline": "Securing your family,",
-    "headlineGold": "31 years of trust.",
+    "headline": "Your Family's Protection,",
+    "headlineGold": "31 Years of Wealth Trust.",
     "subtitle": "Life insurance, health insurance, and comprehensive wealth planning for Indian families — by Mr. Ajay Kumar Poddar, MDRT Member & Chairman's Club awardee.",
-    "cta1": "Get financial health report",
-    "cta2": "Book free consultation",
-    "cta3": "Get a free quote",
+    "cta1": "Get Wealth Health Report",
+    "cta2": "Book Free Wealth Consultation",
+    "cta3": "Get Free Wealth Quote",
     "trustQuote": "31 years of showing up — not just selling.",
     "quickTitle": "What are you planning for?",
     "quickItems": [

@@ -1,7 +1,6 @@
 'use client'
 
 import LicPlans from '@/components/LicPlans'
-import licData from '@/lib/data/lic-plans.json'
 import { motion } from 'framer-motion'
 
 export default function ProductsPage() {
@@ -11,7 +10,7 @@ export default function ProductsPage() {
       <div className="absolute top-0 right-0 w-full h-[600px] bg-gradient-to-b from-navy/5 to-transparent -z-10 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto">
-        <LicPlans data={licData as any} />
+        <LicPlans />
       </div>
 
       {/* CTA Footer for Products */}

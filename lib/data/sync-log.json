@@ -1,0 +1,99 @@
+[
+  {
+    "timestamp": "2026-04-06T12:11:33.888Z",
+    "summary": {
+      "added": 11,
+      "removed": 9,
+      "changed": 0,
+      "unchanged": 0
+    },
+    "details": {
+      "added": [
+        {
+          "id": "lic-LIC's New Pension Plus",
+          "name": "1"
+        },
+        {
+          "id": "lic-LIC's Jeevan Akshay-VII",
+          "name": "2"
+        },
+        {
+          "id": "lic-LIC’s New Jeevan Shanti",
+          "name": "3"
+        },
+        {
+          "id": "lic-LIC's Saral Pension",
+          "name": "4"
+        },
+        {
+          "id": "lic-LIC’s Smart Pension",
+          "name": "5"
+        },
+        {
+          "id": "lic-LIC's Index Plus",
+          "name": "1"
+        },
+        {
+          "id": "lic-LIC's Nivesh Plus",
+          "name": "2"
+        },
+        {
+          "id": "lic-LIC's SIIP",
+          "name": "3"
+        },
+        {
+          "id": "lic-LIC's Protection Plus",
+          "name": "4"
+        },
+        {
+          "id": "lic-LIC's Micro Bachat",
+          "name": "1"
+        },
+        {
+          "id": "lic-LIC's Jan Suraksha",
+          "name": "2"
+        }
+      ],
+      "removed": [
+        {
+          "id": "lic-717",
+          "name": "LIC's Single Premium Endowment Plan"
+        },
+        {
+          "id": "lic-714",
+          "name": "LIC's New Endowment Plan"
+        },
+        {
+          "id": "lic-715",
+          "name": "LIC's New Jeevan Anand"
+        },
+        {
+          "id": "lic-745",
+          "name": "LIC's Jeevan Umang"
+        },
+        {
+          "id": "lic-771",
+          "name": "LIC's Jeevan Utsav"
+        },
+        {
+          "id": "lic-720",
+          "name": "LIC's New Money Back – 20 Years"
+        },
+        {
+          "id": "lic-733",
+          "name": "LIC's Jeevan Lakshya"
+        },
+        {
+          "id": "lic-954",
+          "name": "LIC's New Tech-Term"
+        },
+        {
+          "id": "lic-859",
+          "name": "LIC's Saral Jeevan Bima"
+        }
+      ],
+      "changed": [],
+      "unchanged": 0
+    }
+  }
+]
