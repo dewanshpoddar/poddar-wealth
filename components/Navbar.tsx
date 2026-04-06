@@ -1,7 +1,8 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
@@ -9,6 +10,7 @@ export default function Navbar() {
 
   return (
     <nav className="pw-nav">
+
       {/* Logo */}
       <Link href="/" className="pw-logo-area">
         <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center p-2 shadow-gold-sm overflow-hidden">
@@ -32,16 +34,26 @@ export default function Navbar() {
 
 
         {/* Language toggle */}
-        <div className="pw-lang-toggle ml-1">
+        <div className="pw-lang-toggle ml-1 relative">
+          <motion.div
+            className="absolute top-1 bottom-1 bg-gradient-to-br from-navy to-navy-light rounded-md shadow-md z-0"
+            initial={false}
+            animate={{
+              left: lang === 'en' ? '4px' : 'calc(50% + 2px)',
+              width: 'calc(50% - 6px)'
+            }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
           <button
             onClick={() => setLang('en')}
-            className={`pw-lang-btn ${lang === 'en' ? 'pw-lang-btn--active' : ''}`}
+            className={`pw-lang-btn ${lang === 'en' ? 'text-white' : 'text-gray-400 hover:text-navy'}`}
           >EN</button>
           <button
             onClick={() => setLang('hi')}
-            className={`pw-lang-btn ${lang === 'hi' ? 'pw-lang-btn--active' : ''}`}
+            className={`pw-lang-btn ${lang === 'hi' ? 'text-white' : 'text-gray-400 hover:text-navy'}`}
           >हिंदी</button>
         </div>
+
 
         <Link href="#" className="pw-nav-link font-medium text-navy">{t.nav.login}</Link>
         <a
