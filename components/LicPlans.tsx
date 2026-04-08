@@ -38,7 +38,7 @@ export default function LicPlans() {
   const [data, setData] = useState<LicData | null>(null)
   const [lastSync, setLastSync] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<string>('')
+  const [activeTab, setActiveTab] = useState<string>('__all__')
   const [expandedPlan, setExpandedPlan] = useState<string | null>(null)
 
   useEffect(() => {
@@ -48,7 +48,6 @@ export default function LicPlans() {
         if (res.success) {
           setData(res.data)
           setLastSync(res.lastSync)
-          setActiveTab(Object.keys(res.data.categories)[0])
         }
         setLoading(false)
       })
@@ -71,7 +70,14 @@ export default function LicPlans() {
 
   if (!data || !data.categories) return null
 
-  const activeCategory = data.categories[activeTab]
+  const ALL_TAB = '__all__'
+
+  const allPlans: (Plan & { _categoryKey: string })[] = Object.entries(data.categories).flatMap(
+    ([key, cat]) => cat.plans.map(p => ({ ...p, _categoryKey: key }))
+  )
+
+  const activeCategory = activeTab !== ALL_TAB ? data.categories[activeTab] : null
+  const displayedPlans = activeTab === ALL_TAB ? allPlans : activeCategory?.plans ?? []
 
   const handleGetPlan = (planName: string) => {
     const event = new CustomEvent('open-lead-popup', {
@@ -115,13 +121,28 @@ export default function LicPlans() {
 
         {/* Category Tabs */}
         <div className="flex overflow-x-auto pb-4 mb-8 gap-3 no-scrollbar scroll-smooth">
+          {/* All Plans tab */}
+          <button
+            onClick={() => setActiveTab(ALL_TAB)}
+            className={`flex-shrink-0 px-6 py-3 rounded-xl border-1.5 transition-all flex items-center gap-2 whitespace-nowrap
+              ${activeTab === ALL_TAB
+                ? 'bg-gold border-gold text-white shadow-lg'
+                : 'bg-white border-gray-100 text-gray-500 hover:border-gold/40'}`}
+          >
+            <span className="text-18">🏆</span>
+            <span className="font-bold text-13">{lang === 'en' ? 'All Wealth Plans' : 'सभी प्लान्स'}</span>
+            <span className={`text-10 px-1.5 py-0.5 rounded-full ${activeTab === ALL_TAB ? 'bg-white/20' : 'bg-gray-100'}`}>
+              {allPlans.length}
+            </span>
+          </button>
+
           {Object.entries(data.categories).map(([key, cat]) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
               className={`flex-shrink-0 px-6 py-3 rounded-xl border-1.5 transition-all flex items-center gap-2 whitespace-nowrap
-                ${activeTab === key 
-                  ? 'bg-navy border-navy text-white shadow-navy' 
+                ${activeTab === key
+                  ? 'bg-navy border-navy text-white shadow-navy'
                   : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30'}`}
             >
               <span className="text-18">{cat.icon}</span>
@@ -135,59 +156,62 @@ export default function LicPlans() {
 
         {/* Category Hero */}
         <AnimatePresence mode="wait">
-          {activeCategory && (
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              className="bg-white rounded-2xl p-6 md:p-8 mb-8 border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative"
-            >
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-2">
-                  <div 
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-20 shadow-lg"
-                    style={{ background: activeCategory.color }}
-                  >
-                    {activeCategory.icon}
-                  </div>
-                  <h2 className="text-22 font-bold text-navy">
-                    {activeCategory.label[lang as keyof typeof activeCategory.label]}
-                  </h2>
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="bg-white rounded-2xl p-6 md:p-8 mb-8 border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative"
+          >
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-2">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-white text-20 shadow-lg"
+                  style={{ background: activeCategory ? activeCategory.color : 'linear-gradient(135deg, #c9a84c, #a07839)' }}
+                >
+                  {activeCategory ? activeCategory.icon : '🏆'}
                 </div>
-                <p className="text-15 text-gray-500 italic">
-                  {activeCategory.tagline[lang as keyof typeof activeCategory.tagline]}
-                </p>
+                <h2 className="text-22 font-bold text-navy">
+                  {activeCategory
+                    ? activeCategory.label[lang as keyof typeof activeCategory.label]
+                    : (lang === 'en' ? 'All LIC Wealth Plans' : 'सभी एलआईसी वेल्थ प्लान्स')}
+                </h2>
               </div>
-              
-              <div className="flex items-center gap-8 md:border-l border-gray-100 md:pl-8 relative z-10">
-                <div className="text-center">
-                  <div className="text-11 font-bold text-gray-400 uppercase tracking-widest mb-1">Status</div>
-                  <div className="flex items-center gap-1.5 text-green-600 font-bold text-13">
-                    <Zap size={14} fill="currentColor" /> Live Sync
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-11 font-bold text-gray-400 uppercase tracking-widest mb-1">Last Updated</div>
-                  <div className="flex items-center gap-1.5 text-gold font-bold text-13 underline underline-offset-2">
-                    <CheckCircle2 size={14} /> {data.meta.lastUpdated}
-                  </div>
-                </div>
-              </div>
+              <p className="text-15 text-gray-500 italic">
+                {activeCategory
+                  ? activeCategory.tagline[lang as keyof typeof activeCategory.tagline]
+                  : (lang === 'en'
+                      ? `Complete portfolio — ${allPlans.length} active plans across ${Object.keys(data.categories).length} categories`
+                      : `पूरा पोर्टफोलियो — ${allPlans.length} सक्रिय प्लान्स`)}
+              </p>
+            </div>
 
-              {/* Decorative background circle */}
-              <div 
-                className="absolute -right-10 -bottom-10 w-40 h-40 rounded-full opacity-[0.03] pointer-events-none"
-                style={{ backgroundColor: activeCategory.color }}
-              />
-            </motion.div>
-          )}
+            <div className="flex items-center gap-8 md:border-l border-gray-100 md:pl-8 relative z-10">
+              <div className="text-center">
+                <div className="text-11 font-bold text-gray-400 uppercase tracking-widest mb-1">Status</div>
+                <div className="flex items-center gap-1.5 text-green-600 font-bold text-13">
+                  <Zap size={14} fill="currentColor" /> Live Sync
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-11 font-bold text-gray-400 uppercase tracking-widest mb-1">Last Updated</div>
+                <div className="flex items-center gap-1.5 text-gold font-bold text-13 underline underline-offset-2">
+                  <CheckCircle2 size={14} /> {data.meta.lastUpdated}
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="absolute -right-10 -bottom-10 w-40 h-40 rounded-full opacity-[0.03] pointer-events-none"
+              style={{ backgroundColor: activeCategory ? activeCategory.color : '#c9a84c' }}
+            />
+          </motion.div>
         </AnimatePresence>
 
         {/* Plans Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {activeCategory?.plans.map((plan, idx) => (
+            {(displayedPlans as any[]).map((plan, idx) => (
               <motion.div
                 key={plan.id}
                 layout
@@ -213,11 +237,15 @@ export default function LicPlans() {
                     <span className="text-10 font-bold px-2 py-1 bg-gray-50 text-gray-500 rounded border border-gray-100 uppercase tracking-wider">
                       Plan No. {plan.planNo}
                     </span>
-                    {plan.id.includes('715') && plan.status !== 'new' && (
+                    {activeTab === ALL_TAB && plan._categoryKey ? (
+                      <span className="text-10 font-bold px-2 py-1 bg-navy/5 text-navy/60 rounded border border-navy/10 uppercase tracking-wider">
+                        {data.categories[plan._categoryKey]?.icon} {data.categories[plan._categoryKey]?.label?.en?.replace(' Plans', '')}
+                      </span>
+                    ) : (plan.id.includes('715') && plan.status !== 'new') ? (
                       <span className="text-10 font-bold px-2 py-1 bg-gold/10 text-gold rounded border border-gold/10 uppercase tracking-wider">
                         Best Seller
                       </span>
-                    )}
+                    ) : null}
                   </div>
                   <h3 className="text-18 font-bold text-navy mb-2 line-clamp-1">
                     {plan.name[lang as keyof typeof plan.name] || plan.name.en}
@@ -277,7 +305,7 @@ export default function LicPlans() {
                         <div>
                           <div className="text-11 font-bold text-gray-400 uppercase tracking-widest mb-2">Key Highlights</div>
                           <div className="space-y-2">
-                            {(plan.highlights && plan.highlights.length > 0) ? plan.highlights.map((h, i) => (
+                            {(plan.highlights && plan.highlights.length > 0) ? plan.highlights.map((h: any, i: number) => (
                               <div key={i} className="flex items-start gap-2 text-13 text-gray-600">
                                 <CheckCircle2 size={14} className="text-green-500 mt-1 flex-shrink-0" />
                                 <span>{h[lang as keyof typeof h] || h.en}</span>
