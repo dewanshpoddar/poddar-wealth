@@ -87,6 +87,17 @@ export default function Navbar() {
           {t.nav.services}
         </Link>
 
+        <Link
+          href="/calculators/premium"
+          className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 ${
+            pathname.startsWith('/calculators')
+              ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
+              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
+          }`}
+        >
+          Calculators
+        </Link>
+
         {/* Language toggle adaption */}
         <div className={`pw-lang-toggle ml-1 relative transition-colors duration-500 border-none ${
           isScrolled ? 'bg-white/10' : 'bg-gray-100'
@@ -167,12 +178,20 @@ export default function Navbar() {
             >
               {t.nav.products}
             </Link>
-            <Link 
-              href="/services" 
-              onClick={() => setOpen(false)} 
+            <Link
+              href="/services"
+              onClick={() => setOpen(false)}
               className={`text-18 font-bold ${isActive('/services') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
             >
               {t.nav.services}
+            </Link>
+            <Link
+              href="/calculators/premium"
+              onClick={() => setOpen(false)}
+              className={`text-18 font-bold flex items-center gap-2 ${pathname.startsWith('/calculators') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
+            >
+              Calculators
+              <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
             </Link>
 
             <div className={`h-px my-1 w-full ${isScrolled ? 'bg-white/10' : 'bg-gray-100'}`}></div>

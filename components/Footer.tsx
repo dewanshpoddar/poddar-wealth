@@ -76,8 +76,14 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 px-1 border-l-2 border-gold/40 ml-[-2px]">Support & Tools</h4>
             <ul className="space-y-4 mb-6">
               <li>
+                <Link href="/calculators/premium" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
+                  <span>🧮</span> Premium Calculator
+                  <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/calculators/life-insurance" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
-                   <span>📊</span> {t.nav.calculators}
+                   <span>📊</span> Life Insurance Calculator
                 </Link>
               </li>
               <li>
