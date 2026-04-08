@@ -215,7 +215,7 @@ export default function PremiumCalculatorPage() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <div className={`text-[11px] font-bold mb-1 ${selectedPlan?.planNo === plan.planNo ? 'text-gold' : 'text-gray-900'}`}>
-                          LIC's {plan.name}
+                          LIC&apos;s {plan.name}
                         </div>
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <span className="text-[9px] text-gray-400 bg-gray-50 border border-gray-100 px-1.5 py-0.5 rounded font-medium">
@@ -261,7 +261,7 @@ export default function PremiumCalculatorPage() {
                       {selectedPlan.category?.toUpperCase()}
                     </div>
                     <div className="text-white font-display font-bold text-[20px] leading-tight">
-                      LIC's {selectedPlan.name}
+                      LIC&apos;s {selectedPlan.name}
                       <span className="text-white/40 font-sans text-[12px] ml-2 font-normal">Plan {selectedPlan.planNo}</span>
                     </div>
                     <div className="text-white/60 text-[12px] mt-1 max-w-lg">{selectedPlan.desc}</div>

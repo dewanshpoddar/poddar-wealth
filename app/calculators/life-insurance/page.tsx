@@ -180,7 +180,7 @@ export default function LifeInsuranceCalcPage() {
                 </div>
                 <h2 className="font-display font-bold text-2xl text-slate-900">
                   Your coverage need is <span className="text-brand-600">{fmt(need.recommended)}</span>.
-                  Here's what LIC charges.
+                  Here&apos;s what LIC charges.
                 </h2>
               </div>
 
