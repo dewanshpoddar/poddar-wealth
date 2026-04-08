@@ -1,4 +1,0 @@
-total 24
-drwxr-xr-x  3 dewanshpoddar  staff     96 Apr  6 13:14 .
-drwx------@ 8 dewanshpoddar  staff    256 Apr  6 13:14 ..
--rw-r--r--@ 1 dewanshpoddar  staff  11650 Apr  6 13:10 ANTIGRAVITY_AUTOSYNC_MISSION.md

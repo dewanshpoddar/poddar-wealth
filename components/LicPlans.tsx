@@ -127,7 +127,7 @@ export default function LicPlans() {
               <span className="text-18">{cat.icon}</span>
               <span className="font-bold text-13">{cat.label[lang as keyof typeof cat.label]}</span>
               <span className={`text-10 px-1.5 py-0.5 rounded-full ${activeTab === key ? 'bg-white/20' : 'bg-gray-100'}`}>
-                {cat.plans.filter(p => p.status !== 'withdrawn').length}
+                {cat.plans.length}
               </span>
             </button>
           ))}
@@ -196,22 +196,14 @@ export default function LicPlans() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: idx * 0.05 }}
                 className={`bg-white rounded-2xl border transition-all duration-300 flex flex-col h-full overflow-hidden relative
-                  ${expandedPlan === plan.id ? 'border-navy/20 shadow-xl' : 'border-gray-100 hover:border-navy/10 hover:shadow-card'}
-                  ${plan.status === 'withdrawn' ? 'opacity-60 saturate-50' : ''}`}
+                  ${expandedPlan === plan.id ? 'border-navy/20 shadow-xl' : 'border-gray-100 hover:border-navy/10 hover:shadow-card'}`}
               >
-                {/* Plan Status Badges */}
+                {/* New plan badge */}
                 {plan.status === 'new' && (
                   <div className="absolute top-4 right-4 z-20">
                     <span className="bg-green-500 text-white text-10 font-bold px-2 py-0.5 rounded shadow-sm uppercase tracking-widest animate-pulse">
                       New Plan
                     </span>
-                  </div>
-                )}
-                {plan.status === 'withdrawn' && (
-                  <div className="absolute inset-0 z-30 bg-white/40 flex items-center justify-center p-6 text-center pointer-events-none">
-                     <span className="bg-gray-800 text-white text-12 font-bold px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest">
-                       Plan Discontinued
-                     </span>
                   </div>
                 )}
 
@@ -257,11 +249,7 @@ export default function LicPlans() {
                 <div className="mt-auto p-6 pt-0 space-y-3 relative z-10">
                   <button
                     onClick={() => handleGetPlan(plan.name.en)}
-                    disabled={plan.status === 'withdrawn'}
-                    className={`w-full h-11 text-white rounded-xl font-bold text-13 shadow-sm transition-all flex items-center justify-center gap-2 group
-                      ${plan.status === 'withdrawn' 
-                        ? 'bg-gray-300 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-navy to-navy-light hover:shadow-navy/20'}`}
+                    className="w-full h-11 text-white rounded-xl font-bold text-13 shadow-sm transition-all flex items-center justify-center gap-2 group bg-gradient-to-r from-navy to-navy-light hover:shadow-navy/20"
                   >
                     {lang === 'en' ? 'Get This Plan' : 'यह प्लान प्राप्त करें'}
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
