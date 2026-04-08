@@ -5,16 +5,16 @@ import path from 'path';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { name, mobile, email, intent } = data;
+    const { name, mobile, email, wantTo, iAm, intent } = data;
 
     const timestamp = new Date().toISOString();
     const filePath = path.join(process.cwd(), 'leads.csv');
-    
+
     const sanitize = (str: any) => `"${String(str || '').replace(/"/g, '""')}"`;
-    const line = [sanitize(timestamp), sanitize(name), sanitize(mobile), sanitize(email), sanitize(intent)].join(',') + '\n';
+    const line = [sanitize(timestamp), sanitize(name), sanitize(mobile), sanitize(email), sanitize(wantTo), sanitize(iAm), sanitize(intent)].join(',') + '\n';
 
     if (!fs.existsSync(filePath)) {
-      const headers = 'Timestamp,Name,Mobile,Email,Interest\n';
+      const headers = 'Timestamp,Name,Mobile,Email,Want To,I Am,Interest\n';
       fs.writeFileSync(filePath, headers);
     }
     fs.appendFileSync(filePath, line);

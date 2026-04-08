@@ -5,7 +5,7 @@ import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
 
 export default function ContactPage() {
   const { t } = useLang()
-  const [form, setForm] = useState({ name: '', phone: '', message: '' })
+  const [form, setForm] = useState({ name: '', phone: '', wantTo: '', iAm: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -49,6 +49,34 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp / Phone *</label>
                     <input type="tel" required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} className="input-field" placeholder="+91 98290 XXXXX" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">I want to *</label>
+                      <select required value={form.wantTo} onChange={e => setForm({...form, wantTo: e.target.value})}
+                        className="input-field appearance-none cursor-pointer">
+                        <option value="">Select</option>
+                        <option>Protect my family</option>
+                        <option>Create wealth</option>
+                        <option>Plans for Children&apos;s future</option>
+                        <option>Plan for my retirement</option>
+                        <option>Get health cover</option>
+                        <option>Complete financial checkup</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">I am *</label>
+                      <select required value={form.iAm} onChange={e => setForm({...form, iAm: e.target.value})}
+                        className="input-field appearance-none cursor-pointer">
+                        <option value="">Select</option>
+                        <option>Prospective Policy Holder</option>
+                        <option>Existing Policy Holder</option>
+                        <option>An NRI</option>
+                        <option>An agent</option>
+                        <option>Employee</option>
+                        <option>Retired employee</option>
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Message</label>

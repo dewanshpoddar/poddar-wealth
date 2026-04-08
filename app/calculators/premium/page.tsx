@@ -99,6 +99,8 @@ export default function PremiumCalculatorPage() {
   const [isUnlocked,   setIsUnlocked]   = useState(false)
   const [unlockMobile, setUnlockMobile] = useState('')
   const [unlockEmail,  setUnlockEmail]  = useState('')
+  const [unlockWantTo, setUnlockWantTo] = useState('')
+  const [unlockIAm,    setUnlockIAm]    = useState('')
   const [unlockStatus, setUnlockStatus] = useState<'idle'|'sending'|'done'>('idle')
 
   /* derived */
@@ -175,6 +177,8 @@ export default function PremiumCalculatorPage() {
           name: clientName ? `${salutation} ${clientName}` : 'Calculator User',
           mobile: unlockMobile,
           email: unlockEmail,
+          wantTo: unlockWantTo,
+          iAm: unlockIAm,
           intent: `Premium calc unlock: LIC's ${selectedPlan?.name} (Plan ${selectedPlan?.planNo}), ${fmtSA(sa)} SA, Age ${age}`
         })
       })
@@ -636,6 +640,27 @@ export default function PremiumCalculatorPage() {
                                   <input required type="tel" placeholder="10-digit mobile number"
                                     value={unlockMobile} onChange={e => setUnlockMobile(e.target.value)}
                                     className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                  <select required value={unlockWantTo} onChange={e => setUnlockWantTo(e.target.value)}
+                                    className="px-3 py-2.5 border border-gray-200 rounded-xl text-[12px] bg-gray-50 focus:outline-none focus:border-gold/50 text-gray-600 appearance-none cursor-pointer">
+                                    <option value="">I want to…</option>
+                                    <option>Protect my family</option>
+                                    <option>Create wealth</option>
+                                    <option>Children&apos;s future</option>
+                                    <option>Plan retirement</option>
+                                    <option>Get health cover</option>
+                                  </select>
+                                  <select required value={unlockIAm} onChange={e => setUnlockIAm(e.target.value)}
+                                    className="px-3 py-2.5 border border-gray-200 rounded-xl text-[12px] bg-gray-50 focus:outline-none focus:border-gold/50 text-gray-600 appearance-none cursor-pointer">
+                                    <option value="">I am…</option>
+                                    <option>New to LIC</option>
+                                    <option>Existing holder</option>
+                                    <option>An NRI</option>
+                                    <option>An agent</option>
+                                    <option>Employee</option>
+                                    <option>Retired</option>
+                                  </select>
                                 </div>
                                 <div className="relative">
                                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">✉️</span>

@@ -11,7 +11,9 @@ export default function LeadPopup() {
     name: '',
     mobile: '',
     email: '',
-    intent: 'General Consultation'
+    intent: 'General Consultation',
+    wantTo: '',
+    iAm: '',
   })
 
   useEffect(() => {
@@ -168,19 +170,41 @@ export default function LeadPopup() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">I am interested in</label>
-                      <select
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all appearance-none cursor-pointer"
-                        value={formData.intent}
-                        onChange={(e) => setFormData({ ...formData, intent: e.target.value })}
-                      >
-                        <option>Life Insurance Protection</option>
-                        <option>Health & Medical Cover</option>
-                        <option>Retirement & Pension</option>
-                        <option>Child Education Planning</option>
-                        <option>Complete Financial Checkup</option>
-                      </select>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">I want to</label>
+                        <select
+                          required
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all appearance-none cursor-pointer"
+                          value={formData.wantTo}
+                          onChange={(e) => setFormData({ ...formData, wantTo: e.target.value })}
+                        >
+                          <option value="">Select</option>
+                          <option>Protect my family</option>
+                          <option>Create wealth</option>
+                          <option>Plans for Children&apos;s future</option>
+                          <option>Plan for my retirement</option>
+                          <option>Get health cover</option>
+                          <option>Complete financial checkup</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">I am</label>
+                        <select
+                          required
+                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all appearance-none cursor-pointer"
+                          value={formData.iAm}
+                          onChange={(e) => setFormData({ ...formData, iAm: e.target.value })}
+                        >
+                          <option value="">Select</option>
+                          <option>Prospective Policy Holder</option>
+                          <option>Existing Policy Holder</option>
+                          <option>An NRI</option>
+                          <option>An agent</option>
+                          <option>Employee</option>
+                          <option>Retired employee</option>
+                        </select>
+                      </div>
                     </div>
 
                     <p className="text-[11px] text-gray-400 text-center italic">
