@@ -52,6 +52,10 @@ export default function PremiumCalculatorPage() {
   const [search, setSearch]           = useState('')
   const [selectedPlan, setSelectedPlan] = useState<any>(null)
 
+  /* client identity */
+  const [clientName,  setClientName]  = useState('')
+  const [salutation,  setSalutation]  = useState<'Mr.'|'Mrs.'|'Ms.'>('Mr.')
+
   /* calculator inputs */
   const [age,    setAge]    = useState(30)
   const [sa,     setSa]     = useState(1000000)
@@ -66,6 +70,12 @@ export default function PremiumCalculatorPage() {
   const [benefitTable, setBenefitTable] = useState<any[]>([])
   const [showTable,    setShowTable]    = useState(false)
   const [showAllRows,  setShowAllRows]  = useState(false)
+
+  /* unlock / lead capture */
+  const [isUnlocked,   setIsUnlocked]   = useState(false)
+  const [unlockMobile, setUnlockMobile] = useState('')
+  const [unlockEmail,  setUnlockEmail]  = useState('')
+  const [unlockStatus, setUnlockStatus] = useState<'idle'|'sending'|'done'>('idle')
 
   /* derived */
   const filteredPlans = useMemo(() => {
@@ -107,6 +117,27 @@ export default function PremiumCalculatorPage() {
     setPremResult(prem)
     setMatResult(mat)
     setBenefitTable(table ?? [])
+    setIsUnlocked(false)
+    setUnlockStatus('idle')
+  }
+
+  async function handleUnlock(e: React.FormEvent) {
+    e.preventDefault()
+    setUnlockStatus('sending')
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: clientName ? `${salutation} ${clientName}` : 'Calculator User',
+          mobile: unlockMobile,
+          email: unlockEmail,
+          intent: `Premium calc unlock: LIC's ${selectedPlan?.name} (Plan ${selectedPlan?.planNo}), ${fmtSA(sa)} SA, Age ${age}`
+        })
+      })
+    } catch {}
+    setIsUnlocked(true)
+    setUnlockStatus('done')
   }
 
   const xirr = useMemo(() => {
@@ -282,6 +313,25 @@ export default function PremiumCalculatorPage() {
                 <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5">
                   <h2 className="font-display font-bold text-[16px] text-navy mb-5">Enter Your Details</h2>
 
+                  {/* Name + Salutation */}
+                  <div className="mb-5 pb-5 border-b border-gray-50">
+                    <label className="block text-[12px] font-semibold text-gray-600 mb-2">Your Name <span className="text-gray-300 font-normal">(personalises your report)</span></label>
+                    <div className="flex gap-2">
+                      <div className="flex gap-1">
+                        {(['Mr.', 'Mrs.', 'Ms.'] as const).map(s => (
+                          <button key={s} onClick={() => setSalutation(s)}
+                            className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-all
+                              ${salutation === s ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                            {s}
+                          </button>
+                        ))}
+                      </div>
+                      <input type="text" placeholder="e.g. Rajesh Kumar" value={clientName}
+                        onChange={e => setClientName(e.target.value)}
+                        className="flex-1 px-3 py-2 text-[13px] border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-gold/40 focus:bg-white transition-all" />
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {/* Age */}
                     <div>
@@ -374,7 +424,94 @@ export default function PremiumCalculatorPage() {
 
                 {/* ── RESULTS ── */}
                 {premResult && (
-                  <>
+                  <div className="space-y-4">
+                    {/* Personalized header */}
+                    {clientName && (
+                      <div className="bg-navy/5 border border-navy/10 rounded-2xl px-4 py-3 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center font-bold text-[16px] flex-shrink-0">
+                          {clientName.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <div className="font-bold text-[14px] text-navy">{salutation} {clientName}&apos;s Premium Report</div>
+                          <div className="text-[11px] text-gray-500">LIC&apos;s {selectedPlan.name} · Age {age} · {fmtSA(sa)} SA · {safeterm} yr term</div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* You Pay / You Get hero */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
+                        <div className="text-[22px] mb-1">💰</div>
+                        <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">You Pay</div>
+                        <div className="text-[10px] text-gray-400 mb-2">total premium of</div>
+                        <div className="font-display font-bold text-[22px] text-navy leading-none">{fmt(premResult.totalPaid)}</div>
+                        <div className="text-[10px] text-gray-400 mt-1">over {ppt} year{ppt > 1 ? 's' : ''}</div>
+                      </div>
+                      <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
+                        <div className="text-[22px] mb-1">🤲</div>
+                        <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">You Get</div>
+                        <div className="text-[10px] text-gray-400 mb-2">{isTermPlan ? 'life cover' : 'total benefit of'}</div>
+                        <div className={`font-display font-bold text-[22px] leading-none ${isTermPlan ? 'text-red-600' : 'text-green-700'}`}>
+                          {isTermPlan ? fmtSA(sa) : (matResult?.maturity ? fmt(matResult.maturity) : '—')}
+                        </div>
+                        <div className="text-[10px] text-gray-400 mt-1">
+                          {isTermPlan ? 'on death claim' : `at age ${age + safeterm}`}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Benefit timeline */}
+                    {!isTermPlan && matResult?.maturity > 0 && (
+                      <div className="bg-white rounded-2xl p-5 border border-[rgba(184,134,11,0.08)] shadow-sm">
+                        <div className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-4">Benefit Pattern</div>
+                        {/* Umbrella life cover label */}
+                        <div className="text-center text-[11px] text-blue-600 font-semibold mb-2">
+                          ☂️ Life Cover: {fmtSA(sa)} → {fmt(matResult.maturity)}
+                        </div>
+                        {/* Timeline bar */}
+                        <div className="relative h-2.5 bg-gray-100 rounded-full mx-2 mb-1">
+                          <div className="absolute h-full bg-gradient-to-r from-gold via-amber-400 to-green-500 rounded-full"
+                            style={{ width: `${Math.min((ppt / safeterm) * 100, 100)}%` }} />
+                          {ppt < safeterm && (
+                            <div className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-navy border-2 border-white shadow"
+                              style={{ left: `calc(${(ppt / safeterm) * 100}% - 6px)` }} />
+                          )}
+                        </div>
+                        {/* Age markers */}
+                        <div className="relative flex justify-between text-center mt-3 px-2">
+                          <div>
+                            <div className="text-[11px] font-bold text-navy">Age {age}</div>
+                            <div className="text-[10px] text-gray-400">Start</div>
+                            <div className="text-[10px] text-gold font-semibold mt-0.5">₹{Math.round(premResult.yearlyYear1).toLocaleString('en-IN')}/yr</div>
+                          </div>
+                          {ppt < safeterm && (
+                            <div className="text-center absolute" style={{ left: `calc(${(ppt / safeterm) * 100}% - 28px)` }}>
+                              <div className="text-[11px] font-bold text-navy">Age {age + ppt}</div>
+                              <div className="text-[10px] text-gray-400">Premiums end</div>
+                            </div>
+                          )}
+                          <div>
+                            <div className="text-[11px] font-bold text-green-700">Age {age + safeterm}</div>
+                            <div className="text-[10px] text-gray-400">Maturity</div>
+                            <div className="text-[10px] text-green-600 font-bold mt-0.5">🎉 {fmt(matResult.maturity)}</div>
+                          </div>
+                        </div>
+                        {/* Summary row */}
+                        <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-50 text-center">
+                          {[
+                            { label: 'Total Premium', value: fmt(premResult.totalPaid), color: 'text-navy' },
+                            { label: 'Total Returns',  value: fmt(matResult.maturity),  color: 'text-green-700' },
+                            { label: `Tax Saved (30%)`, value: tax80C ? fmt(tax80C) : '—', color: 'text-blue-600' },
+                          ].map(({ label, value, color }) => (
+                            <div key={label} className="bg-gray-50 rounded-xl p-2.5">
+                              <div className="text-[9px] text-gray-400 font-semibold uppercase tracking-wide mb-0.5">{label}</div>
+                              <div className={`font-display font-bold text-[14px] ${color}`}>{value}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* 4 metric cards */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {[
@@ -392,6 +529,50 @@ export default function PremiumCalculatorPage() {
                         </div>
                       ))}
                     </div>
+
+                    {/* ── LOCKED SECTION ── */}
+                    <div className="relative">
+                      {/* Blur overlay when not unlocked */}
+                      {!isUnlocked && (
+                        <div className="absolute inset-0 z-20 rounded-2xl overflow-hidden">
+                          <div className="absolute inset-0 backdrop-blur-sm bg-white/60" />
+                          <div className="absolute inset-0 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl shadow-2xl border border-gold/20 w-full max-w-sm p-6 text-center">
+                              <div className="text-[32px] mb-2">🔓</div>
+                              <div className="font-display font-bold text-[18px] text-navy mb-1">
+                                {clientName ? `${salutation} ${clientName}, your full report is ready!` : 'Your full report is ready!'}
+                              </div>
+                              <div className="text-[12px] text-gray-500 mb-5">
+                                Enter your mobile number to unlock the complete premium breakdown, tax benefits, and year-by-year benefit table.
+                              </div>
+                              <form onSubmit={handleUnlock} className="space-y-3 text-left">
+                                <div className="relative">
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">📱</span>
+                                  <input required type="tel" placeholder="10-digit mobile number"
+                                    value={unlockMobile} onChange={e => setUnlockMobile(e.target.value)}
+                                    className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
+                                </div>
+                                <div className="relative">
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">✉️</span>
+                                  <input type="email" placeholder="Email (optional)"
+                                    value={unlockEmail} onChange={e => setUnlockEmail(e.target.value)}
+                                    className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
+                                </div>
+                                <button type="submit" disabled={unlockStatus === 'sending'}
+                                  className="w-full bg-gold hover:bg-gold-hover text-white font-bold py-3 rounded-xl text-[13px] flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-70">
+                                  {unlockStatus === 'sending'
+                                    ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    : <><ArrowRight className="w-4 h-4" /> Unlock Full Report</>}
+                                </button>
+                                <div className="text-[10px] text-gray-400 text-center">🔒 Your data is private and never shared.</div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Blurred content (placeholder height when locked) */}
+                      <div className={`space-y-4 ${!isUnlocked ? 'pointer-events-none select-none min-h-[420px]' : ''}`}>
 
                     {/* Progress bar — paid vs maturity */}
                     {!isTermPlan && matResult?.maturity > 0 && (
@@ -616,7 +797,10 @@ export default function PremiumCalculatorPage() {
                         <Share2 className="w-4 h-4" /> WhatsApp
                       </button>
                     </div>
-                  </>
+
+                      </div>{/* end blurred content */}
+                    </div>{/* end locked section */}
+                  </div>
                 )}
               </div>
             )}
