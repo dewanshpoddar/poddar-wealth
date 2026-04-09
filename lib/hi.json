@@ -63,7 +63,7 @@
     ],
     "partnersLabel": "अधिकृत पार्टनर",
     "partners": [
-      { "name": "LIC ऑफ़ इंडिया", "color": "#003087", "logo": "/assets/lic-logo-updated.svg" },
+      { "name": "LIC ऑफ़ इंडिया", "color": "#003087", "logo": "/assets/lic_log_updated.svg" },
       { "name": "Star Health Insurance", "color": "#c8000a", "logo": "/assets/star-health-logo.svg" }
     ]
   },
