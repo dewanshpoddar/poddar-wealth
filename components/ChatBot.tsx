@@ -4,7 +4,6 @@ import { useLang } from '@/lib/LangContext'
 
 type Message = { from: 'bot' | 'user'; text: string }
 
-const systemPrompt = `You are an AI insurance advisor for Poddar Wealth Management, a respected insurance agency in Gorakhpur, UP, India, run by Ajay Kumar Poddar since 1994. MDRT member, Chairman's Club awardee. Products: LIC (Jeevan Amar, New Jeevan Anand, Jeevan Umang, Jeevan Tarun, Jeevan Shanti, Jeevan Akshay, money-back plans) and Star Health Insurance. Answer warmly in the same language as the user (Hindi in Devanagari or English). Be specific, concise (3-4 sentences), and end with a gentle nudge to call 9415313434. Never make up exact premiums — say "roughly" or "approximately". Do not advise on stocks or mutual funds.`
 
 const fallbackReplies: Record<string, string> = {
   term: 'A term plan (like LIC Jeevan Amar) gives the highest life cover at the lowest premium. For a 35-year-old with ₹50L cover, it costs roughly ₹4,000-5,000/quarter. For an exact quote, please call Ajay sir at 9415313434.',
@@ -29,7 +28,6 @@ function getFallbackReply(msg: string): string {
 
 export default function ChatBot({ fullPage = false }: { fullPage?: boolean }) {
   const { t } = useLang()
-  const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     { from: 'bot', text: t.chatbot.greeting }
   ])
@@ -47,11 +45,28 @@ export default function ChatBot({ fullPage = false }: { fullPage?: boolean }) {
     const text = preset || input.trim()
     if (!text || typing) return
     setInput('')
-    setMessages((prev: Message[]) => [...prev, { from: 'user', text }])
+
+    const updatedMessages: Message[] = [...messages, { from: 'user', text }]
+    setMessages(updatedMessages)
     setTyping(true)
-    await new Promise(r => setTimeout(r, 800 + Math.random() * 700))
-    setTyping(false)
-    setMessages((prev: Message[]) => [...prev, { from: 'bot', text: getFallbackReply(text) }])
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: updatedMessages
+            .filter(m => m.from === 'user' || m.from === 'bot')
+            .map(m => ({ role: m.from === 'user' ? 'user' : 'assistant', content: m.text }))
+        }),
+      })
+      const data = await res.json()
+      setMessages(prev => [...prev, { from: 'bot', text: data.reply || getFallbackReply(text) }])
+    } catch {
+      setMessages(prev => [...prev, { from: 'bot', text: getFallbackReply(text) }])
+    } finally {
+      setTyping(false)
+    }
   }
 
   return (

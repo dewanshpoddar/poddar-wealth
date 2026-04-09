@@ -10,6 +10,7 @@
     "sync:lic:now": "node scripts/lic-scraper.js | node scripts/lic-diff.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.86.1",
     "cheerio": "^1.2.0",
     "framer-motion": "^11.2.10",
     "lucide-react": "^0.383.0",

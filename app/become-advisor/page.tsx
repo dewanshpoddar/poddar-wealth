@@ -1,22 +1,34 @@
 'use client'
-import { useState } from 'react'
-import { useLang } from '@/lib/LangContext'
+
 import Image from 'next/image'
-import { CheckCircle2, Loader2 } from 'lucide-react'
+import { useLang } from '@/lib/LangContext'
+import { User, Phone, MapPin, Briefcase, MessageSquare } from 'lucide-react'
+import BaseLeadForm from '@/components/base/BaseLeadForm'
 
 export default function BecomeAdvisorPage() {
-  const { t } = useLang()
-  const [form, setForm] = useState({ name: '', phone: '', city: '', experience: '', motivation: '' })
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const { t, lang } = useLang()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setSuccess(true)
-  }
+  const fields = [
+    { name: 'name' as const, label: t.commonForm.name, icon: <User size={12} />, placeholder: t.agent.placeholders.name, required: true },
+    { name: 'mobile' as const, label: t.commonForm.phone, icon: <Phone size={12} />, placeholder: t.agent.placeholders.phone, required: true, type: 'tel' },
+    { name: 'city' as const, label: t.commonForm.city, icon: <MapPin size={12} />, placeholder: t.agent.placeholders.city, required: true },
+    { 
+      name: 'experience' as const, 
+      label: lang === 'en' ? 'Prior Experience' : 'पिछला अनुभव', 
+      icon: <Briefcase size={12} />, 
+      type: 'select', 
+      options: t.becomeAdvisor.experienceOptions,
+      required: true 
+    },
+    { 
+      name: 'motivation' as const, 
+      label: lang === 'en' ? 'Why do you want to become an advisor?' : 'आप एडवाइज़र क्यों बनना चाहते हैं?', 
+      icon: <MessageSquare size={12} />, 
+      type: 'textarea', 
+      placeholder: lang === 'en' ? 'Share your motivation...' : 'अपनी प्रेरणा साझा करें...',
+      required: true 
+    },
+  ]
 
   return (
     <div className="pt-20">
@@ -45,7 +57,7 @@ export default function BecomeAdvisorPage() {
             <h2 className="section-title">{t.becomeAdvisor.whyTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {t.becomeAdvisor.benefits.map((b, i) => (
+            {t.becomeAdvisor.benefits.map((b: any, i: number) => (
               <div key={i} className="card group hover:-translate-y-1 hover:border-brand-100 border-2 border-transparent">
                 <div className="text-4xl mb-4">{b.icon}</div>
                 <h3 className="font-display font-bold text-lg text-slate-900 mb-2">{b.title}</h3>
@@ -69,7 +81,7 @@ export default function BecomeAdvisorPage() {
                 <div>Monthly Policies</div>
                 <div>Monthly Income</div>
               </div>
-              {t.becomeAdvisor.incomeData.map((row, i) => (
+              {t.becomeAdvisor.incomeData.map((row: any, i: number) => (
                 <div key={i} className={`grid grid-cols-3 px-6 py-4 text-sm ${i % 2 === 0 ? 'bg-white/5' : ''}`}>
                   <div className="font-semibold text-white">{row.level}</div>
                   <div className="text-white/70">{row.policies}</div>
@@ -87,56 +99,21 @@ export default function BecomeAdvisorPage() {
         <div className="section-container">
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-3xl shadow-card-hover p-8 md:p-12">
-              {success ? (
-                <div className="text-center py-8">
-                  <CheckCircle2 className="w-20 h-20 text-green-500 mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-2xl text-slate-900 mb-3">Application Received! 🎉</h3>
-                  <p className="text-slate-600">Ajay will personally review your application and call you within 24 hours. Welcome to the journey!</p>
-                </div>
-              ) : (
-                <>
-                  <div className="text-center mb-8">
-                    <h2 className="font-display font-bold text-2xl text-slate-900 mb-2">{t.becomeAdvisor.formTitle}</h2>
-                    <p className="text-slate-500">{t.becomeAdvisor.formSubtitle}</p>
-                  </div>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">Full Name *</label>
-                        <input type="text" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="input-field" placeholder="Your Name" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp Number *</label>
-                        <input type="tel" required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} className="input-field" placeholder="+91 XXXXX XXXXX" />
-                      </div>
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">City</label>
-                        <input type="text" value={form.city} onChange={e => setForm({...form, city: e.target.value})} className="input-field" placeholder="Jaipur" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1.5">Prior Experience</label>
-                        <select value={form.experience} onChange={e => setForm({...form, experience: e.target.value})} className="input-field">
-                          <option value="">Select...</option>
-                          <option>No experience (fresher)</option>
-                          <option>1–3 years in insurance</option>
-                          <option>3–5 years in insurance</option>
-                          <option>5+ years in insurance</option>
-                          <option>Other sales experience</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">Why do you want to become an advisor?</label>
-                      <textarea rows={3} value={form.motivation} onChange={e => setForm({...form, motivation: e.target.value})} className="input-field resize-none" placeholder="Share your motivation..." />
-                    </div>
-                    <button type="submit" disabled={loading} className="btn-primary w-full justify-center text-base py-4 disabled:opacity-70">
-                      {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Apply Now — It\'s Free →'}
-                    </button>
-                  </form>
-                </>
-              )}
+              <div className="text-center mb-8">
+                <h2 className="font-display font-bold text-2xl text-slate-900 mb-2">{t.becomeAdvisor.formTitle}</h2>
+                <p className="text-slate-500">{lang === 'en' ? t.becomeAdvisor.formSubtitle : 'अजय सर व्यक्तिगत रूप से आपका आवेदन देखेंगे और 24 घंटों के भीतर कॉल करेंगे।'}</p>
+              </div>
+
+              <BaseLeadForm 
+                fields={fields}
+                intent="Advisor Recruitment"
+                submitText={lang === 'en' ? "Apply Now — It's Free →" : "अभी आवेदन करें — यह मुफ़्त है →"}
+                successTitle={lang === 'en' ? 'Application Received! 🎉' : 'आवेदन प्राप्त हुआ! 🎉'}
+                successMessage={lang === 'en' 
+                  ? 'Ajay will personally review your application and call you within 24 hours. Welcome to the journey!' 
+                  : 'अजय सर व्यक्तिगत रूप से आपके आवेदन की समीक्षा करेंगे और 24 घंटों के भीतर आपको कॉल करेंगे।'}
+                grid={true}
+              />
             </div>
           </div>
         </div>

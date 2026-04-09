@@ -11,6 +11,9 @@ export interface LeadData {
   intent?: string;
   wantTo?: string;
   iAm?: string;
+  experience?: string;
+  motivation?: string;
+  message?: string;
 }
 
 export async function submitLead(data: LeadData) {

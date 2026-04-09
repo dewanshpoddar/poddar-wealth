@@ -1,29 +1,19 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
-import { CheckCircle2, User, Phone, MapPin, GraduationCap, ArrowRight, Loader2 } from 'lucide-react'
-import { submitLead } from '@/lib/api'
+import BaseLeadForm from './base/BaseLeadForm'
+import { User, Phone, MapPin, GraduationCap, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react'
 
 export default function LeadForm() {
   const { t, lang } = useLang()
-  const [form, setForm] = useState({ name: '', mobile: '', city: '', profession: '' })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    try {
-      await submitLead({ ...form, intent: 'Agent Recruitment' })
-      setIsSuccess(true)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+  const fields = [
+    { name: 'name' as const, label: t.agent.fields.name, icon: <User size={12} />, placeholder: t.agent.placeholders.name, required: true },
+    { name: 'mobile' as const, label: t.agent.fields.phone, icon: <Phone size={12} />, placeholder: t.agent.placeholders.phone, required: true, type: 'tel' },
+    { name: 'city' as const, label: t.agent.fields.city, icon: <MapPin size={12} />, placeholder: t.agent.placeholders.city, required: true },
+    { name: 'profession' as const, label: t.agent.fields.profession, icon: <GraduationCap size={12} />, placeholder: t.agent.placeholders.profession, required: true },
+  ]
 
   return (
     <section className="py-24 bg-gradient-to-br from-green-50/50 via-white to-white relative overflow-hidden">
@@ -98,128 +88,31 @@ export default function LeadForm() {
               className="bg-white border border-slate-100 p-8 md:p-10 rounded-[40px] shadow-2xl shadow-green-900/5 relative overflow-hidden"
             >
               {/* Form Header */}
-              {!isSuccess ? (
-                <>
-                  <div className="flex items-center justify-between mb-8">
-                    <h3 className="text-20 font-bold text-slate-900 tracking-tight">
-                      {t.agent.formTitle}
-                    </h3>
-                    <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                       {lang === 'en' ? 'Open Now' : 'भर्ती चालू है'}
-                    </div>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-1.5 group">
-                      <label className="text-[11px] font-bold text-slate-400 group-focus-within:text-green-600 transition-colors uppercase tracking-widest flex items-center gap-2">
-                        <User size={12} />
-                        {t.agent.fields.name}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder={t.agent.placeholders.name}
-                        value={form.name}
-                        onChange={e => setForm({ ...form, name: e.target.value })}
-                        className="w-full h-12 bg-slate-50/50 border border-slate-100 focus:border-green-600 focus:bg-white rounded-2xl px-5 text-14 text-slate-900 outline-none transition-all"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5 group">
-                      <label className="text-[11px] font-bold text-slate-400 group-focus-within:text-green-600 transition-colors uppercase tracking-widest flex items-center gap-2">
-                        <Phone size={12} />
-                        {t.agent.fields.phone}
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder={t.agent.placeholders.phone}
-                        value={form.mobile}
-                        onChange={e => setForm({ ...form, mobile: e.target.value })}
-                        className="w-full h-12 bg-slate-50/50 border border-slate-100 focus:border-green-600 focus:bg-white rounded-2xl px-5 text-14 text-slate-900 outline-none transition-all"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 group">
-                        <label className="text-[11px] font-bold text-slate-400 group-focus-within:text-green-600 transition-colors uppercase tracking-widest flex items-center gap-2">
-                          <MapPin size={12} />
-                          {t.agent.fields.city}
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          placeholder={t.agent.placeholders.city}
-                          value={form.city}
-                          onChange={e => setForm({ ...form, city: e.target.value })}
-                          className="w-full h-12 bg-slate-50/50 border border-slate-100 focus:border-green-600 focus:bg-white rounded-2xl px-5 text-14 text-slate-900 outline-none transition-all"
-                        />
-                      </div>
-                      <div className="space-y-1.5 group">
-                        <label className="text-[11px] font-bold text-slate-400 group-focus-within:text-green-600 transition-colors uppercase tracking-widest flex items-center gap-2">
-                          <GraduationCap size={12} />
-                          {t.agent.fields.profession}
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          placeholder={t.agent.placeholders.profession}
-                          value={form.profession}
-                          onChange={e => setForm({ ...form, profession: e.target.value })}
-                          className="w-full h-12 bg-slate-50/50 border border-slate-100 focus:border-green-600 focus:bg-white rounded-2xl px-5 text-14 text-slate-900 outline-none transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="pt-4">
-                      <button 
-                        type="submit" 
-                        disabled={isSubmitting}
-                        className="w-full h-14 bg-green-700 hover:bg-green-800 text-white font-bold rounded-2xl flex items-center justify-center gap-2 group transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-green-900/20"
-                      >
-                        {isSubmitting ? (
-                          <Loader2 className="animate-spin" size={20} />
-                        ) : (
-                          <>
-                            {t.agent.submit}
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    <p className="text-[10px] text-center text-slate-400 leading-tight pt-4">
-                      {lang === 'en' 
-                        ? 'Submit interest to get a personal consultation call from Ajay Poddar sir.' 
-                        : 'अजय पोद्दार सर से व्यक्तिगत परामर्श कॉल के लिए रुचि सबमिट करें।'}
-                    </p>
-                  </form>
-                </>
-              ) : (
-                <div className="text-center py-12 flex flex-col items-center">
-                  <motion.div 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="w-20 h-20 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-6"
-                  >
-                     <CheckCircle2 size={40} />
-                  </motion.div>
-                  <h3 className="text-24 font-bold text-slate-900 mb-3 tracking-tight">
-                    {lang === 'en' ? 'Thank you!' : 'धन्यवाद!'}
-                  </h3>
-                  <p className="text-15 text-slate-500 leading-relaxed mb-8">
-                    {lang === 'en' 
-                      ? 'We received your interest. Ajay sir will personally call you within 24 hours to explain the next steps.' 
-                      : 'हमें आपकी रुचि प्राप्त हुई। अजय सर अगले कदमों को समझाने के लिए 24 घंटों के भीतर व्यक्तिगत रूप से कॉल करेंगे।'}
-                  </p>
-                  <button 
-                    onClick={() => setIsSuccess(false)}
-                    className="text-13 font-bold text-green-700 hover:underline"
-                  >
-                    {lang === 'en' ? '← Submit another response' : '← दूसरी प्रतिक्रिया भेजें'}
-                  </button>
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-20 font-bold text-slate-900 tracking-tight">
+                  {t.agent.formTitle}
+                </h3>
+                <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                   {lang === 'en' ? 'Open Now' : 'भर्ती चालू है'}
                 </div>
-              )}
+              </div>
+
+              <BaseLeadForm 
+                fields={fields}
+                intent="Agent Recruitment"
+                submitText={t.agent.submit}
+                successTitle={lang === 'en' ? 'Thank you!' : 'धन्यवाद!'}
+                successMessage={lang === 'en' 
+                  ? 'We received your interest. Ajay sir will personally call you within 24 hours to explain the next steps.' 
+                  : 'हमें आपकी रुचि प्राप्त हुई। अजय सर अगले कदमों को समझाने के लिए 24 घंटों के भीतर व्यक्तिगत रूप से कॉल करेंगे।'}
+                grid={true}
+              />
+
+              <p className="text-[10px] text-center text-slate-400 leading-tight pt-4">
+                {lang === 'en' 
+                  ? 'Submit interest to get a personal consultation call from Ajay Poddar sir.' 
+                  : 'अजय पोद्दार सर से व्यक्तिगत परामर्श कॉल के लिए रुचि सबमिट करें।'}
+              </p>
             </motion.div>
           </div>
 
