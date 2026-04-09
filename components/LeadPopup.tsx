@@ -2,33 +2,27 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, CheckCircle2, ShieldCheck, Mail, Phone, User, Rocket } from 'lucide-react'
-import { submitLead } from '@/lib/api'
+import { X, User, Phone, Mail, GraduationCap, Rocket } from 'lucide-react'
+import { useLang } from '@/lib/LangContext'
 import { LEAD_POPUP_EVENT } from '@/lib/events'
+import BaseLeadForm from './base/BaseLeadForm'
 
 export default function LeadPopup() {
+  const { t, lang } = useLang()
   const [isOpen, setIsOpen] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
-  const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    email: '',
-    intent: 'General Consultation',
-    wantTo: '',
-    iAm: '',
-  })
+  const [initialIntent, setInitialIntent] = useState('General Consultation')
 
   useEffect(() => {
     // Show popup after 4 seconds automatically if not dismissed
     const timer = setTimeout(() => {
       const isDismissed = localStorage.getItem('poddar_lead_popup_status')
       if (!isDismissed) setIsOpen(true)
-    }, 4000)
+    }, 4500)
 
     // Global listener to open popup from any button
     const handleOpenRequest = (e: any) => {
       if (e.detail?.intent) {
-        setFormData(prev => ({ ...prev, intent: e.detail.intent }))
+        setInitialIntent(e.detail.intent)
       }
       setIsOpen(true)
     }
@@ -40,25 +34,36 @@ export default function LeadPopup() {
     }
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('sending')
-
-    try {
-      await submitLead(formData)
-      setStatus('success')
-      localStorage.setItem('poddar_lead_popup_status', 'completed')
-      setTimeout(() => setIsOpen(false), 3000)
-    } catch (err) {
-      console.error(err)
-      setStatus('error')
-    }
-  }
-
   const handleClose = () => {
     setIsOpen(false)
     localStorage.setItem('poddar_lead_popup_status', 'dismissed')
   }
+
+  const handleSuccess = () => {
+    localStorage.setItem('poddar_lead_popup_status', 'completed')
+    // Auto close after 3 seconds on success
+    setTimeout(() => setIsOpen(false), 3000)
+  }
+
+  const fields = [
+    { name: 'name' as const, label: t.commonForm.name, icon: <User size={12} />, placeholder: 'Ex: Rajesh Kumar', required: true },
+    { name: 'mobile' as const, label: t.commonForm.phone, icon: <Phone size={12} />, placeholder: '10-digit number', required: true, type: 'tel' },
+    { name: 'email' as const, label: t.commonForm.email, icon: <Mail size={12} />, placeholder: 'your@email.com', required: true, type: 'email' },
+    { 
+      name: 'wantTo' as const, 
+      label: t.leadPopup.fields.wantTo, 
+      type: 'select', 
+      options: t.leadPopup.options.wantTo,
+      required: true 
+    },
+    { 
+      name: 'iAm' as const, 
+      label: t.leadPopup.fields.iAm, 
+      type: 'select', 
+      options: t.leadPopup.options.iAm,
+      required: true 
+    },
+  ]
 
   return (
     <AnimatePresence>
@@ -83,152 +88,45 @@ export default function LeadPopup() {
               {/* Close Button */}
               <button 
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
                 aria-label="Close"
               >
                 <X size={20} />
               </button>
 
-              {status === 'success' ? (
-                <div className="p-10 text-center flex flex-col items-center gap-4">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-2"
-                  >
-                    <CheckCircle2 size={32} />
-                  </motion.div>
-                  <h3 className="text-2xl font-display font-bold text-navy">Journey Started!</h3>
-                  <p className="text-gray-500">Ajay Kumar Poddar or our senior advisor will contact you within 24 hours.</p>
-                </div>
-              ) : (
-                <div className="flex flex-col">
-                  {/* Decorative Banner */}
-                  <div className="bg-navy p-6 pt-8 text-center relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                      <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full border border-white" />
-                      <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full border border-white" />
-                    </div>
-                    <div className="pw-eyebrow text-gold/80 mb-2">Poddar Wealth Management</div>
-                    <h3 className="text-xl md:text-2xl font-display font-bold text-white leading-tight">
-                      Secure Your Family&apos;s <span className="text-gold">Financial Future</span>
-                    </h3>
+              <div className="flex flex-col">
+                {/* Decorative Banner */}
+                <div className="bg-navy p-6 pt-8 text-center relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full border border-white" />
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full border border-white" />
                   </div>
-
-                  <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-4">
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">Full Name</label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" size={16} />
-                        <input
-                          required
-                          type="text"
-                          placeholder="Ex: Rajesh Kumar"
-                          className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">Mobile Number</label>
-                        <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" size={16} />
-                          <input
-                            required
-                            type="tel"
-                            placeholder="10-digit number"
-                            className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
-                            value={formData.mobile}
-                            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">Email Address</label>
-                        <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" size={16} />
-                          <input
-                            required
-                            type="email"
-                            placeholder="your@email.com"
-                            className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">I want to</label>
-                        <select
-                          required
-                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all appearance-none cursor-pointer"
-                          value={formData.wantTo}
-                          onChange={(e) => setFormData({ ...formData, wantTo: e.target.value })}
-                        >
-                          <option value="">Select</option>
-                          <option>Protect my family</option>
-                          <option>Create wealth</option>
-                          <option>Plans for Children&apos;s future</option>
-                          <option>Plan for my retirement</option>
-                          <option>Get health cover</option>
-                          <option>Complete financial checkup</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1">I am</label>
-                        <select
-                          required
-                          className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-13 focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all appearance-none cursor-pointer"
-                          value={formData.iAm}
-                          onChange={(e) => setFormData({ ...formData, iAm: e.target.value })}
-                        >
-                          <option value="">Select</option>
-                          <option>Prospective Policy Holder</option>
-                          <option>Existing Policy Holder</option>
-                          <option>An NRI</option>
-                          <option>An agent</option>
-                          <option>Employee</option>
-                          <option>Retired employee</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <p className="text-[11px] text-gray-400 text-center italic">
-                      <ShieldCheck size={12} className="inline mr-1" />
-                      Your data is secure and will never be shared.
-                    </p>
-
-                    <button
-                      type="submit"
-                      disabled={status === 'sending'}
-                      className="w-full bg-gold hover:bg-gold-hover text-white font-bold h-[52px] rounded-xl shadow-lg shadow-gold/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-70"
-                    >
-                      {status === 'sending' ? (
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <Rocket size={18} />
-                          Start My Free Consultation
-                        </>
-                      )}
-                    </button>
-                    
-                    <button 
-                      type="button"
-                      onClick={handleClose}
-                      className="w-full text-gray-400 text-[12px] font-medium hover:text-gray-600 transition-colors pt-2"
-                    >
-                      Maybe later, I&apos;ll explore first
-                    </button>
-                  </form>
+                  <div className="pw-eyebrow text-gold/80 mb-2">{t.leadPopup.eyebrow}</div>
+                  <h3 className="text-xl md:text-2xl font-display font-bold text-white leading-tight">
+                    {t.leadPopup.titlePrefix} <span className="text-gold">{t.leadPopup.titleAccent}</span>
+                  </h3>
                 </div>
-              )}
+
+                <div className="p-6 md:p-8">
+                  <BaseLeadForm 
+                    fields={fields}
+                    intent={initialIntent}
+                    submitText={t.leadPopup.cta}
+                    successTitle={t.leadPopup.successTitle}
+                    successMessage={t.leadPopup.successMessage}
+                    onSuccess={handleSuccess}
+                    grid={true}
+                  />
+
+                  <button 
+                    type="button"
+                    onClick={handleClose}
+                    className="w-full text-gray-400 text-[12px] font-medium hover:text-gray-600 transition-colors pt-4 text-center"
+                  >
+                    {t.leadPopup.maybeLater}
+                  </button>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </>

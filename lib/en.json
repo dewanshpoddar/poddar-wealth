@@ -308,7 +308,14 @@
       { "level": "MDRT Level", "policies": "Top performer", "income": "₹2,00,000+/month" }
     ],
     "formTitle": "Express Your Interest",
-    "formSubtitle": "Fill this form and Ajay sir will personally call you within 24 hours"
+    "formSubtitle": "Fill this form and Ajay sir will personally call you within 24 hours",
+    "experienceOptions": [
+      "No experience (fresher)",
+      "1–3 years in insurance",
+      "3–5 years in insurance",
+      "5+ years in insurance",
+      "Other sales experience"
+    ]
   },
   "contact": {
     "heroTitle": "Let's Talk — We're Here for You",
@@ -357,11 +364,47 @@
     "successTitle": "🎉 Thank You!",
     "successMsg": "Ajay sir will personally call you within 24 hours."
   },
-  "finalCta": {
-    "title": "Don't Wait for a Tragedy to Think About Protection",
-    "subtitle": "The best time to get insured was yesterday. The second best time is right now.",
-    "cta1": "Protect My Family Now",
-    "cta2": "Chat on WhatsApp",
-    "note": "Free consultation • No obligation • Hindi & English support"
+  "commonForm": {
+    "name": "Full Name",
+    "phone": "WhatsApp Number",
+    "email": "Email Address",
+    "city": "City / District",
+    "profession": "Profession",
+    "required": "Required field",
+    "submitting": "Processing...",
+    "successTitle": "Thank You!",
+    "successMessage": "We have received your interest. Ajay sir will call you within 24 hours.",
+    "privacy": "Your data is secure and will never be shared."
+  },
+  "leadPopup": {
+    "eyebrow": "Poddar Wealth Management",
+    "titlePrefix": "Secure Your Family's",
+    "titleAccent": "Financial Future",
+    "cta": "Start My Free Consultation",
+    "maybeLater": "Maybe later, I'll explore first",
+    "successTitle": "Journey Started!",
+    "successMessage": "Ajay Kumar Poddar or our senior advisor will contact you within 24 hours.",
+    "fields": {
+      "wantTo": "I want to",
+      "iAm": "I am"
+    },
+    "options": {
+      "wantTo": [
+        "Protect my family",
+        "Create wealth",
+        "Plans for Children's future",
+        "Plan for my retirement",
+        "Get health cover",
+        "Complete financial checkup"
+      ],
+      "iAm": [
+        "Prospective Policy Holder",
+        "Existing Policy Holder",
+        "An NRI",
+        "An agent",
+        "Employee",
+        "Retired employee"
+      ]
+    }
   }
 }

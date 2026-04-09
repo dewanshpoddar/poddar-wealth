@@ -308,7 +308,14 @@
       { "level": "MDRT Level", "policies": "Top performer", "income": "₹2,00,000+/month" }
     ],
     "formTitle": "Express Your Interest",
-    "formSubtitle": "Fill this form and Ajay sir will personally call you within 24 hours"
+    "formSubtitle": "फिल्ल this form and Ajay sir will personally call you within 24 hours",
+    "experienceOptions": [
+      "कोई अनुभव नहीं (फ्रेशर)",
+      "बीमा में 1-3 साल",
+      "बीमा में 3-5 साल",
+      "बीमा में 5+ साल",
+      "अन्य सेल्स अनुभव"
+    ]
   },
   "contact": {
     "heroTitle": "Let's Talk — We're Here for You",
@@ -357,11 +364,47 @@
     "successTitle": "🎉 Thank You!",
     "successMsg": "Ajay sir will personally call you within 24 hours."
   },
-  "finalCta": {
-    "title": "Don't Wait for a Tragedy to Think About Protection",
-    "subtitle": "The best time to get insured was yesterday. The second best time is right now.",
-    "cta1": "Protect My Family Now",
-    "cta2": "Chat on WhatsApp",
-    "note": "Free consultation • No obligation • Hindi & English support"
+  "commonForm": {
+    "name": "पूरा नाम",
+    "phone": "WhatsApp नंबर",
+    "email": "ईमेल एड्रेस",
+    "city": "शहर / जिला",
+    "profession": "पेशा / शिक्षा",
+    "required": "अनिवार्य क्षेत्र",
+    "submitting": "प्रोसेस हो रहा है...",
+    "successTitle": "धन्यवाद!",
+    "successMessage": "हमें आपकी रुचि प्राप्त हुई है। अजय सर अगले 24 घंटों में आपको कॉल करेंगे।",
+    "privacy": "आपका डेटा सुरक्षित है और कभी साझा नहीं किया जाएगा।"
+  },
+  "leadPopup": {
+    "eyebrow": "पोद्दार वेल्थ मैनेजमेंट",
+    "titlePrefix": "अपने परिवार का",
+    "titleAccent": "आर्थिक भविष्य सुरक्षित करें",
+    "cta": "फ्री कंसल्टेशन शुरू करें",
+    "maybeLater": "शायद बाद में, पहले मैं देखूंगा",
+    "successTitle": "यात्रा शुरू हुई!",
+    "successMessage": "अजय कुमार पोद्दार या हमारे वरिष्ठ सलाहकार 24 घंटों के भीतर आपसे संपर्क करेंगे।",
+    "fields": {
+      "wantTo": "मैं चाहता हूँ",
+      "iAm": "मैं हूँ"
+    },
+    "options": {
+      "wantTo": [
+        "अपने परिवार की सुरक्षा",
+        "वेल्थ बनाना",
+        "बच्चों के भविष्य के लिए प्लान",
+        "रिटायरमेंट की प्लानिंग",
+        "हेल्थ कवर लेना",
+        "कम्प्लीट फाइनेंसियल चेकअप"
+      ],
+      "iAm": [
+        "संभावित पॉलिसी धारक",
+        "मौजूदा पॉलिसी धारक",
+        "एक एनआरआई (NRI)",
+        "एक एजेंट",
+        "कर्मचारी",
+        "रिटायर्ड कर्मचारी"
+      ]
+    }
   }
 }
