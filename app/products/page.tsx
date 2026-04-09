@@ -2,6 +2,7 @@
 
 import LicPlans from '@/components/LicPlans'
 import { motion } from 'framer-motion'
+import { openLeadPopup } from '@/lib/events'
 
 export default function ProductsPage() {
   return (
@@ -28,7 +29,7 @@ export default function ProductsPage() {
              Insurance is a long-term commitment. Mr. Ajay Kumar Poddar himself reviews each case to ensure you get the absolute best protection and returns.
            </p>
            <button 
-             onClick={() => window.dispatchEvent(new CustomEvent('open-lead-popup', { detail: { intent: 'General Product Consultation' } }))}
+             onClick={() => openLeadPopup('General Product Consultation')}
              className="pw-btn--gold h-14 px-10 text-15"
            >
              Book Free Expert Consultation

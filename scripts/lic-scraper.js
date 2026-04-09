@@ -5,14 +5,16 @@ const BASE_URL = 'https://licindia.in';
 
 // LIC India current portal URLs (Liferay CMS structure)
 const PLAN_PAGES = [
-  { url: `${BASE_URL}/web/guest/insurance-plans`,   category: null },   // multi-category page
-  { url: `${BASE_URL}/web/guest/pension-plans`,     category: 'pension' },
-  { url: `${BASE_URL}/web/guest/unit-linked-plans`, category: 'ulip' },
-  { url: `${BASE_URL}/web/guest/micro-insurance-plans`, category: 'micro' },
+  { url: `${BASE_URL}/web/guest/insurance-plans`,       category: null,        defaultStatus: 'active' },
+  { url: `${BASE_URL}/web/guest/pension-plans`,         category: 'pension',   defaultStatus: 'active' },
+  { url: `${BASE_URL}/web/guest/unit-linked-plans`,     category: 'ulip',      defaultStatus: 'active' },
+  { url: `${BASE_URL}/web/guest/micro-insurance-plans`, category: 'micro',     defaultStatus: 'active' },
+  { url: `${BASE_URL}/web/guest/withdrawn-plans`,       category: 'withdrawn', defaultStatus: 'withdrawn' },
   // Fallback: old URL format
-  { url: `${BASE_URL}/insurance-plan`,   category: null },
-  { url: `${BASE_URL}/pension-plan`,     category: 'pension' },
-  { url: `${BASE_URL}/unit-linked-plans`, category: 'ulip' },
+  { url: `${BASE_URL}/insurance-plan`,    category: null,        defaultStatus: 'active' },
+  { url: `${BASE_URL}/pension-plan`,      category: 'pension',   defaultStatus: 'active' },
+  { url: `${BASE_URL}/unit-linked-plans`, category: 'ulip',      defaultStatus: 'active' },
+  { url: `${BASE_URL}/withdrawn-plans`,   category: 'withdrawn', defaultStatus: 'withdrawn' },
 ];
 
 const CATEGORY_KEYWORDS = {

@@ -5,28 +5,9 @@ import {
   Calculator, ArrowRight, ChevronDown, ChevronUp,
   Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star
 } from 'lucide-react'
-// @ts-ignore
-import PLANS, { calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
-
-/* ─── helpers ─────────────────────────────── */
-function fmt(n: number) {
-  if (!n && n !== 0) return '—'
-  if (n >= 10000000) return `₹${(n / 10000000).toFixed(2)} Cr`
-  if (n >= 100000)   return `₹${(n / 100000).toFixed(1)} L`
-  return `₹${Math.round(n).toLocaleString('en-IN')}`
-}
-function fmtSA(n: number) {
-  if (n >= 10000000) return `₹${(n / 10000000).toFixed(1)} Cr`
-  if (n >= 100000)   return `₹${(n / 100000).toFixed(0)} L`
-  return `₹${n.toLocaleString('en-IN')}`
-}
-function toWords(n: number): string {
-  if (!n) return ''
-  if (n >= 10000000) return `${(n / 10000000) % 1 === 0 ? n / 10000000 : (n / 10000000).toFixed(1)} Crore`
-  if (n >= 100000)   return `${(n / 100000) % 1 === 0 ? n / 100000 : (n / 100000).toFixed(1)} Lakh`
-  if (n >= 1000)     return `${Math.round(n / 1000)} Thousand`
-  return String(n)
-}
+import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
+import { fmt, fmtSA, toWords } from '@/lib/format'
+import { openLeadPopup } from '@/lib/events'
 
 /* ─── constants ───────────────────────────── */
 const CATEGORIES = [
@@ -998,9 +979,7 @@ export default function PremiumCalculatorPage() {
                         {/* CTAs */}
                         <div className="flex flex-col sm:flex-row gap-3">
                           <button
-                            onClick={() => window.dispatchEvent(new CustomEvent('open-lead-popup', {
-                              detail: { intent: `Premium quote: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo}), ${fmtSA(sa)} SA, Age ${age}` }
-                            }))}
+                            onClick={() => openLeadPopup(`Premium quote: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo}), ${fmtSA(sa)} SA, Age ${age}`)}
                             className="flex-1 bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md text-[13px]">
                             Get Exact Quote from Ajay Sir <ArrowRight className="w-4 h-4" />
                           </button>

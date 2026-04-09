@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { Shield, ArrowRight, Info, CheckCircle2, Zap, LayoutGrid, List } from 'lucide-react'
+import { openLeadPopup } from '@/lib/events'
 
 interface Plan {
   id: string
@@ -80,10 +81,7 @@ export default function LicPlans() {
   const displayedPlans = activeTab === ALL_TAB ? allPlans : activeCategory?.plans ?? []
 
   const handleGetPlan = (planName: string) => {
-    const event = new CustomEvent('open-lead-popup', {
-      detail: { intent: `Interest in ${planName}` }
-    })
-    window.dispatchEvent(event)
+    openLeadPopup(`Interest in ${planName}`)
   }
 
   return (

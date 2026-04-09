@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle2, ShieldCheck, Mail, Phone, User, Rocket } from 'lucide-react'
+import { submitLead } from '@/lib/api'
+import { LEAD_POPUP_EVENT } from '@/lib/events'
 
 export default function LeadPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,10 +33,10 @@ export default function LeadPopup() {
       setIsOpen(true)
     }
 
-    window.addEventListener('open-lead-popup', handleOpenRequest)
+    window.addEventListener(LEAD_POPUP_EVENT, handleOpenRequest)
     return () => {
       clearTimeout(timer)
-      window.removeEventListener('open-lead-popup', handleOpenRequest)
+      window.removeEventListener(LEAD_POPUP_EVENT, handleOpenRequest)
     }
   }, [])
 
@@ -43,20 +45,10 @@ export default function LeadPopup() {
     setStatus('sending')
 
     try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-
-      if (res.ok) {
-        setStatus('success')
-        localStorage.setItem('poddar_lead_popup_status', 'completed')
-        // Close after 3 seconds on success
-        setTimeout(() => setIsOpen(false), 3000)
-      } else {
-        setStatus('error')
-      }
+      await submitLead(formData)
+      setStatus('success')
+      localStorage.setItem('poddar_lead_popup_status', 'completed')
+      setTimeout(() => setIsOpen(false), 3000)
     } catch (err) {
       console.error(err)
       setStatus('error')

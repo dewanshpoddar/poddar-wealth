@@ -4,21 +4,25 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { CheckCircle2, User, Phone, MapPin, GraduationCap, ArrowRight, Loader2 } from 'lucide-react'
+import { submitLead } from '@/lib/api'
 
 export default function LeadForm() {
   const { t, lang } = useLang()
-  const [form, setForm] = useState({ name: '', phone: '', city: '', profession: '' })
+  const [form, setForm] = useState({ name: '', mobile: '', city: '', profession: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
+    try {
+      await submitLead({ ...form, intent: 'Agent Recruitment' })
       setIsSuccess(true)
-    }, 1500)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -130,8 +134,8 @@ export default function LeadForm() {
                         type="tel"
                         required
                         placeholder={t.agent.placeholders.phone}
-                        value={form.phone}
-                        onChange={e => setForm({ ...form, phone: e.target.value })}
+                        value={form.mobile}
+                        onChange={e => setForm({ ...form, mobile: e.target.value })}
                         className="w-full h-12 bg-slate-50/50 border border-slate-100 focus:border-green-600 focus:bg-white rounded-2xl px-5 text-14 text-slate-900 outline-none transition-all"
                       />
                     </div>

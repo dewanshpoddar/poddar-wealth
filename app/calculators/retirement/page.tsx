@@ -3,14 +3,9 @@ import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import { Calculator, ArrowRight, Info, TrendingUp } from 'lucide-react'
-// @ts-ignore
 import { PLANS, advisePlans } from '@/lib/lic-plans-data.js'
-
-function fmt(n: number) {
-  if (n >= 10000000) return `₹${(n / 10000000).toFixed(1)} Crore`
-  if (n >= 100000)   return `₹${(n / 100000).toFixed(0)} Lakh`
-  return `₹${n.toLocaleString('en-IN')}`
-}
+import { fmt } from '@/lib/format'
+import { openLeadPopup } from '@/lib/events'
 
 export default function RetirementCalcPage() {
   const { t } = useLang()
@@ -190,9 +185,7 @@ export default function RetirementCalcPage() {
                       ))}
                     </ul>
                     <button
-                      onClick={() => window.dispatchEvent(new CustomEvent('open-lead-popup', {
-                        detail: { intent: `Retirement plan interest: ${plan.name} (Plan ${plan.planNo})` }
-                      }))}
+                      onClick={() => openLeadPopup(`Retirement plan interest: ${plan.name} (Plan ${plan.planNo})`)}
                       className="w-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1.5">
                       Get a Quote <ArrowRight className="w-3 h-3" />
                     </button>

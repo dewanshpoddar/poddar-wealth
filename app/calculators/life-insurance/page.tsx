@@ -3,14 +3,9 @@ import { useState, useMemo } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import { Calculator, ArrowRight, Info, ChevronDown, ChevronUp, Shield } from 'lucide-react'
-// @ts-ignore
 import { calculatePremium, generateBenefitTable, PLANS, getPPT } from '@/lib/lic-plans-data.js'
-
-function fmt(n: number) {
-  if (n >= 10000000) return `₹${(n / 10000000).toFixed(2)} Cr`
-  if (n >= 100000)   return `₹${(n / 100000).toFixed(1)} L`
-  return `₹${n.toLocaleString('en-IN')}`
-}
+import { fmt } from '@/lib/format'
+import { openLeadPopup } from '@/lib/events'
 
 const TERM_PLANS = (PLANS as any[]).filter((p: any) => p.category === 'term')
 const ENDOWMENT_PLANS = (PLANS as any[]).filter((p: any) => ['endowment', 'wholelife'].includes(p.category))
@@ -281,7 +276,7 @@ export default function LifeInsuranceCalcPage() {
                         </div>
                       </div>
                       <button
-                        onClick={() => window.dispatchEvent(new CustomEvent('open-lead-popup', { detail: { intent: `Premium quote: ${selectedPlan?.name} Plan ${planNo}, ${fmt(sa)} cover` } }))}
+                        onClick={() => openLeadPopup(`Premium quote: ${selectedPlan?.name} Plan ${planNo}, ${fmt(sa)} cover`)}
                         className="mt-4 w-full bg-white text-brand-700 font-bold py-2.5 rounded-xl text-sm hover:bg-brand-50 transition-colors flex items-center justify-center gap-2">
                         Get Official Quote <ArrowRight className="w-4 h-4" />
                       </button>
