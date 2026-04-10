@@ -1,9 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Send, Sparkles, ChevronDown } from 'lucide-react'
+import { X, Sparkles, ChevronDown } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
+import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
 
 export default function AIChatButton() {
   const { t } = useLang()
@@ -41,103 +42,29 @@ export default function AIChatButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 340, damping: 30 }}
-            className="w-[360px] max-w-[calc(100vw-24px)] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden"
-            style={{ height: 500 }}
+            className="w-[360px] max-w-[calc(100vw-24px)]"
           >
-            {/* Header */}
-            <div className="bg-navy px-4 py-3 flex items-center justify-between flex-shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-navy text-[11px] font-bold flex-shrink-0">
-                  PJ
-                </div>
-                <div>
-                  <div className="text-white text-[13px] font-bold leading-none">Poddar Ji</div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-white/55 text-[10px]">{t.chatbot.statusText}</span>
-                  </div>
-                </div>
-              </div>
+            {/* Close button row */}
+            <div className="flex justify-end mb-1">
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-7 h-7 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
+                className="w-7 h-7 rounded-full flex items-center justify-center bg-white/80 text-slate-500 hover:text-slate-800 hover:bg-white shadow transition-all"
                 aria-label="Close chat"
               >
-                <X size={15} />
+                <X size={14} />
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: 'rgb(248 250 252 / 0.6)' }}>
-              {chat.messages.map((m, i) => (
-                <div key={i} className={`flex gap-2 ${m.from === 'user' ? 'flex-row-reverse' : ''}`}>
-                  {m.from === 'bot' && (
-                    <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0 mt-0.5">
-                      PJ
-                    </div>
-                  )}
-                  <div className={`max-w-[78%] px-3 py-2 rounded-2xl text-[12px] leading-relaxed ${
-                    m.from === 'user'
-                      ? 'bg-navy text-white rounded-br-sm'
-                      : 'bg-white text-slate-700 border border-slate-100 rounded-bl-sm shadow-sm'
-                  }`}>
-                    {m.text.split('\n').map((line, j, arr) => (
-                      <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {/* Typing indicator */}
-              {chat.typing && (
-                <div className="flex gap-2">
-                  <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0">PJ</div>
-                  <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-sm px-3 py-2.5 shadow-sm">
-                    <div className="flex gap-1 items-center h-3">
-                      {[0, 150, 300].map(delay => (
-                        <div key={delay} className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: `${delay}ms` }} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={chat.bottomRef} />
-            </div>
-
-            {/* Quick chips */}
-            <div className="px-3 py-2 flex gap-1.5 overflow-x-auto scrollbar-hide border-t border-slate-100 flex-shrink-0">
-              {t.chatbot.chips.map((chip: string, i: number) => (
-                <button
-                  key={i}
-                  onClick={() => chat.sendMessage(t.chatbot.chipQueries[i])}
-                  className="flex-shrink-0 text-[10px] px-2.5 py-1 rounded-full bg-navy/5 text-navy border border-navy/10 hover:bg-navy hover:text-white transition-all whitespace-nowrap"
-                >
-                  {chip}
-                </button>
-              ))}
-            </div>
-
-            {/* Input */}
-            <div className="px-3 pb-3 pt-2 border-t border-slate-100 flex-shrink-0">
-              <div className="flex gap-2 bg-slate-50 rounded-xl border border-slate-200 p-1">
-                <input
-                  type="text"
-                  value={chat.input}
-                  onChange={e => chat.setInput(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); chat.sendMessage() } }}
-                  placeholder={t.chatbot.placeholder}
-                  className="flex-1 bg-transparent text-[12px] px-2 outline-none text-slate-700 placeholder:text-slate-400"
-                />
-                <button
-                  onClick={() => chat.sendMessage()}
-                  disabled={!chat.input.trim() || chat.typing}
-                  className="w-8 h-8 bg-navy rounded-lg flex items-center justify-center disabled:opacity-30 hover:bg-navy-light transition-colors flex-shrink-0"
-                >
-                  <Send size={13} className="text-white" />
-                </button>
-              </div>
-              <p className="text-[9px] text-slate-400 text-center mt-1.5 leading-snug">{t.chatbot.disclaimer}</p>
-            </div>
+            <PoddarJiChatUI
+              chat={chat}
+              chips={t.chatbot.chips}
+              chipQueries={t.chatbot.chipQueries}
+              placeholder={t.chatbot.placeholder}
+              disclaimer={t.chatbot.disclaimer}
+              badges={t.chatbot.badges}
+              statusText={t.chatbot.statusText}
+              compact
+            />
           </motion.div>
         )}
       </AnimatePresence>
