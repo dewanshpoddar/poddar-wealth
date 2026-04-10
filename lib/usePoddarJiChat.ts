@@ -63,13 +63,17 @@ const LEAD_PROMPT: Message = {
   card: 'lead',
 }
 
-// ── Session helpers ────────────────────────────────────────────────────────
+// ── Storage helpers (localStorage = survives browser close, cross-day) ────────
+const STORAGE_ID_KEY   = 'poddarji_sid'
+const STORAGE_MSGS_KEY = 'poddarji_msgs'
+const MAX_STORED_MSGS  = 30   // cap so localStorage never bloats
+
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return 'ssr'
-  let id = sessionStorage.getItem('poddarji_sid')
+  let id = localStorage.getItem(STORAGE_ID_KEY)
   if (!id) {
     id = `pj_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-    sessionStorage.setItem('poddarji_sid', id)
+    localStorage.setItem(STORAGE_ID_KEY, id)
   }
   return id
 }
@@ -77,10 +81,24 @@ function getOrCreateSessionId(): string {
 function loadSavedMessages(greeting: string): Message[] {
   if (typeof window === 'undefined') return [{ from: 'bot', text: greeting }]
   try {
-    const saved = sessionStorage.getItem('poddarji_msgs')
-    if (saved) return JSON.parse(saved)
+    const saved = localStorage.getItem(STORAGE_MSGS_KEY)
+    if (saved) {
+      const parsed: Message[] = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed
+    }
   } catch { /* ignore */ }
   return [{ from: 'bot', text: greeting }]
+}
+
+function saveMessages(messages: Message[]) {
+  if (typeof window === 'undefined') return
+  try {
+    // Keep only last MAX_STORED_MSGS messages — always keep the first (greeting)
+    const toStore = messages.length > MAX_STORED_MSGS
+      ? [messages[0], ...messages.slice(-(MAX_STORED_MSGS - 1))]
+      : messages
+    localStorage.setItem(STORAGE_MSGS_KEY, JSON.stringify(toStore))
+  } catch { /* ignore — e.g. private browsing quota */ }
 }
 
 // ── Main hook ──────────────────────────────────────────────────────────────
@@ -93,11 +111,8 @@ export function usePoddarJiChat(greeting: string) {
   const [followUps, setFollowUps] = useState<string[]>([])
   const bottomRef               = useRef<HTMLDivElement>(null)
 
-  // Persist messages across popup open/close within same browser session
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    try { sessionStorage.setItem('poddarji_msgs', JSON.stringify(messages)) } catch { /* ignore */ }
-  }, [messages])
+  // Persist messages to localStorage (survives browser close, returning users)
+  useEffect(() => { saveMessages(messages) }, [messages])
 
   // Auto-scroll
   useEffect(() => {
@@ -184,6 +199,12 @@ export function usePoddarJiChat(greeting: string) {
         }
         return [...msgs, { from: 'bot', text: fallback }]
       })
+      // Log fallback exchanges too — fire-and-forget
+      fetch('/api/chat/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, userMsg: text, botReply: fallback }),
+      }).catch(() => { /* non-critical */ })
     }
   }
 
