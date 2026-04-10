@@ -15,8 +15,7 @@ export default function LeadPopup() {
   useEffect(() => {
     // Show popup after 4 seconds automatically if not dismissed
     const timer = setTimeout(() => {
-      const isDismissed = localStorage.getItem('poddar_lead_popup_status')
-      if (!isDismissed) setIsOpen(true)
+      setIsOpen(true)
     }, 4500)
 
     // Global listener to open popup from any button

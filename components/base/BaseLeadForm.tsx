@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Loader2, CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, Loader2 } from 'lucide-react'
 import { submitLead, LeadData } from '@/lib/api'
 
 interface Field {
@@ -26,6 +25,19 @@ interface BaseLeadFormProps {
   grid?: boolean
 }
 
+function validateMobile(value: string) {
+  const digits = value.replace(/\D/g, '')
+  if (!digits) return 'Mobile number is required'
+  if (digits.length !== 10) return 'Enter a valid 10-digit mobile number'
+  return ''
+}
+
+function validateEmail(value: string) {
+  if (!value) return 'Email is required'
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email address'
+  return ''
+}
+
 export default function BaseLeadForm({
   fields,
   intent,
@@ -39,10 +51,43 @@ export default function BaseLeadForm({
   const [formData, setFormData] = useState<LeadData>(
     fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), { intent } as LeadData)
   )
+  const [errors, setErrors] = useState<Partial<Record<keyof LeadData, string>>>({})
+  const [touched, setTouched] = useState<Partial<Record<keyof LeadData, boolean>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+
+  const validateField = (name: keyof LeadData, value: string) => {
+    if (name === 'mobile') return validateMobile(value)
+    if (name === 'email') return validateEmail(value)
+    return ''
+  }
+
+  const handleChange = (name: keyof LeadData, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (touched[name]) {
+      setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+    }
+  }
+
+  const handleBlur = (name: keyof LeadData, value: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }))
+    setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validate mobile + email on submit
+    const newErrors: Partial<Record<keyof LeadData, string>> = {}
+    const newTouched: Partial<Record<keyof LeadData, boolean>> = {}
+    for (const field of fields) {
+      newTouched[field.name] = true
+      const err = validateField(field.name, (formData[field.name] as string) || '')
+      if (err) newErrors[field.name] = err
+    }
+    setTouched(newTouched)
+    setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) return
+
     setStatus('submitting')
     try {
       await submitLead(formData)
@@ -62,7 +107,7 @@ export default function BaseLeadForm({
         </div>
         <h3 className="text-xl font-bold text-slate-900 mb-2">{successTitle}</h3>
         <p className="text-slate-500 mb-6 max-w-sm mx-auto">{successMessage}</p>
-        <button 
+        <button
           onClick={() => setStatus('idle')}
           className="text-sm font-bold text-green-700 hover:underline"
         >
@@ -73,46 +118,68 @@ export default function BaseLeadForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
-      <div className={grid ? "grid grid-cols-1 sm:grid-cols-2 gap-4" : "space-y-4"}>
-        {fields.map((field) => (
-          <div key={field.name} className="space-y-1.5 group">
-            <label className="pw-label flex items-center gap-2">
-              {field.icon}
-              {field.label}
-            </label>
-            {field.type === 'select' ? (
-              <select
-                required={field.required}
-                className="pw-select"
-                value={(formData[field.name] as string) || ''}
-                onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-              >
-                <option value="">Select...</option>
-                {field.options?.map(opt => (
-                  <option key={opt} value={opt}>{opt}</option>
-                ))}
-              </select>
-            ) : field.type === 'textarea' ? (
-              <textarea
-                required={field.required}
-                className="pw-textarea"
-                placeholder={field.placeholder}
-                value={(formData[field.name] as string) || ''}
-                onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-              />
-            ) : (
-              <input
-                type={field.type || 'text'}
-                required={field.required}
-                className="pw-input"
-                placeholder={field.placeholder}
-                value={(formData[field.name] as string) || ''}
-                onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-              />
-            )}
-          </div>
-        ))}
+    <form onSubmit={handleSubmit} className={`space-y-4 ${className}`} noValidate>
+      <div className={grid ? 'grid grid-cols-1 sm:grid-cols-2 gap-4' : 'space-y-4'}>
+        {fields.map((field) => {
+          const value = (formData[field.name] as string) || ''
+          const error = errors[field.name]
+          const hasError = touched[field.name] && !!error
+
+          return (
+            <div key={field.name} className="space-y-1.5 group">
+              <label className="pw-label flex items-center gap-2">
+                {field.icon}
+                {field.label}
+              </label>
+
+              {field.type === 'select' ? (
+                <select
+                  required={field.required}
+                  className={`pw-select ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
+                  value={value}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  onBlur={(e) => handleBlur(field.name, e.target.value)}
+                >
+                  <option value="">Select...</option>
+                  {field.options?.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              ) : field.type === 'textarea' ? (
+                <textarea
+                  required={field.required}
+                  className={`pw-textarea ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
+                  placeholder={field.placeholder}
+                  value={value}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  onBlur={(e) => handleBlur(field.name, e.target.value)}
+                />
+              ) : (
+                <input
+                  type={field.type || 'text'}
+                  required={field.required}
+                  className={`pw-input ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
+                  placeholder={field.placeholder}
+                  value={value}
+                  onChange={(e) => {
+                    // For tel fields, strip non-digits automatically
+                    const val = field.type === 'tel'
+                      ? e.target.value.replace(/\D/g, '').slice(0, 10)
+                      : e.target.value
+                    handleChange(field.name, val)
+                  }}
+                  onBlur={(e) => handleBlur(field.name, e.target.value)}
+                  inputMode={field.type === 'tel' ? 'numeric' : undefined}
+                  maxLength={field.type === 'tel' ? 10 : undefined}
+                />
+              )}
+
+              {hasError && (
+                <p className="text-red-500 text-[11px] font-medium mt-0.5">{error}</p>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       <button

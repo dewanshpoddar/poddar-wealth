@@ -8,6 +8,7 @@ import TestimonialsSection from '@/components/TestimonialsSection'
 import ChatBot from '@/components/ChatBot'
 import FinalCTA from '@/components/FinalCTA'
 import LeadForm from '@/components/LeadForm'
+import LeadPopup from '@/components/LeadPopup'
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
       <FinalCTA />
 
       <LeadForm />
+      <LeadPopup />
     </>
   )
 }
