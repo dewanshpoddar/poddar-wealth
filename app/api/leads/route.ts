@@ -1,71 +1,12 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { google } from 'googleapis';
-
-// ─── Google Sheets helper ────────────────────────────────────────────────────
-
-const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
-
-async function getSheets() {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
-  if (!raw || !SPREADSHEET_ID) return null;
-
-  const credentials = JSON.parse(raw);
-  const auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
-  return google.sheets({ version: 'v4', auth });
-}
-
-// Map intent → sheet tab name
-function tabForIntent(intent?: string): string {
-  if (!intent) return 'All Leads';
-  if (intent.toLowerCase().includes('agent')) return 'Agent Recruitment';
-  if (intent.toLowerCase().includes('lic') || intent.toLowerCase().includes('plan')) return 'LIC Plans';
-  return 'Popup Inquiries';
-}
 
 const HEADERS = [
   'Timestamp', 'Name', 'Mobile', 'Email',
   'City', 'Profession', 'Want To', 'I Am',
   'Intent', 'Experience', 'Message',
 ];
-
-async function ensureTab(sheets: any, tabName: string) {
-  const meta = await sheets.spreadsheets.get({ spreadsheetId: SPREADSHEET_ID });
-  const exists = meta.data.sheets?.some(
-    (s: any) => s.properties?.title === tabName
-  );
-  if (!exists) {
-    await sheets.spreadsheets.batchUpdate({
-      spreadsheetId: SPREADSHEET_ID,
-      requestBody: {
-        requests: [{ addSheet: { properties: { title: tabName } } }],
-      },
-    });
-    // Write header row into new tab
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${tabName}!A1`,
-      valueInputOption: 'RAW',
-      requestBody: { values: [HEADERS] },
-    });
-  }
-}
-
-async function appendRow(sheets: any, tabName: string, row: string[]) {
-  await ensureTab(sheets, tabName);
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: SPREADSHEET_ID,
-    range: `${tabName}!A1`,
-    valueInputOption: 'RAW',
-    requestBody: { values: [row] },
-  });
-}
-
-// ─── Route handler ───────────────────────────────────────────────────────────
 
 export async function POST(request: Request) {
   try {
@@ -88,13 +29,14 @@ export async function POST(request: Request) {
     }
     fs.appendFileSync(filePath, line);
 
-    // 2. Write to Google Sheets (All Leads + intent-specific tab)
-    const sheets = await getSheets();
-    if (sheets) {
-      await Promise.all([
-        appendRow(sheets, 'All Leads', row),
-        appendRow(sheets, tabForIntent(intent), row),
-      ]);
+    // 2. Send to Google Sheets via Apps Script webhook
+    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    if (webhookUrl) {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ row, intent: intent ?? '' }),
+      });
     }
 
     return NextResponse.json({ success: true });

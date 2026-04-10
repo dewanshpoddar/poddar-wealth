@@ -13,7 +13,6 @@
     "@anthropic-ai/sdk": "^0.86.1",
     "cheerio": "^1.2.0",
     "framer-motion": "^11.2.10",
-    "googleapis": "^171.4.0",
     "lucide-react": "^0.383.0",
     "next": "^16.2.3",
     "node-cron": "^4.2.1",
