@@ -161,7 +161,7 @@ export default function AboutPage() {
                      <span className="text-[10px] font-bold text-gold uppercase tracking-widest">MDRT USA Member</span>
                    </div>
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
-                     <Image src="/assets/chairmanclub.svg" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
+                     <Image src="/assets/chairmanclub.png" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
                      <span className="text-[10px] font-bold text-gold uppercase tracking-widest">Chairman&apos;s Club</span>
                    </div>
                 </div>
@@ -349,7 +349,7 @@ export default function AboutPage() {
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Highest Global Quality</div>
              </motion.div>
              <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
-                <Image src="/assets/chairmanclub.svg" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
+                <Image src="/assets/chairmanclub.png" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Premier Club Member</div>
              </motion.div>
              <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">

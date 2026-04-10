@@ -38,7 +38,7 @@ export default function FinalCTA() {
                     <img src="/assets/mdrt-seeklogo.svg" alt="" aria-hidden className="w-3.5 h-3.5 object-contain flex-shrink-0" />
                   )}
                   {badge.text.includes('Chairman') || badge.text.includes('चेयरमैन') ? (
-                    <img src="/assets/chairmanclub.svg" alt="" aria-hidden className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                    <img src="/assets/chairmanclub.png" alt="" aria-hidden className="w-3.5 h-3.5 object-contain flex-shrink-0" />
                   ) : null}
                   {badge.text}
                 </span>
