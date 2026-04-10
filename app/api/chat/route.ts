@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-lite',
+      model: 'gemini-2.0-flash',
       systemInstruction: SYSTEM_PROMPT,
     })
 
@@ -61,7 +61,20 @@ export async function POST(req: NextRequest) {
     const lastMessage = messages[messages.length - 1]
 
     const chat = model.startChat({ history })
-    const result = await chat.sendMessageStream(lastMessage.content)
+
+    // Retry once on 429 rate-limit with a 2s back-off
+    let result
+    try {
+      result = await chat.sendMessageStream(lastMessage.content)
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : ''
+      if (msg.includes('429')) {
+        await new Promise(r => setTimeout(r, 2000))
+        result = await chat.sendMessageStream(lastMessage.content)
+      } else {
+        throw e
+      }
+    }
 
     const encoder = new TextEncoder()
     let fullReply = ''

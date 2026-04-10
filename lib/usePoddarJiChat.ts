@@ -29,79 +29,89 @@ function getFallback(msg: string): string {
   return FALLBACK.default
 }
 
-// ── Dynamic follow-up chips based on bot reply content ─────────────────────
+// ── Dynamic follow-up chips ────────────────────────────────────────────────
 export function getFollowUps(reply: string): string[] {
   const l = reply.toLowerCase()
-  if (l.includes('term') || l.includes('jeevan amar') || l.includes('yuva term')) {
+  if (l.includes('term') || l.includes('jeevan amar') || l.includes('yuva term'))
     return ['Premium kitna hoga?', 'Smoker ke liye kya?', 'Claim kaise karein?']
-  }
-  if (l.includes('health') || l.includes('star health') || l.includes('floater')) {
+  if (l.includes('health') || l.includes('star health') || l.includes('floater'))
     return ['Cashless hospitals Gorakhpur mein?', 'Senior citizen plan?', 'Family vs individual?']
-  }
-  if (l.includes('pension') || l.includes('retirement') || l.includes('jeevan shanti') || l.includes('jeevan umang')) {
+  if (l.includes('pension') || l.includes('retirement') || l.includes('jeevan shanti') || l.includes('jeevan umang'))
     return ['Monthly kitna milega?', '₹10,000/month invest karein?', 'NPS se compare?']
-  }
-  if (l.includes('child') || l.includes('tarun') || l.includes('bacch') || l.includes('education')) {
+  if (l.includes('child') || l.includes('tarun') || l.includes('bacch') || l.includes('education'))
     return ['Premium kitna hoga?', 'Maturity kab milegi?', 'PWB rider kya hai?']
-  }
-  if (l.includes('endowment') || l.includes('jeevan anand') || l.includes('jeevan labh')) {
+  if (l.includes('endowment') || l.includes('jeevan anand') || l.includes('jeevan labh'))
     return ['Returns kitne honge?', 'Loan mil sakta hai?', 'Surrender value?']
-  }
-  if (l.includes('claim') || l.includes('document') || l.includes('settlement')) {
+  if (l.includes('claim') || l.includes('document') || l.includes('settlement'))
     return ['Documents kya chahiye?', 'Online claim ho sakta hai?', 'Timeline kitni?']
-  }
-  if (l.includes('tax') || l.includes('80c') || l.includes('section')) {
+  if (l.includes('tax') || l.includes('80c') || l.includes('section'))
     return ['Kitna tax bachega?', 'Best tax-saving plan?', 'ULIP vs endowment?']
-  }
   return ['Aur detail batayein', 'Mera plan suggest karein', 'Ajay sir se baat karein']
 }
 
-// ── Lead card injected after 3 user messages ───────────────────────────────
+// ── Lead card prompt ───────────────────────────────────────────────────────
 const LEAD_PROMPT: Message = {
   from: 'bot',
   text: 'Lagta hai aap apni planning ke baare mein serious hain! 🎯\n\nChaahein toh Ajay sir aapko personally call karein — bilkul free, koi pressure nahi.',
   card: 'lead',
 }
 
-// ── Session ID stored in localStorage (tiny — just an ID string) ─────────────
-const STORAGE_ID_KEY = 'poddarji_sid'
+// ── localStorage helpers ───────────────────────────────────────────────────
+const LS_SID      = 'poddarji_sid'
+const LS_MSGS     = 'poddarji_msgs'
+const LS_LEADDONE = 'poddarji_lead_done'
+const MAX_MSGS    = 30
 
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return 'ssr'
-  let id = localStorage.getItem(STORAGE_ID_KEY)
+  let id = localStorage.getItem(LS_SID)
   if (!id) {
     id = `pj_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-    localStorage.setItem(STORAGE_ID_KEY, id)
+    localStorage.setItem(LS_SID, id)
   }
   return id
+}
+
+function loadCachedMessages(greeting: string): Message[] {
+  if (typeof window === 'undefined') return [{ from: 'bot', text: greeting }]
+  try {
+    const saved = localStorage.getItem(LS_MSGS)
+    if (saved) {
+      const parsed: Message[] = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed
+    }
+  } catch { /* ignore */ }
+  return [{ from: 'bot', text: greeting }]
+}
+
+function saveMessages(messages: Message[]) {
+  if (typeof window === 'undefined') return
+  try {
+    const toStore = messages.length > MAX_MSGS
+      ? [messages[0], ...messages.slice(-(MAX_MSGS - 1))]
+      : messages
+    localStorage.setItem(LS_MSGS, JSON.stringify(toStore))
+  } catch { /* ignore */ }
+}
+
+function getLeadDone(): boolean {
+  if (typeof window === 'undefined') return false
+  return localStorage.getItem(LS_LEADDONE) === 'true'
 }
 
 // ── Main hook ──────────────────────────────────────────────────────────────
 export function usePoddarJiChat(greeting: string) {
   const [sessionId]  = useState(getOrCreateSessionId)
-  const [messages, setMessages] = useState<Message[]>([{ from: 'bot', text: greeting }])
-  const [input, setInput]       = useState('')
-  const [typing, setTyping]     = useState(false)
-  const [leadDone, setLeadDone] = useState(false)
+  const [messages, setMessages]   = useState<Message[]>(() => loadCachedMessages(greeting))
+  const [input, setInput]         = useState('')
+  const [typing, setTyping]       = useState(false)
+  const [streaming, setStreaming] = useState(false)
+  const [leadDone, setLeadDone]   = useState(getLeadDone)
   const [followUps, setFollowUps] = useState<string[]>([])
-  const [historyLoaded, setHistoryLoaded] = useState(false)
-  const bottomRef               = useRef<HTMLDivElement>(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
 
-  // Load conversation history from Google Sheets on first mount
-  useEffect(() => {
-    if (historyLoaded || typeof window === 'undefined' || sessionId === 'ssr') return
-    setHistoryLoaded(true)
-    fetch(`/api/chat/history?sid=${encodeURIComponent(sessionId)}&limit=30`)
-      .then(r => r.json())
-      .then((data: { messages?: Message[] }) => {
-        if (Array.isArray(data.messages) && data.messages.length > 0) {
-          // Prepend greeting, then restore history
-          setMessages([{ from: 'bot', text: greeting }, ...data.messages])
-        }
-      })
-      .catch(() => { /* fail silently — start fresh */ })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionId])
+  // Persist messages to localStorage on every change (fast, device-local cache)
+  useEffect(() => { saveMessages(messages) }, [messages])
 
   // Auto-scroll
   useEffect(() => {
@@ -116,12 +126,13 @@ export function usePoddarJiChat(greeting: string) {
 
   const markLeadCaptured = () => {
     setLeadDone(true)
+    localStorage.setItem(LS_LEADDONE, 'true')
     setMessages(prev => prev.map(m => m.card === 'lead' ? { ...m, card: 'lead_done' } : m))
   }
 
   const sendMessage = async (preset?: string) => {
     const text = preset || input.trim()
-    if (!text || typing) return
+    if (!text || typing || streaming) return
     setInput('')
     setFollowUps([])
 
@@ -130,12 +141,11 @@ export function usePoddarJiChat(greeting: string) {
     setTyping(true)
 
     try {
-      // Minimum 800ms typing delay so it feels like the bot is reading + thinking
       const [res] = await Promise.all([
         fetch('/api/chat', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({
+          body: JSON.stringify({
             sessionId,
             messages: updated
               .filter(m => !m.card)
@@ -150,8 +160,8 @@ export function usePoddarJiChat(greeting: string) {
       const reader  = res.body.getReader()
       const decoder = new TextDecoder()
 
-      // Switch from typing dots to streaming text
       setTyping(false)
+      setStreaming(true)
       setMessages(prev => [...prev, { from: 'bot', text: '' }])
 
       let fullText = ''
@@ -167,38 +177,40 @@ export function usePoddarJiChat(greeting: string) {
         })
       }
 
-      // Dynamic follow-up chips based on the reply
+      // Stream done — turn off cursor
+      setStreaming(false)
       setFollowUps(getFollowUps(fullText))
 
-      // Lead card injection after exactly 3 user messages
-      const userCount  = updated.filter(m => m.from === 'user').length
+      // Lead card injection after 3 user messages (only once, only if not already done)
+      const userCount   = updated.filter(m => m.from === 'user').length
       const hasLeadCard = updated.some(m => m.card)
       if (userCount >= 3 && !hasLeadCard && !leadDone) {
         setTimeout(() => setMessages(prev => [...prev, LEAD_PROMPT]), 1200)
       }
     } catch {
       setTyping(false)
+      setStreaming(false)
       const fallback = getFallback(text)
+      const errorPrefix = '⚠️ _Abhi thoda connection issue hai — yeh mera best answer hai:_\n\n'
+      const fullFallback = errorPrefix + fallback
       setMessages(prev => {
         const msgs = [...prev]
-        // Fill in-progress streaming message if empty, otherwise append
         if (msgs[msgs.length - 1]?.from === 'bot' && msgs[msgs.length - 1]?.text === '') {
-          msgs[msgs.length - 1] = { from: 'bot', text: fallback }
+          msgs[msgs.length - 1] = { from: 'bot', text: fullFallback }
           return msgs
         }
-        return [...msgs, { from: 'bot', text: fallback }]
+        return [...msgs, { from: 'bot', text: fullFallback }]
       })
-      // Log fallback exchanges too — fire-and-forget
       fetch('/api/chat/log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, userMsg: text, botReply: fallback }),
+        body: JSON.stringify({ sessionId, userMsg: text, botReply: fullFallback }),
       }).catch(() => { /* non-critical */ })
     }
   }
 
   return {
-    messages, input, setInput, typing,
+    messages, input, setInput, typing, streaming,
     sendMessage, bottomRef,
     leadDone, dismissLeadCard, markLeadCaptured,
     followUps,

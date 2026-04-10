@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { Send, CheckCircle2, Phone, User, MessageCircle } from 'lucide-react'
 import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
 import { submitLead } from '@/lib/api'
 
-const WHATSAPP_NUMBER = '919415313434'
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse direct baat karna chahta hun.')}`
+const WHATSAPP_URL = `https://wa.me/919415313434?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
 
 // ── Typing dots ──────────────────────────────────────────────────────────────
 function TypingDots() {
@@ -27,7 +27,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
 
   const submit = async () => {
     const digits = phone.replace(/\D/g, '')
-    if (digits.length !== 10) { setPhoneErr('10-digit number required'); return }
+    if (digits.length !== 10) { setPhoneErr('10 अंक का नंबर डालें'); return }
     if (!name.trim()) return
     setPhoneErr('')
     setStatus('loading')
@@ -44,7 +44,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
     return (
       <div className="flex items-center gap-2 text-green-700 text-[12px] font-medium py-1">
         <CheckCircle2 size={16} className="flex-shrink-0" />
-        Done! Ajay sir will call you soon.
+        हो गया! अजय सर जल्द call करेंगे।
       </div>
     )
   }
@@ -55,7 +55,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
         <User size={12} className="text-slate-400 flex-shrink-0" />
         <input
           type="text"
-          placeholder="Your name"
+          placeholder="आपका नाम"
           value={name}
           onChange={e => setName(e.target.value)}
           className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-400"
@@ -67,7 +67,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
           <Phone size={12} className="text-slate-400 flex-shrink-0" />
           <input
             type="tel"
-            placeholder="Mobile number"
+            placeholder="मोबाइल नंबर"
             value={phone}
             onChange={e => { setPhoneErr(''); setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)) }}
             inputMode="numeric"
@@ -79,7 +79,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
       </div>
 
       {status === 'error' && (
-        <p className="text-red-500 text-[10px] px-1">Something went wrong. Call 9415313434 directly.</p>
+        <p className="text-red-500 text-[10px] px-1">कुछ गड़बड़ हुई। सीधे call करें: 9415313434</p>
       )}
 
       <button
@@ -88,22 +88,34 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
         className="w-full bg-gold text-navy text-[12px] font-bold py-2 rounded-xl hover:bg-gold/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
       >
         <Phone size={12} />
-        {status === 'loading' ? 'Sending…' : 'Request a Callback →'}
+        {status === 'loading' ? 'भेज रहे हैं…' : 'Callback Request करें →'}
       </button>
 
       <button
         onClick={onSkip}
         className="w-full text-[10px] text-slate-400 hover:text-slate-600 transition-colors text-center pt-0.5"
       >
-        Skip for now
+        अभी नहीं
       </button>
     </div>
   )
 }
 
-// ── Streaming text cursor ────────────────────────────────────────────────────
+// ── Streaming cursor ─────────────────────────────────────────────────────────
 function StreamingCursor() {
   return <span className="inline-block w-0.5 h-3 bg-slate-400 ml-0.5 animate-pulse align-middle" />
+}
+
+// ── Bot message with markdown ────────────────────────────────────────────────
+function BotText({ text, isStreaming }: { text: string; isStreaming: boolean }) {
+  return (
+    <div className="text-[12px] leading-relaxed prose prose-sm max-w-none
+      prose-p:my-0.5 prose-ul:my-1 prose-li:my-0 prose-strong:text-navy
+      prose-p:text-slate-700 prose-li:text-slate-700">
+      <ReactMarkdown>{text}</ReactMarkdown>
+      {isStreaming && <StreamingCursor />}
+    </div>
+  )
 }
 
 // ── Main shared chat UI ──────────────────────────────────────────────────────
@@ -121,14 +133,17 @@ interface PoddarJiChatUIProps {
 export default function PoddarJiChatUI({
   chat, chips, chipQueries, placeholder, disclaimer, badges, statusText, compact = false,
 }: PoddarJiChatUIProps) {
-  // Detect if last bot message is still streaming (not typing, but text is building)
-  const lastMsg = chat.messages[chat.messages.length - 1]
-  const isStreaming = !chat.typing && lastMsg?.from === 'bot' && lastMsg?.text !== '' &&
-    chat.messages.filter(m => m.from === 'user').length > 0
+  const lastMsg    = chat.messages[chat.messages.length - 1]
+  const isLastBot  = lastMsg?.from === 'bot'
 
-  // Show dynamic follow-up chips if available, else show static chips
+  // Show dynamic follow-up chips if available, else static
   const activeChips   = chat.followUps?.length ? chat.followUps : chips
   const activeQueries = chat.followUps?.length ? chat.followUps : chipQueries
+
+  // WhatsApp CTA: show after 5 messages OR after lead card is skipped
+  const userCount      = chat.messages.filter(m => m.from === 'user').length
+  const leadSkipped    = chat.messages.some(m => m.card === 'lead_skip')
+  const showWhatsAppCTA = !chat.typing && (userCount >= 5 || leadSkipped) && !chat.leadDone
 
   return (
     <div
@@ -148,7 +163,6 @@ export default function PoddarJiChatUI({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {/* WhatsApp escalation button */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
@@ -170,14 +184,14 @@ export default function PoddarJiChatUI({
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: 'rgb(248 250 252 / 0.5)' }}>
         {chat.messages.map((m, i) => {
-          const isUser    = m.from === 'user'
-          const isLastBot = !isUser && i === chat.messages.length - 1
+          const isUser       = m.from === 'user'
+          const isThisLastBot = !isUser && i === chat.messages.length - 1
 
           if (m.card === 'lead_done') return (
             <div key={i} className="flex gap-2">
               <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0 mt-0.5">PJ</div>
               <div className="bg-white border border-green-200 rounded-2xl rounded-bl-sm px-3.5 py-2.5 shadow-sm text-[12px] text-green-700 flex items-center gap-2">
-                <CheckCircle2 size={14} /> Ajay sir will call you soon. Thank you!
+                <CheckCircle2 size={14} /> अजय सर जल्द call करेंगे। धन्यवाद!
               </div>
             </div>
           )
@@ -188,23 +202,26 @@ export default function PoddarJiChatUI({
                 <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0 mt-0.5">PJ</div>
               )}
               <div className={`max-w-[80%] ${isUser ? '' : 'flex-1'}`}>
-                <div className={`px-3.5 py-2.5 rounded-2xl text-[12px] leading-relaxed ${
+                <div className={`px-3.5 py-2.5 rounded-2xl ${
                   isUser
-                    ? 'bg-navy text-white rounded-br-sm'
+                    ? 'bg-navy text-white rounded-br-sm text-[12px] leading-relaxed'
                     : 'bg-white text-slate-700 border border-slate-100 rounded-bl-sm shadow-sm'
                 }`}>
-                  {m.text.split('\n').map((line, j, arr) => (
-                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                  ))}
-                  {/* Streaming cursor on the last bot message while not typing */}
-                  {isLastBot && !chat.typing && isStreaming && <StreamingCursor />}
+                  {isUser ? (
+                    m.text
+                  ) : (
+                    <BotText
+                      text={m.text}
+                      isStreaming={isThisLastBot && chat.streaming && isLastBot}
+                    />
+                  )}
 
                   {/* Lead capture card */}
                   {m.card === 'lead' && !chat.leadDone && (
                     <LeadCard onCaptured={chat.markLeadCaptured} onSkip={chat.dismissLeadCard} />
                   )}
                   {m.card === 'lead_skip' && (
-                    <p className="text-[10px] text-slate-400 mt-2">No problem! Call 9415313434 whenever you&apos;re ready.</p>
+                    <p className="text-[10px] text-slate-400 mt-2">कोई बात नहीं! जब चाहें call करें: 9415313434</p>
                   )}
                 </div>
               </div>
@@ -222,8 +239,8 @@ export default function PoddarJiChatUI({
           </div>
         )}
 
-        {/* WhatsApp CTA after lead card is skipped or 5+ messages */}
-        {!chat.typing && chat.messages.filter(m => m.from === 'user').length >= 5 && !chat.messages.some(m => m.card === 'lead') && (
+        {/* WhatsApp CTA — shows after 5 messages OR after lead card skipped */}
+        {showWhatsAppCTA && (
           <div className="flex justify-center">
             <a
               href={WHATSAPP_URL}
@@ -232,7 +249,7 @@ export default function PoddarJiChatUI({
               className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 text-[11px] font-semibold px-3.5 py-2 rounded-full hover:bg-green-100 transition-colors"
             >
               <MessageCircle size={13} />
-              Ajay sir se directly baat karein →
+              अजय सर से directly बात करें →
             </a>
           </div>
         )}
@@ -240,7 +257,7 @@ export default function PoddarJiChatUI({
         <div ref={chat.bottomRef} />
       </div>
 
-      {/* Quick chips — dynamic after bot reply, static otherwise */}
+      {/* Quick chips */}
       <div className="px-3 py-2 flex gap-1.5 overflow-x-auto scrollbar-hide border-t border-slate-100 flex-shrink-0">
         {activeChips.map((chip, i) => (
           <button
@@ -266,7 +283,7 @@ export default function PoddarJiChatUI({
           />
           <button
             onClick={() => chat.sendMessage()}
-            disabled={!chat.input.trim() || chat.typing}
+            disabled={!chat.input.trim() || chat.typing || chat.streaming}
             className="w-8 h-8 bg-navy rounded-lg flex items-center justify-center disabled:opacity-30 hover:bg-navy-light transition-colors flex-shrink-0"
           >
             <Send size={13} className="text-white" />
