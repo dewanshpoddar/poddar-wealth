@@ -17,6 +17,7 @@ function ChatWindow() {
       disclaimer={t.chatbot.disclaimer}
       badges={t.chatbot.badges}
       statusText={t.chatbot.statusText}
+      onClearChat={chat.clearChat}
     />
   )
 }

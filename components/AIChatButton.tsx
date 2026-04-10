@@ -64,6 +64,7 @@ export default function AIChatButton() {
               badges={t.chatbot.badges}
               statusText={t.chatbot.statusText}
               compact
+              onClearChat={chat.clearChat}
             />
           </motion.div>
         )}

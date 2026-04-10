@@ -130,8 +130,20 @@ export function usePoddarJiChat(greeting: string) {
     setMessages(prev => prev.map(m => m.card === 'lead' ? { ...m, card: 'lead_done' } : m))
   }
 
+  const clearChat = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(LS_MSGS)
+      localStorage.removeItem(LS_SID)
+      localStorage.removeItem(LS_LEADDONE)
+    }
+    setMessages([{ from: 'bot', text: greeting }])
+    setLeadDone(false)
+    setFollowUps([])
+    setInput('')
+  }
+
   const sendMessage = async (preset?: string) => {
-    const text = preset || input.trim()
+    const text = (preset || input.trim()).slice(0, 500)
     if (!text || typing || streaming) return
     setInput('')
     setFollowUps([])
@@ -182,11 +194,15 @@ export function usePoddarJiChat(greeting: string) {
       setFollowUps(getFollowUps(fullText))
 
       // Lead card injection after 3 user messages (only once, only if not already done)
-      const userCount   = updated.filter(m => m.from === 'user').length
-      const hasLeadCard = updated.some(m => m.card)
-      if (userCount >= 3 && !hasLeadCard && !leadDone) {
-        setTimeout(() => setMessages(prev => [...prev, LEAD_PROMPT]), 1200)
-      }
+      // Check full messages state (includes cached history), not just current session's updated
+      setMessages(prev => {
+        const totalUserCount = prev.filter(m => m.from === 'user').length
+        const alreadyHasCard = prev.some(m => m.card)
+        if (totalUserCount >= 3 && !alreadyHasCard && !leadDone) {
+          setTimeout(() => setMessages(p => [...p, LEAD_PROMPT]), 1200)
+        }
+        return prev
+      })
     } catch {
       setTyping(false)
       setStreaming(false)
@@ -213,7 +229,7 @@ export function usePoddarJiChat(greeting: string) {
     messages, input, setInput, typing, streaming,
     sendMessage, bottomRef,
     leadDone, dismissLeadCard, markLeadCaptured,
-    followUps,
+    followUps, clearChat,
     sessionId,
   }
 }

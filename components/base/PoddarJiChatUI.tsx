@@ -1,11 +1,12 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Send, CheckCircle2, Phone, User, MessageCircle } from 'lucide-react'
+import { Send, CheckCircle2, Phone, User, MessageCircle, Trash2 } from 'lucide-react'
 import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
 import { submitLead } from '@/lib/api'
 
 const WHATSAPP_URL = `https://wa.me/919415313434?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
+const MAX_INPUT = 500
 
 // ── Typing dots ──────────────────────────────────────────────────────────────
 function TypingDots() {
@@ -61,7 +62,6 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
           className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-400"
         />
       </div>
-
       <div>
         <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
           <Phone size={12} className="text-slate-400 flex-shrink-0" />
@@ -77,11 +77,9 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
         </div>
         {phoneErr && <p className="text-red-500 text-[10px] mt-1 px-1">{phoneErr}</p>}
       </div>
-
       {status === 'error' && (
         <p className="text-red-500 text-[10px] px-1">कुछ गड़बड़ हुई। सीधे call करें: 9415313434</p>
       )}
-
       <button
         onClick={submit}
         disabled={status === 'loading' || !name.trim() || !phone}
@@ -90,7 +88,6 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
         <Phone size={12} />
         {status === 'loading' ? 'भेज रहे हैं…' : 'Callback Request करें →'}
       </button>
-
       <button
         onClick={onSkip}
         className="w-full text-[10px] text-slate-400 hover:text-slate-600 transition-colors text-center pt-0.5"
@@ -101,19 +98,16 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
   )
 }
 
-// ── Streaming cursor ─────────────────────────────────────────────────────────
-function StreamingCursor() {
-  return <span className="inline-block w-0.5 h-3 bg-slate-400 ml-0.5 animate-pulse align-middle" />
-}
-
 // ── Bot message with markdown ────────────────────────────────────────────────
-function BotText({ text, isStreaming }: { text: string; isStreaming: boolean }) {
+function BotText({ text, showCursor }: { text: string; showCursor: boolean }) {
   return (
     <div className="text-[12px] leading-relaxed prose prose-sm max-w-none
       prose-p:my-0.5 prose-ul:my-1 prose-li:my-0 prose-strong:text-navy
       prose-p:text-slate-700 prose-li:text-slate-700">
       <ReactMarkdown>{text}</ReactMarkdown>
-      {isStreaming && <StreamingCursor />}
+      {showCursor && (
+        <span className="inline-block w-0.5 h-3 bg-slate-400 ml-0.5 animate-pulse align-middle" />
+      )}
     </div>
   )
 }
@@ -128,22 +122,41 @@ interface PoddarJiChatUIProps {
   badges: string[]
   statusText: string
   compact?: boolean
+  onClearChat?: () => void
 }
 
 export default function PoddarJiChatUI({
-  chat, chips, chipQueries, placeholder, disclaimer, badges, statusText, compact = false,
+  chat, chips, chipQueries, placeholder, disclaimer, badges, statusText, compact = false, onClearChat,
 }: PoddarJiChatUIProps) {
-  const lastMsg    = chat.messages[chat.messages.length - 1]
-  const isLastBot  = lastMsg?.from === 'bot'
+  const inputRef   = useRef<HTMLInputElement>(null)
+  const scrollRef  = useRef<HTMLDivElement>(null)
+  const [confirmClear, setConfirmClear] = useState(false)
 
-  // Show dynamic follow-up chips if available, else static
+  // Mobile keyboard fix: scroll to bottom when input is focused
+  useEffect(() => {
+    const input = inputRef.current
+    if (!input) return
+    const onFocus = () => {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
+      }, 300) // wait for keyboard to fully open
+    }
+    input.addEventListener('focus', onFocus)
+    return () => input.removeEventListener('focus', onFocus)
+  }, [])
+
   const activeChips   = chat.followUps?.length ? chat.followUps : chips
   const activeQueries = chat.followUps?.length ? chat.followUps : chipQueries
 
-  // WhatsApp CTA: show after 5 messages OR after lead card is skipped
-  const userCount      = chat.messages.filter(m => m.from === 'user').length
-  const leadSkipped    = chat.messages.some(m => m.card === 'lead_skip')
+  const userCount       = chat.messages.filter(m => m.from === 'user').length
+  const leadSkipped     = chat.messages.some(m => m.card === 'lead_skip')
   const showWhatsAppCTA = !chat.typing && (userCount >= 5 || leadSkipped) && !chat.leadDone
+
+  const handleClear = () => {
+    if (!confirmClear) { setConfirmClear(true); setTimeout(() => setConfirmClear(false), 3000); return }
+    setConfirmClear(false)
+    onClearChat?.()
+  }
 
   return (
     <div
@@ -151,7 +164,7 @@ export default function PoddarJiChatUI({
       style={compact ? { height: 500 } : undefined}
     >
       {/* Header */}
-      <div className="bg-navy px-5 py-3.5 flex items-center justify-between flex-shrink-0">
+      <div className="bg-navy px-4 py-3.5 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-navy text-[11px] font-bold flex-shrink-0">PJ</div>
           <div>
@@ -162,13 +175,28 @@ export default function PoddarJiChatUI({
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          {/* Clear chat */}
+          {userCount > 0 && (
+            <button
+              onClick={handleClear}
+              className={`flex items-center gap-1 text-[9px] px-2 py-1 rounded-full transition-all ${
+                confirmClear
+                  ? 'bg-red-500 text-white'
+                  : 'text-white/40 hover:text-white/70 hover:bg-white/10'
+              }`}
+              title="Clear chat history"
+            >
+              <Trash2 size={9} />
+              {confirmClear ? 'Sure?' : ''}
+            </button>
+          )}
+          {/* WhatsApp */}
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-full transition-colors flex-shrink-0"
-            title="Chat with Ajay sir on WhatsApp"
           >
             <MessageCircle size={11} />
             <span className="hidden sm:inline">WhatsApp</span>
@@ -182,10 +210,15 @@ export default function PoddarJiChatUI({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: 'rgb(248 250 252 / 0.5)' }}>
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto p-4 space-y-3"
+        style={{ background: 'rgb(248 250 252 / 0.5)' }}
+      >
         {chat.messages.map((m, i) => {
-          const isUser       = m.from === 'user'
-          const isThisLastBot = !isUser && i === chat.messages.length - 1
+          const isUser        = m.from === 'user'
+          const isLastMsg     = i === chat.messages.length - 1
+          const isStreamingThis = !isUser && isLastMsg && chat.streaming
 
           if (m.card === 'lead_done') return (
             <div key={i} className="flex gap-2">
@@ -209,14 +242,13 @@ export default function PoddarJiChatUI({
                 }`}>
                   {isUser ? (
                     m.text
+                  ) : m.text === '' ? (
+                    // Empty bot bubble — show typing dots instead of blank bubble
+                    <TypingDots />
                   ) : (
-                    <BotText
-                      text={m.text}
-                      isStreaming={isThisLastBot && chat.streaming && isLastBot}
-                    />
+                    <BotText text={m.text} showCursor={isStreamingThis} />
                   )}
 
-                  {/* Lead capture card */}
                   {m.card === 'lead' && !chat.leadDone && (
                     <LeadCard onCaptured={chat.markLeadCaptured} onSkip={chat.dismissLeadCard} />
                   )}
@@ -229,7 +261,7 @@ export default function PoddarJiChatUI({
           )
         })}
 
-        {/* Typing indicator */}
+        {/* Typing indicator (800ms delay before stream starts) */}
         {chat.typing && (
           <div className="flex gap-2">
             <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0">PJ</div>
@@ -239,7 +271,7 @@ export default function PoddarJiChatUI({
           </div>
         )}
 
-        {/* WhatsApp CTA — shows after 5 messages OR after lead card skipped */}
+        {/* WhatsApp CTA */}
         {showWhatsAppCTA && (
           <div className="flex justify-center">
             <a
@@ -263,7 +295,8 @@ export default function PoddarJiChatUI({
           <button
             key={chip}
             onClick={() => chat.sendMessage(activeQueries[i])}
-            className="flex-shrink-0 text-[10px] px-2.5 py-1 rounded-full bg-navy/5 text-navy border border-navy/10 hover:bg-navy hover:text-white transition-all whitespace-nowrap"
+            disabled={chat.typing || chat.streaming}
+            className="flex-shrink-0 text-[10px] px-2.5 py-1 rounded-full bg-navy/5 text-navy border border-navy/10 hover:bg-navy hover:text-white transition-all whitespace-nowrap disabled:opacity-40"
           >
             {chip}
           </button>
@@ -274,11 +307,13 @@ export default function PoddarJiChatUI({
       <div className="px-3 pb-3 pt-2 border-t border-slate-100 flex-shrink-0">
         <div className="flex gap-2 bg-slate-50 rounded-xl border border-slate-200 p-1">
           <input
+            ref={inputRef}
             type="text"
             value={chat.input}
-            onChange={e => chat.setInput(e.target.value)}
+            onChange={e => chat.setInput(e.target.value.slice(0, MAX_INPUT))}
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); chat.sendMessage() } }}
             placeholder={placeholder}
+            maxLength={MAX_INPUT}
             className="flex-1 bg-transparent text-[12px] px-2 outline-none text-slate-700 placeholder:text-slate-400"
           />
           <button
@@ -289,6 +324,9 @@ export default function PoddarJiChatUI({
             <Send size={13} className="text-white" />
           </button>
         </div>
+        {chat.input.length > 450 && (
+          <p className="text-[9px] text-amber-500 mt-1 px-1">{MAX_INPUT - chat.input.length} characters left</p>
+        )}
         <p className="text-[9px] text-slate-400 text-center mt-1.5 leading-snug">{disclaimer}</p>
       </div>
     </div>
