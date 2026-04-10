@@ -181,10 +181,10 @@
     ]
   },
   "chatbot": {
-    "eyebrow": "Poddar Wealth Management — AI advisor",
-    "title": "Ask anything about insurance — in Hindi or English",
-    "subtitle": "Powered by Claude AI, trained with LIC and Star Health knowledge. Answers in seconds, 24/7. When you're ready, connects you to Ajay sir.",
-    "topicsLabel": "Common questions — click to ask instantly:",
+    "eyebrow": "Available 24 / 7",
+    "title": "Ask Poddar Ji",
+    "subtitle": "31 years of LIC and Star Health expertise, now available at any hour. Ask in Hindi or English — get an answer in seconds.",
+    "topicsLabel": "Try asking:",
     "topics": [
       "Term cover for age 35, ₹6L income",
       "LIC vs private term plan",
@@ -194,20 +194,20 @@
       "Child education & marriage plans"
     ],
     "curiosityQueries": [
-      "How much life cover is enough?",
-      "LIC vs Private: Which is better?",
-      "Save tax through LIC now?",
-      "Compare Star Health plans 🏥",
+      "How much life cover do I need? 🤔",
+      "LIC vs Private — which is safer?",
+      "Save tax with insurance this year?",
+      "Best Star Health plan for my family",
       "Ajay sir's top 3 LIC plans",
-      "Best health plan for parents?"
+      "Retirement plan starting at 40?"
     ],
-    "headerName": "Connect with Poddar Ji",
+    "headerName": "Poddar Ji",
     "statusText": "Online — replies in seconds",
     "badges": ["LIC expert", "Star Health", "Hindi + English"],
-    "greeting": "Namaste! Main Poddar Wealth Management ka AI advisor hun. 🙏\n\nMain aapko LIC life insurance, Star Health insurance, tax planning, retirement, aur bachon ke plans ke baare mein Hindi ya English mein madad kar sakta hun.\n\nAap kya jaanna chahte hain?",
+    "greeting": "Namaste! Main Poddar Ji hun — Poddar Wealth Management ka AI insurance advisor. 🙏\n\nLIC, Star Health, retirement, tax planning — koi bhi sawaal Hindi ya English mein puchiye.\n\nAap kya jaanna chahte hain?",
     "chips": ["Term plan kya hai?", "MDRT ka matlab?", "Claim process"],
     "chipQueries": ["Term plan kya hota hai?", "MDRT kya hota hai?", "Claim process kaise hota hai LIC mein?"],
-    "placeholder": "Apna sawaal likhen — Hindi ya English mein...",
+    "placeholder": "Ask Poddar Ji — Hindi ya English mein...",
     "disclaimer": "AI responses are indicative. Exact premiums confirmed by Ajay sir — 9415313434"
   },
   "agent": {

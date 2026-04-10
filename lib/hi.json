@@ -19,7 +19,11 @@
   },
   "banner": {
     "text": "नए LIC और Star Health प्लान लॉन्च हुए — अप्रैल 2025",
-    "plans": ["LIC जीवन उत्सव", "Star आरोग्य संजीवनी", "LIC धन वृद्धि"],
+    "plans": [
+      "LIC जीवन उत्सव",
+      "Star आरोग्य संजीवनी",
+      "LIC धन वृद्धि"
+    ],
     "cta": "और जानें →"
   },
   "hero": {
@@ -33,38 +37,110 @@
     "trustQuote": "31 वर्षों का साथ — केवल सेवा, बिक्री नहीं।",
     "quickTitle": "आप किस लिए प्लानिंग कर रहे हैं?",
     "quickItems": [
-      { "icon": "shield", "title": "जीवन सुरक्षा", "sub": "टर्म और एंडोमेंट प्लान" },
-      { "icon": "education", "title": "बच्चों की शिक्षा", "sub": "स्कूलिंग के लिए सुनिश्चित बचत" },
-      { "icon": "check", "title": "रिटायरमेंट प्लानिंग", "sub": "पेंशन और ULIP विकल्प" },
-      { "icon": "heart", "title": "स्वास्थ्य बीमा", "sub": "पारिवारिक मेडिकल कवरेज" },
-      { "icon": "ring", "title": "बेटी की शादी", "sub": "शादी के लिए लक्ष्य-आधारित बचत" }
+      {
+        "icon": "shield",
+        "title": "जीवन सुरक्षा",
+        "sub": "टर्म और एंडोमेंट प्लान"
+      },
+      {
+        "icon": "education",
+        "title": "बच्चों की शिक्षा",
+        "sub": "स्कूलिंग के लिए सुनिश्चित बचत"
+      },
+      {
+        "icon": "check",
+        "title": "रिटायरमेंट प्लानिंग",
+        "sub": "पेंशन और ULIP विकल्प"
+      },
+      {
+        "icon": "heart",
+        "title": "स्वास्थ्य बीमा",
+        "sub": "पारिवारिक मेडिकल कवरेज"
+      },
+      {
+        "icon": "ring",
+        "title": "बेटी की शादी",
+        "sub": "शादी के लिए लक्ष्य-आधारित बचत"
+      }
     ]
   },
   "whyUs": [
-    { "icon": "🤝", "title": "निजी सलाहकार", "sub": "एक सलाहकार, आपके पूरे परिवार के लिए, जीवन भर।" },
-    { "icon": "⚡", "title": "त्वरित क्लेम सहायता", "sub": "हम क्लेम के हर कदम पर आपका मार्गदर्शन करते हैं।" },
-    { "icon": "📋", "title": "अनुकूलित योजना", "sub": "कमीशन नहीं, आपके लक्ष्यों के इर्द-गिर्द बनी योजनाएं।" },
-    { "icon": "🏆", "title": "पुरस्कार विजेता भरोसा", "sub": "MDRT सदस्य और चेयरमैन क्लब — 1994 से।" }
+    {
+      "icon": "🤝",
+      "title": "निजी सलाहकार",
+      "sub": "एक सलाहकार, आपके पूरे परिवार के लिए, जीवन भर।"
+    },
+    {
+      "icon": "⚡",
+      "title": "त्वरित क्लेम सहायता",
+      "sub": "हम क्लेम के हर कदम पर आपका मार्गदर्शन करते हैं।"
+    },
+    {
+      "icon": "📋",
+      "title": "अनुकूलित योजना",
+      "sub": "कमीशन नहीं, आपके लक्ष्यों के इर्द-गिर्द बनी योजनाएं।"
+    },
+    {
+      "icon": "🏆",
+      "title": "पुरस्कार विजेता भरोसा",
+      "sub": "MDRT सदस्य और चेयरमैन क्लब — 1994 से।"
+    }
   ],
   "trust": {
     "title": "परिवार अजय पोद्दार पर क्यों भरोसा करते हैं",
     "subtitle": "तीन दशकों से भारतीय परिवारों के लिए बीमा को सरल बनाते हुए",
     "credentials": [
-      { "icon": "🏆", "title": "MDRT सदस्य", "desc": "मिलियन डॉलर राउंड टेबल — विश्व के शीर्ष 1% एडवाइजर" },
-      { "icon": "⭐", "title": "27+ साल", "desc": "1997 से निरंतर उत्कृष्टता" },
-      { "icon": "👨‍👩‍👧‍👦", "title": "10,000+ परिवार", "desc": "राजस्थान व भारत के परिवारों का भरोसा" },
-      { "icon": "✅", "title": "₹500Cr+ क्लेम", "desc": "जरूरत के वक्त परिवारों के लिए क्लेम सफलतापूर्वक सेटल" }
+      {
+        "icon": "🏆",
+        "title": "MDRT सदस्य",
+        "desc": "मिलियन डॉलर राउंड टेबल — विश्व के शीर्ष 1% एडवाइजर"
+      },
+      {
+        "icon": "⭐",
+        "title": "27+ साल",
+        "desc": "1997 से निरंतर उत्कृष्टता"
+      },
+      {
+        "icon": "👨‍👩‍👧‍👦",
+        "title": "10,000+ परिवार",
+        "desc": "राजस्थान व भारत के परिवारों का भरोसा"
+      },
+      {
+        "icon": "✅",
+        "title": "₹500Cr+ क्लेम",
+        "desc": "जरूरत के वक्त परिवारों के लिए क्लेम सफलतापूर्वक सेटल"
+      }
     ],
     "stats": [
-      { "num": "31+", "label": "सेवा के साल" },
-      { "num": "5000+", "label": "परिवार सुरक्षित" },
-      { "num": "MDRT", "label": "USA सदस्य" },
-      { "num": "चेयरमैन", "label": "क्लब अवार्डी" }
+      {
+        "num": "31+",
+        "label": "सेवा के साल"
+      },
+      {
+        "num": "5000+",
+        "label": "परिवार सुरक्षित"
+      },
+      {
+        "num": "MDRT",
+        "label": "USA सदस्य"
+      },
+      {
+        "num": "चेयरमैन",
+        "label": "क्लब अवार्डी"
+      }
     ],
     "partnersLabel": "अधिकृत पार्टनर",
     "partners": [
-      { "name": "LIC ऑफ़ इंडिया", "color": "#003087", "logo": "/assets/lic_log_updated.svg" },
-      { "name": "Star Health Insurance", "color": "#c8000a", "logo": "/assets/star-health-logo.svg" }
+      {
+        "name": "LIC ऑफ़ इंडिया",
+        "color": "#003087",
+        "logo": "/assets/lic_log_updated.svg"
+      },
+      {
+        "name": "Star Health Insurance",
+        "color": "#c8000a",
+        "logo": "/assets/star-health-logo.svg"
+      }
     ]
   },
   "services": {
@@ -72,39 +148,155 @@
     "title": "आपके परिवार के लिए वह सब कुछ जो आपको चाहिए",
     "subtitle": "जीवन बीमा से लेकर हेल्थ प्लान, टैक्स बचत से लेकर कीमैन इन्श्योरेंस तक — सब कुछ गोरखपुर में एक ही छत के नीचे।",
     "items": [
-      { "icon": "👨‍👩‍👧‍👦", "color": "blue", "title": "जीवन सुरक्षा", "desc": "LIC के टर्म और एंडोमेंट प्लान", "tag": "LIC", "href": "/services/life-insurance", "badge": "लोकप्रिय" },
-      { "icon": "👨‍⚕️", "color": "red", "title": "स्वास्थ्य बीमा", "desc": "Star Health के व्यक्तिगत और फैमिली फ्लोटर प्लान", "tag": "Star Health", "href": "/services/health-insurance", "badge": "बेहतरीन" },
-      { "icon": "💼", "color": "orange", "title": "टैक्स प्लानिंग", "desc": "80C और 80D के तहत टैक्स बचत के सही विकल्प", "tag": "बचत", "href": "/services/tax-planning" },
-      { "icon": "👧", "color": "green", "title": "चाइल्ड प्लान", "desc": "बच्चों की शिक्षा और उज्ज्वल भविष्य के लिए बचत", "tag": "भविष्य", "href": "/services/child-planning", "badge": "बच्चों के लिए" },
-      { "icon": "👴", "color": "blue", "title": "रिटायरमेंट", "desc": "बुढ़ापे में नियमित आय और पेंशन की गारंटी", "tag": "पेंशन", "href": "/services/retirement" },
-      { "icon": "🩺", "color": "red", "title": "क्रिटिकल इलनेस", "desc": "कैंसर और दिल जैसी बीमारियों के लिए आर्थिक सुरक्षा", "tag": "हेल्थ+", "href": "/services/health-insurance" },
-      { "icon": "🏢", "color": "orange", "title": "कीमैन इंश्योरेंस", "desc": "बिजनेस चलाने वाले मुख्य व्यक्तियों का बीमा", "tag": "Business", "href": "/services/life-insurance" },
-      { "icon": "🚶‍♂️", "color": "green", "title": "एक्सीडेंट कवर", "desc": "दुर्घटना, विकलांगता और अस्पताल खर्च का कवर", "tag": "सुरक्षा", "href": "/services/health-insurance" },
-      { "icon": "🎗️", "color": "blue", "title": "कैंसर कवर", "desc": "कैंसर की बीमारी के लिए विशेष LIC सुरक्षा प्लान", "tag": "LIC", "href": "/services/life-insurance" },
-      { "icon": "🧔", "color": "red", "title": "टर्म लाइफ", "desc": "कम प्रीमियम में परिवार के लिए बड़ा लाइफ कवर", "tag": "सुरक्षा", "href": "/services/life-insurance", "badge": "मिलेनियल्स की पसंद" },
-
-      { "icon": "👰", "color": "orange", "title": "बेटी की शादी", "desc": "शादी और भविष्य के खर्चों के लिए वेल्थ बिल्डिंग", "tag": "बचत", "href": "/services/child-planning" },
-      { "icon": "👥", "color": "green", "title": "ग्रुप हेल्थ", "desc": "बिजनेस टीम और कर्मचारियों के लिए मेडिकल बेनिफिट्स", "tag": "टीम", "href": "/services/health-insurance" }
+      {
+        "icon": "👨‍👩‍👧‍👦",
+        "color": "blue",
+        "title": "जीवन सुरक्षा",
+        "desc": "LIC के टर्म और एंडोमेंट प्लान",
+        "tag": "LIC",
+        "href": "/services/life-insurance",
+        "badge": "लोकप्रिय"
+      },
+      {
+        "icon": "👨‍⚕️",
+        "color": "red",
+        "title": "स्वास्थ्य बीमा",
+        "desc": "Star Health के व्यक्तिगत और फैमिली फ्लोटर प्लान",
+        "tag": "Star Health",
+        "href": "/services/health-insurance",
+        "badge": "बेहतरीन"
+      },
+      {
+        "icon": "💼",
+        "color": "orange",
+        "title": "टैक्स प्लानिंग",
+        "desc": "80C और 80D के तहत टैक्स बचत के सही विकल्प",
+        "tag": "बचत",
+        "href": "/services/tax-planning"
+      },
+      {
+        "icon": "👧",
+        "color": "green",
+        "title": "चाइल्ड प्लान",
+        "desc": "बच्चों की शिक्षा और उज्ज्वल भविष्य के लिए बचत",
+        "tag": "भविष्य",
+        "href": "/services/child-planning",
+        "badge": "बच्चों के लिए"
+      },
+      {
+        "icon": "👴",
+        "color": "blue",
+        "title": "रिटायरमेंट",
+        "desc": "बुढ़ापे में नियमित आय और पेंशन की गारंटी",
+        "tag": "पेंशन",
+        "href": "/services/retirement"
+      },
+      {
+        "icon": "🩺",
+        "color": "red",
+        "title": "क्रिटिकल इलनेस",
+        "desc": "कैंसर और दिल जैसी बीमारियों के लिए आर्थिक सुरक्षा",
+        "tag": "हेल्थ+",
+        "href": "/services/health-insurance"
+      },
+      {
+        "icon": "🏢",
+        "color": "orange",
+        "title": "कीमैन इंश्योरेंस",
+        "desc": "बिजनेस चलाने वाले मुख्य व्यक्तियों का बीमा",
+        "tag": "Business",
+        "href": "/services/life-insurance"
+      },
+      {
+        "icon": "🚶‍♂️",
+        "color": "green",
+        "title": "एक्सीडेंट कवर",
+        "desc": "दुर्घटना, विकलांगता और अस्पताल खर्च का कवर",
+        "tag": "सुरक्षा",
+        "href": "/services/health-insurance"
+      },
+      {
+        "icon": "🎗️",
+        "color": "blue",
+        "title": "कैंसर कवर",
+        "desc": "कैंसर की बीमारी के लिए विशेष LIC सुरक्षा प्लान",
+        "tag": "LIC",
+        "href": "/services/life-insurance"
+      },
+      {
+        "icon": "🧔",
+        "color": "red",
+        "title": "टर्म लाइफ",
+        "desc": "कम प्रीमियम में परिवार के लिए बड़ा लाइफ कवर",
+        "tag": "सुरक्षा",
+        "href": "/services/life-insurance",
+        "badge": "मिलेनियल्स की पसंद"
+      },
+      {
+        "icon": "👰",
+        "color": "orange",
+        "title": "बेटी की शादी",
+        "desc": "शादी और भविष्य के खर्चों के लिए वेल्थ बिल्डिंग",
+        "tag": "बचत",
+        "href": "/services/child-planning"
+      },
+      {
+        "icon": "👥",
+        "color": "green",
+        "title": "ग्रुप हेल्थ",
+        "desc": "बिजनेस टीम और कर्मचारियों के लिए मेडिकल बेनिफिट्स",
+        "tag": "टीम",
+        "href": "/services/health-insurance"
+      }
     ]
-
   },
   "calculator": {
     "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — मुफ़्त टूल",
     "title": "LIC और Star Health प्रीमियम कैलकुलेटर",
     "subtitle": "किसी भी प्लान का तुरंत अनुमान प्राप्त करें। असल प्रीमियम मेडिकल हिस्ट्री पर निर्भर करता है — अजय सर कन्फर्म करेंगे।",
-    "tabs": { "life": "जीवन बीमा", "health": "स्वास्थ्य बीमा" },
+    "tabs": {
+      "life": "जीवन बीमा",
+      "health": "स्वास्थ्य बीमा"
+    },
     "age": "आपकी आयु",
     "sumAssured": "सम एश्योर्ड",
     "policyTerm": "पॉलिसी टर्म",
     "planType": "प्लान का प्रकार",
     "frequency": "प्रीमियम फ्रीक्वेंसी",
-    "planTypes": ["टर्म प्लान", "एंडोमेंट", "मनी-बैक", "ULIP", "पेंशन", "चाइल्ड प्लान"],
-    "frequencies": ["मासिक", "तिमाही", "छमाही", "वार्षिक"],
+    "planTypes": [
+      "टर्म प्लान",
+      "एंडोमेंट",
+      "मनी-बैक",
+      "ULIP",
+      "पेंशन",
+      "चाइल्ड प्लान"
+    ],
+    "frequencies": [
+      "मासिक",
+      "तिमाही",
+      "छमाही",
+      "वार्षिक"
+    ],
     "recommended": "आपकी प्रोफ़ाइल के लिए अनुशंसित LIC प्लान",
     "plans": [
-      { "name": "LIC जीवन अमर", "type": "प्योर टर्म — कोई मैच्योरिटी नहीं", "desc": "सबसे कम प्रीमियम में अधिकतम कवर। आय सुरक्षा के लिए सबसे अच्छा।", "badge": "सबसे लोकप्रिय" },
-      { "name": "LIC न्यू जीवन आनंद", "type": "एंडोमेंट + होल लाइफ़", "desc": "दोगुना लाभ — टर्म खत्म होने पर सुरक्षा + मैच्योरिटी बोनस।", "badge": "रिटर्न के साथ" },
-      { "name": "LIC जीवन उमंग", "type": "होल लाइफ़ + वार्षिक भुगतान", "desc": "हर साल सर्वाइवल बेनिफिट — जीवन भर की आय।", "badge": "लाइफटाइम कवर" }
+      {
+        "name": "LIC जीवन अमर",
+        "type": "प्योर टर्म — कोई मैच्योरिटी नहीं",
+        "desc": "सबसे कम प्रीमियम में अधिकतम कवर। आय सुरक्षा के लिए सबसे अच्छा।",
+        "badge": "सबसे लोकप्रिय"
+      },
+      {
+        "name": "LIC न्यू जीवन आनंद",
+        "type": "एंडोमेंट + होल लाइफ़",
+        "desc": "दोगुना लाभ — टर्म खत्म होने पर सुरक्षा + मैच्योरिटी बोनस।",
+        "badge": "रिटर्न के साथ"
+      },
+      {
+        "name": "LIC जीवन उमंग",
+        "type": "होल लाइफ़ + वार्षिक भुगतान",
+        "desc": "हर साल सर्वाइवल बेनिफिट — जीवन भर की आय।",
+        "badge": "लाइफटाइम कवर"
+      }
     ],
     "resultTitle": "आपका प्रीमियम अनुमान",
     "resultCta": "अजय सर से सटीक कोटेशन लें ↗",
@@ -121,7 +313,13 @@
     "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — एक्सक्लूसिव टूल",
     "title": "आपके परिवार का फाइनेंसियल मोट स्कोर",
     "subtitle": "12 आसान सवालों के जवाब दें — 4 पिलर्स पर पर्सनलाइज़्ड स्कोर पाएं। पूरी तरह फ्री, कोई रजिस्ट्रेशन नहीं।",
-    "steps": ["लाइफ कवर", "हेल्थ कवर", "इनकम सेफ्टी", "रिटायरमेंट", "आपका स्कोर"],
+    "steps": [
+      "लाइफ कवर",
+      "हेल्थ कवर",
+      "इनकम सेफ्टी",
+      "रिटायरमेंट",
+      "आपका स्कोर"
+    ],
     "gapsTitle": "पहचानी गई मुख्य कमियां",
     "ctaTitle": "इन कमियों को अजय सर से ठीक कराएं — फ्री कंसल्टेशन",
     "ctaSub": "9415313434 पर कॉल करें या अपना स्कोर भेजने के लिए क्लिक करें"
@@ -131,9 +329,18 @@
     "quoteGold": "आपका परिवार सुरक्षित रहे।",
     "story": "31 सालों से, अजय कुमार पोद्दार गोरखपुर के परिवारों के साथ बैठकर उनके सपनों, उनके डर को समझते आ रहे हैं — और दोनों के इर्द-गिर्द सुरक्षा घेरा बनाते हैं। सिर्फ़ पॉलिसी नहीं। सुकून और शांति देते हैं।",
     "stats": [
-      { "num": "5000+", "label": "परिवार सुरक्षित" },
-      { "num": "₹200Cr+", "label": "क्लेम सेटल" },
-      { "num": "31", "label": "सेवा के साल" }
+      {
+        "num": "5000+",
+        "label": "परिवार सुरक्षित"
+      },
+      {
+        "num": "₹200Cr+",
+        "label": "क्लेम सेटल"
+      },
+      {
+        "num": "31",
+        "label": "सेवा के साल"
+      }
     ],
     "trustCard": {
       "title": "गोरखपुर की फैमिलीज़ का भरोसा",
@@ -181,10 +388,10 @@
     ]
   },
   "chatbot": {
-    "eyebrow": "पोद्दार वेल्थ मैनेजमेंट — AI एडवाइज़र",
-    "title": "बीमा से जुड़ा कुछ भी पूछें — हिंदी या अंग्रेजी में",
-    "subtitle": "Claude AI द्वारा संचालित, LIC और Star Health की जानकारी से प्रशिक्षित। सेकंडों में जवाब, 24/7। जब आप तैयार हों, सीधा अजय सर से जुड़ें।",
-    "topicsLabel": "आम सवाल — तुरंत पूछने के लिए क्लिक करें:",
+    "eyebrow": "24/7 उपलब्ध",
+    "title": "पोद्दार जी से पूछें",
+    "subtitle": "31 साल की LIC और Star Health की विशेषज्ञता — अब किसी भी समय उपलब्ध। हिंदी या अंग्रेजी में पूछें, सेकंडों में जवाब पाएं।",
+    "topicsLabel": "ये पूछकर देखें:",
     "topics": [
       "उम्र 35, ₹6 लाख आय के लिए टर्म कवर",
       "LIC बनाम प्राइवेट टर्म प्लान",
@@ -201,13 +408,25 @@
       "अजय जी की टॉप 3 LIC पॉलिसी",
       "माता-पिता के लिए बेस्ट हेल्थ प्लान?"
     ],
-    "headerName": "अजय जी से जुड़ें",
+    "headerName": "पोद्दार जी",
     "statusText": "ऑनलाइन — सेकंडों में जवाब",
-    "badges": ["LIC एक्सपर्ट", "Star Health", "हिंदी + English"],
-    "greeting": "नमस्ते! मैं पोद्दार वेल्थ मैनेजमेंट का AI एडवाइज़र हूँ। 🙏\n\nमैं आपको LIC लाइफ इन्श्योरेंस, Star Health इन्श्योरेंस, टैक्स प्लानिंग, रिटायरमेंट, और बच्चों के प्लान्स के बारे में हिंदी या इंग्लिश में मदद कर सकता हूँ।\n\nआप क्या जानना चाहते हैं?",
-    "chips": ["टर्म प्लान क्या है?", "MDRT का मतलब?", "क्लेम प्रोसेस"],
-    "chipQueries": ["टर्म प्लान क्या होता है?", "MDRT क्या होता है?", "LIC में क्लेम प्रोसेस कैसे होता है?"],
-    "placeholder": "अपना सवाल यहाँ लिखें — हिंदी या इंग्लिश में...",
+    "badges": [
+      "LIC एक्सपर्ट",
+      "Star Health",
+      "हिंदी + English"
+    ],
+    "greeting": "नमस्ते! मैं पोद्दार जी हूँ — पोद्दार वेल्थ मैनेजमेंट का AI इन्श्योरेंस एडवाइज़र। 🙏\n\nLIC, Star Health, रिटायरमेंट, टैक्स — कोई भी सवाल हिंदी या इंग्लिश में पूछिए।\n\nआप क्या जानना चाहते हैं?",
+    "chips": [
+      "टर्म प्लान क्या है?",
+      "MDRT का मतलब?",
+      "क्लेम प्रोसेस"
+    ],
+    "chipQueries": [
+      "टर्म प्लान क्या होता है?",
+      "MDRT क्या होता है?",
+      "LIC में क्लेम प्रोसेस कैसे होता है?"
+    ],
+    "placeholder": "पोद्दार जी से पूछें — हिंदी या इंग्लिश में...",
     "disclaimer": "AI के जवाब सांकेतिक हैं। अजय सर सटीक प्रीमियम की पुष्टि करेंगे — 9415313434"
   },
   "agent": {
@@ -240,10 +459,22 @@
     "eyebrow": "अपने एडवाइज़र से मिलें",
     "name": "अजय कुमार पोद्दार",
     "badges": [
-      { "text": "MDRT मेंबर — USA", "type": "gold" },
-      { "text": "चेयरमैन क्लब", "type": "gold" },
-      { "text": "चीफ़ लाइफ इन्श्योरेंस एडवाइज़र", "type": "blue" },
-      { "text": "एजेंसी रिक्रूटमेंट ऑफिसर", "type": "blue" }
+      {
+        "text": "MDRT मेंबर — USA",
+        "type": "gold"
+      },
+      {
+        "text": "चेयरमैन क्लब",
+        "type": "gold"
+      },
+      {
+        "text": "चीफ़ लाइफ इन्श्योरेंस एडवाइज़र",
+        "type": "blue"
+      },
+      {
+        "text": "एजेंसी रिक्रूटमेंट ऑफिसर",
+        "type": "blue"
+      }
     ],
     "bio": "एडी मॉल कंपाउंड, विजय चौक, गोरखपुर — पूर्वी यूपी के हृदय में स्थित — अजय कुमार पोद्दार 1994 से परिवारों के भविष्य को सुरक्षित करने में मदद कर रहे हैं। तीन दशक से अधिक के अनुभव के साथ, वह उत्तर प्रदेश के सबसे सम्मानित LIC एजेंटों में से एक हैं, जिन्हें मिलियन डॉलर राउंड टेबल (MDRT, USA) द्वारा वैश्विक मान्यता प्राप्त है।"
   },
@@ -270,10 +501,26 @@
     "mission": "To make insurance simple, honest, and accessible for every Indian family — regardless of income or education level.",
     "valuesTitle": "Our Values",
     "values": [
-      { "icon": "🤝", "title": "Honesty First", "desc": "We recommend what's right for you, not what pays us more" },
-      { "icon": "💡", "title": "Simplicity", "desc": "We explain complex products in plain, simple language — in Hindi" },
-      { "icon": "❤️", "title": "Genuine Care", "desc": "We're here at claim time, not just at policy time" },
-      { "icon": "📞", "title": "Always Available", "desc": "Personal advisor who picks up your calls — 9415313434" }
+      {
+        "icon": "🤝",
+        "title": "Honesty First",
+        "desc": "We recommend what's right for you, not what pays us more"
+      },
+      {
+        "icon": "💡",
+        "title": "Simplicity",
+        "desc": "We explain complex products in plain, simple language — in Hindi"
+      },
+      {
+        "icon": "❤️",
+        "title": "Genuine Care",
+        "desc": "We're here at claim time, not just at policy time"
+      },
+      {
+        "icon": "📞",
+        "title": "Always Available",
+        "desc": "Personal advisor who picks up your calls — 9415313434"
+      }
     ]
   },
   "lifeInsurance": {
@@ -282,10 +529,26 @@
     "whyTitle": "Why Every Earning Member Needs Life Insurance",
     "typesTitle": "Types of Life Insurance",
     "types": [
-      { "title": "Term Insurance (Jeevan Amar)", "desc": "Maximum coverage at minimum cost. Pure protection for your family.", "tag": "Most Popular" },
-      { "title": "Endowment (New Jeevan Anand)", "desc": "Protection + savings. Get sum assured + bonuses at maturity.", "tag": "With Returns" },
-      { "title": "ULIPs (Nivesh Plus)", "desc": "Insurance + market-linked investment returns in one product.", "tag": "Investment" },
-      { "title": "Money-Back Plans", "desc": "Periodic payouts during policy term + full coverage.", "tag": "Regular Income" }
+      {
+        "title": "Term Insurance (Jeevan Amar)",
+        "desc": "Maximum coverage at minimum cost. Pure protection for your family.",
+        "tag": "Most Popular"
+      },
+      {
+        "title": "Endowment (New Jeevan Anand)",
+        "desc": "Protection + savings. Get sum assured + bonuses at maturity.",
+        "tag": "With Returns"
+      },
+      {
+        "title": "ULIPs (Nivesh Plus)",
+        "desc": "Insurance + market-linked investment returns in one product.",
+        "tag": "Investment"
+      },
+      {
+        "title": "Money-Back Plans",
+        "desc": "Periodic payouts during policy term + full coverage.",
+        "tag": "Regular Income"
+      }
     ]
   },
   "becomeAdvisor": {
@@ -293,19 +556,59 @@
     "heroSubtitle": "Join Ajay Kumar Poddar's team — Eastern UP's most experienced Agency Recruitment Officer",
     "whyTitle": "Why Become an LIC Agent?",
     "benefits": [
-      { "icon": "💰", "title": "Lifetime Commission", "desc": "Renewal commission keeps coming — earn while you sleep." },
-      { "icon": "⏰", "title": "Flexible Hours", "desc": "Suitable for housewives, retired persons, graduates." },
-      { "icon": "🎓", "title": "Full Training", "desc": "Ajay sir personally mentors every new agent." },
-      { "icon": "🏆", "title": "Recognition", "desc": "Bonus, contests, and Chairman's Club recognition." },
-      { "icon": "🔒", "title": "Job Security", "desc": "Insurance is always needed, regardless of economy." },
-      { "icon": "❤️", "title": "Meaningful Work", "desc": "Your work directly protects families." }
+      {
+        "icon": "💰",
+        "title": "Lifetime Commission",
+        "desc": "Renewal commission keeps coming — earn while you sleep."
+      },
+      {
+        "icon": "⏰",
+        "title": "Flexible Hours",
+        "desc": "Suitable for housewives, retired persons, graduates."
+      },
+      {
+        "icon": "🎓",
+        "title": "Full Training",
+        "desc": "Ajay sir personally mentors every new agent."
+      },
+      {
+        "icon": "🏆",
+        "title": "Recognition",
+        "desc": "Bonus, contests, and Chairman's Club recognition."
+      },
+      {
+        "icon": "🔒",
+        "title": "Job Security",
+        "desc": "Insurance is always needed, regardless of economy."
+      },
+      {
+        "icon": "❤️",
+        "title": "Meaningful Work",
+        "desc": "Your work directly protects families."
+      }
     ],
     "incomeTitle": "Income Potential",
     "incomeData": [
-      { "level": "Starter", "policies": "5-10 policies/month", "income": "₹15,000 – ₹30,000/month" },
-      { "level": "Growing", "policies": "10-20 policies/month", "income": "₹30,000 – ₹75,000/month" },
-      { "level": "Established", "policies": "20+ policies/month", "income": "₹75,000 – ₹2,00,000/month" },
-      { "level": "MDRT Level", "policies": "Top performer", "income": "₹2,00,000+/month" }
+      {
+        "level": "Starter",
+        "policies": "5-10 policies/month",
+        "income": "₹15,000 – ₹30,000/month"
+      },
+      {
+        "level": "Growing",
+        "policies": "10-20 policies/month",
+        "income": "₹30,000 – ₹75,000/month"
+      },
+      {
+        "level": "Established",
+        "policies": "20+ policies/month",
+        "income": "₹75,000 – ₹2,00,000/month"
+      },
+      {
+        "level": "MDRT Level",
+        "policies": "Top performer",
+        "income": "₹2,00,000+/month"
+      }
     ],
     "formTitle": "Express Your Interest",
     "formSubtitle": "फिल्ल this form and Ajay sir will personally call you within 24 hours",
@@ -358,7 +661,13 @@
     "phone": "WhatsApp Number",
     "age": "Your Age",
     "goal": "Your Primary Goal",
-    "goalOptions": ["Life Protection", "Health Coverage", "Child's Education", "Retirement Planning", "Tax Saving"],
+    "goalOptions": [
+      "Life Protection",
+      "Health Coverage",
+      "Child's Education",
+      "Retirement Planning",
+      "Tax Saving"
+    ],
     "submit": "Get Free Advice →",
     "privacy": "We never share your details. No spam, ever.",
     "successTitle": "🎉 Thank You!",
