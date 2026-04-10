@@ -4,20 +4,15 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import { 
-  ShieldCheck, 
-  Eye, 
-  Heart, 
-  PhoneCall, 
-  MapPin, 
-  Calendar,
-  Users,
-  Briefcase,
+import {
+  ShieldCheck,
+  Eye,
+  Heart,
+  PhoneCall,
+  MapPin,
   Trophy,
   Star,
   Camera,
-  ArrowDown,
-  ArrowUp
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -223,41 +218,86 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ STRAIGHT-LINE HORIZONTAL TIMELINE ═══ */}
+      {/* ═══ HORIZONTAL TIMELINE ═══ */}
       <section className="py-16 md:py-20 bg-white relative overflow-hidden border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-20">
+        <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-16">
           <span className="text-gold font-bold uppercase tracking-[0.3em] text-[11px]">31-Year Chronology</span>
           <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mt-2 leading-tight">The Legacy Timeline</h2>
         </div>
 
-        <div className="max-w-7xl mx-auto px-8 relative overflow-x-auto pb-12 scrollbar-hide">
-          <div className="min-w-[1000px] relative h-[420px] flex items-center">
-            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gold/20 -translate-y-1/2 z-0" />
-            <div className="w-full flex justify-between relative z-10 px-10">
+        {/*
+          Layout (container h=440px, center line at y=220):
+            Top items  → card at top-0 (max 150px tall), connector top-[150px] h-[54px], dot centred at y=220
+            Bottom items → dot centred at y=220, connector top-[236px] h-[54px], card at bottom-0 (max 150px tall)
+            Year label  → below dot for top items (top-[242px]), above dot for bottom items (top-[170px])
+        */}
+        <div className="max-w-7xl mx-auto px-8 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="relative min-w-[860px]" style={{ height: 440 }}>
+
+            {/* Horizontal centre line */}
+            <div className="absolute left-10 right-10 bg-gold/20" style={{ top: 220, height: 1 }} />
+
+            <div className="absolute inset-0 flex justify-between px-10">
               {timeline.map((item, i) => {
-                const isTop = i % 2 === 0;
+                const isTop = i % 2 === 0
                 return (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: isTop ? -20 : 20 }}
+                    initial={{ opacity: 0, y: isTop ? -16 : 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className={`relative w-[220px] flex flex-col items-center ${isTop ? 'justify-end pb-[210px]' : 'justify-start pt-[210px]'}`}
+                    transition={{ delay: i * 0.1 }}
+                    className="relative"
+                    style={{ width: 200 }}
                   >
-                    <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all group">
-                       <h4 className="text-[16px] font-bold text-navy mb-2 group-hover:text-gold transition-colors leading-snug">{item.title}</h4>
-                       <p className="text-[11px] text-slate-500 leading-relaxed font-medium">{item.desc}</p>
+                    {/* Card */}
+                    <div
+                      className={`absolute left-0 right-0 ${isTop ? 'top-0' : 'bottom-0'}`}
+                      style={{ maxHeight: 150 }}
+                    >
+                      <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-gold/30 transition-all group">
+                        <h4 className="text-[14px] font-bold text-navy mb-1.5 group-hover:text-gold transition-colors leading-snug">{item.title}</h4>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">{item.desc}</p>
+                      </div>
                     </div>
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-px h-[160px] bg-gold/10 ${isTop ? 'bottom-[45px]' : 'top-[45px]'}`}>
-                       <div className={`absolute left-1/2 -translate-x-1/2 w-4 h-4 text-gold/30 ${isTop ? 'bottom-0 translate-y-1/2 scale-x-125' : 'top-0 -translate-y-1/2 scale-x-125'}`}>
-                          {isTop ? <ArrowDown size={14} /> : <ArrowUp size={14} />}
-                       </div>
+
+                    {/* Connector line — bridges card edge to dot edge */}
+                    <div
+                      className="absolute bg-gold/25"
+                      style={{
+                        left: '50%',
+                        width: 1,
+                        top: isTop ? 150 : 236,
+                        height: 54,
+                        transform: 'translateX(-50%)',
+                      }}
+                    />
+
+                    {/* Dot — centred exactly on the horizontal line (y=220) */}
+                    <div
+                      className="absolute z-10 flex items-center justify-center"
+                      style={{
+                        left: '50%',
+                        top: 204,               /* 220 - 16 (half of w-8) */
+                        width: 32,
+                        height: 32,
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      <div className="w-full h-full rounded-full bg-white border-2 border-gold flex items-center justify-center text-[11px] font-bold text-navy shadow">
+                        &apos;{item.year.slice(2)}
+                      </div>
                     </div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                       <div className="w-10 h-10 rounded-full bg-white border-2 border-gold flex items-center justify-center text-[13px] font-bold text-navy shadow-sm z-20">
-                          {item.year.slice(-2)}
-                       </div>
-                       <div className="absolute -bottom-8 whitespace-nowrap text-[13px] font-bold text-gold tracking-widest">{item.year}</div>
+
+                    {/* Year label — on the opposite side from the card */}
+                    <div
+                      className="absolute left-1/2 whitespace-nowrap text-[12px] font-bold text-gold tracking-widest"
+                      style={{
+                        top: isTop ? 242 : 172,
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      {item.year}
                     </div>
                   </motion.div>
                 )
