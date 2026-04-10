@@ -156,11 +156,13 @@ export default function AboutPage() {
                 </motion.div>
                 
                 <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
-                   <div className="px-5 py-2 border border-gold/20 rounded-full text-[10px] font-bold text-gold uppercase tracking-widest">
-                     MDRT USA Member
+                   <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
+                     <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain flex-shrink-0" />
+                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">MDRT USA Member</span>
                    </div>
-                   <div className="px-5 py-2 border border-gold/20 rounded-full text-[10px] font-bold text-gold uppercase tracking-widest">
-                     Chairman&apos;s Club
+                   <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
+                     <Image src="/assets/chairmanclub.svg" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
+                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">Chairman&apos;s Club</span>
                    </div>
                 </div>
               </div>
@@ -338,20 +340,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ BOLD INSTITUTIONAL BADGES ═══ */}
+      {/* ═══ INSTITUTIONAL BADGES ═══ */}
       <section className="py-16 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap items-center justify-center gap-12 lg:gap-24">
-             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
-                <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">MDRT USA</div>
+          <div className="flex flex-wrap items-center justify-center gap-16 lg:gap-32">
+             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA" width={110} height={56} className="object-contain" />
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Highest Global Quality</div>
              </motion.div>
-             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
-                <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">LIC CHAIRMAN&apos;S club</div>
+             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+                <Image src="/assets/chairmanclub.svg" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Premier Club Member</div>
              </motion.div>
              <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
-                <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">IRDAI registered</div>
+                <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">IRDAI</div>
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Registered Authority</div>
              </motion.div>
           </div>

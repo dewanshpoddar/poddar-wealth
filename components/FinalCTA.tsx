@@ -1,6 +1,5 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
-
 import Image from 'next/image'
 
 export default function FinalCTA() {
@@ -29,12 +28,18 @@ export default function FinalCTA() {
               {t.aboutSection.badges.map((badge: any, i: number) => (
                 <span
                   key={i}
-                  className={`pw-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                    badge.type === 'gold' 
-                      ? 'bg-gold/10 text-gold border border-gold/20' 
+                  className={`pw-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
+                    badge.type === 'gold'
+                      ? 'bg-gold/10 text-gold border border-gold/20'
                       : 'bg-navy/5 text-navy/70 border border-navy/10'
                   }`}
                 >
+                  {badge.text.includes('MDRT') && (
+                    <img src="/assets/mdrt-seeklogo.svg" alt="" aria-hidden className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                  )}
+                  {badge.text.includes('Chairman') || badge.text.includes('चेयरमैन') ? (
+                    <img src="/assets/chairmanclub.svg" alt="" aria-hidden className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                  ) : null}
                   {badge.text}
                 </span>
               ))}
