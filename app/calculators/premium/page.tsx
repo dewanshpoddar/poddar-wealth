@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA, toWords } from '@/lib/format'
+import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
 import { openLeadPopup } from '@/lib/events'
 
 /* ─── constants ───────────────────────────── */
@@ -41,11 +42,6 @@ const CAT_AVATAR_COLOR: Record<string, string> = {
   ulip:      'bg-teal-600',
 }
 
-const SA_PRESETS = [500000, 1000000, 2500000, 5000000, 10000000]
-
-const MODE_LABEL: Record<string, string> = {
-  yearly: 'Yly', halfyearly: 'Hly', quarterly: 'Qly', monthly: 'Mly'
-}
 
 /* ─── page ────────────────────────────────── */
 export default function PremiumCalculatorPage() {
@@ -766,7 +762,7 @@ export default function PremiumCalculatorPage() {
                                 { label: 'Total\nPremium Paid', value: Math.round(premResult.totalPaid).toLocaleString('en-IN'), color: 'text-navy' },
                                 { label: 'Total\nReturns',      value: Math.round(matResult.maturity).toLocaleString('en-IN'),   color: 'text-green-700' },
                                 { label: `Tax Saved\n(30% Slab)`, value: tax80C ? Math.round(tax80C).toLocaleString('en-IN') : '—', color: 'text-blue-600' },
-                              ].map(({ label, value, color }, i) => (
+                              ].map(({ label, value }, i) => (
                                 <div key={i} className={`bg-navy text-center py-3 px-2 ${i < 2 ? 'border-r border-white/10' : ''}`}>
                                   <div className="text-[9px] text-white/60 leading-tight whitespace-pre-line mb-1">{label}</div>
                                   <div className={`text-[13px] font-bold text-white`}>{value}</div>

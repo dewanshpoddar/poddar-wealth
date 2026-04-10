@@ -1,5 +1,6 @@
 import React from 'react'
 import { fmtSA, toWords } from '@/lib/format'
+import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
 import { Calculator } from 'lucide-react'
 
 interface PremiumInputsProps {
@@ -26,10 +27,6 @@ interface PremiumInputsProps {
   maxTerm: number
 }
 
-const SA_PRESETS = [500000, 1000000, 2500000, 5000000, 10000000]
-const MODE_LABEL: Record<string, string> = {
-  yearly: 'Yly', halfyearly: 'Hly', quarterly: 'Qly', monthly: 'Mly'
-}
 
 export default function PremiumInputs({
   selectedPlan,

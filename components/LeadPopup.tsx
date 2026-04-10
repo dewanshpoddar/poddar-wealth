@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, User, Phone, Mail, GraduationCap, Rocket } from 'lucide-react'
+import { X, User, Phone, Mail } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { LEAD_POPUP_EVENT } from '@/lib/events'
 import BaseLeadForm from './base/BaseLeadForm'
 
 export default function LeadPopup() {
-  const { t, lang } = useLang()
+  const { t } = useLang()
   const [isOpen, setIsOpen] = useState(false)
   const [initialIntent, setInitialIntent] = useState('General Consultation')
 
@@ -33,14 +33,9 @@ export default function LeadPopup() {
     }
   }, [])
 
-  const handleClose = () => {
-    setIsOpen(false)
-    localStorage.setItem('poddar_lead_popup_status', 'dismissed')
-  }
+  const handleClose = () => setIsOpen(false)
 
   const handleSuccess = () => {
-    localStorage.setItem('poddar_lead_popup_status', 'completed')
-    // Auto close after 3 seconds on success
     setTimeout(() => setIsOpen(false), 3000)
   }
 
