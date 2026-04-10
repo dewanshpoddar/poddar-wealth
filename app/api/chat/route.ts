@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { LIC_PLANS_CONTEXT } from '@/lib/lic-plans-context'
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-const CHAT_MODEL = (process.env.CHAT_MODEL || 'claude-sonnet-4-6') as Parameters<typeof client.messages.create>[0]['model']
 
 const SYSTEM_PROMPT = `You are Poddar Ji — the trusted AI insurance advisor for Poddar Wealth Management, Gorakhpur, Uttar Pradesh. Run by Ajay Kumar Poddar since 1994. MDRT member, LIC Chairman's Club awardee. 30+ years of serving families in Purvanchal (eastern UP).
 
@@ -34,13 +31,7 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         intent: 'Chat Log',
-        row: [
-          new Date().toISOString(),
-          sessionId,
-          userMsg,
-          botReply,
-          '', '', '', '', '', 'Chat Log', '', '',
-        ],
+        row: [new Date().toISOString(), sessionId, userMsg, botReply, '', '', '', '', '', 'Chat Log', '', ''],
       }),
     })
   } catch { /* non-critical */ }
@@ -51,16 +42,26 @@ export async function POST(req: NextRequest) {
   try {
     const { messages, sessionId } = await req.json()
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 })
     }
 
-    const anthropicStream = client.messages.stream({
-      model:      CHAT_MODEL,
-      max_tokens: 500,
-      system:     SYSTEM_PROMPT,
-      messages,
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: SYSTEM_PROMPT,
     })
+
+    // Convert messages array to Gemini history format
+    // Gemini requires alternating user/model turns — last message must be user
+    const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }],
+    }))
+    const lastMessage = messages[messages.length - 1]
+
+    const chat = model.startChat({ history })
+    const result = await chat.sendMessageStream(lastMessage.content)
 
     const encoder = new TextEncoder()
     let fullReply = ''
@@ -68,15 +69,10 @@ export async function POST(req: NextRequest) {
     const readable = new ReadableStream({
       async start(controller) {
         try {
-          for await (const event of anthropicStream) {
-            if (
-              event.type === 'content_block_delta' &&
-              event.delta.type === 'text_delta'
-            ) {
-              const text = event.delta.text
-              fullReply += text
-              controller.enqueue(encoder.encode(text))
-            }
+          for await (const chunk of result.stream) {
+            const text = chunk.text()
+            fullReply += text
+            controller.enqueue(encoder.encode(text))
           }
         } catch (e) {
           controller.error(e)
@@ -85,9 +81,8 @@ export async function POST(req: NextRequest) {
         controller.close()
 
         // Log Q&A after stream completes (non-blocking)
-        const lastUser = [...messages].reverse().find((m: { role: string }) => m.role === 'user')
-        if (lastUser && sessionId) {
-          logToSheets(sessionId, (lastUser as { content: string }).content, fullReply)
+        if (lastMessage && sessionId) {
+          logToSheets(sessionId, lastMessage.content, fullReply)
         }
       },
     })
