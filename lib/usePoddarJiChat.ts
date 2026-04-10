@@ -7,14 +7,15 @@ export type Message = {
   card?: 'lead' | 'lead_done' | 'lead_skip'
 }
 
+// ── Fallback responses (when API fails) ────────────────────────────────────
 const FALLBACK: Record<string, string> = {
-  term:       'A term plan (like LIC Jeevan Amar) gives the highest life cover at the lowest premium. For a 35-year-old, ₹50L cover costs roughly ₹4,000–5,000/quarter. For an exact quote, call Ajay sir at 9415313434.',
-  health:     'Star Health offers excellent family floater plans from ~₹8,000/year for a family of 4. Cashless at 14,000+ hospitals. Call 9415313434 for the best plan.',
-  retirement: 'LIC Jeevan Shanti and Jeevan Akshay are excellent pension plans. Starting at 30–35 with ₹10,000/month can build ₹1Cr+ by 60. Call 9415313434 for a personalised plan.',
-  child:      'LIC Jeevan Tarun is built for children\'s education and marriage. Starting early gives maximum benefit — approx ₹5,000–8,000/quarter for ₹10L maturity. Call 9415313434.',
-  claim:      'LIC claim: submit death certificate, policy docs, and claim form to branch. Ajay sir personally assists every step. Most claims settle in 30–45 days. Call 9415313434.',
-  mdrt:       'MDRT (Million Dollar Round Table) is the world\'s most prestigious insurance award — only top 1% qualify. Ajay sir is an MDRT member, so you get world-class advice.',
-  default:    'Main Poddar Ji hun — Poddar Wealth Management ka AI advisor. LIC, Star Health, retirement, ya kisi bhi insurance topic par sawaal puchiye. Personalized advice: 9415313434.',
+  term:       'Term plan (jaise LIC Jeevan Amar) mein sirf pure protection milti hai — premium sabse kam hota hai. 30 saal ke liye ₹50L cover roughly ₹4,200-5,500/saal. Exact quote ke liye Ajay sir se milein: 9415313434.',
+  health:     'Star Health Family Health Optima plan 4 logo ke liye roughly ₹10,000-14,000/saal mein ₹5L cover deta hai. 14,000+ cashless hospitals. Call 9415313434.',
+  retirement: 'LIC Jeevan Shanti aur Jeevan Umang retirement ke liye bahut acche hain. 35 saal mein ₹10,000/month se shuru karke 60 tak ₹1Cr+ ban sakta hai. Call 9415313434.',
+  child:      'LIC Jeevan Tarun baccho ki padhai aur shaadi ke liye best hai. 4 options hain survival benefit ke liye. Jaldi start karne par zyada benefit milta hai. Call 9415313434.',
+  claim:      'LIC claim: death certificate, policy documents aur claim form LIC branch mein submit karein. Ajay sir har claim mein personally help karte hain. 30-45 din mein settle hota hai. Call 9415313434.',
+  mdrt:       'MDRT (Million Dollar Round Table) duniya ka sabse prestigious insurance award hai — sirf top 1% agents qualify karte hain. Ajay sir MDRT member hain, isliye aapko world-class advice milti hai.',
+  default:    'Main Poddar Ji hun — Poddar Wealth Management ka AI advisor. LIC, Star Health, retirement, ya kisi bhi insurance topic par sawaal puchiye. Personalized advice ke liye: 9415313434.',
 }
 
 function getFallback(msg: string): string {
@@ -28,13 +29,41 @@ function getFallback(msg: string): string {
   return FALLBACK.default
 }
 
-// Lead card prompt injected after 3 user messages
+// ── Dynamic follow-up chips based on bot reply content ─────────────────────
+export function getFollowUps(reply: string): string[] {
+  const l = reply.toLowerCase()
+  if (l.includes('term') || l.includes('jeevan amar') || l.includes('yuva term')) {
+    return ['Premium kitna hoga?', 'Smoker ke liye kya?', 'Claim kaise karein?']
+  }
+  if (l.includes('health') || l.includes('star health') || l.includes('floater')) {
+    return ['Cashless hospitals Gorakhpur mein?', 'Senior citizen plan?', 'Family vs individual?']
+  }
+  if (l.includes('pension') || l.includes('retirement') || l.includes('jeevan shanti') || l.includes('jeevan umang')) {
+    return ['Monthly kitna milega?', '₹10,000/month invest karein?', 'NPS se compare?']
+  }
+  if (l.includes('child') || l.includes('tarun') || l.includes('bacch') || l.includes('education')) {
+    return ['Premium kitna hoga?', 'Maturity kab milegi?', 'PWB rider kya hai?']
+  }
+  if (l.includes('endowment') || l.includes('jeevan anand') || l.includes('jeevan labh')) {
+    return ['Returns kitne honge?', 'Loan mil sakta hai?', 'Surrender value?']
+  }
+  if (l.includes('claim') || l.includes('document') || l.includes('settlement')) {
+    return ['Documents kya chahiye?', 'Online claim ho sakta hai?', 'Timeline kitni?']
+  }
+  if (l.includes('tax') || l.includes('80c') || l.includes('section')) {
+    return ['Kitna tax bachega?', 'Best tax-saving plan?', 'ULIP vs endowment?']
+  }
+  return ['Aur detail batayein', 'Mera plan suggest karein', 'Ajay sir se baat karein']
+}
+
+// ── Lead card injected after 3 user messages ───────────────────────────────
 const LEAD_PROMPT: Message = {
   from: 'bot',
   text: 'Lagta hai aap apni planning ke baare mein serious hain! 🎯\n\nChaahein toh Ajay sir aapko personally call karein — bilkul free, koi pressure nahi.',
   card: 'lead',
 }
 
+// ── Session helpers ────────────────────────────────────────────────────────
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return 'ssr'
   let id = sessionStorage.getItem('poddarji_sid')
@@ -54,15 +83,17 @@ function loadSavedMessages(greeting: string): Message[] {
   return [{ from: 'bot', text: greeting }]
 }
 
+// ── Main hook ──────────────────────────────────────────────────────────────
 export function usePoddarJiChat(greeting: string) {
-  const [sessionId] = useState(getOrCreateSessionId)
+  const [sessionId]  = useState(getOrCreateSessionId)
   const [messages, setMessages] = useState<Message[]>(() => loadSavedMessages(greeting))
   const [input, setInput]       = useState('')
   const [typing, setTyping]     = useState(false)
   const [leadDone, setLeadDone] = useState(false)
+  const [followUps, setFollowUps] = useState<string[]>([])
   const bottomRef               = useRef<HTMLDivElement>(null)
 
-  // Persist messages across popup close/open in same session
+  // Persist messages across popup open/close within same browser session
   useEffect(() => {
     if (typeof window === 'undefined') return
     try { sessionStorage.setItem('poddarji_msgs', JSON.stringify(messages)) } catch { /* ignore */ }
@@ -88,38 +119,71 @@ export function usePoddarJiChat(greeting: string) {
     const text = preset || input.trim()
     if (!text || typing) return
     setInput('')
+    setFollowUps([])
 
     const updated: Message[] = [...messages, { from: 'user', text }]
     setMessages(updated)
     setTyping(true)
 
     try {
-      const res = await fetch('/api/chat', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          sessionId,
-          messages: updated
-            .filter(m => !m.card)                         // strip card messages from API context
-            .map(m => ({ role: m.from === 'user' ? 'user' : 'assistant', content: m.text })),
+      // Minimum 800ms typing delay so it feels like the bot is reading + thinking
+      const [res] = await Promise.all([
+        fetch('/api/chat', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            sessionId,
+            messages: updated
+              .filter(m => !m.card)
+              .map(m => ({ role: m.from === 'user' ? 'user' : 'assistant', content: m.text })),
+          }),
         }),
-      })
-      const data = await res.json()
-      const reply = data.reply || getFallback(text)
-      const botMsg: Message = { from: 'bot', text: reply }
-      const next = [...updated, botMsg]
-      setMessages(next)
+        new Promise<void>(r => setTimeout(r, 800)),
+      ])
 
-      // Inject lead card after exactly 3 user exchanges (and only once)
-      const userCount = next.filter(m => m.from === 'user').length
-      const hasLeadCard = next.some(m => m.card)
-      if (userCount === 3 && !hasLeadCard && !leadDone) {
+      if (!res.ok || !res.body) throw new Error('API error')
+
+      const reader  = res.body.getReader()
+      const decoder = new TextDecoder()
+
+      // Switch from typing dots to streaming text
+      setTyping(false)
+      setMessages(prev => [...prev, { from: 'bot', text: '' }])
+
+      let fullText = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        fullText += decoder.decode(value, { stream: true })
+        const snapshot = fullText
+        setMessages(prev => {
+          const msgs = [...prev]
+          msgs[msgs.length - 1] = { from: 'bot', text: snapshot }
+          return msgs
+        })
+      }
+
+      // Dynamic follow-up chips based on the reply
+      setFollowUps(getFollowUps(fullText))
+
+      // Lead card injection after exactly 3 user messages
+      const userCount  = updated.filter(m => m.from === 'user').length
+      const hasLeadCard = updated.some(m => m.card)
+      if (userCount >= 3 && !hasLeadCard && !leadDone) {
         setTimeout(() => setMessages(prev => [...prev, LEAD_PROMPT]), 1200)
       }
     } catch {
-      setMessages(prev => [...prev, { from: 'bot', text: getFallback(text) }])
-    } finally {
       setTyping(false)
+      const fallback = getFallback(text)
+      setMessages(prev => {
+        const msgs = [...prev]
+        // Fill in-progress streaming message if empty, otherwise append
+        if (msgs[msgs.length - 1]?.from === 'bot' && msgs[msgs.length - 1]?.text === '') {
+          msgs[msgs.length - 1] = { from: 'bot', text: fallback }
+          return msgs
+        }
+        return [...msgs, { from: 'bot', text: fallback }]
+      })
     }
   }
 
@@ -127,6 +191,7 @@ export function usePoddarJiChat(greeting: string) {
     messages, input, setInput, typing,
     sendMessage, bottomRef,
     leadDone, dismissLeadCard, markLeadCaptured,
+    followUps,
     sessionId,
   }
 }
