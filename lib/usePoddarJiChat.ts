@@ -63,10 +63,8 @@ const LEAD_PROMPT: Message = {
   card: 'lead',
 }
 
-// ── Storage helpers (localStorage = survives browser close, cross-day) ────────
-const STORAGE_ID_KEY   = 'poddarji_sid'
-const STORAGE_MSGS_KEY = 'poddarji_msgs'
-const MAX_STORED_MSGS  = 30   // cap so localStorage never bloats
+// ── Session ID stored in localStorage (tiny — just an ID string) ─────────────
+const STORAGE_ID_KEY = 'poddarji_sid'
 
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return 'ssr'
@@ -78,41 +76,32 @@ function getOrCreateSessionId(): string {
   return id
 }
 
-function loadSavedMessages(greeting: string): Message[] {
-  if (typeof window === 'undefined') return [{ from: 'bot', text: greeting }]
-  try {
-    const saved = localStorage.getItem(STORAGE_MSGS_KEY)
-    if (saved) {
-      const parsed: Message[] = JSON.parse(saved)
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed
-    }
-  } catch { /* ignore */ }
-  return [{ from: 'bot', text: greeting }]
-}
-
-function saveMessages(messages: Message[]) {
-  if (typeof window === 'undefined') return
-  try {
-    // Keep only last MAX_STORED_MSGS messages — always keep the first (greeting)
-    const toStore = messages.length > MAX_STORED_MSGS
-      ? [messages[0], ...messages.slice(-(MAX_STORED_MSGS - 1))]
-      : messages
-    localStorage.setItem(STORAGE_MSGS_KEY, JSON.stringify(toStore))
-  } catch { /* ignore — e.g. private browsing quota */ }
-}
-
 // ── Main hook ──────────────────────────────────────────────────────────────
 export function usePoddarJiChat(greeting: string) {
   const [sessionId]  = useState(getOrCreateSessionId)
-  const [messages, setMessages] = useState<Message[]>(() => loadSavedMessages(greeting))
+  const [messages, setMessages] = useState<Message[]>([{ from: 'bot', text: greeting }])
   const [input, setInput]       = useState('')
   const [typing, setTyping]     = useState(false)
   const [leadDone, setLeadDone] = useState(false)
   const [followUps, setFollowUps] = useState<string[]>([])
+  const [historyLoaded, setHistoryLoaded] = useState(false)
   const bottomRef               = useRef<HTMLDivElement>(null)
 
-  // Persist messages to localStorage (survives browser close, returning users)
-  useEffect(() => { saveMessages(messages) }, [messages])
+  // Load conversation history from Google Sheets on first mount
+  useEffect(() => {
+    if (historyLoaded || typeof window === 'undefined' || sessionId === 'ssr') return
+    setHistoryLoaded(true)
+    fetch(`/api/chat/history?sid=${encodeURIComponent(sessionId)}&limit=30`)
+      .then(r => r.json())
+      .then((data: { messages?: Message[] }) => {
+        if (Array.isArray(data.messages) && data.messages.length > 0) {
+          // Prepend greeting, then restore history
+          setMessages([{ from: 'bot', text: greeting }, ...data.messages])
+        }
+      })
+      .catch(() => { /* fail silently — start fresh */ })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId])
 
   // Auto-scroll
   useEffect(() => {
