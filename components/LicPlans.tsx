@@ -42,8 +42,10 @@ export default function LicPlans() {
   const [activeTab, setActiveTab] = useState<string>('__all__')
   const [expandedPlan, setExpandedPlan] = useState<string | null>(null)
 
+  const [showWithdrawn, setShowWithdrawn] = useState(false)
+
   useEffect(() => {
-    fetch('/api/lic-plans')
+    fetch('/api/lic-plans?view=all')
       .then(res => res.json())
       .then(res => {
         if (res.success) {
@@ -72,13 +74,25 @@ export default function LicPlans() {
   if (!data || !data.categories) return null
 
   const ALL_TAB = '__all__'
+  const WITHDRAWN_TAB = '__withdrawn__'
 
   const allPlans: (Plan & { _categoryKey: string })[] = Object.entries(data.categories).flatMap(
-    ([key, cat]) => cat.plans.map(p => ({ ...p, _categoryKey: key }))
+    ([key, cat]) => cat.plans
+      .filter(p => p.status !== 'withdrawn')
+      .map(p => ({ ...p, _categoryKey: key }))
   )
 
-  const activeCategory = activeTab !== ALL_TAB ? data.categories[activeTab] : null
-  const displayedPlans = activeTab === ALL_TAB ? allPlans : activeCategory?.plans ?? []
+  const withdrawnPlans: (Plan & { _categoryKey: string })[] = Object.entries(data.categories).flatMap(
+    ([key, cat]) => cat.plans
+      .filter(p => p.status === 'withdrawn')
+      .map(p => ({ ...p, _categoryKey: key }))
+  )
+
+  const activeCategory = (activeTab !== ALL_TAB && activeTab !== WITHDRAWN_TAB) ? data.categories[activeTab] : null
+  const displayedPlans =
+    activeTab === WITHDRAWN_TAB ? withdrawnPlans :
+    activeTab === ALL_TAB ? allPlans :
+    (activeCategory?.plans ?? []).filter(p => p.status !== 'withdrawn')
 
   const handleGetPlan = (planName: string) => {
     openLeadPopup(`Interest in ${planName}`)
@@ -134,22 +148,43 @@ export default function LicPlans() {
             </span>
           </button>
 
-          {Object.entries(data.categories).map(([key, cat]) => (
+          {Object.entries(data.categories).map(([key, cat]) => {
+            const activePlanCount = cat.plans.filter(p => p.status !== 'withdrawn').length
+            if (activePlanCount === 0) return null
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className={`flex-shrink-0 px-6 py-3 rounded-xl border-1.5 transition-all flex items-center gap-2 whitespace-nowrap
+                  ${activeTab === key
+                    ? 'bg-navy border-navy text-white shadow-navy'
+                    : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30'}`}
+              >
+                <span className="text-18">{cat.icon}</span>
+                <span className="font-bold text-13">{cat.label[lang as keyof typeof cat.label]}</span>
+                <span className={`text-10 px-1.5 py-0.5 rounded-full ${activeTab === key ? 'bg-white/20' : 'bg-gray-100'}`}>
+                  {activePlanCount}
+                </span>
+              </button>
+            )
+          })}
+
+          {/* Withdrawn Plans tab */}
+          {withdrawnPlans.length > 0 && (
             <button
-              key={key}
-              onClick={() => setActiveTab(key)}
+              onClick={() => setActiveTab(WITHDRAWN_TAB)}
               className={`flex-shrink-0 px-6 py-3 rounded-xl border-1.5 transition-all flex items-center gap-2 whitespace-nowrap
-                ${activeTab === key
-                  ? 'bg-navy border-navy text-white shadow-navy'
-                  : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30'}`}
+                ${activeTab === WITHDRAWN_TAB
+                  ? 'bg-slate-600 border-slate-600 text-white'
+                  : 'bg-white border-gray-100 text-gray-400 hover:border-slate-400/40'}`}
             >
-              <span className="text-18">{cat.icon}</span>
-              <span className="font-bold text-13">{cat.label[lang as keyof typeof cat.label]}</span>
-              <span className={`text-10 px-1.5 py-0.5 rounded-full ${activeTab === key ? 'bg-white/20' : 'bg-gray-100'}`}>
-                {cat.plans.length}
+              <span className="text-18">📦</span>
+              <span className="font-bold text-13">{lang === 'en' ? 'Withdrawn Plans' : 'बंद योजनाएं'}</span>
+              <span className={`text-10 px-1.5 py-0.5 rounded-full ${activeTab === WITHDRAWN_TAB ? 'bg-white/20' : 'bg-gray-100'}`}>
+                {withdrawnPlans.length}
               </span>
             </button>
-          ))}
+          )}
         </div>
 
         {/* Category Hero */}
@@ -165,22 +200,28 @@ export default function LicPlans() {
               <div className="flex items-center gap-3 mb-2">
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center text-white text-20 shadow-lg"
-                  style={{ background: activeCategory ? activeCategory.color : 'linear-gradient(135deg, #c9a84c, #a07839)' }}
+                  style={{ background: activeTab === WITHDRAWN_TAB ? '#475569' : activeCategory ? activeCategory.color : 'linear-gradient(135deg, #c9a84c, #a07839)' }}
                 >
-                  {activeCategory ? activeCategory.icon : '🏆'}
+                  {activeTab === WITHDRAWN_TAB ? '📦' : activeCategory ? activeCategory.icon : '🏆'}
                 </div>
                 <h2 className="text-22 font-bold text-navy">
-                  {activeCategory
-                    ? activeCategory.label[lang as keyof typeof activeCategory.label]
-                    : (lang === 'en' ? 'All LIC Wealth Plans' : 'सभी एलआईसी वेल्थ प्लान्स')}
+                  {activeTab === WITHDRAWN_TAB
+                    ? (lang === 'en' ? 'Withdrawn / Discontinued Plans' : 'बंद / अप्रचलित योजनाएं')
+                    : activeCategory
+                      ? activeCategory.label[lang as keyof typeof activeCategory.label]
+                      : (lang === 'en' ? 'All LIC Wealth Plans' : 'सभी एलआईसी वेल्थ प्लान्स')}
                 </h2>
               </div>
               <p className="text-15 text-gray-500 italic">
-                {activeCategory
-                  ? activeCategory.tagline[lang as keyof typeof activeCategory.tagline]
-                  : (lang === 'en'
-                      ? `Complete portfolio — ${allPlans.length} active plans across ${Object.keys(data.categories).length} categories`
-                      : `पूरा पोर्टफोलियो — ${allPlans.length} सक्रिय प्लान्स`)}
+                {activeTab === WITHDRAWN_TAB
+                  ? (lang === 'en'
+                      ? `${withdrawnPlans.length} discontinued plans — still useful for premium calculations`
+                      : `${withdrawnPlans.length} बंद योजनाएं — प्रीमियम गणना के लिए उपयोगी`)
+                  : activeCategory
+                    ? activeCategory.tagline[lang as keyof typeof activeCategory.tagline]
+                    : (lang === 'en'
+                        ? `Complete portfolio — ${allPlans.length} active plans across ${Object.keys(data.categories).length} categories`
+                        : `पूरा पोर्टफोलियो — ${allPlans.length} सक्रिय प्लान्स`)}
               </p>
             </div>
 
@@ -220,11 +261,18 @@ export default function LicPlans() {
                 className={`bg-white rounded-2xl border transition-all duration-300 flex flex-col h-full overflow-hidden relative
                   ${expandedPlan === plan.id ? 'border-navy/20 shadow-xl' : 'border-gray-100 hover:border-navy/10 hover:shadow-card'}`}
               >
-                {/* New plan badge */}
+                {/* Status badges */}
                 {plan.status === 'new' && (
                   <div className="absolute top-4 right-4 z-20">
                     <span className="bg-green-500 text-white text-10 font-bold px-2 py-0.5 rounded shadow-sm uppercase tracking-widest animate-pulse">
                       New Plan
+                    </span>
+                  </div>
+                )}
+                {plan.status === 'withdrawn' && (
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className="bg-slate-400 text-white text-10 font-bold px-2 py-0.5 rounded uppercase tracking-widest">
+                      Discontinued
                     </span>
                   </div>
                 )}
@@ -273,13 +321,20 @@ export default function LicPlans() {
 
                 {/* Card Bottom / Actions */}
                 <div className="mt-auto p-6 pt-0 space-y-3 relative z-10">
-                  <button
-                    onClick={() => handleGetPlan(plan.name.en)}
-                    className="w-full h-11 text-white rounded-xl font-bold text-13 shadow-sm transition-all flex items-center justify-center gap-2 group bg-gradient-to-r from-navy to-navy-light hover:shadow-navy/20"
-                  >
-                    {lang === 'en' ? 'Get This Plan' : 'यह प्लान प्राप्त करें'}
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  {plan.status === 'withdrawn' ? (
+                    <div className="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-center gap-2 text-13 text-slate-500 font-medium">
+                      <Info size={14} className="text-slate-400" />
+                      {lang === 'en' ? 'Plan discontinued — calculator only' : 'योजना बंद — केवल कैलकुलेटर हेतु'}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleGetPlan(plan.name.en)}
+                      className="w-full h-11 text-white rounded-xl font-bold text-13 shadow-sm transition-all flex items-center justify-center gap-2 group bg-gradient-to-r from-navy to-navy-light hover:shadow-navy/20"
+                    >
+                      {lang === 'en' ? 'Get This Plan' : 'यह प्लान प्राप्त करें'}
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  )}
                   <button
                     onClick={() => setExpandedPlan(expandedPlan === plan.id ? null : plan.id)}
                     className="w-full text-12 font-bold text-gray-400 hover:text-navy transition-colors flex items-center justify-center gap-1.5"

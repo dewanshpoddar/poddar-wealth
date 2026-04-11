@@ -12,7 +12,7 @@ import { openLeadPopup } from '@/lib/events'
 
 /* ─── constants ───────────────────────────── */
 const CATEGORIES = [
-  { key: 'all',       label: 'All Plans',    icon: '📋' },
+  { key: 'all',       label: 'All Active',   icon: '📋' },
   { key: 'endowment', label: 'Endowment',    icon: '🏦' },
   { key: 'moneyback', label: 'Money Back',   icon: '💰' },
   { key: 'wholelife', label: 'Whole Life',   icon: '♾️' },
@@ -20,6 +20,7 @@ const CATEGORIES = [
   { key: 'child',     label: 'Child',        icon: '🎓' },
   { key: 'pension',   label: 'Pension',      icon: '📈' },
   { key: 'ulip',      label: 'ULIP',         icon: '📊' },
+  { key: 'withdrawn', label: 'Withdrawn',    icon: '📦' },
 ]
 
 const CAT_BADGE: Record<string, string> = {
@@ -30,6 +31,7 @@ const CAT_BADGE: Record<string, string> = {
   child:     'bg-amber-50 text-amber-700',
   pension:   'bg-indigo-50 text-indigo-700',
   ulip:      'bg-teal-50 text-teal-700',
+  withdrawn: 'bg-slate-100 text-slate-500',
 }
 
 const CAT_AVATAR_COLOR: Record<string, string> = {
@@ -40,6 +42,7 @@ const CAT_AVATAR_COLOR: Record<string, string> = {
   child:     'bg-amber-600',
   pension:   'bg-indigo-600',
   ulip:      'bg-teal-600',
+  withdrawn: 'bg-slate-500',
 }
 
 
@@ -82,7 +85,14 @@ export default function PremiumCalculatorPage() {
 
   /* derived */
   const filteredPlans = useMemo(() => {
-    const base = activeCat === 'all' ? PLANS as any[] : (PLANS as any[]).filter((p: any) => p.category === activeCat)
+    let base: any[]
+    if (activeCat === 'all') {
+      base = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
+    } else if (activeCat === 'withdrawn') {
+      base = (PLANS as any[]).filter((p: any) => p.status === 'withdrawn')
+    } else {
+      base = (PLANS as any[]).filter((p: any) => p.category === activeCat && p.status !== 'withdrawn')
+    }
     if (!search.trim()) return base
     const q = search.toLowerCase()
     return base.filter((p: any) => p.name.toLowerCase().includes(q) || String(p.planNo).includes(q))
@@ -293,12 +303,18 @@ export default function PremiumCalculatorPage() {
                         <span className="text-white font-bold text-[13px]">{plan.name.charAt(0)}</span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className={`text-[12px] font-bold truncate ${isSelected ? 'text-gold' : 'text-gray-800'}`}>
-                          {plan.name}
+                        <div className="flex items-center gap-1.5">
+                          <div className={`text-[12px] font-bold truncate ${isSelected ? 'text-gold' : plan.status === 'withdrawn' ? 'text-slate-400' : 'text-gray-800'}`}>
+                            {plan.name}
+                          </div>
+                          {plan.status === 'withdrawn' && (
+                            <span className="flex-shrink-0 text-[9px] bg-slate-100 text-slate-400 font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">Discontinued</span>
+                          )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <span className="text-[10px] text-gray-400 font-medium">Plan {plan.planNo}</span>
-                          {plan.xirr && <span className="text-[10px] text-green-600 font-semibold">· {plan.xirr}</span>}
+                          {plan.xirr && plan.status !== 'withdrawn' && <span className="text-[10px] text-green-600 font-semibold">· {plan.xirr}</span>}
+                          {plan.status === 'withdrawn' && <span className="text-[10px] text-slate-400">· Calc only</span>}
                         </div>
                       </div>
                       <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 -rotate-90 ${isSelected ? 'text-gold' : 'text-gray-300'}`} />
@@ -342,7 +358,11 @@ export default function PremiumCalculatorPage() {
                       </div>
                     </div>
                   </div>
-                  {selectedPlan.xirr && (
+                  {selectedPlan.status === 'withdrawn' ? (
+                    <div className="bg-slate-500/20 border border-slate-400/30 text-slate-200 text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      📦 Discontinued — Calc only
+                    </div>
+                  ) : selectedPlan.xirr && (
                     <div className="bg-gold/10 border border-gold/20 text-gold text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
                       {selectedPlan.xirr} expected XIRR
                     </div>
@@ -974,11 +994,17 @@ export default function PremiumCalculatorPage() {
 
                         {/* CTAs */}
                         <div className="flex flex-col sm:flex-row gap-3">
-                          <button
-                            onClick={() => openLeadPopup(`Premium quote: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo}), ${fmtSA(sa)} SA, Age ${age}`)}
-                            className="flex-1 bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md text-[13px]">
-                            Get Exact Quote from Ajay Sir <ArrowRight className="w-4 h-4" />
-                          </button>
+                          {selectedPlan.status === 'withdrawn' ? (
+                            <div className="flex-1 bg-slate-100 border border-slate-200 text-slate-500 font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 text-[13px]">
+                              <Info className="w-4 h-4" /> Plan discontinued — for legacy policy calc only
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => openLeadPopup(`Premium quote: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo}), ${fmtSA(sa)} SA, Age ${age}`)}
+                              className="flex-1 bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md text-[13px]">
+                              Get Exact Quote from Ajay Sir <ArrowRight className="w-4 h-4" />
+                            </button>
+                          )}
                           <button onClick={whatsappShare}
                             className="sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 text-[13px]">
                             <Share2 className="w-4 h-4" /> Share

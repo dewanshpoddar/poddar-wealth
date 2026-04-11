@@ -60,7 +60,7 @@ async function scrapeLicPlans() {
                 id, slug: slugify(name), name, planNo: planNo || '',
                 uin: '', category: cat || 'endowment',
                 officialUrl: href.startsWith('http') ? href : BASE_URL + href,
-                status: 'active'
+                status: page.defaultStatus || 'active'   // ← use page-level status
               });
             }
           }
@@ -93,7 +93,7 @@ async function scrapeLicPlans() {
             id, slug: slugify(name), name, planNo, uin,
             category: cat || 'endowment',
             officialUrl: url ? (url.startsWith('http') ? url : BASE_URL + url) : null,
-            status: 'active'
+            status: page.defaultStatus || 'active'   // ← use page-level status
           });
         }
       }
