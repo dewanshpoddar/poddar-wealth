@@ -2,8 +2,8 @@
   "meta": {
     "source": "licindia.in",
     "lastUpdated": "2026-04-10",
-    "version": "2.1.0",
-    "totalPlans": 45,
+    "version": "2.2.0",
+    "totalPlans": 56,
     "categories": ["endowment", "wholeLife", "moneyBack", "term", "child", "pension", "ulip", "micro"]
   },
   "categories": {
@@ -185,6 +185,45 @@
           "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular",
           "highlights": [{ "en": "Double benefit — savings + whole life", "hi": "दोहरा लाभ — बचत + आजीवन" }],
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-anand-715", "status": "withdrawn"
+        },
+        {
+          "id": "lic-148", "name": { "en": "LIC's Jeevan Saral", "hi": "एलआईसी जीवन सरल" },
+          "planNo": "148",
+          "tagline": { "en": "Simple savings with whole life protection.", "hi": "सरल बचत और आजीवन सुरक्षा।" },
+          "keyBenefit": { "en": "Death SA = 250× monthly premium; maturity SA + loyalty additions", "hi": "मृत्यु पर SA = मासिक प्रीमियम × 250; मैच्योरिटी पर SA + लॉयल्टी" },
+          "category": "endowment", "entryAge": "12 - 60yr", "sumAssured": "₹45,000+", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "Death SA = 250 times the monthly premium", "hi": "मृत्यु SA = मासिक प्रीमियम का 250 गुना" },
+            { "en": "Flexible policy term (10–35 years)", "hi": "10–35 वर्षों की लचीली पॉलिसी अवधि" },
+            { "en": "Loyalty additions credited from year 10", "hi": "10वें वर्ष से लॉयल्टी वृद्धि" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-828", "name": { "en": "LIC's Jeevan Vriddhi", "hi": "एलआईसी जीवन वृद्धि" },
+          "planNo": "828",
+          "tagline": { "en": "Single premium, guaranteed growth.", "hi": "एकमुश्त प्रीमियम, गारंटीड वृद्धि।" },
+          "keyBenefit": { "en": "Single premium plan with guaranteed maturity addition from day one", "hi": "पहले दिन से गारंटीड मैच्योरिटी वृद्धि के साथ एकमुश्त प्लान" },
+          "category": "endowment", "entryAge": "8 - 50yr", "sumAssured": "₹75,000+", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "Guaranteed maturity addition declared at inception", "hi": "पॉलिसी शुरू में घोषित गारंटीड मैच्योरिटी वृद्धि" },
+            { "en": "Loan facility available after 1 year", "hi": "1 वर्ष बाद ऋण सुविधा उपलब्ध" },
+            { "en": "Simple one-time payment — no annual renewal", "hi": "एकमुश्त भुगतान — कोई वार्षिक नवीनीकरण नहीं" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-814", "name": { "en": "LIC's Jeevan Pragati", "hi": "एलआईसी जीवन प्रगति" },
+          "planNo": "814",
+          "tagline": { "en": "Increasing cover as your family grows.", "hi": "परिवार के साथ बढ़ता हुआ कवर।" },
+          "keyBenefit": { "en": "Death benefit increases every 5 years — starts at 1× and doubles by end", "hi": "हर 5 साल में मृत्यु लाभ बढ़ता है — शुरू 1× से, अंत तक दोगुना" },
+          "category": "endowment", "entryAge": "12 - 45yr", "sumAssured": "₹1,50,000+", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "Death SA increases automatically every 5 years", "hi": "मृत्यु SA हर 5 साल में स्वचालित रूप से बढ़ता है" },
+            { "en": "Participating plan with bonus additions", "hi": "बोनस वृद्धि के साथ सहभागी योजना" },
+            { "en": "Ideal for growing family responsibilities", "hi": "बढ़ती पारिवारिक जिम्मेदारियों के लिए आदर्श" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
       ]
     },
@@ -248,6 +287,19 @@
           "category": "wholeLife", "entryAge": "90d - 65yr", "sumAssured": "₹5,00,000+", "premiumPayment": "Limited",
           "highlights": [{ "en": "Flexible income payout options", "hi": "लचीले आय भुगतान विकल्प" }],
           "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav-771", "status": "withdrawn"
+        },
+        {
+          "id": "lic-825", "name": { "en": "LIC's Jeevan Tarang", "hi": "एलआईसी जीवन तरंग" },
+          "planNo": "825",
+          "tagline": { "en": "Limited premium whole life with annual payouts.", "hi": "सीमित प्रीमियम और वार्षिक भुगतान के साथ आजीवन।" },
+          "keyBenefit": { "en": "Pay for limited term, get 5.5% of SA annually for life after vesting", "hi": "सीमित अवधि भुगतान, वेस्टिंग के बाद जीवनभर SA का 5.5% वार्षिक" },
+          "category": "wholeLife", "entryAge": "0 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited",
+          "highlights": [
+            { "en": "5.5% of SA paid annually after vesting age", "hi": "वेस्टिंग के बाद SA का 5.5% वार्षिक" },
+            { "en": "Full SA + loyalty addition on death/maturity", "hi": "मृत्यु/मैच्योरिटी पर पूर्ण SA + लॉयल्टी वृद्धि" },
+            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
       ]
     },
@@ -324,6 +376,19 @@
           "category": "moneyBack", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular",
           "highlights": [{ "en": "10% SA annually to nominee after death", "hi": "मृत्यु के बाद नामांकित को SA का 10% वार्षिक" }],
           "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-lakshya-733", "status": "withdrawn"
+        },
+        {
+          "id": "lic-847", "name": { "en": "LIC's Bima Bachat", "hi": "एलआईसी बीमा बचत" },
+          "planNo": "847",
+          "tagline": { "en": "Savings plan with periodic money-back payouts.", "hi": "आवधिक मनी-बैक के साथ बचत योजना।" },
+          "keyBenefit": { "en": "Guaranteed survival benefits at regular intervals + full SA on maturity", "hi": "नियमित अंतराल पर गारंटीड उत्तरजीविता लाभ + मैच्योरिटी पर पूर्ण SA" },
+          "category": "moneyBack", "entryAge": "15 - 65yr", "sumAssured": "₹35,000+", "premiumPayment": "Single / Regular",
+          "highlights": [
+            { "en": "Guaranteed survival benefits paid periodically", "hi": "समय-समय पर गारंटीड उत्तरजीविता लाभ" },
+            { "en": "Full SA returned at maturity", "hi": "मैच्योरिटी पर पूरा SA वापस" },
+            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
       ]
     },
@@ -397,6 +462,32 @@
             { "en": "Easy to understand, easy to buy", "hi": "समझने और खरीदने में आसान" }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-saral-jeevan-bima", "status": "active"
+        },
+        {
+          "id": "lic-816", "name": { "en": "LIC's Anmol Jeevan-II", "hi": "एलआईसी अनमोल जीवन-II" },
+          "planNo": "816",
+          "tagline": { "en": "Pure term cover at affordable premium.", "hi": "किफायती प्रीमियम पर शुद्ध टर्म कवर।" },
+          "keyBenefit": { "en": "Low-premium pure term plan — death benefit only, no maturity value", "hi": "कम प्रीमियम शुद्ध टर्म — केवल मृत्यु लाभ, कोई मैच्योरिटी नहीं" },
+          "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹6,00,000 - ₹24,00,000", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "SA range: ₹6 Lakh to ₹24 Lakh", "hi": "SA सीमा: ₹6 लाख से ₹24 लाख" },
+            { "en": "Very low premium for pure protection", "hi": "शुद्ध सुरक्षा के लिए बहुत कम प्रीमियम" },
+            { "en": "Policy term 5–25 years", "hi": "पॉलिसी अवधि 5–25 वर्ष" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-817", "name": { "en": "LIC's Amulya Jeevan-II", "hi": "एलआईसी अमूल्य जीवन-II" },
+          "planNo": "817",
+          "tagline": { "en": "High-cover pure term for breadwinners.", "hi": "कमाने वालों के लिए उच्च-कवर शुद्ध टर्म।" },
+          "keyBenefit": { "en": "High SA pure term plan (₹25L+) at competitive rates — no maturity value", "hi": "₹25L+ की उच्च SA शुद्ध टर्म — कोई मैच्योरिटी नहीं" },
+          "category": "term", "entryAge": "18 - 60yr", "sumAssured": "₹25,00,000+", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "Minimum SA ₹25 Lakh — ideal for family income replacement", "hi": "न्यूनतम SA ₹25 लाख — परिवार की आय प्रतिस्थापन के लिए आदर्श" },
+            { "en": "Competitive premiums for high cover", "hi": "उच्च कवर के लिए प्रतिस्पर्धी प्रीमियम" },
+            { "en": "Predecessor to LIC's Jeevan Amar (Plan 855)", "hi": "एलआईसी जीवन अमर (855) का पूर्ववर्ती" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
       ]
     },
@@ -543,6 +634,58 @@
             { "en": "Tax benefit under 80CCC", "hi": "धारा 80CCC के तहत कर लाभ" }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-pension-plus", "status": "active"
+        },
+        {
+          "id": "lic-842", "name": { "en": "LIC's Jeevan Akshay-VI", "hi": "एलआईसी जीवन अक्षय-VI" },
+          "planNo": "842",
+          "tagline": { "en": "Immediate annuity — predecessor to Jeevan Akshay-VII.", "hi": "तत्काल वार्षिकी — जीवन अक्षय-VII का पूर्ववर्ती।" },
+          "keyBenefit": { "en": "Single premium immediate annuity with multiple payout options", "hi": "कई भुगतान विकल्पों के साथ एकमुश्त तत्काल वार्षिकी" },
+          "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "Multiple annuity payout options", "hi": "कई वार्षिकी भुगतान विकल्प" },
+            { "en": "Lifetime guaranteed income from day one", "hi": "पहले दिन से गारंटीड आजीवन आय" },
+            { "en": "Succeeded by Plan 857 (Jeevan Akshay-VII)", "hi": "योजना 857 (जीवन अक्षय-VII) द्वारा प्रतिस्थापित" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-845", "name": { "en": "LIC's New Jeevan Nidhi", "hi": "एलआईसी न्यू जीवन निधि" },
+          "planNo": "845",
+          "tagline": { "en": "Build your pension corpus with life cover.", "hi": "जीवन कवर के साथ अपना पेंशन कोष बनाएं।" },
+          "keyBenefit": { "en": "Deferred pension plan — save during working years, receive pension at retirement", "hi": "आस्थगित पेंशन — काम के वर्षों में बचत, सेवानिवृत्ति पर पेंशन" },
+          "category": "pension", "entryAge": "20 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Limited",
+          "highlights": [
+            { "en": "Guaranteed additions during accumulation phase", "hi": "संचय चरण में गारंटीड वृद्धि" },
+            { "en": "Loyalty additions credited on vesting", "hi": "वेस्टिंग पर लॉयल्टी वृद्धि" },
+            { "en": "Life cover during premium-paying term", "hi": "प्रीमियम भुगतान अवधि में जीवन कवर" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-829", "name": { "en": "LIC's Varishtha Pension Bima Yojana-II", "hi": "एलआईसी वरिष्ठ पेंशन बीमा योजना-II" },
+          "planNo": "829",
+          "tagline": { "en": "Govt-backed pension scheme for senior citizens.", "hi": "वरिष्ठ नागरिकों के लिए सरकार समर्थित पेंशन योजना।" },
+          "keyBenefit": { "en": "Guaranteed 9% p.a. pension for senior citizens on single premium", "hi": "एकमुश्त प्रीमियम पर वरिष्ठ नागरिकों को 9% p.a. गारंटीड पेंशन" },
+          "category": "pension", "entryAge": "60+yr", "sumAssured": "₹66,665+ (purchase price)", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "9% annual interest guaranteed by Govt of India", "hi": "भारत सरकार द्वारा 9% वार्षिक ब्याज की गारंटी" },
+            { "en": "Available only to senior citizens aged 60+", "hi": "केवल 60+ वर्ष के वरिष्ठ नागरिकों के लिए" },
+            { "en": "Purchase price returned to nominee on death", "hi": "मृत्यु पर नामांकित को खरीद मूल्य वापस" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-839", "name": { "en": "LIC's Pradhan Mantri Vaya Vandana Yojana", "hi": "एलआईसी प्रधानमंत्री वय वंदना योजना (PMVVY)" },
+          "planNo": "839",
+          "tagline": { "en": "Senior citizen pension scheme — closed for new subscriptions.", "hi": "वरिष्ठ नागरिक पेंशन योजना — नए सब्सक्रिप्शन बंद।" },
+          "keyBenefit": { "en": "8% guaranteed return for 10 years on investment up to ₹15 lakh", "hi": "₹15 लाख तक निवेश पर 10 वर्षों तक 8% गारंटीड रिटर्न" },
+          "category": "pension", "entryAge": "60+yr", "sumAssured": "₹1,50,000 - ₹15,00,000 (purchase price)", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "8% p.a. guaranteed return for 10-year policy term", "hi": "10 वर्ष की पॉलिसी अवधि के लिए 8% p.a. गारंटीड" },
+            { "en": "Max investment ₹15 lakh per senior citizen", "hi": "प्रति वरिष्ठ नागरिक अधिकतम निवेश ₹15 लाख" },
+            { "en": "Scheme closed for new enrollment from April 2023", "hi": "अप्रैल 2023 से नए नामांकन के लिए बंद" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
       ]
     },
