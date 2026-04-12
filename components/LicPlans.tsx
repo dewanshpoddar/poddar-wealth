@@ -441,23 +441,21 @@ export default function LicPlans() {
 
   return (
     <section className="bg-[#f5f6fa] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <div className="relative rounded-3xl overflow-hidden mb-8" style={{ minHeight: 260 }}>
-          {/* Layered background: deep navy + radial glow + subtle grain */}
+        <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
+          {/* Photo layer — Indian family / aspirational */}
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop&q=80')" }} />
+          {/* Dark gradient overlay — heavier on left so text is always readable */}
           <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(135deg, #071425 0%, #0c2340 40%, #0f3460 70%, #1a4a7a 100%)' }} />
-          {/* Gold arc bottom-right */}
-          <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full opacity-20 pointer-events-none"
+            style={{ background: 'linear-gradient(100deg, rgba(5,14,30,0.92) 0%, rgba(7,20,45,0.82) 45%, rgba(7,20,45,0.45) 70%, rgba(7,20,45,0.15) 100%)' }} />
+          {/* Gold radial glow bottom-right for warmth */}
+          <div className="absolute -bottom-20 right-0 w-80 h-80 rounded-full opacity-25 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #c9a84c 0%, transparent 65%)' }} />
-          {/* Soft teal glow top-left */}
-          <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full opacity-15 pointer-events-none"
-            style={{ background: 'radial-gradient(circle, #38bdf8 0%, transparent 65%)' }} />
-          {/* Floating shield / coins decorative shapes */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 text-[120px] opacity-[0.07] pointer-events-none select-none hidden md:block">🏦</div>
-          {/* Subtle diagonal texture */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          {/* Subtle grain texture */}
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
             style={{ backgroundImage: 'repeating-linear-gradient(60deg,#fff 0,#fff 1px,transparent 0,transparent 40px)', backgroundSize: '60px 60px' }} />
 
           {/* Content */}
@@ -548,8 +546,8 @@ export default function LicPlans() {
         <div className="flex gap-6 items-start">
 
           {/* ── Left Sidebar ── */}
-          <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-4 self-start" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+          <aside className="hidden lg:block w-64 flex-shrink-0 sticky self-start" style={{ top: '86px', maxHeight: 'calc(100vh - 94px)' }}>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col" style={{ maxHeight: 'calc(100vh - 94px)' }}>
               {/* Sidebar header — always visible */}
               <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
                 <h3 className="text-11 font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">

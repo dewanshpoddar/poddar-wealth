@@ -6,7 +6,7 @@ import { openLeadPopup } from '@/lib/events'
 
 export default function ProductsPage() {
   return (
-    <main className="min-h-screen bg-white pt-24 md:pt-32">
+    <main className="min-h-screen bg-white pt-2 md:pt-3">
       {/* Decorative background accent */}
       <div className="absolute top-0 right-0 w-full h-[600px] bg-gradient-to-b from-navy/5 to-transparent -z-10 pointer-events-none" />
       
