@@ -78,40 +78,40 @@ const PLAN_BADGES: Record<string, { label: string; color: string; bg: string; ic
 
 // ── Goal-based filters (customer language, not product language) ────────────
 const GOALS = [
-  { key: 'save',    label: { en: 'Save & Grow',        hi: 'बचत और वृद्धि' },     icon: '💰', cats: ['endowment', 'wholeLife', 'moneyBack'] },
-  { key: 'protect', label: { en: 'Family Protection',  hi: 'परिवार सुरक्षा' },     icon: '🛡️', cats: ['term', 'child'] },
-  { key: 'retire',  label: { en: 'Retirement Income',  hi: 'सेवानिवृत्ति आय' },   icon: '🏖️', cats: ['pension'] },
-  { key: 'invest',  label: { en: 'Market Growth',      hi: 'बाजार निवेश' },        icon: '📈', cats: ['ulip'] },
-  { key: 'child',   label: { en: "Child's Future",     hi: 'बच्चों का भविष्य' },  icon: '🎓', cats: ['child'] },
-  { key: 'micro',   label: { en: 'Low Premium',        hi: 'कम प्रीमियम' },        icon: '🤝', cats: ['micro'] },
+  { key: 'save',    label: { en: 'Save & Grow',        hi: 'बचत और वृद्धि' },     cats: ['endowment', 'wholeLife', 'moneyBack'] },
+  { key: 'protect', label: { en: 'Family Protection',  hi: 'परिवार सुरक्षा' },     cats: ['term', 'child'] },
+  { key: 'retire',  label: { en: 'Retirement Income',  hi: 'सेवानिवृत्ति आय' },   cats: ['pension'] },
+  { key: 'invest',  label: { en: 'Market Growth',      hi: 'बाजार निवेश' },        cats: ['ulip'] },
+  { key: 'child',   label: { en: "Child's Future",     hi: 'बच्चों का भविष्य' },  cats: ['child'] },
+  { key: 'micro',   label: { en: 'Low Premium',        hi: 'कम प्रीमियम' },        cats: ['micro'] },
 ]
 
 // ── Age suitability ─────────────────────────────────────────────────────────
 const AGE_GROUPS = [
-  { key: 'child',  label: { en: 'For Minors (0–17)',    hi: '0–17 वर्ष' },    icon: '👶' },
-  { key: 'young',  label: { en: 'Young Adult (18–35)',   hi: '18–35 वर्ष' },   icon: '🧑' },
-  { key: 'prime',  label: { en: 'Prime Age (36–55)',     hi: '36–55 वर्ष' },   icon: '👔' },
-  { key: 'senior', label: { en: 'Senior (55+)',          hi: '55+ वर्ष' },     icon: '🧓' },
+  { key: 'child',  label: { en: 'For Minors (0–17)',   hi: '0–17 वर्ष' } },
+  { key: 'young',  label: { en: 'Young Adult (18–35)', hi: '18–35 वर्ष' } },
+  { key: 'prime',  label: { en: 'Prime Age (36–55)',   hi: '36–55 वर्ष' } },
+  { key: 'senior', label: { en: 'Senior (55+)',        hi: '55+ वर्ष' } },
 ]
 
 // ── Returns type ────────────────────────────────────────────────────────────
 const RETURN_TYPES = [
-  { key: 'guaranteed', label: { en: 'Guaranteed Returns', hi: 'गारंटीड रिटर्न' }, icon: '🔒', cats: ['endowment', 'wholeLife', 'moneyBack', 'child', 'micro'] },
-  { key: 'market',     label: { en: 'Market-Linked',      hi: 'बाजार-लिंक्ड' },  icon: '📊', cats: ['ulip'] },
-  { key: 'income',     label: { en: 'Regular Income',     hi: 'नियमित आय' },       icon: '💸', cats: ['pension'] },
-  { key: 'pure',       label: { en: 'Pure Protection',    hi: 'केवल सुरक्षा' },   icon: '🛡️', cats: ['term'] },
+  { key: 'guaranteed', label: { en: 'Guaranteed Returns', hi: 'गारंटीड रिटर्न' }, cats: ['endowment', 'wholeLife', 'moneyBack', 'child', 'micro'] },
+  { key: 'market',     label: { en: 'Market-Linked',      hi: 'बाजार-लिंक्ड' },  cats: ['ulip'] },
+  { key: 'income',     label: { en: 'Regular Income',     hi: 'नियमित आय' },       cats: ['pension'] },
+  { key: 'pure',       label: { en: 'Pure Protection',    hi: 'केवल सुरक्षा' },   cats: ['term'] },
 ]
 
 const PREMIUM_MODES = [
-  { key: 'regular', label: { en: 'Regular Pay',  hi: 'नियमित' },   icon: '📅' },
-  { key: 'limited', label: { en: 'Limited Pay',  hi: 'सीमित' },    icon: '⏱️' },
-  { key: 'single',  label: { en: 'Single Pay',   hi: 'एकमुश्त' },  icon: '💵' },
+  { key: 'regular', label: { en: 'Regular Pay', hi: 'नियमित' } },
+  { key: 'limited', label: { en: 'Limited Pay', hi: 'सीमित' } },
+  { key: 'single',  label: { en: 'Single Pay',  hi: 'एकमुश्त' } },
 ]
 
 const COVER_TIERS = [
-  { key: 'starter', label: { en: 'Upto ₹5 Lakh',   hi: '₹5 लाख तक' }, icon: '🌱' },
-  { key: 'mid',     label: { en: '₹5L – ₹25L',      hi: '₹5L–₹25L' },  icon: '📈' },
-  { key: 'high',    label: { en: '₹25 Lakh+',        hi: '₹25 लाख+' },  icon: '🏆' },
+  { key: 'starter', label: { en: 'Upto ₹5 Lakh', hi: '₹5 लाख तक' } },
+  { key: 'mid',     label: { en: '₹5L – ₹25L',   hi: '₹5L–₹25L' } },
+  { key: 'high',    label: { en: '₹25 Lakh+',     hi: '₹25 लाख+' } },
 ]
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -163,34 +163,32 @@ function FilterSection({ title, children }: { title: string; children: React.Rea
 
 // ── FilterPill button ────────────────────────────────────────────────────────
 function FilterPill({
-  isActive, accent, onClick, icon, label, count
+  isActive, accent, onClick, label, count
 }: {
   isActive: boolean; accent?: string; onClick: () => void
-  icon: string; label: string; count?: number
+  label: string; count?: number
 }) {
   const bg = accent ? (isActive ? `${accent}12` : undefined) : undefined
-  const border = accent ? (isActive ? `${accent}30` : undefined) : undefined
   const textColor = isActive ? (accent || '#1B4F72') : '#4B5563'
   return (
     <button onClick={onClick}
-      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all group
-        ${!accent && isActive ? 'bg-navy/8 text-navy' : ''}
+      className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-left transition-all group
+        ${!accent && isActive ? 'bg-navy/8' : ''}
         ${!isActive ? 'hover:bg-gray-50' : ''}`}
-      style={{ background: bg, borderColor: border }}>
-      <span className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all`}
+      style={{ background: bg }}>
+      <span className="w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all"
         style={{
           background: isActive ? (accent || '#1B4F72') : 'transparent',
           borderColor: isActive ? (accent || '#1B4F72') : '#D1D5DB',
         }}>
         {isActive && <CheckCircle2 size={9} className="text-white fill-white" />}
       </span>
-      <span className="text-15 leading-none flex-shrink-0">{icon}</span>
       <span className="flex-1 font-medium text-12 leading-snug" style={{ color: textColor }}>{label}</span>
       {count !== undefined && (
-        <span className="text-10 font-bold px-1.5 py-0.5 rounded-full flex-shrink-0"
+        <span className="text-10 font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 tabular-nums"
           style={{
             background: isActive ? (accent ? `${accent}20` : '#e0e7ff') : '#F3F4F6',
-            color: isActive ? (accent || '#1B4F72') : '#6B7280',
+            color: isActive ? (accent || '#1B4F72') : '#9CA3AF',
           }}>
           {count}
         </span>
@@ -335,7 +333,6 @@ export default function LicPlans() {
       <FilterPill
         isActive={isShowingAll}
         onClick={clearAllFilters}
-        icon="✅"
         label={lang === 'en' ? 'All Active Plans' : 'सभी सक्रिय'}
         count={activePlans.length}
       />
@@ -347,7 +344,6 @@ export default function LicPlans() {
             key={g.key}
             isActive={goalFilter.has(g.key)}
             onClick={() => toggle(setGoalFilter, g.key)}
-            icon={g.icon}
             label={g.label[lang as keyof typeof g.label]}
             count={activePlans.filter(p => g.cats.includes(p._catKey)).length}
           />
@@ -361,7 +357,6 @@ export default function LicPlans() {
             key={ag.key}
             isActive={ageFilter.has(ag.key)}
             onClick={() => toggle(setAgeFilter, ag.key)}
-            icon={ag.icon}
             label={ag.label[lang as keyof typeof ag.label]}
             count={activePlans.filter(p => matchesAgeGroup(p.entryAge, ag.key)).length}
           />
@@ -375,14 +370,13 @@ export default function LicPlans() {
             key={rt.key}
             isActive={returnsFilter.has(rt.key)}
             onClick={() => toggle(setReturnsFilter, rt.key)}
-            icon={rt.icon}
             label={rt.label[lang as keyof typeof rt.label]}
             count={activePlans.filter(p => rt.cats.includes(p._catKey)).length}
           />
         ))}
       </FilterSection>
 
-      {/* By Plan Type (power users) */}
+      {/* By Plan Type */}
       <FilterSection title={lang === 'en' ? 'Plan Type' : 'प्लान प्रकार'}>
         {Object.entries(categoryMeta).map(([key, meta]) => (
           <FilterPill
@@ -390,7 +384,6 @@ export default function LicPlans() {
             isActive={catFilter.has(key)}
             accent={CAT_ACCENT[key]}
             onClick={() => toggle(setCatFilter, key)}
-            icon={meta.icon}
             label={meta.label[lang as keyof typeof meta.label]}
             count={meta.count}
           />
@@ -406,7 +399,6 @@ export default function LicPlans() {
               key={mode.key}
               isActive={premiumFilter.has(mode.key)}
               onClick={() => toggle(setPremiumFilter, mode.key)}
-              icon={mode.icon}
               label={mode.label[lang as keyof typeof mode.label]}
               count={c}
             />
@@ -421,7 +413,6 @@ export default function LicPlans() {
             key={tier.key}
             isActive={coverFilter.has(tier.key)}
             onClick={() => toggle(setCoverFilter, tier.key)}
-            icon={tier.icon}
             label={tier.label[lang as keyof typeof tier.label]}
             count={activePlans.filter(p => getSumTier(p.sumAssured) === tier.key).length}
           />
@@ -445,9 +436,9 @@ export default function LicPlans() {
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
-          {/* Photo layer — Indian family / aspirational */}
+          {/* Photo layer — happy family of 4-5, warm & aspirational */}
           <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop&q=80')" }} />
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511895426328-dc8714191011?w=1600&auto=format&fit=crop&q=80')" }} />
           {/* Dark gradient overlay — heavier on left so text is always readable */}
           <div className="absolute inset-0"
             style={{ background: 'linear-gradient(100deg, rgba(5,14,30,0.92) 0%, rgba(7,20,45,0.82) 45%, rgba(7,20,45,0.45) 70%, rgba(7,20,45,0.15) 100%)' }} />
