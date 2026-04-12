@@ -154,8 +154,8 @@ function matchesAgeGroup(entryAge: string, ageKey: string): boolean {
 // ── FilterSection wrapper ────────────────────────────────────────────────────
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="border-t border-gray-100 pt-4 pb-2">
-      <p className="text-10 font-bold text-gray-400 uppercase tracking-widest px-3 mb-2.5">{title}</p>
+    <div className="border-t border-gray-100 pt-3 pb-1 mt-1">
+      <p className="text-9 font-bold text-gray-400 uppercase tracking-widest px-2 mb-1.5">{title}</p>
       {children}
     </div>
   )
@@ -541,22 +541,28 @@ export default function LicPlans() {
         <div className="flex gap-6 items-start">
 
           {/* ── Left Sidebar ── */}
-          <aside className="hidden lg:block w-64 flex-shrink-0 sticky self-start" style={{ top: '86px', maxHeight: 'calc(100vh - 94px)' }}>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col" style={{ maxHeight: 'calc(100vh - 94px)' }}>
-              {/* Sidebar header — always visible */}
-              <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
-                <h3 className="text-11 font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
-                  <SlidersHorizontal size={11} /> {lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}
+          <aside
+            className="hidden lg:block w-64 flex-shrink-0 sticky self-start"
+            style={{ top: '86px', maxHeight: 'calc(100vh - 106px)' }}
+          >
+            <div
+              className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden"
+              style={{ maxHeight: 'calc(100vh - 106px)' }}
+            >
+              {/* Pinned header */}
+              <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0 bg-white">
+                <h3 className="text-10 font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <SlidersHorizontal size={10} /> {lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}
                 </h3>
                 {totalFiltersActive > 0 && (
                   <button onClick={clearAllFilters}
-                    className="text-10 text-navy/50 hover:text-navy font-semibold underline underline-offset-2 transition-colors flex items-center gap-1">
+                    className="text-10 text-navy/50 hover:text-navy font-semibold flex items-center gap-1 transition-colors">
                     <X size={10} /> {lang === 'en' ? 'Clear all' : 'साफ़ करें'}
                   </button>
                 )}
               </div>
-              {/* Scrollable filter body */}
-              <div className="overflow-y-auto flex-1 px-4 pt-2 pb-16">
+              {/* Scrollable body — pb-8 ensures last item has breathing room */}
+              <div className="overflow-y-auto flex-1 px-3 pt-2 pb-8 scroll-smooth">
                 {SidebarFilters}
               </div>
             </div>
@@ -643,7 +649,7 @@ export default function LicPlans() {
                         {/* Key advantage */}
                         <div className="rounded-xl p-3 border" style={{ background: `${accent}07`, borderColor: `${accent}1a` }}>
                           <div className="text-10 font-bold uppercase tracking-wider mb-0.5" style={{ color: accent }}>
-                            {lang === 'en' ? '✦ Key Advantage' : '✦ मुख्य लाभ'}
+                            {lang === 'en' ? 'Key Advantage' : 'मुख्य लाभ'}
                           </div>
                           <div className="text-12 font-semibold text-gray-800 leading-snug">
                             {plan.keyBenefit[lang as keyof typeof plan.keyBenefit] || ''}
@@ -718,7 +724,9 @@ export default function LicPlans() {
 
               {displayedPlans.length === 0 && (
                 <div className="col-span-full py-20 text-center">
-                  <div className="text-44 mb-3">🔍</div>
+                  <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+                    <Search size={20} className="text-gray-400" />
+                  </div>
                   <div className="text-15 font-bold text-gray-600 mb-1">
                     {lang === 'en' ? 'No plans match your filters' : 'कोई प्लान नहीं मिला'}
                   </div>
@@ -739,7 +747,7 @@ export default function LicPlans() {
                   onClick={() => setShowWithdrawn(v => !v)}
                   className="flex items-center gap-2 text-12 text-gray-400 hover:text-gray-600 font-medium transition-colors mx-auto">
                   {showWithdrawn ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                  📦 {lang === 'en'
+                  {lang === 'en'
                     ? `${showWithdrawn ? 'Hide' : 'View'} ${withdrawnPlans.length} discontinued plans`
                     : `${withdrawnPlans.length} बंद प्लान ${showWithdrawn ? 'छुपाएं' : 'देखें'}`}
                   <span className="text-10 text-gray-300">· {lang === 'en' ? 'calculator access only' : 'केवल कैलकुलेटर'}</span>
