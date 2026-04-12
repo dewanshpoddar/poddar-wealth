@@ -1,9 +1,9 @@
 {
   "meta": {
     "source": "licindia.in",
-    "lastUpdated": "2026-04-10",
-    "version": "2.2.0",
-    "totalPlans": 56,
+    "lastUpdated": "2026-04-12",
+    "version": "3.0.0",
+    "totalPlans": 149,
     "categories": ["endowment", "wholeLife", "moneyBack", "term", "child", "pension", "ulip", "micro"]
   },
   "categories": {
@@ -187,44 +187,57 @@
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-anand-715", "status": "withdrawn"
         },
         {
-          "id": "lic-148", "name": { "en": "LIC's Jeevan Saral", "hi": "एलआईसी जीवन सरल" },
+          "id": "lic-148", "name": { "en": "LIC's New Jeevan Dhara-I", "hi": "एलआईसी न्यू जीवन धारा-I" },
           "planNo": "148",
-          "tagline": { "en": "Simple savings with whole life protection.", "hi": "सरल बचत और आजीवन सुरक्षा।" },
-          "keyBenefit": { "en": "Death SA = 250× monthly premium; maturity SA + loyalty additions", "hi": "मृत्यु पर SA = मासिक प्रीमियम × 250; मैच्योरिटी पर SA + लॉयल्टी" },
-          "category": "endowment", "entryAge": "12 - 60yr", "sumAssured": "₹45,000+", "premiumPayment": "Regular",
+          "tagline": { "en": "Pension-cum-life plan for salaried earners.", "hi": "वेतनभोगियों के लिए पेंशन सह जीवन बीमा।" },
+          "keyBenefit": { "en": "Deferred pension with life cover; annuity at vesting", "hi": "जीवन कवर सहित आस्थगित पेंशन; वेस्टिंग पर वार्षिकी" },
+          "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹30,000+", "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Death SA = 250 times the monthly premium", "hi": "मृत्यु SA = मासिक प्रीमियम का 250 गुना" },
-            { "en": "Flexible policy term (10–35 years)", "hi": "10–35 वर्षों की लचीली पॉलिसी अवधि" },
-            { "en": "Loyalty additions credited from year 10", "hi": "10वें वर्ष से लॉयल्टी वृद्धि" }
+            { "en": "Pension-cum-endowment hybrid plan", "hi": "पेंशन सह एंडोमेंट संकर योजना" },
+            { "en": "Life cover during accumulation period", "hi": "संचय अवधि में जीवन कवर" },
+            { "en": "Withdrawn in 2011-12", "hi": "2011-12 में वापस लिया गया" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         },
         {
-          "id": "lic-828", "name": { "en": "LIC's Jeevan Vriddhi", "hi": "एलआईसी जीवन वृद्धि" },
-          "planNo": "828",
-          "tagline": { "en": "Single premium, guaranteed growth.", "hi": "एकमुश्त प्रीमियम, गारंटीड वृद्धि।" },
-          "keyBenefit": { "en": "Single premium plan with guaranteed maturity addition from day one", "hi": "पहले दिन से गारंटीड मैच्योरिटी वृद्धि के साथ एकमुश्त प्लान" },
-          "category": "endowment", "entryAge": "8 - 50yr", "sumAssured": "₹75,000+", "premiumPayment": "Single",
-          "highlights": [
-            { "en": "Guaranteed maturity addition declared at inception", "hi": "पॉलिसी शुरू में घोषित गारंटीड मैच्योरिटी वृद्धि" },
-            { "en": "Loan facility available after 1 year", "hi": "1 वर्ष बाद ऋण सुविधा उपलब्ध" },
-            { "en": "Simple one-time payment — no annual renewal", "hi": "एकमुश्त भुगतान — कोई वार्षिक नवीनीकरण नहीं" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        },
-        {
-          "id": "lic-814", "name": { "en": "LIC's Jeevan Pragati", "hi": "एलआईसी जीवन प्रगति" },
+          "id": "lic-814", "name": { "en": "LIC's New Endowment Plan (2013)", "hi": "एलआईसी न्यू एंडोमेंट प्लान (2013)" },
           "planNo": "814",
-          "tagline": { "en": "Increasing cover as your family grows.", "hi": "परिवार के साथ बढ़ता हुआ कवर।" },
-          "keyBenefit": { "en": "Death benefit increases every 5 years — starts at 1× and doubles by end", "hi": "हर 5 साल में मृत्यु लाभ बढ़ता है — शुरू 1× से, अंत तक दोगुना" },
-          "category": "endowment", "entryAge": "12 - 45yr", "sumAssured": "₹1,50,000+", "premiumPayment": "Regular",
+          "tagline": { "en": "Classic savings + bonus. Withdrawn in 2019.", "hi": "क्लासिक बचत + बोनस। 2019 में वापस लिया गया।" },
+          "keyBenefit": { "en": "Bonus-linked endowment with guaranteed lump sum at maturity", "hi": "बोनस सहित गारंटीड मैच्योरिटी" },
+          "category": "endowment", "entryAge": "8 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Death SA increases automatically every 5 years", "hi": "मृत्यु SA हर 5 साल में स्वचालित रूप से बढ़ता है" },
-            { "en": "Participating plan with bonus additions", "hi": "बोनस वृद्धि के साथ सहभागी योजना" },
-            { "en": "Ideal for growing family responsibilities", "hi": "बढ़ती पारिवारिक जिम्मेदारियों के लिए आदर्श" }
+            { "en": "Predecessor to Plan 914 (New Endowment)", "hi": "प्लान 914 का पूर्ववर्ती" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        }
+        },
+        { "id": "lic-815", "name": { "en": "LIC's New Jeevan Anand (2013)", "hi": "एलआईसी न्यू जीवन आनंद (2013)" }, "planNo": "815", "tagline": { "en": "Endowment + whole life protection. Withdrawn 2019.", "hi": "एंडोमेंट + आजीवन सुरक्षा।" }, "keyBenefit": { "en": "Maturity benefit plus continued life cover after policy term", "hi": "मैच्योरिटी पर भुगतान + आजीवन कवर" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Predecessor to Plan 915", "hi": "प्लान 915 का पूर्ववर्ती" }, { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-838", "name": { "en": "LIC's Jeevan Pragati (838)", "hi": "एलआईसी जीवन प्रगति (838)" }, "planNo": "838", "tagline": { "en": "Auto-increasing sum assured plan. Withdrawn 2020.", "hi": "स्वतः बढ़ती बीमा राशि।" }, "keyBenefit": { "en": "Death benefit increases automatically every 5 years", "hi": "हर 5 साल में बीमा राशि बढ़ती है" }, "category": "endowment", "entryAge": "12 - 45yr", "sumAssured": "₹1,50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Increasing cover with time", "hi": "समय के साथ बढ़ता कवर" }, { "en": "Withdrawn in 2020-21", "hi": "2020-21 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-841", "name": { "en": "LIC's New Endowment Plan (2017)", "hi": "एलआईसी न्यू एंडोमेंट प्लान (2017)" }, "planNo": "841", "tagline": { "en": "Savings + bonus plan. Withdrawn 2020.", "hi": "बचत + बोनस।" }, "keyBenefit": { "en": "Guaranteed lump sum maturity benefit with bonuses", "hi": "गारंटीड मैच्योरिटी + बोनस" }, "category": "endowment", "entryAge": "8 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "2017 edition of New Endowment", "hi": "2017 संस्करण" }, { "en": "Withdrawn in 2020-21", "hi": "2020-21 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-848", "name": { "en": "LIC's Aadhaar Stambh (2019)", "hi": "एलआईसी आधार स्तंभ (2019)" }, "planNo": "848", "tagline": { "en": "Aadhaar-linked endowment for males. Withdrawn 2021.", "hi": "आधार लिंक्ड एंडोमेंट (पुरुष)।" }, "keyBenefit": { "en": "Endowment plan for Aadhaar-holding male lives", "hi": "आधार धारक पुरुषों के लिए" }, "category": "endowment", "entryAge": "8 - 55yr", "sumAssured": "₹75,000 - ₹3,00,000", "premiumPayment": "Regular", "highlights": [{ "en": "Aadhaar-based KYC plan for males", "hi": "पुरुषों के लिए आधार आधारित" }, { "en": "Withdrawn in 2021-22", "hi": "2021-22 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-849", "name": { "en": "LIC's Aadhaar Shila (2019)", "hi": "एलआईसी आधार शिला (2019)" }, "planNo": "849", "tagline": { "en": "Aadhaar-linked endowment for females. Withdrawn 2021.", "hi": "आधार लिंक्ड एंडोमेंट (महिला)।" }, "keyBenefit": { "en": "Endowment plan for Aadhaar-holding female lives", "hi": "आधार धारक महिलाओं के लिए" }, "category": "endowment", "entryAge": "8 - 55yr", "sumAssured": "₹75,000 - ₹3,00,000", "premiumPayment": "Regular", "highlights": [{ "en": "Aadhaar-based KYC plan for females", "hi": "महिलाओं के लिए आधार आधारित" }, { "en": "Withdrawn in 2021-22", "hi": "2021-22 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-851", "name": { "en": "LIC's New Jeevan Anand (2019)", "hi": "एलआईसी न्यू जीवन आनंद (2019)" }, "planNo": "851", "tagline": { "en": "Endowment + whole life, 2019 edition. Withdrawn 2023.", "hi": "एंडोमेंट + आजीवन कवर 2019।" }, "keyBenefit": { "en": "2019 edition of New Jeevan Anand with whole life protection post-maturity", "hi": "2019 का न्यू जीवन आनंद" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "2019 edition of Plan 815", "hi": "प्लान 815 का 2019 संस्करण" }, { "en": "Withdrawn in 2023-24", "hi": "2023-24 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-810", "name": { "en": "LIC's New Endowment Plan (Pre-2013)", "hi": "एलआईसी न्यू एंडोमेंट प्लान (पुराना)" }, "planNo": "810", "tagline": { "en": "Pre-2013 endowment savings plan.", "hi": "2013 पूर्व बचत योजना।" }, "keyBenefit": { "en": "Traditional bonus-linked endowment plan before 2013 revision", "hi": "2013 से पहले की एंडोमेंट योजना" }, "category": "endowment", "entryAge": "8 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Pre-2013 version of New Endowment", "hi": "2013 पूर्व न्यू एंडोमेंट" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-811", "name": { "en": "LIC's New Jeevan Anand (Pre-2013)", "hi": "एलआईसी न्यू जीवन आनंद (पुराना)" }, "planNo": "811", "tagline": { "en": "Pre-2013 whole life endowment plan.", "hi": "2013 पूर्व जीवन आनंद।" }, "keyBenefit": { "en": "Whole life endowment plan before 2013 revision", "hi": "2013 से पहले की जीवन आनंद योजना" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Pre-2013 version of New Jeevan Anand", "hi": "2013 पूर्व संस्करण" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-803", "name": { "en": "LIC's Jeevan Saral (803)", "hi": "एलआईसी जीवन सरल (803)" }, "planNo": "803", "tagline": { "en": "Simple flexible endowment plan.", "hi": "सरल लचीली बचत योजना।" }, "keyBenefit": { "en": "Flexible premium endowment with loyalty additions", "hi": "लचीले प्रीमियम के साथ बचत" }, "category": "endowment", "entryAge": "12 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Flexible premium structure", "hi": "लचीला प्रीमियम" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-804", "name": { "en": "LIC's Jeevan Amrit (804)", "hi": "एलआईसी जीवन अमृत (804)" }, "planNo": "804", "tagline": { "en": "Single premium endowment. Withdrawn.", "hi": "एकमुश्त एंडोमेंट।" }, "keyBenefit": { "en": "Single premium endowment plan with guaranteed maturity benefit", "hi": "एकमुश्त प्रीमियम एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Single Premium", "highlights": [{ "en": "Single premium payment option", "hi": "एकमुश्त प्रीमियम" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-802", "name": { "en": "LIC's Jeevan Shree-I (802)", "hi": "एलआईसी जीवन श्री-I (802)" }, "planNo": "802", "tagline": { "en": "Limited premium endowment. Withdrawn.", "hi": "सीमित प्रीमियम एंडोमेंट।" }, "keyBenefit": { "en": "Limited premium paying endowment plan", "hi": "सीमित भुगतान एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited Pay", "highlights": [{ "en": "Limited premium payment term", "hi": "सीमित प्रीमियम भुगतान" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-165", "name": { "en": "LIC's Jeevan Saral (165)", "hi": "एलआईसी जीवन सरल (165)" }, "planNo": "165", "tagline": { "en": "Flexible endowment classic.", "hi": "लचीला एंडोमेंट क्लासिक।" }, "keyBenefit": { "en": "Flexible premium and sum assured endowment", "hi": "लचीला प्रीमियम और बीमा राशि" }, "category": "endowment", "entryAge": "12 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Flexible sum assured structure", "hi": "लचीली बीमा राशि" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-136", "name": { "en": "LIC's Jeevan Amrit (136)", "hi": "एलआईसी जीवन अमृत (136)" }, "planNo": "136", "tagline": { "en": "Classic single premium savings plan.", "hi": "एकमुश्त बचत योजना।" }, "keyBenefit": { "en": "Single premium endowment with guaranteed returns", "hi": "एकमुश्त प्रीमियम गारंटीड बचत" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Single Premium", "highlights": [{ "en": "Old series plan 136", "hi": "पुरानी श्रृंखला प्लान 136" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-107", "name": { "en": "LIC's Jeevan Shree I (107)", "hi": "एलआईसी जीवन श्री I (107)" }, "planNo": "107", "tagline": { "en": "Limited premium whole life savings.", "hi": "सीमित प्रीमियम बचत।" }, "keyBenefit": { "en": "Limited premium endowment — old series", "hi": "सीमित प्रीमियम एंडोमेंट — पुरानी श्रृंखला" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited Pay", "highlights": [{ "en": "Old series plan 107", "hi": "पुरानी श्रृंखला 107" }, { "en": "Withdrawn pre-2000", "hi": "2000 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-108", "name": { "en": "LIC's Jeevan Pramukh (108)", "hi": "एलआईसी जीवन प्रमुख (108)" }, "planNo": "108", "tagline": { "en": "High SA limited pay endowment.", "hi": "उच्च बीमा राशि सीमित प्रीमियम।" }, "keyBenefit": { "en": "High sum assured limited premium endowment for HNIs", "hi": "उच्च निवल सम्पत्ति वालों के लिए एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹5,00,000+", "premiumPayment": "Limited Pay", "highlights": [{ "en": "High SA endowment plan", "hi": "उच्च बीमा राशि" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-050", "name": { "en": "LIC's Jeevan Anand (Old)", "hi": "एलआईसी जीवन आनंद (पुराना)" }, "planNo": "50", "tagline": { "en": "Classic whole life endowment plan.", "hi": "क्लासिक जीवन आनंद।" }, "keyBenefit": { "en": "Original Jeevan Anand endowment plan", "hi": "मूल जीवन आनंद" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Original whole life endowment", "hi": "मूल आजीवन एंडोमेंट" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-164", "name": { "en": "LIC's Jeevan Kashyap (164)", "hi": "एलआईसी जीवन कश्यप (164)" }, "planNo": "164", "tagline": { "en": "Classic savings plan with bonus.", "hi": "बोनस सहित बचत योजना।" }, "keyBenefit": { "en": "Bonus-linked endowment plan — old series", "hi": "बोनस एंडोमेंट — पुरानी श्रृंखला" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Old series plan 164", "hi": "पुरानी श्रृंखला 164" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-162", "name": { "en": "LIC's Jeevan Chetna (162)", "hi": "एलआईसी जीवन चेतना (162)" }, "planNo": "162", "tagline": { "en": "Endowment with critical illness rider.", "hi": "गंभीर बीमारी राइडर सहित एंडोमेंट।" }, "keyBenefit": { "en": "Endowment plan with critical illness benefit", "hi": "गंभीर बीमारी लाभ के साथ एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "CI rider bundled with endowment", "hi": "गंभीर बीमारी राइडर" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-133", "name": { "en": "LIC's Jeevan Rekha (133)", "hi": "एलआईसी जीवन रेखा (133)" }, "planNo": "133", "tagline": { "en": "Money-back endowment hybrid.", "hi": "मनी बैक एंडोमेंट।" }, "keyBenefit": { "en": "Periodic survival benefits + endowment maturity", "hi": "नियमित उत्तरजीविता लाभ + मैच्योरिटी" }, "category": "endowment", "entryAge": "12 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Survival benefit payouts", "hi": "उत्तरजीविता लाभ" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-179", "name": { "en": "LIC's Jeevan Rekha (179)", "hi": "एलआईसी जीवन रेखा (179)" }, "planNo": "179", "tagline": { "en": "Revised money-back endowment.", "hi": "संशोधित मनी बैक एंडोमेंट।" }, "keyBenefit": { "en": "Revised edition of Jeevan Rekha with survival benefits", "hi": "जीवन रेखा का संशोधित संस्करण" }, "category": "endowment", "entryAge": "12 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Revised Jeevan Rekha", "hi": "संशोधित जीवन रेखा" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-171", "name": { "en": "LIC's Jeevan Parivar (171)", "hi": "एलआईसी जीवन परिवार (171)" }, "planNo": "171", "tagline": { "en": "Family savings endowment plan.", "hi": "परिवार बचत योजना।" }, "keyBenefit": { "en": "Endowment plan with family income benefit rider", "hi": "परिवार आय लाभ राइडर सहित एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Family income benefit feature", "hi": "परिवार आय लाभ" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-106", "name": { "en": "LIC's Jeevan Saral (Old) (106)", "hi": "एलआईसी जीवन सरल (पुराना) (106)" }, "planNo": "106", "tagline": { "en": "Original simple savings plan.", "hi": "मूल सरल बचत योजना।" }, "keyBenefit": { "en": "Flexible premium and cover endowment — original series", "hi": "लचीला कवर एंडोमेंट — मूल श्रृंखला" }, "category": "endowment", "entryAge": "12 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Original Jeevan Saral series", "hi": "मूल जीवन सरल" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-005", "name": { "en": "LIC's Endowment Plan (5)", "hi": "एलआईसी एंडोमेंट प्लान (5)" }, "planNo": "5", "tagline": { "en": "Classic basic endowment plan.", "hi": "मूल एंडोमेंट योजना।" }, "keyBenefit": { "en": "Basic endowment plan — original series", "hi": "मूल एंडोमेंट योजना" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹25,000+", "premiumPayment": "Regular", "highlights": [{ "en": "One of LIC's oldest plans", "hi": "एलआईसी की सबसे पुरानी योजनाओं में से एक" }, { "en": "Withdrawn pre-2000", "hi": "2000 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-008", "name": { "en": "LIC's Whole Life Plan (8)", "hi": "एलआईसी होल लाइफ प्लान (8)" }, "planNo": "8", "tagline": { "en": "Original whole life endowment.", "hi": "मूल आजीवन एंडोमेंट।" }, "keyBenefit": { "en": "Whole life plan — original series", "hi": "आजीवन योजना — मूल श्रृंखला" }, "category": "endowment", "entryAge": "0 - 55yr", "sumAssured": "₹25,000+", "premiumPayment": "Regular", "highlights": [{ "en": "One of LIC's oldest plans", "hi": "एलआईसी की पुरानी योजना" }, { "en": "Withdrawn pre-2000", "hi": "2000 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-014", "name": { "en": "LIC's Jeevan Saathi (14)", "hi": "एलआईसी जीवन साथी (14)" }, "planNo": "14", "tagline": { "en": "Joint life endowment plan.", "hi": "संयुक्त जीवन एंडोमेंट।" }, "keyBenefit": { "en": "Joint life endowment for couples", "hi": "दंपत्ति के लिए संयुक्त जीवन एंडोमेंट" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Covers both husband and wife", "hi": "पति-पत्नी दोनों को कवर" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-821", "name": { "en": "LIC's New Jeevan Anand (821)", "hi": "एलआईसी न्यू जीवन आनंद (821)" }, "planNo": "821", "tagline": { "en": "Endowment + whole life. Withdrawn 2013.", "hi": "एंडोमेंट + आजीवन कवर 2013।" }, "keyBenefit": { "en": "New Jeevan Anand 2013 edition with dual benefit", "hi": "2013 का न्यू जीवन आनंद" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "2013 edition of New Jeevan Anand", "hi": "2013 संस्करण" }, { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-835", "name": { "en": "LIC's Jeevan Pragati (835)", "hi": "एलआईसी जीवन प्रगति (835)" }, "planNo": "835", "tagline": { "en": "Auto-increasing cover endowment 2016.", "hi": "स्वतः बढ़ता कवर 2016।" }, "keyBenefit": { "en": "2016 edition of Jeevan Pragati with auto-increasing sum assured", "hi": "2016 का जीवन प्रगति" }, "category": "endowment", "entryAge": "12 - 45yr", "sumAssured": "₹1,50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Auto-increasing death benefit every 5 years", "hi": "हर 5 साल में बढ़ता कवर" }, { "en": "Withdrawn in 2020-21", "hi": "2020-21 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     },
     "wholeLife": {
@@ -288,19 +301,17 @@
           "highlights": [{ "en": "Flexible income payout options", "hi": "लचीले आय भुगतान विकल्प" }],
           "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav-771", "status": "withdrawn"
         },
-        {
-          "id": "lic-825", "name": { "en": "LIC's Jeevan Tarang", "hi": "एलआईसी जीवन तरंग" },
-          "planNo": "825",
-          "tagline": { "en": "Limited premium whole life with annual payouts.", "hi": "सीमित प्रीमियम और वार्षिक भुगतान के साथ आजीवन।" },
-          "keyBenefit": { "en": "Pay for limited term, get 5.5% of SA annually for life after vesting", "hi": "सीमित अवधि भुगतान, वेस्टिंग के बाद जीवनभर SA का 5.5% वार्षिक" },
-          "category": "wholeLife", "entryAge": "0 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited",
-          "highlights": [
-            { "en": "5.5% of SA paid annually after vesting age", "hi": "वेस्टिंग के बाद SA का 5.5% वार्षिक" },
-            { "en": "Full SA + loyalty addition on death/maturity", "hi": "मृत्यु/मैच्योरिटी पर पूर्ण SA + लॉयल्टी वृद्धि" },
-            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        }
+        { "id": "lic-178", "name": { "en": "LIC's Jeevan Tarang (Old)", "hi": "एलआईसी जीवन तरंग (पुराना)" }, "planNo": "178", "tagline": { "en": "Whole life with annual income. Withdrawn 2013.", "hi": "वार्षिक आय के साथ आजीवन।" }, "keyBenefit": { "en": "Limited pay whole life with 5.5% SA annual income — withdrawn 2013-14", "hi": "5.5% SA वार्षिक आय के साथ आजीवन — 2013 में वापस" }, "category": "wholeLife", "entryAge": "0 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-52", "name": { "en": "LIC's Jeevan Tarang (Plan 52)", "hi": "एलआईसी जीवन तरंग (52)" }, "planNo": "52", "tagline": { "en": "Older whole life income plan. Withdrawn 2013.", "hi": "पुरानी आजीवन आय योजना।" }, "keyBenefit": { "en": "Old whole life with annual payout — withdrawn 2013-14", "hi": "वार्षिक भुगतान के साथ आजीवन — 2013 में वापस" }, "category": "wholeLife", "entryAge": "0 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-75", "name": { "en": "LIC's Jeevan Mitra (Double Cover)", "hi": "एलआईसी जीवन मित्र (डबल कवर)" }, "planNo": "75", "tagline": { "en": "Double death benefit whole life. Withdrawn 2013.", "hi": "दोहरा मृत्यु लाभ आजीवन।" }, "keyBenefit": { "en": "Double SA on death + maturity — withdrawn 2013-14", "hi": "मृत्यु पर दोगुना SA + मैच्योरिटी" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-805", "name": { "en": "LIC's Jeevan Mitra (Triple Cover)", "hi": "एलआईसी जीवन मित्र (ट्रिपल कवर)" }, "planNo": "805", "tagline": { "en": "Triple death benefit. Withdrawn 2013.", "hi": "तीन गुना मृत्यु लाभ।" }, "keyBenefit": { "en": "Triple SA on death — withdrawn 2013-14", "hi": "मृत्यु पर तीन गुना SA" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-808", "name": { "en": "LIC's Jeevan Vriddhi (808)", "hi": "एलआईसी जीवन वृद्धि (808)" }, "planNo": "808", "tagline": { "en": "Single premium whole life. Withdrawn 2012.", "hi": "एकमुश्त प्रीमियम आजीवन।" }, "keyBenefit": { "en": "Single premium whole life plan — withdrawn 2012-13", "hi": "एकमुश्त प्रीमियम आजीवन योजना" }, "category": "wholeLife", "entryAge": "8 - 50yr", "sumAssured": "₹75,000+", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2012-13", "hi": "2012-13 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-831", "name": { "en": "LIC's Samridhi Plus", "hi": "एलआईसी समृद्धि प्लस" }, "planNo": "831", "tagline": { "en": "Whole life savings. Withdrawn 2015.", "hi": "आजीवन बचत। 2015 में वापस।" }, "keyBenefit": { "en": "Single premium whole life savings plan — withdrawn 2015-16", "hi": "एकमुश्त प्रीमियम आजीवन बचत" }, "category": "wholeLife", "entryAge": "90d - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2015-16", "hi": "2015-16 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-809", "name": { "en": "LIC's Jeevan Saathi (809)", "hi": "एलआईसी जीवन साथी (809)" }, "planNo": "809", "tagline": { "en": "Joint whole life. Withdrawn 2012.", "hi": "संयुक्त आजीवन।" }, "keyBenefit": { "en": "Joint life whole life plan — withdrawn 2012-13", "hi": "संयुक्त आजीवन योजना" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2012-13", "hi": "2012-13 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-854", "name": { "en": "LIC's Jeevan Umang (2022)", "hi": "एलआईसी जीवन उमंग (2022)" }, "planNo": "854", "tagline": { "en": "Whole life income — 2022 version. Withdrawn.", "hi": "आजीवन आय — 2022 संस्करण।" }, "keyBenefit": { "en": "Whole life with annual income — 2022 version, withdrawn 2022-23", "hi": "वार्षिक आय के साथ आजीवन — 2022-23 में वापस" }, "category": "wholeLife", "entryAge": "90d - 55yr", "sumAssured": "₹2,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "Withdrawn in 2022-23", "hi": "2022-23 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-02", "name": { "en": "LIC's Whole Life Policy (Old)", "hi": "एलआईसी संपूर्ण जीवन पॉलिसी (पुरानी)" }, "planNo": "02", "tagline": { "en": "Classic whole life policy. Withdrawn 2013.", "hi": "क्लासिक संपूर्ण जीवन।" }, "keyBenefit": { "en": "Traditional whole life policy — withdrawn 2013-14", "hi": "परंपरागत संपूर्ण जीवन नीति" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹25,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-93", "name": { "en": "LIC's Jeevan Saathi (93)", "hi": "एलआईसी जीवन साथी (93)" }, "planNo": "93", "tagline": { "en": "Joint whole life plan. Withdrawn 2013.", "hi": "संयुक्त आजीवन।" }, "keyBenefit": { "en": "Joint life whole life plan — withdrawn 2013-14", "hi": "संयुक्त आजीवन योजना" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-168", "name": { "en": "LIC's Jeevan Bharati-I", "hi": "एलआईसी जीवन भारती-I" }, "planNo": "168", "tagline": { "en": "Women-only whole life plan. Withdrawn 2013.", "hi": "महिलाओं के लिए संपूर्ण जीवन।" }, "keyBenefit": { "en": "Whole life plan exclusively for women — withdrawn 2013-14", "hi": "केवल महिलाओं के लिए आजीवन योजना" }, "category": "wholeLife", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     },
     "moneyBack": {
@@ -377,16 +388,26 @@
           "highlights": [{ "en": "10% SA annually to nominee after death", "hi": "मृत्यु के बाद नामांकित को SA का 10% वार्षिक" }],
           "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-lakshya-733", "status": "withdrawn"
         },
+        { "id": "lic-812", "name": { "en": "LIC's New Money Back 20 (Pre-2013)", "hi": "एलआईसी न्यू मनी बैक 20 (पूर्व-2013)" }, "planNo": "812", "tagline": { "en": "Periodic payouts over 20 years. Withdrawn 2013.", "hi": "20 वर्षों में आवधिक भुगतान।" }, "keyBenefit": { "en": "20-year money back — withdrawn 2013-14", "hi": "20 वर्षीय मनी बैक — 2013 में वापस" }, "category": "moneyBack", "entryAge": "13 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-813", "name": { "en": "LIC's New Money Back 25 (Pre-2013)", "hi": "एलआईसी न्यू मनी बैक 25 (पूर्व-2013)" }, "planNo": "813", "tagline": { "en": "Periodic payouts over 25 years. Withdrawn 2013.", "hi": "25 वर्षों में आवधिक भुगतान।" }, "keyBenefit": { "en": "25-year money back — withdrawn 2013-14", "hi": "25 वर्षीय मनी बैक — 2013 में वापस" }, "category": "moneyBack", "entryAge": "13 - 45yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-853", "name": { "en": "LIC's New Children's Money Back (2019)", "hi": "एलआईसी न्यू चिल्ड्रन्स मनी बैक (2019)" }, "planNo": "853", "tagline": { "en": "Child money back — 2019 version. Withdrawn.", "hi": "बाल मनी बैक — 2019 संस्करण।" }, "keyBenefit": { "en": "Children's money back — 2019 version, withdrawn 2019-20", "hi": "बच्चों के लिए मनी बैक — 2019 में वापस" }, "category": "moneyBack", "entryAge": "0 - 12yr (child)", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-41", "name": { "en": "LIC's Money Back (20 Yr, Old)", "hi": "एलआईसी मनी बैक (20 वर्ष, पुराना)" }, "planNo": "41", "tagline": { "en": "Old 20-year money back. Withdrawn 2013.", "hi": "20 वर्षीय मनी बैक। 2013 में वापस।" }, "keyBenefit": { "en": "Classic 20-year money back — withdrawn 2013-14", "hi": "क्लासिक 20 वर्षीय मनी बैक" }, "category": "moneyBack", "entryAge": "13 - 50yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-43", "name": { "en": "LIC's Money Back (25 Yr, Old)", "hi": "एलआईसी मनी बैक (25 वर्ष, पुराना)" }, "planNo": "43", "tagline": { "en": "Old 25-year money back. Withdrawn 2013.", "hi": "25 वर्षीय मनी बैक। 2013 में वापस।" }, "keyBenefit": { "en": "Classic 25-year money back — withdrawn 2013-14", "hi": "क्लासिक 25 वर्षीय मनी बैक" }, "category": "moneyBack", "entryAge": "13 - 45yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-175", "name": { "en": "LIC's Bima Bachat", "hi": "एलआईसी बीमा बचत" }, "planNo": "175", "tagline": { "en": "Single premium money back. Withdrawn 2013.", "hi": "एकमुश्त प्रीमियम मनी बैक।" }, "keyBenefit": { "en": "Single premium money-back plan — withdrawn 2013-14", "hi": "एकमुश्त मनी-बैक — 2013 में वापस" }, "category": "moneyBack", "entryAge": "15 - 65yr", "sumAssured": "₹35,000+", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-48", "name": { "en": "LIC's Jeevan Surabhi", "hi": "एलआईसी जीवन सुरभि" }, "planNo": "48", "tagline": { "en": "Increasing money back plan. Withdrawn 2013.", "hi": "बढ़ती मनी बैक योजना।" }, "keyBenefit": { "en": "Increasing money-back plan with escalating payouts — withdrawn 2013-14", "hi": "बढ़ते भुगतान के साथ मनी-बैक — 2013 में वापस" }, "category": "moneyBack", "entryAge": "12 - 45yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-820", "name": { "en": "LIC's Jeevan Labh (2013)", "hi": "एलआईसी जीवन लाभ (2013)" }, "planNo": "820", "tagline": { "en": "Old limited pay endowment. Withdrawn 2019.", "hi": "पुरानी सीमित प्रीमियम एंडोमेंट।" }, "keyBenefit": { "en": "Limited premium endowment — withdrawn 2019-20; succeeded by Plan 936", "hi": "सीमित प्रीमियम एंडोमेंट — 2019 में वापस" }, "category": "moneyBack", "entryAge": "8 - 59yr", "sumAssured": "₹2,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-833", "name": { "en": "LIC's New Money Back 20 (2019)", "hi": "एलआईसी न्यू मनी बैक 20 (2019)" }, "planNo": "833", "tagline": { "en": "20-year money back — 2019 version. Withdrawn.", "hi": "20 वर्षीय मनी बैक — 2019 संस्करण।" }, "keyBenefit": { "en": "20-year money back — withdrawn 2019-20", "hi": "20 वर्षीय मनी बैक — 2019 में वापस" }, "category": "moneyBack", "entryAge": "13 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-850", "name": { "en": "LIC's Jeevan Umang (2020)", "hi": "एलआईसी जीवन उमंग (2020)" }, "planNo": "850", "tagline": { "en": "Whole life income — 2020 version. Withdrawn.", "hi": "आजीवन आय — 2020 संस्करण।" }, "keyBenefit": { "en": "Whole life with annual survival income — 2020-21 version, withdrawn", "hi": "वार्षिक उत्तरजीविता आय के साथ आजीवन" }, "category": "wholeLife", "entryAge": "90d - 55yr", "sumAssured": "₹2,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "Withdrawn in 2020-21", "hi": "2020-21 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-198", "name": { "en": "LIC's Komal Jeevan", "hi": "एलआईसी कोमल जीवन" }, "planNo": "198", "tagline": { "en": "Child endowment plan. Withdrawn 2013.", "hi": "बाल एंडोमेंट योजना।" }, "keyBenefit": { "en": "Child endowment for education and future needs — withdrawn 2013-14", "hi": "शिक्षा और भविष्य के लिए बाल एंडोमेंट" }, "category": "moneyBack", "entryAge": "0 - 12yr (child)", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         {
-          "id": "lic-847", "name": { "en": "LIC's Bima Bachat", "hi": "एलआईसी बीमा बचत" },
+          "id": "lic-847", "name": { "en": "LIC's Jeevan Shiromani (2019)", "hi": "एलआईसी जीवन शिरोमणि (2019)" },
           "planNo": "847",
-          "tagline": { "en": "Savings plan with periodic money-back payouts.", "hi": "आवधिक मनी-बैक के साथ बचत योजना।" },
-          "keyBenefit": { "en": "Guaranteed survival benefits at regular intervals + full SA on maturity", "hi": "नियमित अंतराल पर गारंटीड उत्तरजीविता लाभ + मैच्योरिटी पर पूर्ण SA" },
-          "category": "moneyBack", "entryAge": "15 - 65yr", "sumAssured": "₹35,000+", "premiumPayment": "Single / Regular",
+          "tagline": { "en": "Elite HNI plan — 1st version. Withdrawn 2019.", "hi": "HNI के लिए एलीट प्लान — पहला संस्करण।" },
+          "keyBenefit": { "en": "High-value endowment (min ₹1Cr SA) with critical illness cover — 1st version, withdrawn 2019-20", "hi": "₹1 करोड़+ SA + क्रिटिकल इलनेस — पहला संस्करण" },
+          "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,00,000+", "premiumPayment": "Limited",
           "highlights": [
-            { "en": "Guaranteed survival benefits paid periodically", "hi": "समय-समय पर गारंटीड उत्तरजीविता लाभ" },
-            { "en": "Full SA returned at maturity", "hi": "मैच्योरिटी पर पूरा SA वापस" },
-            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" }
+            { "en": "1st version of Jeevan Shiromani; succeeded by Plan 947", "hi": "जीवन शिरोमणि का पहला संस्करण; प्लान 947 द्वारा प्रतिस्थापित" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
@@ -448,7 +469,7 @@
             { "en": "Death benefit as lump sum or monthly income", "hi": "मृत्यु लाभ एकमुश्त या मासिक आय" },
             { "en": "Accidental death & disability benefit rider", "hi": "आकस्मिक मृत्यु व विकलांगता लाभ राइडर" }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-amar", "status": "active"
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         },
         {
           "id": "lic-859", "name": { "en": "LIC's Saral Jeevan Bima", "hi": "एलआईसी सरल जीवन बीमा" },
@@ -463,29 +484,73 @@
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-saral-jeevan-bima", "status": "active"
         },
+        { "id": "lic-837", "name": { "en": "LIC's Jeevan Rakshak", "hi": "एलआईसी जीवन रक्षक" }, "planNo": "837", "tagline": { "en": "Low-cost term plan. Withdrawn 2016.", "hi": "कम लागत टर्म योजना।" }, "keyBenefit": { "en": "Affordable term insurance for masses — withdrawn 2016-17", "hi": "जनता के लिए किफायती टर्म बीमा" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹75,000 - ₹2,00,000", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2016-17", "hi": "2016-17 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-159", "name": { "en": "LIC's Anmol Jeevan I", "hi": "एलआईसी अनमोल जीवन I" }, "planNo": "159", "tagline": { "en": "Pure term — first version. Withdrawn 2013.", "hi": "शुद्ध टर्म — पहला संस्करण।" }, "keyBenefit": { "en": "Low-premium pure term — withdrawn 2013-14", "hi": "कम प्रीमियम शुद्ध टर्म — 2013 में वापस" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹5,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-190", "name": { "en": "LIC's Amulya Jeevan I", "hi": "एलआईसी अमूल्य जीवन I" }, "planNo": "190", "tagline": { "en": "High-cover pure term. Withdrawn 2013.", "hi": "उच्च-कवर शुद्ध टर्म।" }, "keyBenefit": { "en": "High SA pure term plan — predecessor to Plan 823, withdrawn 2013-14", "hi": "उच्च SA शुद्ध टर्म — 2013 में वापस" }, "category": "term", "entryAge": "18 - 60yr", "sumAssured": "₹25,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-806", "name": { "en": "LIC's New Jeevan Suraksha-I", "hi": "एलआईसी न्यू जीवन सुरक्षा-I" }, "planNo": "806", "tagline": { "en": "Pure term + pension accumulation. Withdrawn 2013.", "hi": "शुद्ध टर्म + पेंशन संचय।" }, "keyBenefit": { "en": "Term + deferred pension — withdrawn 2013-14", "hi": "टर्म + आस्थगित पेंशन" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-149", "name": { "en": "LIC's New Jeevan Suraksha-I (149)", "hi": "एलआईसी न्यू जीवन सुरक्षा-I (149)" }, "planNo": "149", "tagline": { "en": "Term-cum-pension. Withdrawn 2013.", "hi": "टर्म सह पेंशन।" }, "keyBenefit": { "en": "Term insurance with pension accumulation — withdrawn 2013-14", "hi": "पेंशन संचय के साथ टर्म बीमा" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-88", "name": { "en": "LIC's Jeevan Suraksha (Old)", "hi": "एलआईसी जीवन सुरक्षा (पुराना)" }, "planNo": "88", "tagline": { "en": "Old term plan. Withdrawn 2013.", "hi": "पुरानी टर्म योजना।" }, "keyBenefit": { "en": "Old term-cum-pension plan — withdrawn 2013-14", "hi": "पुरानी टर्म सह पेंशन — 2013 में वापस" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-89", "name": { "en": "LIC's New Jeevan Suraksha I (89)", "hi": "एलआईसी न्यू जीवन सुरक्षा I (89)" }, "planNo": "89", "tagline": { "en": "Term + pension (old). Withdrawn 2013.", "hi": "टर्म + पेंशन (पुराना)।" }, "keyBenefit": { "en": "Old term-cum-pension hybrid — withdrawn 2013-14", "hi": "पुरानी टर्म सह पेंशन" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         {
-          "id": "lic-816", "name": { "en": "LIC's Anmol Jeevan-II", "hi": "एलआईसी अनमोल जीवन-II" },
-          "planNo": "816",
-          "tagline": { "en": "Pure term cover at affordable premium.", "hi": "किफायती प्रीमियम पर शुद्ध टर्म कवर।" },
-          "keyBenefit": { "en": "Low-premium pure term plan — death benefit only, no maturity value", "hi": "कम प्रीमियम शुद्ध टर्म — केवल मृत्यु लाभ, कोई मैच्योरिटी नहीं" },
+          "id": "lic-822", "name": { "en": "LIC's Anmol Jeevan-II", "hi": "एलआईसी अनमोल जीवन-II" },
+          "planNo": "822",
+          "tagline": { "en": "Affordable pure term for modest cover needs.", "hi": "साधारण कवर जरूरतों के लिए किफायती शुद्ध टर्म।" },
+          "keyBenefit": { "en": "Low-premium pure term — SA ₹6L–₹24L, death benefit only", "hi": "कम प्रीमियम शुद्ध टर्म — SA ₹6L–₹24L, केवल मृत्यु लाभ" },
           "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹6,00,000 - ₹24,00,000", "premiumPayment": "Regular",
           "highlights": [
             { "en": "SA range: ₹6 Lakh to ₹24 Lakh", "hi": "SA सीमा: ₹6 लाख से ₹24 लाख" },
-            { "en": "Very low premium for pure protection", "hi": "शुद्ध सुरक्षा के लिए बहुत कम प्रीमियम" },
-            { "en": "Policy term 5–25 years", "hi": "पॉलिसी अवधि 5–25 वर्ष" }
+            { "en": "No maturity value — pure protection", "hi": "कोई मैच्योरिटी नहीं — शुद्ध सुरक्षा" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         },
         {
-          "id": "lic-817", "name": { "en": "LIC's Amulya Jeevan-II", "hi": "एलआईसी अमूल्य जीवन-II" },
-          "planNo": "817",
+          "id": "lic-823", "name": { "en": "LIC's Amulya Jeevan-II", "hi": "एलआईसी अमूल्य जीवन-II" },
+          "planNo": "823",
           "tagline": { "en": "High-cover pure term for breadwinners.", "hi": "कमाने वालों के लिए उच्च-कवर शुद्ध टर्म।" },
-          "keyBenefit": { "en": "High SA pure term plan (₹25L+) at competitive rates — no maturity value", "hi": "₹25L+ की उच्च SA शुद्ध टर्म — कोई मैच्योरिटी नहीं" },
+          "keyBenefit": { "en": "High SA (₹25L+) pure term at competitive rates — no maturity value", "hi": "₹25L+ की उच्च SA शुद्ध टर्म — कोई मैच्योरिटी नहीं" },
           "category": "term", "entryAge": "18 - 60yr", "sumAssured": "₹25,00,000+", "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Minimum SA ₹25 Lakh — ideal for family income replacement", "hi": "न्यूनतम SA ₹25 लाख — परिवार की आय प्रतिस्थापन के लिए आदर्श" },
-            { "en": "Competitive premiums for high cover", "hi": "उच्च कवर के लिए प्रतिस्पर्धी प्रीमियम" },
-            { "en": "Predecessor to LIC's Jeevan Amar (Plan 855)", "hi": "एलआईसी जीवन अमर (855) का पूर्ववर्ती" }
+            { "en": "Minimum SA ₹25 Lakh", "hi": "न्यूनतम SA ₹25 लाख" },
+            { "en": "Predecessor to LIC's Jeevan Amar (Plan 855)", "hi": "एलआईसी जीवन अमर (855) का पूर्ववर्ती" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-816", "name": { "en": "LIC's New Bima Bachat", "hi": "एलआईसी न्यू बीमा बचत" },
+          "planNo": "816",
+          "tagline": { "en": "Savings with money-back payouts. Withdrawn 2019.", "hi": "मनी-बैक के साथ बचत। 2019 में वापस।" },
+          "keyBenefit": { "en": "Single premium money-back plan with guaranteed survival benefits", "hi": "गारंटीड उत्तरजीविता लाभ के साथ एकमुश्त मनी-बैक" },
+          "category": "moneyBack", "entryAge": "15 - 65yr", "sumAssured": "₹35,000+", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "Single premium, periodic survival benefits", "hi": "एकमुश्त प्रीमियम, आवधिक उत्तरजीविता लाभ" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-817", "name": { "en": "LIC's Single Premium Endowment Plan (817)", "hi": "एलआईसी सिंगल प्रीमियम एंडोमेंट प्लान (817)" },
+          "planNo": "817",
+          "tagline": { "en": "One-time premium for guaranteed maturity. Withdrawn 2019.", "hi": "गारंटीड मैच्योरिटी के लिए एकमुश्त प्रीमियम।" },
+          "keyBenefit": { "en": "Single premium endowment with bonus participation", "hi": "बोनस भागीदारी के साथ एकमुश्त एंडोमेंट" },
+          "category": "endowment", "entryAge": "90d - 65yr", "sumAssured": "₹50,000+", "premiumPayment": "Single",
+          "highlights": [
+            { "en": "Preceded Plan 717 (Single Premium Endowment)", "hi": "प्लान 717 का पूर्ववर्ती" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-825", "name": { "en": "LIC's e-Term Plan", "hi": "एलआईसी e-टर्म प्लान" },
+          "planNo": "825",
+          "tagline": { "en": "Online pure term — LIC's first digital term plan.", "hi": "ऑनलाइन शुद्ध टर्म — LIC की पहली डिजिटल टर्म योजना।" },
+          "keyBenefit": { "en": "Online pure term plan at low premiums — precursor to New Tech-Term (954)", "hi": "कम प्रीमियम पर ऑनलाइन शुद्ध टर्म — New Tech-Term का पूर्ववर्ती" },
+          "category": "term", "entryAge": "18 - 60yr", "sumAssured": "₹25,00,000+", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "LIC's first online term plan", "hi": "LIC की पहली ऑनलाइन टर्म योजना" },
+            { "en": "Succeeded by New Tech-Term Plan 954", "hi": "प्लान 954 (New Tech-Term) द्वारा प्रतिस्थापित" },
+            { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         }
@@ -537,31 +602,30 @@
           "officialUrl": "https://licindia.in/web/guest/lic-s-amritbaal", "status": "active"
         },
         {
-          "id": "lic-832", "name": { "en": "LIC's New Children's Money Back Plan", "hi": "एलआईसी न्यू चिल्ड्रन्स मनी बैक प्लान" },
+          "id": "lic-832", "name": { "en": "LIC's New Children's Money Back (2013)", "hi": "एलआईसी न्यू चिल्ड्रन्स मनी बैक (2013)" },
           "planNo": "832",
-          "tagline": { "en": "Fund every milestone of your child.", "hi": "बच्चे की हर उपलब्धि के लिए धन।" },
-          "keyBenefit": { "en": "Periodic money back at key education milestones", "hi": "प्रमुख शिक्षा मील के पत्थर पर आवधिक मनी बैक" },
+          "tagline": { "en": "Child milestones plan — withdrawn 2019.", "hi": "बाल उपलब्धि योजना — 2019 में वापस।" },
+          "keyBenefit": { "en": "Periodic money back at child's education milestones — withdrawn 2019-20", "hi": "शिक्षा मील पर मनी बैक — 2019 में वापस" },
           "category": "child", "entryAge": "0 - 12yr (child)", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular",
           "highlights": [
-            { "en": "20% SA at ages 18, 20, 22 years", "hi": "18, 20, 22 वर्ष की आयु में SA का 20%" },
-            { "en": "40% SA + bonus at age 25", "hi": "25 वर्ष पर SA का 40% + बोनस" },
-            { "en": "Premium waiver on parent's death", "hi": "माता-पिता की मृत्यु पर प्रीमियम माफी" }
+            { "en": "Withdrawn in 2019-20; succeeded by Plan 932", "hi": "2019-20 में वापस; प्लान 932 द्वारा प्रतिस्थापित" }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-childrens-money-back-plan", "status": "active"
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         },
         {
-          "id": "lic-834", "name": { "en": "LIC's Jeevan Tarun", "hi": "एलआईसी जीवन तरुण" },
+          "id": "lic-834", "name": { "en": "LIC's Jeevan Tarun (2013)", "hi": "एलआईसी जीवन तरुण (2013)" },
           "planNo": "834",
-          "tagline": { "en": "Grow with your child, every step.", "hi": "हर कदम अपने बच्चे के साथ बढ़ें।" },
-          "keyBenefit": { "en": "Flexible money back for education + lump sum at age 25", "hi": "शिक्षा के लिए लचीला मनी बैक + 25 वर्ष पर एकमुश्त" },
+          "tagline": { "en": "Flexible child plan — withdrawn 2019.", "hi": "लचीली बाल योजना — 2019 में वापस।" },
+          "keyBenefit": { "en": "Flexible child money-back plan — withdrawn 2019-20; succeeded by Plan 934", "hi": "लचीला बाल मनी बैक — 2019 में वापस" },
           "category": "child", "entryAge": "90d - 12yr (child)", "sumAssured": "₹75,000+", "premiumPayment": "Regular (till age 20)",
           "highlights": [
-            { "en": "Choose 5%-20% SA as annual survival benefit", "hi": "वार्षिक उत्तरजीविता लाभ के रूप में SA का 5%-20% चुनें" },
-            { "en": "Balance + bonus paid at age 25", "hi": "25 वर्ष की आयु में शेष + बोनस का भुगतान" },
-            { "en": "Premium waiver rider available", "hi": "प्रीमियम माफी राइडर उपलब्ध" }
+            { "en": "Withdrawn in 2019-20; succeeded by Plan 934", "hi": "2019-20 में वापस; प्लान 934 द्वारा प्रतिस्थापित" }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-tarun", "status": "active"
-        }
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        { "id": "lic-827", "name": { "en": "LIC's Jeevan Tarun (2013 Old)", "hi": "एलआईसी जीवन तरुण (2013 पुराना)" }, "planNo": "827", "tagline": { "en": "Old child plan. Withdrawn 2019.", "hi": "पुरानी बाल योजना।" }, "keyBenefit": { "en": "Early version child plan — withdrawn 2019-20", "hi": "बाल योजना का पहला संस्करण" }, "category": "child", "entryAge": "90d - 12yr (child)", "sumAssured": "₹75,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-102", "name": { "en": "LIC's Jeevan Kishore", "hi": "एलआईसी जीवन किशोर" }, "planNo": "102", "tagline": { "en": "Child plan for school years. Withdrawn 2013.", "hi": "स्कूली वर्षों के लिए बाल योजना।" }, "keyBenefit": { "en": "Child endowment for education goals — withdrawn 2013-14", "hi": "शिक्षा लक्ष्यों के लिए बाल एंडोमेंट" }, "category": "child", "entryAge": "0 - 12yr (child)", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-103", "name": { "en": "LIC's Jeevan Chhaya", "hi": "एलआईसी जीवन छाया" }, "planNo": "103", "tagline": { "en": "Child protection + savings. Withdrawn 2013.", "hi": "बाल सुरक्षा + बचत।" }, "keyBenefit": { "en": "Child protection plan with money back — withdrawn 2013-14", "hi": "मनी बैक के साथ बाल सुरक्षा" }, "category": "child", "entryAge": "0 - 12yr (child)", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     },
     "pension": {
@@ -610,19 +674,6 @@
           "officialUrl": "https://licindia.in/web/guest/lic-s-saral-pension", "status": "active"
         },
         {
-          "id": "lic-873", "name": { "en": "LIC's Smart Pension Plan", "hi": "एलआईसी स्मार्ट पेंशन प्लान" },
-          "planNo": "873",
-          "tagline": { "en": "Smart retirement planning with flexibility.", "hi": "लचीलेपन के साथ स्मार्ट सेवानिवृत्ति योजना।" },
-          "keyBenefit": { "en": "Market-linked pension plan with flexible annuity at vesting", "hi": "वेस्टिंग पर लचीले वार्षिकी विकल्पों के साथ बाजार-लिंक्ड पेंशन" },
-          "category": "pension", "entryAge": "25 - 75yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single",
-          "highlights": [
-            { "en": "Market-linked growth potential", "hi": "बाजार से जुड़ी वृद्धि क्षमता" },
-            { "en": "Flexible annuity options at vesting", "hi": "वेस्टिंग पर लचीले वार्षिकी विकल्प" },
-            { "en": "Fund switching available", "hi": "फंड स्विचिंग उपलब्ध" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-smart-pension-plan", "status": "active"
-        },
-        {
           "id": "lic-867", "name": { "en": "LIC's New Pension Plus", "hi": "एलआईसी न्यू पेंशन प्लस" },
           "planNo": "867",
           "tagline": { "en": "Grow your retirement corpus with market returns.", "hi": "बाजार रिटर्न के साथ अपना रिटायरमेंट कोष बढ़ाएं।" },
@@ -636,57 +687,40 @@
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-pension-plus", "status": "active"
         },
         {
-          "id": "lic-842", "name": { "en": "LIC's Jeevan Akshay-VI", "hi": "एलआईसी जीवन अक्षय-VI" },
+          "id": "lic-842", "name": { "en": "LIC's PMVVY (Pradhan Mantri Vaya Vandana Yojana)", "hi": "एलआईसी PMVVY (प्रधानमंत्री वय वंदना योजना)" },
           "planNo": "842",
-          "tagline": { "en": "Immediate annuity — predecessor to Jeevan Akshay-VII.", "hi": "तत्काल वार्षिकी — जीवन अक्षय-VII का पूर्ववर्ती।" },
-          "keyBenefit": { "en": "Single premium immediate annuity with multiple payout options", "hi": "कई भुगतान विकल्पों के साथ एकमुश्त तत्काल वार्षिकी" },
-          "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single",
-          "highlights": [
-            { "en": "Multiple annuity payout options", "hi": "कई वार्षिकी भुगतान विकल्प" },
-            { "en": "Lifetime guaranteed income from day one", "hi": "पहले दिन से गारंटीड आजीवन आय" },
-            { "en": "Succeeded by Plan 857 (Jeevan Akshay-VII)", "hi": "योजना 857 (जीवन अक्षय-VII) द्वारा प्रतिस्थापित" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        },
-        {
-          "id": "lic-845", "name": { "en": "LIC's New Jeevan Nidhi", "hi": "एलआईसी न्यू जीवन निधि" },
-          "planNo": "845",
-          "tagline": { "en": "Build your pension corpus with life cover.", "hi": "जीवन कवर के साथ अपना पेंशन कोष बनाएं।" },
-          "keyBenefit": { "en": "Deferred pension plan — save during working years, receive pension at retirement", "hi": "आस्थगित पेंशन — काम के वर्षों में बचत, सेवानिवृत्ति पर पेंशन" },
-          "category": "pension", "entryAge": "20 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Limited",
-          "highlights": [
-            { "en": "Guaranteed additions during accumulation phase", "hi": "संचय चरण में गारंटीड वृद्धि" },
-            { "en": "Loyalty additions credited on vesting", "hi": "वेस्टिंग पर लॉयल्टी वृद्धि" },
-            { "en": "Life cover during premium-paying term", "hi": "प्रीमियम भुगतान अवधि में जीवन कवर" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        },
-        {
-          "id": "lic-829", "name": { "en": "LIC's Varishtha Pension Bima Yojana-II", "hi": "एलआईसी वरिष्ठ पेंशन बीमा योजना-II" },
-          "planNo": "829",
-          "tagline": { "en": "Govt-backed pension scheme for senior citizens.", "hi": "वरिष्ठ नागरिकों के लिए सरकार समर्थित पेंशन योजना।" },
-          "keyBenefit": { "en": "Guaranteed 9% p.a. pension for senior citizens on single premium", "hi": "एकमुश्त प्रीमियम पर वरिष्ठ नागरिकों को 9% p.a. गारंटीड पेंशन" },
-          "category": "pension", "entryAge": "60+yr", "sumAssured": "₹66,665+ (purchase price)", "premiumPayment": "Single",
-          "highlights": [
-            { "en": "9% annual interest guaranteed by Govt of India", "hi": "भारत सरकार द्वारा 9% वार्षिक ब्याज की गारंटी" },
-            { "en": "Available only to senior citizens aged 60+", "hi": "केवल 60+ वर्ष के वरिष्ठ नागरिकों के लिए" },
-            { "en": "Purchase price returned to nominee on death", "hi": "मृत्यु पर नामांकित को खरीद मूल्य वापस" }
-          ],
-          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        },
-        {
-          "id": "lic-839", "name": { "en": "LIC's Pradhan Mantri Vaya Vandana Yojana", "hi": "एलआईसी प्रधानमंत्री वय वंदना योजना (PMVVY)" },
-          "planNo": "839",
-          "tagline": { "en": "Senior citizen pension scheme — closed for new subscriptions.", "hi": "वरिष्ठ नागरिक पेंशन योजना — नए सब्सक्रिप्शन बंद।" },
-          "keyBenefit": { "en": "8% guaranteed return for 10 years on investment up to ₹15 lakh", "hi": "₹15 लाख तक निवेश पर 10 वर्षों तक 8% गारंटीड रिटर्न" },
+          "tagline": { "en": "Govt-backed senior citizen pension. Subscription closed.", "hi": "सरकार समर्थित वरिष्ठ नागरिक पेंशन। सब्सक्रिप्शन बंद।" },
+          "keyBenefit": { "en": "Guaranteed 8% p.a. pension for senior citizens for 10 years on investment up to ₹15 lakh", "hi": "₹15 लाख तक निवेश पर वरिष्ठ नागरिकों को 10 वर्षों तक 8% गारंटीड" },
           "category": "pension", "entryAge": "60+yr", "sumAssured": "₹1,50,000 - ₹15,00,000 (purchase price)", "premiumPayment": "Single",
           "highlights": [
-            { "en": "8% p.a. guaranteed return for 10-year policy term", "hi": "10 वर्ष की पॉलिसी अवधि के लिए 8% p.a. गारंटीड" },
-            { "en": "Max investment ₹15 lakh per senior citizen", "hi": "प्रति वरिष्ठ नागरिक अधिकतम निवेश ₹15 लाख" },
-            { "en": "Scheme closed for new enrollment from April 2023", "hi": "अप्रैल 2023 से नए नामांकन के लिए बंद" }
+            { "en": "8% p.a. guaranteed for 10 years by Govt of India", "hi": "भारत सरकार द्वारा 10 वर्षों के लिए 8% p.a. गारंटी" },
+            { "en": "Max investment ₹15 lakh per senior citizen", "hi": "प्रति वरिष्ठ नागरिक अधिकतम ₹15 लाख" },
+            { "en": "Closed for new enrollment from April 2023", "hi": "अप्रैल 2023 से नए नामांकन बंद" }
           ],
           "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
-        }
+        },
+        { "id": "lic-845", "name": { "en": "LIC's Jeevan Umang (2019)", "hi": "एलआईसी जीवन उमंग (2019)" }, "planNo": "845", "tagline": { "en": "Whole life income — 3rd version. Withdrawn 2019.", "hi": "आजीवन आय — तीसरा संस्करण।" }, "keyBenefit": { "en": "Annual survival benefit + whole life cover — 3rd version, withdrawn 2019-20", "hi": "वार्षिक उत्तरजीविता लाभ + आजीवन कवर — 2019 संस्करण" }, "category": "pension", "entryAge": "90d - 55yr", "sumAssured": "₹2,00,000+", "premiumPayment": "Limited", "highlights": [{ "en": "3rd version of Jeevan Umang; succeeded by Plan 945", "hi": "जीवन उमंग का तीसरा संस्करण; प्लान 945 द्वारा प्रतिस्थापित" }, { "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-830", "name": { "en": "LIC's New Jeevan Nidhi (2013)", "hi": "एलआईसी न्यू जीवन निधि (2013)" }, "planNo": "830", "tagline": { "en": "Deferred pension with life cover. Withdrawn 2019.", "hi": "जीवन कवर के साथ आस्थगित पेंशन।" }, "keyBenefit": { "en": "Deferred pension plan — withdrawn 2019-20; succeeded by Plan 845", "hi": "आस्थगित पेंशन — 2019 में वापस" }, "category": "pension", "entryAge": "20 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Limited", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-843", "name": { "en": "LIC's New Jeevan Nidhi (2019)", "hi": "एलआईसी न्यू जीवन निधि (2019)" }, "planNo": "843", "tagline": { "en": "Deferred pension — 3rd version. Withdrawn 2019.", "hi": "आस्थगित पेंशन — तीसरा संस्करण।" }, "keyBenefit": { "en": "Deferred pension plan — 3rd version, withdrawn 2019-20", "hi": "आस्थगित पेंशन — 3rd version" }, "category": "pension", "entryAge": "20 - 60yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-826", "name": { "en": "LIC's New Pension Plus (2014)", "hi": "एलआईसी न्यू पेंशन प्लस (2014)" }, "planNo": "826", "tagline": { "en": "ULIP pension — withdrawn 2014.", "hi": "ULIP पेंशन — 2014 में वापस।" }, "keyBenefit": { "en": "Unit-linked pension plan — withdrawn 2014-15", "hi": "यूनिट-लिंक्ड पेंशन — 2014 में वापस" }, "category": "pension", "entryAge": "25 - 75yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2014-15", "hi": "2014-15 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-840", "name": { "en": "LIC's Jeevan Akshay-VI (2019)", "hi": "एलआईसी जीवन अक्षय-VI (2019)" }, "planNo": "840", "tagline": { "en": "Immediate annuity — predecessor to Plan 857.", "hi": "तत्काल वार्षिकी — प्लान 857 का पूर्ववर्ती।" }, "keyBenefit": { "en": "Immediate annuity with multiple payout options — withdrawn 2019-20", "hi": "कई भुगतान विकल्पों के साथ तत्काल वार्षिकी" }, "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2019-20; succeeded by Plan 857", "hi": "2019-20 में वापस; प्लान 857 द्वारा प्रतिस्थापित" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-189", "name": { "en": "LIC's Jeevan Akshay-VI (Classic)", "hi": "एलआईसी जीवन अक्षय-VI (क्लासिक)" }, "planNo": "189", "tagline": { "en": "Original immediate annuity. Withdrawn 2013.", "hi": "मूल तत्काल वार्षिकी।" }, "keyBenefit": { "en": "Original immediate annuity plan — withdrawn 2013 after many iterations", "hi": "मूल तत्काल वार्षिकी — 2013 में वापस" }, "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Many versions existed; Plan 840 was last number before 857", "hi": "कई संस्करण; प्लान 840 अंतिम पुनः जारी संस्करण" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-185", "name": { "en": "LIC's Jeevan Akshay IV", "hi": "एलआईसी जीवन अक्षय IV" }, "planNo": "185", "tagline": { "en": "Immediate annuity — 4th version.", "hi": "तत्काल वार्षिकी — चौथा संस्करण।" }, "keyBenefit": { "en": "Single premium immediate annuity — 4th version, withdrawn 2013-14", "hi": "एकमुश्त तत्काल वार्षिकी — 4th version" }, "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-186", "name": { "en": "LIC's Jeevan Akshay V", "hi": "एलआईसी जीवन अक्षय V" }, "planNo": "186", "tagline": { "en": "Immediate annuity — 5th version.", "hi": "तत्काल वार्षिकी — पाँचवाँ संस्करण।" }, "keyBenefit": { "en": "Single premium immediate annuity — 5th version, withdrawn 2013-14", "hi": "एकमुश्त तत्काल वार्षिकी — 5th version" }, "category": "pension", "entryAge": "30 - 85yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-807", "name": { "en": "LIC's New Jeevan Dhara", "hi": "एलआईसी न्यू जीवन धारा" }, "planNo": "807", "tagline": { "en": "Deferred pension + life cover. Withdrawn 2013.", "hi": "आस्थगित पेंशन + जीवन कवर।" }, "keyBenefit": { "en": "Deferred pension plan with life cover — withdrawn 2013-14", "hi": "जीवन कवर के साथ आस्थगित पेंशन" }, "category": "pension", "entryAge": "18 - 60yr", "sumAssured": "₹50,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-828", "name": { "en": "LIC's Varishtha Pension Bima Yojana (828)", "hi": "एलआईसी वरिष्ठ पेंशन बीमा योजना (828)" }, "planNo": "828", "tagline": { "en": "Govt annuity for seniors. Withdrawn 2015.", "hi": "वरिष्ठों के लिए सरकारी वार्षिकी।" }, "keyBenefit": { "en": "9% guaranteed pension for senior citizens — withdrawn 2015-16", "hi": "वरिष्ठ नागरिकों को 9% गारंटीड पेंशन — 2015 में वापस" }, "category": "pension", "entryAge": "60+yr", "sumAssured": "₹66,665+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2015-16", "hi": "2015-16 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-856", "name": { "en": "LIC's PMVVY (2022)", "hi": "एलआईसी PMVVY (2022)" }, "planNo": "856", "tagline": { "en": "PMVVY — 2022 version. Withdrawn 2022.", "hi": "PMVVY — 2022 संस्करण।" }, "keyBenefit": { "en": "Pradhan Mantri Vaya Vandana Yojana — 2022-23 version, closed for subscriptions", "hi": "प्रधानमंत्री वय वंदना योजना — 2022-23 संस्करण" }, "category": "pension", "entryAge": "60+yr", "sumAssured": "₹1,50,000 - ₹15,00,000 (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2022-23", "hi": "2022-23 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-861", "name": { "en": "LIC's New Jeevan Shanti (2021)", "hi": "एलआईसी न्यू जीवन शांति (2021)" }, "planNo": "861", "tagline": { "en": "Deferred annuity — 2021 version.", "hi": "आस्थगित वार्षिकी — 2021 संस्करण।" }, "keyBenefit": { "en": "Deferred annuity plan — 2021 version, withdrawn 2022-23", "hi": "आस्थगित वार्षिकी — 2022 में वापस" }, "category": "pension", "entryAge": "30 - 79yr", "sumAssured": "₹1,50,000+ (purchase price)", "premiumPayment": "Single / Regular", "highlights": [{ "en": "Withdrawn in 2022-23", "hi": "2022-23 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-863", "name": { "en": "LIC's Saral Pension (2022)", "hi": "एलआईसी सरल पेंशन (2022)" }, "planNo": "863", "tagline": { "en": "Standard pension — earlier version.", "hi": "मानक पेंशन — पहला संस्करण।" }, "keyBenefit": { "en": "IRDAI standardised pension — earlier version, withdrawn 2024-25", "hi": "IRDAI मानकीकृत पेंशन — पुराना संस्करण" }, "category": "pension", "entryAge": "40 - 80yr", "sumAssured": "₹1,00,000+ (purchase price)", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-872", "name": { "en": "LIC's New Bima Bachat (2023)", "hi": "एलआईसी न्यू बीमा बचत (2023)" }, "planNo": "872", "tagline": { "en": "Money back savings — 2023 version.", "hi": "मनी बैक बचत — 2023 संस्करण।" }, "keyBenefit": { "en": "Single premium money-back savings plan — 2023 version, withdrawn 2024-25", "hi": "एकमुश्त मनी-बैक बचत — 2024 में वापस" }, "category": "pension", "entryAge": "15 - 65yr", "sumAssured": "₹35,000+", "premiumPayment": "Single", "highlights": [{ "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-188", "name": { "en": "LIC's Health Plus", "hi": "एलआईसी हेल्थ प्लस" }, "planNo": "188", "tagline": { "en": "Health + life ULIP. Withdrawn 2010.", "hi": "हेल्थ + लाइफ ULIP — 2010 में वापस।" }, "keyBenefit": { "en": "Health-linked unit plan covering hospitalization — withdrawn 2010-11", "hi": "अस्पताल कवर के साथ स्वास्थ्य-लिंक्ड यूनिट योजना" }, "category": "pension", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2010-11", "hi": "2010-11 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-191", "name": { "en": "LIC's Jeevan Samridhi", "hi": "एलआईसी जीवन समृद्धि" }, "planNo": "191", "tagline": { "en": "Savings plan. Withdrawn 2010.", "hi": "बचत योजना — 2010 में वापस।" }, "keyBenefit": { "en": "Savings plan with bonus — withdrawn 2010-11", "hi": "बोनस के साथ बचत योजना" }, "category": "endowment", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2010-11", "hi": "2010-11 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-192", "name": { "en": "LIC's Jeevan Anand (Double Cover)", "hi": "एलआईसी जीवन आनंद (डबल कवर)" }, "planNo": "192", "tagline": { "en": "Double benefit endowment. Withdrawn 2013.", "hi": "दोहरा लाभ एंडोमेंट।" }, "keyBenefit": { "en": "Double SA benefit endowment — withdrawn 2013-14", "hi": "दोगुना SA एंडोमेंट — 2013 में वापस" }, "category": "endowment", "entryAge": "18 - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-905", "name": { "en": "LIC's Group Term Insurance Plan (905)", "hi": "एलआईसी ग्रुप टर्म इंश्योरेंस (905)" }, "planNo": "905", "tagline": { "en": "Group term. Withdrawn 2020.", "hi": "ग्रुप टर्म — 2020 में वापस।" }, "keyBenefit": { "en": "Group term insurance for organizations — withdrawn 2020-21", "hi": "संगठनों के लिए ग्रुप टर्म बीमा" }, "category": "term", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2020-21", "hi": "2020-21 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-904", "name": { "en": "LIC's Group Jeevan Umang (904)", "hi": "एलआईसी ग्रुप जीवन उमंग (904)" }, "planNo": "904", "tagline": { "en": "Group whole life income. Withdrawn.", "hi": "ग्रुप आजीवन आय।" }, "keyBenefit": { "en": "Group whole life plan — withdrawn 2021-22", "hi": "ग्रुप आजीवन योजना — 2021 में वापस" }, "category": "wholeLife", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2021-22", "hi": "2021-22 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-090", "name": { "en": "LIC's New Jeevan Dhara I (90)", "hi": "एलआईसी न्यू जीवन धारा I (90)" }, "planNo": "90", "tagline": { "en": "Pension with return of premium. Withdrawn.", "hi": "प्रीमियम वापसी सहित पेंशन।" }, "keyBenefit": { "en": "Deferred pension plan with return of premium option", "hi": "स्थगित पेंशन योजना — प्रीमियम वापसी" }, "category": "pension", "entryAge": "18 - 65yr", "sumAssured": "N/A", "premiumPayment": "Regular", "highlights": [{ "en": "Deferred annuity with return of premium", "hi": "स्थगित वार्षिकी" }, { "en": "Withdrawn pre-2007", "hi": "2007 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-091", "name": { "en": "LIC's New Jeevan Dhara II (91)", "hi": "एलआईसी न्यू जीवन धारा II (91)" }, "planNo": "91", "tagline": { "en": "Single premium deferred pension.", "hi": "एकमुश्त स्थगित पेंशन।" }, "keyBenefit": { "en": "Single premium deferred annuity plan", "hi": "एकमुश्त स्थगित वार्षिकी" }, "category": "pension", "entryAge": "18 - 65yr", "sumAssured": "N/A", "premiumPayment": "Single Premium", "highlights": [{ "en": "Single premium pension plan", "hi": "एकमुश्त पेंशन" }, { "en": "Withdrawn pre-2007", "hi": "2007 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-169", "name": { "en": "LIC's New Jeevan Dhara (2011)", "hi": "एलआईसी न्यू जीवन धारा (2011)" }, "planNo": "169", "tagline": { "en": "Revised deferred pension plan 2011.", "hi": "2011 स्थगित पेंशन।" }, "keyBenefit": { "en": "2011 edition deferred pension plan with annuity options", "hi": "2011 का स्थगित पेंशन प्लान" }, "category": "pension", "entryAge": "18 - 65yr", "sumAssured": "N/A", "premiumPayment": "Regular", "highlights": [{ "en": "2011 edition of New Jeevan Dhara", "hi": "2011 संस्करण" }, { "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     },
     "ulip": {
@@ -733,7 +767,16 @@
             { "en": "Switch between funds anytime", "hi": "कभी भी फंड स्विच करें" }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-endowment-plus", "status": "active"
-        }
+        },
+        { "id": "lic-873", "name": { "en": "LIC's Index Plus", "hi": "एलआईसी इंडेक्स प्लस" }, "planNo": "873", "tagline": { "en": "Index-linked ULIP. Withdrawn 2024.", "hi": "इंडेक्स-लिंक्ड ULIP — 2024 में वापस।" }, "keyBenefit": { "en": "Index-linked unit plan — withdrawn 2024-25", "hi": "इंडेक्स-लिंक्ड यूनिट योजना — 2024 में वापस" }, "category": "ulip", "entryAge": "90d - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-866", "name": { "en": "LIC's Index Plus (2023)", "hi": "एलआईसी इंडेक्स प्लस (2023)" }, "planNo": "866", "tagline": { "en": "Index-linked ULIP — earlier version.", "hi": "इंडेक्स-लिंक्ड ULIP — पहला संस्करण।" }, "keyBenefit": { "en": "Index-linked unit plan — 2023-24 version, withdrawn", "hi": "इंडेक्स-लिंक्ड यूनिट योजना — 2023-24 संस्करण" }, "category": "ulip", "entryAge": "90d - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2023-24", "hi": "2023-24 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-844", "name": { "en": "LIC's New Endowment Plus (2019)", "hi": "एलआईसी न्यू एंडोमेंट प्लस (2019)" }, "planNo": "844", "tagline": { "en": "ULIP endowment — 2019 version. Withdrawn.", "hi": "ULIP एंडोमेंट — 2019 संस्करण।" }, "keyBenefit": { "en": "Unit-linked endowment — 2019 version, withdrawn 2019-20", "hi": "यूनिट-लिंक्ड एंडोमेंट — 2019 में वापस" }, "category": "ulip", "entryAge": "90d - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20; succeeded by Plan 935", "hi": "2019-20 में वापस; प्लान 935 द्वारा प्रतिस्थापित" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-846", "name": { "en": "LIC's New Endowment Plus (2018)", "hi": "एलआईसी न्यू एंडोमेंट प्लस (2018)" }, "planNo": "846", "tagline": { "en": "ULIP endowment — 2018 version. Withdrawn.", "hi": "ULIP एंडोमेंट — 2018 संस्करण।" }, "keyBenefit": { "en": "Unit-linked endowment — 2018-19 version, withdrawn", "hi": "यूनिट-लिंक्ड एंडोमेंट — 2018-19 में वापस" }, "category": "ulip", "entryAge": "90d - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2018-19", "hi": "2018-19 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-182", "name": { "en": "LIC's Fortune Plus", "hi": "एलआईसी फॉर्च्यून प्लस" }, "planNo": "182", "tagline": { "en": "Old ULIP with market-linked returns. Withdrawn 2013.", "hi": "पुराना ULIP — 2013 में वापस।" }, "keyBenefit": { "en": "Market-linked ULIP — withdrawn 2013-14", "hi": "बाजार-लिंक्ड ULIP — 2013 में वापस" }, "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-184", "name": { "en": "LIC's Future Plus", "hi": "एलआईसी फ्यूचर प्लस" }, "planNo": "184", "tagline": { "en": "ULIP for future goals. Withdrawn 2013.", "hi": "भविष्य के लक्ष्यों के लिए ULIP।" }, "keyBenefit": { "en": "Market-linked ULIP — withdrawn 2013-14", "hi": "बाजार-लिंक्ड ULIP — 2013 में वापस" }, "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-197", "name": { "en": "LIC's Wealth Plus", "hi": "एलआईसी वेल्थ प्लस" }, "planNo": "197", "tagline": { "en": "Wealth-building ULIP. Withdrawn 2010.", "hi": "धन-निर्माण ULIP — 2010 में वापस।" }, "keyBenefit": { "en": "Market-linked ULIP for wealth accumulation — withdrawn 2010-11", "hi": "धन संचय के लिए बाजार-लिंक्ड ULIP" }, "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2010-11", "hi": "2010-11 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-193", "name": { "en": "LIC's Bima Nivesh (2004)", "hi": "एलआईसी बीमा निवेश (2004)" }, "planNo": "193", "tagline": { "en": "Single premium ULIP. Withdrawn 2006.", "hi": "एकमुश्त ULIP — 2006 में वापस।" }, "keyBenefit": { "en": "Single premium market-linked plan — withdrawn 2006-07", "hi": "एकमुश्त बाजार-लिंक्ड प्लान" }, "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Single Premium", "highlights": [{ "en": "2004 edition of Bima Nivesh", "hi": "2004 संस्करण" }, { "en": "Withdrawn in 2006-07", "hi": "2006-07 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-194", "name": { "en": "LIC's Bima Nivesh (2005)", "hi": "एलआईसी बीमा निवेश (2005)" }, "planNo": "194", "tagline": { "en": "Single premium ULIP 2005. Withdrawn.", "hi": "एकमुश्त ULIP 2005 — वापस।" }, "keyBenefit": { "en": "2005 edition single premium market-linked plan", "hi": "2005 का एकमुश्त बाजार-लिंक्ड प्लान" }, "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Single Premium", "highlights": [{ "en": "2005 edition of Bima Nivesh", "hi": "2005 संस्करण" }, { "en": "Withdrawn in 2007-08", "hi": "2007-08 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     },
     "micro": {
@@ -743,31 +786,53 @@
       "color": "#1E8449",
       "plans": [
         {
-          "id": "lic-822", "name": { "en": "LIC's Bhagya Lakshmi Plan", "hi": "एलआईसी भाग्य लक्ष्मी" },
-          "planNo": "822",
-          "tagline": { "en": "Small premium. Big protection.", "hi": "छोटा प्रीमियम। बड़ी सुरक्षा।" },
-          "keyBenefit": { "en": "Low-cost endowment cover for low-income families", "hi": "कम आय वाले परिवारों के लिए कम लागत का एंडोमेंट कवर" },
+          "id": "lic-939", "name": { "en": "LIC's Bhagya Lakshmi (2019)", "hi": "एलआईसी भाग्य लक्ष्मी (2019)" },
+          "planNo": "939",
+          "tagline": { "en": "Small premium. Big protection. Withdrawn 2024.", "hi": "छोटा प्रीमियम। बड़ी सुरक्षा।" },
+          "keyBenefit": { "en": "Low-cost micro endowment for low-income families — 4th version, withdrawn 2024-25", "hi": "कम आय परिवारों के लिए माइक्रो एंडोमेंट — 2024 में वापस" },
           "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹10,000 - ₹50,000", "premiumPayment": "Regular",
           "highlights": [
-            { "en": "Very affordable premiums", "hi": "बहुत किफायती प्रीमियम" },
+            { "en": "Very affordable premiums for rural families", "hi": "ग्रामीण परिवारों के लिए किफायती प्रीमियम" },
             { "en": "Maturity + bonus benefit", "hi": "मैच्योरिटी + बोनस लाभ" },
-            { "en": "Available without bank account requirement", "hi": "बैंक खाते की अनिवार्यता के बिना उपलब्ध" }
+            { "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-bhagya-lakshmi", "status": "active"
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
         },
         {
-          "id": "lic-823", "name": { "en": "LIC's New Jeevan Mangal", "hi": "एलआईसी न्यू जीवन मंगल" },
-          "planNo": "823",
-          "tagline": { "en": "Protection for the underserved.", "hi": "वंचितों के लिए सुरक्षा।" },
-          "keyBenefit": { "en": "Double accident benefit + savings for low-income earners", "hi": "कम आय वालों के लिए दोहरा दुर्घटना लाभ + बचत" },
+          "id": "lic-940", "name": { "en": "LIC's New Jeevan Mangal (2019)", "hi": "एलआईसी न्यू जीवन मंगल (2019)" },
+          "planNo": "940",
+          "tagline": { "en": "Accident protection for underserved. Withdrawn 2024.", "hi": "वंचितों के लिए दुर्घटना सुरक्षा।" },
+          "keyBenefit": { "en": "Double accident benefit + savings for low-income earners — 2019 version, withdrawn 2024-25", "hi": "कम आय वालों के लिए दोहरा दुर्घटना लाभ + बचत — 2024 में वापस" },
           "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹10,000 - ₹50,000", "premiumPayment": "Regular",
           "highlights": [
             { "en": "Double SA on accidental death", "hi": "आकस्मिक मृत्यु पर दोगुना SA" },
-            { "en": "Maturity + bonus on survival", "hi": "उत्तरजीविता पर मैच्योरिटी + बोनस" },
-            { "en": "Designed for rural & semi-urban families", "hi": "ग्रामीण और अर्ध-शहरी परिवारों के लिए" }
+            { "en": "Designed for rural & semi-urban families", "hi": "ग्रामीण और अर्ध-शहरी परिवारों के लिए" },
+            { "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }
           ],
-          "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-mangal", "status": "active"
-        }
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-818", "name": { "en": "LIC's New Jeevan Mangal (2013)", "hi": "एलआईसी न्यू जीवन मंगल (2013)" },
+          "planNo": "818",
+          "tagline": { "en": "Micro protection — 1st version.", "hi": "माइक्रो सुरक्षा — पहला संस्करण।" },
+          "keyBenefit": { "en": "Micro endowment with accident benefit for low-income earners — withdrawn 2019-20", "hi": "कम आय वालों के लिए माइक्रो एंडोमेंट — 2019 में वापस" },
+          "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹10,000 - ₹50,000", "premiumPayment": "Regular",
+          "highlights": [{ "en": "Withdrawn in 2019-20", "hi": "2019-20 में वापस लिया गया" }],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        {
+          "id": "lic-819", "name": { "en": "LIC's Jeevan Aadhar (Micro)", "hi": "एलआईसी जीवन आधार (माइक्रो)" },
+          "planNo": "819",
+          "tagline": { "en": "Micro plan for differently-abled. Withdrawn 2016.", "hi": "दिव्यांगजनों के लिए माइक्रो प्लान।" },
+          "keyBenefit": { "en": "Micro endowment for persons with disabilities — withdrawn 2016-17", "hi": "दिव्यांगजनों के लिए माइक्रो एंडोमेंट" },
+          "category": "micro", "entryAge": "18 - 65yr", "sumAssured": "₹25,000 - ₹2,00,000", "premiumPayment": "Regular",
+          "highlights": [{ "en": "Withdrawn in 2016-17", "hi": "2016-17 में वापस लिया गया" }],
+          "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn"
+        },
+        { "id": "lic-829-micro", "name": { "en": "LIC's Bhagya Lakshmi (2016)", "hi": "एलआईसी भाग्य लक्ष्मी (2016)" }, "planNo": "829", "tagline": { "en": "Micro endowment — 2016 version.", "hi": "माइक्रो एंडोमेंट — 2016 संस्करण।" }, "keyBenefit": { "en": "Low-cost micro endowment — withdrawn 2016-17", "hi": "माइक्रो एंडोमेंट — 2016 में वापस" }, "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹10,000 - ₹50,000", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2016-17", "hi": "2016-17 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-839-micro", "name": { "en": "LIC's Bhagya Lakshmi (2019)", "hi": "एलआईसी भाग्य लक्ष्मी (2019 — माइक्रो)" }, "planNo": "839", "tagline": { "en": "Micro endowment — 2019 version.", "hi": "माइक्रो एंडोमेंट — 2019 संस्करण।" }, "keyBenefit": { "en": "Low-cost micro endowment — 3rd version, withdrawn 2019-20", "hi": "माइक्रो एंडोमेंट — तीसरा संस्करण, 2019 में वापस" }, "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹10,000 - ₹50,000", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20; succeeded by Plan 939", "hi": "2019-20 में वापस; प्लान 939 द्वारा प्रतिस्थापित" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-114", "name": { "en": "LIC's Jeevan Aadhar (114)", "hi": "एलआईसी जीवन आधार (114)" }, "planNo": "114", "tagline": { "en": "Plan for differently-abled. Withdrawn 2013.", "hi": "दिव्यांगजनों के लिए योजना।" }, "keyBenefit": { "en": "Endowment for persons with disabilities — withdrawn 2013-14", "hi": "दिव्यांगजनों के लिए एंडोमेंट" }, "category": "micro", "entryAge": "18 - 65yr", "sumAssured": "₹25,000 - ₹2,00,000", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
+        { "id": "lic-147", "name": { "en": "LIC's Jeevan Madhur (147)", "hi": "एलआईसी जीवन मधुर (147)" }, "planNo": "147", "tagline": { "en": "Micro insurance savings plan. Withdrawn.", "hi": "माइक्रो बचत योजना — वापस।" }, "keyBenefit": { "en": "Low-cost micro insurance endowment for low-income households", "hi": "कम आय वर्ग के लिए माइक्रो बीमा" }, "category": "micro", "entryAge": "18 - 60yr", "sumAssured": "₹5,000 - ₹30,000", "premiumPayment": "Regular", "highlights": [{ "en": "Micro insurance for lower income segment", "hi": "कम आय वर्ग के लिए" }, { "en": "Withdrawn pre-2013", "hi": "2013 से पहले वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" }
       ]
     }
   }
