@@ -437,8 +437,11 @@ export default function LicPlans() {
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
           {/* Photo — happy family of 4-5 (Pexels, reliable hotlink) */}
-          <div className="absolute inset-0 bg-cover bg-right-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1600')" }} />
+          <div className="absolute inset-0 bg-cover bg-no-repeat"
+            style={{
+              backgroundImage: "url('https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1600')",
+              backgroundPosition: 'right 20%',
+            }} />
           {/* Gradient overlay: fully opaque left → transparent right so family shows through */}
           <div className="absolute inset-0"
             style={{ background: 'linear-gradient(105deg, rgba(4,12,28,0.96) 0%, rgba(5,16,38,0.88) 38%, rgba(6,18,42,0.6) 58%, rgba(6,18,42,0.15) 100%)' }} />
@@ -553,7 +556,7 @@ export default function LicPlans() {
                 )}
               </div>
               {/* Scrollable filter body */}
-              <div className="overflow-y-auto flex-1 px-4 pt-2 pb-6">
+              <div className="overflow-y-auto flex-1 px-4 pt-2 pb-16">
                 {SidebarFilters}
               </div>
             </div>
