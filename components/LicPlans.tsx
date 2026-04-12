@@ -431,7 +431,7 @@ export default function LicPlans() {
   )
 
   return (
-    <section className="bg-[#f5f6fa] min-h-screen">
+    <section className="bg-[#f5f6fa] rounded-b-[40px] md:rounded-b-[60px]">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
@@ -538,7 +538,7 @@ export default function LicPlans() {
         </AnimatePresence>
 
         {/* ── Main: Sidebar + Grid ───────────────────────────────────────── */}
-        <div className="flex gap-6 items-start pb-24 md:pb-32">
+        <div className="flex gap-6 items-start pb-12 md:pb-16">
 
           {/* ── Left Sidebar ── */}
           <aside

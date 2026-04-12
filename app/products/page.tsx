@@ -15,7 +15,7 @@ export default function ProductsPage() {
       </div>
 
       {/* CTA Footer for Products */}
-      <section className="py-20 px-6 bg-navy text-white text-center rounded-t-[40px] md:rounded-t-[80px] shadow-2xl mt-[-40px] md:mt-[-80px] relative z-20">
+      <section className="py-20 px-6 bg-navy text-white text-center shadow-2xl relative z-20">
          <motion.div
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
