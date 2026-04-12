@@ -3,7 +3,9 @@
     "source": "licindia.in",
     "lastUpdated": "2026-04-12",
     "version": "3.0.0",
-    "totalPlans": 149,
+    "totalPlans": 156,
+    "activePlans": 39,
+    "withdrawnPlans": 117,
     "categories": ["endowment", "wholeLife", "moneyBack", "term", "child", "pension", "ulip", "micro"]
   },
   "categories": {
@@ -155,6 +157,34 @@
             { "en": "Accidental death & disability rider available", "hi": "दुर्घटना मृत्यु व विकलांगता राइडर उपलब्ध" }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-aadhaar-stambh", "status": "active"
+        },
+        {
+          "id": "lic-881", "name": { "en": "LIC's Bima Lakshmi", "hi": "एलआईसी बीमा लक्ष्मी" },
+          "planNo": "881",
+          "tagline": { "en": "Women's plan with guaranteed additions.", "hi": "महिलाओं के लिए गारंटीड वृद्धि योजना।" },
+          "keyBenefit": { "en": "Women-only limited-pay endowment with 7% guaranteed additions per year", "hi": "महिलाओं के लिए सीमित प्रीमियम — 7% वार्षिक गारंटीड वृद्धि" },
+          "category": "endowment", "entryAge": "18 - 50yr (Female)", "sumAssured": "₹2,00,000+", "premiumPayment": "Limited Pay (7-15 yr)",
+          "highlights": [
+            { "en": "Exclusively for women", "hi": "केवल महिलाओं के लिए" },
+            { "en": "7% guaranteed additions on sum assured annually", "hi": "प्रति वर्ष 7% गारंटीड वृद्धि" },
+            { "en": "Optional female-specific critical illness rider", "hi": "महिला विशेष गंभीर बीमारी राइडर" },
+            { "en": "Tax benefit under Sec 80C & 10(10D)", "hi": "धारा 80C व 10(10D) के तहत कर लाभ" }
+          ],
+          "officialUrl": "https://licindia.in/bima-lakshmi", "status": "active"
+        },
+        {
+          "id": "lic-912", "name": { "en": "LIC's Nav Jeevan Shree", "hi": "एलआईसी नव जीवन श्री" },
+          "planNo": "912",
+          "tagline": { "en": "Guaranteed additions + limited pay savings.", "hi": "गारंटीड वृद्धि + सीमित प्रीमियम बचत।" },
+          "keyBenefit": { "en": "Limited pay endowment with 8.5–9.5% guaranteed additions on annual premium", "hi": "सीमित भुगतान एंडोमेंट — वार्षिक प्रीमियम पर 8.5–9.5% गारंटीड वृद्धि" },
+          "category": "endowment", "entryAge": "30d - 60yr", "sumAssured": "₹5,00,000+", "premiumPayment": "Limited Pay (6/8/10/12 yr)",
+          "highlights": [
+            { "en": "Guaranteed additions of 8.5%–9.5% of annual premium each year", "hi": "प्रत्येक वर्ष वार्षिक प्रीमियम का 8.5–9.5% गारंटीड वृद्धि" },
+            { "en": "Entry from 30 days — ideal for children", "hi": "30 दिन से एंट्री — बच्चों के लिए उपयुक्त" },
+            { "en": "Tax-free maturity under Sec 10(10D)", "hi": "धारा 10(10D) के तहत कर-मुक्त मैच्योरिटी" },
+            { "en": "Loan available after 2 years", "hi": "2 वर्ष बाद ऋण सुविधा" }
+          ],
+          "officialUrl": "https://licindia.in/nav-jeevan-shree", "status": "active"
         },
         {
           "id": "lic-717", "name": { "en": "LIC's Single Premium Endowment Plan", "hi": "एलआईसी सिंगल प्रीमियम एंडोमेंट प्लान" },
@@ -484,6 +514,34 @@
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-saral-jeevan-bima", "status": "active"
         },
+        {
+          "id": "lic-876", "name": { "en": "LIC's Digi Term", "hi": "एलआईसी डिजी टर्म" },
+          "planNo": "876",
+          "tagline": { "en": "Online pure term — high cover, low cost.", "hi": "ऑनलाइन शुद्ध टर्म — अधिक कवर, कम लागत।" },
+          "keyBenefit": { "en": "Online term plan with level or increasing SA; covers up to ₹5 crore", "hi": "ऑनलाइन टर्म — लेवल या बढ़ती बीमा राशि; ₹5 करोड़ तक कवर" },
+          "category": "term", "entryAge": "18 - 45yr", "sumAssured": "₹50,00,000 - ₹5,00,00,000", "premiumPayment": "Regular / Limited / Single",
+          "highlights": [
+            { "en": "100% online purchase — no agent needed", "hi": "100% ऑनलाइन खरीद" },
+            { "en": "Level or increasing sum assured option", "hi": "स्तर या बढ़ती बीमा राशि" },
+            { "en": "Policy term 15–40 years", "hi": "15 से 40 वर्ष की पॉलिसी अवधि" },
+            { "en": "Critical illness rider available", "hi": "गंभीर बीमारी राइडर उपलब्ध" }
+          ],
+          "officialUrl": "https://licindia.in/digi-term", "status": "active"
+        },
+        {
+          "id": "lic-887", "name": { "en": "LIC's Bima Kavach", "hi": "एलआईसी बीमा कवच" },
+          "planNo": "887",
+          "tagline": { "en": "Protection up to age 100.", "hi": "100 वर्ष की आयु तक सुरक्षा।" },
+          "keyBenefit": { "en": "Long-term cover plan protecting up to age 100 with option to increase SA by 10% every year for 10 years", "hi": "100 वर्ष तक कवर — 10 साल तक बीमा राशि में 10% वार्षिक वृद्धि का विकल्प" },
+          "category": "term", "entryAge": "18 - 65yr", "sumAssured": "₹2,00,00,000+", "premiumPayment": "Regular / Limited / Single",
+          "highlights": [
+            { "en": "Cover continues till age 100", "hi": "100 वर्ष की आयु तक कवर" },
+            { "en": "SA can increase 10% p.a. in years 6–15", "hi": "6–15वें वर्ष में बीमा राशि 10% वार्षिक बढ़ सकती है" },
+            { "en": "Minimum sum assured ₹2 crore", "hi": "न्यूनतम बीमा राशि ₹2 करोड़" },
+            { "en": "Flexible premium payment terms", "hi": "लचीला प्रीमियम भुगतान" }
+          ],
+          "officialUrl": "https://licindia.in/bima-kavach", "status": "active"
+        },
         { "id": "lic-837", "name": { "en": "LIC's Jeevan Rakshak", "hi": "एलआईसी जीवन रक्षक" }, "planNo": "837", "tagline": { "en": "Low-cost term plan. Withdrawn 2016.", "hi": "कम लागत टर्म योजना।" }, "keyBenefit": { "en": "Affordable term insurance for masses — withdrawn 2016-17", "hi": "जनता के लिए किफायती टर्म बीमा" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹75,000 - ₹2,00,000", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2016-17", "hi": "2016-17 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         { "id": "lic-159", "name": { "en": "LIC's Anmol Jeevan I", "hi": "एलआईसी अनमोल जीवन I" }, "planNo": "159", "tagline": { "en": "Pure term — first version. Withdrawn 2013.", "hi": "शुद्ध टर्म — पहला संस्करण।" }, "keyBenefit": { "en": "Low-premium pure term — withdrawn 2013-14", "hi": "कम प्रीमियम शुद्ध टर्म — 2013 में वापस" }, "category": "term", "entryAge": "18 - 55yr", "sumAssured": "₹5,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         { "id": "lic-190", "name": { "en": "LIC's Amulya Jeevan I", "hi": "एलआईसी अमूल्य जीवन I" }, "planNo": "190", "tagline": { "en": "High-cover pure term. Withdrawn 2013.", "hi": "उच्च-कवर शुद्ध टर्म।" }, "keyBenefit": { "en": "High SA pure term plan — predecessor to Plan 823, withdrawn 2013-14", "hi": "उच्च SA शुद्ध टर्म — 2013 में वापस" }, "category": "term", "entryAge": "18 - 60yr", "sumAssured": "₹25,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2013-14", "hi": "2013-14 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
@@ -768,6 +826,20 @@
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-new-endowment-plus", "status": "active"
         },
+        {
+          "id": "lic-886", "name": { "en": "LIC's Protection Plus", "hi": "एलआईसी प्रोटेक्शन प्लस" },
+          "planNo": "886",
+          "tagline": { "en": "Market-linked growth with life protection.", "hi": "बाजार-लिंक्ड वृद्धि + जीवन सुरक्षा।" },
+          "keyBenefit": { "en": "ULIP with 6 fund options, partial withdrawals after 5 years, and mortality charge refund at maturity", "hi": "6 फंड विकल्प, 5 साल बाद आंशिक निकासी, मैच्योरिटी पर मृत्यु शुल्क वापसी" },
+          "category": "ulip", "entryAge": "18 - 65yr", "sumAssured": "7x Annual Premium (age <50) / 5x (age 50+)", "premiumPayment": "Limited Pay (5/7/10/15 yr)",
+          "highlights": [
+            { "en": "6 investment fund options — debt to equity", "hi": "6 निवेश फंड विकल्प — डेट से इक्विटी तक" },
+            { "en": "Partial withdrawals allowed after 5 years", "hi": "5 साल बाद आंशिक निकासी की अनुमति" },
+            { "en": "Mortality charge refunded at maturity", "hi": "मैच्योरिटी पर मृत्यु प्रभार वापस" },
+            { "en": "Tax benefit under Sec 80C & 10(10D)", "hi": "धारा 80C व 10(10D) के तहत कर लाभ" }
+          ],
+          "officialUrl": "https://licindia.in/protection-plus", "status": "active"
+        },
         { "id": "lic-873", "name": { "en": "LIC's Index Plus", "hi": "एलआईसी इंडेक्स प्लस" }, "planNo": "873", "tagline": { "en": "Index-linked ULIP. Withdrawn 2024.", "hi": "इंडेक्स-लिंक्ड ULIP — 2024 में वापस।" }, "keyBenefit": { "en": "Index-linked unit plan — withdrawn 2024-25", "hi": "इंडेक्स-लिंक्ड यूनिट योजना — 2024 में वापस" }, "category": "ulip", "entryAge": "90d - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2024-25", "hi": "2024-25 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         { "id": "lic-866", "name": { "en": "LIC's Index Plus (2023)", "hi": "एलआईसी इंडेक्स प्लस (2023)" }, "planNo": "866", "tagline": { "en": "Index-linked ULIP — earlier version.", "hi": "इंडेक्स-लिंक्ड ULIP — पहला संस्करण।" }, "keyBenefit": { "en": "Index-linked unit plan — 2023-24 version, withdrawn", "hi": "इंडेक्स-लिंक्ड यूनिट योजना — 2023-24 संस्करण" }, "category": "ulip", "entryAge": "90d - 65yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular / Single", "highlights": [{ "en": "Withdrawn in 2023-24", "hi": "2023-24 में वापस लिया गया" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
         { "id": "lic-844", "name": { "en": "LIC's New Endowment Plus (2019)", "hi": "एलआईसी न्यू एंडोमेंट प्लस (2019)" }, "planNo": "844", "tagline": { "en": "ULIP endowment — 2019 version. Withdrawn.", "hi": "ULIP एंडोमेंट — 2019 संस्करण।" }, "keyBenefit": { "en": "Unit-linked endowment — 2019 version, withdrawn 2019-20", "hi": "यूनिट-लिंक्ड एंडोमेंट — 2019 में वापस" }, "category": "ulip", "entryAge": "90d - 50yr", "sumAssured": "₹1,00,000+", "premiumPayment": "Regular", "highlights": [{ "en": "Withdrawn in 2019-20; succeeded by Plan 935", "hi": "2019-20 में वापस; प्लान 935 द्वारा प्रतिस्थापित" }], "officialUrl": "https://licindia.in/web/guest/withdrawn-plans", "status": "withdrawn" },
@@ -785,6 +857,34 @@
       "icon": "🤝",
       "color": "#1E8449",
       "plans": [
+        {
+          "id": "lic-751", "name": { "en": "LIC's Micro Bachat", "hi": "एलआईसी माइक्रो बचत" },
+          "planNo": "751",
+          "tagline": { "en": "Affordable savings for every household.", "hi": "हर घर के लिए किफायती बचत।" },
+          "keyBenefit": { "en": "Low-ticket savings plan for low-income families — no medical exam, easy entry", "hi": "कम आय वर्ग के लिए बचत — बिना मेडिकल, आसान नामांकन" },
+          "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹50,000 - ₹2,00,000", "premiumPayment": "Regular",
+          "highlights": [
+            { "en": "No medical examination required", "hi": "कोई मेडिकल परीक्षा नहीं" },
+            { "en": "Policy term 10 or 15 years", "hi": "10 या 15 वर्ष की पॉलिसी अवधि" },
+            { "en": "Suitable for low-income households", "hi": "कम आय वर्ग के लिए उपयुक्त" },
+            { "en": "Loan facility after 3 years", "hi": "3 वर्ष बाद ऋण सुविधा" }
+          ],
+          "officialUrl": "https://licindia.in/micro-bachat", "status": "active"
+        },
+        {
+          "id": "lic-880", "name": { "en": "LIC's Jan Suraksha", "hi": "एलआईसी जन सुरक्षा" },
+          "planNo": "880",
+          "tagline": { "en": "Guaranteed additions + auto-cover for all.", "hi": "गारंटीड वृद्धि + सभी के लिए स्वचालित कवर।" },
+          "keyBenefit": { "en": "Micro insurance with 4% guaranteed additions and auto-cover reinstatement after 3 years", "hi": "4% गारंटीड वृद्धि और 3 साल बाद स्वतः कवर नवीनीकरण" },
+          "category": "micro", "entryAge": "18 - 55yr", "sumAssured": "₹1,00,000 - ₹2,00,000", "premiumPayment": "Limited Pay",
+          "highlights": [
+            { "en": "4% guaranteed additions on sum assured", "hi": "बीमा राशि पर 4% गारंटीड वृद्धि" },
+            { "en": "Auto-cover activated after 3 full years", "hi": "3 वर्ष बाद स्वतः कवर सक्रिय" },
+            { "en": "Policy term 12–20 years", "hi": "12 से 20 वर्ष की पॉलिसी अवधि" },
+            { "en": "Loan facility available", "hi": "ऋण सुविधा उपलब्ध" }
+          ],
+          "officialUrl": "https://licindia.in/jan-suraksha", "status": "active"
+        },
         {
           "id": "lic-939", "name": { "en": "LIC's Bhagya Lakshmi (2019)", "hi": "एलआईसी भाग्य लक्ष्मी (2019)" },
           "planNo": "939",
