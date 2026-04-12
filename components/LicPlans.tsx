@@ -436,18 +436,15 @@ export default function LicPlans() {
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
-          {/* Photo layer — happy family of 4-5, warm & aspirational */}
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511895426328-dc8714191011?w=1600&auto=format&fit=crop&q=80')" }} />
-          {/* Dark gradient overlay — heavier on left so text is always readable */}
+          {/* Photo — happy family of 4-5 (Pexels, reliable hotlink) */}
+          <div className="absolute inset-0 bg-cover bg-right-center bg-no-repeat"
+            style={{ backgroundImage: "url('https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1600')" }} />
+          {/* Gradient overlay: fully opaque left → transparent right so family shows through */}
           <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(100deg, rgba(5,14,30,0.92) 0%, rgba(7,20,45,0.82) 45%, rgba(7,20,45,0.45) 70%, rgba(7,20,45,0.15) 100%)' }} />
-          {/* Gold radial glow bottom-right for warmth */}
-          <div className="absolute -bottom-20 right-0 w-80 h-80 rounded-full opacity-25 pointer-events-none"
-            style={{ background: 'radial-gradient(circle, #c9a84c 0%, transparent 65%)' }} />
-          {/* Subtle grain texture */}
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-            style={{ backgroundImage: 'repeating-linear-gradient(60deg,#fff 0,#fff 1px,transparent 0,transparent 40px)', backgroundSize: '60px 60px' }} />
+            style={{ background: 'linear-gradient(105deg, rgba(4,12,28,0.96) 0%, rgba(5,16,38,0.88) 38%, rgba(6,18,42,0.6) 58%, rgba(6,18,42,0.15) 100%)' }} />
+          {/* Warm gold bloom bottom-right */}
+          <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full opacity-30 pointer-events-none"
+            style={{ background: 'radial-gradient(circle at 80% 90%, #c9a84c 0%, transparent 60%)' }} />
 
           {/* Content */}
           <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end gap-8 px-8 md:px-14 py-10 md:py-14">
@@ -469,17 +466,21 @@ export default function LicPlans() {
               </motion.p>
             </div>
 
-            {/* Right: 2-stat pill cards */}
+            {/* Right: stat cards */}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
-              className="flex gap-3 flex-shrink-0">
+              className="flex flex-col gap-3 flex-shrink-0 min-w-[160px]">
               {[
-                { val: data.meta.activePlans ?? activePlans.length, label: lang === 'en' ? 'Active Plans' : 'सक्रिय', icon: '✅' },
-                { val: '68+', label: lang === 'en' ? 'Yrs of Trust' : 'वर्षों का विश्वास', icon: '🏛️' },
-              ].map(({ val, label, icon }) => (
-                <div key={label} className="bg-white/10 border border-white/15 backdrop-blur-sm rounded-2xl px-5 py-4 text-center min-w-[90px]">
-                  <div className="text-20 mb-1">{icon}</div>
-                  <div className="text-26 font-bold text-white leading-none">{val}</div>
-                  <div className="text-9 text-white/45 uppercase tracking-wider font-semibold mt-1">{label}</div>
+                { val: data.meta.activePlans ?? activePlans.length, label: lang === 'en' ? 'Active Plans' : 'सक्रिय प्लान्स', sub: lang === 'en' ? 'Across all categories' : 'सभी श्रेणियों में' },
+                { val: '68+', label: lang === 'en' ? 'Years of Trust' : 'वर्षों का विश्वास', sub: lang === 'en' ? 'Since 1956, Govt. backed' : '1956 से, सरकार समर्थित' },
+              ].map(({ val, label, sub }) => (
+                <div key={label}
+                  className="relative overflow-hidden rounded-2xl px-5 py-4 border border-white/12"
+                  style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)' }}>
+                  {/* Gold left accent bar */}
+                  <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full bg-[#c9a84c]" />
+                  <div className="text-30 font-bold text-white leading-none tracking-tight">{val}</div>
+                  <div className="text-12 font-semibold text-white/80 mt-1 leading-snug">{label}</div>
+                  <div className="text-10 text-white/35 mt-0.5 leading-snug">{sub}</div>
                 </div>
               ))}
             </motion.div>
@@ -552,7 +553,7 @@ export default function LicPlans() {
                 )}
               </div>
               {/* Scrollable filter body */}
-              <div className="overflow-y-auto flex-1 p-4 pt-2">
+              <div className="overflow-y-auto flex-1 px-4 pt-2 pb-6">
                 {SidebarFilters}
               </div>
             </div>
