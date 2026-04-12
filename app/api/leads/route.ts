@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+// Set GOOGLE_SHEETS_WEBHOOK_URL in .env.local to push leads to Google Sheets
+const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
+
 const HEADERS = [
   'Timestamp', 'Name', 'Mobile', 'Email',
   'City', 'Profession', 'Want To', 'I Am',
@@ -30,13 +33,23 @@ export async function POST(request: Request) {
     fs.appendFileSync(filePath, line);
 
     // 2. Send to Google Sheets via Apps Script webhook
-    const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    //    Wrapped in try/catch with timeout so it never breaks the user-facing response
     if (webhookUrl) {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ row, intent: intent ?? '' }),
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ row, intent: intent ?? '' }),
+          signal: controller.signal,
+        });
+      } catch (webhookError) {
+        // Log but DO NOT throw — CSV is our source of truth backup
+        console.error('Google Sheets webhook failed (non-fatal):', webhookError);
+      } finally {
+        clearTimeout(timeoutId);
+      }
     }
 
     return NextResponse.json({ success: true });
@@ -45,3 +58,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
