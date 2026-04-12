@@ -444,69 +444,57 @@ export default function LicPlans() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#07111f] via-[#0D1F3C] to-[#1a3a72] text-white px-6 md:px-14 py-12 md:py-16 mb-8">
-          <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-blue-500/15 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-yellow-400/8 blur-3xl pointer-events-none" />
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-            style={{ backgroundImage: 'repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%)', backgroundSize: '20px 20px' }} />
-          <div className="relative z-10 text-center">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-11 font-bold uppercase tracking-widest text-white/75 mb-5">
-              <Shield size={10} className="flex-shrink-0" />
-              {lang === 'en' ? 'IRDAI Reg. 512 · Est. 1956 · Govt. of India Backed' : 'IRDAI रेग. 512 · 1956 से · सरकार समर्थित'}
-            </motion.div>
-            <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
-              className="text-34 md:text-54 font-display font-bold mb-3 leading-tight tracking-tight">
-              {lang === 'en' ? 'Explore LIC Wealth Plans' : 'एलआईसी वेल्थ प्लान्स'}
-            </motion.h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.16 }}
-              className="text-14 md:text-16 text-white/60 max-w-xl mx-auto mb-10 leading-relaxed">
-              {lang === 'en'
-                ? 'Hand-picked solutions for wealth creation, family protection, and guaranteed retirement income.'
-                : 'धन सृजन, परिवार की सुरक्षा और गारंटीड सेवानिवृत्ति आय के लिए चुने हुए समाधान।'}
-            </motion.p>
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}
-              className="inline-grid grid-cols-3 divide-x divide-white/10 bg-white/10 border border-white/10 rounded-2xl overflow-hidden">
+        <div className="relative rounded-3xl overflow-hidden mb-8" style={{ minHeight: 260 }}>
+          {/* Layered background: deep navy + radial glow + subtle grain */}
+          <div className="absolute inset-0"
+            style={{ background: 'linear-gradient(135deg, #071425 0%, #0c2340 40%, #0f3460 70%, #1a4a7a 100%)' }} />
+          {/* Gold arc bottom-right */}
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full opacity-20 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #c9a84c 0%, transparent 65%)' }} />
+          {/* Soft teal glow top-left */}
+          <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full opacity-15 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #38bdf8 0%, transparent 65%)' }} />
+          {/* Floating shield / coins decorative shapes */}
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 text-[120px] opacity-[0.07] pointer-events-none select-none hidden md:block">🏦</div>
+          {/* Subtle diagonal texture */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{ backgroundImage: 'repeating-linear-gradient(60deg,#fff 0,#fff 1px,transparent 0,transparent 40px)', backgroundSize: '60px 60px' }} />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end gap-8 px-8 md:px-14 py-10 md:py-14">
+            <div className="flex-1">
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3.5 py-1 text-10 font-bold uppercase tracking-widest text-white/60 mb-4">
+                <Shield size={9} className="flex-shrink-0" />
+                IRDAI Reg. 512 · Since 1956 · Govt. of India
+              </motion.div>
+              <motion.h1 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.07 }}
+                className="text-32 md:text-52 font-display font-bold text-white leading-[1.1] tracking-tight mb-3">
+                {lang === 'en' ? <>Your Money.<br />Protected. Growing.</> : <>आपका पैसा।<br />सुरक्षित। बढ़ता हुआ।</>}
+              </motion.h1>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.16 }}
+                className="text-14 md:text-15 text-white/55 max-w-lg leading-relaxed">
+                {lang === 'en'
+                  ? 'Explore India\'s most trusted insurance plans — for savings, protection, retirement, and growth.'
+                  : 'बचत, सुरक्षा, सेवानिवृत्ति और वृद्धि के लिए भारत के सबसे भरोसेमंद बीमा प्लान।'}
+              </motion.p>
+            </div>
+
+            {/* Right: 2-stat pill cards */}
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
+              className="flex gap-3 flex-shrink-0">
               {[
-                { val: data.meta.activePlans ?? activePlans.length, label: lang === 'en' ? 'Active Plans' : 'सक्रिय प्लान्स' },
-                { val: data.meta.withdrawnPlans ?? withdrawnPlans.length, label: lang === 'en' ? 'Withdrawn Plans' : 'बंद प्लान्स' },
-                { val: '68+', label: lang === 'en' ? 'Years of Trust' : 'वर्षों का विश्वास' },
-              ].map(({ val, label }) => (
-                <div key={label} className="px-7 md:px-10 py-4">
-                  <div className="text-28 md:text-36 font-bold text-white leading-none mb-1">{val}</div>
-                  <div className="text-10 text-white/50 uppercase tracking-widest font-semibold">{label}</div>
+                { val: data.meta.activePlans ?? activePlans.length, label: lang === 'en' ? 'Active Plans' : 'सक्रिय', icon: '✅' },
+                { val: '68+', label: lang === 'en' ? 'Yrs of Trust' : 'वर्षों का विश्वास', icon: '🏛️' },
+              ].map(({ val, label, icon }) => (
+                <div key={label} className="bg-white/10 border border-white/15 backdrop-blur-sm rounded-2xl px-5 py-4 text-center min-w-[90px]">
+                  <div className="text-20 mb-1">{icon}</div>
+                  <div className="text-26 font-bold text-white leading-none">{val}</div>
+                  <div className="text-9 text-white/45 uppercase tracking-wider font-semibold mt-1">{label}</div>
                 </div>
               ))}
             </motion.div>
           </div>
-        </div>
-
-        {/* ── Category quick-tabs ───────────────────────────────────────── */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 mb-6 scrollbar-hide">
-          <button
-            onClick={clearAllFilters}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border text-12 font-bold transition-all
-              ${isShowingAll ? 'bg-navy text-white border-navy shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:border-navy/30'}`}>
-            All <span className={`text-11 px-1.5 py-0.5 rounded-full font-bold ${isShowingAll ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>{activePlans.length}</span>
-          </button>
-          {Object.entries(categoryMeta).map(([key, meta]) => {
-            const accent = CAT_ACCENT[key] || '#1B4F72'
-            const isOn = catFilter.has(key)
-            return (
-              <button key={key}
-                onClick={() => toggle(setCatFilter, key)}
-                className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full border text-12 font-bold transition-all`}
-                style={isOn
-                  ? { background: accent, color: '#fff', borderColor: accent }
-                  : { background: '#fff', color: '#374151', borderColor: '#E5E7EB' }}>
-                {meta.icon} {meta.label.en.replace(' Plans', '').replace(' Insurance', '')}
-                <span className="text-11 px-1.5 py-0.5 rounded-full font-bold"
-                  style={{ background: isOn ? 'rgba(255,255,255,0.2)' : '#F3F4F6', color: isOn ? '#fff' : '#6B7280' }}>
-                  {meta.count}
-                </span>
-              </button>
-            )
-          })}
         </div>
 
         {/* ── Mobile filter bar ─────────────────────────────────────────── */}
@@ -560,10 +548,11 @@ export default function LicPlans() {
         <div className="flex gap-6 items-start">
 
           {/* ── Left Sidebar ── */}
-          <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-6">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-              <div className="flex items-center justify-between mb-3 px-1">
-                <h3 className="text-11 font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+          <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-4 self-start" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+              {/* Sidebar header — always visible */}
+              <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
+                <h3 className="text-11 font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                   <SlidersHorizontal size={11} /> {lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}
                 </h3>
                 {totalFiltersActive > 0 && (
@@ -573,7 +562,10 @@ export default function LicPlans() {
                   </button>
                 )}
               </div>
-              {SidebarFilters}
+              {/* Scrollable filter body */}
+              <div className="overflow-y-auto flex-1 p-4 pt-2">
+                {SidebarFilters}
+              </div>
             </div>
           </aside>
 
