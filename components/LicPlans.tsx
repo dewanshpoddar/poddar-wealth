@@ -538,16 +538,16 @@ export default function LicPlans() {
         </AnimatePresence>
 
         {/* ── Main: Sidebar + Grid ───────────────────────────────────────── */}
-        <div className="flex gap-6 items-start">
+        <div className="flex gap-6 items-start pb-24 md:pb-32">
 
           {/* ── Left Sidebar ── */}
           <aside
             className="hidden lg:block w-64 flex-shrink-0 sticky self-start"
-            style={{ top: '86px', maxHeight: 'calc(100vh - 106px)' }}
+            style={{ top: '86px', maxHeight: 'calc(100vh - 116px)' }}
           >
             <div
               className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden"
-              style={{ maxHeight: 'calc(100vh - 106px)' }}
+              style={{ maxHeight: 'calc(100vh - 116px)' }}
             >
               {/* Pinned header */}
               <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0 bg-white">
