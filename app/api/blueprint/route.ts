@@ -58,7 +58,8 @@ export async function POST(request: Request) {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ row, intent: 'Wealth Blueprint' }),
+          // sheetName tells the Apps Script to write to a separate "Blueprints" tab
+        body: JSON.stringify({ row, intent: 'Wealth Blueprint', sheetName: 'Blueprints' }),
           signal: ctrl.signal,
         })
       } catch (e) {
