@@ -1,5 +1,5 @@
 'use client'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import {
   Calculator, ArrowRight, ChevronDown, ChevronUp,
@@ -75,6 +75,28 @@ export default function PremiumCalculatorPage() {
   const [showAllRows,    setShowAllRows]    = useState(false)
   const [showAllModes,   setShowAllModes]   = useState(false)
 
+  /* ULIP: fund selection + live NAV */
+  const [ulipFund,    setUlipFund]    = useState<string>('')
+  const [navData,     setNavData]     = useState<Record<string, Record<string, { nav: number; date: string }>>>({})
+  const [navLoading,  setNavLoading]  = useState(false)
+  const isUlip = selectedPlan?.category === 'ulip'
+
+  useEffect(() => {
+    if (!isUlip) return
+    setNavLoading(true)
+    fetch('/api/nav')
+      .then(r => r.json())
+      .then(d => { if (d.success) setNavData(d.nav) })
+      .catch(() => {})
+      .finally(() => setNavLoading(false))
+  }, [isUlip])
+
+  useEffect(() => {
+    if (isUlip && selectedPlan?.fundOptions?.length) {
+      setUlipFund(selectedPlan.fundOptions[0].id)
+    }
+  }, [selectedPlan, isUlip])
+
   /* unlock / lead capture */
   const [isUnlocked,   setIsUnlocked]   = useState(false)
   const [unlockMobile, setUnlockMobile] = useState('')
@@ -129,7 +151,8 @@ export default function PremiumCalculatorPage() {
     setShowAllRows(false)
     setIsUnlocked(false)
     setUnlockStatus('idle')
-    if (plan.minTerm) setTerm(Math.max(plan.minTerm, Math.min(term, plan.maxTerm ?? 35)))
+    setUlipFund('')
+    if (plan.minTerm && plan.minTerm < 50) setTerm(Math.max(plan.minTerm, Math.min(term, plan.maxTerm ?? 35)))
   }
 
   function handleQuickSelect() {
@@ -234,7 +257,7 @@ export default function PremiumCalculatorPage() {
             Calculate Your <span className="text-gold">Exact LIC Premium</span>
           </h1>
           <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            28 plans · real tabular rates · year-by-year benefit table · tax savings · WhatsApp share
+            34 active plans · real tabular rates · ULIP live NAV · year-by-year benefit table · WhatsApp share
           </p>
         </div>
       </div>
@@ -368,6 +391,58 @@ export default function PremiumCalculatorPage() {
                     </div>
                   )}
                 </div>
+
+                {/* ULIP Fund Selector */}
+                {isUlip && selectedPlan?.fundOptions?.length > 0 && (
+                  <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="font-display font-bold text-[16px] text-navy">Choose Fund</h2>
+                      {navLoading && <span className="text-[11px] text-gray-400 animate-pulse">Fetching live NAV…</span>}
+                      {!navLoading && navData[String(selectedPlan.planNo)] && (
+                        <span className="text-[11px] text-green-600 font-semibold">● Live NAV</span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {selectedPlan.fundOptions.map((fund: any) => {
+                        const planNav = navData[String(selectedPlan.planNo)]
+                        const fundNav = planNav?.[fund.id]
+                        const isSelected = ulipFund === fund.id
+                        const riskColor: Record<string,string> = {
+                          'Low': 'text-blue-600 bg-blue-50',
+                          'Low-Med': 'text-teal-600 bg-teal-50',
+                          'Medium': 'text-amber-600 bg-amber-50',
+                          'High': 'text-red-600 bg-red-50',
+                        }
+                        return (
+                          <button key={fund.id} onClick={() => setUlipFund(fund.id)}
+                            className={`text-left p-3.5 rounded-xl border-2 transition-all ${
+                              isSelected ? 'border-gold bg-gold/5' : 'border-gray-100 hover:border-gold/30 bg-gray-50'
+                            }`}>
+                            <div className="flex items-start justify-between gap-2 mb-1.5">
+                              <div className={`text-[12px] font-bold ${isSelected ? 'text-navy' : 'text-gray-700'}`}>{fund.name}</div>
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${riskColor[fund.risk] || 'text-gray-500 bg-gray-100'}`}>
+                                {fund.risk}
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-gray-500 leading-relaxed mb-2">{fund.desc}</div>
+                            {fundNav ? (
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-[13px] font-bold text-navy">₹{fundNav.nav.toFixed(2)}</span>
+                                <span className="text-[10px] text-gray-400">NAV · {fundNav.date}</span>
+                              </div>
+                            ) : (
+                              <div className="text-[11px] text-gray-300">NAV loading…</div>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    <p className="text-[10px] text-gray-400 mt-3">
+                      NAV updates daily after market close (~6–7 PM IST). Returns are market-linked and not guaranteed.
+                      ULIP charges (allocation, mortality, fund management) apply.
+                    </p>
+                  </div>
+                )}
 
                 {/* Input form */}
                 <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5 space-y-5">
