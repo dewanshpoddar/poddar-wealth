@@ -483,7 +483,7 @@ export default function WealthBlueprintCalculator() {
       setSaved(true)
       trackEvent('blueprint_lead_submitted', {
         score: bp.score,
-        gap_lakhs: Math.round(bp.protectionGapL),
+        gap_lakhs: Math.round(bp.gapL),
         hlv_lakhs: Math.round(bp.hlvL),
       })
     } catch {
@@ -499,9 +499,9 @@ export default function WealthBlueprintCalculator() {
       trackedResult.current = true
       trackEvent('blueprint_completed', {
         score: bp.score,
-        gap_lakhs: Math.round(bp.protectionGapL),
+        gap_lakhs: Math.round(bp.gapL),
         hlv_lakhs: Math.round(bp.hlvL),
-        is_hni: bp.isHNI,
+        is_hni: isHNI,
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -52,7 +52,7 @@
 
   /* ── Navigation ──────────────────────────────────────────── */
   .pw-nav {
-    @apply bg-white px-8 flex items-center justify-between h-[78px] sticky top-0 z-50 shadow-sm transition-all duration-300;
+    @apply bg-white px-4 sm:px-8 flex items-center justify-between h-[78px] sticky top-0 z-50 shadow-sm transition-all duration-300;
     border-bottom: 1px solid rgba(184,134,11,0.18);
   }
   .pw-logo-area  { @apply flex items-center gap-3; }
