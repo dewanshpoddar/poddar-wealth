@@ -124,7 +124,7 @@ function parseDate(str: string): string | null {
 export async function GET(req: Request) {
   // Vercel authenticates cron jobs with Authorization: Bearer <CRON_SECRET>
   const authHeader = req.headers.get('authorization')
-  const cronSecret = process.env.CRON_SECRET
+  const cronSecret = process.env.CRON_SECRET?.trim()
 
   if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
