@@ -142,16 +142,51 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* Mobile toggle adaption */}
-      <button
-        className={`lg:hidden font-bold text-20 bg-transparent border-none cursor-pointer p-2 transition-colors duration-500 ${
-          isScrolled ? 'text-white' : 'text-navy'
-        }`}
-        onClick={() => setOpen(!open)}
-        aria-label="Toggle menu"
-      >
-        {open ? '✕' : '☰'}
-      </button>
+      {/* Mobile: language toggle + hamburger */}
+      <div className="lg:hidden flex items-center gap-2">
+        {/* Language toggle — always visible on mobile for Hindi users */}
+        <div className={`pw-lang-toggle relative transition-colors duration-500 border-none ${
+          isScrolled ? 'bg-white/10' : 'bg-gray-100'
+        }`}>
+          <motion.div
+            className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-colors duration-500 ${
+              isScrolled ? 'bg-gold' : 'bg-navy'
+            }`}
+            initial={false}
+            animate={{
+              left: lang === 'en' ? '4px' : 'calc(50% + 2px)',
+              width: 'calc(50% - 6px)'
+            }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+          <button
+            onClick={() => setLang('en')}
+            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
+              isScrolled
+                ? (lang === 'en' ? 'text-white' : 'text-white/40')
+                : (lang === 'en' ? 'text-white' : 'text-gray-400')
+            }`}
+          >EN</button>
+          <button
+            onClick={() => setLang('hi')}
+            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
+              isScrolled
+                ? (lang === 'hi' ? 'text-white' : 'text-white/40')
+                : (lang === 'hi' ? 'text-white' : 'text-gray-400')
+            }`}
+          >हिंदी</button>
+        </div>
+
+        <button
+          className={`font-bold text-20 bg-transparent border-none cursor-pointer p-2 transition-colors duration-500 ${
+            isScrolled ? 'text-white' : 'text-navy'
+          }`}
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          {open ? '✕' : '☰'}
+        </button>
+      </div>
 
       {/* Mobile Menu (Sticky at top of content) */}
       <AnimatePresence>

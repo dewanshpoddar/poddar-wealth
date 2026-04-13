@@ -42,7 +42,7 @@ export default function BecomeAdvisorPage() {
               <p className="text-white/80 text-xl leading-relaxed">{t.becomeAdvisor.heroSubtitle}</p>
             </div>
             <div className="hidden lg:block">
-              <div className="rounded-3xl overflow-hidden shadow-hero">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&q=80" alt="Advisor team" width={600} height={450} className="w-full object-cover" />
               </div>
             </div>
@@ -54,11 +54,11 @@ export default function BecomeAdvisorPage() {
       <section className="section-padding bg-white">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="section-title">{t.becomeAdvisor.whyTitle}</h2>
+            <h2 className="font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight">{t.becomeAdvisor.whyTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.becomeAdvisor.benefits.map((b: any, i: number) => (
-              <div key={i} className="card group hover:-translate-y-1 hover:border-brand-100 border-2 border-transparent">
+              <div key={i} className="bg-white border border-slate-100 rounded-2xl p-6 shadow-card group hover:-translate-y-1 hover:border-gold/30 hover:shadow-xl transition-all duration-300 border-2 border-transparent">
                 <div className="text-4xl mb-4">{b.icon}</div>
                 <h3 className="font-display font-bold text-lg text-slate-900 mb-2">{b.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{b.desc}</p>
@@ -69,7 +69,7 @@ export default function BecomeAdvisorPage() {
       </section>
 
       {/* Income table */}
-      <section className="section-padding bg-brand-900 text-white">
+      <section className="section-padding bg-navy text-white">
         <div className="section-container">
           <div className="text-center mb-10">
             <h2 className="font-display font-bold text-3xl md:text-4xl text-white">{t.becomeAdvisor.incomeTitle}</h2>
@@ -98,7 +98,7 @@ export default function BecomeAdvisorPage() {
       <section className="section-padding bg-slate-50" id="apply">
         <div className="section-container">
           <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-card-hover p-8 md:p-12">
+            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
               <div className="text-center mb-8">
                 <h2 className="font-display font-bold text-2xl text-slate-900 mb-2">{t.becomeAdvisor.formTitle}</h2>
                 <p className="text-slate-500">{lang === 'en' ? t.becomeAdvisor.formSubtitle : 'अजय सर व्यक्तिगत रूप से आपका आवेदन देखेंगे और 24 घंटों के भीतर कॉल करेंगे।'}</p>
