@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ─── CRITICAL: Move build output OUTSIDE the workspace ───────────────────
-  distDir: '/tmp/poddar-wealth-build',
-
   // ─── www → non-www canonical redirect ───────────────────────────────────
   // Redirect poddarwealth.com → www.poddarwealth.com (permanent, SEO-safe)
   async redirects() {
@@ -29,7 +26,6 @@ const nextConfig = {
     ],
   },
 
-  turbopack: {},
 }
 
 module.exports = nextConfig
