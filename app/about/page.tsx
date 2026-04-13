@@ -234,7 +234,7 @@ export default function AboutPage() {
             Year label  → below dot for top items (top-[242px]), above dot for bottom items (top-[170px])
         */}
         <div className="max-w-7xl mx-auto px-8 overflow-x-auto pb-4 scrollbar-hide">
-          <div className="relative min-w-[860px]" style={{ height: 440 }}>
+          <div className="relative min-w-[600px] sm:min-w-[860px]" style={{ height: 440 }}>
 
             {/* Horizontal centre line */}
             <div className="absolute left-10 right-10 bg-gold/20" style={{ top: 220, height: 1 }} />
@@ -385,7 +385,7 @@ export default function AboutPage() {
           <div className="flex overflow-hidden">
             <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel:[animation-play-state:paused]" style={{ animationDirection: 'reverse', animationDuration: '40s' }}>
               {filmStrip1.concat(filmStrip1).map((item, i) => (
-                <div key={i} className="relative w-[280px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-xl">
+                <div key={i} className="relative w-[200px] sm:w-[280px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-xl">
                    <Image src={item.src} alt={item.label} fill className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" />
                    <div className="absolute top-4 left-4 right-4 text-[9px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
                    <div className="absolute inset-0 bg-gradient-to-tr from-gold/5 via-transparent to-transparent pointer-events-none" />
@@ -409,7 +409,7 @@ export default function AboutPage() {
           <div className="flex overflow-hidden">
             <div className="flex animate-marquee whitespace-nowrap gap-4 py-8 group-hover/reel2:[animation-play-state:paused]" style={{ animationDuration: '45s' }}>
               {filmStrip2.concat(filmStrip2).map((item, i) => (
-                <div key={i} className="relative w-[280px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-xl">
+                <div key={i} className="relative w-[200px] sm:w-[280px] aspect-[4/3] bg-navy-deep overflow-hidden group/frame border-x-[8px] border-black shadow-xl">
                    <Image src={item.src} alt={item.label} fill className="object-cover transition-transform duration-1000 group-hover/frame:scale-110 grayscale hover:grayscale-0" />
                    <div className="absolute top-4 left-4 right-4 text-[9px] text-white/50 font-bold uppercase tracking-widest pointer-events-none">{item.label}</div>
                    <div className="absolute inset-0 bg-gradient-to-bl from-gold/5 via-transparent to-transparent pointer-events-none" />

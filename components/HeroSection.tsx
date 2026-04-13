@@ -27,7 +27,8 @@ export default function HeroSection() {
   return (
     <>
       {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
-      <div className="grid lg:grid-cols-2" style={{ height: 'clamp(580px, calc(100vh - 200px), 700px)' }}>
+      <div className="grid lg:grid-cols-2 lg:h-[clamp(580px,calc(100vh-200px),700px)]">
+
 
         {/* ── LEFT ── */}
         <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-8 pb-6 lg:pt-10 lg:pb-8 bg-warm/30 relative">
@@ -95,7 +96,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT ── */}
-        <div className="relative bg-navy h-full">
+        <div className="relative bg-navy h-[280px] lg:h-full">
 
           {/* Geometric circles */}
           <div className="absolute w-[300px] h-[300px] rounded-full border border-[rgba(245,200,66,0.12)]

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
+import { submitLead } from '@/lib/api'
 import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
 
 export default function ContactPage() {
@@ -8,13 +9,28 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: '', phone: '', wantTo: '', iAm: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError('')
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setSuccess(true)
+    try {
+      await submitLead({
+        name: form.name,
+        mobile: form.phone,
+        wantTo: form.wantTo,
+        iAm: form.iAm,
+        message: form.message,
+        intent: 'Contact Page',
+      })
+      setSuccess(true)
+    } catch (err) {
+      console.error(err)
+      setError('Something went wrong. Please call us at 9415313434.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -38,23 +54,49 @@ export default function ContactPage() {
                 <div className="text-center py-10">
                   <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h3 className="font-display font-bold text-xl text-slate-900 mb-2">Message Sent! 🎉</h3>
-                  <p className="text-slate-500">Ajay will get back to you within 24 hours.</p>
+                  <p className="text-slate-500">Ajay will personally get back to you within 24 hours.</p>
+                  <button
+                    onClick={() => { setSuccess(false); setForm({ name: '', phone: '', wantTo: '', iAm: '', message: '' }) }}
+                    className="mt-6 text-sm font-bold text-green-700 hover:underline"
+                  >
+                    ← Send another message
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Name *</label>
-                    <input type="text" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="input-field" placeholder="Ramesh Sharma" />
+                    <input
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={e => setForm({...form, name: e.target.value})}
+                      className="input-field"
+                      placeholder="Ramesh Sharma"
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp / Phone *</label>
-                    <input type="tel" required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} className="input-field" placeholder="+91 98290 XXXXX" />
+                    <input
+                      type="tel"
+                      required
+                      value={form.phone}
+                      onChange={e => setForm({...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
+                      className="input-field"
+                      placeholder="10-digit mobile number"
+                      inputMode="numeric"
+                      maxLength={10}
+                    />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-1.5">I want to *</label>
-                      <select required value={form.wantTo} onChange={e => setForm({...form, wantTo: e.target.value})}
-                        className="input-field appearance-none cursor-pointer">
+                      <select
+                        required
+                        value={form.wantTo}
+                        onChange={e => setForm({...form, wantTo: e.target.value})}
+                        className="input-field appearance-none cursor-pointer"
+                      >
                         <option value="">Select</option>
                         <option>Protect my family</option>
                         <option>Create wealth</option>
@@ -66,8 +108,12 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-1.5">I am *</label>
-                      <select required value={form.iAm} onChange={e => setForm({...form, iAm: e.target.value})}
-                        className="input-field appearance-none cursor-pointer">
+                      <select
+                        required
+                        value={form.iAm}
+                        onChange={e => setForm({...form, iAm: e.target.value})}
+                        className="input-field appearance-none cursor-pointer"
+                      >
                         <option value="">Select</option>
                         <option>Prospective Policy Holder</option>
                         <option>Existing Policy Holder</option>
@@ -80,11 +126,27 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Message</label>
-                    <textarea rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="input-field resize-none" placeholder="Tell us how we can help..." />
+                    <textarea
+                      rows={4}
+                      value={form.message}
+                      onChange={e => setForm({...form, message: e.target.value})}
+                      className="input-field resize-none"
+                      placeholder="Tell us how we can help..."
+                    />
                   </div>
-                  <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-4 text-base disabled:opacity-70">
+
+                  {error && (
+                    <p className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-2">{error}</p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-primary w-full justify-center py-4 text-base disabled:opacity-70"
+                  >
                     {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Send Message →'}
                   </button>
+                  <p className="text-xs text-slate-400 text-center">Your details are secure and never shared.</p>
                 </form>
               )}
             </div>
@@ -94,22 +156,22 @@ export default function ContactPage() {
               <div className="bg-white rounded-3xl shadow-card p-8">
                 <h2 className="font-display font-bold text-xl text-slate-900 mb-6">{t.contact.infoTitle}</h2>
                 <div className="space-y-4">
-                  <a href={`tel:${t.footer.phone}`} className="flex items-center gap-4 p-4 bg-brand-50 rounded-2xl hover:bg-brand-100 transition-colors group">
-                    <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                  <a href={`tel:${t.footer.phone}`} className="flex items-center gap-4 p-4 bg-gold/5 rounded-2xl hover:bg-gold/10 transition-colors group">
+                    <div className="w-12 h-12 bg-gold rounded-xl flex items-center justify-center">
                       <Phone className="w-5 h-5 text-white" />
                     </div>
                     <div>
                       <div className="text-sm text-slate-500">Call / WhatsApp</div>
-                      <div className="font-semibold text-slate-900 group-hover:text-brand-700">{t.footer.phone}</div>
+                      <div className="font-semibold text-slate-900 group-hover:text-gold">{t.footer.phone}</div>
                     </div>
                   </a>
-                  <a href={`mailto:${t.footer.email}`} className="flex items-center gap-4 p-4 bg-brand-50 rounded-2xl hover:bg-brand-100 transition-colors group">
-                    <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                  <a href={`mailto:${t.footer.email}`} className="flex items-center gap-4 p-4 bg-gold/5 rounded-2xl hover:bg-gold/10 transition-colors group">
+                    <div className="w-12 h-12 bg-gold rounded-xl flex items-center justify-center">
                       <Mail className="w-5 h-5 text-white" />
                     </div>
                     <div>
                       <div className="text-sm text-slate-500">Email</div>
-                      <div className="font-semibold text-slate-900 group-hover:text-brand-700">{t.footer.email}</div>
+                      <div className="font-semibold text-slate-900 group-hover:text-gold">{t.footer.email}</div>
                     </div>
                   </a>
                   <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl">

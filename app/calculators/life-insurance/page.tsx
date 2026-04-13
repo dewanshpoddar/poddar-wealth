@@ -98,7 +98,7 @@ export default function LifeInsuranceCalcPage() {
                     </label>
                     <input type="range" min="18" max="60" value={form.age}
                       onChange={e => setForm({ ...form, age: +e.target.value })}
-                      className="w-full accent-brand-600 h-2 rounded-full" />
+                      className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>18</span><span>60</span></div>
                   </div>
                   <div>
@@ -114,7 +114,7 @@ export default function LifeInsuranceCalcPage() {
                     </label>
                     <input type="range" min="0" max="6" value={form.dependents}
                       onChange={e => setForm({ ...form, dependents: +e.target.value })}
-                      className="w-full accent-brand-600 h-2 rounded-full" />
+                      className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>0</span><span>6</span></div>
                   </div>
                   <div>
@@ -170,7 +170,7 @@ export default function LifeInsuranceCalcPage() {
           <div className="section-container">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 bg-brand-50 text-brand-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-3">
+                <div className="inline-flex items-center gap-2 bg-gold/5 text-gold px-4 py-1.5 rounded-full text-sm font-semibold mb-3">
                   <Shield className="w-4 h-4" /> Step 2 — Get a Real LIC Premium Quote
                 </div>
                 <h2 className="font-display font-bold text-2xl text-slate-900">
@@ -210,7 +210,7 @@ export default function LifeInsuranceCalcPage() {
                     </label>
                     <input type="range" min="500000" max="10000000" step="500000" value={sa}
                       onChange={e => setSa(+e.target.value)}
-                      className="w-full accent-brand-600 h-2 rounded-full" />
+                      className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>₹5L</span><span>₹1Cr</span></div>
                   </div>
                   <div>
@@ -219,7 +219,7 @@ export default function LifeInsuranceCalcPage() {
                     </label>
                     <input type="range" min="10" max="35" step="1" value={term}
                       onChange={e => setTerm(+e.target.value)}
-                      className="w-full accent-brand-600 h-2 rounded-full" />
+                      className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>10 yrs</span><span>35 yrs</span></div>
                   </div>
                   <div>
@@ -277,7 +277,7 @@ export default function LifeInsuranceCalcPage() {
                       </div>
                       <button
                         onClick={() => openLeadPopup(`Premium quote: ${selectedPlan?.name} Plan ${planNo}, ${fmt(sa)} cover`)}
-                        className="mt-4 w-full bg-white text-brand-700 font-bold py-2.5 rounded-xl text-sm hover:bg-brand-50 transition-colors flex items-center justify-center gap-2">
+                        className="mt-4 w-full bg-white text-gold font-bold py-2.5 rounded-xl text-sm hover:bg-gold/5 transition-colors flex items-center justify-center gap-2">
                         Get Official Quote <ArrowRight className="w-4 h-4" />
                       </button>
                     </>
@@ -309,14 +309,14 @@ export default function LifeInsuranceCalcPage() {
                         <tbody>
                           {benefitTable.map((row: any, i: number) => (
                             <tr key={row.year} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                              <td className="px-3 py-2 font-semibold text-brand-700">{row.year}</td>
+                              <td className="px-3 py-2 font-semibold text-gold">{row.year}</td>
                               <td className="px-3 py-2">{row.age}</td>
                               <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '—'}</td>
                               <td className="px-3 py-2">{fmt(row.cumPremiumPaid)}</td>
                               <td className="px-3 py-2">{row.annualBonus ? fmt(row.annualBonus) : '—'}</td>
                               <td className="px-3 py-2">{row.cumBonus ? fmt(row.cumBonus) : '—'}</td>
                               <td className="px-3 py-2 font-semibold text-red-600">{fmt(row.deathBenefit)}</td>
-                              <td className="px-3 py-2 text-amber-600">{row.gsv ? fmt(row.gsv) : '—'}</td>
+                              <td className="px-3 py-2 text-gold">{row.gsv ? fmt(row.gsv) : '—'}</td>
                               <td className="px-3 py-2 font-bold text-green-700">{row.maturityPayout ? fmt(row.maturityPayout) : '—'}</td>
                             </tr>
                           ))}
@@ -335,9 +335,9 @@ export default function LifeInsuranceCalcPage() {
       <section className="pb-12 bg-white">
         <div className="section-container">
           <div className="max-w-5xl mx-auto">
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
-              <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-              <p className="text-amber-800 text-sm">
+            <div className="bg-gold/5 border border-gold/20 rounded-2xl p-4 flex items-start gap-3">
+              <Info className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+              <p className="text-navy text-sm">
                 Premium figures are illustrative based on LIC tabular rates (2026). Actual premiums depend on underwriting, medical tests, and current LIC circulars. Bonus rates are historical and not guaranteed.
                 {' '}<Link href="/contact" className="underline font-semibold">Get a precise quote from Ajay.</Link>
               </p>
