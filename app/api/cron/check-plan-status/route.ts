@@ -19,7 +19,8 @@ import fs from 'fs'
 import path from 'path'
 import { adminNotify } from '@/lib/admin-notify'
 
-const FLAGS_PATH = path.join(process.cwd(), 'lib/data/plan-flags.json')
+// /tmp is the only writable directory in Vercel serverless functions
+const FLAGS_PATH = path.join('/tmp', 'plan-flags.json')
 
 // ── Active plans to monitor ─────────────────────────────────────────────────
 // planNo → canonical LIC product page (avoids PDF links that always 200)

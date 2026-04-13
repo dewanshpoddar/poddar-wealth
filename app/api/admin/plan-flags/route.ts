@@ -18,7 +18,7 @@ import { NextResponse } from 'next/server'
 import fs   from 'fs'
 import path from 'path'
 
-const FLAGS_PATH    = path.join(process.cwd(), 'lib/data/plan-flags.json')
+const FLAGS_PATH    = path.join('/tmp', 'plan-flags.json')
 const JSON_PATH     = path.join(process.cwd(), 'lib/data/lic-plans.json')
 
 function readFlags() {
