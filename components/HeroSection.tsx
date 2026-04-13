@@ -96,7 +96,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT — image carousel ── */}
-        <div className="relative bg-navy h-[56vw] max-h-[380px] lg:h-full">
+        <div className="relative bg-navy h-[60vw] max-h-[420px] lg:h-full lg:max-h-none">
 
           {/* Photos (Slideshow) */}
           <div className="absolute inset-0 overflow-hidden bg-navy">
@@ -105,7 +105,7 @@ export default function HeroSection() {
                 key={idx}
                 src={src}
                 alt="Happy Indian family planning their future"
-                className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
             {/* Stronger gradient so images pop on mobile */}

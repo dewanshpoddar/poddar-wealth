@@ -44,8 +44,8 @@ export default function Navbar() {
         <div className="flex-col min-w-0 hidden [@media(min-width:400px)]:flex">
           <span className={`pw-logo-text uppercase transition-colors duration-500 truncate ${
             isScrolled ? 'text-white' : 'text-navy'
-          } text-[13px] sm:text-[15px] md:text-[17px]`}>
-            PoddaR Wealth
+          } text-[11px] sm:text-[13px] md:text-[16px]`}>
+            Poddar Wealth Management
           </span>
           <span className={`pw-logo-sub italic transition-colors duration-500 hidden sm:block ${
             isScrolled ? 'text-gold/90 font-medium' : 'text-gold/80'
