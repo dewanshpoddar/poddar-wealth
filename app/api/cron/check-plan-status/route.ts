@@ -6,10 +6,9 @@
  *  1. Pings the brochure/product URL of each active plan on licindia.in
  *  2. If a plan returns 404 / redirects away / times out → flags it as
  *     "possibly withdrawn" in lib/data/plan-flags.json
- *  3. Does NOT auto-withdraw anything — just tells you via Google Sheets
- *  4. Alert appears as a row in the same Google Sheet used for leads
- *     (uses GOOGLE_SHEETS_WEBHOOK_URL — no extra setup needed)
- *  5. To confirm a withdrawal: just tell Claude in chat → it updates
+ *  3. Does NOT auto-withdraw anything — sends alert to Admin Notifications
+ *     tab in Google Sheets via ADMIN_SHEETS_WEBHOOK_URL
+ *  4. To confirm a withdrawal: just tell Claude in chat → it updates
  *     lic-plans-data.js, rebuilds lic-plans.json, and pushes the change
  *
  * Auth: Vercel sends Authorization: Bearer <CRON_SECRET>
@@ -18,6 +17,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { adminNotify } from '@/lib/admin-notify'
 
 const FLAGS_PATH = path.join(process.cwd(), 'lib/data/plan-flags.json')
 
@@ -104,32 +104,17 @@ async function checkUrl(url: string): Promise<{ ok: boolean; status: number | nu
   }
 }
 
-async function sendGoogleSheetsAlert(flagged: PlanFlag[]) {
-  // Reuse the same Google Sheets webhook used for leads — no extra setup needed.
-  // Each flagged plan appears as a row so you can see it in the same sheet.
-  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
-  if (!webhookUrl || flagged.length === 0) return
-
+async function sendPlanAlerts(flagged: PlanFlag[]) {
   for (const f of flagged) {
-    try {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:    `⚠️ PLAN ALERT — ${f.name}`,
-          mobile:  `Plan No. ${f.planNo}`,
-          email:   '',
-          intent:  'Plan Withdrawal Alert',
-          message: `Plan ${f.planNo} (${f.name}) may have been withdrawn. HTTP ${f.httpStatus ?? 'timeout'} on ${f.checkedUrl}. Tell Claude to mark it as withdrawn if confirmed.`,
-          city:    '',
-          source:  'cron/check-plan-status',
-          timestamp: f.lastChecked,
-        }),
-        signal: AbortSignal.timeout(8000),
-      })
-    } catch (err) {
-      console.error('[check-plan-status] Sheets alert failed:', err)
-    }
+    await adminNotify({
+      type:     'PLAN_ALERT',
+      severity: 'warn',
+      route:    '/api/cron/check-plan-status',
+      message:  `Plan ${f.planNo} — ${f.name} may have been withdrawn from LIC's website`,
+      detail:   `HTTP status: ${f.httpStatus ?? 'timeout'}\nChecked URL: ${f.checkedUrl}\nFirst flagged: ${f.firstFlagged}\nTell Claude: "Mark plan ${f.planNo} ${f.name} as withdrawn"`,
+      planNo:   f.planNo,
+      planName: f.name,
+    })
   }
 }
 
@@ -185,7 +170,7 @@ export async function GET(req: Request) {
   writeFlags(flags)
 
   if (newlyFlagged.length > 0) {
-    await sendGoogleSheetsAlert(newlyFlagged)
+    await sendPlanAlerts(newlyFlagged)
     console.warn('[check-plan-status] Newly flagged plans:', newlyFlagged.map(f => `${f.planNo} ${f.name}`).join(', '))
   }
 

@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { adminNotify } from '@/lib/admin-notify'
 
 const CACHE_PATH = path.join(process.cwd(), 'lib/data/nav-cache.json')
 
@@ -141,6 +142,11 @@ export async function GET(req: Request) {
   } catch (err) {
     errorMsg = err instanceof Error ? err.message : 'Scrape failed'
     console.error('[cron/refresh-nav] Scrape error:', errorMsg)
+    adminNotify({
+      type: 'SCRAPE_FAIL', severity: 'warn', route: '/api/cron/refresh-nav',
+      message: `NAV scrape from licindia.in failed — serving fallback NAV values`,
+      detail: errorMsg,
+    }).catch(() => {})
   }
 
   // Merge scraped data with fallback (scraped wins where available)

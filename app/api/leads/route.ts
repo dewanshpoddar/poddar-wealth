@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+import { adminNotify } from '@/lib/admin-notify'
+
 // Set GOOGLE_SHEETS_WEBHOOK_URL in .env.local to push leads to Google Sheets
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
 
@@ -66,7 +68,12 @@ export async function POST(request: Request) {
         });
       } catch (webhookError) {
         // Log but DO NOT throw — CSV is our source of truth backup
-        console.error('Google Sheets webhook failed (non-fatal):', webhookError);
+        console.error('Google Sheets webhook failed (non-fatal):', webhookError)
+        adminNotify({
+          type: 'LEAD_FAIL', severity: 'warn', route: '/api/leads',
+          message: 'Google Sheets lead sync failed — lead saved to CSV only',
+          detail: String(webhookError),
+        }).catch(() => {})
       } finally {
         clearTimeout(timeoutId);
       }
@@ -74,8 +81,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error('Lead submission error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Lead submission error:', error)
+    adminNotify({
+      type: 'API_ERROR', severity: 'error', route: '/api/leads',
+      message: `Lead submission crashed: ${error.message}`,
+      detail: error.stack ?? String(error),
+    }).catch(() => {})
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
 

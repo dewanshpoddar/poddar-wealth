@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { adminNotify } from '@/lib/admin-notify'
 
 // Optional: set GOOGLE_SHEETS_BLUEPRINT_WEBHOOK_URL in .env.local to also
 // push blueprint data to a dedicated Google Sheets tab
@@ -75,6 +76,11 @@ export async function POST(request: Request) {
         })
       } catch (e) {
         console.error('Blueprint webhook failed (non-fatal):', e)
+        adminNotify({
+          type: 'LEAD_FAIL', severity: 'warn', route: '/api/blueprint',
+          message: 'Blueprint webhook sync failed — blueprint saved to CSV only',
+          detail: String(e),
+        }).catch(() => {})
       } finally {
         clearTimeout(tid)
       }
@@ -94,6 +100,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error('Blueprint save error:', error)
+    adminNotify({
+      type: 'API_ERROR', severity: 'error', route: '/api/blueprint',
+      message: `Blueprint submission crashed: ${error.message}`,
+      detail: error.stack ?? String(error),
+    }).catch(() => {})
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
