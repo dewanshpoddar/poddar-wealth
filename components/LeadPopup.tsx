@@ -103,6 +103,7 @@ export default function LeadPopup() {
 
                 <div className="p-6 md:p-8">
                   <BaseLeadForm 
+                    key={initialIntent}
                     fields={fields}
                     intent={initialIntent}
                     submitText={t.leadPopup.cta}

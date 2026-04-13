@@ -80,7 +80,7 @@ export default function LeadForm() {
           </div>
 
           {/* Right Side: Form Card */}
-          <div className="lg:col-span-12 xl:col-span-5 h-full">
+          <div className="lg:col-span-5 h-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}

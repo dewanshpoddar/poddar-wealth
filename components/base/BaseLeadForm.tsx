@@ -25,15 +25,15 @@ interface BaseLeadFormProps {
   grid?: boolean
 }
 
-function validateMobile(value: string) {
+function validateMobile(value: string, required?: boolean) {
   const digits = value.replace(/\D/g, '')
-  if (!digits) return 'Mobile number is required'
+  if (!digits) return required ? 'Mobile number is required' : ''
   if (digits.length !== 10) return 'Enter a valid 10-digit mobile number'
   return ''
 }
 
-function validateEmail(value: string) {
-  if (!value) return 'Email is required'
+function validateEmail(value: string, required?: boolean) {
+  if (!value) return required ? 'Email is required' : ''
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email address'
   return ''
 }
@@ -55,33 +55,37 @@ export default function BaseLeadForm({
   const [touched, setTouched] = useState<Partial<Record<keyof LeadData, boolean>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
-  const validateField = (name: keyof LeadData, value: string) => {
-    if (name === 'mobile') return validateMobile(value)
-    if (name === 'email') return validateEmail(value)
+  const validateField = (name: keyof LeadData, value: string, required?: boolean) => {
+    if (name === 'mobile') return validateMobile(value, required)
+    if (name === 'email') return validateEmail(value, required)
+    // For all other required fields (select, textarea, text), check if empty
+    if (required && !value.trim()) return 'This field is required'
     return ''
   }
 
   const handleChange = (name: keyof LeadData, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }))
     if (touched[name]) {
-      setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+      const field = fields.find(f => f.name === name)
+      setErrors(prev => ({ ...prev, [name]: validateField(name, value, field?.required) }))
     }
   }
 
   const handleBlur = (name: keyof LeadData, value: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
-    setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+    const field = fields.find(f => f.name === name)
+    setErrors(prev => ({ ...prev, [name]: validateField(name, value, field?.required) }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate mobile + email on submit
+    // Validate all fields on submit
     const newErrors: Partial<Record<keyof LeadData, string>> = {}
     const newTouched: Partial<Record<keyof LeadData, boolean>> = {}
     for (const field of fields) {
       newTouched[field.name] = true
-      const err = validateField(field.name, (formData[field.name] as string) || '')
+      const err = validateField(field.name, (formData[field.name] as string) || '', field.required)
       if (err) newErrors[field.name] = err
     }
     setTouched(newTouched)
