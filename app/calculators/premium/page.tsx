@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import {
   Calculator, ArrowRight, ChevronDown, ChevronUp,
-  Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star
+  Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star, RefreshCw
 } from 'lucide-react'
 import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA, toWords } from '@/lib/format'
@@ -77,8 +77,10 @@ export default function PremiumCalculatorPage() {
 
   /* ULIP: fund selection + live NAV */
   const [ulipFund,    setUlipFund]    = useState<string>('')
-  const [navData,     setNavData]     = useState<Record<string, Record<string, { nav: number; date: string }>>>({})
-  const [navLoading,  setNavLoading]  = useState(false)
+  const [navData,       setNavData]       = useState<Record<string, Record<string, { nav: number; date: string }>>>({})
+  const [navLoading,    setNavLoading]    = useState(false)
+  const [navRefreshing, setNavRefreshing] = useState(false)
+  const [navLastUpdated, setNavLastUpdated] = useState<string | null>(null)
   const isUlip = selectedPlan?.category === 'ulip'
 
   useEffect(() => {
@@ -86,10 +88,20 @@ export default function PremiumCalculatorPage() {
     setNavLoading(true)
     fetch('/api/nav')
       .then(r => r.json())
-      .then(d => { if (d.success) setNavData(d.nav) })
+      .then(d => { if (d.success) { setNavData(d.nav); setNavLastUpdated(d.scrapedAt) } })
       .catch(() => {})
       .finally(() => setNavLoading(false))
   }, [isUlip])
+
+  async function handleRefreshNav() {
+    setNavRefreshing(true)
+    try {
+      await fetch('/api/cron/refresh-nav')
+      const d = await fetch('/api/nav').then(r => r.json())
+      if (d.success) { setNavData(d.nav); setNavLastUpdated(d.scrapedAt) }
+    } catch (_) {}
+    setNavRefreshing(false)
+  }
 
   useEffect(() => {
     if (isUlip && selectedPlan?.fundOptions?.length) {
@@ -397,10 +409,23 @@ export default function PremiumCalculatorPage() {
                   <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="font-display font-bold text-[16px] text-navy">Choose Fund</h2>
-                      {navLoading && <span className="text-[11px] text-gray-400 animate-pulse">Fetching live NAV…</span>}
-                      {!navLoading && navData[String(selectedPlan.planNo)] && (
-                        <span className="text-[11px] text-green-600 font-semibold">● Live NAV</span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {navLoading && <span className="text-[11px] text-gray-400 animate-pulse">Fetching…</span>}
+                        {!navLoading && navLastUpdated && (
+                          <span className="text-[10px] text-gray-400">
+                            Updated {new Date(navLastUpdated).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        )}
+                        <button onClick={handleRefreshNav} disabled={navRefreshing}
+                          title="Refresh NAV from LIC"
+                          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold transition-all
+                            ${navRefreshing
+                              ? 'border-gray-100 text-gray-300 cursor-not-allowed'
+                              : 'border-gold/30 text-gold hover:bg-gold/5 hover:border-gold/60'}`}>
+                          <RefreshCw className={`w-3 h-3 ${navRefreshing ? 'animate-spin' : ''}`} />
+                          {navRefreshing ? 'Refreshing…' : 'Refresh NAV'}
+                        </button>
+                      </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {selectedPlan.fundOptions.map((fund: any) => {
