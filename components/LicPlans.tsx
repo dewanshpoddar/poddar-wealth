@@ -213,7 +213,7 @@ export default function LicPlans() {
   const [showWithdrawn, setShowWithdrawn]     = useState(false)
 
   useEffect(() => {
-    fetch('/api/lic-plans?view=all')
+    fetch('/api/lic-plans')
       .then(r => r.json())
       .then(res => { if (res.success) setData(res.data); setLoading(false) })
       .catch(() => setLoading(false))

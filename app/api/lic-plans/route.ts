@@ -43,7 +43,9 @@ function filterActiveOnly(raw: any) {
       delete filtered.categories[key];
     }
   }
-  filtered.meta.totalPlans = Object.values(filtered.categories)
+  const count = Object.values(filtered.categories)
     .reduce((sum: number, cat: any) => sum + cat.plans.length, 0);
+  filtered.meta.totalPlans  = count;
+  filtered.meta.activePlans = count;
   return filtered;
 }
