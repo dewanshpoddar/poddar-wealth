@@ -34,19 +34,20 @@ export default function Navbar() {
     }`}>
 
       {/* Logo Area */}
-      <Link href="/" className="pw-logo-area">
-        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center p-2 shadow-sm overflow-hidden transition-all duration-500 ${
+      <Link href="/" className="pw-logo-area flex-shrink-0">
+        <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center p-1.5 shadow-sm overflow-hidden transition-all duration-500 flex-shrink-0 ${
           isScrolled ? 'bg-white shadow-none' : 'bg-white shadow-gold-sm border-gold/10 border'
         }`}>
           <img src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" className="w-full h-full object-contain scale-110" />
         </div>
-        <div className="flex flex-col">
-          <span className={`pw-logo-text uppercase transition-colors duration-500 ${
+        {/* Logo text — hidden below 400px to give room for lang toggle + hamburger */}
+        <div className="flex-col min-w-0 hidden [@media(min-width:400px)]:flex">
+          <span className={`pw-logo-text uppercase transition-colors duration-500 truncate ${
             isScrolled ? 'text-white' : 'text-navy'
-          } text-[15px] md:text-xl`}>
-            PoddaR Wealth Management
+          } text-[13px] sm:text-[15px] md:text-[17px]`}>
+            PoddaR Wealth
           </span>
-          <span className={`pw-logo-sub italic transition-colors duration-500 ${
+          <span className={`pw-logo-sub italic transition-colors duration-500 hidden sm:block ${
             isScrolled ? 'text-gold/90 font-medium' : 'text-gold/80'
           }`}>
             Excellence in Protection Since 1994

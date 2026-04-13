@@ -532,8 +532,14 @@ export default function WealthBlueprintCalculator() {
           </div>
         )}
 
-        <div className="max-w-2xl mx-auto">
-          <AnimatePresence mode="wait">
+        {/* ── Steps 0-3: 2-col layout (form + live sidebar) ── */}
+        {step < 4 && (
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-[1fr_288px] gap-6 items-start">
+
+              {/* Left column: form steps */}
+              <div>
+                <AnimatePresence mode="wait">
 
             {/* ── STEP 0: Identity ─────────────────────────────────────── */}
             {step === 0 && (
@@ -733,7 +739,110 @@ export default function WealthBlueprintCalculator() {
               </motion.div>
             )}
 
-            {/* ── STEP 4: THE WEALTH BRIEF ─────────────────────────────── */}
+                </AnimatePresence>
+              </div>
+
+              {/* Right column: live preview sidebar */}
+              <div className="hidden lg:block sticky top-[90px]">
+                <div className="bg-navy rounded-2xl p-5 text-white">
+                  <div className="text-9 font-bold tracking-[0.18em] uppercase text-gold/70 mb-4">Your Live Snapshot</div>
+
+                  {/* Profile summary */}
+                  <div className="space-y-2.5 mb-5">
+                    <div className="flex justify-between items-center">
+                      <span className="text-10 text-white/50">Age</span>
+                      <span className="text-12 font-bold text-white">{age} years</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-10 text-white/50">Monthly Income</span>
+                      <span className="text-12 font-bold text-gold">{incomeLabel}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-10 text-white/50">City</span>
+                      <span className="text-12 font-bold text-white capitalize">{cityTier === 'metro' ? 'Metro' : cityTier === 'tier2' ? 'Tier-2' : 'Tier-3'}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-10 text-white/50">Family</span>
+                      <span className="text-12 font-bold text-white">{isMarried ? 'Married' : 'Single'}{children > 0 ? `, ${children} child${children > 1 ? 'ren' : ''}` : ''}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-10 text-white/50">Retire by</span>
+                      <span className="text-12 font-bold text-white">Age {retirementAge}</span>
+                    </div>
+                  </div>
+
+                  {/* Live key metrics */}
+                  <div className="border-t border-white/10 pt-4 mb-5">
+                    <div className="text-9 font-bold tracking-[0.14em] uppercase text-white/30 mb-3">Blueprint Preview</div>
+                    <div className="space-y-3">
+                      <div className="bg-white/6 rounded-xl px-3 py-2.5">
+                        <div className="text-9 text-white/40 mb-0.5">Human Life Value</div>
+                        <div className="text-18 font-bold text-gold">₹{fmt(bp.hlvL)}L</div>
+                        <div className="text-9 text-white/30">Your economic worth to family</div>
+                      </div>
+                      <div className="bg-white/6 rounded-xl px-3 py-2.5">
+                        <div className="text-9 text-white/40 mb-0.5">Retirement Corpus Needed</div>
+                        <div className={`text-18 font-bold ${bp.retDiffCrore < 0 ? 'text-red-400' : 'text-green-400'}`}>{crore(bp.retCorpusCrore)}</div>
+                        <div className="text-9 text-white/30">At 3.5% safe withdrawal rate</div>
+                      </div>
+                      <div className="bg-white/6 rounded-xl px-3 py-2.5">
+                        <div className="text-9 text-white/40 mb-0.5">Protection Gap</div>
+                        <div className={`text-18 font-bold ${bp.gapL > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                          {bp.gapL > 0 ? `₹${fmt(bp.gapL)}L` : 'None'}
+                        </div>
+                        <div className="text-9 text-white/30">{bp.gapL > 0 ? `${bp.gapPct}% of HLV uncovered` : 'Fully protected'}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* What's in the blueprint */}
+                  <div className="border-t border-white/10 pt-4">
+                    <div className="text-9 font-bold tracking-[0.14em] uppercase text-white/30 mb-3">Your Brief Includes</div>
+                    <ul className="space-y-2">
+                      {[
+                        'Personalised financial narrative',
+                        'Specific LIC plan names + premiums',
+                        'Named mutual funds to invest in',
+                        '90-day action plan with platforms',
+                        isHNI ? 'HNI: NPS + LRS + ESOP strategy' : 'Emergency corpus roadmap',
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-10 text-white/50">
+                          <span className="text-gold mt-0.5 flex-shrink-0">✦</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Progress indicator */}
+                  <div className="mt-5 pt-4 border-t border-white/10">
+                    <div className="flex justify-between text-9 text-white/30 mb-2">
+                      <span>Blueprint completion</span>
+                      <span>{Math.round((step / 4) * 100)}%</span>
+                    </div>
+                    <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-gold rounded-full transition-all duration-500" style={{ width: `${(step / 4) * 100}%` }}/>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Confidentiality note */}
+                <div className="mt-3 flex items-start gap-2 px-1">
+                  <Lock size={10} className="text-gray-400 mt-0.5 flex-shrink-0"/>
+                  <p className="text-10 text-gray-400 leading-snug">
+                    100% confidential. Your data powers your blueprint only — never stored or shared until you explicitly save.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* ── Step 4: Full-width results ── */}
+        {step === 4 && (
+          <div className="max-w-4xl mx-auto">
+            <AnimatePresence mode="wait">
             {step === 4 && (
               <motion.div key="s4" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
 
@@ -1044,9 +1153,10 @@ export default function WealthBlueprintCalculator() {
                 </div>
               </motion.div>
             )}
+            </AnimatePresence>
+          </div>
+        )}
 
-          </AnimatePresence>
-        </div>
       </div>
     </section>
   )

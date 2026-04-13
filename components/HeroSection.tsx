@@ -95,14 +95,8 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── RIGHT ── */}
-        <div className="relative bg-navy h-[280px] lg:h-full">
-
-          {/* Geometric circles */}
-          <div className="absolute w-[300px] h-[300px] rounded-full border border-[rgba(245,200,66,0.12)]
-                          top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-          <div className="absolute w-[460px] h-[460px] rounded-full border border-[rgba(245,200,66,0.06)]
-                          top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        {/* ── RIGHT — image carousel ── */}
+        <div className="relative bg-navy h-[56vw] max-h-[380px] lg:h-full">
 
           {/* Photos (Slideshow) */}
           <div className="absolute inset-0 overflow-hidden bg-navy">
@@ -114,22 +108,31 @@ export default function HeroSection() {
                 className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/5 to-transparent pointer-events-none" />
+            {/* Stronger gradient so images pop on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/10 to-navy/20 pointer-events-none" />
           </div>
 
-          {/* Dot Navigation */}
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+          {/* Dot Navigation — visible on all sizes */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentImageIndex(idx)}
-                className={`transition-all duration-300 rounded-full h-1.5 ${idx === currentImageIndex ? 'w-6 bg-gold' : 'w-1.5 bg-white/40 hover:bg-white/80'}`}
+                className={`transition-all duration-300 rounded-full h-1.5 ${idx === currentImageIndex ? 'w-6 bg-gold' : 'w-1.5 bg-white/50 hover:bg-white/80'}`}
                 aria-label={`Slide ${idx + 1}`}
               />
             ))}
           </div>
 
-          {/* Plan card — bottom left, overlapping into left column */}
+          {/* Mobile badge — bottom left corner (replaces the broken chip) */}
+          <div className="absolute bottom-8 left-4 lg:hidden z-10">
+            <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"/>
+              <span className="text-[10px] font-bold text-white/90 tracking-wider uppercase">31 Yrs · MDRT Certified</span>
+            </div>
+          </div>
+
+          {/* Plan card — desktop only, overlapping into left column */}
           <div className="hidden lg:block absolute bottom-6 -left-16 w-[230px] bg-white rounded-2xl p-4
                           border border-[rgba(184,134,11,0.12)] z-20 shadow-2xl animate-slide-in">
             <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
@@ -158,8 +161,8 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* "Why families trust us" chip — bottom right */}
-          <div className="absolute bottom-10 right-6 bg-white/[0.07] border border-white/[0.12]
+          {/* "Why families trust us" chip — desktop only */}
+          <div className="hidden lg:block absolute bottom-10 right-6 bg-white/[0.07] border border-white/[0.12]
                           rounded-xl px-4 py-3 max-w-[170px] z-10 animate-fade-up"
                style={{ animationDelay: '0.55s' }}>
             <div className="text-[10px] text-[rgba(245,200,66,0.7)] tracking-[0.1em] mb-1.5 font-medium uppercase">
