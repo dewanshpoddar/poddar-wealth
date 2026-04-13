@@ -188,7 +188,7 @@ export default function ContactPage() {
 
               <div className="bg-white rounded-3xl shadow-card p-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <Clock className="w-5 h-5 text-brand-600" />
+                  <Clock className="w-5 h-5 text-gold" />
                   <h3 className="font-display font-bold text-lg text-slate-900">{t.contact.officeTitle}</h3>
                 </div>
                 <pre className="text-slate-600 text-sm whitespace-pre-wrap font-sans leading-relaxed">{t.contact.officeHours}</pre>

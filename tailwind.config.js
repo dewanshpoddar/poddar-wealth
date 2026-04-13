@@ -94,6 +94,8 @@ module.exports = {
         'wa':         '0 4px 16px rgba(37,211,102,0.4)',
         'navy':       '0 4px 20px rgba(12,35,64,0.3)',
         'navy-sm':    '0 2px 8px rgba(12,35,64,0.2)',
+        'hero':       '0 20px 60px rgba(0,0,0,0.35)',
+        'card-hover': '0 8px 32px rgba(0,0,0,0.14)',
       },
       keyframes: {
         'wa-pulse': {

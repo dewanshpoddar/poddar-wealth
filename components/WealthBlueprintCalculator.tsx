@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackEvent } from '@/lib/analytics'
 import {
   Shield, Heart, TrendingUp, Landmark, PiggyBank, Lock, CheckCircle2,
   ArrowRight, ChevronRight, AlertTriangle, TriangleAlert, Star,
@@ -425,6 +426,7 @@ export default function WealthBlueprintCalculator() {
   const [saveError, setSaveError] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const trackedResult = useRef(false)
 
   const [age, setAge]           = useState(29)
   const [monthlyIncome, setMI]  = useState(80000)
@@ -479,9 +481,31 @@ export default function WealthBlueprintCalculator() {
         body: JSON.stringify({ name, phone, profile, blueprint: bp }),
       })
       setSaved(true)
-    } catch { setSaveError('Could not save. Please try again.') }
+      trackEvent('blueprint_lead_submitted', {
+        score: bp.score,
+        gap_lakhs: Math.round(bp.protectionGapL),
+        hlv_lakhs: Math.round(bp.hlvL),
+      })
+    } catch {
+      setSaveError('Could not save. Please try again.')
+      trackEvent('blueprint_lead_failed', { error_type: 'network' })
+    }
     finally { setSaving(false) }
   }
+
+  // Track when results render (once per session)
+  useEffect(() => {
+    if (step === 4 && !trackedResult.current) {
+      trackedResult.current = true
+      trackEvent('blueprint_completed', {
+        score: bp.score,
+        gap_lakhs: Math.round(bp.protectionGapL),
+        hlv_lakhs: Math.round(bp.hlvL),
+        is_hni: bp.isHNI,
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step])
 
   const slide = { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -20 } }
 
@@ -592,7 +616,7 @@ export default function WealthBlueprintCalculator() {
                   </div>
                 </div>
                 <div className="mt-7 flex justify-end">
-                  <button onClick={() => setStep(1)}
+                  <button onClick={() => { trackEvent('blueprint_step_completed', { step: 1 }); setStep(1) }}
                     className="flex items-center gap-2 bg-navy text-white font-bold text-12 px-7 py-3 rounded-full hover:bg-navy/90 transition-all shadow-md">
                     Next <ArrowRight size={12}/>
                   </button>
@@ -660,7 +684,7 @@ export default function WealthBlueprintCalculator() {
                 )}
                 <div className="flex justify-between mt-5">
                   <button onClick={() => setStep(0)} className="text-12 text-navy/40 hover:text-navy transition-colors px-2 py-2">← Back</button>
-                  <button onClick={() => setStep(2)}
+                  <button onClick={() => { trackEvent('blueprint_step_completed', { step: 2 }); setStep(2) }}
                     className="flex items-center gap-2 bg-navy text-white font-bold text-12 px-7 py-3 rounded-full hover:bg-navy/90 transition-all shadow-md">
                     Next <ArrowRight size={12}/>
                   </button>
@@ -683,7 +707,7 @@ export default function WealthBlueprintCalculator() {
                 </div>
                 <div className="flex justify-between mt-7">
                   <button onClick={() => setStep(1)} className="text-12 text-navy/40 hover:text-navy transition-colors px-2 py-2">← Back</button>
-                  <button onClick={() => setStep(3)}
+                  <button onClick={() => { trackEvent('blueprint_step_completed', { step: 3 }); setStep(3) }}
                     className="flex items-center gap-2 bg-navy text-white font-bold text-12 px-7 py-3 rounded-full hover:bg-navy/90 transition-all shadow-md">
                     Next <ArrowRight size={12}/>
                   </button>
@@ -731,7 +755,7 @@ export default function WealthBlueprintCalculator() {
                 </div>
                 <div className="flex justify-between mt-7">
                   <button onClick={() => setStep(2)} className="text-12 text-navy/40 hover:text-navy transition-colors px-2 py-2">← Back</button>
-                  <button onClick={() => setStep(4)}
+                  <button onClick={() => { trackEvent('blueprint_step_completed', { step: 4 }); setStep(4) }}
                     className="flex items-center gap-2 bg-gold text-white font-bold text-12 px-8 py-3 rounded-full hover:bg-gold/90 transition-all shadow-lg">
                     Generate My Blueprint <ArrowRight size={12}/>
                   </button>

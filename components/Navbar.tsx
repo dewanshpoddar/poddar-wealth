@@ -132,9 +132,9 @@ export default function Navbar() {
           >हिंदी</button>
         </div>
 
-        <Link href="#" className={`text-[14px] font-bold transition-colors duration-500 ${
+        <Link href="/contact" className={`text-[14px] font-bold transition-colors duration-500 ${
           isScrolled ? 'text-white/90 hover:text-gold' : 'text-navy hover:text-gold'
-        }`}>{t.nav.login}</Link>
+        }`}>{t.nav.renewPolicy}</Link>
         
         <Link href="/contact" className={`pw-nav-cta hidden xl:block shadow-xl ${
           isScrolled ? 'bg-gold hover:bg-gold-hover' : 'bg-navy hover:bg-navy-mid'
@@ -232,7 +232,10 @@ export default function Navbar() {
 
             <div className={`h-px my-1 w-full ${isScrolled ? 'bg-white/10' : 'bg-gray-100'}`}></div>
 
-            <Link href="#" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.login}</Link>
+            <Link href="/contact" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
+            <Link href="/become-advisor" onClick={() => setOpen(false)} className={`text-[14px] font-medium ${isScrolled ? 'text-white/40 hover:text-white/70' : 'text-slate-400 hover:text-slate-600'}`}>
+              Join as Advisor
+            </Link>
             
             <Link href="/contact" onClick={() => setOpen(false)} className="pw-btn pw-btn--gold pw-btn--full mt-2 shadow-xl py-4 text-16">
               {t.nav.getQuote}

@@ -2,7 +2,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
-import LeadForm from '@/components/LeadForm'
+import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 
 const whyPoints = [
@@ -88,7 +88,7 @@ export default function LifeInsurancePage() {
         </div>
       </section>
 
-      <LeadForm />
+      <ConsultationSection intent="Life Insurance Consultation" />
     </div>
   )
 }

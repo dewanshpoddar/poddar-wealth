@@ -433,6 +433,35 @@
            transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed;
   }
 
+  /* Secondary action button — outline style for dark/hero backgrounds */
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-transparent font-medium text-14
+           px-6 py-3 rounded-xl cursor-pointer border border-current
+           hover:bg-white/10 active:scale-[0.98]
+           transition-all duration-150;
+  }
+
+  /* Section subtitle — muted lead text below section headings */
+  .section-subtitle {
+    @apply text-slate-500 text-lg leading-relaxed mt-2;
+  }
+
+  /* Section title — consistent h2 style across service/calculator pages */
+  .section-title {
+    @apply font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight;
+  }
+
+  /* Badge — small label chip */
+  .badge {
+    @apply inline-block text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+
+  /* Card — standard white card with subtle border */
+  .card {
+    @apply bg-white border border-slate-100 rounded-2xl p-6 shadow-sm
+           hover:shadow-lg hover:shadow-gold/5 transition-all duration-300;
+  }
+
 }
 
 /* ============================================================

@@ -11,16 +11,36 @@ const HEADERS = [
   'Intent', 'Experience', 'Message',
 ];
 
+// Sanitize: strip newlines/tabs, limit length
+const clean = (s: any, max = 500): string =>
+  String(s ?? '').slice(0, max).replace(/[\r\n\t]/g, ' ').trim()
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
     const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message } = data;
 
+    // Validate required fields
+    if (!name || clean(name, 100).length < 2) {
+      return NextResponse.json({ error: 'Invalid name' }, { status: 400 });
+    }
+    if (!mobile || !/^\d{10}$/.test(String(mobile).replace(/\s/g, ''))) {
+      return NextResponse.json({ error: 'Invalid mobile number — must be 10 digits' }, { status: 400 });
+    }
+
     const timestamp = new Date().toISOString();
     const row = [
-      timestamp, name ?? '', mobile ?? '', email ?? '',
-      city ?? '', profession ?? '', wantTo ?? '', iAm ?? '',
-      intent ?? '', experience ?? '', message ?? '',
+      timestamp,
+      clean(name, 100),
+      clean(mobile, 10),
+      clean(email, 200),
+      clean(city, 100),
+      clean(profession, 100),
+      clean(wantTo, 200),
+      clean(iAm, 100),
+      clean(intent, 200),
+      clean(experience, 200),
+      clean(message, 1000),
     ];
 
     // 1. Always write to local CSV as backup

@@ -23,9 +23,20 @@ const HEADERS = [
   'TotalMonthlyRecommended',
 ]
 
+const clean = (s: any, max = 500): string =>
+  String(s ?? '').slice(0, max).replace(/[\r\n\t]/g, ' ').trim()
+
 export async function POST(request: Request) {
   try {
     const { name, phone, profile: p, blueprint: bp } = await request.json()
+
+    // Validate name and phone before writing
+    if (!name || clean(name, 100).length < 2) {
+      return NextResponse.json({ error: 'Invalid name' }, { status: 400 })
+    }
+    if (!phone || !/^\d{10}$/.test(String(phone).replace(/\s/g, ''))) {
+      return NextResponse.json({ error: 'Invalid phone — must be 10 digits' }, { status: 400 })
+    }
     const timestamp = new Date().toISOString()
 
     const row = [

@@ -2,7 +2,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
-import LeadForm from '@/components/LeadForm'
+import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 
 const features = [
@@ -89,7 +89,7 @@ export default function HealthInsurancePage() {
         </div>
       </section>
 
-      <LeadForm />
+      <ConsultationSection intent="Health Insurance Consultation" />
     </div>
   )
 }

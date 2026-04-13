@@ -48,6 +48,11 @@ export default function Footer() {
                   <span className="animate-pulse">✨</span> AI Advisor (Poddar Ji)
                 </Link>
               </li>
+              <li>
+                <Link href="/become-advisor" className="text-gray-500 hover:text-gold text-sm transition-colors duration-200">
+                  Join as Advisor
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -113,9 +118,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-gray-500 text-[11px] text-center md:text-left">
             {t.footer.rights}
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="text-[11px] text-gray-600 hover:text-gold transition-colors">Privacy Policy</Link>
+            <span className="text-gray-700">·</span>
+            <Link href="/terms" className="text-[11px] text-gray-600 hover:text-gold transition-colors">Terms of Service</Link>
           </div>
           <div className="text-[10px] text-gray-600 text-center md:text-right max-w-xl leading-relaxed italic">
             {t.footer.disclaimer}
