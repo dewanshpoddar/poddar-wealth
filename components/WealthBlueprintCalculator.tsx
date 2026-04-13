@@ -569,7 +569,7 @@ export default function WealthBlueprintCalculator() {
             {step === 0 && (
               <motion.div key="s0" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
-                <h3 className="text-16 font-bold text-navy mb-6">Let's start with the basics</h3>
+                <h3 className="text-16 font-bold text-navy mb-6">Let&apos;s start with the basics</h3>
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <div className="flex justify-between mb-2">
@@ -907,7 +907,7 @@ export default function WealthBlueprintCalculator() {
                   <SectionLabel n="01" title="Your Financial Story"/>
                   <div className="bg-[#f8f7f4] rounded-2xl p-6 border border-gray-100">
                     <p className="text-15 md:text-17 font-bold text-navy leading-snug mb-5 italic">
-                      "{narrative.headline}"
+                      &ldquo;{narrative.headline}&rdquo;
                     </p>
                     <div className="space-y-3">
                       {narrative.paras.map((p, i) => (
@@ -1139,7 +1139,7 @@ export default function WealthBlueprintCalculator() {
                           <Lock size={12} className="text-gold"/>
                           <span className="text-9 font-bold tracking-[0.18em] text-gold/70 uppercase">Private · Confidential · Free</span>
                         </div>
-                        <h4 className="text-17 font-bold text-white mb-1">Get Ajay sir's personal review of this blueprint</h4>
+                        <h4 className="text-17 font-bold text-white mb-1">Get Ajay sir&apos;s personal review of this blueprint</h4>
                         <p className="text-12 text-white/45 mb-5 leading-relaxed max-w-lg">
                           Ajay sir personally reviews every blueprint submitted here and calls with a specific, no-script action plan — not a sales call. Your data is never sold or shared.
                         </p>

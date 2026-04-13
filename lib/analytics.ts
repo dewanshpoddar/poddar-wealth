@@ -42,8 +42,7 @@ export function trackEvent(
   params?: Record<string, string | number | boolean>
 ) {
   if (typeof window === 'undefined') return
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (typeof (window as any).gtag !== 'function') return
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(window as any).gtag('event', name, params ?? {})
+  const w = window as Window & { gtag?: (...args: unknown[]) => void }
+  if (typeof w.gtag !== 'function') return
+  w.gtag('event', name, params ?? {})
 }
