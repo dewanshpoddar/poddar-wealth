@@ -20,6 +20,7 @@ const CATEGORIES = [
   { key: 'child',     label: 'Child',        icon: '🎓' },
   { key: 'pension',   label: 'Pension',      icon: '📈' },
   { key: 'ulip',      label: 'ULIP',         icon: '📊' },
+  { key: 'micro',     label: 'Micro/Rural',  icon: '🌾' },
   { key: 'withdrawn', label: 'Withdrawn',    icon: '📦' },
 ]
 
@@ -31,6 +32,7 @@ const CAT_BADGE: Record<string, string> = {
   child:     'bg-amber-50 text-amber-700',
   pension:   'bg-indigo-50 text-indigo-700',
   ulip:      'bg-teal-50 text-teal-700',
+  micro:     'bg-lime-50 text-lime-700',
   withdrawn: 'bg-slate-100 text-slate-500',
 }
 
@@ -42,6 +44,7 @@ const CAT_AVATAR_COLOR: Record<string, string> = {
   child:     'bg-amber-600',
   pension:   'bg-indigo-600',
   ulip:      'bg-teal-600',
+  micro:     'bg-lime-600',
   withdrawn: 'bg-slate-500',
 }
 
