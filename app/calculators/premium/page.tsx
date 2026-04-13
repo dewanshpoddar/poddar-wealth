@@ -83,6 +83,22 @@ export default function PremiumCalculatorPage() {
   const [navLastUpdated, setNavLastUpdated] = useState<string | null>(null)
   const isUlip = selectedPlan?.category === 'ulip'
 
+  /* plan-specific inputs */
+  const [annuityOption,       setAnnuityOption]       = useState<string>('')
+  const [purchasePrice,       setPurchasePrice]       = useState(500000)
+  const [maturityAge,         setMaturityAge]         = useState(100)
+  const [survivalBenefitPct,  setSurvivalBenefitPct]  = useState<5|10|15|20>(5)
+  const [bimaLakshmiOption,   setBimaLakshmiOption]   = useState<'A'|'B'>('A')
+
+  /* results slide panel */
+  const [showResults, setShowResults] = useState(false)
+
+  /* plan-type helpers */
+  const isPensionAnnuity = ['758','857','862','879'].includes(String(selectedPlan?.planNo))
+  const isWholeLifeUtsav = ['771','883'].includes(String(selectedPlan?.planNo))
+  const isJeevanTarun    = selectedPlan?.planNo === 734
+  const isBimaLakshmi    = selectedPlan?.planNo === 881
+
   useEffect(() => {
     if (!isUlip) return
     setNavLoading(true)
@@ -156,15 +172,59 @@ export default function PremiumCalculatorPage() {
 
   function handleSelectPlan(plan: any) {
     setSelectedPlan(plan)
-    setPremResult(null)
-    setMatResult(null)
-    setBenefitTable([])
+    setShowResults(false)
     setShowTable(false)
     setShowAllRows(false)
     setIsUnlocked(false)
     setUnlockStatus('idle')
     setUlipFund('')
+
+    // Set plan-specific defaults
+    if (plan.defaultGender) setGender(plan.defaultGender)
+    if (plan.bimaLakshmiOption) setBimaLakshmiOption('A')
+    if (plan.annuityOptions?.length) setAnnuityOption(plan.annuityOptions[0])
+    if (plan.defaultMaturityAge) setMaturityAge(plan.defaultMaturityAge)
     if (plan.minTerm && plan.minTerm < 50) setTerm(Math.max(plan.minTerm, Math.min(term, plan.maxTerm ?? 35)))
+
+    // Restore from sessionStorage cache
+    try {
+      const cached = sessionStorage.getItem(`calc_${plan.planNo}`)
+      if (cached) {
+        const c = JSON.parse(cached)
+        if (c.age)               setAge(c.age)
+        if (c.sa)                setSa(c.sa)
+        if (c.term)              setTerm(c.term)
+        if (c.mode)              setMode(c.mode)
+        if (c.gender)            setGender(c.gender)
+        if (c.smoker !== undefined) setSmoker(c.smoker)
+        if (c.ulipFund)          setUlipFund(c.ulipFund)
+        if (c.annuityOption)     setAnnuityOption(c.annuityOption)
+        if (c.purchasePrice)     setPurchasePrice(c.purchasePrice)
+        if (c.maturityAge)       setMaturityAge(c.maturityAge)
+        if (c.survivalBenefitPct) setSurvivalBenefitPct(c.survivalBenefitPct)
+        if (c.bimaLakshmiOption) setBimaLakshmiOption(c.bimaLakshmiOption)
+        if (c.clientName)        setClientName(c.clientName)
+        if (c.salutation)        setSalutation(c.salutation)
+        if (c.premResult) {
+          setPremResult(c.premResult)
+          setMatResult(c.matResult)
+          setBenefitTable(c.benefitTable ?? [])
+          setShowResults(true)
+        } else {
+          setPremResult(null)
+          setMatResult(null)
+          setBenefitTable([])
+        }
+      } else {
+        setPremResult(null)
+        setMatResult(null)
+        setBenefitTable([])
+      }
+    } catch {
+      setPremResult(null)
+      setMatResult(null)
+      setBenefitTable([])
+    }
   }
 
   function handleQuickSelect() {
@@ -178,14 +238,26 @@ export default function PremiumCalculatorPage() {
 
   function calculate() {
     if (!selectedPlan) return
-    const prem = calculatePremium({ planNo: selectedPlan.planNo, sa, age, term: safeterm, ppt, mode, smoker, gender })
-    const mat  = calculateMaturity({ planNo: selectedPlan.planNo, sa, term: safeterm })
-    const table = generateBenefitTable({ planNo: selectedPlan.planNo, sa, age, term: safeterm, ppt, premResult: prem as any })
+    const effectiveSa = isPensionAnnuity ? purchasePrice : sa
+    const prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender })
+    const mat  = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm })
+    const table = generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem as any })
     setPremResult(prem)
     setMatResult(mat)
     setBenefitTable(table ?? [])
     setIsUnlocked(false)
     setUnlockStatus('idle')
+    setShowResults(true)
+
+    // Persist to sessionStorage
+    try {
+      sessionStorage.setItem(`calc_${selectedPlan.planNo}`, JSON.stringify({
+        age, sa: effectiveSa, term, mode, gender, smoker, ulipFund,
+        annuityOption, purchasePrice, maturityAge, survivalBenefitPct, bimaLakshmiOption,
+        clientName, salutation,
+        premResult: prem, matResult: mat, benefitTable: table ?? [],
+      }))
+    } catch { /* quota exceeded — ignore */ }
   }
 
   async function handleUnlock(e: React.FormEvent) {
@@ -469,6 +541,28 @@ export default function PremiumCalculatorPage() {
                   </div>
                 )}
 
+                {/* ── Slide container wraps inputs + results ── */}
+                <div className="relative overflow-hidden rounded-2xl">
+                  {/* Back button strip when results are showing */}
+                  {showResults && (
+                    <div className="sticky top-[86px] z-30 bg-white border-b border-gold/10 px-4 py-2.5 flex items-center gap-3 shadow-sm">
+                      <button onClick={() => setShowResults(false)}
+                        className="flex items-center gap-1.5 text-[12px] font-semibold text-gold hover:text-gold-hover transition-colors">
+                        ← Back to Inputs
+                      </button>
+                      <div className="flex-1 text-center text-[11px] text-gray-400 truncate">
+                        LIC&apos;s {selectedPlan.name} · Age {age} · {isPensionAnnuity ? fmtSA(purchasePrice) : fmtSA(sa)}
+                      </div>
+                      <button onClick={calculate}
+                        className="text-[11px] font-bold text-navy bg-gold/10 hover:bg-gold/20 border border-gold/20 px-3 py-1 rounded-lg transition-all">
+                        Recalculate
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Inputs panel — slides out left when results open */}
+                  <div className={`transition-all duration-300 ease-in-out ${showResults ? 'hidden' : 'block'}`}>
+
                 {/* Input form */}
                 <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5 space-y-5">
                   <h2 className="font-display font-bold text-[16px] text-navy">Enter Details</h2>
@@ -495,74 +589,178 @@ export default function PremiumCalculatorPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {/* Age */}
+
+                    {/* ── Age: slider + number ── */}
                     <div>
-                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
-                        Age: <span className="text-gold">{age} years</span>
-                      </label>
-                      <input type="range" min={selectedPlan.minAge ?? 18} max={selectedPlan.maxAge ?? 65}
-                        value={age} onChange={e => setAge(+e.target.value)}
-                        className="w-full accent-[#b8860b] h-1.5 rounded-full" />
-                      <div className="flex justify-between text-[10px] text-gray-300 mt-0.5">
-                        <span>{selectedPlan.minAge ?? 18}</span><span>{selectedPlan.maxAge ?? 65}</span>
+                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Age</label>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <input type="range" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                          value={age} onChange={e => setAge(+e.target.value)}
+                          className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                        <input type="number" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                          value={age} onChange={e => setAge(Math.min(selectedPlan.maxAge ?? 65, Math.max(selectedPlan.minAge ?? 0, +e.target.value)))}
+                          className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                      </div>
+                      <div className="flex justify-between text-[10px] text-gray-300">
+                        <span>{selectedPlan.minAge ?? 0} yrs</span><span>{selectedPlan.maxAge ?? 65} yrs</span>
                       </div>
                     </div>
 
-                    {/* Term + PPT auto-display */}
-                    <div>
-                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
-                        Term: <span className="text-gold">{safeterm} years</span>
-                      </label>
-                      <input type="range" min={minTerm} max={maxTerm}
-                        value={safeterm} onChange={e => setTerm(+e.target.value)}
-                        className="w-full accent-[#b8860b] h-1.5 rounded-full" />
-                      <div className="flex justify-between text-[10px] mt-0.5">
-                        <span className="text-gray-300">{minTerm} yrs</span>
-                        {/* PPT shown prominently like competitor */}
-                        <span className="text-amber-600 font-semibold">PPT: {ppt} Years</span>
-                        <span className="text-gray-300">{maxTerm} yrs</span>
+                    {/* ── Term: slider + number (hidden for pure annuity plans) ── */}
+                    {!isPensionAnnuity && (
+                      <div>
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Policy Term</label>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <input type="range" min={minTerm} max={maxTerm}
+                            value={safeterm} onChange={e => setTerm(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={minTerm} max={maxTerm}
+                            value={safeterm} onChange={e => setTerm(Math.min(maxTerm, Math.max(minTerm, +e.target.value)))}
+                            className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="flex justify-between text-[10px] mt-0.5">
+                          <span className="text-gray-300">{minTerm} yrs</span>
+                          <span className="text-amber-600 font-semibold">PPT: {ppt} yrs</span>
+                          <span className="text-gray-300">{maxTerm} yrs</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
-                    {/* Sum Assured with word form */}
-                    <div className="sm:col-span-2">
-                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
-                        Sum Assured: <span className="text-gold">{fmtSA(sa)}</span>
-                        {selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
-                      </label>
-                      <div className="flex flex-wrap gap-1.5 mb-2">
-                        {SA_PRESETS.map(v => (
-                          <button key={v} onClick={() => setSa(v)}
-                            className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition-all
-                              ${sa === v ? 'bg-gold text-white border-gold' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gold/30'}`}>
-                            {fmtSA(v)}
-                          </button>
-                        ))}
+                    {/* ── Sum Assured (non-pension, non-ULIP) ── */}
+                    {!isPensionAnnuity && !isUlip && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Sum Assured
+                          {selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
+                        </label>
+                        <div className="flex flex-wrap gap-1.5 mb-2">
+                          {SA_PRESETS.map((v: number) => (
+                            <button key={v} onClick={() => setSa(v)}
+                              className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition-all
+                                ${sa === v ? 'bg-gold text-white border-gold' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gold/30'}`}>
+                              {fmtSA(v)}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <input type="range" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                            value={sa} onChange={e => setSa(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                            value={sa} onChange={e => setSa(Math.min(10000000, Math.max(selectedPlan.minSA ?? 100000, +e.target.value)))}
+                            className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="text-center text-[12px] text-gold font-semibold">( {toWords(sa)} )</div>
                       </div>
-                      <input type="range" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
-                        value={sa} onChange={e => setSa(+e.target.value)}
-                        className="w-full accent-[#b8860b] h-1.5 rounded-full" />
-                      {/* Word form — like "( Ten Lakh )" in competitor */}
-                      <div className="text-center text-[12px] text-gold font-semibold mt-1.5">
-                        ( {toWords(sa)} )
-                      </div>
-                    </div>
+                    )}
 
-                    {/* Mode */}
-                    <div>
-                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Premium Mode</label>
-                      <div className="grid grid-cols-4 gap-1">
-                        {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
-                          <button key={m} onClick={() => setMode(m)}
-                            className={`text-[11px] font-bold py-2 rounded-lg border transition-all
-                              ${mode === m ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
-                            {MODE_LABEL[m]}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                    {/* ── Purchase Price (pension/annuity plans) ── */}
+                    {isPensionAnnuity && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Purchase Price (Lump Sum)
+                          <span className="text-gray-400 font-normal ml-1">(min {fmtSA(selectedPlan.minPurchasePrice ?? 100000)})</span>
+                        </label>
+                        <div className="flex items-center gap-2 mb-1">
+                          <input type="range" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                            value={purchasePrice} onChange={e => setPurchasePrice(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                            value={purchasePrice} onChange={e => setPurchasePrice(Math.max(selectedPlan.minPurchasePrice ?? 100000, +e.target.value))}
+                            className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="text-center text-[12px] text-gold font-semibold">( {toWords(purchasePrice)} )</div>
 
-                    {/* Gender + Smoker */}
+                        {/* Annuity option */}
+                        {selectedPlan.annuityOptions?.length > 0 && (
+                          <div className="mt-3">
+                            <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Annuity Option</label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedPlan.annuityOptions.map((opt: string) => (
+                                <button key={opt} onClick={() => setAnnuityOption(opt)}
+                                  className={`text-[11px] font-semibold px-3 py-1.5 rounded-lg border transition-all
+                                    ${annuityOption === opt ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                                  {opt}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* ── Maturity Age (Jeevan Utsav 771/883) ── */}
+                    {isWholeLifeUtsav && selectedPlan.maturityAgeOptions && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Select Maturity Age</label>
+                        <div className="flex gap-2">
+                          {selectedPlan.maturityAgeOptions.map((a: number) => (
+                            <button key={a} onClick={() => setMaturityAge(a)}
+                              className={`flex-1 text-[12px] font-bold py-2 rounded-lg border transition-all
+                                ${maturityAge === a ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                              {a}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Survival Benefit % (Jeevan Tarun 734) ── */}
+                    {isJeevanTarun && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Survival Benefit Option
+                          <span className="text-gray-400 font-normal ml-1">(paid each year age 20–24)</span>
+                        </label>
+                        <div className="grid grid-cols-4 gap-2">
+                          {([5,10,15,20] as const).map(pct => (
+                            <button key={pct} onClick={() => setSurvivalBenefitPct(pct)}
+                              className={`text-[12px] font-bold py-2.5 rounded-xl border transition-all
+                                ${survivalBenefitPct === pct ? 'bg-navy text-white border-navy shadow' : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-navy/20'}`}>
+                              {pct}%
+                              <div className="text-[9px] font-normal mt-0.5 opacity-70">of SA/yr</div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Bima Lakshmi Option A/B ── */}
+                    {isBimaLakshmi && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Plan Option</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {(['A','B'] as const).map(opt => (
+                            <button key={opt} onClick={() => setBimaLakshmiOption(opt)}
+                              className={`text-left p-3 rounded-xl border transition-all
+                                ${bimaLakshmiOption === opt ? 'bg-navy text-white border-navy' : 'bg-gray-50 border-gray-100 hover:border-navy/20'}`}>
+                              <div className={`text-[12px] font-bold ${bimaLakshmiOption === opt ? 'text-white' : 'text-gray-700'}`}>Option {opt}</div>
+                              <div className={`text-[10px] mt-0.5 ${bimaLakshmiOption === opt ? 'text-white/70' : 'text-gray-400'}`}>
+                                {opt === 'A' ? '50% SA survival benefit at end of PPT' : 'Deferred survival benefit at maturity'}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Mode (not for annuity) ── */}
+                    {!isPensionAnnuity && (
+                      <div>
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Premium Mode</label>
+                        <div className="grid grid-cols-4 gap-1">
+                          {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
+                            <button key={m} onClick={() => setMode(m)}
+                              className={`text-[11px] font-bold py-2 rounded-lg border transition-all
+                                ${mode === m ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                              {MODE_LABEL[m]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Gender + Smoker ── */}
                     <div>
                       <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Gender</label>
                       <div className="flex gap-2">
@@ -574,7 +772,7 @@ export default function PremiumCalculatorPage() {
                           </button>
                         ))}
                       </div>
-                      {isTermPlan && (
+                      {(isTermPlan || selectedPlan?.smokerNonSmokerRates) && (
                         <button onClick={() => setSmoker(s => !s)}
                           className={`mt-2 w-full text-[11px] font-bold py-1.5 rounded-lg border transition-all
                             ${smoker ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-100'}`}>
@@ -586,11 +784,13 @@ export default function PremiumCalculatorPage() {
 
                   <button onClick={calculate}
                     className="w-full bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all text-[14px] flex items-center justify-center gap-2 shadow-md">
-                    <Calculator className="w-4 h-4" /> Calculate Premium
+                    <Calculator className="w-4 h-4" /> Calculate &amp; See Results →
                   </button>
                 </div>
+                  </div>{/* end inputs panel */}
 
-                {/* ── RESULTS ── */}
+                {/* Results panel — slides in from right */}
+                <div className={`transition-all duration-300 ease-in-out ${showResults ? 'block' : 'hidden'}`}>
                 {premResult && (
                   <div className="space-y-4">
 
@@ -1115,6 +1315,8 @@ export default function PremiumCalculatorPage() {
                     </div>{/* end locked section */}
                   </div>
                 )}
+                </div>{/* end results panel */}
+                </div>{/* end slide container */}
               </>
             )}
           </div>
