@@ -6,11 +6,11 @@
  *  1. Pings the brochure/product URL of each active plan on licindia.in
  *  2. If a plan returns 404 / redirects away / times out → flags it as
  *     "possibly withdrawn" in lib/data/plan-flags.json
- *  3. Does NOT auto-withdraw anything — that requires manual confirmation
- *     via POST /api/admin/plan-flags  (set status: "withdrawn")
- *  4. Sends a webhook notification if NOTIFY_WEBHOOK_URL env var is set
- *     (supports any URL that accepts a POST with JSON body — Slack, Discord,
- *      Make, n8n, custom endpoint, etc.)
+ *  3. Does NOT auto-withdraw anything — just tells you via Google Sheets
+ *  4. Alert appears as a row in the same Google Sheet used for leads
+ *     (uses GOOGLE_SHEETS_WEBHOOK_URL — no extra setup needed)
+ *  5. To confirm a withdrawal: just tell Claude in chat → it updates
+ *     lic-plans-data.js, rebuilds lic-plans.json, and pushes the change
  *
  * Auth: Vercel sends Authorization: Bearer <CRON_SECRET>
  */
@@ -104,33 +104,32 @@ async function checkUrl(url: string): Promise<{ ok: boolean; status: number | nu
   }
 }
 
-async function sendWebhookNotification(flagged: PlanFlag[]) {
-  const webhookUrl = process.env.NOTIFY_WEBHOOK_URL
+async function sendGoogleSheetsAlert(flagged: PlanFlag[]) {
+  // Reuse the same Google Sheets webhook used for leads — no extra setup needed.
+  // Each flagged plan appears as a row so you can see it in the same sheet.
+  const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
   if (!webhookUrl || flagged.length === 0) return
 
-  const lines = flagged.map(f =>
-    `• Plan ${f.planNo} — ${f.name} (HTTP ${f.httpStatus ?? 'timeout'}) | ${f.checkedUrl}`
-  ).join('\n')
-
-  const body = {
-    text: `⚠️ *Poddar Wealth — Plan Status Alert*\n\n${flagged.length} plan(s) may have been withdrawn from LIC's website and need your review:\n\n${lines}\n\nReview & confirm at: https://poddarwealth.com/api/admin/plan-flags`,
-    // Slack/Discord compatible
-    embeds: [{
-      title: 'LIC Plan Withdrawal Alert',
-      description: lines,
-      color: 0xf59e0b,
-    }],
-  }
-
-  try {
-    await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(8000),
-    })
-  } catch (err) {
-    console.error('[check-plan-status] Webhook failed:', err)
+  for (const f of flagged) {
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    `⚠️ PLAN ALERT — ${f.name}`,
+          mobile:  `Plan No. ${f.planNo}`,
+          email:   '',
+          intent:  'Plan Withdrawal Alert',
+          message: `Plan ${f.planNo} (${f.name}) may have been withdrawn. HTTP ${f.httpStatus ?? 'timeout'} on ${f.checkedUrl}. Tell Claude to mark it as withdrawn if confirmed.`,
+          city:    '',
+          source:  'cron/check-plan-status',
+          timestamp: f.lastChecked,
+        }),
+        signal: AbortSignal.timeout(8000),
+      })
+    } catch (err) {
+      console.error('[check-plan-status] Sheets alert failed:', err)
+    }
   }
 }
 
@@ -186,7 +185,7 @@ export async function GET(req: Request) {
   writeFlags(flags)
 
   if (newlyFlagged.length > 0) {
-    await sendWebhookNotification(newlyFlagged)
+    await sendGoogleSheetsAlert(newlyFlagged)
     console.warn('[check-plan-status] Newly flagged plans:', newlyFlagged.map(f => `${f.planNo} ${f.name}`).join(', '))
   }
 
