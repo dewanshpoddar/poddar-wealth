@@ -3,9 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import { adminNotify } from '@/lib/admin-notify'
 
-// Optional: set GOOGLE_SHEETS_BLUEPRINT_WEBHOOK_URL in .env.local to also
-// push blueprint data to a dedicated Google Sheets tab
-const webhookUrl = process.env.GOOGLE_SHEETS_BLUEPRINT_WEBHOOK_URL
+// Uses main GOOGLE_SHEETS_WEBHOOK_URL with sheetName:'Wealth Blueprint' for routing
+const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
 
 const HEADERS = [
   'Timestamp', 'Name', 'Phone',
@@ -70,8 +69,7 @@ export async function POST(request: Request) {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          // sheetName tells the Apps Script to write to a separate "Blueprints" tab
-        body: JSON.stringify({ row, intent: 'Wealth Blueprint', sheetName: 'Blueprints' }),
+          body: JSON.stringify({ row, intent: 'Wealth Blueprint', sheetName: 'Wealth Blueprint', headers: HEADERS }),
           signal: ctrl.signal,
         })
       } catch (e) {

@@ -63,7 +63,18 @@ export async function POST(request: Request) {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ row, intent: intent ?? '' }),
+          body: JSON.stringify({
+            row,
+            intent:    intent ?? '',
+            sheetName: intent?.toLowerCase().includes('agent') || intent?.toLowerCase().includes('advisor')
+              ? 'Agent Recruitment'
+              : intent?.toLowerCase().includes('popup') || intent?.toLowerCase().includes('consultation')
+              ? 'Popup Inquiries'
+              : intent?.toLowerCase().includes('calc') || intent?.toLowerCase().includes('premium')
+              ? 'Premium Calculator'
+              : 'All Leads',
+            headers: HEADERS,
+          }),
           signal: controller.signal,
         });
       } catch (webhookError) {

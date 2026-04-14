@@ -41,8 +41,10 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        intent: 'Chat Log',
-        row: [new Date().toISOString(), sessionId, userMsg, botReply, '', '', '', '', '', 'Chat Log', '', ''],
+        intent:    'Chat Log',
+        sheetName: 'Chat Logs',
+        headers:   ['Timestamp', 'Session ID', 'User Message', 'Bot Reply'],
+        row:       [new Date().toISOString(), sessionId, userMsg, botReply],
       }),
     })
   } catch { /* non-critical */ }

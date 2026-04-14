@@ -261,6 +261,32 @@ export default function PremiumCalculatorPage() {
         premResult: prem, matResult: mat, benefitTable: table ?? [],
       }))
     } catch { /* quota exceeded — ignore */ }
+
+    // Track calculation to Google Sheets
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'calc_run',
+        sheetName: 'Premium Calculator',
+        data: {
+          planNo:       selectedPlan.planNo,
+          planName:     selectedPlan.name,
+          category:     selectedPlan.category,
+          age,
+          sa:           effectiveSa,
+          term:         safeterm,
+          ppt,
+          mode,
+          gender,
+          annualPremium: (prem as any)?.annual ?? '',
+          totalPaid:    (prem as any)?.totalPaid ?? '',
+          maturityValue: (mat as any)?.maturity ?? '',
+          clientName:   clientName || '',
+          session:      typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
+        }
+      })
+    }).catch(() => {})
   }
 
   async function handleUnlock(e: React.FormEvent) {
@@ -325,6 +351,27 @@ export default function PremiumCalculatorPage() {
       `https://poddarwealth.com/contact`,
     ].filter(Boolean).join('\n')
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
+
+    // Track share event
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'calc_share',
+        sheetName: 'Premium Calculator',
+        data: {
+          planNo:    selectedPlan.planNo,
+          planName:  selectedPlan.name,
+          category:  selectedPlan.category,
+          age, sa, term: safeterm, mode, gender,
+          annualPremium: premResult.annual ?? '',
+          totalPaid:     premResult.totalPaid ?? '',
+          maturityValue: matResult?.maturity ?? '',
+          clientName:    clientName || '',
+          session:       sessionStorage.getItem('sid') ?? '',
+        }
+      })
+    }).catch(() => {})
   }
 
   const visibleRows = showAllRows ? benefitTable : benefitTable.slice(0, 10)
