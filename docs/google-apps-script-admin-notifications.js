@@ -84,10 +84,9 @@ function handleAdminNotification(payload) {
     sheet.setColumnWidth(9, 90)   // Resolved?
   }
 
-  // Convert UTC timestamp to IST
+  // Convert UTC timestamp to IST — Utilities.formatDate handles the offset
   const utc = new Date(payload.timestamp || new Date())
-  const ist = new Date(utc.getTime() + 5.5 * 60 * 60 * 1000)
-  const istStr = Utilities.formatDate(ist, 'Asia/Kolkata', 'dd-MMM-yyyy HH:mm:ss')
+  const istStr = Utilities.formatDate(utc, 'Asia/Kolkata', 'dd-MMM-yyyy HH:mm:ss')
 
   const row = [
     istStr,
@@ -121,7 +120,7 @@ function handleAdminNotification(payload) {
 // ─── Placeholder — replace with your existing lead handler if needed ───────
 // If you already have a doPost that handles leads, remove this stub and keep
 // your original function. This is only here so the script runs standalone.
-function handleLead(payload) {
+function handleLead(_payload) {
   // Your existing lead-writing code goes here (or is already above this file)
   return ContentService
     .createTextOutput(JSON.stringify({ success: true, note: 'lead handler not wired' }))
