@@ -87,22 +87,46 @@ interface PlanFlag {
   note?:        string
 }
 
-async function checkUrl(url: string): Promise<{ ok: boolean; status: number | null }> {
-  try {
-    const res = await fetch(url, {
-      method: 'GET',
-      redirect: 'follow',
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PoddarWealthMonitor/1.0)' },
-      signal: AbortSignal.timeout(12000),
-    })
-    // LIC returns 200 even for removed pages sometimes, but body contains "Page Not Found"
-    if (!res.ok) return { ok: false, status: res.status }
-    const body = await res.text()
-    const notFound = /page not found|this page (has been|is no longer)|plan.*withdrawn|no longer available/i.test(body)
-    return { ok: !notFound, status: res.status }
-  } catch (_) {
-    return { ok: false, status: null }
+/**
+ * Fetch LIC's "Individual Plans" listing page once and return the full HTML.
+ * Much more reliable than hitting 34 separate plan pages (LIC blocks bots on those).
+ * The listing page shows all currently active plans with their plan numbers.
+ */
+async function fetchLicPlanListing(): Promise<{ html: string; status: number } | null> {
+  const URLS = [
+    'https://licindia.in/web/guest/individual-plans',
+    'https://licindia.in/web/guest/all-plans',
+    'https://licindia.in/web/guest/buy-online',
+  ]
+  for (const url of URLS) {
+    try {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': 'text/html,application/xhtml+xml,*/*',
+          'Accept-Language': 'en-IN,en;q=0.9',
+        },
+        signal: AbortSignal.timeout(15000),
+        redirect: 'follow',
+      })
+      if (res.ok) {
+        const html = await res.text()
+        if (html.length > 5000) return { html, status: res.status }
+      }
+    } catch (_) {}
   }
+  return null
+}
+
+function isPlanInListing(planNo: number, planName: string, html: string): boolean {
+  const no   = String(planNo)
+  const name = planName.toLowerCase().replace(/[^a-z0-9 ]/g, '')
+  // Plan number must appear somewhere in the page
+  // Also accept partial name match as a secondary signal
+  const hasNo   = html.includes(no)
+  const hasName = name.split(' ').filter(w => w.length > 4)
+    .every(word => html.toLowerCase().includes(word))
+  return hasNo || hasName
 }
 
 async function sendPlanAlerts(flagged: PlanFlag[]) {
@@ -132,25 +156,38 @@ export async function GET(req: Request) {
   const flags  = readFlags()
   const newlyFlagged: PlanFlag[] = []
 
+  // Fetch LIC listing once — check all 34 plans against it
+  const listing = await fetchLicPlanListing()
+
+  if (!listing) {
+    // Can't reach LIC at all — notify but don't flag individual plans
+    await adminNotify({
+      type: 'SCRAPE_FAIL', severity: 'warn',
+      route: '/api/cron/check-plan-status',
+      message: 'Could not reach LIC website for plan status check — all checks skipped',
+      detail: 'licindia.in did not respond on any of the listing URLs tried',
+    })
+    return NextResponse.json({ success: true, checkedAt: now, total: 0, ok: 0, flagged: 0, withdrawn: 0, newlyFlagged: [], note: 'LIC site unreachable — skipped' })
+  }
+
   for (const plan of ACTIVE_PLANS) {
     const key = String(plan.planNo)
     const existing = flags[key]
 
-    // Skip plans already manually confirmed withdrawn — don't re-check
+    // Skip plans already manually confirmed withdrawn
     if (existing?.status === 'withdrawn') continue
 
-    const { ok, status } = await checkUrl(plan.checkUrl)
+    const found = isPlanInListing(plan.planNo, plan.name, listing.html)
 
-    if (ok) {
-      // Plan is live — update last checked, clear any prior flag
+    if (found) {
       flags[key] = {
         planNo:       plan.planNo,
         name:         plan.name,
         status:       'ok',
-        httpStatus:   status,
+        httpStatus:   listing.status,
         firstFlagged: null,
         lastChecked:  now,
-        checkedUrl:   plan.checkUrl,
+        checkedUrl:   'lic listing page',
       }
     } else {
       const alreadyFlagged = existing?.status === 'flagged'
@@ -158,10 +195,10 @@ export async function GET(req: Request) {
         planNo:       plan.planNo,
         name:         plan.name,
         status:       'flagged',
-        httpStatus:   status,
+        httpStatus:   listing.status,
         firstFlagged: existing?.firstFlagged ?? now,
         lastChecked:  now,
-        checkedUrl:   plan.checkUrl,
+        checkedUrl:   'lic listing page',
         note:         existing?.note,
       }
       if (!alreadyFlagged) newlyFlagged.push(flags[key])
