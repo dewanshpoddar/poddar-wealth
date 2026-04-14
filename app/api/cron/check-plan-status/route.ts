@@ -23,42 +23,42 @@ import { adminNotify } from '@/lib/admin-notify'
 const FLAGS_PATH = path.join('/tmp', 'plan-flags.json')
 
 // ── Active plans to monitor ─────────────────────────────────────────────────
-// planNo → canonical LIC product page (avoids PDF links that always 200)
-const ACTIVE_PLANS: Array<{ planNo: number; name: string; checkUrl: string }> = [
-  { planNo: 714, name: 'New Endowment Plan',           checkUrl: 'https://licindia.in/web/guest/lic-s-new-endowment-plan' },
-  { planNo: 715, name: 'New Jeevan Anand',             checkUrl: 'https://licindia.in/web/guest/lic-s-new-jeevan-anand' },
-  { planNo: 717, name: 'Single Premium Endowment',     checkUrl: 'https://licindia.in/web/guest/lic-s-single-premium-endowment-plan' },
-  { planNo: 733, name: 'Jeevan Lakshya',               checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-lakshya' },
-  { planNo: 736, name: 'Jeevan Labh',                  checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-labh' },
-  { planNo: 760, name: 'Bima Jyoti',                   checkUrl: 'https://licindia.in/web/guest/lic-s-bima-jyoti' },
-  { planNo: 880, name: 'Jan Suraksha',                 checkUrl: 'https://licindia.in/web/guest/lic-s-jan-suraksha' },
-  { planNo: 881, name: 'Bima Lakshmi',                 checkUrl: 'https://licindia.in/web/guest/lic-s-bima-lakshmi' },
-  { planNo: 911, name: 'Nav Jeevan Shree (Single)',    checkUrl: 'https://licindia.in/web/guest/lic-s-nav-jeevan-shree' },
-  { planNo: 912, name: 'Nav Jeevan Shree (Limited)',   checkUrl: 'https://licindia.in/web/guest/lic-s-nav-jeevan-shree' },
-  { planNo: 720, name: 'New Money Back 20yr',          checkUrl: 'https://licindia.in/web/guest/lic-s-new-money-back-plan-20-years' },
-  { planNo: 721, name: 'New Money Back 25yr',          checkUrl: 'https://licindia.in/web/guest/lic-s-new-money-back-plan-25-years' },
-  { planNo: 748, name: 'Bima Shree',                   checkUrl: 'https://licindia.in/web/guest/lic-s-bima-shree' },
-  { planNo: 745, name: 'Jeevan Umang',                 checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-umang' },
-  { planNo: 771, name: 'Jeevan Utsav',                 checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-utsav' },
-  { planNo: 883, name: 'Jeevan Utsav (Single)',        checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-utsav' },
-  { planNo: 732, name: 'Child Money Back Plan',        checkUrl: 'https://licindia.in/web/guest/lic-s-child-money-back-plan' },
-  { planNo: 734, name: 'Jeevan Tarun',                 checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-tarun' },
-  { planNo: 774, name: 'Amritbaal',                    checkUrl: 'https://licindia.in/web/guest/lic-s-amritbaal' },
-  { planNo: 859, name: 'Saral Jeevan Bima',            checkUrl: 'https://licindia.in/web/guest/lic-s-saral-jeevan-bima' },
-  { planNo: 875, name: 'Yuva Term',                    checkUrl: 'https://licindia.in/web/guest/lic-s-yuva-term' },
-  { planNo: 877, name: 'Yuva Credit Life',             checkUrl: 'https://licindia.in/web/guest/lic-s-yuva-credit-life' },
-  { planNo: 887, name: 'Bima Kavach',                  checkUrl: 'https://licindia.in/web/guest/lic-s-bima-kavach' },
-  { planNo: 955, name: 'New Jeevan Amar',              checkUrl: 'https://licindia.in/web/guest/lic-s-new-jeevan-amar' },
-  { planNo: 758, name: 'New Jeevan Shanti',            checkUrl: 'https://licindia.in/web/guest/lic-s-new-jeevan-shanti' },
-  { planNo: 857, name: 'Jeevan Akshay VII',            checkUrl: 'https://licindia.in/web/guest/lic-s-jeevan-akshay-vii' },
-  { planNo: 862, name: 'Saral Pension',                checkUrl: 'https://licindia.in/web/guest/lic-s-saral-pension' },
-  { planNo: 879, name: 'Smart Pension',                checkUrl: 'https://licindia.in/web/guest/lic-s-smart-pension' },
-  { planNo: 749, name: 'Nivesh Plus',                  checkUrl: 'https://licindia.in/web/guest/lic-s-nivesh-plus' },
-  { planNo: 752, name: 'SIIP',                         checkUrl: 'https://licindia.in/web/guest/lic-s-siip' },
-  { planNo: 867, name: 'New Pension Plus',             checkUrl: 'https://licindia.in/web/guest/lic-s-new-pension-plus' },
-  { planNo: 873, name: 'Index Plus',                   checkUrl: 'https://licindia.in/web/guest/lic-s-index-plus' },
-  { planNo: 886, name: 'Protection Plus',              checkUrl: 'https://licindia.in/web/guest/lic-s-protection-plus' },
-  { planNo: 751, name: 'Micro Bachat',                 checkUrl: 'https://licindia.in/web/guest/lic-s-micro-bachat' },
+// aliases: alternative names LIC uses on their listing pages
+const ACTIVE_PLANS: Array<{ planNo: number; name: string; aliases?: string[] }> = [
+  { planNo: 714, name: 'New Endowment Plan' },
+  { planNo: 715, name: 'New Jeevan Anand' },
+  { planNo: 717, name: 'Single Premium Endowment' },
+  { planNo: 733, name: 'Jeevan Lakshya',            aliases: ['lakshya', 'jeevan lakshya'] },
+  { planNo: 736, name: 'Jeevan Labh' },
+  { planNo: 760, name: 'Bima Jyoti' },
+  { planNo: 880, name: 'Jan Suraksha' },
+  { planNo: 881, name: 'Bima Lakshmi' },
+  { planNo: 911, name: 'Nav Jeevan Shree' },
+  { planNo: 912, name: 'Nav Jeevan Shree' },
+  { planNo: 720, name: 'New Money Back 20',          aliases: ['money back plan-20', 'money back 20'] },
+  { planNo: 721, name: 'New Money Back 25',          aliases: ['money back plan-25', 'money back 25'] },
+  { planNo: 748, name: 'Bima Shree' },
+  { planNo: 745, name: 'Jeevan Umang',               aliases: ['umang', 'jeevan umang'] },
+  { planNo: 771, name: 'Jeevan Utsav' },
+  { planNo: 883, name: 'Jeevan Utsav' },
+  { planNo: 732, name: 'Child Money Back Plan',      aliases: ['child money back'] },
+  { planNo: 734, name: 'Jeevan Tarun',               aliases: ['tarun', 'jeevan tarun'] },
+  { planNo: 774, name: 'Amritbaal' },
+  { planNo: 859, name: 'Saral Jeevan Bima' },
+  { planNo: 875, name: 'Yuva Term' },
+  { planNo: 877, name: 'Yuva Credit Life' },
+  { planNo: 887, name: 'Bima Kavach' },
+  { planNo: 955, name: 'New Jeevan Amar' },
+  { planNo: 758, name: 'New Jeevan Shanti' },
+  { planNo: 857, name: 'Jeevan Akshay',              aliases: ['akshay vii', 'jeevan akshay'] },
+  { planNo: 862, name: 'Saral Pension' },
+  { planNo: 879, name: 'Smart Pension' },
+  { planNo: 749, name: 'Nivesh Plus' },
+  { planNo: 752, name: 'SIIP' },
+  { planNo: 867, name: 'New Pension Plus' },
+  { planNo: 873, name: 'Index Plus' },
+  { planNo: 886, name: 'Protection Plus' },
+  { planNo: 751, name: 'Micro Bachat' },
 ]
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -118,15 +118,31 @@ async function fetchLicPlanListing(): Promise<{ html: string; status: number } |
   return null
 }
 
-function isPlanInListing(planNo: number, planName: string, html: string): boolean {
-  const no   = String(planNo)
-  const name = planName.toLowerCase().replace(/[^a-z0-9 ]/g, '')
-  // Plan number must appear somewhere in the page
-  // Also accept partial name match as a secondary signal
-  const hasNo   = html.includes(no)
-  const hasName = name.split(' ').filter(w => w.length > 4)
-    .every(word => html.toLowerCase().includes(word))
-  return hasNo || hasName
+function isPlanInListing(
+  planNo: number,
+  planName: string,
+  html: string,
+  aliases: string[] = []
+): boolean {
+  const lower = html.toLowerCase()
+  const no    = String(planNo)
+
+  // 1. Plan number appears in the page (most reliable signal)
+  if (lower.includes(no)) return true
+
+  // 2. All significant words of the plan name appear in the page
+  const nameWords = planName.toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .split(' ')
+    .filter(w => w.length > 3)
+  if (nameWords.length > 0 && nameWords.every(w => lower.includes(w))) return true
+
+  // 3. Any alias matches
+  for (const alias of aliases) {
+    if (lower.includes(alias.toLowerCase())) return true
+  }
+
+  return false
 }
 
 async function sendPlanAlerts(flagged: PlanFlag[]) {
@@ -177,7 +193,7 @@ export async function GET(req: Request) {
     // Skip plans already manually confirmed withdrawn
     if (existing?.status === 'withdrawn') continue
 
-    const found = isPlanInListing(plan.planNo, plan.name, listing.html)
+    const found = isPlanInListing(plan.planNo, plan.name, listing.html, plan.aliases)
 
     if (found) {
       flags[key] = {
