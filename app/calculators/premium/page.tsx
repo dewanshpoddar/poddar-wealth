@@ -77,6 +77,7 @@ export default function PremiumCalculatorPage() {
   const [showTable,      setShowTable]      = useState(false)
   const [showAllRows,    setShowAllRows]    = useState(false)
   const [showAllModes,   setShowAllModes]   = useState(false)
+  const [calcError,      setCalcError]      = useState<string | null>(null)
 
   /* ULIP: fund selection + live NAV */
   const [ulipFund,    setUlipFund]    = useState<string>('')
@@ -241,13 +242,38 @@ export default function PremiumCalculatorPage() {
 
   function calculate() {
     if (!selectedPlan) return
+    setCalcError(null)
+
     const effectiveSa = isPensionAnnuity ? purchasePrice : sa
-    const prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender })
-    const mat  = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm })
-    const table = generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem as any })
+
+    // Input validation
+    if (!isPensionAnnuity && !isUlip && sa < (selectedPlan.minSA ?? 100000)) {
+      setCalcError(`Minimum sum assured for this plan is ₹${(selectedPlan.minSA ?? 100000).toLocaleString('en-IN')}. Please increase the SA.`)
+      return
+    }
+    if (age < (selectedPlan.minAge ?? 0) || age > (selectedPlan.maxAge ?? 65)) {
+      setCalcError(`Entry age for this plan must be between ${selectedPlan.minAge} and ${selectedPlan.maxAge} years.`)
+      return
+    }
+
+    let prem: any, mat: any, table: any[]
+    try {
+      prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender })
+      if (!prem) {
+        setCalcError('Could not calculate premium for this plan with the given inputs. Please try different age, term, or sum assured.')
+        return
+      }
+      mat   = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm })
+      table = generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem }) ?? []
+    } catch (err) {
+      setCalcError('An unexpected error occurred during calculation. Please try again or contact support.')
+      console.error('Calculation error:', err)
+      return
+    }
+
     setPremResult(prem)
     setMatResult(mat)
-    setBenefitTable(table ?? [])
+    setBenefitTable(table)
     setIsUnlocked(false)
     setUnlockStatus('idle')
     setShowResults(true)
@@ -258,7 +284,7 @@ export default function PremiumCalculatorPage() {
         age, sa: effectiveSa, term, mode, gender, smoker, ulipFund,
         annuityOption, purchasePrice, maturityAge, survivalBenefitPct, bimaLakshmiOption,
         clientName, salutation,
-        premResult: prem, matResult: mat, benefitTable: table ?? [],
+        premResult: prem, matResult: mat, benefitTable: table,
       }))
     } catch { /* quota exceeded — ignore */ }
 
@@ -279,9 +305,9 @@ export default function PremiumCalculatorPage() {
           ppt,
           mode,
           gender,
-          annualPremium: (prem as any)?.annual ?? '',
-          totalPaid:    (prem as any)?.totalPaid ?? '',
-          maturityValue: (mat as any)?.maturity ?? '',
+          annualPremium: prem?.annual ?? '',
+          totalPaid:    prem?.totalPaid ?? '',
+          maturityValue: mat?.maturity ?? '',
           clientName:   clientName || '',
           session:      typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
         }
@@ -591,27 +617,53 @@ export default function PremiumCalculatorPage() {
                   </div>
                 )}
 
-                {/* ── Slide container wraps inputs + results ── */}
-                <div className="relative overflow-hidden rounded-2xl">
-                  {/* Back button strip when results are showing */}
-                  {showResults && (
-                    <div className="sticky top-[86px] z-30 bg-white border-b border-gold/10 px-4 py-2.5 flex items-center gap-3 shadow-sm">
+                {/* ── Nav bar: always visible above form or results ── */}
+                <div className="sticky top-[72px] md:top-[86px] z-30 bg-white rounded-2xl border border-gold/10 shadow-md mb-3 px-4 py-2.5 flex items-center gap-2">
+                  {showResults ? (
+                    <>
                       <button onClick={() => setShowResults(false)}
-                        className="flex items-center gap-1.5 text-[12px] font-semibold text-gold hover:text-gold-hover transition-colors">
-                        ← Back to Inputs
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-navy bg-gray-100 hover:bg-gold/10 border border-gray-200 hover:border-gold/30 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                        ← Edit Inputs
                       </button>
-                      <div className="flex-1 text-center text-[11px] text-gray-400 truncate">
+                      <div className="flex-1 text-center text-[11px] text-gray-400 truncate hidden sm:block">
                         LIC&apos;s {selectedPlan.name} · Age {age} · {isPensionAnnuity ? fmtSA(purchasePrice) : fmtSA(sa)}
                       </div>
                       <button onClick={calculate}
-                        className="text-[11px] font-bold text-navy bg-gold/10 hover:bg-gold/20 border border-gold/20 px-3 py-1 rounded-lg transition-all">
-                        Recalculate
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-gold hover:bg-gold-hover px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                        <RefreshCw className="w-3 h-3" /> Recalculate
                       </button>
-                    </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex-1 text-[12px] font-semibold text-navy truncate">
+                        LIC&apos;s {selectedPlan.name}
+                        <span className="text-gray-400 font-normal ml-1 text-[11px]">· Plan {selectedPlan.planNo}</span>
+                      </div>
+                      {premResult && (
+                        <button onClick={() => setShowResults(true)}
+                          className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-navy hover:bg-navy/90 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                          View Results →
+                        </button>
+                      )}
+                    </>
                   )}
+                </div>
 
-                  {/* Inputs panel — slides out left when results open */}
-                  <div className={`transition-all duration-300 ease-in-out ${showResults ? 'hidden' : 'block'}`}>
+                {/* ── Error banner ── */}
+                {calcError && !showResults && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-3">
+                    <span className="text-red-500 text-[18px] leading-none mt-0.5">⚠</span>
+                    <div>
+                      <div className="text-[12px] font-bold text-red-700 mb-0.5">Calculation Error</div>
+                      <div className="text-[11px] text-red-600">{calcError}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Slide container wraps inputs + results ── */}
+                <div className="relative rounded-2xl">
+                  {/* Inputs panel */}
+                  <div className={`${showResults ? 'hidden' : 'block'}`}>
 
                 {/* Input form */}
                 <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5 space-y-5">
