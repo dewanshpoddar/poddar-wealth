@@ -689,6 +689,42 @@
     "successMessage": "We have received your interest. Ajay sir will call you within 24 hours.",
     "privacy": "Your data is secure and will never be shared."
   },
+  "consultation": {
+    "eyebrow": "Free Consultation",
+    "heading": "Book a free 30-min call",
+    "headingGold": "with Ajay sir personally.",
+    "body": "No scripts. No call centre. Ajay Kumar Poddar reviews your situation himself and recommends exactly what your family needs — nothing more.",
+    "trust": [
+      "MDRT Member — top 1% of advisors globally",
+      "31 years · Personal call, not a call centre",
+      "5,000+ families protected across India"
+    ],
+    "responseNote": "Ajay typically responds within",
+    "responseTime": "2–4 hours",
+    "responseContext": "on business days",
+    "formTitle": "Get your free plan review",
+    "formSubtitle": "Just your name and number — Ajay does the rest.",
+    "submitText": "Book Free Call with Ajay →",
+    "successTitle": "Call booked! 🎉",
+    "successMessage": "Ajay sir will personally call you within 2–4 hours on business days. No scripts, no sales pressure.",
+    "privacy": "Your number is only shared with Ajay. Never sold or mass-marketed."
+  },
+  "servicesSection": {
+    "exploreAll": "Explore All Services"
+  },
+  "trustSection": {
+    "officialPartner": "Official Partner",
+    "mdrtBadge": "31 Yrs · MDRT Certified"
+  },
+  "homePage": {
+    "agentStrip": "Are you a financial professional?",
+    "agentStripCta": "Join Ajay sir's advisor network →",
+    "joinAdvisor": "Join as Advisor"
+  },
+  "contactPage": {
+    "successTitle": "Message Sent! 🎉",
+    "whatsappAlt": "Prefer WhatsApp?"
+  },
   "leadPopup": {
     "eyebrow": "Poddar Wealth Management",
     "titlePrefix": "Secure Your Family's",

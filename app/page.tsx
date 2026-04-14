@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import HeroSection from '@/components/HeroSection'
+import AgentTeaserStrip from '@/components/AgentTeaserStrip'
 import TrustSection from '@/components/TrustSection'
 import WealthBlueprintCalculator from '@/components/WealthBlueprintCalculator'
 import ServicesSection from '@/components/ServicesSection'
@@ -29,14 +29,7 @@ export default function HomePage() {
       <TestimonialsSection />
 
       {/* 7 — Agent teaser strip (subtle — does not interrupt client journey) */}
-      <div className="bg-navy/5 border-y border-gold/10 py-6 px-8 text-center">
-        <p className="text-[13px] text-slate-500">
-          Are you a financial professional?{' '}
-          <Link href="/become-advisor" className="text-gold font-semibold hover:underline">
-            Join Ajay sir&apos;s advisor network →
-          </Link>
-        </p>
-      </div>
+      <AgentTeaserStrip />
 
       {/* 8 — About the advisor + final CTA */}
       <FinalCTA />

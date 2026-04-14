@@ -53,7 +53,7 @@ export default function ContactPage() {
               {success ? (
                 <div className="text-center py-10">
                   <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">Message Sent! 🎉</h3>
+                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">{t.contactPage.successTitle}</h3>
                   <p className="text-slate-500">Ajay will personally get back to you within 24 hours.</p>
                   <button
                     onClick={() => { setSuccess(false); setForm({ name: '', phone: '', wantTo: '', iAm: '', message: '' }) }}
@@ -195,7 +195,7 @@ export default function ContactPage() {
               </div>
 
               <div className="bg-green-50 border border-green-200 rounded-3xl p-6">
-                <h3 className="font-bold text-green-800 mb-3">💬 Prefer WhatsApp?</h3>
+                <h3 className="font-bold text-green-800 mb-3">💬 {t.contactPage.whatsappAlt}</h3>
                 <p className="text-green-700 text-sm mb-4">Ajay responds to WhatsApp messages personally — usually within a few hours during business days.</p>
                 <a
                   href={`https://wa.me/${t.whatsapp.number}?text=Hi Ajay ji, I need insurance advice.`}

@@ -128,7 +128,7 @@ export default function HeroSection() {
           <div className="absolute bottom-8 left-4 lg:hidden z-10">
             <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"/>
-              <span className="text-[10px] font-bold text-white/90 tracking-wider uppercase">31 Yrs · MDRT Certified</span>
+              <span className="text-[10px] font-bold text-white/90 tracking-wider uppercase">{t.trustSection.mdrtBadge}</span>
             </div>
           </div>
 

@@ -39,7 +39,7 @@ export default function TrustSection() {
               </div>
               <div className="flex flex-col items-center">
                 <span className="text-sm sm:text-base font-bold text-navy tracking-tight group-hover/partner:text-gold transition-colors">{partner.name}</span>
-                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.1em] font-medium leading-none mt-1">Official Partner</span>
+                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.1em] font-medium leading-none mt-1">{t.trustSection.officialPartner}</span>
               </div>
             </div>
           ))}

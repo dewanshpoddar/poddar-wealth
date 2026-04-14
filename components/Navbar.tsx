@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { motion, AnimatePresence } from 'framer-motion'
+import LangToggle from './LangToggle'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
@@ -96,41 +97,11 @@ export default function Navbar() {
               : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
           }`}
         >
-          Calculators
+          {t.nav.calculators}
         </Link>
 
-        {/* Language toggle adaption */}
-        <div className={`pw-lang-toggle ml-1 relative transition-colors duration-500 border-none ${
-          isScrolled ? 'bg-white/10' : 'bg-gray-100'
-        }`}>
-          <motion.div
-            className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-colors duration-500 ${
-              isScrolled ? 'bg-gold' : 'bg-navy'
-            }`}
-            initial={false}
-            animate={{
-              left: lang === 'en' ? '4px' : 'calc(50% + 2px)',
-              width: 'calc(50% - 6px)'
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          />
-          <button
-            onClick={() => setLang('en')}
-            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
-              isScrolled 
-                ? (lang === 'en' ? 'text-white' : 'text-white/40 hover:text-white') 
-                : (lang === 'en' ? 'text-white' : 'text-gray-400 hover:text-navy')
-            }`}
-          >EN</button>
-          <button
-            onClick={() => setLang('hi')}
-            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
-              isScrolled 
-                ? (lang === 'hi' ? 'text-white' : 'text-white/40 hover:text-white') 
-                : (lang === 'hi' ? 'text-white' : 'text-gray-400 hover:text-navy')
-            }`}
-          >हिंदी</button>
-        </div>
+        {/* Language toggle */}
+        <LangToggle scrolled={isScrolled} />
 
         <Link href="/contact" className={`text-[14px] font-bold transition-colors duration-500 ${
           isScrolled ? 'text-white/90 hover:text-gold' : 'text-navy hover:text-gold'
@@ -146,37 +117,7 @@ export default function Navbar() {
       {/* Mobile: language toggle + hamburger */}
       <div className="lg:hidden flex items-center gap-2">
         {/* Language toggle — always visible on mobile for Hindi users */}
-        <div className={`pw-lang-toggle relative transition-colors duration-500 border-none ${
-          isScrolled ? 'bg-white/10' : 'bg-gray-100'
-        }`}>
-          <motion.div
-            className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-colors duration-500 ${
-              isScrolled ? 'bg-gold' : 'bg-navy'
-            }`}
-            initial={false}
-            animate={{
-              left: lang === 'en' ? '4px' : 'calc(50% + 2px)',
-              width: 'calc(50% - 6px)'
-            }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          />
-          <button
-            onClick={() => setLang('en')}
-            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
-              isScrolled
-                ? (lang === 'en' ? 'text-white' : 'text-white/40')
-                : (lang === 'en' ? 'text-white' : 'text-gray-400')
-            }`}
-          >EN</button>
-          <button
-            onClick={() => setLang('hi')}
-            className={`pw-lang-btn text-[11px] font-bold transition-colors duration-500 ${
-              isScrolled
-                ? (lang === 'hi' ? 'text-white' : 'text-white/40')
-                : (lang === 'hi' ? 'text-white' : 'text-gray-400')
-            }`}
-          >हिंदी</button>
-        </div>
+        <LangToggle scrolled={isScrolled} />
 
         <button
           className={`font-bold text-20 bg-transparent border-none cursor-pointer p-2 transition-colors duration-500 ${
@@ -226,7 +167,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className={`text-18 font-bold flex items-center gap-2 ${pathname.startsWith('/calculators') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
             >
-              Calculators
+              {t.nav.calculators}
               <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
             </Link>
 
@@ -234,7 +175,7 @@ export default function Navbar() {
 
             <Link href="/contact" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
             <Link href="/become-advisor" onClick={() => setOpen(false)} className={`text-[14px] font-medium ${isScrolled ? 'text-white/40 hover:text-white/70' : 'text-slate-400 hover:text-slate-600'}`}>
-              Join as Advisor
+              {t.homePage.joinAdvisor}
             </Link>
             
             <Link href="/contact" onClick={() => setOpen(false)} className="pw-btn pw-btn--gold pw-btn--full mt-2 shadow-xl py-4 text-16">

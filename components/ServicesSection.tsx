@@ -39,7 +39,7 @@ export default function ServicesSection() {
             </p>
           </div>
           <Link href="/services" className="hidden md:flex items-center gap-2 group text-13 font-bold text-navy hover:text-gold transition-colors">
-            Explore All Services
+            {t.servicesSection.exploreAll}
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
 
