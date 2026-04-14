@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
-const CACHE_PATH = path.join(process.cwd(), 'lib/data/nav-cache.json')
+const CACHE_PATH = path.join('/tmp', 'nav-cache.json')
 
 // Fallback NAV — used when cache is missing and scraper fails
 const FALLBACK_NAV: Record<string, Record<string, { nav: number; date: string }>> = {

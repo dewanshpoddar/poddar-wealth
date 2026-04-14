@@ -11,7 +11,7 @@ import fs from 'fs'
 import path from 'path'
 import { adminNotify } from '@/lib/admin-notify'
 
-const CACHE_PATH = path.join(process.cwd(), 'lib/data/nav-cache.json')
+const CACHE_PATH = path.join('/tmp', 'nav-cache.json')
 
 const FALLBACK_NAV: Record<string, Record<string, { nav: number; date: string; source?: string }>> = {
   "749": {
@@ -166,10 +166,8 @@ export async function GET(req: Request) {
 
   const result = { nav: merged, source, scrapedAt: startedAt, error: errorMsg }
 
-  // Write to cache file
+  // Write to /tmp cache file (persists within the same Vercel instance lifecycle)
   try {
-    const dir = path.dirname(CACHE_PATH)
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
     fs.writeFileSync(CACHE_PATH, JSON.stringify(result, null, 2))
   } catch (writeErr) {
     console.error('[cron/refresh-nav] Cache write failed:', writeErr)
