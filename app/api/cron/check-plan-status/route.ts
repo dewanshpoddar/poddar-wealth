@@ -79,11 +79,12 @@ function writeFlags(flags: Record<string, PlanFlag>) {
 interface PlanFlag {
   planNo:       number
   name:         string
-  status:       'ok' | 'flagged' | 'withdrawn'
+  status:       'ok' | 'watching' | 'flagged' | 'withdrawn'
   httpStatus:   number | null
   firstFlagged: string | null
   lastChecked:  string
   checkedUrl:   string
+  missCount?:   number   // consecutive check failures; alert fires at 2
   note?:        string
 }
 
@@ -204,20 +205,25 @@ export async function GET(req: Request) {
         firstFlagged: null,
         lastChecked:  now,
         checkedUrl:   'lic listing page',
+        missCount:    0,
       }
     } else {
-      const alreadyFlagged = existing?.status === 'flagged'
+      const missCount = (existing?.missCount ?? 0) + 1
       flags[key] = {
         planNo:       plan.planNo,
         name:         plan.name,
-        status:       'flagged',
+        // Only escalate to 'flagged' after 2 consecutive misses (~1 month apart)
+        // First miss is silently recorded — LIC page structure can be unreliable
+        status:       missCount >= 2 ? 'flagged' : 'watching',
         httpStatus:   listing.status,
-        firstFlagged: existing?.firstFlagged ?? now,
+        firstFlagged: existing?.firstFlagged ?? (missCount >= 2 ? now : null),
         lastChecked:  now,
         checkedUrl:   'lic listing page',
+        missCount,
         note:         existing?.note,
       }
-      if (!alreadyFlagged) newlyFlagged.push(flags[key])
+      // Only alert on 2nd consecutive miss — prevents false positives from LIC page quirks
+      if (missCount >= 2 && existing?.status !== 'flagged') newlyFlagged.push(flags[key])
     }
   }
 
