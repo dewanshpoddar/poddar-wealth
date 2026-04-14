@@ -26,13 +26,11 @@ export const metadata: Metadata = {
     siteName: 'Poddar Wealth Management',
     title: 'Poddar Wealth Management — 30+ Years of Trusted Insurance Advisory',
     description: 'MDRT Member & LIC Chairman\'s Club awardee Ajay Kumar Poddar. Expert in life, health & wealth planning for families in Gorakhpur and eastern UP since 1994.',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Poddar Wealth Management' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Poddar Wealth Management — Trusted Insurance Advisory',
     description: 'MDRT Member Ajay Kumar Poddar. LIC, health & wealth planning for Gorakhpur families since 1994.',
-    images: ['/og-image.jpg'],
   },
   icons: {
     icon: '/favicon.svg',
