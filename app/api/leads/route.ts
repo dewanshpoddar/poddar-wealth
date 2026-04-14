@@ -17,6 +17,45 @@ const HEADERS = [
 const clean = (s: any, max = 500): string =>
   String(s ?? '').slice(0, max).replace(/[\r\n\t]/g, ' ').trim()
 
+/**
+ * Route each lead to its own dedicated tab — nothing gets merged.
+ *
+ * Tab strategy:
+ *  Agent Recruitment  — advisor/agent intent or iAm=Agent
+ *  Popup Inquiries    — plan interest popups, quick quote buttons
+ *  Chat Lead Capture  — leads captured inside the AI chat
+ *  Premium Calculator — calculator unlock (user enters mobile to see full results)
+ *  Wealth Blueprint   — blueprint form submissions (handled by /api/blueprint)
+ *  All Leads          — contact page form, general enquiries
+ */
+function resolveLeadTab(intent: string, iAm: string, wantTo: string): string {
+  const i = intent.toLowerCase()
+  const a = iAm.toLowerCase()
+  const w = wantTo.toLowerCase()
+
+  if (a.includes('agent') || w.includes('advisor') || i.includes('advisor') || i.includes('agent recruitment'))
+    return 'Agent Recruitment'
+
+  if (i.includes('chat lead') || i.includes('chat capture'))
+    return 'Chat Lead Capture'
+
+  if (i.includes('calc unlock') || i.includes('premium calc'))
+    return 'Premium Calculator'
+
+  if (i.includes('blueprint'))
+    return 'Wealth Blueprint'
+
+  // Popup = any plan interest, service consultation, quick quote from product cards
+  if (
+    i.includes('interest in') || i.includes('popup') ||
+    i.includes('service consultation') || i.includes('free quote') ||
+    i.includes('book') || i.includes('enquiry') || i.includes('inquiry')
+  )
+    return 'Popup Inquiries'
+
+  return 'All Leads'
+}
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
@@ -66,13 +105,7 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             row,
             intent:    intent ?? '',
-            sheetName: intent?.toLowerCase().includes('agent') || intent?.toLowerCase().includes('advisor')
-              ? 'Agent Recruitment'
-              : intent?.toLowerCase().includes('popup') || intent?.toLowerCase().includes('consultation')
-              ? 'Popup Inquiries'
-              : intent?.toLowerCase().includes('calc') || intent?.toLowerCase().includes('premium')
-              ? 'Premium Calculator'
-              : 'All Leads',
+            sheetName: resolveLeadTab(intent ?? '', iAm ?? '', wantTo ?? ''),
             headers: HEADERS,
           }),
           signal: controller.signal,
