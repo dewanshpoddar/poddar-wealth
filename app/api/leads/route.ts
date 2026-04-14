@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     // 1. Always write to local CSV as backup
     const sanitize = (str: any) => `"${String(str || '').replace(/"/g, '""')}"`;
     const line = row.map(sanitize).join(',') + '\n';
-    const filePath = path.join(process.cwd(), 'leads.csv');
+    const filePath = path.join('/tmp', 'leads.csv');
     if (!fs.existsSync(filePath)) {
       fs.writeFileSync(filePath, HEADERS.join(',') + '\n');
     }

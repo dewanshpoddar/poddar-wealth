@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     // 1. Always write to local CSV
     const sanitize = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`
     const line = row.map(sanitize).join(',') + '\n'
-    const filePath = path.join(process.cwd(), 'blueprints.csv')
+    const filePath = path.join('/tmp', 'blueprints.csv')
     if (!fs.existsSync(filePath)) {
       fs.writeFileSync(filePath, HEADERS.join(',') + '\n')
     }
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
 
     // 3. Also create a standard lead entry (name + phone + intent)
     try {
-      const leadsPath = path.join(process.cwd(), 'leads.csv')
+      const leadsPath = path.join('/tmp', 'leads.csv')
       const leadLine = [timestamp, name ?? '', '', phone ?? '', '', '', 'Wealth Blueprint Calculator', '', 'Blueprint Lead', '', ''].map(
         (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`
       ).join(',') + '\n'
