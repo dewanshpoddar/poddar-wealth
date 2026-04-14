@@ -1,6 +1,7 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   const { t } = useLang()
@@ -13,7 +14,7 @@ export default function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center p-2 shadow-gold-sm overflow-hidden flex-shrink-0">
-                <img src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" className="w-full h-full object-contain scale-110" />
+                <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" width={64} height={64} className="w-full h-full object-contain scale-110" />
               </div>
               <div>
                 <span className="text-white font-bold text-[15px] leading-snug block uppercase tracking-wide">Poddar Wealth Management</span>

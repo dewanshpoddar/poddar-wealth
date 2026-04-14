@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
+import { useLang } from '@/lib/LangContext'
 import {
   Shield, Heart, TrendingUp, Landmark, PiggyBank, Lock, CheckCircle2,
   ArrowRight, ChevronRight, AlertTriangle, TriangleAlert, Star,
@@ -420,6 +421,7 @@ function SectionLabel({ n, title }: { n: string; title: string }) {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function WealthBlueprintCalculator() {
+  const { t } = useLang()
   const [step, setStep] = useState(0)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -569,11 +571,11 @@ export default function WealthBlueprintCalculator() {
             {step === 0 && (
               <motion.div key="s0" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
-                <h3 className="text-16 font-bold text-navy mb-6">Let&apos;s start with the basics</h3>
+                <h3 className="text-16 font-bold text-navy mb-6">{t.blueprint.step0Title}</h3>
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <div className="flex justify-between mb-2">
-                      <label className="text-11 font-semibold text-navy/75">Your Age</label>
+                      <label className="text-11 font-semibold text-navy/75">{t.blueprint.fieldAge}</label>
                       <span className="text-13 font-bold text-gold">{age} yrs</span>
                     </div>
                     <input type="range" min={20} max={58} value={age} onChange={e => setAge(+e.target.value)} className="pw-gold-range w-full"/>
@@ -581,7 +583,7 @@ export default function WealthBlueprintCalculator() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <label className="text-11 font-semibold text-navy/75">Monthly Income</label>
+                      <label className="text-11 font-semibold text-navy/75">{t.blueprint.fieldIncome}</label>
                       <span className="text-13 font-bold text-gold">{incomeLabel}</span>
                     </div>
                     <input type="range" min={15000} max={700000} step={5000} value={monthlyIncome}
@@ -591,9 +593,9 @@ export default function WealthBlueprintCalculator() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
-                    <label className="text-11 font-semibold text-navy/75 block mb-2">How do you earn?</label>
+                    <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldEarning}</label>
                     <div className="grid grid-cols-3 gap-2">
-                      {([['salaried','Salaried','Paycheck'],['freelance','Freelance','Variable'],['business','Business','Self-employed']] as const).map(([k,l,s]) => (
+                      {([['salaried', t.blueprint.employOptions[0], 'Paycheck'],['freelance', t.blueprint.employOptions[1], 'Variable'],['business', t.blueprint.employOptions[2], 'Self-employed']] as [Employment, string, string][]).map(([k,l,s]) => (
                         <button key={k} onClick={() => setEmploy(k)}
                           className={`px-2 py-2.5 rounded-xl border-2 text-left transition-all ${employment === k ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
                           <div className="text-11 font-bold">{l}</div>
@@ -603,9 +605,9 @@ export default function WealthBlueprintCalculator() {
                     </div>
                   </div>
                   <div>
-                    <label className="text-11 font-semibold text-navy/75 block mb-2">Your City</label>
+                    <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldCity}</label>
                     <div className="grid grid-cols-3 gap-2">
-                      {([['metro','Metro','Delhi/Mum/Blr'],['tier2','Tier-2','Pune/Hyd/Lko'],['tier3','Tier-3','Smaller city']] as const).map(([k,l,s]) => (
+                      {([['metro', t.blueprint.cityOptions[0], 'Delhi/Mum/Blr'],['tier2', t.blueprint.cityOptions[1], 'Pune/Hyd/Lko'],['tier3', t.blueprint.cityOptions[2], 'Smaller city']] as [CityTier, string, string][]).map(([k,l,s]) => (
                         <button key={k} onClick={() => setCity(k)}
                           className={`px-2 py-2.5 rounded-xl border-2 text-left transition-all ${cityTier === k ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
                           <div className="text-11 font-bold">{l}</div>
@@ -628,12 +630,12 @@ export default function WealthBlueprintCalculator() {
             {step === 1 && (
               <motion.div key="s1" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
-                <h3 className="text-16 font-bold text-navy mb-6">Who depends on you?</h3>
+                <h3 className="text-16 font-bold text-navy mb-6">{t.blueprint.step1Title}</h3>
                 <div className="grid md:grid-cols-2 gap-5 mb-5">
                   <div>
-                    <label className="text-11 font-semibold text-navy/75 block mb-2">Marital Status</label>
+                    <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldMarital}</label>
                     <div className="grid grid-cols-2 gap-2">
-                      {([['true','Married'],['false','Single']] as const).map(([v,l]) => (
+                      {([['true', t.blueprint.marriedSingle[0]],['false', t.blueprint.marriedSingle[1]]] as [string, string][]).map(([v,l]) => (
                         <button key={v} onClick={() => setMarried(v === 'true')}
                           className={`py-3 rounded-xl border-2 text-12 font-bold transition-all ${isMarried === (v === 'true') ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
                           {l}
@@ -642,9 +644,9 @@ export default function WealthBlueprintCalculator() {
                     </div>
                   </div>
                   <div>
-                    <label className="text-11 font-semibold text-navy/75 block mb-2">Support ageing parents?</label>
+                    <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldParents}</label>
                     <div className="grid grid-cols-2 gap-2">
-                      {([['true','Yes'],['false','No']] as const).map(([v,l]) => (
+                      {([['true', t.blueprint.yesNo[0]],['false', t.blueprint.yesNo[1]]] as [string, string][]).map(([v,l]) => (
                         <button key={v} onClick={() => setParents(v === 'true')}
                           className={`py-3 rounded-xl border-2 text-12 font-bold transition-all ${hasAgedParents === (v === 'true') ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
                           {l}
@@ -654,7 +656,7 @@ export default function WealthBlueprintCalculator() {
                   </div>
                 </div>
                 <div className="mb-5">
-                  <label className="text-11 font-semibold text-navy/75 block mb-2">Number of children</label>
+                  <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldChildren}</label>
                   <div className="flex gap-2">
                     {[0,1,2,3,4].map(n => (
                       <button key={n} onClick={() => setChildren(n)}
@@ -696,7 +698,7 @@ export default function WealthBlueprintCalculator() {
             {step === 2 && (
               <motion.div key="s2" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
-                <h3 className="text-16 font-bold text-navy mb-1">What protection do you currently have?</h3>
+                <h3 className="text-16 font-bold text-navy mb-1">{t.blueprint.step2Title}</h3>
                 <p className="text-11 text-gray-400 mb-5">Approximate ranges are fine — this powers your gap analysis.</p>
                 {ConfidentialBanner}
                 <div className="space-y-5">
@@ -719,7 +721,7 @@ export default function WealthBlueprintCalculator() {
             {step === 3 && (
               <motion.div key="s3" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
-                <h3 className="text-16 font-bold text-navy mb-1">What have you already built?</h3>
+                <h3 className="text-16 font-bold text-navy mb-1">{t.blueprint.step3Title}</h3>
                 <p className="text-11 text-gray-400 mb-5">Used to calculate your retirement trajectory and net worth today.</p>
                 {ConfidentialBanner}
                 <div className="space-y-5 mb-6">
@@ -757,7 +759,7 @@ export default function WealthBlueprintCalculator() {
                   <button onClick={() => setStep(2)} className="text-12 text-navy/40 hover:text-navy transition-colors px-2 py-2">← Back</button>
                   <button onClick={() => { trackEvent('blueprint_step_completed', { step: 4 }); setStep(4) }}
                     className="flex items-center gap-2 bg-gold text-white font-bold text-12 px-8 py-3 rounded-full hover:bg-gold/90 transition-all shadow-lg">
-                    Generate My Blueprint <ArrowRight size={12}/>
+                    {t.blueprint.generateBtn} <ArrowRight size={12}/>
                   </button>
                 </div>
               </motion.div>
@@ -904,7 +906,7 @@ export default function WealthBlueprintCalculator() {
 
                 {/* ── 01 YOUR STORY ── */}
                 <div className="mb-5">
-                  <SectionLabel n="01" title="Your Financial Story"/>
+                  <SectionLabel n="01" title={t.blueprint.section01}/>
                   <div className="bg-[#f8f7f4] rounded-2xl p-6 border border-gray-100">
                     <p className="text-15 md:text-17 font-bold text-navy leading-snug mb-5 italic">
                       &ldquo;{narrative.headline}&rdquo;
@@ -919,29 +921,29 @@ export default function WealthBlueprintCalculator() {
 
                 {/* ── 02 RISK MATRIX ── */}
                 <div className="mb-5">
-                  <SectionLabel n="02" title="Risk Matrix"/>
+                  <SectionLabel n="02" title={t.blueprint.section02}/>
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       {
-                        icon: Shield, label: 'Life Risk', status: bp.gapL > 0 ? 'exposed' : 'covered',
+                        icon: Shield, label: t.blueprint.riskLabels[0], status: bp.gapL > 0 ? 'exposed' : 'covered',
                         line1: bp.gapL > 0 ? `₹${fmt(bp.gapL)}L gap` : 'Fully covered',
                         line2: bp.gapL > 0 ? `Family's runway: ${bp.incYears} yr${bp.incYears !== 1 ? 's' : ''}` : `HLV fully protected`,
                         color: bp.gapL > 0 ? '#ef4444' : '#22c55e',
                       },
                       {
-                        icon: Heart, label: 'Health Risk', status: bp.hGapL > 0 ? 'exposed' : 'covered',
+                        icon: Heart, label: t.blueprint.riskLabels[1], status: bp.hGapL > 0 ? 'exposed' : 'covered',
                         line1: bp.hGapL > 0 ? `₹${fmt(bp.hGapL)}L underinsured` : `₹${bp.rHL}L cover adequate`,
                         line2: `Medical inflation: 14%/yr`,
                         color: bp.hGapL > 0 ? '#f59e0b' : '#22c55e',
                       },
                       {
-                        icon: TrendingUp, label: 'Retirement Risk', status: bp.retDiffCrore < 0 ? 'exposed' : 'covered',
+                        icon: TrendingUp, label: t.blueprint.riskLabels[2], status: bp.retDiffCrore < 0 ? 'exposed' : 'covered',
                         line1: bp.retDiffCrore < 0 ? `${crore(Math.abs(bp.retDiffCrore))} deficit` : `${crore(bp.retDiffCrore)} surplus`,
                         line2: `Target: ${crore(bp.retCorpusCrore)} at ${retirementAge}`,
                         color: bp.retDiffCrore < 0 ? '#f59e0b' : '#22c55e',
                       },
                       {
-                        icon: Landmark, label: 'Education Risk', status: bp.totalEduL > 0 ? 'planning' : 'na',
+                        icon: Landmark, label: t.blueprint.riskLabels[3], status: bp.totalEduL > 0 ? 'planning' : 'na',
                         line1: bp.totalEduL > 0 ? `₹${fmt(bp.totalEduL)}L total` : 'No children',
                         line2: bp.totalEduL > 0 ? `11% education inflation` : 'Not applicable',
                         color: bp.totalEduL > 0 ? '#8b5cf6' : '#9ca3af',
@@ -956,7 +958,7 @@ export default function WealthBlueprintCalculator() {
                             <span className="text-11 font-bold text-navy">{label}</span>
                           </div>
                           <span className="text-9 font-bold px-2 py-0.5 rounded-full" style={{ background: color + '15', color }}>
-                            {status === 'covered' ? 'Protected' : status === 'exposed' ? 'Gap Found' : status === 'planning' ? 'Plan Needed' : '—'}
+                            {status === 'covered' ? t.blueprint.riskStatus.covered : status === 'exposed' ? t.blueprint.riskStatus.exposed : status === 'planning' ? t.blueprint.riskStatus.planning : '—'}
                           </span>
                         </div>
                         <div className="text-15 font-bold text-navy mb-0.5" style={{ color }}>{line1}</div>
@@ -969,7 +971,7 @@ export default function WealthBlueprintCalculator() {
                 {/* ── 03 THE PRESCRIPTION ── */}
                 {protectionPlan.length > 0 && (
                   <div className="mb-5">
-                    <SectionLabel n="03" title="The Prescription — Specific Plans & Premiums"/>
+                    <SectionLabel n="03" title={t.blueprint.section03}/>
                     <div className="space-y-3">
                       {protectionPlan.map(rec => (
                         <div key={rec.no} className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: priorityColor(rec.priority) + '30' }}>
@@ -1079,7 +1081,7 @@ export default function WealthBlueprintCalculator() {
 
                 {/* ── 90-DAY PLAN ── */}
                 <div className="mb-5">
-                  <SectionLabel n={isHNI ? '06' : '05'} title="Your 90-Day Action Plan"/>
+                  <SectionLabel n={isHNI ? '06' : '05'} title={t.blueprint.section90Day}/>
                   <div className="space-y-3">
                     {plan90.map(({ label, title, color, steps }) => (
                       <div key={label} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
@@ -1105,7 +1107,7 @@ export default function WealthBlueprintCalculator() {
 
                 {/* ── TRAJECTORY ── */}
                 <div className="mb-5">
-                  <SectionLabel n={isHNI ? '07' : '06'} title="Financial Trajectory"/>
+                  <SectionLabel n={isHNI ? '07' : '06'} title={t.blueprint.sectionTrajectory}/>
                   <div className="bg-[#f8f7f4] rounded-2xl p-5 border border-gray-100">
                     <div className="grid grid-cols-4 gap-0">
                       {[
@@ -1137,20 +1139,20 @@ export default function WealthBlueprintCalculator() {
                       <>
                         <div className="flex items-center gap-2 mb-2">
                           <Lock size={12} className="text-gold"/>
-                          <span className="text-9 font-bold tracking-[0.18em] text-gold/70 uppercase">Private · Confidential · Free</span>
+                          <span className="text-9 font-bold tracking-[0.18em] text-gold/70 uppercase">{t.blueprint.saveBadge}</span>
                         </div>
-                        <h4 className="text-17 font-bold text-white mb-1">Get Ajay sir&apos;s personal review of this blueprint</h4>
+                        <h4 className="text-17 font-bold text-white mb-1">{t.blueprint.saveTitle}</h4>
                         <p className="text-12 text-white/45 mb-5 leading-relaxed max-w-lg">
-                          Ajay sir personally reviews every blueprint submitted here and calls with a specific, no-script action plan — not a sales call. Your data is never sold or shared.
+                          {t.blueprint.saveBody}
                         </p>
                         <div className="grid md:grid-cols-3 gap-3">
-                          <input value={name} onChange={e => setName(e.target.value)} placeholder="Your name"
+                          <input value={name} onChange={e => setName(e.target.value)} placeholder={t.blueprint.namePlaceholder}
                             className="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-12 text-white placeholder-white/25 focus:outline-none focus:border-gold/50 transition-colors"/>
-                          <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="WhatsApp number" type="tel" maxLength={10}
+                          <input value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.blueprint.phonePlaceholder} type="tel" maxLength={10}
                             className="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-12 text-white placeholder-white/25 focus:outline-none focus:border-gold/50 transition-colors"/>
                           <button disabled={saving || !name || phone.length < 10} onClick={saveBlueprint}
                             className="flex items-center justify-center gap-2 bg-gold text-white font-bold text-12 px-6 py-3 rounded-xl hover:bg-gold/90 transition-all disabled:opacity-40 shadow-lg">
-                            {saving ? 'Saving…' : <><span>Save & Book Call</span><ChevronRight size={13}/></>}
+                            {saving ? t.blueprint.saving : <><span>{t.blueprint.saveBtn}</span><ChevronRight size={13}/></>}
                           </button>
                         </div>
                         {saveError && <p className="text-10 text-red-400 mt-2">{saveError}</p>}
@@ -1158,8 +1160,8 @@ export default function WealthBlueprintCalculator() {
                     ) : (
                       <div className="text-center py-4">
                         <CheckCircle2 size={30} className="text-green-400 mx-auto mb-3"/>
-                        <h4 className="text-17 font-bold text-white mb-1">Blueprint saved.</h4>
-                        <p className="text-12 text-white/45">Ajay sir will call you within 24 hours for a free 30-min personalised review.</p>
+                        <h4 className="text-17 font-bold text-white mb-1">{t.blueprint.savedTitle}</h4>
+                        <p className="text-12 text-white/45">{t.blueprint.savedBody}</p>
                       </div>
                     )}
                   </div>
@@ -1172,7 +1174,7 @@ export default function WealthBlueprintCalculator() {
                 <div className="text-center mt-3">
                   <button onClick={() => { setStep(0); setSaved(false); setName(''); setPhone('') }}
                     className="text-11 text-navy/35 hover:text-navy transition-colors underline underline-offset-2">
-                    Recalculate with different inputs
+                    {t.blueprint.recalculate}
                   </button>
                 </div>
               </motion.div>

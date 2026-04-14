@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import LangToggle from './LangToggle'
 
 export default function Navbar() {
@@ -39,7 +40,7 @@ export default function Navbar() {
         <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center p-1.5 shadow-sm overflow-hidden transition-all duration-500 flex-shrink-0 ${
           isScrolled ? 'bg-white shadow-none' : 'bg-white shadow-gold-sm border-gold/10 border'
         }`}>
-          <img src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" className="w-full h-full object-contain scale-110" />
+          <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" width={56} height={56} className="w-full h-full object-contain scale-110" priority />
         </div>
         {/* Logo text — hidden below 400px to give room for lang toggle + hamburger */}
         <div className="flex-col min-w-0 hidden [@media(min-width:400px)]:flex">
