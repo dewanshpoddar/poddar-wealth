@@ -143,9 +143,23 @@ function toIST(isoString) {
   return Utilities.formatDate(utc, 'Asia/Kolkata', 'dd-MMM-yyyy HH:mm:ss')
 }
 
+// ─── Test function — run this manually to authorize the script ────────────
+function testSetup() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet()
+  getOrCreateSheet(ss, 'All Leads')
+  getOrCreateSheet(ss, 'Premium Calculator')
+  getOrCreateSheet(ss, 'Wealth Blueprint')
+  getOrCreateSheet(ss, 'Chat Logs')
+  getOrCreateSheet(ss, 'Admin Notifications')
+  Logger.log('✅ All tabs created. Authorization complete.')
+}
+
 // ─── Main entry point ─────────────────────────────────────────────────────
 function doPost(e) {
   try {
+    if (!e || !e.postData) {
+      return ContentService.createTextOutput(JSON.stringify({ error: 'No POST data' })).setMimeType(ContentService.MimeType.JSON)
+    }
     const payload = JSON.parse(e.postData.contents)
     const ss = SpreadsheetApp.getActiveSpreadsheet()
     const tabName = resolveSheetName(payload)
