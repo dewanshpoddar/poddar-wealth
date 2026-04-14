@@ -53,7 +53,10 @@ export async function POST(request: Request) {
     ]
 
     // 1. Always write to local CSV
-    const sanitize = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`
+    const sanitize = (v: any) => {
+      const s = String(v ?? '').replace(/^[=+\-@\t\r]/, "'")
+      return `"${s.replace(/"/g, '""')}"`
+    }
     const line = row.map(sanitize).join(',') + '\n'
     const filePath = path.join('/tmp', 'blueprints.csv')
     if (!fs.existsSync(filePath)) {

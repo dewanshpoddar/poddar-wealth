@@ -68,7 +68,7 @@ export default function LeadPopup() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-6"
+            className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[9999] flex items-center justify-center px-4 py-6"
             onClick={handleClose}
           >
             {/* Modal */}

@@ -35,7 +35,8 @@ function writeFlags(flags: Record<string, unknown>) {
 }
 
 function auth(req: Request) {
-  const secret = process.env.ADMIN_SECRET || process.env.SYNC_SECRET || 'dev_secret_123'
+  const secret = process.env.ADMIN_SECRET || process.env.SYNC_SECRET
+  if (!secret) return false
   return req.headers.get('x-admin-secret') === secret
 }
 

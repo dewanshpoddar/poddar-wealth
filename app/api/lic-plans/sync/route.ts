@@ -5,9 +5,8 @@ import { runDiff } from '@/scripts/lic-diff';
 export async function POST(req: NextRequest) {
   try {
     const authHeader = req.headers.get('x-sync-secret');
-    const secret = process.env.SYNC_SECRET || 'dev_secret_123';
-    
-    if (authHeader !== secret) {
+    const secret = process.env.SYNC_SECRET;
+    if (!secret || authHeader !== secret) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 

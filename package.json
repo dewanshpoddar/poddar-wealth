@@ -10,13 +10,11 @@
     "sync:lic:now": "node scripts/lic-scraper.js | node scripts/lic-diff.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.86.1",
     "@google/generative-ai": "^0.24.1",
     "cheerio": "^1.2.0",
     "framer-motion": "^11.2.10",
     "lucide-react": "^0.383.0",
     "next": "15.5.15",
-    "node-cron": "^4.2.1",
     "node-fetch": "^2.7.0",
     "react": "^18",
     "react-dom": "^18",

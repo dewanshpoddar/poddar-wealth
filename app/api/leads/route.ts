@@ -85,7 +85,11 @@ export async function POST(request: Request) {
     ];
 
     // 1. Always write to local CSV as backup
-    const sanitize = (str: any) => `"${String(str || '').replace(/"/g, '""')}"`;
+    // Strip leading formula characters to prevent CSV injection
+    const sanitize = (str: any) => {
+      const s = String(str || '').replace(/^[=+\-@\t\r]/, "'")
+      return `"${s.replace(/"/g, '""')}"`
+    };
     const line = row.map(sanitize).join(',') + '\n';
     const filePath = path.join('/tmp', 'leads.csv');
     if (!fs.existsSync(filePath)) {

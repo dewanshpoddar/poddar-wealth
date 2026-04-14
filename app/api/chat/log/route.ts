@@ -12,6 +12,7 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
       headers:   ['Timestamp', 'Session ID', 'User Message', 'Bot Reply'],
       row:       [new Date().toISOString(), sessionId, userMsg, botReply],
     }),
+    signal: AbortSignal.timeout(5000),
   })
 }
 

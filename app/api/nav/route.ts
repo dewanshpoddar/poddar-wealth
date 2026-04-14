@@ -113,9 +113,8 @@ export async function GET(req: Request) {
 // POST /api/nav — force refresh (requires auth header)
 export async function POST(req: Request) {
   const secret = req.headers.get('x-nav-secret')
-  const expectedSecret = process.env.SYNC_SECRET || 'dev_secret_123'
-
-  if (secret !== expectedSecret) {
+  const expectedSecret = process.env.SYNC_SECRET
+  if (!expectedSecret || secret !== expectedSecret) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
   }
 
