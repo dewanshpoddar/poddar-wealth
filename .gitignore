@@ -1,0 +1,49 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+/tmp/
+
+# production
+/build
+
+# testing
+/coverage
+
+# environment
+.env
+.env*.local
+
+# typescript build artifacts
+*.tsbuildinfo
+next-env.d.ts
+
+# claude code
+.claude/
+
+# local editor / AI tooling
+.aiexclude
+.cursorignore
+task.md
+test-access.txt
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# sensitive / local-only data
+leads.csv
+
+# vercel
+.vercel

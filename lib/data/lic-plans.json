@@ -1,0 +1,4747 @@
+{
+  "meta": {
+    "source": "lic-plans-data.js (manual curation)",
+    "lastUpdated": "2026-04-13",
+    "version": "4.0.0",
+    "totalPlans": 123,
+    "activePlans": 34,
+    "withdrawnPlans": 89,
+    "categories": [
+      "endowment",
+      "moneyback",
+      "wholelife",
+      "term",
+      "child",
+      "pension",
+      "ulip",
+      "micro"
+    ]
+  },
+  "categories": {
+    "endowment": {
+      "label": {
+        "en": "Endowment Plans",
+        "hi": "एंडाउमेंट प्लान्स"
+      },
+      "icon": "🏦",
+      "plans": [
+        {
+          "id": "lic-714",
+          "name": {
+            "en": "LIC's New Endowment Plan",
+            "hi": "एलआईसी New Endowment"
+          },
+          "planNo": "714",
+          "tagline": {
+            "en": "Classic savings + protection plan. Lump sum at maturity or death, with annual bonus.",
+            "hi": "Classic savings + protection plan. Lump sum at maturity or death, with annual bonus."
+          },
+          "keyBenefit": {
+            "en": "Classic savings + protection plan. Lump sum at maturity or death, with annual bonus.",
+            "hi": "Classic savings + protection plan. Lump sum at maturity or death, with annual bonus."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Lifelong savings with life cover",
+              "hi": "Lifelong savings with life cover"
+            },
+            {
+              "en": "Loan after 3 years",
+              "hi": "Loan after 3 years"
+            },
+            {
+              "en": "Tax benefit under 80C and 10(10D)",
+              "hi": "Tax benefit under 80C and 10(10D)"
+            },
+            {
+              "en": "Ideal for first-time buyers",
+              "hi": "Ideal for first-time buyers"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-endowment-plan",
+          "status": "active"
+        },
+        {
+          "id": "lic-715",
+          "name": {
+            "en": "LIC's New Jeevan Anand",
+            "hi": "एलआईसी Jeevan Anand"
+          },
+          "planNo": "715",
+          "tagline": {
+            "en": "Endowment + lifetime cover continues after maturity. Best two-in-one plan.",
+            "hi": "Endowment + lifetime cover continues after maturity. Best two-in-one plan."
+          },
+          "keyBenefit": {
+            "en": "Endowment + lifetime cover continues after maturity. Best two-in-one plan.",
+            "hi": "Endowment + lifetime cover continues after maturity. Best two-in-one plan."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Life cover continues even after maturity",
+              "hi": "Life cover continues even after maturity"
+            },
+            {
+              "en": "Participating — bonus every year",
+              "hi": "Participating — bonus every year"
+            },
+            {
+              "en": "Death benefit = max(125% SA, 7x premium)",
+              "hi": "Death benefit = max(125% SA, 7x premium)"
+            },
+            {
+              "en": "Best two-in-one plan for family protection + savings",
+              "hi": "Best two-in-one plan for family protection + savings"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/1319704/LICs-New+Jeevan+Anand+sales+brochure+Eng_11072025.pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-717",
+          "name": {
+            "en": "LIC's Single Premium Endowment",
+            "hi": "एलआईसी SP Endowment"
+          },
+          "planNo": "717",
+          "tagline": {
+            "en": "Pay once, stay covered. Single premium endowment with guaranteed lump sum at maturity.",
+            "hi": "Pay once, stay covered. Single premium endowment with guaranteed lump sum at maturity."
+          },
+          "keyBenefit": {
+            "en": "Pay once, stay covered. Single premium endowment with guaranteed lump sum at maturity.",
+            "hi": "Pay once, stay covered. Single premium endowment with guaranteed lump sum at maturity."
+          },
+          "category": "endowment",
+          "entryAge": "0 - 65yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "One-time payment",
+              "hi": "One-time payment"
+            },
+            {
+              "en": "Loyalty additions at maturity",
+              "hi": "Loyalty additions at maturity"
+            },
+            {
+              "en": "Loan available after 1 year",
+              "hi": "Loan available after 1 year"
+            },
+            {
+              "en": "Ideal for lump sum investors",
+              "hi": "Ideal for lump sum investors"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-single-premium-endowment-plan",
+          "status": "active"
+        },
+        {
+          "id": "lic-733",
+          "name": {
+            "en": "LIC's Jeevan Lakshya",
+            "hi": "एलआईसी Jeevan Lakshya"
+          },
+          "planNo": "733",
+          "tagline": {
+            "en": "Family income protection. On death, family gets 10% SA annually till maturity, then 110% SA.",
+            "hi": "Family income protection. On death, family gets 10% SA annually till maturity, then 110% SA."
+          },
+          "keyBenefit": {
+            "en": "Family income protection. On death, family gets 10% SA annually till maturity, then 110% SA.",
+            "hi": "Family income protection. On death, family gets 10% SA annually till maturity, then 110% SA."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "Annual income to family on death",
+              "hi": "Annual income to family on death"
+            },
+            {
+              "en": "PPT 3 years less than policy term",
+              "hi": "PPT 3 years less than policy term"
+            },
+            {
+              "en": "Ideal for income replacement",
+              "hi": "Ideal for income replacement"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-lakshya",
+          "status": "active"
+        },
+        {
+          "id": "lic-736",
+          "name": {
+            "en": "LIC's Jeevan Labh",
+            "hi": "एलआईसी Jeevan Labh"
+          },
+          "planNo": "736",
+          "tagline": {
+            "en": "Limited pay endowment. Pay for fewer years, enjoy highest bonus + coverage for longer.",
+            "hi": "Limited pay endowment. Pay for fewer years, enjoy highest bonus + coverage for longer."
+          },
+          "keyBenefit": {
+            "en": "Limited pay endowment. Pay for fewer years, enjoy highest bonus + coverage for longer.",
+            "hi": "Limited pay endowment. Pay for fewer years, enjoy highest bonus + coverage for longer."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 59yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Pay for 10/15/16 yrs, covered for 16/21/25 yrs",
+              "hi": "Pay for 10/15/16 yrs, covered for 16/21/25 yrs"
+            },
+            {
+              "en": "Highest bonus rate (₹54/1000 SA/yr)",
+              "hi": "Highest bonus rate (₹54/1000 SA/yr)"
+            },
+            {
+              "en": "Best XIRR in endowment category",
+              "hi": "Best XIRR in endowment category"
+            },
+            {
+              "en": "Min SA ₹2 lakh",
+              "hi": "Min SA ₹2 lakh"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/1319704/LIC_Jeevan+labh_Sales+Brochure_Eng.pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-760",
+          "name": {
+            "en": "LIC's Bima Jyoti",
+            "hi": "एलआईसी Bima Jyoti"
+          },
+          "planNo": "760",
+          "tagline": {
+            "en": "Non-par plan with guaranteed additions of ₹50 per ₹1000 SA per year. Predictable maturity.",
+            "hi": "Non-par plan with guaranteed additions of ₹50 per ₹1000 SA per year. Predictable maturity."
+          },
+          "keyBenefit": {
+            "en": "Non-par plan with guaranteed additions of ₹50 per ₹1000 SA per year. Predictable maturity.",
+            "hi": "Non-par plan with guaranteed additions of ₹50 per ₹1000 SA per year. Predictable maturity."
+          },
+          "category": "endowment",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "₹1.25L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "₹50 guaranteed additions per ₹1000 SA per year",
+              "hi": "₹50 guaranteed additions per ₹1000 SA per year"
+            },
+            {
+              "en": "Zero market risk",
+              "hi": "Zero market risk"
+            },
+            {
+              "en": "Predictable maturity amount",
+              "hi": "Predictable maturity amount"
+            },
+            {
+              "en": "Tax benefit under 80C",
+              "hi": "Tax benefit under 80C"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-bima-jyoti",
+          "status": "active"
+        },
+        {
+          "id": "lic-911",
+          "name": {
+            "en": "LIC's Nav Jeevan Shree (Single)",
+            "hi": "एलआईसी NJS Single"
+          },
+          "planNo": "911",
+          "tagline": {
+            "en": "New non-par single premium endowment with guaranteed additions. One-time payment.",
+            "hi": "New non-par single premium endowment with guaranteed additions. One-time payment."
+          },
+          "keyBenefit": {
+            "en": "New non-par single premium endowment with guaranteed additions. One-time payment.",
+            "hi": "New non-par single premium endowment with guaranteed additions. One-time payment."
+          },
+          "category": "endowment",
+          "entryAge": "3 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Single premium — pay once",
+              "hi": "Single premium — pay once"
+            },
+            {
+              "en": "Guaranteed additions accumulate throughout term",
+              "hi": "Guaranteed additions accumulate throughout term"
+            },
+            {
+              "en": "Risk-free predictable maturity",
+              "hi": "Risk-free predictable maturity"
+            },
+            {
+              "en": "Loan available after 1 year",
+              "hi": "Loan available after 1 year"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-nav-jeevan-shree",
+          "status": "active"
+        },
+        {
+          "id": "lic-912",
+          "name": {
+            "en": "LIC's Nav Jeevan Shree (Limited)",
+            "hi": "एलआईसी NJS Limited"
+          },
+          "planNo": "912",
+          "tagline": {
+            "en": "Non-par limited pay endowment. Pay for shorter term (5/8/10 yrs), covered for 15/20/25 yrs.",
+            "hi": "Non-par limited pay endowment. Pay for shorter term (5/8/10 yrs), covered for 15/20/25 yrs."
+          },
+          "keyBenefit": {
+            "en": "Non-par limited pay endowment. Pay for shorter term (5/8/10 yrs), covered for 15/20/25 yrs.",
+            "hi": "Non-par limited pay endowment. Pay for shorter term (5/8/10 yrs), covered for 15/20/25 yrs."
+          },
+          "category": "endowment",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited premium paying term (5/8/10 yrs)",
+              "hi": "Limited premium paying term (5/8/10 yrs)"
+            },
+            {
+              "en": "Guaranteed additions throughout policy term",
+              "hi": "Guaranteed additions throughout policy term"
+            },
+            {
+              "en": "Non-participating — no market risk",
+              "hi": "Non-participating — no market risk"
+            },
+            {
+              "en": "Coverage = 7× annualised premium",
+              "hi": "Coverage = 7× annualised premium"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-nav-jeevan-shree",
+          "status": "active"
+        },
+        {
+          "id": "lic-880",
+          "name": {
+            "en": "LIC's Jan Suraksha",
+            "hi": "एलआईसी Jan Suraksha"
+          },
+          "planNo": "880",
+          "tagline": {
+            "en": "New participating endowment plan. Flexible terms with death + maturity benefit and annual bonus.",
+            "hi": "New participating endowment plan. Flexible terms with death + maturity benefit and annual bonus."
+          },
+          "keyBenefit": {
+            "en": "New participating endowment plan. Flexible terms with death + maturity benefit and annual bonus.",
+            "hi": "New participating endowment plan. Flexible terms with death + maturity benefit and annual bonus."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "New plan with enhanced death benefit",
+              "hi": "New plan with enhanced death benefit"
+            },
+            {
+              "en": "Annual bonus participation",
+              "hi": "Annual bonus participation"
+            },
+            {
+              "en": "Coverage = 7× annualised premium",
+              "hi": "Coverage = 7× annualised premium"
+            },
+            {
+              "en": "Flexible term 15–25 years",
+              "hi": "Flexible term 15–25 years"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jan-suraksha",
+          "status": "active"
+        },
+        {
+          "id": "lic-881",
+          "name": {
+            "en": "LIC's Bima Lakshmi",
+            "hi": "एलआईसी Bima Lakshmi"
+          },
+          "planNo": "881",
+          "tagline": {
+            "en": "New women-focused endowment with enhanced features for financial security of women.",
+            "hi": "New women-focused endowment with enhanced features for financial security of women."
+          },
+          "keyBenefit": {
+            "en": "New women-focused endowment with enhanced features for financial security of women.",
+            "hi": "New women-focused endowment with enhanced features for financial security of women."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Exclusively for women",
+              "hi": "Exclusively for women"
+            },
+            {
+              "en": "Option A: 50% SA survival benefit at end of PPT",
+              "hi": "Option A: 50% SA survival benefit at end of PPT"
+            },
+            {
+              "en": "Coverage = 10× annualised premium",
+              "hi": "Coverage = 10× annualised premium"
+            },
+            {
+              "en": "Female Critical Illness Rider available",
+              "hi": "Female Critical Illness Rider available"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-bima-lakshmi",
+          "status": "active"
+        },
+        {
+          "id": "lic-3",
+          "name": {
+            "en": "LIC's Limited Payment Life Policy (Regular)",
+            "hi": "एलआईसी LPL Regular"
+          },
+          "planNo": "3",
+          "tagline": {
+            "en": "Limited premium payment endowment. Pay for limited years, coverage continues for life.",
+            "hi": "Limited premium payment endowment. Pay for limited years, coverage continues for life."
+          },
+          "keyBenefit": {
+            "en": "Limited premium payment endowment. Pay for limited years, coverage continues for life.",
+            "hi": "Limited premium payment endowment. Pay for limited years, coverage continues for life."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited premium paying term",
+              "hi": "Limited premium paying term"
+            },
+            {
+              "en": "Coverage continues after PPT",
+              "hi": "Coverage continues after PPT"
+            },
+            {
+              "en": "Min SA ₹50,000",
+              "hi": "Min SA ₹50,000"
+            },
+            {
+              "en": "Modes: Yly/Hly/Qly/Mly",
+              "hi": "Modes: Yly/Hly/Qly/Mly"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-3",
+          "status": "withdrawn",
+          "withdrawnDate": "2003-02-15"
+        },
+        {
+          "id": "lic-7",
+          "name": {
+            "en": "LIC's Limited Payment Life Policy (Single)",
+            "hi": "एलआईसी LPL Single"
+          },
+          "planNo": "7",
+          "tagline": {
+            "en": "Single premium limited payment endowment. Pay once, covered for life.",
+            "hi": "Single premium limited payment endowment. Pay once, covered for life."
+          },
+          "keyBenefit": {
+            "en": "Single premium limited payment endowment. Pay once, covered for life.",
+            "hi": "Single premium limited payment endowment. Pay once, covered for life."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Single premium",
+              "hi": "Single premium"
+            },
+            {
+              "en": "Coverage for life",
+              "hi": "Coverage for life"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-7",
+          "status": "withdrawn",
+          "withdrawnDate": "2003-02-15"
+        },
+        {
+          "id": "lic-11",
+          "name": {
+            "en": "LIC's Endowment Policy (Without Profit)",
+            "hi": "एलआईसी Endowment W/O Profit"
+          },
+          "planNo": "11",
+          "tagline": {
+            "en": "Basic without-profit endowment policy. Guaranteed SA at maturity or death.",
+            "hi": "Basic without-profit endowment policy. Guaranteed SA at maturity or death."
+          },
+          "keyBenefit": {
+            "en": "Basic without-profit endowment policy. Guaranteed SA at maturity or death.",
+            "hi": "Basic without-profit endowment policy. Guaranteed SA at maturity or death."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Guaranteed maturity",
+              "hi": "Guaranteed maturity"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-11",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-11-14"
+        },
+        {
+          "id": "lic-14",
+          "name": {
+            "en": "LIC's Endowment Policy (With Profit)",
+            "hi": "एलआईसी Endowment With Profit"
+          },
+          "planNo": "14",
+          "tagline": {
+            "en": "Classic with-profit endowment. Bonus participation throughout policy term.",
+            "hi": "Classic with-profit endowment. Bonus participation throughout policy term."
+          },
+          "keyBenefit": {
+            "en": "Classic with-profit endowment. Bonus participation throughout policy term.",
+            "hi": "Classic with-profit endowment. Bonus participation throughout policy term."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "With profit bonus",
+              "hi": "With profit bonus"
+            },
+            {
+              "en": "Classic endowment",
+              "hi": "Classic endowment"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-14",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-17",
+          "name": {
+            "en": "LIC's Joint Life Endowment",
+            "hi": "एलआईसी Joint Life Endowment"
+          },
+          "planNo": "17",
+          "tagline": {
+            "en": "Joint life with-profit endowment. Covers two lives under one policy.",
+            "hi": "Joint life with-profit endowment. Covers two lives under one policy."
+          },
+          "keyBenefit": {
+            "en": "Joint life with-profit endowment. Covers two lives under one policy.",
+            "hi": "Joint life with-profit endowment. Covers two lives under one policy."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Joint life cover",
+              "hi": "Joint life cover"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-17",
+          "status": "withdrawn",
+          "withdrawnDate": "1998-05-01"
+        },
+        {
+          "id": "lic-18",
+          "name": {
+            "en": "LIC's Double Endowment Plan",
+            "hi": "एलआईसी Double Endowment"
+          },
+          "planNo": "18",
+          "tagline": {
+            "en": "Without-profit endowment paying double the SA at maturity.",
+            "hi": "Without-profit endowment paying double the SA at maturity."
+          },
+          "keyBenefit": {
+            "en": "Without-profit endowment paying double the SA at maturity.",
+            "hi": "Without-profit endowment paying double the SA at maturity."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Double SA at maturity",
+              "hi": "Double SA at maturity"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-18",
+          "status": "withdrawn",
+          "withdrawnDate": "2003-02-15"
+        },
+        {
+          "id": "lic-47",
+          "name": {
+            "en": "LIC's Limited Payment Endowment (Without Profits)",
+            "hi": "एलआईसी LPE W/O Profit"
+          },
+          "planNo": "47",
+          "tagline": {
+            "en": "Limited pay without-profit endowment. Fixed SA at maturity, no bonus.",
+            "hi": "Limited pay without-profit endowment. Fixed SA at maturity, no bonus."
+          },
+          "keyBenefit": {
+            "en": "Limited pay without-profit endowment. Fixed SA at maturity, no bonus.",
+            "hi": "Limited pay without-profit endowment. Fixed SA at maturity, no bonus."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited pay",
+              "hi": "Limited pay"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Guaranteed SA",
+              "hi": "Guaranteed SA"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-47",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-11-14"
+        },
+        {
+          "id": "lic-48",
+          "name": {
+            "en": "LIC's Limited Payment Endowment (With Profits)",
+            "hi": "एलआईसी LPE With Profit"
+          },
+          "planNo": "48",
+          "tagline": {
+            "en": "Limited pay with-profit endowment. Bonus accrues throughout policy term.",
+            "hi": "Limited pay with-profit endowment. Bonus accrues throughout policy term."
+          },
+          "keyBenefit": {
+            "en": "Limited pay with-profit endowment. Bonus accrues throughout policy term.",
+            "hi": "Limited pay with-profit endowment. Bonus accrues throughout policy term."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited pay",
+              "hi": "Limited pay"
+            },
+            {
+              "en": "With profit bonus",
+              "hi": "With profit bonus"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-48",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-04-01"
+        },
+        {
+          "id": "lic-88",
+          "name": {
+            "en": "LIC's Jeevan Mithra (Double Cover)",
+            "hi": "एलआईसी Jeevan Mithra DC"
+          },
+          "planNo": "88",
+          "tagline": {
+            "en": "Endowment with double sum assured on accidental death. With profit.",
+            "hi": "Endowment with double sum assured on accidental death. With profit."
+          },
+          "keyBenefit": {
+            "en": "Endowment with double sum assured on accidental death. With profit.",
+            "hi": "Endowment with double sum assured on accidental death. With profit."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Double SA on accidental death",
+              "hi": "Double SA on accidental death"
+            },
+            {
+              "en": "With profit bonus",
+              "hi": "With profit bonus"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-88",
+          "status": "withdrawn",
+          "withdrawnDate": "2013-11-24"
+        },
+        {
+          "id": "lic-89",
+          "name": {
+            "en": "LIC's Jeevan Saathi",
+            "hi": "एलआईसी Jeevan Saathi"
+          },
+          "planNo": "89",
+          "tagline": {
+            "en": "Joint life double cover endowment. Covers husband & wife under one policy.",
+            "hi": "Joint life double cover endowment. Covers husband & wife under one policy."
+          },
+          "keyBenefit": {
+            "en": "Joint life double cover endowment. Covers husband & wife under one policy.",
+            "hi": "Joint life double cover endowment. Covers husband & wife under one policy."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Joint life — husband & wife",
+              "hi": "Joint life — husband & wife"
+            },
+            {
+              "en": "Double cover on accidental death",
+              "hi": "Double cover on accidental death"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-89",
+          "status": "withdrawn",
+          "withdrawnDate": "2013-11-24"
+        },
+        {
+          "id": "lic-91",
+          "name": {
+            "en": "LIC's New Janaraksha",
+            "hi": "एलआईसी New Janaraksha"
+          },
+          "planNo": "91",
+          "tagline": {
+            "en": "Endowment with profit for low-income groups. Affordable premiums.",
+            "hi": "Endowment with profit for low-income groups. Affordable premiums."
+          },
+          "keyBenefit": {
+            "en": "Endowment with profit for low-income groups. Affordable premiums.",
+            "hi": "Endowment with profit for low-income groups. Affordable premiums."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Low-cost endowment",
+              "hi": "Low-cost endowment"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "For low-income groups",
+              "hi": "For low-income groups"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-91",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-94",
+          "name": {
+            "en": "LIC's Bima Sandesh",
+            "hi": "एलआईसी Bima Sandesh"
+          },
+          "planNo": "94",
+          "tagline": {
+            "en": "Without-profit endowment for rural/semi-urban population.",
+            "hi": "Without-profit endowment for rural/semi-urban population."
+          },
+          "keyBenefit": {
+            "en": "Without-profit endowment for rural/semi-urban population.",
+            "hi": "Without-profit endowment for rural/semi-urban population."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹5K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Rural focus",
+              "hi": "Rural focus"
+            },
+            {
+              "en": "Low minimum SA",
+              "hi": "Low minimum SA"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-94",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-02-18"
+        },
+        {
+          "id": "lic-95",
+          "name": {
+            "en": "LIC's Bhavishya Jeevan",
+            "hi": "एलआईसी Bhavishya Jeevan"
+          },
+          "planNo": "95",
+          "tagline": {
+            "en": "Endowment with premium reduction after 5 years. With profit.",
+            "hi": "Endowment with premium reduction after 5 years. With profit."
+          },
+          "keyBenefit": {
+            "en": "Endowment with premium reduction after 5 years. With profit.",
+            "hi": "Endowment with premium reduction after 5 years. With profit."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Premium reduces after 5 years",
+              "hi": "Premium reduces after 5 years"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Unique premium structure",
+              "hi": "Unique premium structure"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-95",
+          "status": "withdrawn",
+          "withdrawnDate": "2004-07-15"
+        },
+        {
+          "id": "lic-110",
+          "name": {
+            "en": "LIC's Asha Deep",
+            "hi": "एलआईसी Asha Deep"
+          },
+          "planNo": "110",
+          "tagline": {
+            "en": "Health/endowment hybrid plan with critical illness benefit.",
+            "hi": "Health/endowment hybrid plan with critical illness benefit."
+          },
+          "keyBenefit": {
+            "en": "Health/endowment hybrid plan with critical illness benefit.",
+            "hi": "Health/endowment hybrid plan with critical illness benefit."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Health + endowment hybrid",
+              "hi": "Health + endowment hybrid"
+            },
+            {
+              "en": "CI benefit included",
+              "hi": "CI benefit included"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-110",
+          "status": "withdrawn",
+          "withdrawnDate": "1993-11-30"
+        },
+        {
+          "id": "lic-112",
+          "name": {
+            "en": "LIC's Jeevan Shree",
+            "hi": "एलआईसी Jeevan Shree"
+          },
+          "planNo": "112",
+          "tagline": {
+            "en": "Non-par endowment with guaranteed additions. Predecessor to Bima Jyoti family.",
+            "hi": "Non-par endowment with guaranteed additions. Predecessor to Bima Jyoti family."
+          },
+          "keyBenefit": {
+            "en": "Non-par endowment with guaranteed additions. Predecessor to Bima Jyoti family.",
+            "hi": "Non-par endowment with guaranteed additions. Predecessor to Bima Jyoti family."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Predecessor to GA plans",
+              "hi": "Predecessor to GA plans"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-112",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-01-31"
+        },
+        {
+          "id": "lic-114",
+          "name": {
+            "en": "LIC's Jeevan Aadhar",
+            "hi": "एलआईसी Jeevan Aadhar"
+          },
+          "planNo": "114",
+          "tagline": {
+            "en": "Plan for handicapped dependants. Provides financial security for disabled family members.",
+            "hi": "Plan for handicapped dependants. Provides financial security for disabled family members."
+          },
+          "keyBenefit": {
+            "en": "Plan for handicapped dependants. Provides financial security for disabled family members.",
+            "hi": "Plan for handicapped dependants. Provides financial security for disabled family members."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For handicapped dependants",
+              "hi": "For handicapped dependants"
+            },
+            {
+              "en": "Annual benefit payout",
+              "hi": "Annual benefit payout"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-114",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-121",
+          "name": {
+            "en": "LIC's Asha Deep II",
+            "hi": "एलआईसी Asha Deep II"
+          },
+          "planNo": "121",
+          "tagline": {
+            "en": "Health insurance + endowment hybrid. Enhanced CI cover over Asha Deep.",
+            "hi": "Health insurance + endowment hybrid. Enhanced CI cover over Asha Deep."
+          },
+          "keyBenefit": {
+            "en": "Health insurance + endowment hybrid. Enhanced CI cover over Asha Deep.",
+            "hi": "Health insurance + endowment hybrid. Enhanced CI cover over Asha Deep."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Health + endowment",
+              "hi": "Health + endowment"
+            },
+            {
+              "en": "Enhanced CI benefit",
+              "hi": "Enhanced CI benefit"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-121",
+          "status": "withdrawn",
+          "withdrawnDate": "2004-08-31"
+        },
+        {
+          "id": "lic-123",
+          "name": {
+            "en": "LIC's Jeevan Sanchay (12 Year)",
+            "hi": "एलआईसी Jeevan Sanchay 12yr"
+          },
+          "planNo": "123",
+          "tagline": {
+            "en": "12-year non-par endowment with guaranteed additions.",
+            "hi": "12-year non-par endowment with guaranteed additions."
+          },
+          "keyBenefit": {
+            "en": "12-year non-par endowment with guaranteed additions.",
+            "hi": "12-year non-par endowment with guaranteed additions."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "12-year fixed term",
+              "hi": "12-year fixed term"
+            },
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-123",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-16"
+        },
+        {
+          "id": "lic-124",
+          "name": {
+            "en": "LIC's Jeevan Sanchay (15 Year)",
+            "hi": "एलआईसी Jeevan Sanchay 15yr"
+          },
+          "planNo": "124",
+          "tagline": {
+            "en": "15-year non-par endowment with guaranteed additions.",
+            "hi": "15-year non-par endowment with guaranteed additions."
+          },
+          "keyBenefit": {
+            "en": "15-year non-par endowment with guaranteed additions.",
+            "hi": "15-year non-par endowment with guaranteed additions."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "15-year fixed term",
+              "hi": "15-year fixed term"
+            },
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-124",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-16"
+        },
+        {
+          "id": "lic-128",
+          "name": {
+            "en": "LIC's Jeevan Sneha (20 Year)",
+            "hi": "एलआईसी Jeevan Sneha"
+          },
+          "planNo": "128",
+          "tagline": {
+            "en": "20-year endowment with profit for women.",
+            "hi": "20-year endowment with profit for women."
+          },
+          "keyBenefit": {
+            "en": "20-year endowment with profit for women.",
+            "hi": "20-year endowment with profit for women."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For women",
+              "hi": "For women"
+            },
+            {
+              "en": "20-year term",
+              "hi": "20-year term"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-128",
+          "status": "withdrawn",
+          "withdrawnDate": "2001-12-31"
+        },
+        {
+          "id": "lic-131",
+          "name": {
+            "en": "LIC's Jeevan Asha II",
+            "hi": "एलआईसी Jeevan Asha II"
+          },
+          "planNo": "131",
+          "tagline": {
+            "en": "Health insurance plan with endowment benefit.",
+            "hi": "Health insurance plan with endowment benefit."
+          },
+          "keyBenefit": {
+            "en": "Health insurance plan with endowment benefit.",
+            "hi": "Health insurance plan with endowment benefit."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Health + endowment",
+              "hi": "Health + endowment"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-131",
+          "status": "withdrawn",
+          "withdrawnDate": "2003-10-16"
+        },
+        {
+          "id": "lic-133",
+          "name": {
+            "en": "LIC's Jeevan Mithra (Triple Cover)",
+            "hi": "एलआईसी Jeevan Mithra TC"
+          },
+          "planNo": "133",
+          "tagline": {
+            "en": "Endowment with triple SA on accidental death. With profit.",
+            "hi": "Endowment with triple SA on accidental death. With profit."
+          },
+          "keyBenefit": {
+            "en": "Endowment with triple SA on accidental death. With profit.",
+            "hi": "Endowment with triple SA on accidental death. With profit."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Triple SA on accidental death",
+              "hi": "Triple SA on accidental death"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Premium SA rebate",
+              "hi": "Premium SA rebate"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-133",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-16"
+        },
+        {
+          "id": "lic-136",
+          "name": {
+            "en": "LIC's Jeevan Viswas",
+            "hi": "एलआईसी Jeevan Viswas"
+          },
+          "planNo": "136",
+          "tagline": {
+            "en": "Endowment plan for handicapped dependants. Annual survival benefits after PPT.",
+            "hi": "Endowment plan for handicapped dependants. Annual survival benefits after PPT."
+          },
+          "keyBenefit": {
+            "en": "Endowment plan for handicapped dependants. Annual survival benefits after PPT.",
+            "hi": "Endowment plan for handicapped dependants. Annual survival benefits after PPT."
+          },
+          "category": "endowment",
+          "entryAge": "20 - 65yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For handicapped dependants",
+              "hi": "For handicapped dependants"
+            },
+            {
+              "en": "Annual survival benefit",
+              "hi": "Annual survival benefit"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-136",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-149",
+          "name": {
+            "en": "LIC's Jeevan Anand (Whole Life)",
+            "hi": "एलआईसी Jeevan Anand (old)"
+          },
+          "planNo": "149",
+          "tagline": {
+            "en": "Predecessor to New Jeevan Anand (Plan 715). Endowment with lifetime cover.",
+            "hi": "Predecessor to New Jeevan Anand (Plan 715). Endowment with lifetime cover."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to New Jeevan Anand (Plan 715). Endowment with lifetime cover.",
+            "hi": "Predecessor to New Jeevan Anand (Plan 715). Endowment with lifetime cover."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Life cover continues post maturity",
+              "hi": "Life cover continues post maturity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Succeeded by Plan 715/815",
+              "hi": "Succeeded by Plan 715/815"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-149",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-151",
+          "name": {
+            "en": "LIC's New Jeevan Shree",
+            "hi": "एलआईसी New Jeevan Shree (old)"
+          },
+          "planNo": "151",
+          "tagline": {
+            "en": "Non-par endowment with guaranteed additions. Predecessor to Plan 911/912.",
+            "hi": "Non-par endowment with guaranteed additions. Predecessor to Plan 911/912."
+          },
+          "keyBenefit": {
+            "en": "Non-par endowment with guaranteed additions. Predecessor to Plan 911/912.",
+            "hi": "Non-par endowment with guaranteed additions. Predecessor to Plan 911/912."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Succeeded by Plan 911/912",
+              "hi": "Succeeded by Plan 911/912"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-151",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-154",
+          "name": {
+            "en": "LIC's Jeevan Samridhi (12 Year)",
+            "hi": "एलआईसी Jeevan Samridhi 12yr"
+          },
+          "planNo": "154",
+          "tagline": {
+            "en": "12-year endowment with profit. Short-term savings + insurance.",
+            "hi": "12-year endowment with profit. Short-term savings + insurance."
+          },
+          "keyBenefit": {
+            "en": "12-year endowment with profit. Short-term savings + insurance.",
+            "hi": "12-year endowment with profit. Short-term savings + insurance."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "12-year term",
+              "hi": "12-year term"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Short-term savings",
+              "hi": "Short-term savings"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-154",
+          "status": "withdrawn",
+          "withdrawnDate": "2005-03-01"
+        },
+        {
+          "id": "lic-155",
+          "name": {
+            "en": "LIC's Jeevan Samridhi (15 Year)",
+            "hi": "एलआईसी Jeevan Samridhi 15yr"
+          },
+          "planNo": "155",
+          "tagline": {
+            "en": "15-year endowment with profit.",
+            "hi": "15-year endowment with profit."
+          },
+          "keyBenefit": {
+            "en": "15-year endowment with profit.",
+            "hi": "15-year endowment with profit."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "15-year term",
+              "hi": "15-year term"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-155",
+          "status": "withdrawn",
+          "withdrawnDate": "2005-03-01"
+        },
+        {
+          "id": "lic-156",
+          "name": {
+            "en": "LIC's Jeevan Samridhi (20 Year)",
+            "hi": "एलआईसी Jeevan Samridhi 20yr"
+          },
+          "planNo": "156",
+          "tagline": {
+            "en": "20-year endowment with profit.",
+            "hi": "20-year endowment with profit."
+          },
+          "keyBenefit": {
+            "en": "20-year endowment with profit.",
+            "hi": "20-year endowment with profit."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "20-year term",
+              "hi": "20-year term"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-156",
+          "status": "withdrawn",
+          "withdrawnDate": "2005-03-01"
+        },
+        {
+          "id": "lic-157",
+          "name": {
+            "en": "LIC's Jeevan Samridhi (25 Year)",
+            "hi": "एलआईसी Jeevan Samridhi 25yr"
+          },
+          "planNo": "157",
+          "tagline": {
+            "en": "25-year endowment with profit.",
+            "hi": "25-year endowment with profit."
+          },
+          "keyBenefit": {
+            "en": "25-year endowment with profit.",
+            "hi": "25-year endowment with profit."
+          },
+          "category": "endowment",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "25-year term",
+              "hi": "25-year term"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-157",
+          "status": "withdrawn",
+          "withdrawnDate": "2005-03-01"
+        },
+        {
+          "id": "lic-165",
+          "name": {
+            "en": "LIC's Jeevan Saral",
+            "hi": "एलआईसी Jeevan Saral"
+          },
+          "planNo": "165",
+          "tagline": {
+            "en": "Simple flexible endowment. Choose premium, SA auto-calculated. Popular for simplicity.",
+            "hi": "Simple flexible endowment. Choose premium, SA auto-calculated. Popular for simplicity."
+          },
+          "keyBenefit": {
+            "en": "Simple flexible endowment. Choose premium, SA auto-calculated. Popular for simplicity.",
+            "hi": "Simple flexible endowment. Choose premium, SA auto-calculated. Popular for simplicity."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 60yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Choose premium, SA calculated automatically",
+              "hi": "Choose premium, SA calculated automatically"
+            },
+            {
+              "en": "Flexible",
+              "hi": "Flexible"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Loyalty addition at maturity",
+              "hi": "Loyalty addition at maturity"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-165",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-768",
+          "name": {
+            "en": "LIC's Jeevan Azad",
+            "hi": "एलआईसी Jeevan Azad"
+          },
+          "planNo": "768",
+          "tagline": {
+            "en": "Limited payment non-par endowment with guaranteed additions. Withdrawn March 2026.",
+            "hi": "Limited payment non-par endowment with guaranteed additions. Withdrawn March 2026."
+          },
+          "keyBenefit": {
+            "en": "Limited payment non-par endowment with guaranteed additions. Withdrawn March 2026.",
+            "hi": "Limited payment non-par endowment with guaranteed additions. Withdrawn March 2026."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited pay",
+              "hi": "Limited pay"
+            },
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Non-par",
+              "hi": "Non-par"
+            },
+            {
+              "en": "Withdrawn March 2026",
+              "hi": "Withdrawn March 2026"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-768",
+          "status": "withdrawn",
+          "withdrawnDate": "2026-03-01"
+        },
+        {
+          "id": "lic-814",
+          "name": {
+            "en": "LIC's New Endowment Plan",
+            "hi": "एलआईसी New Endowment (814)"
+          },
+          "planNo": "814",
+          "tagline": {
+            "en": "Predecessor to Plan 714. Classic endowment with annual bonus. Withdrawn Feb 2020.",
+            "hi": "Predecessor to Plan 714. Classic endowment with annual bonus. Withdrawn Feb 2020."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 714. Classic endowment with annual bonus. Withdrawn Feb 2020.",
+            "hi": "Predecessor to Plan 714. Classic endowment with annual bonus. Withdrawn Feb 2020."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Classic endowment",
+              "hi": "Classic endowment"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Succeeded by Plan 714",
+              "hi": "Succeeded by Plan 714"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-814",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-815",
+          "name": {
+            "en": "LIC's New Jeevan Anand",
+            "hi": "एलआईसी New Jeevan Anand (815)"
+          },
+          "planNo": "815",
+          "tagline": {
+            "en": "Predecessor to Plan 715. Endowment + whole life cover continues post maturity.",
+            "hi": "Predecessor to Plan 715. Endowment + whole life cover continues post maturity."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 715. Endowment + whole life cover continues post maturity.",
+            "hi": "Predecessor to Plan 715. Endowment + whole life cover continues post maturity."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Life cover continues post maturity",
+              "hi": "Life cover continues post maturity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Succeeded by Plan 715",
+              "hi": "Succeeded by Plan 715"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-815",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-01-31"
+        },
+        {
+          "id": "lic-827",
+          "name": {
+            "en": "LIC's Jeevan Rakshak",
+            "hi": "एलआईसी Jeevan Rakshak"
+          },
+          "planNo": "827",
+          "tagline": {
+            "en": "Low-cost endowment for small SA. Max SA ₹2 lakh.",
+            "hi": "Low-cost endowment for small SA. Max SA ₹2 lakh."
+          },
+          "keyBenefit": {
+            "en": "Low-cost endowment for small SA. Max SA ₹2 lakh.",
+            "hi": "Low-cost endowment for small SA. Max SA ₹2 lakh."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹75K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Max SA ₹2 lakh",
+              "hi": "Max SA ₹2 lakh"
+            },
+            {
+              "en": "Affordable",
+              "hi": "Affordable"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Low-income segment",
+              "hi": "Low-income segment"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-827",
+          "status": "withdrawn",
+          "withdrawnDate": "2019-11-01"
+        },
+        {
+          "id": "lic-830",
+          "name": {
+            "en": "LIC's Limited Premium Endowment Plan",
+            "hi": "एलआईसी LPE (830)"
+          },
+          "planNo": "830",
+          "tagline": {
+            "en": "Limited pay endowment. Similar structure to Jeevan Labh (736).",
+            "hi": "Limited pay endowment. Similar structure to Jeevan Labh (736)."
+          },
+          "keyBenefit": {
+            "en": "Limited pay endowment. Similar structure to Jeevan Labh (736).",
+            "hi": "Limited pay endowment. Similar structure to Jeevan Labh (736)."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 59yr",
+          "sumAssured": "₹3L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited premium payment",
+              "hi": "Limited premium payment"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "High bonus rate",
+              "hi": "High bonus rate"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-830",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-833",
+          "name": {
+            "en": "LIC's New Jeevan Lakshya",
+            "hi": "एलआईसी New Jeevan Lakshya (833)"
+          },
+          "planNo": "833",
+          "tagline": {
+            "en": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity.",
+            "hi": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity.",
+            "hi": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "10% SA annual income on death",
+              "hi": "10% SA annual income on death"
+            },
+            {
+              "en": "Family income plan",
+              "hi": "Family income plan"
+            },
+            {
+              "en": "Succeeded by Plan 733",
+              "hi": "Succeeded by Plan 733"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-833",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-836",
+          "name": {
+            "en": "LIC's New Jeevan Labh",
+            "hi": "एलआईसी New Jeevan Labh (836)"
+          },
+          "planNo": "836",
+          "tagline": {
+            "en": "Predecessor to Plan 736 (Jeevan Labh). Limited pay high-bonus endowment.",
+            "hi": "Predecessor to Plan 736 (Jeevan Labh). Limited pay high-bonus endowment."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 736 (Jeevan Labh). Limited pay high-bonus endowment.",
+            "hi": "Predecessor to Plan 736 (Jeevan Labh). Limited pay high-bonus endowment."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 59yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Limited pay 10/15/16 yrs",
+              "hi": "Limited pay 10/15/16 yrs"
+            },
+            {
+              "en": "High bonus rate",
+              "hi": "High bonus rate"
+            },
+            {
+              "en": "Succeeded by Plan 736",
+              "hi": "Succeeded by Plan 736"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-836",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-838",
+          "name": {
+            "en": "LIC's Jeevan Pragati",
+            "hi": "एलआईसी Jeevan Pragati"
+          },
+          "planNo": "838",
+          "tagline": {
+            "en": "Endowment with increasing life cover every 5 years. With profit.",
+            "hi": "Endowment with increasing life cover every 5 years. With profit."
+          },
+          "keyBenefit": {
+            "en": "Endowment with increasing life cover every 5 years. With profit.",
+            "hi": "Endowment with increasing life cover every 5 years. With profit."
+          },
+          "category": "endowment",
+          "entryAge": "12 - 45yr",
+          "sumAssured": "₹1.5L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "SA increases every 5 years",
+              "hi": "SA increases every 5 years"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Growing coverage",
+              "hi": "Growing coverage"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-838",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-843",
+          "name": {
+            "en": "LIC's Aadhaar Stambh",
+            "hi": "एलआईसी Aadhaar Stambh"
+          },
+          "planNo": "843",
+          "tagline": {
+            "en": "Endowment for males under govt. Aadhaar identity scheme. With profit.",
+            "hi": "Endowment for males under govt. Aadhaar identity scheme. With profit."
+          },
+          "keyBenefit": {
+            "en": "Endowment for males under govt. Aadhaar identity scheme. With profit.",
+            "hi": "Endowment for males under govt. Aadhaar identity scheme. With profit."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹75K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Aadhaar-linked plan for males",
+              "hi": "Aadhaar-linked plan for males"
+            },
+            {
+              "en": "Max SA ₹3 lakh",
+              "hi": "Max SA ₹3 lakh"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-843",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-844",
+          "name": {
+            "en": "LIC's Aadhaar Shila",
+            "hi": "एलआईसी Aadhaar Shila"
+          },
+          "planNo": "844",
+          "tagline": {
+            "en": "Endowment for women under Aadhaar scheme. With profit. Max SA ₹3 lakh.",
+            "hi": "Endowment for women under Aadhaar scheme. With profit. Max SA ₹3 lakh."
+          },
+          "keyBenefit": {
+            "en": "Endowment for women under Aadhaar scheme. With profit. Max SA ₹3 lakh.",
+            "hi": "Endowment for women under Aadhaar scheme. With profit. Max SA ₹3 lakh."
+          },
+          "category": "endowment",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹75K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For women — Aadhaar linked",
+              "hi": "For women — Aadhaar linked"
+            },
+            {
+              "en": "Max SA ₹3 lakh",
+              "hi": "Max SA ₹3 lakh"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-844",
+          "status": "withdrawn",
+          "withdrawnDate": "2017-04-01"
+        },
+        {
+          "id": "lic-846",
+          "name": {
+            "en": "LIC's Jeevan Utkarsh",
+            "hi": "एलआईसी Jeevan Utkarsh"
+          },
+          "planNo": "846",
+          "tagline": {
+            "en": "Single premium endowment with guaranteed additions. Short-term investment.",
+            "hi": "Single premium endowment with guaranteed additions. Short-term investment."
+          },
+          "keyBenefit": {
+            "en": "Single premium endowment with guaranteed additions. Short-term investment.",
+            "hi": "Single premium endowment with guaranteed additions. Short-term investment."
+          },
+          "category": "endowment",
+          "entryAge": "6 - 47yr",
+          "sumAssured": "₹75K+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Single premium",
+              "hi": "Single premium"
+            },
+            {
+              "en": "12-year fixed term",
+              "hi": "12-year fixed term"
+            },
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-846",
+          "status": "withdrawn",
+          "withdrawnDate": "2018-06-03"
+        },
+        {
+          "id": "lic-853",
+          "name": {
+            "en": "LIC's Navjeevan",
+            "hi": "एलआईसी Navjeevan"
+          },
+          "planNo": "853",
+          "tagline": {
+            "en": "Endowment with increasing cover. SA grows by 5% every year for first 5 years.",
+            "hi": "Endowment with increasing cover. SA grows by 5% every year for first 5 years."
+          },
+          "keyBenefit": {
+            "en": "Endowment with increasing cover. SA grows by 5% every year for first 5 years.",
+            "hi": "Endowment with increasing cover. SA grows by 5% every year for first 5 years."
+          },
+          "category": "endowment",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Increasing SA for first 5 years",
+              "hi": "Increasing SA for first 5 years"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Enhanced death cover",
+              "hi": "Enhanced death cover"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-853",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-03-31"
+        },
+        {
+          "id": "lic-860",
+          "name": {
+            "en": "LIC's Bima Jyoti (860)",
+            "hi": "एलआईसी Bima Jyoti (860)"
+          },
+          "planNo": "860",
+          "tagline": {
+            "en": "Predecessor to Plan 760. Non-par endowment with guaranteed additions.",
+            "hi": "Predecessor to Plan 760. Non-par endowment with guaranteed additions."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 760. Non-par endowment with guaranteed additions.",
+            "hi": "Predecessor to Plan 760. Non-par endowment with guaranteed additions."
+          },
+          "category": "endowment",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Guaranteed additions ₹50/1000 SA/yr",
+              "hi": "Guaranteed additions ₹50/1000 SA/yr"
+            },
+            {
+              "en": "Non-par",
+              "hi": "Non-par"
+            },
+            {
+              "en": "Succeeded by Plan 760",
+              "hi": "Succeeded by Plan 760"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-860",
+          "status": "withdrawn",
+          "withdrawnDate": "2021-12-20"
+        }
+      ]
+    },
+    "moneyback": {
+      "label": {
+        "en": "Money Back Plans",
+        "hi": "मनी बैक प्लान्स"
+      },
+      "icon": "💰",
+      "plans": [
+        {
+          "id": "lic-720",
+          "name": {
+            "en": "LIC's New Money Back Plan — 20 Years",
+            "hi": "एलआईसी Money Back 20yr"
+          },
+          "planNo": "720",
+          "tagline": {
+            "en": "Get 20% SA back every 5 years (3 times). Remaining 40% SA + full bonuses at 20-yr maturity.",
+            "hi": "Get 20% SA back every 5 years (3 times). Remaining 40% SA + full bonuses at 20-yr maturity."
+          },
+          "keyBenefit": {
+            "en": "Get 20% SA back every 5 years (3 times). Remaining 40% SA + full bonuses at 20-yr maturity.",
+            "hi": "Get 20% SA back every 5 years (3 times). Remaining 40% SA + full bonuses at 20-yr maturity."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "15 Years",
+          "highlights": [
+            {
+              "en": "20% SA back every 5 years for liquidity",
+              "hi": "20% SA back every 5 years for liquidity"
+            },
+            {
+              "en": "Premium paying term only 15 years",
+              "hi": "Premium paying term only 15 years"
+            },
+            {
+              "en": "40% SA + full bonuses at maturity",
+              "hi": "40% SA + full bonuses at maturity"
+            },
+            {
+              "en": "Life cover throughout for full SA",
+              "hi": "Life cover throughout for full SA"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-money-back-plan-20-years",
+          "status": "active"
+        },
+        {
+          "id": "lic-721",
+          "name": {
+            "en": "LIC's New Money Back Plan — 25 Years",
+            "hi": "एलआईसी Money Back 25yr"
+          },
+          "planNo": "721",
+          "tagline": {
+            "en": "Get 15% SA back every 5 years (4 times). Remaining 40% SA + bonuses at 25-yr maturity.",
+            "hi": "Get 15% SA back every 5 years (4 times). Remaining 40% SA + bonuses at 25-yr maturity."
+          },
+          "keyBenefit": {
+            "en": "Get 15% SA back every 5 years (4 times). Remaining 40% SA + bonuses at 25-yr maturity.",
+            "hi": "Get 15% SA back every 5 years (4 times). Remaining 40% SA + bonuses at 25-yr maturity."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "20 Years",
+          "highlights": [
+            {
+              "en": "4 periodic payouts of 15% SA each",
+              "hi": "4 periodic payouts of 15% SA each"
+            },
+            {
+              "en": "Premium paying term only 20 years",
+              "hi": "Premium paying term only 20 years"
+            },
+            {
+              "en": "Good for milestone-based planning",
+              "hi": "Good for milestone-based planning"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-money-back-plan-25-years",
+          "status": "active"
+        },
+        {
+          "id": "lic-748",
+          "name": {
+            "en": "LIC's Bima Shree",
+            "hi": "एलआईसी Bima Shree"
+          },
+          "planNo": "748",
+          "tagline": {
+            "en": "HNI money back plan. Limited pay. Min SA ₹10 lakh. Survival benefits + high bonuses.",
+            "hi": "HNI money back plan. Limited pay. Min SA ₹10 lakh. Survival benefits + high bonuses."
+          },
+          "keyBenefit": {
+            "en": "HNI money back plan. Limited pay. Min SA ₹10 lakh. Survival benefits + high bonuses.",
+            "hi": "HNI money back plan. Limited pay. Min SA ₹10 lakh. Survival benefits + high bonuses."
+          },
+          "category": "moneyback",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹10L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Min SA ₹10 lakh — HNI plan",
+              "hi": "Min SA ₹10 lakh — HNI plan"
+            },
+            {
+              "en": "Limited pay 12/14/16 yrs",
+              "hi": "Limited pay 12/14/16 yrs"
+            },
+            {
+              "en": "Survival benefits at intervals",
+              "hi": "Survival benefits at intervals"
+            },
+            {
+              "en": "Critical illness rider available",
+              "hi": "Critical illness rider available"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-bima-shree",
+          "status": "active"
+        },
+        {
+          "id": "lic-73",
+          "name": {
+            "en": "LIC's Money Back Plan (12 Years)",
+            "hi": "एलआईसी Money Back 12yr"
+          },
+          "planNo": "73",
+          "tagline": {
+            "en": "12-year money back plan with periodic survival benefits.",
+            "hi": "12-year money back plan with periodic survival benefits."
+          },
+          "keyBenefit": {
+            "en": "12-year money back plan with periodic survival benefits.",
+            "hi": "12-year money back plan with periodic survival benefits."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "12-year term",
+              "hi": "12-year term"
+            },
+            {
+              "en": "Periodic survival benefits",
+              "hi": "Periodic survival benefits"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-73",
+          "status": "withdrawn",
+          "withdrawnDate": "1994-09-01"
+        },
+        {
+          "id": "lic-74",
+          "name": {
+            "en": "LIC's Money Back Plan (15 Years)",
+            "hi": "एलआईसी Money Back 15yr"
+          },
+          "planNo": "74",
+          "tagline": {
+            "en": "15-year money back plan. Survival benefits at 5th and 10th year.",
+            "hi": "15-year money back plan. Survival benefits at 5th and 10th year."
+          },
+          "keyBenefit": {
+            "en": "15-year money back plan. Survival benefits at 5th and 10th year.",
+            "hi": "15-year money back plan. Survival benefits at 5th and 10th year."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "15-year term",
+              "hi": "15-year term"
+            },
+            {
+              "en": "Survival benefits at 5 & 10 years",
+              "hi": "Survival benefits at 5 & 10 years"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-74",
+          "status": "withdrawn",
+          "withdrawnDate": "1998-01-15"
+        },
+        {
+          "id": "lic-75",
+          "name": {
+            "en": "LIC's Money Back Plan (20 Years)",
+            "hi": "एलआईसी Money Back 20yr (old)"
+          },
+          "planNo": "75",
+          "tagline": {
+            "en": "Predecessor to Plan 720. 20-year money back with survival benefits every 5 years.",
+            "hi": "Predecessor to Plan 720. 20-year money back with survival benefits every 5 years."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 720. 20-year money back with survival benefits every 5 years.",
+            "hi": "Predecessor to Plan 720. 20-year money back with survival benefits every 5 years."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "15 Years",
+          "highlights": [
+            {
+              "en": "20-year term",
+              "hi": "20-year term"
+            },
+            {
+              "en": "20% SA every 5 years",
+              "hi": "20% SA every 5 years"
+            },
+            {
+              "en": "Succeeded by Plan 720",
+              "hi": "Succeeded by Plan 720"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-75",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-04-01"
+        },
+        {
+          "id": "lic-93",
+          "name": {
+            "en": "LIC's Money Back Plan (25 Years)",
+            "hi": "एलआईसी Money Back 25yr (old)"
+          },
+          "planNo": "93",
+          "tagline": {
+            "en": "Predecessor to Plan 721. 25-year money back with 4 periodic payouts.",
+            "hi": "Predecessor to Plan 721. 25-year money back with 4 periodic payouts."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 721. 25-year money back with 4 periodic payouts.",
+            "hi": "Predecessor to Plan 721. 25-year money back with 4 periodic payouts."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "20 Years",
+          "highlights": [
+            {
+              "en": "25-year term",
+              "hi": "25-year term"
+            },
+            {
+              "en": "15% SA every 5 years (4 times)",
+              "hi": "15% SA every 5 years (4 times)"
+            },
+            {
+              "en": "Succeeded by Plan 721",
+              "hi": "Succeeded by Plan 721"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-93",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-103",
+          "name": {
+            "en": "LIC's Jeevan Chaya",
+            "hi": "एलआईसी Jeevan Chaya"
+          },
+          "planNo": "103",
+          "tagline": {
+            "en": "High risk cover money back plan. Enhanced death benefit with periodic payouts.",
+            "hi": "High risk cover money back plan. Enhanced death benefit with periodic payouts."
+          },
+          "keyBenefit": {
+            "en": "High risk cover money back plan. Enhanced death benefit with periodic payouts.",
+            "hi": "High risk cover money back plan. Enhanced death benefit with periodic payouts."
+          },
+          "category": "moneyback",
+          "entryAge": "18 - 50yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "High risk cover",
+              "hi": "High risk cover"
+            },
+            {
+              "en": "Money back payouts",
+              "hi": "Money back payouts"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-103",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-106",
+          "name": {
+            "en": "LIC's Jeevan Surabhi (15 Year)",
+            "hi": "एलआईसी Jeevan Surabhi 15yr"
+          },
+          "planNo": "106",
+          "tagline": {
+            "en": "15-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "15-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "keyBenefit": {
+            "en": "15-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "15-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "15-year term",
+              "hi": "15-year term"
+            },
+            {
+              "en": "Increasing money back",
+              "hi": "Increasing money back"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-106",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-107",
+          "name": {
+            "en": "LIC's Jeevan Surabhi (20 Year)",
+            "hi": "एलआईसी Jeevan Surabhi 20yr"
+          },
+          "planNo": "107",
+          "tagline": {
+            "en": "20-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "20-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "keyBenefit": {
+            "en": "20-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "20-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "20-year term",
+              "hi": "20-year term"
+            },
+            {
+              "en": "Increasing money back",
+              "hi": "Increasing money back"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-107",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-108",
+          "name": {
+            "en": "LIC's Jeevan Surabhi (25 Year)",
+            "hi": "एलआईसी Jeevan Surabhi 25yr"
+          },
+          "planNo": "108",
+          "tagline": {
+            "en": "25-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "25-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "keyBenefit": {
+            "en": "25-year money back with increasing survival benefits and with-profit bonus.",
+            "hi": "25-year money back with increasing survival benefits and with-profit bonus."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "25-year term",
+              "hi": "25-year term"
+            },
+            {
+              "en": "Increasing money back",
+              "hi": "Increasing money back"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-108",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-125",
+          "name": {
+            "en": "LIC's Jeevan Sanchay (20 Year)",
+            "hi": "एलआईसी Jeevan Sanchay 20yr"
+          },
+          "planNo": "125",
+          "tagline": {
+            "en": "20-year money back with guaranteed additions of ₹70/1000 SA/yr. 20% SB at 5th, 10th, 15th year.",
+            "hi": "20-year money back with guaranteed additions of ₹70/1000 SA/yr. 20% SB at 5th, 10th, 15th year."
+          },
+          "keyBenefit": {
+            "en": "20-year money back with guaranteed additions of ₹70/1000 SA/yr. 20% SB at 5th, 10th, 15th year.",
+            "hi": "20-year money back with guaranteed additions of ₹70/1000 SA/yr. 20% SB at 5th, 10th, 15th year."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "GA ₹70/1000 SA/yr",
+              "hi": "GA ₹70/1000 SA/yr"
+            },
+            {
+              "en": "20% SA at year 5, 10, 15",
+              "hi": "20% SA at year 5, 10, 15"
+            },
+            {
+              "en": "40% SA + GA + LA at maturity",
+              "hi": "40% SA + GA + LA at maturity"
+            },
+            {
+              "en": "Accident benefit ₹1/1000 SA extra",
+              "hi": "Accident benefit ₹1/1000 SA extra"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-125",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-16"
+        },
+        {
+          "id": "lic-126",
+          "name": {
+            "en": "LIC's Jeevan Sanchay (25 Year)",
+            "hi": "एलआईसी Jeevan Sanchay 25yr"
+          },
+          "planNo": "126",
+          "tagline": {
+            "en": "25-year money back with guaranteed additions. Similar to Plan 125 with longer term.",
+            "hi": "25-year money back with guaranteed additions. Similar to Plan 125 with longer term."
+          },
+          "keyBenefit": {
+            "en": "25-year money back with guaranteed additions. Similar to Plan 125 with longer term.",
+            "hi": "25-year money back with guaranteed additions. Similar to Plan 125 with longer term."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "GA ₹70/1000 SA/yr",
+              "hi": "GA ₹70/1000 SA/yr"
+            },
+            {
+              "en": "Periodic money back",
+              "hi": "Periodic money back"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-126",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-16"
+        },
+        {
+          "id": "lic-168",
+          "name": {
+            "en": "LIC's Jeevan Anurag",
+            "hi": "एलआईसी Jeevan Anurag"
+          },
+          "planNo": "168",
+          "tagline": {
+            "en": "Child money back plan. Survival benefits at child's key milestones.",
+            "hi": "Child money back plan. Survival benefits at child's key milestones."
+          },
+          "keyBenefit": {
+            "en": "Child money back plan. Survival benefits at child's key milestones.",
+            "hi": "Child money back plan. Survival benefits at child's key milestones."
+          },
+          "category": "moneyback",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "Child money back",
+              "hi": "Child money back"
+            },
+            {
+              "en": "Milestone payouts",
+              "hi": "Milestone payouts"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Premium waiver",
+              "hi": "Premium waiver"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-168",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-764",
+          "name": {
+            "en": "LIC's Bima Ratna",
+            "hi": "एलआईसी Bima Ratna"
+          },
+          "planNo": "764",
+          "tagline": {
+            "en": "Non-par money back plan with guaranteed additions. Withdrawn March 2026.",
+            "hi": "Non-par money back plan with guaranteed additions. Withdrawn March 2026."
+          },
+          "keyBenefit": {
+            "en": "Non-par money back plan with guaranteed additions. Withdrawn March 2026.",
+            "hi": "Non-par money back plan with guaranteed additions. Withdrawn March 2026."
+          },
+          "category": "moneyback",
+          "entryAge": "5 - 55yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Non-par money back",
+              "hi": "Non-par money back"
+            },
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Min SA ₹5 lakh",
+              "hi": "Min SA ₹5 lakh"
+            },
+            {
+              "en": "Withdrawn March 2026",
+              "hi": "Withdrawn March 2026"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-764",
+          "status": "withdrawn",
+          "withdrawnDate": "2026-03-01"
+        },
+        {
+          "id": "lic-820",
+          "name": {
+            "en": "LIC's New Money Back Plan – 20 Year",
+            "hi": "एलआईसी Money Back 20yr (820)"
+          },
+          "planNo": "820",
+          "tagline": {
+            "en": "Predecessor to Plan 720. 20% SA every 5 years, 40% SA at maturity + bonuses.",
+            "hi": "Predecessor to Plan 720. 20% SA every 5 years, 40% SA at maturity + bonuses."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 720. 20% SA every 5 years, 40% SA at maturity + bonuses.",
+            "hi": "Predecessor to Plan 720. 20% SA every 5 years, 40% SA at maturity + bonuses."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "15 Years",
+          "highlights": [
+            {
+              "en": "20% SA at years 5/10/15",
+              "hi": "20% SA at years 5/10/15"
+            },
+            {
+              "en": "40% SA + bonus at maturity",
+              "hi": "40% SA + bonus at maturity"
+            },
+            {
+              "en": "Succeeded by Plan 720",
+              "hi": "Succeeded by Plan 720"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-820",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-821",
+          "name": {
+            "en": "LIC's New Money Back Plan – 25 Year",
+            "hi": "एलआईसी Money Back 25yr (821)"
+          },
+          "planNo": "821",
+          "tagline": {
+            "en": "Predecessor to Plan 721. 15% SA every 5 years (4 times), 40% SA at maturity.",
+            "hi": "Predecessor to Plan 721. 15% SA every 5 years (4 times), 40% SA at maturity."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 721. 15% SA every 5 years (4 times), 40% SA at maturity.",
+            "hi": "Predecessor to Plan 721. 15% SA every 5 years (4 times), 40% SA at maturity."
+          },
+          "category": "moneyback",
+          "entryAge": "13 - 45yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "20 Years",
+          "highlights": [
+            {
+              "en": "15% SA at years 5/10/15/20",
+              "hi": "15% SA at years 5/10/15/20"
+            },
+            {
+              "en": "40% SA + bonus at maturity",
+              "hi": "40% SA + bonus at maturity"
+            },
+            {
+              "en": "Succeeded by Plan 721",
+              "hi": "Succeeded by Plan 721"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-821",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-841",
+          "name": {
+            "en": "LIC's Bima Diamond",
+            "hi": "एलआईसी Bima Diamond"
+          },
+          "planNo": "841",
+          "tagline": {
+            "en": "Money back plan with guaranteed loyalty additions at maturity.",
+            "hi": "Money back plan with guaranteed loyalty additions at maturity."
+          },
+          "keyBenefit": {
+            "en": "Money back plan with guaranteed loyalty additions at maturity.",
+            "hi": "Money back plan with guaranteed loyalty additions at maturity."
+          },
+          "category": "moneyback",
+          "entryAge": "14 - 50yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Periodic money back",
+              "hi": "Periodic money back"
+            },
+            {
+              "en": "Guaranteed loyalty additions",
+              "hi": "Guaranteed loyalty additions"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-841",
+          "status": "withdrawn",
+          "withdrawnDate": "2017-08-31"
+        },
+        {
+          "id": "lic-847",
+          "name": {
+            "en": "LIC's Jeevan Shiromani",
+            "hi": "एलआईसी Jeevan Shiromani"
+          },
+          "planNo": "847",
+          "tagline": {
+            "en": "HNI money back plan. Min SA ₹1 crore. Critical illness cover included.",
+            "hi": "HNI money back plan. Min SA ₹1 crore. Critical illness cover included."
+          },
+          "keyBenefit": {
+            "en": "HNI money back plan. Min SA ₹1 crore. Critical illness cover included.",
+            "hi": "HNI money back plan. Min SA ₹1 crore. Critical illness cover included."
+          },
+          "category": "moneyback",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹1Cr+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Min SA ₹1 crore — super HNI",
+              "hi": "Min SA ₹1 crore — super HNI"
+            },
+            {
+              "en": "Critical illness cover",
+              "hi": "Critical illness cover"
+            },
+            {
+              "en": "Limited pay",
+              "hi": "Limited pay"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-847",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        },
+        {
+          "id": "lic-848",
+          "name": {
+            "en": "LIC's Bima Shree (848)",
+            "hi": "एलआईसी Bima Shree (848)"
+          },
+          "planNo": "848",
+          "tagline": {
+            "en": "Predecessor to Plan 748. HNI limited pay money back. Min SA ₹10 lakh.",
+            "hi": "Predecessor to Plan 748. HNI limited pay money back. Min SA ₹10 lakh."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 748. HNI limited pay money back. Min SA ₹10 lakh.",
+            "hi": "Predecessor to Plan 748. HNI limited pay money back. Min SA ₹10 lakh."
+          },
+          "category": "moneyback",
+          "entryAge": "8 - 55yr",
+          "sumAssured": "₹10L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Min SA ₹10 lakh",
+              "hi": "Min SA ₹10 lakh"
+            },
+            {
+              "en": "Limited pay",
+              "hi": "Limited pay"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Succeeded by Plan 748",
+              "hi": "Succeeded by Plan 748"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-848",
+          "status": "withdrawn",
+          "withdrawnDate": "2023-03-30"
+        },
+        {
+          "id": "lic-863",
+          "name": {
+            "en": "LIC's Dhan Rekha",
+            "hi": "एलआईसी Dhan Rekha"
+          },
+          "planNo": "863",
+          "tagline": {
+            "en": "Non-par money back plan with guaranteed additions. Periodic payouts assured.",
+            "hi": "Non-par money back plan with guaranteed additions. Periodic payouts assured."
+          },
+          "keyBenefit": {
+            "en": "Non-par money back plan with guaranteed additions. Periodic payouts assured.",
+            "hi": "Non-par money back plan with guaranteed additions. Periodic payouts assured."
+          },
+          "category": "moneyback",
+          "entryAge": "3 - 45yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Guaranteed additions",
+              "hi": "Guaranteed additions"
+            },
+            {
+              "en": "Non-par money back",
+              "hi": "Non-par money back"
+            },
+            {
+              "en": "Periodic assured payouts",
+              "hi": "Periodic assured payouts"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-863",
+          "status": "withdrawn",
+          "withdrawnDate": "2023-03-31"
+        }
+      ]
+    },
+    "wholelife": {
+      "label": {
+        "en": "Whole Life Plans",
+        "hi": "होल लाइफ प्लान्स"
+      },
+      "icon": "♾️",
+      "plans": [
+        {
+          "id": "lic-745",
+          "name": {
+            "en": "LIC's Jeevan Umang",
+            "hi": "एलआईसी Jeevan Umang"
+          },
+          "planNo": "745",
+          "tagline": {
+            "en": "Whole life plan. 8% SA income every year after PPT ends, for life. Full SA + bonuses at age 100.",
+            "hi": "Whole life plan. 8% SA income every year after PPT ends, for life. Full SA + bonuses at age 100."
+          },
+          "keyBenefit": {
+            "en": "Whole life plan. 8% SA income every year after PPT ends, for life. Full SA + bonuses at age 100.",
+            "hi": "Whole life plan. 8% SA income every year after PPT ends, for life. Full SA + bonuses at age 100."
+          },
+          "category": "wholelife",
+          "entryAge": "0 - 55yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "8% SA as annual income after PPT — for life",
+              "hi": "8% SA as annual income after PPT — for life"
+            },
+            {
+              "en": "Highest bonus rate in LIC portfolio (₹55/1000)",
+              "hi": "Highest bonus rate in LIC portfolio (₹55/1000)"
+            },
+            {
+              "en": "Full SA + all bonuses at maturity (age 100)",
+              "hi": "Full SA + all bonuses at maturity (age 100)"
+            },
+            {
+              "en": "Loan available after 3 years",
+              "hi": "Loan available after 3 years"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-umang",
+          "status": "active"
+        },
+        {
+          "id": "lic-771",
+          "name": {
+            "en": "LIC's Jeevan Utsav",
+            "hi": "एलआईसी Jeevan Utsav"
+          },
+          "planNo": "771",
+          "tagline": {
+            "en": "Non-par whole life. Guaranteed additions during PPT. 10% SA income per year for life after PPT.",
+            "hi": "Non-par whole life. Guaranteed additions during PPT. 10% SA income per year for life after PPT."
+          },
+          "keyBenefit": {
+            "en": "Non-par whole life. Guaranteed additions during PPT. 10% SA income per year for life after PPT.",
+            "hi": "Non-par whole life. Guaranteed additions during PPT. 10% SA income per year for life after PPT."
+          },
+          "category": "wholelife",
+          "entryAge": "0 - 65yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "₹40 guaranteed additions per ₹1000 SA/yr during PPT",
+              "hi": "₹40 guaranteed additions per ₹1000 SA/yr during PPT"
+            },
+            {
+              "en": "10% SA annual income for life after PPT",
+              "hi": "10% SA annual income for life after PPT"
+            },
+            {
+              "en": "Select maturity age (75–100)",
+              "hi": "Select maturity age (75–100)"
+            },
+            {
+              "en": "Min SA ₹5 lakh",
+              "hi": "Min SA ₹5 lakh"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav",
+          "status": "active"
+        },
+        {
+          "id": "lic-883",
+          "name": {
+            "en": "LIC's Jeevan Utsav (Single Premium)",
+            "hi": "एलआईसी Jeevan Utsav SP"
+          },
+          "planNo": "883",
+          "tagline": {
+            "en": "Single premium version of Jeevan Utsav. Pay once, get lifetime income from day one.",
+            "hi": "Single premium version of Jeevan Utsav. Pay once, get lifetime income from day one."
+          },
+          "keyBenefit": {
+            "en": "Single premium version of Jeevan Utsav. Pay once, get lifetime income from day one.",
+            "hi": "Single premium version of Jeevan Utsav. Pay once, get lifetime income from day one."
+          },
+          "category": "wholelife",
+          "entryAge": "0 - 65yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Pay once — income starts immediately",
+              "hi": "Pay once — income starts immediately"
+            },
+            {
+              "en": "10% SA annual income for lifetime",
+              "hi": "10% SA annual income for lifetime"
+            },
+            {
+              "en": "Select maturity age (75–100)",
+              "hi": "Select maturity age (75–100)"
+            },
+            {
+              "en": "Min SA ₹5 lakh",
+              "hi": "Min SA ₹5 lakh"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-utsav",
+          "status": "active"
+        },
+        {
+          "id": "lic-1",
+          "name": {
+            "en": "LIC's Whole Life",
+            "hi": "एलआईसी Whole Life"
+          },
+          "planNo": "1",
+          "tagline": {
+            "en": "Without Profit Endowment Plan. Coverage for whole life with no bonus participation.",
+            "hi": "Without Profit Endowment Plan. Coverage for whole life with no bonus participation."
+          },
+          "keyBenefit": {
+            "en": "Without Profit Endowment Plan. Coverage for whole life with no bonus participation.",
+            "hi": "Without Profit Endowment Plan. Coverage for whole life with no bonus participation."
+          },
+          "category": "wholelife",
+          "entryAge": "16 - 60yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Without profit — no bonus",
+              "hi": "Without profit — no bonus"
+            },
+            {
+              "en": "Whole life cover",
+              "hi": "Whole life cover"
+            },
+            {
+              "en": "Pure protection plan",
+              "hi": "Pure protection plan"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-1",
+          "status": "withdrawn",
+          "withdrawnDate": "1998-05-01"
+        },
+        {
+          "id": "lic-27",
+          "name": {
+            "en": "LIC's Convertible Whole Life Policy",
+            "hi": "एलआईसी Convertible WL"
+          },
+          "planNo": "27",
+          "tagline": {
+            "en": "Whole life policy convertible to endowment after 5 years if needed.",
+            "hi": "Whole life policy convertible to endowment after 5 years if needed."
+          },
+          "keyBenefit": {
+            "en": "Whole life policy convertible to endowment after 5 years if needed.",
+            "hi": "Whole life policy convertible to endowment after 5 years if needed."
+          },
+          "category": "wholelife",
+          "entryAge": "16 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Convert to endowment after 5 years",
+              "hi": "Convert to endowment after 5 years"
+            },
+            {
+              "en": "Whole life cover",
+              "hi": "Whole life cover"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-27",
+          "status": "withdrawn",
+          "withdrawnDate": "2003-08-31"
+        },
+        {
+          "id": "lic-152",
+          "name": {
+            "en": "LIC's Jeevan Rekha",
+            "hi": "एलआईसी Jeevan Rekha"
+          },
+          "planNo": "152",
+          "tagline": {
+            "en": "Whole life money back plan. Survival benefits during term plus whole life cover.",
+            "hi": "Whole life money back plan. Survival benefits during term plus whole life cover."
+          },
+          "keyBenefit": {
+            "en": "Whole life money back plan. Survival benefits during term plus whole life cover.",
+            "hi": "Whole life money back plan. Survival benefits during term plus whole life cover."
+          },
+          "category": "wholelife",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Whole life + money back",
+              "hi": "Whole life + money back"
+            },
+            {
+              "en": "Survival benefits at intervals",
+              "hi": "Survival benefits at intervals"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-152",
+          "status": "withdrawn",
+          "withdrawnDate": "2006-03-17"
+        },
+        {
+          "id": "lic-178",
+          "name": {
+            "en": "LIC's Jeevan Tarang",
+            "hi": "एलआईसी Jeevan Tarang"
+          },
+          "planNo": "178",
+          "tagline": {
+            "en": "Guaranteed income whole life plan. Guaranteed additions + annual survival benefit for life.",
+            "hi": "Guaranteed income whole life plan. Guaranteed additions + annual survival benefit for life."
+          },
+          "keyBenefit": {
+            "en": "Guaranteed income whole life plan. Guaranteed additions + annual survival benefit for life.",
+            "hi": "Guaranteed income whole life plan. Guaranteed additions + annual survival benefit for life."
+          },
+          "category": "wholelife",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "Guaranteed additions during PPT",
+              "hi": "Guaranteed additions during PPT"
+            },
+            {
+              "en": "Annual income for life",
+              "hi": "Annual income for life"
+            },
+            {
+              "en": "Similar to Jeevan Utsav concept",
+              "hi": "Similar to Jeevan Utsav concept"
+            },
+            {
+              "en": "Non-participating",
+              "hi": "Non-participating"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-178",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-845",
+          "name": {
+            "en": "LIC's Jeevan Umang (845)",
+            "hi": "एलआईसी Jeevan Umang (845)"
+          },
+          "planNo": "845",
+          "tagline": {
+            "en": "Predecessor to Plan 745. Whole life with 8% SA annual income after PPT.",
+            "hi": "Predecessor to Plan 745. Whole life with 8% SA annual income after PPT."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 745. Whole life with 8% SA annual income after PPT.",
+            "hi": "Predecessor to Plan 745. Whole life with 8% SA annual income after PPT."
+          },
+          "category": "wholelife",
+          "entryAge": "0 - 55yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "limited",
+          "highlights": [
+            {
+              "en": "8% SA annual income after PPT",
+              "hi": "8% SA annual income after PPT"
+            },
+            {
+              "en": "Whole life cover",
+              "hi": "Whole life cover"
+            },
+            {
+              "en": "Succeeded by Plan 745",
+              "hi": "Succeeded by Plan 745"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-845",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        }
+      ]
+    },
+    "term": {
+      "label": {
+        "en": "Term Plans",
+        "hi": "टर्म प्लान्स"
+      },
+      "icon": "🛡️",
+      "plans": [
+        {
+          "id": "lic-859",
+          "name": {
+            "en": "LIC's Saral Jeevan Bima",
+            "hi": "एलआईसी Saral Jeevan Bima"
+          },
+          "planNo": "859",
+          "tagline": {
+            "en": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all.",
+            "hi": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all."
+          },
+          "keyBenefit": {
+            "en": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all.",
+            "hi": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all."
+          },
+          "category": "term",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "₹5L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Standardized IRDAI-mandated plan",
+              "hi": "Standardized IRDAI-mandated plan"
+            },
+            {
+              "en": "Simple eligibility — minimal documentation",
+              "hi": "Simple eligibility — minimal documentation"
+            },
+            {
+              "en": "SA capped at ₹25 lakh",
+              "hi": "SA capped at ₹25 lakh"
+            },
+            {
+              "en": "No medical for small SA",
+              "hi": "No medical for small SA"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/saral-jeevan-bima",
+          "status": "active"
+        },
+        {
+          "id": "lic-875",
+          "name": {
+            "en": "LIC's Yuva Term",
+            "hi": "एलआईसी Yuva Term"
+          },
+          "planNo": "875",
+          "tagline": {
+            "en": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
+            "hi": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
+          },
+          "keyBenefit": {
+            "en": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
+            "hi": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
+          },
+          "category": "term",
+          "entryAge": "18 - 45yr",
+          "sumAssured": "₹50L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Lowest premiums for young policyholders",
+              "hi": "Lowest premiums for young policyholders"
+            },
+            {
+              "en": "High SA from ₹50 lakh",
+              "hi": "High SA from ₹50 lakh"
+            },
+            {
+              "en": "Online & offline available",
+              "hi": "Online & offline available"
+            },
+            {
+              "en": "Smoker/non-smoker differential",
+              "hi": "Smoker/non-smoker differential"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-yuva-term",
+          "status": "active"
+        },
+        {
+          "id": "lic-877",
+          "name": {
+            "en": "LIC's Yuva Credit Life",
+            "hi": "एलआईसी Yuva Credit Life"
+          },
+          "planNo": "877",
+          "tagline": {
+            "en": "Decreasing term plan for loan protection. Cover reduces with loan outstanding. Ideal for home/car loans.",
+            "hi": "Decreasing term plan for loan protection. Cover reduces with loan outstanding. Ideal for home/car loans."
+          },
+          "keyBenefit": {
+            "en": "Decreasing term plan for loan protection. Cover reduces with loan outstanding. Ideal for home/car loans.",
+            "hi": "Decreasing term plan for loan protection. Cover reduces with loan outstanding. Ideal for home/car loans."
+          },
+          "category": "term",
+          "entryAge": "18 - 45yr",
+          "sumAssured": "₹20L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Decreasing SA matches loan outstanding",
+              "hi": "Decreasing SA matches loan outstanding"
+            },
+            {
+              "en": "Interest profile 9% for loan balance calculation",
+              "hi": "Interest profile 9% for loan balance calculation"
+            },
+            {
+              "en": "Min SA ₹20 lakh",
+              "hi": "Min SA ₹20 lakh"
+            },
+            {
+              "en": "Age 18–45 only",
+              "hi": "Age 18–45 only"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-yuva-credit-life",
+          "status": "active"
+        },
+        {
+          "id": "lic-887",
+          "name": {
+            "en": "LIC's Bima Kavach",
+            "hi": "एलआईसी Bima Kavach"
+          },
+          "planNo": "887",
+          "tagline": {
+            "en": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups.",
+            "hi": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups."
+          },
+          "keyBenefit": {
+            "en": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups.",
+            "hi": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups."
+          },
+          "category": "term",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "₹38K+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Single premium — pay once",
+              "hi": "Single premium — pay once"
+            },
+            {
+              "en": "Non-smoker discount available",
+              "hi": "Non-smoker discount available"
+            },
+            {
+              "en": "Short 1–5 year terms",
+              "hi": "Short 1–5 year terms"
+            },
+            {
+              "en": "SA ₹37,500–₹2.5 lakh",
+              "hi": "SA ₹37,500–₹2.5 lakh"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-bima-kavach",
+          "status": "active"
+        },
+        {
+          "id": "lic-955",
+          "name": {
+            "en": "LIC's New Jeevan Amar",
+            "hi": "एलआईसी Jeevan Amar"
+          },
+          "planNo": "955",
+          "tagline": {
+            "en": "Flagship offline term plan. Level or increasing SA. High cover up to ₹25 crore. Agent channel.",
+            "hi": "Flagship offline term plan. Level or increasing SA. High cover up to ₹25 crore. Agent channel."
+          },
+          "keyBenefit": {
+            "en": "Flagship offline term plan. Level or increasing SA. High cover up to ₹25 crore. Agent channel.",
+            "hi": "Flagship offline term plan. Level or increasing SA. High cover up to ₹25 crore. Agent channel."
+          },
+          "category": "term",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "₹25L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Level or increasing SA option",
+              "hi": "Level or increasing SA option"
+            },
+            {
+              "en": "Very high SA available (up to ₹25 crore)",
+              "hi": "Very high SA available (up to ₹25 crore)"
+            },
+            {
+              "en": "Accidental death & disability rider",
+              "hi": "Accidental death & disability rider"
+            },
+            {
+              "en": "Smoker/non-smoker rates",
+              "hi": "Smoker/non-smoker rates"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-amar",
+          "status": "active"
+        },
+        {
+          "id": "lic-111",
+          "name": {
+            "en": "LIC's Bima Kiran",
+            "hi": "एलआईसी Bima Kiran"
+          },
+          "planNo": "111",
+          "tagline": {
+            "en": "Term assurance plan. Pure life cover without savings element.",
+            "hi": "Term assurance plan. Pure life cover without savings element."
+          },
+          "keyBenefit": {
+            "en": "Term assurance plan. Pure life cover without savings element.",
+            "hi": "Term assurance plan. Pure life cover without savings element."
+          },
+          "category": "term",
+          "entryAge": "18 - 60yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Pure term cover",
+              "hi": "Pure term cover"
+            },
+            {
+              "en": "No maturity benefit",
+              "hi": "No maturity benefit"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-111",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-02-18"
+        },
+        {
+          "id": "lic-150",
+          "name": {
+            "en": "LIC's New Bima Kiran",
+            "hi": "एलआईसी New Bima Kiran"
+          },
+          "planNo": "150",
+          "tagline": {
+            "en": "Revised term plan. Pure life cover, no savings.",
+            "hi": "Revised term plan. Pure life cover, no savings."
+          },
+          "keyBenefit": {
+            "en": "Revised term plan. Pure life cover, no savings.",
+            "hi": "Revised term plan. Pure life cover, no savings."
+          },
+          "category": "term",
+          "entryAge": "18 - 60yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Pure term",
+              "hi": "Pure term"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Enhanced over Plan 111",
+              "hi": "Enhanced over Plan 111"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-150",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-02-18"
+        },
+        {
+          "id": "lic-153",
+          "name": {
+            "en": "LIC's Anmol Jeevan",
+            "hi": "एलआईसी Anmol Jeevan"
+          },
+          "planNo": "153",
+          "tagline": {
+            "en": "Pure term assurance plan at very affordable premiums.",
+            "hi": "Pure term assurance plan at very affordable premiums."
+          },
+          "keyBenefit": {
+            "en": "Pure term assurance plan at very affordable premiums.",
+            "hi": "Pure term assurance plan at very affordable premiums."
+          },
+          "category": "term",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Affordable term",
+              "hi": "Affordable term"
+            },
+            {
+              "en": "Without profit",
+              "hi": "Without profit"
+            },
+            {
+              "en": "Pure protection",
+              "hi": "Pure protection"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-153",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-10-31"
+        },
+        {
+          "id": "lic-823",
+          "name": {
+            "en": "LIC's Amulya Jeevan II",
+            "hi": "एलआईसी Amulya Jeevan II"
+          },
+          "planNo": "823",
+          "tagline": {
+            "en": "Term assurance plan. Pure life cover at affordable premiums.",
+            "hi": "Term assurance plan. Pure life cover at affordable premiums."
+          },
+          "keyBenefit": {
+            "en": "Term assurance plan. Pure life cover at affordable premiums.",
+            "hi": "Term assurance plan. Pure life cover at affordable premiums."
+          },
+          "category": "term",
+          "entryAge": "18 - 60yr",
+          "sumAssured": "₹25L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Pure term",
+              "hi": "Pure term"
+            },
+            {
+              "en": "Min SA ₹25 lakh",
+              "hi": "Min SA ₹25 lakh"
+            },
+            {
+              "en": "Affordable premiums",
+              "hi": "Affordable premiums"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-823",
+          "status": "withdrawn",
+          "withdrawnDate": "2019-08-05"
+        },
+        {
+          "id": "lic-855",
+          "name": {
+            "en": "LIC's Jeevan Amar (855)",
+            "hi": "एलआईसी Jeevan Amar (855)"
+          },
+          "planNo": "855",
+          "tagline": {
+            "en": "Predecessor to Plan 955. Term with level/increasing SA option.",
+            "hi": "Predecessor to Plan 955. Term with level/increasing SA option."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 955. Term with level/increasing SA option.",
+            "hi": "Predecessor to Plan 955. Term with level/increasing SA option."
+          },
+          "category": "term",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "₹25L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Level or increasing SA",
+              "hi": "Level or increasing SA"
+            },
+            {
+              "en": "High cover",
+              "hi": "High cover"
+            },
+            {
+              "en": "Succeeded by Plan 955",
+              "hi": "Succeeded by Plan 955"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-855",
+          "status": "withdrawn",
+          "withdrawnDate": "2019-08-05"
+        }
+      ]
+    },
+    "child": {
+      "label": {
+        "en": "Child Plans",
+        "hi": "चाइल्ड प्लान्स"
+      },
+      "icon": "🎓",
+      "plans": [
+        {
+          "id": "lic-732",
+          "name": {
+            "en": "LIC's Child Money Back Plan",
+            "hi": "एलआईसी Child Money Back"
+          },
+          "planNo": "732",
+          "tagline": {
+            "en": "Survival benefits at child's age 18, 20, 22 (20% SA each). Maturity at 25: 40% SA + bonuses.",
+            "hi": "Survival benefits at child's age 18, 20, 22 (20% SA each). Maturity at 25: 40% SA + bonuses."
+          },
+          "keyBenefit": {
+            "en": "Survival benefits at child's age 18, 20, 22 (20% SA each). Maturity at 25: 40% SA + bonuses.",
+            "hi": "Survival benefits at child's age 18, 20, 22 (20% SA each). Maturity at 25: 40% SA + bonuses."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "Money back at age 18, 20, 22 for education/marriage",
+              "hi": "Money back at age 18, 20, 22 for education/marriage"
+            },
+            {
+              "en": "Full cover continues even if parent dies",
+              "hi": "Full cover continues even if parent dies"
+            },
+            {
+              "en": "Premium Waiver on parent's death",
+              "hi": "Premium Waiver on parent's death"
+            },
+            {
+              "en": "Maturity at age 25",
+              "hi": "Maturity at age 25"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-children-s-money-back-plan",
+          "status": "active"
+        },
+        {
+          "id": "lic-734",
+          "name": {
+            "en": "LIC's Jeevan Tarun",
+            "hi": "एलआईसी Jeevan Tarun"
+          },
+          "planNo": "734",
+          "tagline": {
+            "en": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits.",
+            "hi": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits."
+          },
+          "keyBenefit": {
+            "en": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits.",
+            "hi": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹75K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "4 flexible survival benefit options",
+              "hi": "4 flexible survival benefit options"
+            },
+            {
+              "en": "Risk commences at age 7",
+              "hi": "Risk commences at age 7"
+            },
+            {
+              "en": "Annual survival payments age 20–24",
+              "hi": "Annual survival payments age 20–24"
+            },
+            {
+              "en": "Premium Waiver Benefit available",
+              "hi": "Premium Waiver Benefit available"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-tarun",
+          "status": "active"
+        },
+        {
+          "id": "lic-774",
+          "name": {
+            "en": "LIC's Amritbaal",
+            "hi": "एलआईसी Amritbaal"
+          },
+          "planNo": "774",
+          "tagline": {
+            "en": "Latest LIC child plan. Enhanced death benefit, survival benefits, and extended coverage up to age 25.",
+            "hi": "Latest LIC child plan. Enhanced death benefit, survival benefits, and extended coverage up to age 25."
+          },
+          "keyBenefit": {
+            "en": "Latest LIC child plan. Enhanced death benefit, survival benefits, and extended coverage up to age 25.",
+            "hi": "Latest LIC child plan. Enhanced death benefit, survival benefits, and extended coverage up to age 25."
+          },
+          "category": "child",
+          "entryAge": "0 - 13yr",
+          "sumAssured": "₹2L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Latest child plan with enhanced benefits",
+              "hi": "Latest child plan with enhanced benefits"
+            },
+            {
+              "en": "Risk commencement from age 8",
+              "hi": "Risk commencement from age 8"
+            },
+            {
+              "en": "Premium waiver on parent's death",
+              "hi": "Premium waiver on parent's death"
+            },
+            {
+              "en": "Loan facility available",
+              "hi": "Loan facility available"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-amritbaal",
+          "status": "active"
+        },
+        {
+          "id": "lic-90",
+          "name": {
+            "en": "LIC's Marriage Endowment / Educational Annuity",
+            "hi": "एलआईसी Marriage Endowment"
+          },
+          "planNo": "90",
+          "tagline": {
+            "en": "Child plan for marriage or education. Annuity payout on maturity for education/marriage.",
+            "hi": "Child plan for marriage or education. Annuity payout on maturity for education/marriage."
+          },
+          "keyBenefit": {
+            "en": "Child plan for marriage or education. Annuity payout on maturity for education/marriage.",
+            "hi": "Child plan for marriage or education. Annuity payout on maturity for education/marriage."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For child's marriage/education",
+              "hi": "For child's marriage/education"
+            },
+            {
+              "en": "Annuity payout at maturity",
+              "hi": "Annuity payout at maturity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-90",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-102",
+          "name": {
+            "en": "LIC's Jeevan Kishor",
+            "hi": "एलआईसी Jeevan Kishor"
+          },
+          "planNo": "102",
+          "tagline": {
+            "en": "Child endowment plan. Risk commences from child's age 7.",
+            "hi": "Child endowment plan. Risk commences from child's age 7."
+          },
+          "keyBenefit": {
+            "en": "Child endowment plan. Risk commences from child's age 7.",
+            "hi": "Child endowment plan. Risk commences from child's age 7."
+          },
+          "category": "child",
+          "entryAge": "0 - 10yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Child plan",
+              "hi": "Child plan"
+            },
+            {
+              "en": "Risk from age 7",
+              "hi": "Risk from age 7"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-102",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-109",
+          "name": {
+            "en": "LIC's Jeevan Sukanya",
+            "hi": "एलआईसी Jeevan Sukanya"
+          },
+          "planNo": "109",
+          "tagline": {
+            "en": "Children's plan specifically for girl child. Lump sum for education/marriage.",
+            "hi": "Children's plan specifically for girl child. Lump sum for education/marriage."
+          },
+          "keyBenefit": {
+            "en": "Children's plan specifically for girl child. Lump sum for education/marriage.",
+            "hi": "Children's plan specifically for girl child. Lump sum for education/marriage."
+          },
+          "category": "child",
+          "entryAge": "0 - 10yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "For girl child",
+              "hi": "For girl child"
+            },
+            {
+              "en": "Education/marriage fund",
+              "hi": "Education/marriage fund"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-109",
+          "status": "withdrawn",
+          "withdrawnDate": "2004-08-31"
+        },
+        {
+          "id": "lic-113",
+          "name": {
+            "en": "LIC's Children's Money Back",
+            "hi": "एलआईसी Children's MB (old)"
+          },
+          "planNo": "113",
+          "tagline": {
+            "en": "Old children's money back plan. Preceded by Plan 832 then Plan 732.",
+            "hi": "Old children's money back plan. Preceded by Plan 832 then Plan 732."
+          },
+          "keyBenefit": {
+            "en": "Old children's money back plan. Preceded by Plan 832 then Plan 732.",
+            "hi": "Old children's money back plan. Preceded by Plan 832 then Plan 732."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "Money back at milestones",
+              "hi": "Money back at milestones"
+            },
+            {
+              "en": "Child plan",
+              "hi": "Child plan"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-113",
+          "status": "withdrawn",
+          "withdrawnDate": "2002-03-31"
+        },
+        {
+          "id": "lic-159",
+          "name": {
+            "en": "LIC's Komal Jeevan",
+            "hi": "एलआईसी Komal Jeevan"
+          },
+          "planNo": "159",
+          "tagline": {
+            "en": "Children's endowment plan. Risk commences from age 7, premium waiver on parent's death.",
+            "hi": "Children's endowment plan. Risk commences from age 7, premium waiver on parent's death."
+          },
+          "keyBenefit": {
+            "en": "Children's endowment plan. Risk commences from age 7, premium waiver on parent's death.",
+            "hi": "Children's endowment plan. Risk commences from age 7, premium waiver on parent's death."
+          },
+          "category": "child",
+          "entryAge": "0 - 10yr",
+          "sumAssured": "₹50K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Child plan",
+              "hi": "Child plan"
+            },
+            {
+              "en": "Premium waiver on parent death",
+              "hi": "Premium waiver on parent death"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-159",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-184",
+          "name": {
+            "en": "LIC's Child Career Plan",
+            "hi": "एलआईसी Child Career Plan"
+          },
+          "planNo": "184",
+          "tagline": {
+            "en": "Children's plan focused on career funding. Payouts at ages 17–21.",
+            "hi": "Children's plan focused on career funding. Payouts at ages 17–21."
+          },
+          "keyBenefit": {
+            "en": "Children's plan focused on career funding. Payouts at ages 17–21.",
+            "hi": "Children's plan focused on career funding. Payouts at ages 17–21."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Career funding payouts",
+              "hi": "Career funding payouts"
+            },
+            {
+              "en": "Ages 17–21",
+              "hi": "Ages 17–21"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "PWB available",
+              "hi": "PWB available"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-184",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-185",
+          "name": {
+            "en": "LIC's Child Future Plan",
+            "hi": "एलआईसी Child Future Plan"
+          },
+          "planNo": "185",
+          "tagline": {
+            "en": "Children's comprehensive plan. Covers education, career, and marriage milestones.",
+            "hi": "Children's comprehensive plan. Covers education, career, and marriage milestones."
+          },
+          "keyBenefit": {
+            "en": "Children's comprehensive plan. Covers education, career, and marriage milestones.",
+            "hi": "Children's comprehensive plan. Covers education, career, and marriage milestones."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Education + career + marriage milestones",
+              "hi": "Education + career + marriage milestones"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "PWB",
+              "hi": "PWB"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-185",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-832",
+          "name": {
+            "en": "LIC's New Children's Money Back Plan",
+            "hi": "एलआईसी Child MB (832)"
+          },
+          "planNo": "832",
+          "tagline": {
+            "en": "Predecessor to Plan 732. Money back at child's ages 18, 20, 22. Maturity at 25.",
+            "hi": "Predecessor to Plan 732. Money back at child's ages 18, 20, 22. Maturity at 25."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to Plan 732. Money back at child's ages 18, 20, 22. Maturity at 25.",
+            "hi": "Predecessor to Plan 732. Money back at child's ages 18, 20, 22. Maturity at 25."
+          },
+          "category": "child",
+          "entryAge": "0 - 12yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "term_minus_3",
+          "highlights": [
+            {
+              "en": "20% SA at age 18/20/22",
+              "hi": "20% SA at age 18/20/22"
+            },
+            {
+              "en": "40% SA at age 25",
+              "hi": "40% SA at age 25"
+            },
+            {
+              "en": "PWB on parent death",
+              "hi": "PWB on parent death"
+            },
+            {
+              "en": "Succeeded by Plan 732",
+              "hi": "Succeeded by Plan 732"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-832",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        }
+      ]
+    },
+    "pension": {
+      "label": {
+        "en": "Pension & Annuity",
+        "hi": "पेंशन और एन्युटी"
+      },
+      "icon": "📈",
+      "plans": [
+        {
+          "id": "lic-758",
+          "name": {
+            "en": "LIC's New Jeevan Shanti",
+            "hi": "एलआईसी New Jeevan Shanti"
+          },
+          "planNo": "758",
+          "tagline": {
+            "en": "Single premium annuity. Choose immediate or deferred annuity (up to 12 years deferral). 10 annuity options.",
+            "hi": "Single premium annuity. Choose immediate or deferred annuity (up to 12 years deferral). 10 annuity options."
+          },
+          "keyBenefit": {
+            "en": "Single premium annuity. Choose immediate or deferred annuity (up to 12 years deferral). 10 annuity options.",
+            "hi": "Single premium annuity. Choose immediate or deferred annuity (up to 12 years deferral). 10 annuity options."
+          },
+          "category": "pension",
+          "entryAge": "30 - 79yr",
+          "sumAssured": "₹1.5L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Immediate or deferred annuity",
+              "hi": "Immediate or deferred annuity"
+            },
+            {
+              "en": "10 flexible annuity options",
+              "hi": "10 flexible annuity options"
+            },
+            {
+              "en": "Return of purchase price on death",
+              "hi": "Return of purchase price on death"
+            },
+            {
+              "en": "Joint life option for couples",
+              "hi": "Joint life option for couples"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-jeevan-shanti",
+          "status": "active"
+        },
+        {
+          "id": "lic-857",
+          "name": {
+            "en": "LIC's Jeevan Akshay — VII",
+            "hi": "एलआईसी Jeevan Akshay VII"
+          },
+          "planNo": "857",
+          "tagline": {
+            "en": "Immediate annuity plan. Multiple annuity options including joint life and return of purchase price.",
+            "hi": "Immediate annuity plan. Multiple annuity options including joint life and return of purchase price."
+          },
+          "keyBenefit": {
+            "en": "Immediate annuity plan. Multiple annuity options including joint life and return of purchase price.",
+            "hi": "Immediate annuity plan. Multiple annuity options including joint life and return of purchase price."
+          },
+          "category": "pension",
+          "entryAge": "25 - 100yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Immediate pension from next month",
+              "hi": "Immediate pension from next month"
+            },
+            {
+              "en": "7 annuity options",
+              "hi": "7 annuity options"
+            },
+            {
+              "en": "Joint life & return of purchase price",
+              "hi": "Joint life & return of purchase price"
+            },
+            {
+              "en": "Highest annuity rate in immediate annuity category",
+              "hi": "Highest annuity rate in immediate annuity category"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-jeevan-akshay-vii",
+          "status": "active"
+        },
+        {
+          "id": "lic-862",
+          "name": {
+            "en": "LIC's Saral Pension",
+            "hi": "एलआईसी Saral Pension"
+          },
+          "planNo": "862",
+          "tagline": {
+            "en": "Simple standardized immediate annuity. 2 options: Life Annuity with ROP or Joint Life with ROP.",
+            "hi": "Simple standardized immediate annuity. 2 options: Life Annuity with ROP or Joint Life with ROP."
+          },
+          "keyBenefit": {
+            "en": "Simple standardized immediate annuity. 2 options: Life Annuity with ROP or Joint Life with ROP.",
+            "hi": "Simple standardized immediate annuity. 2 options: Life Annuity with ROP or Joint Life with ROP."
+          },
+          "category": "pension",
+          "entryAge": "40 - 80yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Standardized IRDAI-mandated annuity",
+              "hi": "Standardized IRDAI-mandated annuity"
+            },
+            {
+              "en": "Return of purchase price to nominee",
+              "hi": "Return of purchase price to nominee"
+            },
+            {
+              "en": "Simple 2 options only",
+              "hi": "Simple 2 options only"
+            },
+            {
+              "en": "Minimum documentation",
+              "hi": "Minimum documentation"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-saral-pension",
+          "status": "active"
+        },
+        {
+          "id": "lic-879",
+          "name": {
+            "en": "LIC's Smart Pension",
+            "hi": "एलआईसी Smart Pension"
+          },
+          "planNo": "879",
+          "tagline": {
+            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100.",
+            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100."
+          },
+          "keyBenefit": {
+            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100.",
+            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100."
+          },
+          "category": "pension",
+          "entryAge": "18 - 100yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Immediate annuity — pension starts next month",
+              "hi": "Immediate annuity — pension starts next month"
+            },
+            {
+              "en": "Option F: Life with Return of Purchase Price",
+              "hi": "Option F: Life with Return of Purchase Price"
+            },
+            {
+              "en": "Age 18–100 eligible",
+              "hi": "Age 18–100 eligible"
+            },
+            {
+              "en": "Flexible annuity options",
+              "hi": "Flexible annuity options"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-smart-pension",
+          "status": "active"
+        },
+        {
+          "id": "lic-96",
+          "name": {
+            "en": "LIC's Jeevan Dhara",
+            "hi": "एलआईसी Jeevan Dhara"
+          },
+          "planNo": "96",
+          "tagline": {
+            "en": "Deferred annuity plan. Build pension corpus then convert to annuity.",
+            "hi": "Deferred annuity plan. Build pension corpus then convert to annuity."
+          },
+          "keyBenefit": {
+            "en": "Deferred annuity plan. Build pension corpus then convert to annuity.",
+            "hi": "Deferred annuity plan. Build pension corpus then convert to annuity."
+          },
+          "category": "pension",
+          "entryAge": "18 - 60yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Deferred annuity",
+              "hi": "Deferred annuity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Pension building",
+              "hi": "Pension building"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-96",
+          "status": "withdrawn",
+          "withdrawnDate": "2000-02-16"
+        },
+        {
+          "id": "lic-97",
+          "name": {
+            "en": "LIC's Jeevan Akshay",
+            "hi": "एलआईसी Jeevan Akshay (old)"
+          },
+          "planNo": "97",
+          "tagline": {
+            "en": "Original immediate annuity plan. Succeeded by Jeevan Akshay VII (Plan 857).",
+            "hi": "Original immediate annuity plan. Succeeded by Jeevan Akshay VII (Plan 857)."
+          },
+          "keyBenefit": {
+            "en": "Original immediate annuity plan. Succeeded by Jeevan Akshay VII (Plan 857).",
+            "hi": "Original immediate annuity plan. Succeeded by Jeevan Akshay VII (Plan 857)."
+          },
+          "category": "pension",
+          "entryAge": "30 - 85yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Immediate annuity",
+              "hi": "Immediate annuity"
+            },
+            {
+              "en": "Single premium",
+              "hi": "Single premium"
+            },
+            {
+              "en": "Succeeded by Plan 857",
+              "hi": "Succeeded by Plan 857"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-97",
+          "status": "withdrawn",
+          "withdrawnDate": "2000-02-16"
+        },
+        {
+          "id": "lic-117",
+          "name": {
+            "en": "LIC's Jeevan Saritha",
+            "hi": "एलआईसी Jeevan Saritha"
+          },
+          "planNo": "117",
+          "tagline": {
+            "en": "Joint life deferred annuity. Both spouses receive pension post vesting.",
+            "hi": "Joint life deferred annuity. Both spouses receive pension post vesting."
+          },
+          "keyBenefit": {
+            "en": "Joint life deferred annuity. Both spouses receive pension post vesting.",
+            "hi": "Joint life deferred annuity. Both spouses receive pension post vesting."
+          },
+          "category": "pension",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹10K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Joint life annuity",
+              "hi": "Joint life annuity"
+            },
+            {
+              "en": "Deferred pension",
+              "hi": "Deferred pension"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-117",
+          "status": "withdrawn",
+          "withdrawnDate": "2000-02-16"
+        },
+        {
+          "id": "lic-122",
+          "name": {
+            "en": "LIC's Jeevan Suraksha (Endowment Type)",
+            "hi": "एलआईसी Jeevan Suraksha"
+          },
+          "planNo": "122",
+          "tagline": {
+            "en": "Pension plan — endowment type. Build corpus then convert to annuity.",
+            "hi": "Pension plan — endowment type. Build corpus then convert to annuity."
+          },
+          "keyBenefit": {
+            "en": "Pension plan — endowment type. Build corpus then convert to annuity.",
+            "hi": "Pension plan — endowment type. Build corpus then convert to annuity."
+          },
+          "category": "pension",
+          "entryAge": "18 - 60yr",
+          "sumAssured": "₹25K+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Pension endowment type",
+              "hi": "Pension endowment type"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Convert to annuity",
+              "hi": "Convert to annuity"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-122",
+          "status": "withdrawn",
+          "withdrawnDate": "1998-06-04"
+        },
+        {
+          "id": "lic-818",
+          "name": {
+            "en": "LIC's New Jeevan Nidhi",
+            "hi": "एलआईसी New Jeevan Nidhi"
+          },
+          "planNo": "818",
+          "tagline": {
+            "en": "Pension plan with profit participation. Deferred annuity.",
+            "hi": "Pension plan with profit participation. Deferred annuity."
+          },
+          "keyBenefit": {
+            "en": "Pension plan with profit participation. Deferred annuity.",
+            "hi": "Pension plan with profit participation. Deferred annuity."
+          },
+          "category": "pension",
+          "entryAge": "20 - 60yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Deferred annuity",
+              "hi": "Deferred annuity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Withdrawn Jan 2020",
+              "hi": "Withdrawn Jan 2020"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-818",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-01-16"
+        },
+        {
+          "id": "lic-850",
+          "name": {
+            "en": "LIC's Jeevan Shanti",
+            "hi": "एलआईसी Jeevan Shanti (850)"
+          },
+          "planNo": "850",
+          "tagline": {
+            "en": "Predecessor to New Jeevan Shanti (758). Single premium annuity plan.",
+            "hi": "Predecessor to New Jeevan Shanti (758). Single premium annuity plan."
+          },
+          "keyBenefit": {
+            "en": "Predecessor to New Jeevan Shanti (758). Single premium annuity plan.",
+            "hi": "Predecessor to New Jeevan Shanti (758). Single premium annuity plan."
+          },
+          "category": "pension",
+          "entryAge": "30 - 79yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Immediate or deferred annuity",
+              "hi": "Immediate or deferred annuity"
+            },
+            {
+              "en": "Single premium",
+              "hi": "Single premium"
+            },
+            {
+              "en": "Succeeded by Plan 758",
+              "hi": "Succeeded by Plan 758"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-850",
+          "status": "withdrawn",
+          "withdrawnDate": "2019-08-24"
+        },
+        {
+          "id": "lic-872",
+          "name": {
+            "en": "LIC's Jeevan Dhara-II",
+            "hi": "एलआईसी Jeevan Dhara-II"
+          },
+          "planNo": "872",
+          "tagline": {
+            "en": "Deferred annuity pension plan. Build corpus with regular premiums, convert at vesting.",
+            "hi": "Deferred annuity pension plan. Build corpus with regular premiums, convert at vesting."
+          },
+          "keyBenefit": {
+            "en": "Deferred annuity pension plan. Build corpus with regular premiums, convert at vesting.",
+            "hi": "Deferred annuity pension plan. Build corpus with regular premiums, convert at vesting."
+          },
+          "category": "pension",
+          "entryAge": "20 - 70yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Deferred annuity",
+              "hi": "Deferred annuity"
+            },
+            {
+              "en": "With profit",
+              "hi": "With profit"
+            },
+            {
+              "en": "Flexible vesting age",
+              "hi": "Flexible vesting age"
+            },
+            {
+              "en": "Withdrawn Oct 2024",
+              "hi": "Withdrawn Oct 2024"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-872",
+          "status": "withdrawn",
+          "withdrawnDate": "2024-10-31"
+        }
+      ]
+    },
+    "ulip": {
+      "label": {
+        "en": "ULIP Plans",
+        "hi": "यूलिप प्लान्स"
+      },
+      "icon": "📊",
+      "plans": [
+        {
+          "id": "lic-749",
+          "name": {
+            "en": "LIC's Nivesh Plus",
+            "hi": "एलआईसी Nivesh Plus"
+          },
+          "planNo": "749",
+          "tagline": {
+            "en": "Single premium ULIP. Invest once in 4 fund options. Min ₹1 lakh. Lock-in 5 years.",
+            "hi": "Single premium ULIP. Invest once in 4 fund options. Min ₹1 lakh. Lock-in 5 years."
+          },
+          "keyBenefit": {
+            "en": "Single premium ULIP. Invest once in 4 fund options. Min ₹1 lakh. Lock-in 5 years.",
+            "hi": "Single premium ULIP. Invest once in 4 fund options. Min ₹1 lakh. Lock-in 5 years."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 65yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "single",
+          "highlights": [
+            {
+              "en": "Single premium investment",
+              "hi": "Single premium investment"
+            },
+            {
+              "en": "4 fund options (Bond to Growth)",
+              "hi": "4 fund options (Bond to Growth)"
+            },
+            {
+              "en": "4 free fund switches per year",
+              "hi": "4 free fund switches per year"
+            },
+            {
+              "en": "Life cover = 125% of single premium",
+              "hi": "Life cover = 125% of single premium"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/103490/LIC_Nivesh-Plus_Brochure_9-inch-x-8-inch_Eng_Single-pages-(2).pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-752",
+          "name": {
+            "en": "LIC's SIIP",
+            "hi": "एलआईसी SIIP"
+          },
+          "planNo": "752",
+          "tagline": {
+            "en": "SIP-style regular premium ULIP. Min ₹4,000/month. Guaranteed additions at years 4, 7, 10, 13, 16.",
+            "hi": "SIP-style regular premium ULIP. Min ₹4,000/month. Guaranteed additions at years 4, 7, 10, 13, 16."
+          },
+          "keyBenefit": {
+            "en": "SIP-style regular premium ULIP. Min ₹4,000/month. Guaranteed additions at years 4, 7, 10, 13, 16.",
+            "hi": "SIP-style regular premium ULIP. Min ₹4,000/month. Guaranteed additions at years 4, 7, 10, 13, 16."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 65yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Guaranteed additions at years 4,7,10,13,16",
+              "hi": "Guaranteed additions at years 4,7,10,13,16"
+            },
+            {
+              "en": "Return of mortality charges at maturity",
+              "hi": "Return of mortality charges at maturity"
+            },
+            {
+              "en": "SIP-style regular investment",
+              "hi": "SIP-style regular investment"
+            },
+            {
+              "en": "4 fund options",
+              "hi": "4 fund options"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/1319704/SIIP+Sales+Brochure.pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-867",
+          "name": {
+            "en": "LIC's New Pension Plus",
+            "hi": "एलआईसी New Pension Plus"
+          },
+          "planNo": "867",
+          "tagline": {
+            "en": "Pension ULIP. Build retirement corpus in market-linked pension funds. 4 dedicated pension fund options.",
+            "hi": "Pension ULIP. Build retirement corpus in market-linked pension funds. 4 dedicated pension fund options."
+          },
+          "keyBenefit": {
+            "en": "Pension ULIP. Build retirement corpus in market-linked pension funds. 4 dedicated pension fund options.",
+            "hi": "Pension ULIP. Build retirement corpus in market-linked pension funds. 4 dedicated pension fund options."
+          },
+          "category": "ulip",
+          "entryAge": "25 - 75yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "4 pension-specific fund options",
+              "hi": "4 pension-specific fund options"
+            },
+            {
+              "en": "Market-linked pension building",
+              "hi": "Market-linked pension building"
+            },
+            {
+              "en": "Convert to annuity on vesting",
+              "hi": "Convert to annuity on vesting"
+            },
+            {
+              "en": "Tax deduction under 80CCC",
+              "hi": "Tax deduction under 80CCC"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-new-pension-plus-plan-no.867-uin-no.-512l347v01-",
+          "status": "active"
+        },
+        {
+          "id": "lic-873",
+          "name": {
+            "en": "LIC's Index Plus",
+            "hi": "एलआईसी Index Plus"
+          },
+          "planNo": "873",
+          "tagline": {
+            "en": "Index-linked ULIP tracking NIFTY 100 and NIFTY 50.",
+            "hi": "Index-linked ULIP tracking NIFTY 100 and NIFTY 50."
+          },
+          "keyBenefit": {
+            "en": "Index-linked ULIP tracking NIFTY 100 and NIFTY 50.",
+            "hi": "Index-linked ULIP tracking NIFTY 100 and NIFTY 50."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Tracks NIFTY 100 and NIFTY 50 indices",
+              "hi": "Tracks NIFTY 100 and NIFTY 50 indices"
+            },
+            {
+              "en": "Lowest fund management charge (0.50%)",
+              "hi": "Lowest fund management charge (0.50%)"
+            },
+            {
+              "en": "Coverage = 7× annualised premium",
+              "hi": "Coverage = 7× annualised premium"
+            },
+            {
+              "en": "Withdrawn from new business Oct 2024",
+              "hi": "Withdrawn from new business Oct 2024"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/987437/101941+LIC_Index+Plus+Sales+Brochure_FEB+24-WEB.pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-886",
+          "name": {
+            "en": "LIC's Protection Plus",
+            "hi": "एलआईसी Protection Plus"
+          },
+          "planNo": "886",
+          "tagline": {
+            "en": "ULIP with enhanced protection. 6 fund options including index funds. High life cover + market investment.",
+            "hi": "ULIP with enhanced protection. 6 fund options including index funds. High life cover + market investment."
+          },
+          "keyBenefit": {
+            "en": "ULIP with enhanced protection. 6 fund options including index funds. High life cover + market investment.",
+            "hi": "ULIP with enhanced protection. 6 fund options including index funds. High life cover + market investment."
+          },
+          "category": "ulip",
+          "entryAge": "18 - 65yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "5 Years",
+          "highlights": [
+            {
+              "en": "PPT fixed at 5 years only",
+              "hi": "PPT fixed at 5 years only"
+            },
+            {
+              "en": "6 fund options — most in LIC ULIP range",
+              "hi": "6 fund options — most in LIC ULIP range"
+            },
+            {
+              "en": "Includes NIFTY 100 and NIFTY 50 index funds",
+              "hi": "Includes NIFTY 100 and NIFTY 50 index funds"
+            },
+            {
+              "en": "Initial NAV ₹22.7264 (launched Dec 2025)",
+              "hi": "Initial NAV ₹22.7264 (launched Dec 2025)"
+            }
+          ],
+          "officialUrl": "https://licindia.in/documents/20121/1319704/LIC+Protection+plus+sales+brochure+Eng_03122025.pdf/",
+          "status": "active"
+        },
+        {
+          "id": "lic-140",
+          "name": {
+            "en": "LIC's Bima Plus",
+            "hi": "एलआईसी Bima Plus"
+          },
+          "planNo": "140",
+          "tagline": {
+            "en": "Early LIC ULIP plan. Market-linked returns with life cover.",
+            "hi": "Early LIC ULIP plan. Market-linked returns with life cover."
+          },
+          "keyBenefit": {
+            "en": "Early LIC ULIP plan. Market-linked returns with life cover.",
+            "hi": "Early LIC ULIP plan. Market-linked returns with life cover."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Early ULIP",
+              "hi": "Early ULIP"
+            },
+            {
+              "en": "Market-linked",
+              "hi": "Market-linked"
+            },
+            {
+              "en": "Life cover",
+              "hi": "Life cover"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-140",
+          "status": "withdrawn",
+          "withdrawnDate": "2014-01-01"
+        },
+        {
+          "id": "lic-735",
+          "name": {
+            "en": "LIC's Endowment Plus",
+            "hi": "एलआईसी Endowment Plus"
+          },
+          "planNo": "735",
+          "tagline": {
+            "en": "ULIP endowment plan. Market-linked with life cover. Withdrawn March 2026.",
+            "hi": "ULIP endowment plan. Market-linked with life cover. Withdrawn March 2026."
+          },
+          "keyBenefit": {
+            "en": "ULIP endowment plan. Market-linked with life cover. Withdrawn March 2026.",
+            "hi": "ULIP endowment plan. Market-linked with life cover. Withdrawn March 2026."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "ULIP endowment",
+              "hi": "ULIP endowment"
+            },
+            {
+              "en": "Market-linked",
+              "hi": "Market-linked"
+            },
+            {
+              "en": "Withdrawn March 2026",
+              "hi": "Withdrawn March 2026"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-735",
+          "status": "withdrawn",
+          "withdrawnDate": "2026-03-01"
+        },
+        {
+          "id": "lic-835",
+          "name": {
+            "en": "LIC's New Endowment Plus",
+            "hi": "एलआईसी New Endowment Plus"
+          },
+          "planNo": "835",
+          "tagline": {
+            "en": "ULIP endowment plan. Market-linked with guaranteed additions.",
+            "hi": "ULIP endowment plan. Market-linked with guaranteed additions."
+          },
+          "keyBenefit": {
+            "en": "ULIP endowment plan. Market-linked with guaranteed additions.",
+            "hi": "ULIP endowment plan. Market-linked with guaranteed additions."
+          },
+          "category": "ulip",
+          "entryAge": "0 - 60yr",
+          "sumAssured": "N/A",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "ULIP with guaranteed additions",
+              "hi": "ULIP with guaranteed additions"
+            },
+            {
+              "en": "Market-linked",
+              "hi": "Market-linked"
+            },
+            {
+              "en": "Withdrawn Feb 2020",
+              "hi": "Withdrawn Feb 2020"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/plan-835",
+          "status": "withdrawn",
+          "withdrawnDate": "2020-02-01"
+        }
+      ]
+    },
+    "micro": {
+      "label": {
+        "en": "Micro / Rural",
+        "hi": "माइक्रो / ग्रामीण"
+      },
+      "icon": "🌾",
+      "plans": [
+        {
+          "id": "lic-751",
+          "name": {
+            "en": "LIC's Micro Bachat",
+            "hi": "एलआईसी Micro Bachat"
+          },
+          "planNo": "751",
+          "tagline": {
+            "en": "Micro insurance endowment. Max SA ₹2 lakh. Simple savings + life cover for low-income families.",
+            "hi": "Micro insurance endowment. Max SA ₹2 lakh. Simple savings + life cover for low-income families."
+          },
+          "keyBenefit": {
+            "en": "Micro insurance endowment. Max SA ₹2 lakh. Simple savings + life cover for low-income families.",
+            "hi": "Micro insurance endowment. Max SA ₹2 lakh. Simple savings + life cover for low-income families."
+          },
+          "category": "micro",
+          "entryAge": "18 - 55yr",
+          "sumAssured": "₹1L+",
+          "premiumPayment": "Regular",
+          "highlights": [
+            {
+              "en": "Max SA ₹2 lakh — micro insurance",
+              "hi": "Max SA ₹2 lakh — micro insurance"
+            },
+            {
+              "en": "Simple documentation",
+              "hi": "Simple documentation"
+            },
+            {
+              "en": "Affordable premiums",
+              "hi": "Affordable premiums"
+            },
+            {
+              "en": "Ideal for rural / low-income segments",
+              "hi": "Ideal for rural / low-income segments"
+            }
+          ],
+          "officialUrl": "https://licindia.in/web/guest/lic-s-micro-bachat",
+          "status": "active"
+        }
+      ]
+    }
+  }
+}

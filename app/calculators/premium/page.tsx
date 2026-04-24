@@ -1,0 +1,1504 @@
+'use client'
+import { useState, useMemo, useEffect } from 'react'
+import Link from 'next/link'
+import {
+  Calculator, ArrowRight, ChevronDown, ChevronUp,
+  Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star, RefreshCw
+} from 'lucide-react'
+import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
+import { fmt, fmtSA, toWords } from '@/lib/format'
+import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
+import { openLeadPopup } from '@/lib/events'
+
+/* ─── constants ───────────────────────────── */
+const CATEGORIES = [
+  { key: 'all',       label: 'All Active',   icon: '📋' },
+  { key: 'endowment', label: 'Endowment',    icon: '🏦' },
+  { key: 'moneyback', label: 'Money Back',   icon: '💰' },
+  { key: 'wholelife', label: 'Whole Life',   icon: '♾️' },
+  { key: 'term',      label: 'Term',         icon: '🛡️' },
+  { key: 'child',     label: 'Child',        icon: '🎓' },
+  { key: 'pension',   label: 'Pension',      icon: '📈' },
+  { key: 'ulip',      label: 'ULIP',         icon: '📊' },
+  { key: 'micro',     label: 'Micro/Rural',  icon: '🌾' },
+  { key: 'withdrawn', label: 'Withdrawn',    icon: '📦' },
+]
+
+const CAT_BADGE: Record<string, string> = {
+  endowment: 'bg-blue-50 text-blue-700',
+  moneyback: 'bg-green-50 text-green-700',
+  wholelife: 'bg-purple-50 text-purple-700',
+  term:      'bg-red-50 text-red-700',
+  child:     'bg-amber-50 text-amber-700',
+  pension:   'bg-indigo-50 text-indigo-700',
+  ulip:      'bg-teal-50 text-teal-700',
+  micro:     'bg-lime-50 text-lime-700',
+  withdrawn: 'bg-slate-100 text-slate-500',
+}
+
+const CAT_AVATAR_COLOR: Record<string, string> = {
+  endowment: 'bg-blue-600',
+  moneyback: 'bg-green-600',
+  wholelife: 'bg-purple-600',
+  term:      'bg-red-600',
+  child:     'bg-amber-600',
+  pension:   'bg-indigo-600',
+  ulip:      'bg-teal-600',
+  micro:     'bg-lime-600',
+  withdrawn: 'bg-slate-500',
+}
+
+
+/* ─── page ────────────────────────────────── */
+export default function PremiumCalculatorPage() {
+  /* plan browser */
+  const [activeCat,     setActiveCat]     = useState('all')
+  const [search,        setSearch]        = useState('')
+  const [quickPlanNo,   setQuickPlanNo]   = useState('')
+  const [quickAge,      setQuickAge]      = useState('')
+  const [selectedPlan,  setSelectedPlan]  = useState<any>(null)
+
+  /* client identity */
+  const [clientName,  setClientName]  = useState('')
+  const [salutation,  setSalutation]  = useState<'Mr.'|'Mrs.'|'Ms.'>('Mr.')
+
+  /* calculator inputs */
+  const [age,    setAge]    = useState(30)
+  const [sa,     setSa]     = useState(1000000)
+  const [term,   setTerm]   = useState(20)
+  const [mode,   setMode]   = useState<'yearly'|'halfyearly'|'quarterly'|'monthly'>('yearly')
+  const [gender, setGender] = useState<'male'|'female'>('male')
+  const [smoker, setSmoker] = useState(false)
+
+  /* results */
+  const [premResult,     setPremResult]     = useState<any>(null)
+  const [matResult,      setMatResult]      = useState<any>(null)
+  const [benefitTable,   setBenefitTable]   = useState<any[]>([])
+  const [showTable,      setShowTable]      = useState(false)
+  const [showAllRows,    setShowAllRows]    = useState(false)
+  const [showAllModes,   setShowAllModes]   = useState(false)
+  const [calcError,      setCalcError]      = useState<string | null>(null)
+
+  /* ULIP: fund selection + live NAV */
+  const [ulipFund,    setUlipFund]    = useState<string>('')
+  const [navData,       setNavData]       = useState<Record<string, Record<string, { nav: number; date: string }>>>({})
+  const [navLoading,    setNavLoading]    = useState(false)
+  const [navRefreshing, setNavRefreshing] = useState(false)
+  const [navLastUpdated, setNavLastUpdated] = useState<string | null>(null)
+  const isUlip = selectedPlan?.category === 'ulip'
+
+  /* plan-specific inputs */
+  const [annuityOption,       setAnnuityOption]       = useState<string>('')
+  const [purchasePrice,       setPurchasePrice]       = useState(500000)
+  const [maturityAge,         setMaturityAge]         = useState(100)
+  const [survivalBenefitPct,  setSurvivalBenefitPct]  = useState<5|10|15|20>(5)
+  const [bimaLakshmiOption,   setBimaLakshmiOption]   = useState<'A'|'B'>('A')
+
+  /* results slide panel */
+  const [showResults, setShowResults] = useState(false)
+
+  /* plan-type helpers */
+  const isPensionAnnuity = ['758','857','862','879'].includes(String(selectedPlan?.planNo))
+  const isWholeLifeUtsav = ['771','883'].includes(String(selectedPlan?.planNo))
+  const isJeevanTarun    = selectedPlan?.planNo === 734
+  const isBimaLakshmi    = selectedPlan?.planNo === 881
+
+  useEffect(() => {
+    if (!isUlip) return
+    setNavLoading(true)
+    fetch('/api/nav')
+      .then(r => r.json())
+      .then(d => { if (d.success) { setNavData(d.nav); setNavLastUpdated(d.scrapedAt) } })
+      .catch(() => {})
+      .finally(() => setNavLoading(false))
+  }, [isUlip])
+
+  async function handleRefreshNav() {
+    setNavRefreshing(true)
+    try {
+      await fetch('/api/cron/refresh-nav')
+      const d = await fetch('/api/nav').then(r => r.json())
+      if (d.success) { setNavData(d.nav); setNavLastUpdated(d.scrapedAt) }
+    } catch (_) {}
+    setNavRefreshing(false)
+  }
+
+  useEffect(() => {
+    if (isUlip && selectedPlan?.fundOptions?.length) {
+      setUlipFund(selectedPlan.fundOptions[0].id)
+    }
+  }, [selectedPlan, isUlip])
+
+  /* unlock / lead capture */
+  const [isUnlocked,   setIsUnlocked]   = useState(false)
+  const [unlockMobile, setUnlockMobile] = useState('')
+  const [unlockEmail,  setUnlockEmail]  = useState('')
+  const [unlockWantTo, setUnlockWantTo] = useState('')
+  const [unlockIAm,    setUnlockIAm]    = useState('')
+  const [unlockStatus, setUnlockStatus] = useState<'idle'|'sending'|'done'>('idle')
+
+  /* derived */
+  const filteredPlans = useMemo(() => {
+    let base: any[]
+    if (activeCat === 'all') {
+      base = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
+    } else if (activeCat === 'withdrawn') {
+      base = (PLANS as any[]).filter((p: any) => p.status === 'withdrawn')
+    } else {
+      base = (PLANS as any[]).filter((p: any) => p.category === activeCat && p.status !== 'withdrawn')
+    }
+    if (!search.trim()) return base
+    const q = search.toLowerCase()
+    return base.filter((p: any) => p.name.toLowerCase().includes(q) || String(p.planNo).includes(q))
+  }, [activeCat, search])
+
+  const ppt = useMemo(() => {
+    if (!selectedPlan) return term
+    return getPPT(selectedPlan, term, age)
+  }, [selectedPlan, term, age])
+
+  const isTermPlan = selectedPlan?.category === 'term'
+
+  const minTerm = selectedPlan?.minTerm ?? 10
+  const maxTerm = selectedPlan?.maxTerm ?? 35
+  const safeterm = Math.max(minTerm, Math.min(term, maxTerm))
+
+  /* all modes premium for "Show Full Premium Chart" */
+  const allModesPrem = useMemo(() => {
+    if (!selectedPlan || !premResult) return null
+    return (['yearly', 'halfyearly', 'quarterly', 'monthly'] as const).map(m => {
+      const p = calculatePremium({ planNo: selectedPlan.planNo, sa, age, term: safeterm, ppt, mode: m, smoker, gender }) as any
+      if (!p) return null
+      const perDay = m === 'yearly' ? Math.round(p.yearlyYear1 / 365) : null
+      return { mode: m, prem: p, perDay }
+    }).filter(Boolean) as { mode: string, prem: any, perDay: number | null }[]
+  }, [selectedPlan, premResult, sa, age, safeterm, ppt, smoker, gender])
+
+  function handleSelectPlan(plan: any) {
+    setSelectedPlan(plan)
+    setShowResults(false)
+    setShowTable(false)
+    setShowAllRows(false)
+    setIsUnlocked(false)
+    setUnlockStatus('idle')
+    setUlipFund('')
+
+    // Set plan-specific defaults
+    if (plan.defaultGender) setGender(plan.defaultGender)
+    if (plan.bimaLakshmiOption) setBimaLakshmiOption('A')
+    if (plan.annuityOptions?.length) setAnnuityOption(plan.annuityOptions[0])
+    if (plan.defaultMaturityAge) setMaturityAge(plan.defaultMaturityAge)
+    if (plan.minTerm && plan.minTerm < 50) setTerm(Math.max(plan.minTerm, Math.min(term, plan.maxTerm ?? 35)))
+
+    // Restore from sessionStorage cache
+    try {
+      const cached = sessionStorage.getItem(`calc_${plan.planNo}`)
+      if (cached) {
+        const c = JSON.parse(cached)
+        if (c.age)               setAge(c.age)
+        if (c.sa)                setSa(c.sa)
+        if (c.term)              setTerm(c.term)
+        if (c.mode)              setMode(c.mode)
+        if (c.gender)            setGender(c.gender)
+        if (c.smoker !== undefined) setSmoker(c.smoker)
+        if (c.ulipFund)          setUlipFund(c.ulipFund)
+        if (c.annuityOption)     setAnnuityOption(c.annuityOption)
+        if (c.purchasePrice)     setPurchasePrice(c.purchasePrice)
+        if (c.maturityAge)       setMaturityAge(c.maturityAge)
+        if (c.survivalBenefitPct) setSurvivalBenefitPct(c.survivalBenefitPct)
+        if (c.bimaLakshmiOption) setBimaLakshmiOption(c.bimaLakshmiOption)
+        if (c.clientName)        setClientName(c.clientName)
+        if (c.salutation)        setSalutation(c.salutation)
+        if (c.premResult) {
+          setPremResult(c.premResult)
+          setMatResult(c.matResult)
+          setBenefitTable(c.benefitTable ?? [])
+          setShowResults(true)
+        } else {
+          setPremResult(null)
+          setMatResult(null)
+          setBenefitTable([])
+        }
+      } else {
+        setPremResult(null)
+        setMatResult(null)
+        setBenefitTable([])
+      }
+    } catch {
+      setPremResult(null)
+      setMatResult(null)
+      setBenefitTable([])
+    }
+  }
+
+  function handleQuickSelect() {
+    const pno = parseInt(quickPlanNo)
+    const plan = (PLANS as any[]).find((p: any) => p.planNo === pno)
+    if (plan) {
+      handleSelectPlan(plan)
+      if (quickAge) setAge(Math.max(plan.minAge ?? 18, Math.min(parseInt(quickAge), plan.maxAge ?? 65)))
+    }
+  }
+
+  function calculate() {
+    if (!selectedPlan) return
+    setCalcError(null)
+
+    const effectiveSa = isPensionAnnuity ? purchasePrice : sa
+
+    // Input validation
+    if (!isPensionAnnuity && !isUlip && sa < (selectedPlan.minSA ?? 100000)) {
+      setCalcError(`Minimum sum assured for this plan is ₹${(selectedPlan.minSA ?? 100000).toLocaleString('en-IN')}. Please increase the SA.`)
+      return
+    }
+    if (age < (selectedPlan.minAge ?? 0) || age > (selectedPlan.maxAge ?? 65)) {
+      setCalcError(`Entry age for this plan must be between ${selectedPlan.minAge} and ${selectedPlan.maxAge} years.`)
+      return
+    }
+
+    let prem: any, mat: any, table: any[]
+    try {
+      prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender })
+      if (!prem) {
+        setCalcError('Could not calculate premium for this plan with the given inputs. Please try different age, term, or sum assured.')
+        return
+      }
+      mat   = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm })
+      table = generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem }) ?? []
+    } catch (err) {
+      setCalcError('An unexpected error occurred during calculation. Please try again or contact support.')
+      console.error('Calculation error:', err)
+      return
+    }
+
+    setPremResult(prem)
+    setMatResult(mat)
+    setBenefitTable(table)
+    setIsUnlocked(false)
+    setUnlockStatus('idle')
+    setShowResults(true)
+
+    // Persist to sessionStorage
+    try {
+      sessionStorage.setItem(`calc_${selectedPlan.planNo}`, JSON.stringify({
+        age, sa: effectiveSa, term, mode, gender, smoker, ulipFund,
+        annuityOption, purchasePrice, maturityAge, survivalBenefitPct, bimaLakshmiOption,
+        clientName, salutation,
+        premResult: prem, matResult: mat, benefitTable: table,
+      }))
+    } catch { /* quota exceeded — ignore */ }
+
+    // Track calculation to Google Sheets
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'calc_run',
+        sheetName: 'Premium Calculator',
+        data: {
+          planNo:       selectedPlan.planNo,
+          planName:     selectedPlan.name,
+          category:     selectedPlan.category,
+          age,
+          sa:           effectiveSa,
+          term:         safeterm,
+          ppt,
+          mode,
+          gender,
+          annualPremium: prem?.annual ?? '',
+          totalPaid:    prem?.totalPaid ?? '',
+          maturityValue: mat?.maturity ?? '',
+          clientName:   clientName || '',
+          session:      typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
+        }
+      })
+    }).catch(() => {})
+  }
+
+  async function handleUnlock(e: React.FormEvent) {
+    e.preventDefault()
+    setUnlockStatus('sending')
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: clientName ? `${salutation} ${clientName}` : 'Calculator User',
+          mobile: unlockMobile,
+          email: unlockEmail,
+          wantTo: unlockWantTo,
+          iAm: unlockIAm,
+          intent: `Premium calc unlock: LIC's ${selectedPlan?.name} (Plan ${selectedPlan?.planNo}), ${fmtSA(sa)} SA, Age ${age}`
+        })
+      })
+    } catch {}
+    setIsUnlocked(true)
+    setUnlockStatus('done')
+  }
+
+  const xirr = useMemo(() => {
+    if (!premResult || !matResult?.maturity || !safeterm) return null
+    const val = ((Math.pow(matResult.maturity / premResult.totalPaid, 1 / safeterm) - 1) * 100)
+    return val > 0 ? val.toFixed(1) : null
+  }, [premResult, matResult, safeterm])
+
+  const multiplier = useMemo(() => {
+    if (!premResult || !matResult?.maturity) return null
+    return (matResult.maturity / premResult.totalPaid).toFixed(2)
+  }, [premResult, matResult])
+
+  const tax80C = useMemo(() => {
+    if (!premResult) return null
+    return Math.min(premResult.netPremium, 150000) * 0.3
+  }, [premResult])
+
+  function whatsappShare() {
+    if (!selectedPlan || !premResult) return
+    const name = clientName ? `${salutation} ${clientName}` : 'Customer'
+    const matLine = matResult?.maturity ? `Maturity Value: ${fmt(matResult.maturity)}` : 'Pure Term Plan'
+    const msg = [
+      `*LIC Premium Illustration — Poddar Wealth*`,
+      ``,
+      `For: ${name} | Age: ${age} yrs`,
+      `Plan: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo})`,
+      `Sum Assured: ${fmtSA(sa)} | Term: ${safeterm} yrs | PPT: ${ppt} yrs`,
+      ``,
+      `*1st Year Premium (incl. GST):*`,
+      `Yearly: ${fmt(premResult.yearlyYear1)}  (${fmt(Math.round(premResult.yearlyYear1/365))}/day)`,
+      `Half-Yearly: ${fmt(premResult.instalment1 * 2)}`,
+      `Quarterly: ${fmt(premResult.instalment1 * 4 / (mode === 'quarterly' ? 1 : 1))}`,
+      `Monthly: ${fmt(premResult.instalment1)}`,
+      ``,
+      `Total Paid: ${fmt(premResult.totalPaid)}`,
+      matLine,
+      xirr ? `Expected XIRR: ~${xirr}% p.a.` : '',
+      ``,
+      `📞 Contact Ajay Kumar Poddar for official quote`,
+      `https://poddarwealth.com/contact`,
+    ].filter(Boolean).join('\n')
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
+
+    // Track share event
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'calc_share',
+        sheetName: 'Premium Calculator',
+        data: {
+          planNo:    selectedPlan.planNo,
+          planName:  selectedPlan.name,
+          category:  selectedPlan.category,
+          age, sa, term: safeterm, mode, gender,
+          annualPremium: premResult.annual ?? '',
+          totalPaid:     premResult.totalPaid ?? '',
+          maturityValue: matResult?.maturity ?? '',
+          clientName:    clientName || '',
+          session:       sessionStorage.getItem('sid') ?? '',
+        }
+      })
+    }).catch(() => {})
+  }
+
+  const visibleRows = showAllRows ? benefitTable : benefitTable.slice(0, 10)
+
+  return (
+    <div className="min-h-screen bg-warm pt-[78px]">
+
+      {/* ── Hero ─────────────────────────────── */}
+      <div className="bg-navy py-10 px-6 text-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
+            <Calculator className="w-3.5 h-3.5" /> LIC Premium Calculator
+          </div>
+          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
+            Calculate Your <span className="text-gold">Exact LIC Premium</span>
+          </h1>
+          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
+            34 active plans · real tabular rates · ULIP live NAV · year-by-year benefit table · WhatsApp share
+          </p>
+        </div>
+      </div>
+
+      {/* ── Main layout ──────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+
+          {/* ══ LEFT — Plan Browser ═══════════════ */}
+          <div className="lg:w-[360px] lg:flex-shrink-0">
+            <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.1)] overflow-hidden lg:sticky lg:top-[86px]">
+
+              {/* Quick Selector — like the competitor app */}
+              <div className="bg-navy px-4 py-3">
+                <div className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Quick Selector</div>
+                <div className="flex gap-2">
+                  <input type="number" placeholder="Plan No" value={quickPlanNo}
+                    onChange={e => setQuickPlanNo(e.target.value)}
+                    className="flex-1 px-3 py-2 text-[12px] bg-white/10 border border-white/20 text-white placeholder-white/30 rounded-lg focus:outline-none focus:bg-white/15" />
+                  <input type="number" placeholder="Age" value={quickAge}
+                    onChange={e => setQuickAge(e.target.value)}
+                    className="w-20 px-3 py-2 text-[12px] bg-white/10 border border-white/20 text-white placeholder-white/30 rounded-lg focus:outline-none focus:bg-white/15" />
+                  <button onClick={handleQuickSelect}
+                    className="px-3 py-2 bg-gold text-white text-[11px] font-bold rounded-lg hover:bg-gold-hover transition-colors">
+                    Go
+                  </button>
+                </div>
+              </div>
+
+              {/* Category tabs */}
+              <div className="p-3 border-b border-gray-50">
+                <div className="flex flex-wrap gap-1.5">
+                  {CATEGORIES.map(c => (
+                    <button key={c.key} onClick={() => setActiveCat(c.key)}
+                      className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all
+                        ${activeCat === c.key ? 'bg-navy text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}>
+                      {c.icon} {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="px-3 pt-3 pb-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                  <input value={search} onChange={e => setSearch(e.target.value)}
+                    placeholder="Search plan name or number…"
+                    className="w-full pl-8 pr-3 py-2 text-[12px] border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-gold/40 focus:bg-white transition-all" />
+                </div>
+              </div>
+
+              {/* Plan list with letter-avatar circles */}
+              <div className="overflow-y-auto max-h-[420px] px-2 pb-2">
+                {filteredPlans.length === 0 ? (
+                  <div className="py-8 text-center text-[12px] text-gray-400">No plans found</div>
+                ) : filteredPlans.map((plan: any) => {
+                  const isSelected = selectedPlan?.planNo === plan.planNo
+                  const avatarColor = CAT_AVATAR_COLOR[plan.category] ?? 'bg-navy'
+                  return (
+                    <button key={plan.planNo} onClick={() => handleSelectPlan(plan)}
+                      className={`w-full text-left px-3 py-2.5 rounded-xl mb-1 transition-all border flex items-center gap-3
+                        ${isSelected ? 'bg-gold/8 border-gold/30 shadow-sm' : 'border-transparent hover:bg-gray-50 hover:border-gray-100'}`}>
+                      {/* Avatar circle with first letter */}
+                      <div className={`w-9 h-9 rounded-full ${avatarColor} ring-2 ring-gold/30 flex items-center justify-center flex-shrink-0`}>
+                        <span className="text-white font-bold text-[13px]">{plan.name.charAt(0)}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <div className={`text-[12px] font-bold truncate ${isSelected ? 'text-gold' : plan.status === 'withdrawn' ? 'text-slate-400' : 'text-gray-800'}`}>
+                            {plan.name}
+                          </div>
+                          {plan.status === 'withdrawn' && (
+                            <span className="flex-shrink-0 text-[9px] bg-slate-100 text-slate-400 font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">Discontinued</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="text-[10px] text-gray-400 font-medium">Plan {plan.planNo}</span>
+                          {plan.xirr && plan.status !== 'withdrawn' && <span className="text-[10px] text-green-600 font-semibold">· {plan.xirr}</span>}
+                          {plan.status === 'withdrawn' && <span className="text-[10px] text-slate-400">· Calc only</span>}
+                        </div>
+                      </div>
+                      <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 -rotate-90 ${isSelected ? 'text-gold' : 'text-gray-300'}`} />
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* ══ RIGHT — Calculator ════════════════ */}
+          <div className="flex-1 min-w-0 space-y-4">
+
+            {/* No plan selected */}
+            {!selectedPlan && (
+              <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-64 flex flex-col items-center justify-center text-center p-8">
+                <Calculator className="w-12 h-12 text-gray-200 mb-3" />
+                <div className="font-display font-bold text-gray-400 text-[17px] mb-1">Select a plan to calculate</div>
+                <div className="text-[12px] text-gray-300">Choose any LIC plan from the list · or use Quick Selector above</div>
+              </div>
+            )}
+
+            {selectedPlan && (
+              <>
+                {/* Plan banner */}
+                <div className="bg-navy rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-12 h-12 rounded-full ${CAT_AVATAR_COLOR[selectedPlan.category] ?? 'bg-navy-light'} ring-2 ring-gold/30 flex items-center justify-center flex-shrink-0`}>
+                      <span className="text-white font-bold text-[18px]">{selectedPlan.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <div className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded mb-1 ${CAT_BADGE[selectedPlan.category] ?? ''}`}>
+                        {selectedPlan.category?.toUpperCase()}
+                      </div>
+                      <div className="text-white font-display font-bold text-[18px] leading-tight">
+                        LIC&apos;s {selectedPlan.name}
+                        <span className="text-white/40 font-sans text-[11px] ml-2 font-normal">Plan {selectedPlan.planNo}</span>
+                      </div>
+                      <div className="text-white/50 text-[11px] mt-0.5">
+                        Entry Age: {selectedPlan.minAge}–{selectedPlan.maxAge} yrs · Min SA: {fmtSA(selectedPlan.minSA)}
+                      </div>
+                    </div>
+                  </div>
+                  {selectedPlan.status === 'withdrawn' ? (
+                    <div className="bg-slate-500/20 border border-slate-400/30 text-slate-200 text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      📦 Discontinued — Calc only
+                    </div>
+                  ) : selectedPlan.xirr && (
+                    <div className="bg-gold/10 border border-gold/20 text-gold text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
+                      {selectedPlan.xirr} expected XIRR
+                    </div>
+                  )}
+                </div>
+
+                {/* ULIP Fund Selector */}
+                {isUlip && selectedPlan?.fundOptions?.length > 0 && (
+                  <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="font-display font-bold text-[16px] text-navy">Choose Fund</h2>
+                      <div className="flex items-center gap-2">
+                        {navLoading && <span className="text-[11px] text-gray-400 animate-pulse">Fetching…</span>}
+                        {!navLoading && navLastUpdated && (
+                          <span className="text-[10px] text-gray-400">
+                            Updated {new Date(navLastUpdated).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        )}
+                        <button onClick={handleRefreshNav} disabled={navRefreshing}
+                          title="Refresh NAV from LIC"
+                          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold transition-all
+                            ${navRefreshing
+                              ? 'border-gray-100 text-gray-300 cursor-not-allowed'
+                              : 'border-gold/30 text-gold hover:bg-gold/5 hover:border-gold/60'}`}>
+                          <RefreshCw className={`w-3 h-3 ${navRefreshing ? 'animate-spin' : ''}`} />
+                          {navRefreshing ? 'Refreshing…' : 'Refresh NAV'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {selectedPlan.fundOptions.map((fund: any) => {
+                        const planNav = navData[String(selectedPlan.planNo)]
+                        const fundNav = planNav?.[fund.id]
+                        const isSelected = ulipFund === fund.id
+                        const riskColor: Record<string,string> = {
+                          'Low': 'text-blue-600 bg-blue-50',
+                          'Low-Med': 'text-teal-600 bg-teal-50',
+                          'Medium': 'text-amber-600 bg-amber-50',
+                          'High': 'text-red-600 bg-red-50',
+                        }
+                        return (
+                          <button key={fund.id} onClick={() => setUlipFund(fund.id)}
+                            className={`text-left p-3.5 rounded-xl border-2 transition-all ${
+                              isSelected ? 'border-gold bg-gold/5' : 'border-gray-100 hover:border-gold/30 bg-gray-50'
+                            }`}>
+                            <div className="flex items-start justify-between gap-2 mb-1.5">
+                              <div className={`text-[12px] font-bold ${isSelected ? 'text-navy' : 'text-gray-700'}`}>{fund.name}</div>
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${riskColor[fund.risk] || 'text-gray-500 bg-gray-100'}`}>
+                                {fund.risk}
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-gray-500 leading-relaxed mb-2">{fund.desc}</div>
+                            {fundNav ? (
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-[13px] font-bold text-navy">₹{fundNav.nav.toFixed(2)}</span>
+                                <span className="text-[10px] text-gray-400">NAV · {fundNav.date}</span>
+                              </div>
+                            ) : (
+                              <div className="text-[11px] text-gray-300">NAV loading…</div>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    <p className="text-[10px] text-gray-400 mt-3">
+                      NAV updates daily after market close (~6–7 PM IST). Returns are market-linked and not guaranteed.
+                      ULIP charges (allocation, mortality, fund management) apply.
+                    </p>
+                  </div>
+                )}
+
+                {/* ── Nav bar: always visible above form or results ── */}
+                <div className="sticky top-[72px] md:top-[86px] z-30 bg-white rounded-2xl border border-gold/10 shadow-md mb-3 px-4 py-2.5 flex items-center gap-2">
+                  {showResults ? (
+                    <>
+                      <button onClick={() => setShowResults(false)}
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-navy bg-gray-100 hover:bg-gold/10 border border-gray-200 hover:border-gold/30 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                        ← Edit Inputs
+                      </button>
+                      <div className="flex-1 text-center text-[11px] text-gray-400 truncate hidden sm:block">
+                        LIC&apos;s {selectedPlan.name} · Age {age} · {isPensionAnnuity ? fmtSA(purchasePrice) : fmtSA(sa)}
+                      </div>
+                      <button onClick={calculate}
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-gold hover:bg-gold-hover px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                        <RefreshCw className="w-3 h-3" /> Recalculate
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex-1 text-[12px] font-semibold text-navy truncate">
+                        LIC&apos;s {selectedPlan.name}
+                        <span className="text-gray-400 font-normal ml-1 text-[11px]">· Plan {selectedPlan.planNo}</span>
+                      </div>
+                      {premResult && (
+                        <button onClick={() => setShowResults(true)}
+                          className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-navy hover:bg-navy/90 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                          View Results →
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {/* ── Error banner ── */}
+                {calcError && !showResults && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-3">
+                    <span className="text-red-500 text-[18px] leading-none mt-0.5">⚠</span>
+                    <div>
+                      <div className="text-[12px] font-bold text-red-700 mb-0.5">Calculation Error</div>
+                      <div className="text-[11px] text-red-600">{calcError}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Slide container wraps inputs + results ── */}
+                <div className="relative rounded-2xl">
+                  {/* Inputs panel */}
+                  <div className={`${showResults ? 'hidden' : 'block'}`}>
+
+                {/* Input form */}
+                <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5 space-y-5">
+                  <h2 className="font-display font-bold text-[16px] text-navy">Enter Details</h2>
+
+                  {/* Name + Salutation */}
+                  <div className="pb-4 border-b border-gray-50">
+                    <label className="block text-[12px] font-semibold text-gray-600 mb-2">
+                      Client Name <span className="text-gray-300 font-normal">(personalises report)</span>
+                    </label>
+                    <div className="flex gap-2">
+                      <div className="flex gap-1">
+                        {(['Mr.', 'Mrs.', 'Ms.'] as const).map(s => (
+                          <button key={s} onClick={() => setSalutation(s)}
+                            className={`px-3 py-2 text-[11px] font-bold rounded-lg border transition-all
+                              ${salutation === s ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                            {s}
+                          </button>
+                        ))}
+                      </div>
+                      <input type="text" placeholder="e.g. Rajesh Kumar" value={clientName}
+                        onChange={e => setClientName(e.target.value)}
+                        className="flex-1 px-3 py-2 text-[13px] border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-gold/40 focus:bg-white transition-all" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                    {/* ── Age: slider + number ── */}
+                    <div>
+                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Age</label>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <input type="range" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                          value={age} onChange={e => setAge(+e.target.value)}
+                          className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                        <input type="number" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                          value={age} onChange={e => setAge(Math.min(selectedPlan.maxAge ?? 65, Math.max(selectedPlan.minAge ?? 0, +e.target.value)))}
+                          className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                      </div>
+                      <div className="flex justify-between text-[10px] text-gray-300">
+                        <span>{selectedPlan.minAge ?? 0} yrs</span><span>{selectedPlan.maxAge ?? 65} yrs</span>
+                      </div>
+                    </div>
+
+                    {/* ── Term: slider + number (hidden for pure annuity plans) ── */}
+                    {!isPensionAnnuity && (
+                      <div>
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Policy Term</label>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <input type="range" min={minTerm} max={maxTerm}
+                            value={safeterm} onChange={e => setTerm(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={minTerm} max={maxTerm}
+                            value={safeterm} onChange={e => setTerm(Math.min(maxTerm, Math.max(minTerm, +e.target.value)))}
+                            className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="flex justify-between text-[10px] mt-0.5">
+                          <span className="text-gray-300">{minTerm} yrs</span>
+                          <span className="text-amber-600 font-semibold">PPT: {ppt} yrs</span>
+                          <span className="text-gray-300">{maxTerm} yrs</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Sum Assured (non-pension, non-ULIP) ── */}
+                    {!isPensionAnnuity && !isUlip && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Sum Assured
+                          {selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
+                        </label>
+                        <div className="flex flex-wrap gap-1.5 mb-2">
+                          {SA_PRESETS.map((v: number) => (
+                            <button key={v} onClick={() => setSa(v)}
+                              className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition-all
+                                ${sa === v ? 'bg-gold text-white border-gold' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gold/30'}`}>
+                              {fmtSA(v)}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <input type="range" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                            value={sa} onChange={e => setSa(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                            value={sa} onChange={e => setSa(Math.min(10000000, Math.max(selectedPlan.minSA ?? 100000, +e.target.value)))}
+                            className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="text-center text-[12px] text-gold font-semibold">( {toWords(sa)} )</div>
+                      </div>
+                    )}
+
+                    {/* ── Purchase Price (pension/annuity plans) ── */}
+                    {isPensionAnnuity && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Purchase Price (Lump Sum)
+                          <span className="text-gray-400 font-normal ml-1">(min {fmtSA(selectedPlan.minPurchasePrice ?? 100000)})</span>
+                        </label>
+                        <div className="flex items-center gap-2 mb-1">
+                          <input type="range" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                            value={purchasePrice} onChange={e => setPurchasePrice(+e.target.value)}
+                            className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
+                          <input type="number" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                            value={purchasePrice} onChange={e => setPurchasePrice(Math.max(selectedPlan.minPurchasePrice ?? 100000, +e.target.value))}
+                            className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
+                        </div>
+                        <div className="text-center text-[12px] text-gold font-semibold">( {toWords(purchasePrice)} )</div>
+
+                        {/* Annuity option */}
+                        {selectedPlan.annuityOptions?.length > 0 && (
+                          <div className="mt-3">
+                            <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Annuity Option</label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedPlan.annuityOptions.map((opt: string) => (
+                                <button key={opt} onClick={() => setAnnuityOption(opt)}
+                                  className={`text-[11px] font-semibold px-3 py-1.5 rounded-lg border transition-all
+                                    ${annuityOption === opt ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                                  {opt}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* ── Maturity Age (Jeevan Utsav 771/883) ── */}
+                    {isWholeLifeUtsav && selectedPlan.maturityAgeOptions && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Select Maturity Age</label>
+                        <div className="flex gap-2">
+                          {selectedPlan.maturityAgeOptions.map((a: number) => (
+                            <button key={a} onClick={() => setMaturityAge(a)}
+                              className={`flex-1 text-[12px] font-bold py-2 rounded-lg border transition-all
+                                ${maturityAge === a ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                              {a}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Survival Benefit % (Jeevan Tarun 734) ── */}
+                    {isJeevanTarun && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                          Survival Benefit Option
+                          <span className="text-gray-400 font-normal ml-1">(paid each year age 20–24)</span>
+                        </label>
+                        <div className="grid grid-cols-4 gap-2">
+                          {([5,10,15,20] as const).map(pct => (
+                            <button key={pct} onClick={() => setSurvivalBenefitPct(pct)}
+                              className={`text-[12px] font-bold py-2.5 rounded-xl border transition-all
+                                ${survivalBenefitPct === pct ? 'bg-navy text-white border-navy shadow' : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-navy/20'}`}>
+                              {pct}%
+                              <div className="text-[9px] font-normal mt-0.5 opacity-70">of SA/yr</div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Bima Lakshmi Option A/B ── */}
+                    {isBimaLakshmi && (
+                      <div className="sm:col-span-2">
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Plan Option</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {(['A','B'] as const).map(opt => (
+                            <button key={opt} onClick={() => setBimaLakshmiOption(opt)}
+                              className={`text-left p-3 rounded-xl border transition-all
+                                ${bimaLakshmiOption === opt ? 'bg-navy text-white border-navy' : 'bg-gray-50 border-gray-100 hover:border-navy/20'}`}>
+                              <div className={`text-[12px] font-bold ${bimaLakshmiOption === opt ? 'text-white' : 'text-gray-700'}`}>Option {opt}</div>
+                              <div className={`text-[10px] mt-0.5 ${bimaLakshmiOption === opt ? 'text-white/70' : 'text-gray-400'}`}>
+                                {opt === 'A' ? '50% SA survival benefit at end of PPT' : 'Deferred survival benefit at maturity'}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Mode (not for annuity) ── */}
+                    {!isPensionAnnuity && (
+                      <div>
+                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Premium Mode</label>
+                        <div className="grid grid-cols-4 gap-1">
+                          {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
+                            <button key={m} onClick={() => setMode(m)}
+                              className={`text-[11px] font-bold py-2 rounded-lg border transition-all
+                                ${mode === m ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                              {MODE_LABEL[m]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Gender + Smoker ── */}
+                    <div>
+                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Gender</label>
+                      <div className="flex gap-2">
+                        {(['male','female'] as const).map(g => (
+                          <button key={g} onClick={() => setGender(g)}
+                            className={`flex-1 text-[11px] font-bold py-2 rounded-lg border transition-all
+                              ${gender === g ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100'}`}>
+                            {g === 'male' ? '♂ Male' : '♀ Female'}
+                          </button>
+                        ))}
+                      </div>
+                      {(isTermPlan || selectedPlan?.smokerNonSmokerRates) && (
+                        <button onClick={() => setSmoker(s => !s)}
+                          className={`mt-2 w-full text-[11px] font-bold py-1.5 rounded-lg border transition-all
+                            ${smoker ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-100'}`}>
+                          🚬 Smoker {smoker ? '(+25% surcharge)' : '(click if applicable)'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <button onClick={calculate}
+                    className="w-full bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all text-[14px] flex items-center justify-center gap-2 shadow-md">
+                    <Calculator className="w-4 h-4" /> Calculate &amp; See Results →
+                  </button>
+                </div>
+                  </div>{/* end inputs panel */}
+
+                {/* Results panel — slides in from right */}
+                <div className={`transition-all duration-300 ease-in-out ${showResults ? 'block' : 'hidden'}`}>
+                {premResult && (
+                  <div className="space-y-4">
+
+                    {/* Personalized profile header */}
+                    <div className="bg-[#f5f0e8] border border-gold/20 rounded-2xl px-5 py-4 flex items-center gap-4">
+                      <div className={`w-14 h-14 rounded-full ${CAT_AVATAR_COLOR[selectedPlan.category] ?? 'bg-navy'} ring-2 ring-gold/40 flex items-center justify-center flex-shrink-0 shadow`}>
+                        <span className="text-white font-bold text-[20px]">
+                          {clientName ? clientName.charAt(0).toUpperCase() : salutation.charAt(0)}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-bold text-[15px] text-navy">
+                          {clientName ? `${salutation} ${clientName}` : `${salutation} Client`}
+                        </div>
+                        <div className="text-[11px] text-gray-500 mt-0.5">Age: {age} years</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-display font-bold text-[13px] text-navy">
+                          LIC&apos;s {selectedPlan.name} ({selectedPlan.planNo}-{safeterm}-{ppt})
+                        </div>
+                        <div className="text-[11px] text-gray-400">Premium And Benefit Illustration</div>
+                      </div>
+                    </div>
+
+                    {/* Plan Details summary table */}
+                    <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
+                      <div className="bg-navy px-5 py-2.5">
+                        <span className="text-white font-bold text-[12px]">Plan Details</span>
+                      </div>
+                      <div className="divide-y divide-gray-50">
+                        {[
+                          { icon: '🛡️', label: 'Sum Assured', value: `₹ ${sa.toLocaleString('en-IN')}` },
+                          { icon: '⏱️', label: 'Term',         value: `${safeterm} Years.` },
+                          { icon: '💳', label: 'Premium Payment', value: `${ppt} Years.` },
+                        ].map(({ icon, label, value }) => (
+                          <div key={label} className="flex items-center justify-between px-5 py-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-[14px]">{icon}</div>
+                              <span className="text-[13px] font-medium text-gray-700">{label}</span>
+                            </div>
+                            <span className="text-[13px] font-bold text-navy">{value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Other Benefits */}
+                    {selectedPlan.riders?.length > 0 && (() => {
+                      const dabRider = selectedPlan.riders.includes('dab')
+                      return dabRider ? (
+                        <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
+                          <div className="bg-navy px-5 py-2.5">
+                            <span className="text-white font-bold text-[12px]">Other Benefits</span>
+                          </div>
+                          <div className="flex items-center justify-between px-5 py-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-[14px]">🛡️</div>
+                              <span className="text-[13px] font-medium text-gray-700">Accidental Death And Disability Cover</span>
+                            </div>
+                            <span className="text-[13px] font-bold text-navy">₹ {sa.toLocaleString('en-IN')}</span>
+                          </div>
+                        </div>
+                      ) : null
+                    })()}
+
+                    {/* You Pay / You Get — pension-specific vs standard */}
+                    {premResult.isPensionAnnuity ? (
+                      /* ── PENSION ANNUITY: one-time purchase price → annual pension ── */
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
+                            <div className="text-[22px] mb-1">🐷</div>
+                            <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
+                            <div className="text-[10px] text-gray-400 mb-2">one-time purchase price</div>
+                            <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {premResult.purchasePrice.toLocaleString('en-IN')}</div>
+                            <div className="text-[10px] text-gray-400 mt-1">+ GST ₹{premResult.gst.toLocaleString('en-IN')} = ₹{premResult.totalPayable.toLocaleString('en-IN')}</div>
+                          </div>
+                          <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
+                            <div className="text-[22px] mb-1">🤲</div>
+                            <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
+                            <div className="text-[10px] text-gray-400 mb-2">annual pension</div>
+                            <div className="font-display font-bold text-[22px] text-green-700 leading-none">₹ {premResult.annualPension.toLocaleString('en-IN')}</div>
+                            <div className="text-[10px] text-gray-400 mt-1">every year for life</div>
+                          </div>
+                        </div>
+                        <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
+                          <div className="flex items-center gap-3 mb-3">
+                            <span className="text-[24px]">📅</span>
+                            <div className="font-bold text-[14px] text-navy">Pension Payout Breakdown</div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            {[
+                              { label: 'Monthly', value: premResult.monthlyPension },
+                              { label: 'Quarterly', value: premResult.quarterlyPension },
+                              { label: 'Half-Yearly', value: premResult.halfYearlyPension },
+                              { label: 'Annual', value: premResult.annualPension },
+                            ].map(({ label, value }) => (
+                              <div key={label} className="text-center bg-gold/5 rounded-xl p-3">
+                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{label}</div>
+                                <div className="font-display font-bold text-[18px] text-navy">₹ {value.toLocaleString('en-IN')}</div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="mt-3 text-[10px] text-gray-400 text-center">
+                            Annuity rate: ₹{premResult.annuityRate}/₹1000 purchase price · Life annuity with return of purchase price option
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* ── STANDARD: You Pay / You Get ── */
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
+                          <div className="text-[22px] mb-1">🐷</div>
+                          <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
+                          <div className="text-[10px] text-gray-400 mb-2">total premium of</div>
+                          <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {Math.round(premResult.totalPaid).toLocaleString('en-IN')}</div>
+                          <div className="text-[10px] text-gray-400 mt-1">over {ppt} year{ppt > 1 ? 's' : ''}</div>
+                        </div>
+                        <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
+                          <div className="text-[22px] mb-1">🤲</div>
+                          <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
+                          <div className="text-[10px] text-gray-400 mb-2">{isTermPlan ? 'life cover' : isUlip ? 'fund value (market-linked)' : 'total benefit of'}</div>
+                          <div className={`font-display font-bold text-[22px] leading-none ${isTermPlan ? 'text-red-600' : 'text-green-700'}`}>
+                            {isTermPlan
+                              ? `₹ ${sa.toLocaleString('en-IN')}`
+                              : isUlip
+                              ? 'Market-linked'
+                              : (matResult?.maturity ? `₹ ${Math.round(matResult.maturity).toLocaleString('en-IN')}` : '—')}
+                          </div>
+                          <div className="text-[10px] text-gray-400 mt-1">
+                            {isTermPlan ? 'on death claim' : isUlip ? 'depends on NAV at maturity' : `at age ${age + safeterm}`}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Premium per instalment — mode-reactive (hidden for pension annuity & single premium) */}
+                    {!premResult.isPensionAnnuity && selectedPlan?.ppt !== 'single' && (() => {
+                      const currentModePrem = allModesPrem?.find(r => r.mode === mode)?.prem ?? premResult
+                      const isSinglePremPlan = ppt === 1 && selectedPlan?.ppt === 'single'
+                      if (isSinglePremPlan) return null
+                      return (
+                        <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
+                          <div className="flex items-center gap-3 mb-4">
+                            <span className="text-[24px]">💰</span>
+                            <div className="font-bold text-[14px] text-navy">
+                              {mode === 'yearly' ? 'Yearly Premium' : `${MODE_LABEL[mode]} Premium`}
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 mb-4">
+                            <div className="text-center">
+                              <div className="text-[11px] font-bold text-gray-500 mb-1">First Year</div>
+                              <div className="font-display font-bold text-[22px] text-gold">₹ {Math.round(currentModePrem.instalment1).toLocaleString('en-IN')}</div>
+                              <div className="text-[10px] text-gray-400 mt-0.5">
+                                per {mode === 'yearly' ? 'year' : mode === 'halfyearly' ? 'half-year' : mode === 'quarterly' ? 'quarter' : 'month'}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-[11px] font-bold text-gray-500 mb-1">Subseq. Year</div>
+                              <div className="font-display font-bold text-[22px] text-gold">₹ {Math.round(currentModePrem.instalment2).toLocaleString('en-IN')}</div>
+                              <div className="text-[10px] text-gray-400 mt-0.5">
+                                per {mode === 'yearly' ? 'year' : mode === 'halfyearly' ? 'half-year' : mode === 'quarterly' ? 'quarter' : 'month'}
+                              </div>
+                            </div>
+                          </div>
+                          {/* Mode toggle on results */}
+                          <div className="grid grid-cols-4 gap-1.5 pt-3 border-t border-gray-50">
+                            {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
+                              <button key={m} onClick={() => setMode(m)}
+                                className={`text-[11px] font-bold py-2 rounded-lg border transition-all
+                                  ${mode === m ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-navy/20'}`}>
+                                {MODE_LABEL[m]}
+                              </button>
+                            ))}
+                          </div>
+                          {/* Per day — based on yearly equivalent */}
+                          {allModesPrem && (
+                            <div className="mt-3 text-center text-[11px] text-gray-400">
+                              {MODE_LABEL[mode]} Mode · Avg. Premium/Day ≈{' '}
+                              <span className="font-bold text-navy">
+                                ₹{Math.round((allModesPrem.find(r => r.mode === 'yearly')?.prem?.yearlyYear1 ?? premResult.yearlyYear1) / 365)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })()}
+
+                    {/* ── LOCKED SECTION ── */}
+                    <div className="relative">
+                      {!isUnlocked && (
+                        <div className="absolute inset-0 z-20 rounded-2xl overflow-hidden">
+                          <div className="absolute inset-0 backdrop-blur-sm bg-white/60" />
+                          <div className="absolute inset-0 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl shadow-2xl border border-gold/20 w-full max-w-sm p-6 text-center">
+                              <div className="text-[36px] mb-2">🔓</div>
+                              <div className="font-display font-bold text-[18px] text-navy mb-1">
+                                {clientName ? `${salutation} ${clientName}, your full report is ready!` : 'Your full report is ready!'}
+                              </div>
+                              <div className="text-[12px] text-gray-500 mb-5">
+                                Enter your mobile to unlock the complete breakdown, maturity illustration, tax benefits, and year-by-year table.
+                              </div>
+                              <form onSubmit={handleUnlock} className="space-y-3 text-left">
+                                <div className="relative">
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">📱</span>
+                                  <input required type="tel" placeholder="10-digit mobile number"
+                                    value={unlockMobile} onChange={e => setUnlockMobile(e.target.value)}
+                                    className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                  <select required value={unlockWantTo} onChange={e => setUnlockWantTo(e.target.value)}
+                                    className="px-3 py-2.5 border border-gray-200 rounded-xl text-[12px] bg-gray-50 focus:outline-none focus:border-gold/50 text-gray-600 appearance-none cursor-pointer">
+                                    <option value="">I want to…</option>
+                                    <option>Protect my family</option>
+                                    <option>Create wealth</option>
+                                    <option>Children&apos;s future</option>
+                                    <option>Plan retirement</option>
+                                    <option>Get health cover</option>
+                                  </select>
+                                  <select required value={unlockIAm} onChange={e => setUnlockIAm(e.target.value)}
+                                    className="px-3 py-2.5 border border-gray-200 rounded-xl text-[12px] bg-gray-50 focus:outline-none focus:border-gold/50 text-gray-600 appearance-none cursor-pointer">
+                                    <option value="">I am…</option>
+                                    <option>New to LIC</option>
+                                    <option>Existing holder</option>
+                                    <option>An NRI</option>
+                                    <option>An agent</option>
+                                    <option>Employee</option>
+                                    <option>Retired</option>
+                                  </select>
+                                </div>
+                                <div className="relative">
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">✉️</span>
+                                  <input type="email" placeholder="Email (optional)"
+                                    value={unlockEmail} onChange={e => setUnlockEmail(e.target.value)}
+                                    className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
+                                </div>
+                                <button type="submit" disabled={unlockStatus === 'sending'}
+                                  className="w-full bg-gold hover:bg-gold-hover text-white font-bold py-3 rounded-xl text-[13px] flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-70">
+                                  {unlockStatus === 'sending'
+                                    ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    : <><ArrowRight className="w-4 h-4" /> Unlock Full Report</>}
+                                </button>
+                                <div className="text-[10px] text-gray-400 text-center">🔒 Your data is private and never shared.</div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className={`space-y-4 ${!isUnlocked ? 'pointer-events-none select-none min-h-[480px]' : ''}`}>
+
+                        {/* Maturity Benefit table */}
+                        {!isTermPlan && matResult?.maturity > 0 && (
+                          <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
+                            <div className="bg-navy px-5 py-2.5 flex justify-between items-center">
+                              <span className="text-white font-bold text-[12px]">Maturity Benefit</span>
+                              <span className="text-white/50 text-[10px]">(After completion of {safeterm} years)</span>
+                            </div>
+                            <div className="divide-y divide-gray-50 px-5">
+                              <div className="flex justify-between py-2.5">
+                                <span className="text-[12px] text-gray-600">Sum Assured</span>
+                                <span className="text-[12px] font-semibold text-gray-800">{sa.toLocaleString('en-IN')}</span>
+                              </div>
+                              {matResult.totalSRB > 0 && (
+                                <div className="flex justify-between py-2.5">
+                                  <span className="text-[12px] text-gray-600">
+                                    Bonus* ({Math.round(matResult.totalSRB / safeterm / (sa / 1000))}/1000 × {safeterm})
+                                  </span>
+                                  <span className="text-[12px] font-semibold text-gray-800">{Math.round(matResult.totalSRB).toLocaleString('en-IN')}</span>
+                                </div>
+                              )}
+                              {matResult.fab > 0 && (
+                                <div className="flex justify-between py-2.5">
+                                  <span className="text-[12px] text-gray-600">
+                                    Final Addition Bonus* ({Math.round(matResult.fab / (sa / 1000))}/1000 SA)
+                                  </span>
+                                  <span className="text-[12px] font-semibold text-gray-800">{Math.round(matResult.fab).toLocaleString('en-IN')}</span>
+                                </div>
+                              )}
+                              <div className="flex justify-between py-3">
+                                <span className="text-[13px] font-bold text-navy">Expected Maturity Amount<br /><span className="font-normal text-[10px] text-gray-400">after {safeterm} years.</span></span>
+                                <span className="text-[16px] font-bold text-navy">{Math.round(matResult.maturity).toLocaleString('en-IN')}</span>
+                              </div>
+                              <div className="flex justify-between py-2.5">
+                                <span className="text-[12px] text-gray-500">Total Premium Paid</span>
+                                <span className="text-[12px] font-semibold text-gray-700">{Math.round(premResult.totalPaid).toLocaleString('en-IN')}</span>
+                              </div>
+                            </div>
+                            <div className="px-5 pb-3">
+                              <p className="text-[10px] text-gray-400 italic">*Bonus rates and Final Addition Bonus (FAB) rates as per the latest declared rates.</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Benefit Pattern Illustration */}
+                        {!isTermPlan && matResult?.maturity > 0 && (
+                          <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
+                            <div className="bg-navy px-5 py-2.5 -mx-5 -mt-5 mb-5 rounded-t-2xl">
+                              <span className="text-white font-bold text-[12px]">Benefit Pattern — Illustration</span>
+                            </div>
+                            {/* Visual timeline */}
+                            <div className="relative py-6 px-4">
+                              {/* Top arc — life cover label */}
+                              <div className="flex justify-between items-start mb-1 px-2">
+                                <div />
+                                <div className="text-center text-[10px] text-blue-600 font-semibold">
+                                  ☂️ You get Life Cover<br />
+                                  <span className="text-[9px]">({fmtSA(sa)} to {fmt(matResult.maturity)})</span>
+                                </div>
+                                <div className="text-right text-[10px] text-green-600 font-semibold">
+                                  You get<br/>Lump Sum<br/>
+                                  <span className="font-bold text-[11px]">{fmt(matResult.maturity)}</span><br/>
+                                  <span className="text-[16px]">💰</span>
+                                </div>
+                              </div>
+                              {/* Timeline bar */}
+                              <div className="relative h-3 bg-gray-100 rounded-full mx-2 my-3">
+                                <div className="absolute h-full bg-gradient-to-r from-gold via-amber-400 to-green-500 rounded-full"
+                                  style={{ width: `${Math.min((ppt / safeterm) * 100, 100)}%` }} />
+                                {/* Start dot */}
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-green-500 border-2 border-white shadow" />
+                                {/* PPT end dot */}
+                                {ppt < safeterm && (
+                                  <div className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-navy border-2 border-white shadow"
+                                    style={{ left: `calc(${(ppt / safeterm) * 100}% - 6px)` }} />
+                                )}
+                                {/* End dot */}
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-green-500 border-2 border-white shadow" />
+                              </div>
+                              {/* Labels */}
+                              <div className="flex justify-between text-center px-2">
+                                <div>
+                                  <div className="text-[11px] font-bold text-navy">Age {age}</div>
+                                  <div className="text-[10px] text-gold font-semibold">₹{Math.round(premResult.yearlyYear1).toLocaleString('en-IN')}/yr 🐷</div>
+                                </div>
+                                {ppt < safeterm && (
+                                  <div className="text-center">
+                                    <div className="text-[11px] font-bold text-navy">Age {age + ppt}</div>
+                                    <div className="text-[10px] text-gray-400">Premiums end</div>
+                                  </div>
+                                )}
+                                <div>
+                                  <div className="text-[11px] font-bold text-green-700">Age {age + safeterm}</div>
+                                  <div className="text-[10px] text-green-600 font-semibold">{fmt(matResult.maturity)}</div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* Bottom 3-cell summary */}
+                            <div className="grid grid-cols-3 border border-navy/10 rounded-xl overflow-hidden mt-2">
+                              {[
+                                { label: 'Total\nPremium Paid', value: Math.round(premResult.totalPaid).toLocaleString('en-IN'), color: 'text-navy' },
+                                { label: 'Total\nReturns',      value: Math.round(matResult.maturity).toLocaleString('en-IN'),   color: 'text-green-700' },
+                                { label: `Tax Saved\n(30% Slab)`, value: tax80C ? Math.round(tax80C).toLocaleString('en-IN') : '—', color: 'text-blue-600' },
+                              ].map(({ label, value }, i) => (
+                                <div key={i} className={`bg-navy text-center py-3 px-2 ${i < 2 ? 'border-r border-white/10' : ''}`}>
+                                  <div className="text-[9px] text-white/60 leading-tight whitespace-pre-line mb-1">{label}</div>
+                                  <div className={`text-[13px] font-bold text-white`}>{value}</div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Show Full Premium Chart accordion */}
+                        <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
+                          <button onClick={() => setShowAllModes(v => !v)}
+                            className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors">
+                            <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
+                              <span className="text-[16px]">💳</span> Show Full Premium Chart
+                            </div>
+                            {showAllModes ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                          </button>
+                          {showAllModes && allModesPrem && (
+                            <div className="border-t border-gray-50">
+                              {/* First Year */}
+                              <div className="px-5 py-2.5 bg-navy/5 text-[11px] font-bold text-navy/60 uppercase tracking-wider">
+                                1st Year Premium With TAX {premResult.gstPctYear1}%
+                              </div>
+                              <div className="divide-y divide-gray-50">
+                                {allModesPrem.map(({ mode: m, prem: p }) => (
+                                  <div key={m} className="flex justify-between items-center px-5 py-2.5">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-[12px] font-semibold text-gray-700 w-20">
+                                        {m === 'yearly' ? 'Yearly' : m === 'halfyearly' ? 'Half-Yearly' : m === 'quarterly' ? 'Quarterly' : 'Monthly (ECS)'}
+                                      </span>
+                                    </div>
+                                    <div className="text-right">
+                                      <span className="text-[13px] font-bold text-navy">₹ {Math.round(
+                                        m === 'yearly' ? p.yearlyYear1 :
+                                        m === 'halfyearly' ? p.yearlyYear1 / 2 :
+                                        m === 'quarterly' ? p.yearlyYear1 / 4 :
+                                        p.yearlyYear1 / 12
+                                      ).toLocaleString('en-IN')}</span>
+                                    </div>
+                                  </div>
+                                ))}
+                                <div className="flex justify-between items-center px-5 py-2.5 bg-gold/5">
+                                  <span className="text-[11px] text-gray-500">YLY Mode Avg. Prem/Day</span>
+                                  <span className="text-[12px] font-bold text-navy">₹ {Math.round(premResult.yearlyYear1 / 365)}</span>
+                                </div>
+                              </div>
+                              {/* Subsequent Years */}
+                              <div className="px-5 py-2.5 bg-navy/5 text-[11px] font-bold text-navy/60 uppercase tracking-wider border-t border-gray-100">
+                                After 1st Year Premium With TAX {premResult.gstPctYear2}%
+                              </div>
+                              <div className="divide-y divide-gray-50">
+                                {allModesPrem.map(({ mode: m, prem: p }) => (
+                                  <div key={m} className="flex justify-between items-center px-5 py-2.5">
+                                    <span className="text-[12px] font-semibold text-gray-700 w-20">
+                                      {m === 'yearly' ? 'Yearly' : m === 'halfyearly' ? 'Half-Yearly' : m === 'quarterly' ? 'Quarterly' : 'Monthly (ECS)'}
+                                    </span>
+                                    <span className="text-[13px] font-bold text-navy">₹ {Math.round(
+                                      m === 'yearly' ? p.yearlyYear2plus :
+                                      m === 'halfyearly' ? p.yearlyYear2plus / 2 :
+                                      m === 'quarterly' ? p.yearlyYear2plus / 4 :
+                                      p.yearlyYear2plus / 12
+                                    ).toLocaleString('en-IN')}</span>
+                                  </div>
+                                ))}
+                                <div className="flex justify-between items-center px-5 py-2.5 bg-gold/5 border-t border-gray-100">
+                                  <span className="text-[11px] text-gray-500">Total Approx. Paid Premium</span>
+                                  <span className="text-[12px] font-bold text-navy">₹ {Math.round(premResult.totalPaid).toLocaleString('en-IN')}</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Tax benefits + Riders */}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="bg-white rounded-2xl p-5 border border-[rgba(184,134,11,0.08)] shadow-sm">
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center">
+                                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                              </div>
+                              <div className="font-bold text-[13px] text-navy">Tax Benefits</div>
+                            </div>
+                            <div className="space-y-2.5">
+                              <div className="flex justify-between">
+                                <div>
+                                  <div className="text-[12px] font-semibold text-gray-700">Section 80C Deduction</div>
+                                  <div className="text-[10px] text-gray-400">Up to ₹1.5L from taxable income</div>
+                                </div>
+                                <div className="text-[13px] font-bold text-green-700">{tax80C ? `~${fmt(tax80C)}` : '—'}</div>
+                              </div>
+                              <div className="flex justify-between">
+                                <div>
+                                  <div className="text-[12px] font-semibold text-gray-700">Sec. 10(10D) Maturity</div>
+                                  <div className="text-[10px] text-gray-400">Maturity proceeds tax-free*</div>
+                                </div>
+                                <div className="text-[13px] font-bold text-green-700">Tax Free</div>
+                              </div>
+                              <div className="text-[10px] text-gray-300">* Subject to conditions.</div>
+                            </div>
+                          </div>
+                          <div className="bg-white rounded-2xl p-5 border border-[rgba(184,134,11,0.08)] shadow-sm">
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
+                                <Shield className="w-4 h-4 text-blue-600" />
+                              </div>
+                              <div className="font-bold text-[13px] text-navy">Available Riders</div>
+                            </div>
+                            {selectedPlan.riders?.length ? (
+                              <div className="space-y-1.5">
+                                {selectedPlan.riders.map((rId: string) => {
+                                  const r = (RIDERS as any)[rId]
+                                  if (!r) return null
+                                  return (
+                                    <div key={rId} className="flex items-start gap-2">
+                                      <span className="text-gold text-[12px] mt-0.5">+</span>
+                                      <div>
+                                        <div className="text-[11px] font-semibold text-gray-700">{r.name}</div>
+                                        <div className="text-[10px] text-gray-400 leading-relaxed">{r.desc}</div>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            ) : (
+                              <div className="text-[12px] text-gray-400">No riders for this plan.</div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Key insights */}
+                        {!isTermPlan && (
+                          <div className="bg-gold/5 border border-gold/15 rounded-2xl p-5">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Star className="w-4 h-4 text-gold" />
+                              <div className="font-bold text-[13px] text-gold">Key Insights</div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-3">
+                              {[
+                                { label: 'Expected XIRR',    value: xirr ? `~${xirr}% p.a.` : selectedPlan.xirr ?? '—' },
+                                { label: 'Money Multiplier', value: multiplier ? `${multiplier}×` : '—' },
+                                { label: 'Total Bonus',      value: matResult?.totalBonus ? fmt(matResult.totalBonus) : '—' },
+                              ].map(({ label, value }) => (
+                                <div key={label} className="bg-white rounded-xl p-3 border border-gold/10 text-center">
+                                  <div className="text-[10px] text-gray-400 mb-0.5">{label}</div>
+                                  <div className="font-display font-bold text-[16px] text-navy">{value}</div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Year-by-year benefit table */}
+                        {benefitTable.length > 0 && (
+                          <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
+                            <button onClick={() => setShowTable(v => !v)}
+                              className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors">
+                              <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
+                                <TrendingUp className="w-4 h-4 text-gold" />
+                                Show Full Premium Chart (Year-wise)
+                                <span className="text-[10px] text-gray-400 font-normal">({benefitTable.length} years)</span>
+                              </div>
+                              {showTable ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                            </button>
+                            {showTable && (
+                              <>
+                                <div className="overflow-x-auto">
+                                  <table className="w-full">
+                                    <thead>
+                                      <tr className="bg-navy text-white text-[10px]">
+                                        {['Year','Age','Premium','Cum. Paid','SA','Annual Bonus','Cum. Bonus','Death Benefit','Surrender Val.','Survival / Maturity'].map(h => (
+                                          <th key={h} className="px-3 py-2.5 text-left font-bold whitespace-nowrap">{h}</th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody className="text-[11px]">
+                                      {visibleRows.map((row: any, i: number) => (
+                                        <tr key={row.year}
+                                          className={`${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'}
+                                            ${row.maturityPayout ? 'bg-green-50' : ''}
+                                            ${row.survivalPayout ? 'bg-amber-50/60' : ''}`}>
+                                          <td className="px-3 py-2 font-bold text-gold">{row.year}</td>
+                                          <td className="px-3 py-2 text-gray-500">{row.age}</td>
+                                          <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '—'}</td>
+                                          <td className="px-3 py-2 font-semibold">{fmt(row.cumPremiumPaid)}</td>
+                                          <td className="px-3 py-2">{fmtSA(sa)}</td>
+                                          <td className="px-3 py-2 text-blue-600">{row.annualBonus ? fmt(row.annualBonus) : '—'}</td>
+                                          <td className="px-3 py-2 text-blue-700 font-semibold">{row.cumBonus ? fmt(row.cumBonus) : '—'}</td>
+                                          <td className="px-3 py-2 font-bold text-red-600">{fmt(row.deathBenefit)}</td>
+                                          <td className="px-3 py-2 text-amber-600">{row.gsv ? fmt(row.gsv) : '—'}</td>
+                                          <td className="px-3 py-2 font-bold text-green-700">
+                                            {row.maturityPayout ? `🎉 ${fmt(row.maturityPayout)}` : row.survivalPayout ? `💰 ${fmt(row.survivalPayout)}` : '—'}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                                {benefitTable.length > 10 && (
+                                  <button onClick={() => setShowAllRows(v => !v)}
+                                    className="w-full py-2.5 text-[11px] font-bold text-gold hover:text-gold-hover border-t border-gray-50 hover:bg-gray-50 transition-colors">
+                                    {showAllRows ? `Show less ↑` : `Show all ${benefitTable.length} years ↓`}
+                                  </button>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        )}
+
+                        {/* CTAs */}
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          {selectedPlan.status === 'withdrawn' ? (
+                            <div className="flex-1 bg-slate-100 border border-slate-200 text-slate-500 font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 text-[13px]">
+                              <Info className="w-4 h-4" /> Plan discontinued — for legacy policy calc only
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => openLeadPopup(`Premium quote: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo}), ${fmtSA(sa)} SA, Age ${age}`)}
+                              className="flex-1 bg-gold hover:bg-gold-hover text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md text-[13px]">
+                              Get Exact Quote from Ajay Sir <ArrowRight className="w-4 h-4" />
+                            </button>
+                          )}
+                          <button onClick={whatsappShare}
+                            className="sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 text-[13px]">
+                            <Share2 className="w-4 h-4" /> Share
+                          </button>
+                        </div>
+
+                      </div>{/* end blurred content */}
+                    </div>{/* end locked section */}
+                  </div>
+                )}
+                </div>{/* end results panel */}
+                </div>{/* end slide container */}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Disclaimer */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 pb-10">
+        <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex items-start gap-3">
+          <Info className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+          <p className="text-[11px] text-amber-700 leading-relaxed">
+            <strong>Disclaimer:</strong> Calculations are illustrative based on LIC tabular rates and are not official LIC quotes.
+            Bonus rates are based on 2026 declared rates and are not guaranteed for future years.
+            Actual premiums depend on LIC underwriting rules and current circulars.
+            {' '}<Link href="/contact" className="underline font-semibold">Contact Ajay Kumar Poddar for an official LIC quote.</Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
