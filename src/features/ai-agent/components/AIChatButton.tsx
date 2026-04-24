@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Sparkles, ChevronDown } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
-import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
+import { usePoddarJiChat } from '../hooks/usePoddarJiChat'
 import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
 
 export default function AIChatButton() {

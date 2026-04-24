@@ -1,4 +1,4 @@
-import ChatBot from '@/components/ChatBot'
+import { ChatBot } from '@/src/features/ai-agent'
 
 export const metadata = {
   title: 'Ask Poddar Ji — AI Insurance Advisor | Poddar Wealth',

@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
-import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
+import { usePoddarJiChat } from '../hooks/usePoddarJiChat'
 import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
 
 function ChatWindow() {

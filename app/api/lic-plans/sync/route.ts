@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('🔄 Manual Sync Triggered...');
     const newPlans = await scrapeLicPlans();
     
     if (!newPlans || newPlans.length === 0) {

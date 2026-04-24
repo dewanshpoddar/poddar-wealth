@@ -1,6 +1,6 @@
 'use client'
 
-import LicPlans from '@/components/LicPlans'
+import { LicPlans } from '@/src/features/lic-plans'
 import { motion } from 'framer-motion'
 import { openLeadPopup } from '@/lib/events'
 

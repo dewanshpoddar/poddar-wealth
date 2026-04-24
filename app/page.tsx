@@ -1,7 +1,7 @@
 import HeroSection from '@/components/HeroSection'
 import AgentTeaserStrip from '@/components/AgentTeaserStrip'
 import TrustSection from '@/components/TrustSection'
-import WealthBlueprintCalculator from '@/components/WealthBlueprintCalculator'
+import { WealthBlueprintCalculator } from '@/src/features/wealth-blueprint'
 import ServicesSection from '@/components/ServicesSection'
 import ProductTeaser from '@/components/ProductTeaser'
 import TestimonialsSection from '@/components/TestimonialsSection'

@@ -1,155 +1,23 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp } from 'lucide-react'
 import { openLeadPopup } from '@/lib/events'
 
-interface Plan {
-  id: string
-  name: { en: string; hi: string }
-  planNo: string
-  tagline: { en: string; hi: string }
-  keyBenefit: { en: string; hi: string }
-  category: string
-  entryAge: string
-  sumAssured: string
-  premiumPayment: string
-  highlights: { en: string; hi: string }[]
-  officialUrl: string
-  status: string
-}
-
-interface Category {
-  label: { en: string; hi: string }
-  tagline: { en: string; hi: string }
-  icon: string
-  color: string
-  plans: Plan[]
-}
-
-interface LicData {
-  meta: any
-  categories: Record<string, Category>
-}
-
-// ── Category accent colors ──────────────────────────────────────────────────
-const CAT_ACCENT: Record<string, string> = {
-  endowment:  '#2563EB',
-  wholeLife:  '#059669',
-  moneyBack:  '#D97706',
-  term:       '#DC2626',
-  child:      '#DB2777',
-  pension:    '#7C3AED',
-  ulip:       '#0891B2',
-  micro:      '#EA580C',
-}
-
-// ── Popularity badges — based on LIC sales & internet data ─────────────────
-const PLAN_BADGES: Record<string, { label: string; color: string; bg: string; icon: string }> = {
-  // Best Sellers (top LIC annual premium collection plans)
-  '915': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
-  '945': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
-  '836': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
-  '933': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
-  // Most Popular (highest policy count)
-  '954': { label: 'Most Popular', color: '#1d4ed8', bg: '#dbeafe', icon: '🔥' },
-  '955': { label: 'Most Popular', color: '#1d4ed8', bg: '#dbeafe', icon: '🔥' },
-  '858': { label: 'Most Popular', color: '#1d4ed8', bg: '#dbeafe', icon: '🔥' },
-  '857': { label: 'Most Popular', color: '#1d4ed8', bg: '#dbeafe', icon: '🔥' },
-  // Top Performer (ULIP / pension standouts)
-  '852': { label: 'Top Performer', color: '#0e7490', bg: '#cffafe', icon: '📈' },
-  '749': { label: 'Top Performer', color: '#0e7490', bg: '#cffafe', icon: '📈' },
-  // Advisor Picks
-  '948': { label: "Advisor's Pick", color: '#7c3aed', bg: '#ede9fe', icon: '⭐' },
-  '871': { label: "Advisor's Pick", color: '#7c3aed', bg: '#ede9fe', icon: '⭐' },
-  '862': { label: "Advisor's Pick", color: '#7c3aed', bg: '#ede9fe', icon: '⭐' },
-  // New Launches
-  '881': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '912': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '876': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '887': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '886': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '880': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '751': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-  '879': { label: 'New Launch', color: '#b45309', bg: '#fef3c7', icon: '✨' },
-}
-
-// ── Goal-based filters (customer language, not product language) ────────────
-const GOALS = [
-  { key: 'save',    label: { en: 'Save & Grow',        hi: 'बचत और वृद्धि' },     cats: ['endowment', 'wholeLife', 'moneyBack'] },
-  { key: 'protect', label: { en: 'Family Protection',  hi: 'परिवार सुरक्षा' },     cats: ['term', 'child'] },
-  { key: 'retire',  label: { en: 'Retirement Income',  hi: 'सेवानिवृत्ति आय' },   cats: ['pension'] },
-  { key: 'invest',  label: { en: 'Market Growth',      hi: 'बाजार निवेश' },        cats: ['ulip'] },
-  { key: 'child',   label: { en: "Child's Future",     hi: 'बच्चों का भविष्य' },  cats: ['child'] },
-  { key: 'micro',   label: { en: 'Low Premium',        hi: 'कम प्रीमियम' },        cats: ['micro'] },
-]
-
-// ── Age suitability ─────────────────────────────────────────────────────────
-const AGE_GROUPS = [
-  { key: 'child',  label: { en: 'For Minors (0–17)',   hi: '0–17 वर्ष' } },
-  { key: 'young',  label: { en: 'Young Adult (18–35)', hi: '18–35 वर्ष' } },
-  { key: 'prime',  label: { en: 'Prime Age (36–55)',   hi: '36–55 वर्ष' } },
-  { key: 'senior', label: { en: 'Senior (55+)',        hi: '55+ वर्ष' } },
-]
-
-// ── Returns type ────────────────────────────────────────────────────────────
-const RETURN_TYPES = [
-  { key: 'guaranteed', label: { en: 'Guaranteed Returns', hi: 'गारंटीड रिटर्न' }, cats: ['endowment', 'wholeLife', 'moneyBack', 'child', 'micro'] },
-  { key: 'market',     label: { en: 'Market-Linked',      hi: 'बाजार-लिंक्ड' },  cats: ['ulip'] },
-  { key: 'income',     label: { en: 'Regular Income',     hi: 'नियमित आय' },       cats: ['pension'] },
-  { key: 'pure',       label: { en: 'Pure Protection',    hi: 'केवल सुरक्षा' },   cats: ['term'] },
-]
-
-const PREMIUM_MODES = [
-  { key: 'regular', label: { en: 'Regular Pay', hi: 'नियमित' } },
-  { key: 'limited', label: { en: 'Limited Pay', hi: 'सीमित' } },
-  { key: 'single',  label: { en: 'Single Pay',  hi: 'एकमुश्त' } },
-]
-
-const COVER_TIERS = [
-  { key: 'starter', label: { en: 'Upto ₹5 Lakh', hi: '₹5 लाख तक' } },
-  { key: 'mid',     label: { en: '₹5L – ₹25L',   hi: '₹5L–₹25L' } },
-  { key: 'high',    label: { en: '₹25 Lakh+',     hi: '₹25 लाख+' } },
-]
-
-// ── Helpers ─────────────────────────────────────────────────────────────────
-function getPremiumModes(pp: string): string[] {
-  const lower = pp.toLowerCase()
-  const modes: string[] = []
-  if (lower.includes('regular')) modes.push('regular')
-  if (lower.includes('limited')) modes.push('limited')
-  if (lower.includes('single')) modes.push('single')
-  return modes
-}
-
-function getSumTier(sa: string): string {
-  const cleaned = sa.replace(/[₹,+\s]/g, '')
-  const num = parseInt(cleaned.split(/[-–(]/)[0]) || 0
-  if (num >= 2500000) return 'high'
-  if (num >= 500000)  return 'mid'
-  return 'starter'
-}
-
-function parseAgeRange(entryAge: string): { min: number; max: number } {
-  const cleanedMin = entryAge.match(/^(\d+)(d|m)?/)
-  const cleanedMax = entryAge.match(/[-–]\s*(\d+)\s*(yr)?/)
-  const min = cleanedMin ? (cleanedMin[2] === 'd' ? 0 : parseInt(cleanedMin[1])) : 0
-  const max = cleanedMax ? parseInt(cleanedMax[1]) : 99
-  return { min, max }
-}
-
-function matchesAgeGroup(entryAge: string, ageKey: string): boolean {
-  const { min, max } = parseAgeRange(entryAge)
-  switch (ageKey) {
-    case 'child':  return min <= 17
-    case 'young':  return max >= 18 && min <= 35
-    case 'prime':  return max >= 36 && min <= 55
-    case 'senior': return max >= 55
-    default: return true
-  }
-}
+import { useLicPlans } from '../hooks/useLicPlans'
+import {
+  CAT_ACCENT,
+  PLAN_BADGES,
+  GOALS,
+  AGE_GROUPS,
+  RETURN_TYPES,
+  PREMIUM_MODES,
+  COVER_TIERS,
+  getPremiumModes,
+  getSumTier,
+  matchesAgeGroup
+} from '../domain/licPlansEngine'
 
 // ── FilterSection wrapper ────────────────────────────────────────────────────
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
@@ -199,106 +67,25 @@ function FilterPill({
 
 export default function LicPlans() {
   const { lang } = useLang()
-  const [data, setData]                       = useState<LicData | null>(null)
-  const [loading, setLoading]                 = useState(true)
-  const [expandedPlan, setExpandedPlan]       = useState<string | null>(null)
-  const [catFilter, setCatFilter]             = useState<Set<string>>(new Set())
-  const [goalFilter, setGoalFilter]           = useState<Set<string>>(new Set())
-  const [ageFilter, setAgeFilter]             = useState<Set<string>>(new Set())
-  const [returnsFilter, setReturnsFilter]     = useState<Set<string>>(new Set())
-  const [premiumFilter, setPremiumFilter]     = useState<Set<string>>(new Set())
-  const [coverFilter, setCoverFilter]         = useState<Set<string>>(new Set())
-  const [searchQuery, setSearchQuery]         = useState('')
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [showWithdrawn, setShowWithdrawn]     = useState(false)
-
-  useEffect(() => {
-    fetch('/api/lic-plans')
-      .then(r => r.json())
-      .then(res => { if (res.success) setData(res.data); setLoading(false) })
-      .catch(() => setLoading(false))
-  }, [])
-
-  // ── Derived data ─────────────────────────────────────────────────────────
-  const { activePlans, withdrawnPlans, categoryMeta } = useMemo(() => {
-    if (!data) return { activePlans: [], withdrawnPlans: [], categoryMeta: {} }
-    const activePlans:    (Plan & { _catKey: string })[] = []
-    const withdrawnPlans: (Plan & { _catKey: string })[] = []
-    const categoryMeta: Record<string, { label: Category['label']; icon: string; color: string; count: number }> = {}
-    for (const [key, cat] of Object.entries(data.categories)) {
-      const activeInCat = cat.plans.filter(p => p.status !== 'withdrawn')
-      const wdrInCat    = cat.plans.filter(p => p.status === 'withdrawn')
-      activeInCat.forEach(p => activePlans.push({ ...p, _catKey: key }))
-      wdrInCat.forEach(p =>    withdrawnPlans.push({ ...p, _catKey: key }))
-      if (activeInCat.length > 0)
-        categoryMeta[key] = { label: cat.label, icon: cat.icon, color: cat.color, count: activeInCat.length }
-    }
-    return { activePlans, withdrawnPlans, categoryMeta }
-  }, [data])
-
-  // ── Filtered display list ────────────────────────────────────────────────
-  const displayedPlans = useMemo(() => {
-    let base = [...activePlans]
-
-    // Category filter
-    if (catFilter.size > 0)
-      base = base.filter(p => catFilter.has(p._catKey))
-
-    // Goal filter — resolve to categories
-    if (goalFilter.size > 0) {
-      const goalCats = new Set<string>()
-      GOALS.filter(g => goalFilter.has(g.key)).forEach(g => g.cats.forEach(c => goalCats.add(c)))
-      base = base.filter(p => goalCats.has(p._catKey))
-    }
-
-    // Age filter
-    if (ageFilter.size > 0)
-      base = base.filter(p => [...ageFilter].some(ag => matchesAgeGroup(p.entryAge, ag)))
-
-    // Returns type filter
-    if (returnsFilter.size > 0) {
-      const rtCats = new Set<string>()
-      RETURN_TYPES.filter(r => returnsFilter.has(r.key)).forEach(r => r.cats.forEach(c => rtCats.add(c)))
-      base = base.filter(p => rtCats.has(p._catKey))
-    }
-
-    // Premium mode filter
-    if (premiumFilter.size > 0)
-      base = base.filter(p => getPremiumModes(p.premiumPayment).some(m => premiumFilter.has(m)))
-
-    // Cover tier filter
-    if (coverFilter.size > 0)
-      base = base.filter(p => coverFilter.has(getSumTier(p.sumAssured)))
-
-    // Search
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase()
-      base = base.filter(p =>
-        p.name.en.toLowerCase().includes(q) ||
-        p.name.hi.includes(searchQuery) ||
-        p.planNo.includes(q) ||
-        p.keyBenefit.en.toLowerCase().includes(q)
-      )
-    }
-
-    return base
-  }, [catFilter, goalFilter, ageFilter, returnsFilter, premiumFilter, coverFilter, searchQuery, activePlans])
-
-  const totalFiltersActive = catFilter.size + goalFilter.size + ageFilter.size + returnsFilter.size + premiumFilter.size + coverFilter.size + (searchQuery ? 1 : 0)
-  const isShowingAll = totalFiltersActive === 0
-
-  const clearAllFilters = () => {
-    setCatFilter(new Set()); setGoalFilter(new Set()); setAgeFilter(new Set())
-    setReturnsFilter(new Set()); setPremiumFilter(new Set()); setCoverFilter(new Set())
-    setSearchQuery(''); setExpandedPlan(null)
-  }
-
-  const toggle = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, key: string) =>
-    setter(prev => { const n = new Set(prev); n.has(key) ? n.delete(key) : n.add(key); return n })
+  const { state, actions, computed } = useLicPlans()
+  
+  const {
+    data, loading, expandedPlan, catFilter, goalFilter, ageFilter, returnsFilter,
+    premiumFilter, coverFilter, searchQuery, mobileFiltersOpen, showWithdrawn
+  } = state
+  
+  const {
+    setExpandedPlan, setCatFilter, setGoalFilter, setAgeFilter, setReturnsFilter,
+    setPremiumFilter, setCoverFilter, setSearchQuery, setMobileFiltersOpen, setShowWithdrawn,
+    clearAllFilters, toggle
+  } = actions
+  
+  const {
+    activePlans, withdrawnPlans, categoryMeta, displayedPlans, totalFiltersActive, isShowingAll
+  } = computed
 
   const handleGetPlan = (planName: string) => openLeadPopup(`Interest in ${planName}`)
 
-  // ── Loading ───────────────────────────────────────────────────────────────
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50/30">
       <div className="flex flex-col items-center gap-4">
@@ -307,6 +94,7 @@ export default function LicPlans() {
       </div>
     </div>
   )
+  
   if (!data || !data.categories) return null
 
   // ── Sidebar filter content ────────────────────────────────────────────────
@@ -338,7 +126,7 @@ export default function LicPlans() {
       />
 
       {/* By Goal */}
-      <FilterSection title={lang === 'en' ? 'What\'s your goal?' : 'आपका लक्ष्य?'}>
+      <FilterSection title={lang === 'en' ? "What's your goal?" : 'आपका लक्ष्य?'}>
         {GOALS.map(g => (
           <FilterPill
             key={g.key}
@@ -436,20 +224,16 @@ export default function LicPlans() {
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
-          {/* Photo — happy family of 4-5 (Pexels, reliable hotlink) */}
           <div className="absolute inset-0 bg-cover bg-no-repeat"
             style={{
               backgroundImage: "url('https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1600')",
               backgroundPosition: 'right 20%',
             }} />
-          {/* Gradient overlay: fully opaque left → transparent right so family shows through */}
           <div className="absolute inset-0"
             style={{ background: 'linear-gradient(105deg, rgba(4,12,28,0.96) 0%, rgba(5,16,38,0.88) 38%, rgba(6,18,42,0.6) 58%, rgba(6,18,42,0.15) 100%)' }} />
-          {/* Warm gold bloom bottom-right */}
           <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full opacity-30 pointer-events-none"
             style={{ background: 'radial-gradient(circle at 80% 90%, #c9a84c 0%, transparent 60%)' }} />
 
-          {/* Content */}
           <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end gap-8 px-8 md:px-14 py-10 md:py-14">
             <div className="flex-1">
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
@@ -464,12 +248,11 @@ export default function LicPlans() {
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.16 }}
                 className="text-14 md:text-15 text-white/55 max-w-lg leading-relaxed">
                 {lang === 'en'
-                  ? 'Explore India\'s most trusted insurance plans — for savings, protection, retirement, and growth.'
+                  ? "Explore India's most trusted insurance plans — for savings, protection, retirement, and growth."
                   : 'बचत, सुरक्षा, सेवानिवृत्ति और वृद्धि के लिए भारत के सबसे भरोसेमंद बीमा प्लान।'}
               </motion.p>
             </div>
 
-            {/* Right: stat cards */}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
               className="flex flex-col gap-3 flex-shrink-0 min-w-[160px]">
               {[
@@ -479,7 +262,6 @@ export default function LicPlans() {
                 <div key={label}
                   className="relative overflow-hidden rounded-2xl px-5 py-4 border border-white/12"
                   style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)' }}>
-                  {/* Gold left accent bar */}
                   <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full bg-[#c9a84c]" />
                   <div className="text-30 font-bold text-white leading-none tracking-tight">{val}</div>
                   <div className="text-12 font-semibold text-white/80 mt-1 leading-snug">{label}</div>
@@ -549,7 +331,6 @@ export default function LicPlans() {
               className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden"
               style={{ maxHeight: 'calc(100vh - 116px)' }}
             >
-              {/* Pinned header */}
               <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0 bg-white">
                 <h3 className="text-10 font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
                   <SlidersHorizontal size={10} /> {lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}
@@ -561,7 +342,6 @@ export default function LicPlans() {
                   </button>
                 )}
               </div>
-              {/* Scrollable body — pb-8 ensures last item has breathing room */}
               <div className="overflow-y-auto flex-1 px-3 pt-2 pb-8 scroll-smooth">
                 {SidebarFilters}
               </div>
@@ -571,7 +351,6 @@ export default function LicPlans() {
           {/* ── Right: Results ── */}
           <div className="flex-1 min-w-0">
 
-            {/* Results bar */}
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-baseline gap-2">
                 <span className="text-22 font-display font-bold text-navy">{displayedPlans.length}</span>
@@ -588,10 +367,9 @@ export default function LicPlans() {
               )}
             </div>
 
-            {/* ── Plan Cards Grid ── */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               <AnimatePresence mode="popLayout">
-                {(displayedPlans as any[]).map((plan, idx) => {
+                {displayedPlans.map((plan, idx) => {
                   const accent  = CAT_ACCENT[plan._catKey] || '#1B4F72'
                   const badge   = PLAN_BADGES[plan.planNo]
                   const modes   = getPremiumModes(plan.premiumPayment)
@@ -614,15 +392,12 @@ export default function LicPlans() {
                       transition={{ delay: Math.min(idx * 0.035, 0.25) }}
                       className="bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group"
                     >
-                      {/* ── Card header band ── */}
                       <div className="relative h-16 flex-shrink-0 flex items-center justify-between px-4"
                         style={{ background: `linear-gradient(120deg, ${accent}18 0%, ${accent}08 100%)`, borderBottom: `2px solid ${accent}22` }}>
-                        {/* Category pill */}
                         <div className="flex items-center gap-1.5">
                           <span className="text-16">{catIcon}</span>
                           <span className="text-10 font-bold uppercase tracking-wider" style={{ color: accent }}>{catLabel}</span>
                         </div>
-                        {/* Plan no */}
                         <span className="text-10 font-bold bg-white/70 border text-gray-400 px-2 py-0.5 rounded-lg"
                           style={{ borderColor: `${accent}30` }}>
                           Plan {plan.planNo}
@@ -630,7 +405,6 @@ export default function LicPlans() {
                       </div>
 
                       <div className="p-4 flex flex-col gap-3 flex-1">
-                        {/* Badge + Plan name */}
                         <div className="space-y-1.5">
                           {badge && (
                             <span className="inline-flex items-center gap-1 text-10 font-bold px-2 py-0.5 rounded-full"
@@ -646,7 +420,6 @@ export default function LicPlans() {
                           </p>
                         </div>
 
-                        {/* Key advantage */}
                         <div className="rounded-xl p-3 border" style={{ background: `${accent}07`, borderColor: `${accent}1a` }}>
                           <div className="text-10 font-bold uppercase tracking-wider mb-0.5" style={{ color: accent }}>
                             {lang === 'en' ? 'Key Advantage' : 'मुख्य लाभ'}
@@ -656,7 +429,6 @@ export default function LicPlans() {
                           </div>
                         </div>
 
-                        {/* 3-col meta */}
                         <div className="grid grid-cols-3 gap-1.5">
                           {[
                             { label: lang === 'en' ? 'Entry Age' : 'आयु', val: plan.entryAge || '—' },
@@ -671,7 +443,6 @@ export default function LicPlans() {
                         </div>
                       </div>
 
-                      {/* ── Actions ── */}
                       <div className="px-4 pb-4 space-y-2">
                         <button onClick={() => handleGetPlan(plan.name.en)}
                           className="w-full h-10 text-white rounded-xl font-bold text-12 shadow-sm transition-all flex items-center justify-center gap-2 group/btn hover:shadow-lg hover:brightness-110 active:scale-[0.98]"
@@ -688,7 +459,6 @@ export default function LicPlans() {
                         </button>
                       </div>
 
-                      {/* Expanded highlights */}
                       <AnimatePresence>
                         {expandedPlan === plan.id && (
                           <motion.div
@@ -740,11 +510,10 @@ export default function LicPlans() {
               )}
             </div>
 
-            {/* ── Withdrawn plans — collapsed at bottom ── */}
             {withdrawnPlans.length > 0 && (
               <div className="mt-12 border-t border-dashed border-gray-200 pt-6">
                 <button
-                  onClick={() => setShowWithdrawn(v => !v)}
+                  onClick={() => setShowWithdrawn(!showWithdrawn)}
                   className="flex items-center gap-2 text-12 text-gray-400 hover:text-gray-600 font-medium transition-colors mx-auto">
                   {showWithdrawn ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                   {lang === 'en'
@@ -759,7 +528,6 @@ export default function LicPlans() {
                       exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-6">
                         {withdrawnPlans.map((plan, idx) => {
-                          const accent = CAT_ACCENT[plan._catKey] || '#9CA3AF'
                           return (
                             <motion.div key={plan.id}
                               initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
@@ -785,7 +553,6 @@ export default function LicPlans() {
               </div>
             )}
 
-            {/* Footer */}
             <div className="mt-10 text-center text-gray-400 text-11 border-t border-gray-100 pt-6">
               <p className="mb-1 italic">
                 {lang === 'en'

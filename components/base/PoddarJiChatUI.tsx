@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Send, CheckCircle2, Phone, User, MessageCircle, Trash2 } from 'lucide-react'
-import { usePoddarJiChat } from '@/lib/usePoddarJiChat'
+import { usePoddarJiChat } from '@/src/features/ai-agent'
 import { submitLead } from '@/lib/api'
 
 const WHATSAPP_URL = `https://wa.me/919415313434?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
