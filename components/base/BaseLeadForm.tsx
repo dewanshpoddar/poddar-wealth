@@ -130,6 +130,7 @@ export default function BaseLeadForm({
           const value = (formData[field.name] as string) || ''
           const error = errors[field.name]
           const hasError = touched[field.name] && !!error
+          const errorId = `${field.name}-error`
 
           return (
             <div key={field.name} className="space-y-1.5 group">
@@ -145,6 +146,7 @@ export default function BaseLeadForm({
                   value={value}
                   onChange={(e) => handleChange(field.name, e.target.value)}
                   onBlur={(e) => handleBlur(field.name, e.target.value)}
+                  aria-describedby={hasError ? errorId : undefined}
                 >
                   <option value="">Select...</option>
                   {field.options?.map(opt => (
@@ -159,6 +161,7 @@ export default function BaseLeadForm({
                   value={value}
                   onChange={(e) => handleChange(field.name, e.target.value)}
                   onBlur={(e) => handleBlur(field.name, e.target.value)}
+                  aria-describedby={hasError ? errorId : undefined}
                 />
               ) : (
                 <input
@@ -177,11 +180,12 @@ export default function BaseLeadForm({
                   onBlur={(e) => handleBlur(field.name, e.target.value)}
                   inputMode={field.type === 'tel' ? 'numeric' : undefined}
                   maxLength={field.type === 'tel' ? 10 : undefined}
+                  aria-describedby={hasError ? errorId : undefined}
                 />
               )}
 
               {hasError && (
-                <p className="text-red-500 text-[11px] font-medium mt-0.5">{error}</p>
+                <p id={errorId} role="alert" className="text-red-500 text-[11px] font-medium mt-0.5">{error}</p>
               )}
             </div>
           )
@@ -201,7 +205,7 @@ export default function BaseLeadForm({
       </button>
 
       {status === 'error' && (
-        <p className="text-red-500 text-xs text-center mt-2">
+        <p role="alert" className="text-red-500 text-xs text-center mt-2">
           Something went wrong. Please try again or call 9415313434.
         </p>
       )}

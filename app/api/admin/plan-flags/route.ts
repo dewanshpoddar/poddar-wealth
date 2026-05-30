@@ -21,14 +21,23 @@ import path from 'path'
 const FLAGS_PATH    = path.join('/tmp', 'plan-flags.json')
 const JSON_PATH     = path.join(process.cwd(), 'lib/data/lic-plans.json')
 
-function readFlags() {
+interface PlanFlag {
+  planNo:                number | string
+  status:                'ok' | 'flagged' | 'withdrawn'
+  lastChecked:           string
+  note:                  string
+  name?:                 string
+  confirmedWithdrawnAt?: string
+}
+
+function readFlags(): Record<string, PlanFlag> {
   try {
     if (fs.existsSync(FLAGS_PATH)) return JSON.parse(fs.readFileSync(FLAGS_PATH, 'utf8'))
   } catch (_) {}
   return {}
 }
 
-function writeFlags(flags: Record<string, unknown>) {
+function writeFlags(flags: Record<string, PlanFlag>) {
   const dir = path.dirname(FLAGS_PATH)
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(FLAGS_PATH, JSON.stringify(flags, null, 2))
@@ -45,18 +54,18 @@ export async function GET(req: Request) {
   if (!auth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const flags = readFlags()
-  const all   = Object.values(flags) as any[]
+  const all   = Object.values(flags)
 
   return NextResponse.json({
     success: true,
     summary: {
-      ok:        all.filter((f: any) => f.status === 'ok').length,
-      flagged:   all.filter((f: any) => f.status === 'flagged').length,
-      withdrawn: all.filter((f: any) => f.status === 'withdrawn').length,
+      ok:        all.filter(f => f.status === 'ok').length,
+      flagged:   all.filter(f => f.status === 'flagged').length,
+      withdrawn: all.filter(f => f.status === 'withdrawn').length,
     },
-    flagged:   all.filter((f: any) => f.status === 'flagged'),
-    withdrawn: all.filter((f: any) => f.status === 'withdrawn'),
-    ok:        all.filter((f: any) => f.status === 'ok'),
+    flagged:   all.filter(f => f.status === 'flagged'),
+    withdrawn: all.filter(f => f.status === 'withdrawn'),
+    ok:        all.filter(f => f.status === 'ok'),
   })
 }
 
@@ -74,10 +83,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'action must be "withdraw" or "clear"' }, { status: 400 })
   }
 
-  const flags   = readFlags()
-  const key     = String(planNo)
-  const now     = new Date().toISOString()
-  const existing = flags[key] as any
+  const flags    = readFlags()
+  const key      = String(planNo)
+  const now      = new Date().toISOString()
+  const existing = flags[key]
 
   if (action === 'withdraw') {
     flags[key] = {
@@ -126,9 +135,9 @@ export async function POST(req: Request) {
 
   if (action === 'clear') {
     if (flags[key]) {
-      (flags[key] as any).status  = 'ok'
-      ;(flags[key] as any).note   = note ?? 'Manually cleared'
-      ;(flags[key] as any).lastChecked = now
+      flags[key].status      = 'ok'
+      flags[key].note        = note ?? 'Manually cleared'
+      flags[key].lastChecked = now
     }
     writeFlags(flags)
     return NextResponse.json({

@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
     const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-    // Convert prior turns to Groq format {role, content} — normalize 'model'→'assistant'
+    // Convert prior turns to Groq format — normalize any non-user role to 'assistant'
     const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
       role: (m.role === 'user' ? 'user' : 'assistant') as 'user' | 'assistant',
       content: String(m.content || '').slice(0, MAX_INPUT_CHARS),
