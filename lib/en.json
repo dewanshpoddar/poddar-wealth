@@ -701,18 +701,41 @@
     "fieldMarital": "Marital Status",
     "fieldParents": "Support ageing parents?",
     "fieldChildren": "Number of children",
-    "employOptions": ["Salaried", "Freelance", "Business"],
-    "cityOptions": ["Metro", "Tier-2", "Tier-3"],
-    "yesNo": ["Yes", "No"],
-    "marriedSingle": ["Married", "Single"],
+    "employOptions": [
+      "Salaried",
+      "Freelance",
+      "Business"
+    ],
+    "cityOptions": [
+      "Metro",
+      "Tier-2",
+      "Tier-3"
+    ],
+    "yesNo": [
+      "Yes",
+      "No"
+    ],
+    "marriedSingle": [
+      "Married",
+      "Single"
+    ],
     "generateBtn": "Generate My Blueprint",
     "section01": "Your Financial Story",
     "section02": "Risk Matrix",
     "section03": "The Prescription",
     "section90Day": "Your 90-Day Action Plan",
     "sectionTrajectory": "Financial Trajectory",
-    "riskLabels": ["Life Risk", "Health Risk", "Retirement Risk", "Education Risk"],
-    "riskStatus": { "covered": "Protected", "exposed": "Gap Found", "planning": "Plan Needed" },
+    "riskLabels": [
+      "Life Risk",
+      "Health Risk",
+      "Retirement Risk",
+      "Education Risk"
+    ],
+    "riskStatus": {
+      "covered": "Protected",
+      "exposed": "Gap Found",
+      "planning": "Plan Needed"
+    },
     "saveBadge": "Private · Confidential · Free",
     "saveTitle": "Get Ajay sir's personal review of this blueprint",
     "saveBody": "Ajay sir personally reviews every blueprint submitted here and calls with a specific, no-script action plan — not a sales call. Your data is never sold or shared.",
@@ -790,5 +813,87 @@
         "Retired employee"
       ]
     }
+  },
+  "privacyPolicy": {
+    "badge": "🔒 Privacy Policy",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: May 2026",
+    "intro": "Poddar Wealth Management is committed to protecting the privacy of every person who contacts us. This policy explains what information we collect, how it is used, and your rights. We do not sell your data. Ever."
+  },
+  "terms": {
+    "badge": "📋 Terms of Service",
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: May 2026",
+    "intro": "By using this website, you agree to these terms. Please read them carefully. If you do not agree, please do not use this website."
+  },
+  "claims": {
+    "heroEyebrow": "CLAIM SUPPORT CENTRE",
+    "heroTitle": "We stand with you",
+    "heroTitleGold": "during claims.",
+    "heroSubtitle": "For over three decades, Ajay Kumar Poddar has personally hand-delivered claims to families when they needed it most. No call centres, no automation — just complete support when it matters.",
+    "processTitle": "Simple 4-Step Claim Process",
+    "processSubtitle": "We guide you and handle the paperwork at every single stage.",
+    "steps": [
+      {
+        "title": "1. Inform Us",
+        "desc": "Call Ajay sir immediately on 9415313434 to inform about the event."
+      },
+      {
+        "title": "2. Gather Documents",
+        "desc": "Collect required documents like the policy bond and certificates."
+      },
+      {
+        "title": "3. Verification & Submit",
+        "desc": "We verify your papers and submit them directly to the LIC/Star branch."
+      },
+      {
+        "title": "4. Quick Tracking",
+        "desc": "We follow up with the authority and track your claim until settlement."
+      }
+    ],
+    "checklistTitle": "Required Documents Checklist",
+    "checklistSubtitle": "Keep these documents ready for a smooth and fast claim settlement.",
+    "checklistItems": [
+      {
+        "title": "Original Policy Bond",
+        "desc": "The official insurance document issued at the time of purchase."
+      },
+      {
+        "title": "Death Certificate",
+        "desc": "Issued by the local municipal authority (required for life claims)."
+      },
+      {
+        "title": "Claim Form",
+        "desc": "Form 3707/3706 for LIC, or the Star Health claim form, which we provide."
+      },
+      {
+        "title": "ID & Address Proof of Claimant",
+        "desc": "Aadhaar Card, PAN Card, or Voter ID of the nominee/claimant."
+      },
+      {
+        "title": "Bank Details & Cancelled Cheque",
+        "desc": "For direct bank transfer (NEFT) of the claim amount to the nominee."
+      }
+    ],
+    "statsTitle": "Our Settlement Trust",
+    "statsSubtitle": "Numbers that represent families protected and promises kept.",
+    "stats": [
+      {
+        "num": "₹2.5 Cr+",
+        "label": "Claims settled"
+      },
+      {
+        "num": "Average 45 Days",
+        "label": "Settlement timeline"
+      },
+      {
+        "num": "100%",
+        "label": "Personal guidance"
+      }
+    ],
+    "ctaTitle": "Need immediate claim support?",
+    "ctaSubtitle": "Talk to Ajay sir directly for end-to-end guidance. No third-party agents.",
+    "ctaCall": "Call Ajay sir directly: 9415313434",
+    "ctaWhatsapp": "Chat on WhatsApp"
   }
 }

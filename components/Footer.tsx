@@ -33,7 +33,7 @@ export default function Footer() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'About Us', href: '/about' },
-                { name: t.nav.products, href: '/' },
+                { name: t.nav.products, href: '/products' },
                 { name: t.nav.services, href: '/services' },
 
                 { name: 'Testimonials', href: '/#testimonials' },
@@ -98,7 +98,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
+                <Link href="/claims" className="text-gray-400 hover:text-gold text-sm transition-colors duration-200 flex items-center gap-2">
                   <span>🏥</span> {t.nav.claimSupport}
                 </Link>
               </li>

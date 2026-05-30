@@ -1,7 +1,5 @@
-export const metadata = {
-  title: 'Terms of Service — Poddar Wealth Management',
-  description: 'Terms and conditions for using the Poddar Wealth Management website and advisory services.',
-}
+'use client'
+import { useLang } from '@/lib/LangContext'
 
 const sections = [
   {
@@ -17,8 +15,12 @@ const sections = [
     body: `Our calculators (Wealth Blueprint Calculator, Premium Calculator, Life Insurance Calculator, Retirement Calculator) use publicly available actuarial assumptions and standard financial models. Results are approximate. Do not make financial decisions based solely on calculator outputs. Always consult a qualified financial advisor and read the product brochure before purchasing.`,
   },
   {
+    title: 'IRDAI Compliance',
+    body: `Ajay Kumar Poddar is an IRDAI-authorised insurance agent. He is not an insurance company, corporate broker, or registered investment advisor. Products recommended are issued directly by LIC of India and Star Health Insurance and are subject to their respective terms, conditions, and exclusions. No returns, bonuses, or maturity benefits are guaranteed by Poddar Wealth Management. All guarantees are the liability of the issuing insurer only.`,
+  },
+  {
     title: 'AI Advisor Disclaimer',
-    body: `Poddar Ji (our AI Advisor) is powered by Anthropic Claude and is designed to provide general guidance. It is not a licensed financial advisor. Responses from the AI are informational only and should not be treated as professional financial advice. Always verify AI responses with Ajay Kumar Poddar or another licensed advisor before acting on them.`,
+    body: `Poddar Ji (our AI Advisor) is powered by the Groq API (llama-3.3-70b-versatile model) and is designed to provide general guidance on insurance and wealth planning. It is not a licensed financial advisor. Responses from the AI are informational only and should not be treated as professional financial, legal, or tax advice. Always verify AI responses with Ajay Kumar Poddar or another licensed advisor before acting on them.`,
   },
   {
     title: 'No Guarantee of Availability',
@@ -42,21 +44,23 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: `For questions about these terms, contact us at: +91 94153 13434 or visit our Contact page. Poddar Wealth Management, Gorakhpur, Uttar Pradesh — IRDAI Authorised Agent.`,
+    body: `For questions about these terms:\n\nPoddar Wealth Management\nAD Mall Compound, Vijay Chowk, Gorakhpur, UP 273001\nPhone / WhatsApp: +91 94153 13434\nEmail: poddarwealth@gmail.com\n\nIRDAI Authorised Agent.`,
   },
 ]
 
 export default function TermsPage() {
+  const { t } = useLang()
+
   return (
     <div className="pt-20 min-h-screen bg-white">
       {/* Hero */}
       <section className="bg-navy py-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-medium text-white mb-5">
-            📋 Terms of Service
+            {t.terms.badge}
           </div>
-          <h1 className="font-display font-bold text-4xl text-white mb-3">Terms of Service</h1>
-          <p className="text-white/60 text-sm">Last updated: April 2026</p>
+          <h1 className="font-display font-bold text-4xl text-white mb-3">{t.terms.title}</h1>
+          <p className="text-white/60 text-sm">{t.terms.lastUpdated}</p>
         </div>
       </section>
 
@@ -64,7 +68,7 @@ export default function TermsPage() {
       <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-slate-600 text-base leading-relaxed mb-10 p-5 bg-gold/5 border border-gold/20 rounded-2xl">
-            By using this website, you agree to these terms. Please read them carefully. If you do not agree, please do not use this website.
+            {t.terms.intro}
           </p>
 
           <div className="space-y-10">
@@ -76,7 +80,7 @@ export default function TermsPage() {
                   </span>
                   {s.title}
                 </h2>
-                <p className="text-slate-600 leading-relaxed pl-10">{s.body}</p>
+                <p className="text-slate-600 leading-relaxed pl-10 whitespace-pre-line">{s.body}</p>
               </div>
             ))}
           </div>

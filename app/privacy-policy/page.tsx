@@ -1,7 +1,5 @@
-export const metadata = {
-  title: 'Privacy Policy — Poddar Wealth Management',
-  description: 'How Poddar Wealth Management collects, uses, and protects your personal information.',
-}
+'use client'
+import { useLang } from '@/lib/LangContext'
 
 const sections = [
   {
@@ -14,19 +12,27 @@ const sections = [
   },
   {
     title: 'Data Storage',
-    body: `Form submissions are stored securely in a private spreadsheet accessible only to Ajay Kumar Poddar and his direct team. Data is not transferred to third-party marketing platforms. We use an encrypted Google Apps Script webhook to log inquiries — data is stored in Google Workspace under our account.`,
+    body: `Form submissions are stored securely in a private Google Sheets spreadsheet accessible only to Ajay Kumar Poddar and his direct team. Data is not transferred to third-party marketing platforms. We use an encrypted Google Apps Script webhook to log inquiries — data is stored in Google Workspace under our account.`,
+  },
+  {
+    title: 'Google Analytics',
+    body: `Our website uses Google Analytics 4 (GA4) to understand how visitors use the site — pages visited, session duration, and general geographic region. GA4 data is aggregated and does not personally identify you. No advertising features or remarketing lists are enabled. You can opt out using the Google Analytics Opt-out Browser Add-on available at tools.google.com/dlpage/gaoptout.`,
   },
   {
     title: 'Third Parties',
-    body: `We do not sell, rent, or share your personal information with third parties. We use Google Sheets (via Apps Script) for internal CRM purposes only. Our website is hosted on Vercel, which processes server logs in accordance with their privacy policy. Our AI Advisor (Poddar Ji) uses the Anthropic Claude API to respond to your questions — chat messages are processed by Anthropic and are subject to their data handling policies.`,
+    body: `We do not sell, rent, or share your personal information with third parties for commercial purposes. Our website is hosted on Vercel, which processes server logs in accordance with their privacy policy. Google Workspace is used for internal CRM and data storage purposes only.`,
+  },
+  {
+    title: 'AI Advisor (Poddar Ji)',
+    body: `Our AI Advisor "Poddar Ji" is powered by the Groq API (llama-3.3-70b-versatile model). Chat messages you send are processed by Groq Inc. and are subject to their data handling policies. We do not store chat transcripts linked to your personal identity. The AI advisor does not have access to your form submissions or contact details.`,
   },
   {
     title: 'Cookies',
-    body: `Our website uses only essential cookies required for navigation and language preference storage. We do not use advertising cookies, tracking pixels, or cross-site behavioural analytics. We do not use Google Analytics or Facebook Pixel.`,
+    body: `Our website uses only essential cookies required for navigation and your language preference (Hindi/English). We do not use advertising cookies, tracking pixels, or cross-site behavioural analytics. Google Analytics uses its own cookies to measure aggregate site usage — see the Google Analytics section above.`,
   },
   {
     title: 'Your Rights',
-    body: `You may request deletion of your personal data at any time by calling or WhatsApp messaging us at +91 94153 13434 or emailing us at the address in our footer. We will confirm deletion within 7 business days.`,
+    body: `You may request deletion of your personal data at any time by calling or WhatsApp messaging us at +91 94153 13434 or emailing poddarwealth@gmail.com. We will confirm deletion within 7 business days.`,
   },
   {
     title: 'Children',
@@ -38,21 +44,23 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: `For any privacy-related questions: Call/WhatsApp +91 94153 13434 or visit our Contact page. Poddar Wealth Management, Gorakhpur, Uttar Pradesh, India. IRDAI Authorised Agent.`,
+    body: `For any privacy-related questions or data deletion requests:\n\nPoddar Wealth Management\nAD Mall Compound, Vijay Chowk, Gorakhpur, UP 273001\nPhone / WhatsApp: +91 94153 13434\nEmail: poddarwealth@gmail.com\n\nIRDAI Authorised Agent.`,
   },
 ]
 
 export default function PrivacyPolicyPage() {
+  const { t } = useLang()
+
   return (
     <div className="pt-20 min-h-screen bg-white">
       {/* Hero */}
       <section className="bg-navy py-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-medium text-white mb-5">
-            🔒 Privacy Policy
+            {t.privacyPolicy.badge}
           </div>
-          <h1 className="font-display font-bold text-4xl text-white mb-3">Privacy Policy</h1>
-          <p className="text-white/60 text-sm">Last updated: April 2026</p>
+          <h1 className="font-display font-bold text-4xl text-white mb-3">{t.privacyPolicy.title}</h1>
+          <p className="text-white/60 text-sm">{t.privacyPolicy.lastUpdated}</p>
         </div>
       </section>
 
@@ -60,7 +68,7 @@ export default function PrivacyPolicyPage() {
       <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-slate-600 text-base leading-relaxed mb-10 p-5 bg-gold/5 border border-gold/20 rounded-2xl">
-            Poddar Wealth Management is committed to protecting the privacy of every person who contacts us. This policy explains what information we collect, how it is used, and your rights. We do not sell your data. Ever.
+            {t.privacyPolicy.intro}
           </p>
 
           <div className="space-y-10">
@@ -72,7 +80,7 @@ export default function PrivacyPolicyPage() {
                   </span>
                   {s.title}
                 </h2>
-                <p className="text-slate-600 leading-relaxed pl-10">{s.body}</p>
+                <p className="text-slate-600 leading-relaxed pl-10 whitespace-pre-line">{s.body}</p>
               </div>
             ))}
           </div>
