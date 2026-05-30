@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp } from 'lucide-react'
@@ -84,6 +85,33 @@ export default function LicPlans() {
     activePlans, withdrawnPlans, categoryMeta, displayedPlans, totalFiltersActive, isShowingAll
   } = computed
 
+  const [activeMobileTab, setActiveMobileTab] = useState<string>('all')
+
+  const mobileTabs = [
+    { key: 'all', label: { en: 'All', hi: 'सभी' } },
+    { key: 'term', label: { en: 'Term', hi: 'टर्म' } },
+    { key: 'endowment', label: { en: 'Endowment', hi: 'एंडोमेंट' } },
+    { key: 'ulip', label: { en: 'ULIP', hi: 'यूलिप' } },
+    { key: 'health', label: { en: 'Health', hi: 'हेल्थ' } },
+    { key: 'pension', label: { en: 'Pension', hi: 'पेंशन' } },
+    { key: 'child', label: { en: 'Child', hi: 'चाइल्ड' } },
+  ]
+
+  const handleMobileTabClick = (key: string) => {
+    setActiveMobileTab(key)
+    if (key === 'all') {
+      handleClearAllFilters()
+    } else {
+      handleClearAllFilters()
+      toggle(setCatFilter, key)
+    }
+  }
+
+  const handleClearAllFilters = () => {
+    setActiveMobileTab('all')
+    clearAllFilters()
+  }
+
   const handleGetPlan = (planName: string) => openLeadPopup(`Interest in ${planName}`)
 
   if (loading) return (
@@ -120,7 +148,7 @@ export default function LicPlans() {
       {/* All Active */}
       <FilterPill
         isActive={isShowingAll}
-        onClick={clearAllFilters}
+        onClick={handleClearAllFilters}
         label={lang === 'en' ? 'All Active Plans' : 'सभी सक्रिय'}
         count={activePlans.length}
       />
@@ -272,8 +300,28 @@ export default function LicPlans() {
           </div>
         </div>
 
+        {/* Mobile horizontal scrollable filter bar (sticky) */}
+        <div className="md:hidden sticky top-[72px] z-30 bg-[#f5f6fa] py-3 -mx-4 px-4 overflow-x-auto scrollbar-hide flex gap-2 border-b border-gray-100 mb-4">
+          {mobileTabs.map(tab => {
+            const isActive = activeMobileTab === tab.key
+            return (
+              <button
+                key={tab.key}
+                onClick={() => handleMobileTabClick(tab.key)}
+                className={`px-4 py-2 rounded-full text-12 font-bold whitespace-nowrap transition-all uppercase tracking-wide cursor-pointer ${
+                  isActive
+                    ? 'bg-navy text-white shadow-md'
+                    : 'bg-white text-gray-500 border border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                {tab.label[lang as 'en' | 'hi']}
+              </button>
+            )
+          })}
+        </div>
+
         {/* ── Mobile filter bar ─────────────────────────────────────────── */}
-        <div className="flex lg:hidden items-center gap-2 mb-4">
+        <div className="flex md:hidden items-center gap-2 mb-4">
           <button onClick={() => setMobileFiltersOpen(true)}
             className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 text-13 font-semibold text-gray-700 shadow-sm flex-shrink-0">
             <SlidersHorizontal size={14} />
@@ -297,11 +345,11 @@ export default function LicPlans() {
           {mobileFiltersOpen && (
             <>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setMobileFiltersOpen(false)} />
+                className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setMobileFiltersOpen(false)} />
               <motion.div
                 initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="fixed top-0 left-0 h-full w-80 bg-white z-50 lg:hidden overflow-y-auto p-5 shadow-2xl">
+                className="fixed top-0 left-0 h-full w-80 bg-white z-50 md:hidden overflow-y-auto p-5 shadow-2xl">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-16 font-bold text-navy">{lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}</h3>
                   <button onClick={() => setMobileFiltersOpen(false)}
@@ -324,7 +372,7 @@ export default function LicPlans() {
 
           {/* ── Left Sidebar ── */}
           <aside
-            className="hidden lg:block w-64 flex-shrink-0 sticky self-start"
+            className="hidden md:block w-64 flex-shrink-0 sticky self-start"
             style={{ top: '86px', maxHeight: 'calc(100vh - 116px)' }}
           >
             <div
@@ -336,7 +384,7 @@ export default function LicPlans() {
                   <SlidersHorizontal size={10} /> {lang === 'en' ? 'Filter Plans' : 'फ़िल्टर'}
                 </h3>
                 {totalFiltersActive > 0 && (
-                  <button onClick={clearAllFilters}
+                  <button onClick={handleClearAllFilters}
                     className="text-10 text-navy/50 hover:text-navy font-semibold flex items-center gap-1 transition-colors">
                     <X size={10} /> {lang === 'en' ? 'Clear all' : 'साफ़ करें'}
                   </button>
@@ -360,7 +408,7 @@ export default function LicPlans() {
                 </span>
               </div>
               {totalFiltersActive > 0 && (
-                <button onClick={clearAllFilters}
+                <button onClick={handleClearAllFilters}
                   className="hidden md:flex items-center gap-1 text-12 text-navy/50 hover:text-navy transition-colors font-medium">
                   <X size={12} /> {lang === 'en' ? 'Clear filters' : 'फ़िल्टर हटाएं'}
                 </button>
@@ -503,7 +551,7 @@ export default function LicPlans() {
                   <p className="text-12 text-gray-400 mb-5">
                     {lang === 'en' ? 'Try adjusting your filters or search term' : 'फ़िल्टर बदलें'}
                   </p>
-                  <button onClick={clearAllFilters} className="text-navy text-13 font-bold underline underline-offset-2">
+                  <button onClick={handleClearAllFilters} className="text-navy text-13 font-bold underline underline-offset-2">
                     {lang === 'en' ? 'Clear all filters' : 'सभी फ़िल्टर हटाएं'}
                   </button>
                 </div>

@@ -326,13 +326,13 @@ export default function ResultsPanel({
                                 <span className="text-[12px] text-gray-600">Sum Assured</span>
                                 <span className="text-[12px] font-semibold text-gray-800">{sa.toLocaleString('en-IN')}</span>
                               </div>
-                              {/* TODO: totalSRB is never returned by calculateMaturity — verify if this should be totalBonus */}
-                              {matResult.totalSRB && matResult.totalSRB > 0 && (
+                              {/* Fixed: was totalSRB which doesn't exist in calculateMaturity return */}
+                              {matResult.totalBonus && matResult.totalBonus > 0 && (
                                 <div className="flex justify-between py-2.5">
                                   <span className="text-[12px] text-gray-600">
-                                    Bonus* ({Math.round(matResult.totalSRB / safeterm / (sa / 1000))}/1000 × {safeterm})
+                                    Bonus* ({Math.round(matResult.totalBonus / safeterm / (sa / 1000))}/1000 × {safeterm})
                                   </span>
-                                  <span className="text-[12px] font-semibold text-gray-800">{Math.round(matResult.totalSRB).toLocaleString('en-IN')}</span>
+                                  <span className="text-[12px] font-semibold text-gray-800">{Math.round(matResult.totalBonus).toLocaleString('en-IN')}</span>
                                 </div>
                               )}
                               {matResult.fab > 0 && (

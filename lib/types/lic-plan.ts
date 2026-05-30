@@ -88,7 +88,6 @@ export interface MaturityResult {
   maturity: number
   totalBonus: number
   fab: number
-  totalSRB?: number // Referenced in ResultsPanel.tsx (possible bug/legacy code)
 }
 
 export interface BenefitRow {

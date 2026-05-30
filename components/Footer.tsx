@@ -37,6 +37,7 @@ export default function Footer() {
                 { name: t.nav.services, href: '/services' },
 
                 { name: 'Testimonials', href: '/#testimonials' },
+                { name: 'Blog', href: '/blog' },
                 { name: 'FAQ', href: '/faq' },
               ].map((link) => (
                 <li key={link.name}>

@@ -251,6 +251,8 @@
     ]
   },
   "calculator": {
+    "shareWhatsApp": "Share results with Ajay sir on WhatsApp",
+    "shareWhatsAppHi": "अजय सर के साथ WhatsApp पर परिणाम साझा करें",
     "eyebrow": "PODDAR WEALTH MANAGEMENT — free tool",
     "title": "LIC & Star Health premium calculator",
     "subtitle": "Get an instant estimate for any plan. Actual premium depends on medical history — Ajay sir will confirm.",
@@ -980,5 +982,12 @@
         }
       ]
     }
+  },
+  "blog": {
+    "title": "Insights & Guides",
+    "readMore": "Read More",
+    "backToAll": "Back to all articles",
+    "askPoddarJi": "Have questions? Ask Poddar Ji",
+    "allCategories": "All"
   }
 }

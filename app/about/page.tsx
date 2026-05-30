@@ -1,6 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+
+const MotionDiv = dynamic(
+  () => import('framer-motion').then(mod => ({ default: mod.motion.div })),
+  { ssr: false }
+)
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
@@ -88,7 +93,7 @@ export default function AboutPage() {
             </div>
 
             {/* Right: Institutional Visual Frame */}
-            <motion.div 
+            <MotionDiv 
                initial={{ opacity: 0, scale: 0.98 }}
                animate={{ opacity: 1, scale: 1 }}
                className="relative lg:block hidden"
@@ -107,7 +112,7 @@ export default function AboutPage() {
                      <div className="text-[8px] font-bold text-white uppercase tracking-[0.2em] leading-tight">Since <br/> 1994</div>
                   </div>
                </div>
-            </motion.div>
+            </MotionDiv>
 
           </div>
         </div>
@@ -139,7 +144,7 @@ export default function AboutPage() {
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
               <div className="lg:col-span-12 xl:col-span-5">
-                <motion.div 
+                <MotionDiv 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -153,7 +158,7 @@ export default function AboutPage() {
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent opacity-60" />
-                </motion.div>
+                </MotionDiv>
                 
                 <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
@@ -168,7 +173,7 @@ export default function AboutPage() {
               </div>
 
               <div className="lg:col-span-12 xl:col-span-7">
-                <motion.div 
+                <MotionDiv 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -212,7 +217,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </MotionDiv>
               </div>
 
             </div>
@@ -243,7 +248,7 @@ export default function AboutPage() {
               {timeline.map((item, i) => {
                 const isTop = i % 2 === 0
                 return (
-                  <motion.div
+                  <MotionDiv
                     key={i}
                     initial={{ opacity: 0, y: isTop ? -16 : 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -301,7 +306,7 @@ export default function AboutPage() {
                     >
                       {item.year}
                     </div>
-                  </motion.div>
+                  </MotionDiv>
                 )
               })}
             </div>
@@ -321,7 +326,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.about.values.map((v: any, i: number) => (
-              <motion.div
+              <MotionDiv
                 key={i}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -334,7 +339,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-[18px] font-bold text-slate-900 mb-3 tracking-tight leading-snug">{v.title}</h3>
                 <p className="text-[13px] text-slate-500 leading-relaxed font-medium">{v.desc}</p>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>
@@ -344,18 +349,18 @@ export default function AboutPage() {
       <section className="py-16 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-16 lg:gap-32">
-             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
                 <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA" width={110} height={56} className="object-contain" />
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Highest Global Quality</div>
-             </motion.div>
-             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+             </MotionDiv>
+             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
                 <Image src="/assets/chairmanclub.png" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Premier Club Member</div>
-             </motion.div>
-             <motion.div whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
+             </MotionDiv>
+             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
                 <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">IRDAI</div>
                 <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Registered Authority</div>
-             </motion.div>
+             </MotionDiv>
           </div>
         </div>
       </section>
