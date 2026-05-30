@@ -70,8 +70,7 @@ These MUST exist in `.env.local` (local) AND in Vercel project settings (product
 - `CRON_SECRET` — protects cron endpoints from unauthorized calls
 - `SYNC_SECRET` — protects LIC sync endpoint
 - `ADMIN_SECRET` — protects admin endpoints
-- `NEXT_PUBLIC_GA_ID` — Google Analytics tracking ID (public, OK in code)
-- `NEXT_PUBLIC_CLARITY_ID` — Microsoft Clarity tracking ID (public, OK in code)
+- `NEXT_PUBLIC_GA_ID` — Google Analytics 4 Measurement ID
 
 To pull from Vercel: `npx vercel env pull .env.local`
 

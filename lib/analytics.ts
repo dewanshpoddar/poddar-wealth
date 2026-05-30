@@ -1,7 +1,6 @@
 /**
  * Analytics helper — wraps gtag() calls with type safety.
  * GA4 Measurement ID is set via NEXT_PUBLIC_GA_ID in .env.local
- * Microsoft Clarity ID is set via NEXT_PUBLIC_CLARITY_ID in .env.local
  */
 
 export type AnalyticsEvent =
