@@ -386,6 +386,46 @@
         "badge": "Cashless claim ✓",
         "color": "#E6F1FB",
         "textColor": "#185FA5"
+      },
+      {
+        "name": "Devendra Singh",
+        "location": "Gorakhpur · LIC Pension Plan",
+        "text": "After retiring as a teacher, I was worried about regular expenses. Ajay sir set up a pension plan that ensures a guaranteed income hits my bank account on the 1st of every month.",
+        "badge": "Pension started ✓",
+        "color": "#F5F3FF",
+        "textColor": "#6D28D9"
+      },
+      {
+        "name": "Rahul Verma",
+        "location": "Lucknow · LIC Term Plan",
+        "text": "At 25, I wanted to secure my parents' future. Ajay sir explained term insurance clearly and helped me get a large cover at a very affordable premium. The online process was seamless.",
+        "badge": "First term plan ✓",
+        "color": "#ECFDF5",
+        "textColor": "#047857"
+      },
+      {
+        "name": "Sanjay Agrawal",
+        "location": "Deoria · Keyman Insurance",
+        "text": "When my business partner passed away unexpectedly, our Keyman Insurance policy kept our company stable. Ajay sir handled the entire claim and helped save the jobs of our 15 employees.",
+        "badge": "Business secured ✓",
+        "color": "#FFF5F5",
+        "textColor": "#C53030"
+      },
+      {
+        "name": "Kiran Tripathi",
+        "location": "Gorakhpur · Daughter's Marriage Fund",
+        "text": "I had started a small saving plan for my daughter 18 years ago on Ajay sir's advice. The policy matured just before her wedding, allowing us to manage all expenses without taking any loans.",
+        "badge": "Marriage fund matured ✓",
+        "color": "#FFF7ED",
+        "textColor": "#C2410C"
+      },
+      {
+        "name": "Vikram Malhotra",
+        "location": "Dubai · NRI Service",
+        "text": "Living in Dubai, managing my parents' health and life policies in Gorakhpur was a challenge. Ajay sir takes care of everything end-to-end, from premium reminders to offline support, with complete honesty.",
+        "badge": "NRI family support ✓",
+        "color": "#F0F9FF",
+        "textColor": "#0369A1"
       }
     ]
   },

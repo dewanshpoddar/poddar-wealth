@@ -21,7 +21,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 import { LangProvider } from '@/lib/LangContext'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { AIChatButton } from '@/src/features/ai-agent'
+import { AIChatButton, MobileCTABar } from '@/src/features/ai-agent'
 import LeadPopup from '@/components/LeadPopup'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 import WhatsAppButton from '@/components/WhatsAppButton'
@@ -30,8 +30,8 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.poddarwealth.com'),
-  title: 'Poddar Wealth Management — Excellence in Protection Since 1994',
-  description: 'India\'s most trusted insurance advisor specializing in LIC, Star Health, and wealth planning by Mr. Ajay Kumar Poddar, MDRT Member & Chairman\'s Club awardee.',
+  title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+  description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   keywords: ['LIC agent Gorakhpur', 'life insurance Gorakhpur', 'LIC advisor UP', 'Ajay Kumar Poddar', 'wealth management Gorakhpur', 'health insurance UP'],
   authors: [{ name: 'Ajay Kumar Poddar' }],
   openGraph: {
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://www.poddarwealth.com',
     siteName: 'Poddar Wealth Management',
-    title: 'Poddar Wealth Management — 30+ Years of Trusted Insurance Advisory',
-    description: 'MDRT Member & LIC Chairman\'s Club awardee Ajay Kumar Poddar. Expert in life, health & wealth planning for families in Gorakhpur and eastern UP since 1994.',
+    title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+    description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Poddar Wealth Management — Trusted Insurance Advisory',
-    description: 'MDRT Member Ajay Kumar Poddar. LIC, health & wealth planning for Gorakhpur families since 1994.',
+    title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+    description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   },
   icons: {
     icon: '/favicon.svg',
@@ -100,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
           <AIChatButton />
+          <MobileCTABar />
           <WhatsAppButton />
           <LeadPopup />
         </LangProvider>

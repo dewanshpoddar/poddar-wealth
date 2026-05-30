@@ -7,7 +7,7 @@ export default function ProblemSolutionSection() {
   return (
     <div className="bg-navy py-2.5 overflow-hidden whitespace-nowrap flex relative z-50 shadow-md border-b border-gold/20">
       <div className="animate-marquee inline-flex flex-nowrap items-center hover:[animation-play-state:paused]">
-        {[...Array(10)].map((_, idx) => (
+        {[...Array(2)].map((_, idx) => (
           <div key={idx} className="flex items-center gap-3.5 mx-10 flex-shrink-0">
             <div className="relative flex items-center justify-center">
               <span className="w-2.5 h-2.5 rounded-full bg-gold animate-wa-pulse" />

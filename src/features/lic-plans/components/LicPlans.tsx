@@ -115,12 +115,57 @@ export default function LicPlans() {
   const handleGetPlan = (planName: string) => openLeadPopup(`Interest in ${planName}`)
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50/30">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 border-4 border-navy/10 border-t-navy rounded-full animate-spin" />
-        <p className="text-14 font-bold text-navy/40 uppercase tracking-widest">Loading Plans...</p>
+    <section className="bg-[#f5f6fa] rounded-b-[40px] md:rounded-b-[60px] min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+        {/* Header Hero Skeleton */}
+        <div className="rounded-3xl bg-gray-200 animate-pulse mb-6 h-[260px]" />
+        
+        {/* Sidebar + Grid */}
+        <div className="flex gap-6 items-start pb-12 md:pb-16">
+          {/* Sidebar Skeleton */}
+          <aside className="hidden md:block w-64 flex-shrink-0">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 space-y-4">
+              <div className="h-4 bg-gray-200 animate-pulse rounded w-1/3" />
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-8 bg-gray-200 animate-pulse rounded-lg w-full" />
+              ))}
+            </div>
+          </aside>
+
+          {/* Grid Skeleton */}
+          <div className="flex-1">
+            <div className="h-6 bg-gray-200 animate-pulse rounded w-1/4 mb-5" />
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 flex flex-col gap-4 overflow-hidden h-[340px]">
+                  {/* Category header skeleton */}
+                  <div className="h-16 -mx-4 -mt-4 bg-gray-200 animate-pulse" />
+                  
+                  {/* Badge + Title skeleton */}
+                  <div className="space-y-2 mt-2">
+                    <div className="h-4 bg-gray-200 animate-pulse rounded w-1/4" />
+                    <div className="h-5 bg-gray-200 animate-pulse rounded w-3/4" />
+                    <div className="h-3 bg-gray-200 animate-pulse rounded w-1/2" />
+                  </div>
+                  
+                  {/* Key advantage box skeleton */}
+                  <div className="h-14 bg-gray-100 rounded-xl p-3 border border-gray-200 animate-pulse space-y-1.5">
+                    <div className="h-2 bg-gray-200 rounded w-1/4" />
+                    <div className="h-3 bg-gray-200 rounded w-3/4" />
+                  </div>
+                  
+                  {/* Footer button skeleton */}
+                  <div className="mt-auto space-y-2">
+                    <div className="h-10 bg-gray-200 animate-pulse rounded-xl w-full" />
+                    <div className="h-3 bg-gray-200 animate-pulse rounded w-1/3 mx-auto" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   )
   
   if (!data || !data.categories) return null

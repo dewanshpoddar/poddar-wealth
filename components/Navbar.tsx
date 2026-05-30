@@ -104,6 +104,14 @@ export default function Navbar() {
         {/* Language toggle */}
         <LangToggle scrolled={isScrolled} />
 
+        <Link href="/pay-premium" className={`text-[13px] font-bold px-3 py-1.5 rounded-lg border transition-all duration-500 ${
+          isScrolled
+            ? 'border-gold/40 text-gold hover:bg-gold/10'
+            : 'border-navy/20 text-navy hover:border-navy hover:text-navy'
+        }`}>
+          {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
+        </Link>
+
         <Link href="/contact" className={`text-[14px] font-bold transition-colors duration-500 ${
           isScrolled ? 'text-white/90 hover:text-gold' : 'text-navy hover:text-gold'
         }`}>{t.nav.renewPolicy}</Link>
@@ -174,6 +182,9 @@ export default function Navbar() {
 
             <div className={`h-px my-1 w-full ${isScrolled ? 'bg-white/10' : 'bg-gray-100'}`}></div>
 
+            <Link href="/pay-premium" onClick={() => setOpen(false)} className={`text-16 font-bold flex items-center gap-2 ${isScrolled ? 'text-gold' : 'text-gold'}`}>
+              💳 {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
+            </Link>
             <Link href="/contact" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
             <Link href="/become-advisor" onClick={() => setOpen(false)} className={`text-[14px] font-medium ${isScrolled ? 'text-white/40 hover:text-white/70' : 'text-slate-400 hover:text-slate-600'}`}>
               {t.homePage.joinAdvisor}

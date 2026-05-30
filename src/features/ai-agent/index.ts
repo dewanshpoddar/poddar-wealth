@@ -1,4 +1,5 @@
 export { default as AIChatButton } from './components/AIChatButton'
 export { default as ChatBot } from './components/ChatBot'
+export { default as MobileCTABar } from './components/MobileCTABar'
 export { usePoddarJiChat } from './hooks/usePoddarJiChat'
 export type { Message } from './hooks/usePoddarJiChat'
