@@ -895,5 +895,90 @@
     "ctaSubtitle": "Talk to Ajay sir directly for end-to-end guidance. No third-party agents.",
     "ctaCall": "Call Ajay sir directly: 9415313434",
     "ctaWhatsapp": "Chat on WhatsApp"
+  },
+  "faq": {
+    "heroEyebrow": "KNOWLEDGE BASE",
+    "heroTitle": "Frequently Asked",
+    "heroTitleGold": "Questions.",
+    "heroSubtitle": "Find clear, honest answers about LIC policies, Star Health insurance, claim settlements, and our 31-year wealth advisory legacy in Gorakhpur.",
+    "categories": {
+      "general": "General Questions",
+      "lic": "LIC Plans",
+      "health": "Health Insurance",
+      "claims": "Claims Support"
+    },
+    "ctaTitle": "Still have questions?",
+    "ctaSubtitle": "Ask Poddar Ji, our 24/7 AI insurance advisor, trained on 31 years of on-ground financial expertise.",
+    "ctaButton": "Ask Poddar Ji",
+    "items": {
+      "general": [
+        {
+          "q": "Who is Ajay Kumar Poddar?",
+          "a": "Ajay Kumar Poddar is a veteran financial advisor with over 31 years of experience. He is a prestigious Million Dollar Round Table (MDRT, USA) Member and a premier LIC Chairman's Club Member. Based in Gorakhpur, he and his team have protected over 5,000 families with ethical, on-ground insurance and retirement planning."
+        },
+        {
+          "q": "Is Poddar Wealth Management an insurance company?",
+          "a": "No. Poddar Wealth Management is an authorized premier financial advisory firm. We are official partners with the Life Insurance Corporation of India (LIC) and Star Health Insurance, meaning we help you choose the best plans and provide end-to-end claim support, at no extra cost to you."
+        },
+        {
+          "q": "How do I contact you?",
+          "a": "You can call Mr. Ajay Kumar Poddar directly at 9415313434, or send a message on WhatsApp. You can also visit our Gorakhpur office located at AD Mall Compound, Vijay Chowk, Gorakhpur, U.P. 273001."
+        },
+        {
+          "q": "Is my data safe with you?",
+          "a": "Yes, absolutely. We take data privacy extremely seriously. We use secure endpoints to handle your details and never sell, trade, or share your personal information with third-party telemarketers. All details are kept strictly confidential for policy and advisory purposes only."
+        },
+        {
+          "q": "What areas do you serve?",
+          "a": "Our primary physical service region is Gorakhpur, Deoria, Kushinagar, Maharajganj, and surrounding Eastern UP districts. However, through digitized processes, we successfully serve LIC and Star Health clients across Uttar Pradesh and pan-India."
+        }
+      ],
+      "lic": [
+        {
+          "q": "Which LIC plan is best for me?",
+          "a": "The best plan depends on your financial goals. For pure family protection, a term plan like LIC Jeevan Amar is best. For guaranteed savings and protection, New Jeevan Anand or Jeevan Umang are excellent. You can use our Premium Calculator or consult Mr. Ajay Poddar for a tailored recommendation."
+        },
+        {
+          "q": "What is term insurance?",
+          "a": "Term insurance (such as LIC Jeevan Amar) is pure life protection. It offers the maximum life cover (Sum Assured) at the lowest possible premium. It does not have a maturity benefit, making it the highest-leverage tool to secure your family's future income if something happens to you."
+        },
+        {
+          "q": "What is an endowment plan?",
+          "a": "An endowment plan (like LIC New Jeevan Anand) combines life protection with guaranteed savings. You pay premiums for a selected term, and if you survive the term, you receive the full Sum Assured plus accumulated LIC bonuses. If death occurs during the term, the nominee receives the death benefit."
+        },
+        {
+          "q": "How do I check my LIC policy status?",
+          "a": "You can check your status online via the official LIC Customer Portal or by downloading the LIC Customer App. Alternatively, you can call Ajay sir or our support team with your policy number, and we will fetch the live status, premium due dates, and maturity details for you."
+        }
+      ],
+      "health": [
+        {
+          "q": "Why should I choose Star Health Insurance?",
+          "a": "Star Health is India's largest standalone health insurance company. They offer a vast network of 14,000+ cashless hospitals, high claim settlement ratios, dedicated in-house doctors, and specialized plans for diabetes, cardiac care, and senior citizens without mandatory pre-policy medical screenings."
+        },
+        {
+          "q": "What does a health insurance policy cover?",
+          "a": "A standard health policy covers indoor hospitalization expenses, room rent, ICU charges, surgeon fees, medicines, day-care procedures, pre-hospitalization (up to 60 days), and post-hospitalization care (up to 90 days). Modern plans also include modern treatments, organ donor costs, and road ambulance cover."
+        },
+        {
+          "q": "Can my elderly parents be covered under health insurance?",
+          "a": "Yes. Star Health offers dedicated senior citizen plans like 'Red Carpet' designed for parents aged 60 to 75 years. These plans cover pre-existing diseases with shorter waiting periods and do not require pre-policy medical checkups in most cases, making them highly accessible."
+        }
+      ],
+      "claims": [
+        {
+          "q": "How do I file a claim during an emergency?",
+          "a": "We offer a direct 4-step claim process. First, call Ajay sir directly at 9415313434 to inform about the hospitalization or event. Second, collect the required documents. Third, we verify and submit the paperwork. Fourth, we track the settlement. For detailed instructions, visit our dedicated claims support page."
+        },
+        {
+          "q": "How long does the claim settlement take?",
+          "a": "For health insurance, cashless approvals at network hospitals usually take 2 to 4 hours. For life insurance death claims, once all mandatory documents are submitted to the LIC branch, it takes an average of 45 days for full settlement directly into the nominee's bank account."
+        },
+        {
+          "q": "What documents are required to file a claim?",
+          "a": "Key documents include the original policy bond, claimant's ID & address proof, nominee's bank details (cancelled cheque), and the official claim form. For life claims, the death certificate is required. For health claims, hospital discharge summaries and bills are needed. View our claims page for a complete checklist."
+        }
+      ]
+    }
   }
 }

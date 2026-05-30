@@ -52,10 +52,35 @@ export const metadata: Metadata = {
   },
 }
 
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@type': 'InsuranceAgency',
+  name: 'Poddar Wealth Management',
+  founder: 'Ajay Kumar Poddar',
+  foundingDate: '1994',
+  url: 'https://www.poddarwealth.com',
+  telephone: '+919415313434',
+  email: 'poddarwealth@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'AD Mall Compound, Vijay Chowk',
+    addressLocality: 'Gorakhpur',
+    addressRegion: 'Uttar Pradesh',
+    postalCode: '273001',
+    addressCountry: 'IN',
+  },
+  areaServed: 'Gorakhpur, Eastern Uttar Pradesh',
+  description: 'Life insurance, health insurance, and wealth planning by MDRT Member Ajay Kumar Poddar since 1994.',
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
       <body className="font-sans text-13 text-gray-900 bg-white antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+        />
         {/* ── Google Analytics 4 ── */}
         {GA_ID && (
           <>

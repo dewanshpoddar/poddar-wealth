@@ -37,6 +37,7 @@ export default function Footer() {
                 { name: t.nav.services, href: '/services' },
 
                 { name: 'Testimonials', href: '/#testimonials' },
+                { name: 'FAQ', href: '/faq' },
               ].map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} className="text-gray-400 hover:text-gold text-sm transition-colors duration-200">
