@@ -33,7 +33,6 @@ export async function submitLead(data: LeadData) {
 
     return await response.json();
   } catch (error) {
-    console.error('API Error:', error);
     throw error;
   }
 }

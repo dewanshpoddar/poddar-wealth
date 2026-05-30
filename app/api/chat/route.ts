@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       content: String(m.content || '').slice(0, MAX_INPUT_CHARS),
     }))
 
-    // Drop leading 'assistant' turns — defensive filter preserved from Gemini path
+    // Drop any leading 'assistant' turns so the first message is always from the user
     const firstUserIdx = history.findIndex((m: { role: string }) => m.role === 'user')
     const safeHistory = firstUserIdx === -1 ? [] : history.slice(firstUserIdx)
 
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
           return
         }
 
-        // If Gemini returned nothing (safety filter blocked), send a graceful fallback
+        // If the model returned nothing, send a graceful fallback
         if (!fullReply) {
           const fallback = 'Yeh sawaal thoda sensitive lag raha hai — main insurance ke baare mein hi baat kar sakta hun. Koi LIC ya health plan ke baare mein puchiye, ya Ajay sir se directly baat karein: 9415313434.'
           fullReply = fallback

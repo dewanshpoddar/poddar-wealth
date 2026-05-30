@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { adminNotify } from '@/lib/admin-notify'
+import { clean, isValidPhone, csvSanitize, appendToCsv, pushToSheets } from '@/lib/server-utils'
 
-// Uses main GOOGLE_SHEETS_WEBHOOK_URL with sheetName:'Wealth Blueprint' for routing
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
 
 const HEADERS = [
@@ -23,9 +23,6 @@ const HEADERS = [
   'TotalMonthlyRecommended',
 ]
 
-const clean = (s: any, max = 500): string =>
-  String(s ?? '').slice(0, max).replace(/[\r\n\t]/g, ' ').trim()
-
 export async function POST(request: Request) {
   try {
     const { name, phone, profile: p, blueprint: bp } = await request.json()
@@ -34,7 +31,7 @@ export async function POST(request: Request) {
     if (!name || clean(name, 100).length < 2) {
       return NextResponse.json({ error: 'Invalid name' }, { status: 400 })
     }
-    if (!phone || !/^\d{10}$/.test(String(phone).replace(/\s/g, ''))) {
+    if (!phone || !isValidPhone(phone)) {
       return NextResponse.json({ error: 'Invalid phone — must be 10 digits' }, { status: 400 })
     }
     const timestamp = new Date().toISOString()
@@ -52,60 +49,39 @@ export async function POST(request: Request) {
       bp.totalMonthly,
     ]
 
-    // 1. Always write to local CSV
-    const sanitize = (v: any) => {
-      const s = String(v ?? '').replace(/^[=+\-@\t\r]/, "'")
-      return `"${s.replace(/"/g, '""')}"`
-    }
-    const line = row.map(sanitize).join(',') + '\n'
-    const filePath = path.join('/tmp', 'blueprints.csv')
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, HEADERS.join(',') + '\n')
-    }
-    fs.appendFileSync(filePath, line)
+    // 1. Always write to local CSV (CSV injection prevention inside appendToCsv)
+    appendToCsv('blueprints.csv', HEADERS, row)
 
     // 2. Push to Google Sheets (optional, non-fatal)
     if (webhookUrl) {
-      const ctrl = new AbortController()
-      const tid = setTimeout(() => ctrl.abort(), 5000)
-      try {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ row, intent: 'Wealth Blueprint', sheetName: 'Wealth Blueprint', headers: HEADERS }),
-          signal: ctrl.signal,
-        })
-      } catch (e) {
-        console.error('Blueprint webhook failed (non-fatal):', e)
-        adminNotify({
-          type: 'LEAD_FAIL', severity: 'warn', route: '/api/blueprint',
-          message: 'Blueprint webhook sync failed — blueprint saved to CSV only',
-          detail: String(e),
-        }).catch(() => {})
-      } finally {
-        clearTimeout(tid)
-      }
+      await pushToSheets(
+        webhookUrl,
+        { row, intent: 'Wealth Blueprint', sheetName: 'Wealth Blueprint', headers: HEADERS },
+        '/api/blueprint',
+        'Blueprint webhook sync failed — blueprint saved to CSV only',
+      )
     }
 
-    // 3. Also create a standard lead entry (name + phone + intent)
+    // 3. Also append a standard lead row to leads.csv if it already exists
+    //    (does NOT create the file — leads.csv is owned by /api/leads)
     try {
       const leadsPath = path.join('/tmp', 'leads.csv')
-      const leadLine = [timestamp, name ?? '', '', phone ?? '', '', '', 'Wealth Blueprint Calculator', '', 'Blueprint Lead', '', ''].map(
-        (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`
-      ).join(',') + '\n'
+      const leadRow = [timestamp, name ?? '', '', phone ?? '', '', '', 'Wealth Blueprint Calculator', '', 'Blueprint Lead', '', '']
       if (fs.existsSync(leadsPath)) {
-        fs.appendFileSync(leadsPath, leadLine)
+        fs.appendFileSync(leadsPath, leadRow.map(csvSanitize).join(',') + '\n')
       }
     } catch { /* non-fatal */ }
 
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error)
+    const stack = error instanceof Error ? (error.stack ?? msg) : msg
     console.error('Blueprint save error:', error)
     adminNotify({
       type: 'API_ERROR', severity: 'error', route: '/api/blueprint',
-      message: `Blueprint submission crashed: ${error.message}`,
-      detail: error.stack ?? String(error),
+      message: `Blueprint submission crashed: ${msg}`,
+      detail: stack,
     }).catch(() => {})
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

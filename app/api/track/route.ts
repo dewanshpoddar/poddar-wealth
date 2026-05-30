@@ -13,11 +13,9 @@
  */
 
 import { NextResponse } from 'next/server'
+import { clean } from '@/lib/server-utils'
 
 const WEBHOOK = process.env.GOOGLE_SHEETS_WEBHOOK_URL ?? ''
-
-const clean = (s: any, max = 300): string =>
-  String(s ?? '').slice(0, max).replace(/[\r\n\t]/g, ' ').trim()
 
 // Sheet column definitions per event type
 const SHEET_HEADERS: Record<string, string[]> = {
@@ -44,6 +42,8 @@ const SHEET_HEADERS: Record<string, string[]> = {
   ],
 }
 
+const ALLOWED_SHEET_NAMES = new Set(Object.keys(SHEET_HEADERS))
+
 export async function POST(req: Request) {
   try {
     const body = await req.json()
@@ -53,10 +53,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'event, sheetName, data required' }, { status: 400 })
     }
 
+    // Whitelist sheetName — reject unknown values to prevent writing to arbitrary tabs
+    if (!ALLOWED_SHEET_NAMES.has(sheetName)) {
+      return NextResponse.json({ error: 'Invalid sheetName' }, { status: 400 })
+    }
+
     const now = new Date().toISOString()
 
-    // Build row based on sheetName
-    let row: any[] = []
+    let row: unknown[]
 
     if (sheetName === 'Premium Calculator') {
       row = [
@@ -94,7 +98,8 @@ export async function POST(req: Request) {
         bp.totalEduL, bp.netWorthL, bp.score,
         bp.totalMonthly,
       ]
-    } else if (sheetName === 'Plan Views') {
+    } else {
+      // sheetName === 'Plan Views' (only remaining allowed value)
       row = [
         now,
         clean(data.planNo),
@@ -103,9 +108,6 @@ export async function POST(req: Request) {
         clean(data.sourcePage),
         clean(data.session),
       ]
-    } else {
-      // Generic fallback — just dump key-value pairs
-      row = [now, clean(event), clean(sheetName), JSON.stringify(data).slice(0, 500)]
     }
 
     if (!WEBHOOK) return NextResponse.json({ success: true, note: 'no webhook configured' })
@@ -118,7 +120,8 @@ export async function POST(req: Request) {
     }).catch(() => {})
 
     return NextResponse.json({ success: true })
-  } catch (err: any) {
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Internal server error'
+    return NextResponse.json({ success: false, error: msg }, { status: 500 })
   }
 }
