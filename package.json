@@ -10,7 +10,6 @@
     "sync:lic:now": "node scripts/lic-scraper.js | node scripts/lic-diff.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
     "cheerio": "^1.2.0",
     "framer-motion": "^11.2.10",
     "groq-sdk": "^1.2.1",

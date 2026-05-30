@@ -32,7 +32,7 @@ A bilingual (English + Hindi) financial advisory website for Poddar Wealth Manag
 - **Language:** TypeScript + React 19
 - **Styling:** Tailwind CSS
 - **Architecture:** Feature-Sliced Design (FSD) under `src/features/*`
-- **AI:** Google Gemini API (Poddar Ji chatbot)
+- **AI:** Groq API (llama-3.3-70b-versatile for Poddar Ji chatbot)
 - **Forms:** Google Sheets webhooks (lead capture, admin notifications)
 - **Scrapers:** LIC plan list, NAV refresh (Vercel cron jobs)
 - **Analytics:** Google Analytics + Microsoft Clarity
@@ -63,7 +63,8 @@ PW/
 
 These MUST exist in `.env.local` (local) AND in Vercel project settings (production):
 
-- `GEMINI_API_KEY` — Google Gemini for AI advisor chat
+- `GROQ_API_KEY` — Groq API key for AI advisor chat
+- `GROQ_MODEL` — Groq model identifier (optional, defaults to llama-3.3-70b-versatile)
 - `GOOGLE_SHEETS_WEBHOOK_URL` — leads capture endpoint (Apps Script)
 - `ADMIN_SHEETS_WEBHOOK_URL` — admin notifications endpoint (Apps Script)
 - `CRON_SECRET` — protects cron endpoints from unauthorized calls
