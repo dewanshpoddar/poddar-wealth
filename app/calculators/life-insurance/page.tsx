@@ -7,8 +7,10 @@ import { calculatePremium, generateBenefitTable, PLANS, getPPT } from '@/lib/lic
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
 
-const TERM_PLANS = (PLANS as any[]).filter((p: any) => p.category === 'term')
-const ENDOWMENT_PLANS = (PLANS as any[]).filter((p: any) => ['endowment', 'wholelife'].includes(p.category))
+import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
+
+const TERM_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => p.category === 'term')
+const ENDOWMENT_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => ['endowment', 'wholelife'].includes(p.category))
 
 export default function LifeInsuranceCalcPage() {
   const { t } = useLang()
@@ -45,7 +47,7 @@ export default function LifeInsuranceCalcPage() {
     setPlanNo(TERM_PLANS[0]?.planNo ?? null)
   }
 
-  const selectedPlan = useMemo(() => (PLANS as any[]).find((p: any) => p.planNo === planNo), [planNo])
+  const selectedPlan = useMemo(() => (PLANS as LicPlan[]).find((p: LicPlan) => p.planNo === planNo), [planNo])
   const ppt = useMemo(() => {
     if (!selectedPlan) return term
     return getPPT(selectedPlan, term, form.age)
@@ -58,7 +60,7 @@ export default function LifeInsuranceCalcPage() {
 
   const benefitTable = useMemo(() => {
     if (!premResult || !planNo) return []
-    return generateBenefitTable({ planNo, sa, age: form.age, term, ppt, premResult: premResult as any })
+    return generateBenefitTable({ planNo, sa, age: form.age, term, ppt, premResult: premResult as PremiumResult })
   }, [premResult, planNo, sa, form.age, term, ppt])
 
   const xirr = useMemo(() => {
@@ -185,7 +187,7 @@ export default function LifeInsuranceCalcPage() {
                 <div className="bg-slate-50 rounded-2xl p-5">
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Choose Plan</div>
                   <div className="space-y-2">
-                    {[...TERM_PLANS, ...ENDOWMENT_PLANS].map((p: any) => (
+                    {[...TERM_PLANS, ...ENDOWMENT_PLANS].map((p: LicPlan) => (
                       <button key={p.planNo}
                         onClick={() => setPlanNo(p.planNo)}
                         className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-all border
@@ -247,13 +249,13 @@ export default function LifeInsuranceCalcPage() {
                           {fmt(premResult.instalment1)}
                         </div>
                         <div className="space-y-2 text-sm">
-                          {[
+                          {([
                             ['Base Premium',    premResult.basePremium],
                             ['Mode Rebate',    -premResult.modeRebate],
                             ['SA Rebate',      -premResult.saRebate],
                             ['Net Premium',     premResult.netPremium],
                             [`GST (${premResult.gstPctYear1}%)`, premResult.gstYear1],
-                          ].map(([l,v]: any) => (
+                          ] as [string, number][]).map(([l,v]) => (
                             <div key={l} className="flex justify-between text-white/80">
                               <span>{l}</span>
                               <span className={v < 0 ? 'text-green-300' : ''}>{v < 0 ? '-' : ''}{fmt(Math.abs(v))}</span>
@@ -307,7 +309,7 @@ export default function LifeInsuranceCalcPage() {
                           </tr>
                         </thead>
                         <tbody>
-                          {benefitTable.map((row: any, i: number) => (
+                          {benefitTable.map((row: BenefitRow, i: number) => (
                             <tr key={row.year} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                               <td className="px-3 py-2 font-semibold text-gold">{row.year}</td>
                               <td className="px-3 py-2">{row.age}</td>

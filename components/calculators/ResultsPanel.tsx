@@ -10,33 +10,35 @@ import { RIDERS } from '@/lib/lic-plans-data.js'
 import { openLeadPopup } from '@/lib/events'
 import { CAT_AVATAR_COLOR } from './calc-constants'
 
+import { LicPlan, PremiumResult, MaturityResult, BenefitRow } from '@/lib/types/lic-plan'
+
 export interface ResultsPanelProps {
-  selectedPlan: any
+  selectedPlan: LicPlan
   clientName: string
-  salutation: string
+  salutation: 'Mr.' | 'Mrs.' | 'Ms.'
   age: number
   sa: number
   safeterm: number
   ppt: number
   isTermPlan: boolean
   isUlip: boolean
-  premResult: any
-  matResult: any
+  premResult: PremiumResult | null
+  matResult: MaturityResult | null
   tax80C: number | null
   xirr: string | null
   multiplier: string | null
-  benefitTable: any[]
+  benefitTable: BenefitRow[]
   showTable: boolean
-  setShowTable: (val: any) => void
+  setShowTable: (val: boolean) => void
   showAllRows: boolean
-  setShowAllRows: (val: any) => void
+  setShowAllRows: (val: boolean) => void
   showAllModes: boolean
-  setShowAllModes: (val: any) => void
-  allModesPrem: any[] | null
-  mode: string
-  setMode: (val: any) => void
+  setShowAllModes: (val: boolean | ((v: boolean) => boolean)) => void
+  allModesPrem: { mode: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly'; prem: PremiumResult; perDay: number | null }[] | null
+  mode: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly'
+  setMode: (val: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly') => void
   isUnlocked: boolean
-  setIsUnlocked: (val: any) => void
+  setIsUnlocked: (val: boolean) => void
   unlockMobile: string
   setUnlockMobile: (val: string) => void
   unlockWantTo: string
@@ -46,7 +48,7 @@ export interface ResultsPanelProps {
   unlockEmail: string
   setUnlockEmail: (val: string) => void
   unlockStatus: 'idle' | 'sending' | 'done'
-  handleUnlock: (e: any) => void
+  handleUnlock: (e: React.FormEvent) => void
   whatsappShare: () => void
 }
 
@@ -135,14 +137,14 @@ export default function ResultsPanel({
                             <div className="text-[22px] mb-1">🐷</div>
                             <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
                             <div className="text-[10px] text-gray-400 mb-2">one-time purchase price</div>
-                            <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {premResult.purchasePrice.toLocaleString('en-IN')}</div>
-                            <div className="text-[10px] text-gray-400 mt-1">+ GST ₹{premResult.gst.toLocaleString('en-IN')} = ₹{premResult.totalPayable.toLocaleString('en-IN')}</div>
+                            <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {(premResult.purchasePrice ?? 0).toLocaleString('en-IN')}</div>
+                            <div className="text-[10px] text-gray-400 mt-1">+ GST ₹{(premResult.gst ?? 0).toLocaleString('en-IN')} = ₹{(premResult.totalPayable ?? 0).toLocaleString('en-IN')}</div>
                           </div>
                           <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
                             <div className="text-[22px] mb-1">🤲</div>
                             <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
                             <div className="text-[10px] text-gray-400 mb-2">annual pension</div>
-                            <div className="font-display font-bold text-[22px] text-green-700 leading-none">₹ {premResult.annualPension.toLocaleString('en-IN')}</div>
+                            <div className="font-display font-bold text-[22px] text-green-700 leading-none">₹ {(premResult.annualPension ?? 0).toLocaleString('en-IN')}</div>
                             <div className="text-[10px] text-gray-400 mt-1">every year for life</div>
                           </div>
                         </div>
@@ -153,10 +155,10 @@ export default function ResultsPanel({
                           </div>
                           <div className="grid grid-cols-2 gap-3">
                             {[
-                              { label: 'Monthly', value: premResult.monthlyPension },
-                              { label: 'Quarterly', value: premResult.quarterlyPension },
-                              { label: 'Half-Yearly', value: premResult.halfYearlyPension },
-                              { label: 'Annual', value: premResult.annualPension },
+                              { label: 'Monthly', value: premResult.monthlyPension ?? 0 },
+                              { label: 'Quarterly', value: premResult.quarterlyPension ?? 0 },
+                              { label: 'Half-Yearly', value: premResult.halfYearlyPension ?? 0 },
+                              { label: 'Annual', value: premResult.annualPension ?? 0 },
                             ].map(({ label, value }) => (
                               <div key={label} className="text-center bg-gold/5 rounded-xl p-3">
                                 <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{label}</div>
@@ -165,7 +167,7 @@ export default function ResultsPanel({
                             ))}
                           </div>
                           <div className="mt-3 text-[10px] text-gray-400 text-center">
-                            Annuity rate: ₹{premResult.annuityRate}/₹1000 purchase price · Life annuity with return of purchase price option
+                            Annuity rate: ₹{premResult.annuityRate ?? 0}/₹1000 purchase price · Life annuity with return of purchase price option
                           </div>
                         </div>
                       </div>
@@ -313,7 +315,7 @@ export default function ResultsPanel({
                       <div className={`space-y-4 ${!isUnlocked ? 'pointer-events-none select-none min-h-[480px]' : ''}`}>
 
                         {/* Maturity Benefit table */}
-                        {!isTermPlan && matResult?.maturity > 0 && (
+                        {!isTermPlan && matResult && matResult.maturity > 0 && (
                           <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
                             <div className="bg-navy px-5 py-2.5 flex justify-between items-center">
                               <span className="text-white font-bold text-[12px]">Maturity Benefit</span>
@@ -324,7 +326,8 @@ export default function ResultsPanel({
                                 <span className="text-[12px] text-gray-600">Sum Assured</span>
                                 <span className="text-[12px] font-semibold text-gray-800">{sa.toLocaleString('en-IN')}</span>
                               </div>
-                              {matResult.totalSRB > 0 && (
+                              {/* TODO: totalSRB is never returned by calculateMaturity — verify if this should be totalBonus */}
+                              {matResult.totalSRB && matResult.totalSRB > 0 && (
                                 <div className="flex justify-between py-2.5">
                                   <span className="text-[12px] text-gray-600">
                                     Bonus* ({Math.round(matResult.totalSRB / safeterm / (sa / 1000))}/1000 × {safeterm})
@@ -356,7 +359,7 @@ export default function ResultsPanel({
                         )}
 
                         {/* Benefit Pattern Illustration */}
-                        {!isTermPlan && matResult?.maturity > 0 && (
+                        {!isTermPlan && matResult && matResult.maturity > 0 && (
                           <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
                             <div className="bg-navy px-5 py-2.5 -mx-5 -mt-5 mb-5 rounded-t-2xl">
                               <span className="text-white font-bold text-[12px]">Benefit Pattern — Illustration</span>
@@ -426,7 +429,7 @@ export default function ResultsPanel({
 
                         {/* Show Full Premium Chart accordion */}
                         <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
-                          <button onClick={() => setShowAllModes((v: boolean) => !v)}
+                          <button onClick={() => setShowAllModes(!showAllModes)}
                             className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors">
                             <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
                               <span className="text-[16px]">💳</span> Show Full Premium Chart
@@ -526,7 +529,7 @@ export default function ResultsPanel({
                             {selectedPlan.riders?.length ? (
                               <div className="space-y-1.5">
                                 {selectedPlan.riders.map((rId: string) => {
-                                  const r = (RIDERS as any)[rId]
+                                  const r = (RIDERS as Record<string, { name: string; desc: string }>)[rId]
                                   if (!r) return null
                                   return (
                                     <div key={rId} className="flex items-start gap-2">
@@ -570,7 +573,7 @@ export default function ResultsPanel({
                         {/* Year-by-year benefit table */}
                         {benefitTable.length > 0 && (
                           <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm overflow-hidden">
-                            <button onClick={() => setShowTable((v: boolean) => !v)}
+                            <button onClick={() => setShowTable(!showTable)}
                               className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors">
                               <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
                                 <TrendingUp className="w-4 h-4 text-gold" />
@@ -591,7 +594,7 @@ export default function ResultsPanel({
                                       </tr>
                                     </thead>
                                     <tbody className="text-[11px]">
-                                      {visibleRows.map((row: any, i: number) => (
+                                      {visibleRows.map((row: BenefitRow, i: number) => (
                                         <tr key={row.year}
                                           className={`${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'}
                                             ${row.maturityPayout ? 'bg-green-50' : ''}
@@ -614,7 +617,7 @@ export default function ResultsPanel({
                                   </table>
                                 </div>
                                 {benefitTable.length > 10 && (
-                                  <button onClick={() => setShowAllRows((v: boolean) => !v)}
+                                  <button onClick={() => setShowAllRows(!showAllRows)}
                                     className="w-full py-2.5 text-[11px] font-bold text-gold hover:text-gold-hover border-t border-gray-50 hover:bg-gray-50 transition-colors">
                                     {showAllRows ? `Show less ↑` : `Show all ${benefitTable.length} years ↓`}
                                   </button>

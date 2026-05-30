@@ -14,13 +14,15 @@ import PlanSearch from '@/components/calculators/PlanSearch'
 import InputsPanel from '@/components/calculators/InputsPanel'
 import ResultsPanel from '@/components/calculators/ResultsPanel'
 
+import { LicPlan, PremiumResult, MaturityResult, BenefitRow, FundOption } from '@/lib/types/lic-plan'
+
 export default function PremiumCalculatorPage() {
   /* plan browser */
   const [activeCat,     setActiveCat]     = useState('all')
   const [search,        setSearch]        = useState('')
   const [quickPlanNo,   setQuickPlanNo]   = useState('')
   const [quickAge,      setQuickAge]      = useState('')
-  const [selectedPlan,  setSelectedPlan]  = useState<any>(null)
+  const [selectedPlan,  setSelectedPlan]  = useState<LicPlan | null>(null)
 
   /* client identity */
   const [clientName,  setClientName]  = useState('')
@@ -35,9 +37,9 @@ export default function PremiumCalculatorPage() {
   const [smoker, setSmoker] = useState(false)
 
   /* results */
-  const [premResult,     setPremResult]     = useState<any>(null)
-  const [matResult,      setMatResult]      = useState<any>(null)
-  const [benefitTable,   setBenefitTable]   = useState<any[]>([])
+  const [premResult,     setPremResult]     = useState<PremiumResult | null>(null)
+  const [matResult,      setMatResult]      = useState<MaturityResult | null>(null)
+  const [benefitTable,   setBenefitTable]   = useState<BenefitRow[]>([])
   const [showTable,      setShowTable]      = useState(false)
   const [showAllRows,    setShowAllRows]    = useState(false)
   const [showAllModes,   setShowAllModes]   = useState(false)
@@ -103,17 +105,17 @@ export default function PremiumCalculatorPage() {
 
   /* derived */
   const filteredPlans = useMemo(() => {
-    let base: any[]
+    let base: LicPlan[]
     if (activeCat === 'all') {
-      base = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
+      base = (PLANS as LicPlan[]).filter((p: LicPlan) => p.status !== 'withdrawn')
     } else if (activeCat === 'withdrawn') {
-      base = (PLANS as any[]).filter((p: any) => p.status === 'withdrawn')
+      base = (PLANS as LicPlan[]).filter((p: LicPlan) => p.status === 'withdrawn')
     } else {
-      base = (PLANS as any[]).filter((p: any) => p.category === activeCat && p.status !== 'withdrawn')
+      base = (PLANS as LicPlan[]).filter((p: LicPlan) => p.category === activeCat && p.status !== 'withdrawn')
     }
     if (!search.trim()) return base
     const q = search.toLowerCase()
-    return base.filter((p: any) => p.name.toLowerCase().includes(q) || String(p.planNo).includes(q))
+    return base.filter((p: LicPlan) => p.name.toLowerCase().includes(q) || String(p.planNo).includes(q))
   }, [activeCat, search])
 
   const ppt = useMemo(() => {
@@ -131,14 +133,14 @@ export default function PremiumCalculatorPage() {
   const allModesPrem = useMemo(() => {
     if (!selectedPlan || !premResult) return null
     return (['yearly', 'halfyearly', 'quarterly', 'monthly'] as const).map(m => {
-      const p = calculatePremium({ planNo: selectedPlan.planNo, sa, age, term: safeterm, ppt, mode: m, smoker, gender }) as any
+      const p = calculatePremium({ planNo: selectedPlan.planNo, sa, age, term: safeterm, ppt, mode: m, smoker, gender }) as PremiumResult | null
       if (!p) return null
       const perDay = m === 'yearly' ? Math.round(p.yearlyYear1 / 365) : null
       return { mode: m, prem: p, perDay }
-    }).filter(Boolean) as { mode: string, prem: any, perDay: number | null }[]
+    }).filter(Boolean) as { mode: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly', prem: PremiumResult, perDay: number | null }[]
   }, [selectedPlan, premResult, sa, age, safeterm, ppt, smoker, gender])
 
-  function handleSelectPlan(plan: any) {
+  function handleSelectPlan(plan: LicPlan) {
     setSelectedPlan(plan)
     setShowResults(false)
     setShowTable(false)
@@ -197,7 +199,7 @@ export default function PremiumCalculatorPage() {
 
   function handleQuickSelect() {
     const pno = parseInt(quickPlanNo)
-    const plan = (PLANS as any[]).find((p: any) => p.planNo === pno)
+    const plan = (PLANS as LicPlan[]).find((p: LicPlan) => p.planNo === pno)
     if (plan) {
       handleSelectPlan(plan)
       if (quickAge) setAge(Math.max(plan.minAge ?? 18, Math.min(parseInt(quickAge), plan.maxAge ?? 65)))
@@ -220,15 +222,15 @@ export default function PremiumCalculatorPage() {
       return
     }
 
-    let prem: any, mat: any, table: any[]
+    let prem: PremiumResult | null, mat: MaturityResult | null, table: BenefitRow[]
     try {
-      prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender })
+      prem = calculatePremium({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, mode, smoker, gender }) as PremiumResult | null
       if (!prem) {
         setCalcError('Could not calculate premium for this plan with the given inputs. Please try different age, term, or sum assured.')
         return
       }
-      mat   = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm })
-      table = generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem }) ?? []
+      mat   = calculateMaturity({ planNo: selectedPlan.planNo, sa: effectiveSa, term: safeterm }) as MaturityResult | null
+      table = (generateBenefitTable({ planNo: selectedPlan.planNo, sa: effectiveSa, age, term: safeterm, ppt, premResult: prem }) as BenefitRow[]) ?? []
     } catch (err) {
       setCalcError('An unexpected error occurred during calculation. Please try again or contact support.')
       console.error('Calculation error:', err)
@@ -269,7 +271,7 @@ export default function PremiumCalculatorPage() {
           ppt,
           mode,
           gender,
-          annualPremium: prem?.annual ?? '',
+          annualPremium: prem?.yearlyYear1 ?? '',
           totalPaid:    prem?.totalPaid ?? '',
           maturityValue: mat?.maturity ?? '',
           clientName:   clientName || '',
@@ -354,7 +356,7 @@ export default function PremiumCalculatorPage() {
           planName:  selectedPlan.name,
           category:  selectedPlan.category,
           age, sa, term: safeterm, mode, gender,
-          annualPremium: premResult.annual ?? '',
+          annualPremium: premResult.yearlyYear1 ?? '',
           totalPaid:     premResult.totalPaid ?? '',
           maturityValue: matResult?.maturity ?? '',
           clientName:    clientName || '',
@@ -429,7 +431,7 @@ export default function PremiumCalculatorPage() {
                         <span className="text-white/40 font-sans text-[11px] ml-2 font-normal">Plan {selectedPlan.planNo}</span>
                       </div>
                       <div className="text-white/50 text-[11px] mt-0.5">
-                        Entry Age: {selectedPlan.minAge}–{selectedPlan.maxAge} yrs · Min SA: {fmtSA(selectedPlan.minSA)}
+                        Entry Age: {selectedPlan.minAge}–{selectedPlan.maxAge} yrs · Min SA: {fmtSA(selectedPlan.minSA ?? 0)}
                       </div>
                     </div>
                   </div>
@@ -445,7 +447,7 @@ export default function PremiumCalculatorPage() {
                 </div>
 
                 {/* ULIP Fund Selector */}
-                {isUlip && selectedPlan?.fundOptions?.length > 0 && (
+                {isUlip && selectedPlan?.fundOptions && selectedPlan.fundOptions.length > 0 && (
                   <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-5">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="font-display font-bold text-[16px] text-navy">Choose Fund</h2>
@@ -468,7 +470,7 @@ export default function PremiumCalculatorPage() {
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {selectedPlan.fundOptions.map((fund: any) => {
+                      {selectedPlan.fundOptions.map((fund: FundOption) => {
                         const planNav = navData[String(selectedPlan.planNo)]
                         const fundNav = planNav?.[fund.id]
                         const isSelected = ulipFund === fund.id

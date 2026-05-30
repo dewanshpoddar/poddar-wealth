@@ -47,3 +47,6 @@ leads.csv
 
 # vercel
 .vercel
+
+# Local env backups
+.env.local.backup-*

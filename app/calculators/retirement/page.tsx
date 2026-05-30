@@ -6,6 +6,7 @@ import { Calculator, ArrowRight, Info, TrendingUp } from 'lucide-react'
 import { PLANS, advisePlans } from '@/lib/lic-plans-data.js'
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
+import { LicPlan } from '@/lib/types/lic-plan'
 
 export default function RetirementCalcPage() {
   const { t } = useLang()
@@ -15,7 +16,7 @@ export default function RetirementCalcPage() {
     monthlyAtRetirement: number
     yearsToRetire: number
     monthlySavingsNeeded: number
-    suggestedPlans: any[]
+    suggestedPlans: LicPlan[]
   }>(null)
 
   const calculate = () => {
@@ -35,7 +36,7 @@ export default function RetirementCalcPage() {
       goal: 'retirement',
       budget: monthlySavingsNeeded * 12,
       hasDependents: false,
-    })
+    }) as LicPlan[]
 
     setResult({ corpus, monthlyAtRetirement, yearsToRetire, monthlySavingsNeeded, suggestedPlans })
   }
@@ -155,7 +156,7 @@ export default function RetirementCalcPage() {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {result.suggestedPlans.map((plan: any) => (
+                {result.suggestedPlans.map((plan: LicPlan) => (
                   <div key={plan.planNo} className="bg-slate-50 border border-slate-100 rounded-2xl p-5 hover:border-gold/30 hover:shadow-md transition-all">
                     <div className="flex items-start justify-between mb-3">
                       <span className="text-xs font-bold text-slate-400 bg-white px-2 py-0.5 rounded border border-slate-100">

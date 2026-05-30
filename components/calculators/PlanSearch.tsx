@@ -1,5 +1,6 @@
 import { Search, ChevronDown } from 'lucide-react'
 import { CATEGORIES, CAT_AVATAR_COLOR } from './calc-constants'
+import { LicPlan } from '@/lib/types/lic-plan'
 
 export interface PlanSearchProps {
   quickPlanNo: string
@@ -11,9 +12,9 @@ export interface PlanSearchProps {
   setActiveCat: (val: string) => void
   search: string
   setSearch: (val: string) => void
-  filteredPlans: any[]
-  selectedPlan: any
-  handleSelectPlan: (plan: any) => void
+  filteredPlans: LicPlan[]
+  selectedPlan: LicPlan | null
+  handleSelectPlan: (plan: LicPlan) => void
 }
 
 export default function PlanSearch({
@@ -67,7 +68,7 @@ export default function PlanSearch({
               <div className="overflow-y-auto max-h-[420px] px-2 pb-2">
                 {filteredPlans.length === 0 ? (
                   <div className="py-8 text-center text-[12px] text-gray-400">No plans found</div>
-                ) : filteredPlans.map((plan: any) => {
+                ) : filteredPlans.map((plan: LicPlan) => {
                   const isSelected = selectedPlan?.planNo === plan.planNo
                   const avatarColor = CAT_AVATAR_COLOR[plan.category] ?? 'bg-navy'
                   return (

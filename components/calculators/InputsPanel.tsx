@@ -1,13 +1,14 @@
 import { Calculator } from 'lucide-react'
 import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
 import { fmtSA, toWords } from '@/lib/format'
+import { LicPlan } from '@/lib/types/lic-plan'
 
 export interface InputsPanelProps {
-  selectedPlan: any
+  selectedPlan: LicPlan
   clientName: string
   setClientName: (val: string) => void
-  salutation: string
-  setSalutation: (val: any) => void
+  salutation: 'Mr.' | 'Mrs.' | 'Ms.'
+  setSalutation: (val: 'Mr.' | 'Mrs.' | 'Ms.') => void
   age: number
   setAge: (val: number) => void
   term: number
@@ -32,14 +33,14 @@ export interface InputsPanelProps {
   setMaturityAge: (val: number) => void
   survivalBenefitPct: 5 | 10 | 15 | 20
   setSurvivalBenefitPct: (val: 5 | 10 | 15 | 20) => void
-  bimaLakshmiOption: string
-  setBimaLakshmiOption: (val: any) => void
-  mode: string
-  setMode: (val: any) => void
-  gender: string
-  setGender: (val: any) => void
+  bimaLakshmiOption: 'A' | 'B'
+  setBimaLakshmiOption: (val: 'A' | 'B') => void
+  mode: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly'
+  setMode: (val: 'yearly' | 'halfyearly' | 'quarterly' | 'monthly') => void
+  gender: 'male' | 'female'
+  setGender: (val: 'male' | 'female') => void
   smoker: boolean
-  setSmoker: (val: any) => void
+  setSmoker: (val: boolean | ((s: boolean) => boolean)) => void
   calculate: () => void
 }
 
@@ -121,7 +122,7 @@ export default function InputsPanel({
                       <div className="sm:col-span-2">
                         <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Sum Assured
-                          {selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
+                          {selectedPlan.minSA && selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
                         </label>
                         <div className="flex flex-wrap gap-1.5 mb-2">
                           {SA_PRESETS.map((v: number) => (
@@ -162,7 +163,7 @@ export default function InputsPanel({
                         <div className="text-center text-[12px] text-gold font-semibold">( {toWords(purchasePrice)} )</div>
 
                         {/* Annuity option */}
-                        {selectedPlan.annuityOptions?.length > 0 && (
+                        {selectedPlan.annuityOptions && selectedPlan.annuityOptions.length > 0 && (
                           <div className="mt-3">
                             <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Annuity Option</label>
                             <div className="flex flex-wrap gap-1.5">

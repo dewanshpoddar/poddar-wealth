@@ -1,8 +1,9 @@
 import React from 'react'
 import { fmt, fmtSA } from '@/lib/format'
+import { BenefitRow } from '@/lib/types/lic-plan'
 
 interface BenefitTableProps {
-  data: any[]
+  data: BenefitRow[]
   sa: number
   showAllRows: boolean
   setShowAllRows: (v: boolean) => void
@@ -22,7 +23,7 @@ export default function BenefitTable({ data, sa, showAllRows, setShowAllRows }: 
           </tr>
         </thead>
         <tbody className="text-[11px]">
-          {visibleRows.map((row: any, i: number) => (
+          {visibleRows.map((row: BenefitRow, i: number) => (
             <tr key={row.year}
               className={`${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'}
                 ${row.maturityPayout ? 'bg-green-50' : ''}
