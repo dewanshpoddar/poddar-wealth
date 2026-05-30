@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Groq from 'groq-sdk'
 import { LIC_PLANS_CONTEXT } from '@/lib/lic-plans-context'
-import { GEMINI_MODEL } from '@/lib/constants'
+import { GROQ_MODEL } from '@/lib/constants'
 
 const MAX_INPUT_CHARS = 500
 
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
   try {
     const { messages, sessionId } = await req.json()
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.GROQ_API_KEY) {
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 })
     }
 
@@ -68,29 +68,33 @@ export async function POST(req: NextRequest) {
     const safeContent = rawContent.slice(0, MAX_INPUT_CHARS)
     if (!safeContent) return NextResponse.json({ error: 'Empty message' }, { status: 400 })
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({
-      model: GEMINI_MODEL,
-      systemInstruction: buildSystemPrompt(),
-    })
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-    // Convert to Gemini history format — MUST use 'model' not 'assistant'
+    // Convert prior turns to Groq format {role, content} — normalize 'model'→'assistant'
     const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
-      role: m.role === 'user' ? 'user' : 'model',
-      parts: [{ text: String(m.content || '').slice(0, MAX_INPUT_CHARS) }],
+      role: (m.role === 'user' ? 'user' : 'assistant') as 'user' | 'assistant',
+      content: String(m.content || '').slice(0, MAX_INPUT_CHARS),
     }))
 
-    const chat = model.startChat({ history })
+    // Drop leading 'assistant' turns — defensive filter preserved from Gemini path
+    const firstUserIdx = history.findIndex((m: { role: string }) => m.role === 'user')
+    const safeHistory = firstUserIdx === -1 ? [] : history.slice(firstUserIdx)
+
+    const groqMessages: Groq.Chat.ChatCompletionMessageParam[] = [
+      { role: 'system', content: buildSystemPrompt() },
+      ...safeHistory,
+      { role: 'user', content: safeContent },
+    ]
 
     // Retry once on 429 rate-limit with 2s back-off
-    let result
+    let stream
     try {
-      result = await chat.sendMessageStream(safeContent)
+      stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true })
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : ''
       if (msg.includes('429')) {
         await new Promise(r => setTimeout(r, 2000))
-        result = await chat.sendMessageStream(safeContent)
+        stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true })
       } else {
         throw e
       }
@@ -102,9 +106,8 @@ export async function POST(req: NextRequest) {
     const readable = new ReadableStream({
       async start(controller) {
         try {
-          for await (const chunk of result.stream) {
-            const text = chunk.text()
-            // Safety filter: Gemini returns empty string when blocked
+          for await (const chunk of stream) {
+            const text = chunk.choices[0]?.delta?.content ?? ''
             if (text) {
               fullReply += text
               controller.enqueue(encoder.encode(text))
