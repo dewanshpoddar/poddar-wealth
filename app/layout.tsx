@@ -13,6 +13,7 @@ import { AIChatButton, MobileCTABar } from '@/src/features/ai-agent'
 import LeadPopup from '@/components/LeadPopup'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ExitIntentPopup from '@/components/ExitIntentPopup'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <MobileCTABar />
           <WhatsAppButton />
           <LeadPopup />
+          <ExitIntentPopup />
         </LangProvider>
       </body>
     </html>

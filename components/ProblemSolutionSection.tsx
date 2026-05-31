@@ -1,5 +1,13 @@
 'use client'
+import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+
+// Index-stable links for each plan in t.banner.plans array
+const PLAN_LINKS = [
+  '/products',                                             // LIC Jeevan Utsav
+  '/services/health-insurance',                            // Star Arogya Sanjeevani
+  '/blog/lic-dhan-vriddhi-single-premium-guaranteed-returns', // LIC Dhan Vriddhi
+]
 
 export default function ProblemSolutionSection() {
   const { t } = useLang()
@@ -16,13 +24,16 @@ export default function ProblemSolutionSection() {
             <span className="text-[12px] font-semibold text-white/90 tracking-wide">{t.banner.text}</span>
             <div className="flex gap-2.5">
               {t.banner.plans.map((plan: string, i: number) => (
-                <span key={i} className="text-[10px] bg-white/5 text-white/80 font-medium px-3 py-0.5 rounded-full border border-white/10 hover:border-gold/40 hover:bg-gold/10 transition-all duration-300 uppercase tracking-wider">{plan}</span>
+                <Link key={i} href={PLAN_LINKS[i] ?? '/products'}
+                  className="text-[10px] bg-white/5 text-white/80 font-medium px-3 py-0.5 rounded-full border border-white/10 hover:border-gold/40 hover:bg-gold/10 transition-all duration-300 uppercase tracking-wider">
+                  {plan}
+                </Link>
               ))}
             </div>
-            <div className="flex items-center gap-1 group cursor-pointer ml-2">
+            <Link href="/products" className="flex items-center gap-1 group ml-2">
               <span className="text-[11px] text-gold font-bold group-hover:text-white transition-colors">{t.banner.cta}</span>
               <span className="text-[11px] text-gold group-hover:translate-x-1 transition-transform">→</span>
-            </div>
+            </Link>
           </div>
         ))}
       </div>

@@ -101,6 +101,18 @@ export default function Navbar() {
           {t.nav.calculators}
         </Link>
 
+        <Link
+          href="/compare"
+          className={`pw-nav-link text-[13px] font-bold tracking-wide transition-all duration-500 flex items-center gap-1 ${
+            isActive('/compare')
+              ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
+              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
+          }`}
+        >
+          ⚖️ {lang === 'en' ? 'Compare' : 'तुलना'}
+          <span className="bg-gold text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
+        </Link>
+
         {/* Language toggle */}
         <LangToggle scrolled={isScrolled} />
 

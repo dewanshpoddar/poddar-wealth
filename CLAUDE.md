@@ -225,6 +225,15 @@ Both endpoints require `CRON_SECRET` header to execute.
   Dead links: zero found after scan. All service page layouts added.
   Translation keys added: renew (en.json + hi.json).
   Build: 43+ pages, 0 errors.
+
+- **2026-05-31 (cont 2):** Final features sprint.
+  Added /compare (plan comparison tool with desktop table + mobile cards).
+  ExitIntentPopup: mouseleave/inactivity trigger, sessionStorage guard, lead capture.
+  GA4 events: compare_viewed, faq_opened, exit_intent_shown/submitted, plan_quote_clicked.
+  Banner "Know more" links: each plan pill now links to its specific page.
+  Blog related articles: relatedSlugs added to all 20 posts, Related Articles section in post page.
+  Navbar: Compare Plans link with New badge added.
+  Translation keys added: compare, exitIntent (en.json + hi.json).
   Code: totalSRB→totalBonus fix, DRY server-utils, banner DOM 10→2 copies.
 
 ---

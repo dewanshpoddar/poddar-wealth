@@ -30,12 +30,7 @@ export default function AboutPage() {
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता' }
   ]
 
-  const timeline = [
-    { year: '1994', title: 'The Vision Begins', desc: 'Ajay Kumar Poddar started his journey to redefine family protection in Gorakhpur.' },
-    { year: '2005', title: 'MDRT Recognition', desc: 'First induction into the Million Dollar Round Table, USA — the gold standard.' },
-    { year: '2015', title: 'Chairman\'s Club', desc: 'Inducted into the premier LIC Chairman\'s Club for top-tier Indian performance.' },
-    { year: '2024', title: '31yr Legacy', desc: 'Protecting 5,000+ families with ₹500Cr+ in wealth and security managed.' }
-  ]
+
 
   const filmStrip1 = [
     { src: '/assets/legacy-award-1994.png', label: '1994 MDRT Success' },
@@ -230,92 +225,73 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ HORIZONTAL TIMELINE ═══ */}
-      <section className="py-16 md:py-20 bg-white relative overflow-hidden border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-16">
-          <span className="text-gold font-bold uppercase tracking-[0.3em] text-[11px]">31-Year Chronology</span>
-          <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mt-2 leading-tight">The Legacy Timeline</h2>
-        </div>
+      {/* ═══ VERTICAL TIMELINE ═══ */}
+      <section className="py-20 bg-white relative overflow-hidden border-t border-slate-100">
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          {(() => {
+            const timelineData = t.aboutTimeline || {
+              title: 'The Legacy Timeline',
+              subtitle: '31-Year Chronology',
+              items: []
+            }
+            return (
+              <>
+                <div className="text-center mb-16">
+                  <span className="text-gold font-bold uppercase tracking-[0.3em] text-[10px] block mb-2">
+                    {timelineData.subtitle}
+                  </span>
+                  <h2 className="text-[26px] md:text-[32px] font-display font-bold text-navy leading-tight">
+                    {timelineData.title}
+                  </h2>
+                </div>
 
-        {/*
-          Layout (container h=440px, center line at y=220):
-            Top items  → card at top-0 (max 150px tall), connector top-[150px] h-[54px], dot centred at y=220
-            Bottom items → dot centred at y=220, connector top-[236px] h-[54px], card at bottom-0 (max 150px tall)
-            Year label  → below dot for top items (top-[242px]), above dot for bottom items (top-[170px])
-        */}
-        <div className="max-w-7xl mx-auto px-8 overflow-x-auto pb-4 scrollbar-hide">
-          <div className="relative min-w-[600px] sm:min-w-[860px]" style={{ height: 440 }}>
+                <div className="relative mt-12">
+                  {/* Vertical Line */}
+                  <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gold/20 -translate-x-[1px]" />
 
-            {/* Horizontal centre line */}
-            <div className="absolute left-10 right-10 bg-gold/20" style={{ top: 220, height: 1 }} />
+                  <div className="space-y-12">
+                    {(timelineData.items || []).map((item: any, i: number) => {
+                      const isEven = i % 2 === 0
+                      return (
+                        <div
+                          key={i}
+                          className={`flex flex-col md:flex-row relative items-start md:items-center ${
+                            isEven ? 'md:flex-row-reverse' : ''
+                          }`}
+                        >
+                          {/* Circle Dot with pulse */}
+                          <div className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-white border-2 border-gold flex items-center justify-center -translate-x-3 z-20">
+                            <span className="w-2.5 h-2.5 rounded-full bg-gold animate-pulse" />
+                          </div>
 
-            <div className="absolute inset-0 flex justify-between px-10">
-              {timeline.map((item, i) => {
-                const isTop = i % 2 === 0
-                return (
-                  <MotionDiv
-                    key={i}
-                    initial={{ opacity: 0, y: isTop ? -16 : 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="relative"
-                    style={{ width: 200 }}
-                  >
-                    {/* Card */}
-                    <div
-                      className={`absolute left-0 right-0 ${isTop ? 'top-0' : 'bottom-0'}`}
-                      style={{ maxHeight: 150 }}
-                    >
-                      <div className="bg-slate-50 border border-slate-200 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-gold/30 transition-all group">
-                        <h4 className="text-[14px] font-bold text-navy mb-1.5 group-hover:text-gold transition-colors leading-snug">{item.title}</h4>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
+                          {/* Card */}
+                          <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8">
+                            <div className="bg-slate-50 border border-slate-200 p-6 rounded-[28px] shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300 group">
+                              <div className="flex flex-wrap items-center gap-2 mb-2">
+                                <span className="text-gold font-bold text-xs tracking-wider uppercase">
+                                  {item.year}
+                                </span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-gold/30 hidden sm:inline" />
+                                <h4 className="text-[14px] font-bold text-navy leading-snug group-hover:text-gold transition-colors">
+                                  {item.title}
+                                </h4>
+                              </div>
+                              <p className="text-[12px] text-slate-500 leading-relaxed font-medium">
+                                {item.desc}
+                              </p>
+                            </div>
+                          </div>
 
-                    {/* Connector line — bridges card edge to dot edge */}
-                    <div
-                      className="absolute bg-gold/25"
-                      style={{
-                        left: '50%',
-                        width: 1,
-                        top: isTop ? 150 : 236,
-                        height: 54,
-                        transform: 'translateX(-50%)',
-                      }}
-                    />
-
-                    {/* Dot — centred exactly on the horizontal line (y=220) */}
-                    <div
-                      className="absolute z-10 flex items-center justify-center"
-                      style={{
-                        left: '50%',
-                        top: 204,               /* 220 - 16 (half of w-8) */
-                        width: 32,
-                        height: 32,
-                        transform: 'translateX(-50%)',
-                      }}
-                    >
-                      <div className="w-full h-full rounded-full bg-white border-2 border-gold flex items-center justify-center text-[11px] font-bold text-navy shadow">
-                        &apos;{item.year.slice(2)}
-                      </div>
-                    </div>
-
-                    {/* Year label — on the opposite side from the card */}
-                    <div
-                      className="absolute left-1/2 whitespace-nowrap text-[12px] font-bold text-gold tracking-widest"
-                      style={{
-                        top: isTop ? 242 : 172,
-                        transform: 'translateX(-50%)',
-                      }}
-                    >
-                      {item.year}
-                    </div>
-                  </MotionDiv>
-                )
-              })}
-            </div>
-          </div>
+                          {/* Empty spacer for desktop alignment */}
+                          <div className="hidden md:block w-1/2" />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </>
+            )
+          })()}
         </div>
       </section>
 

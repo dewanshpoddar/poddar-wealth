@@ -14,6 +14,31 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Health Insurance': 'bg-red-50 text-red-700 border-red-200',
   'Tax Planning':     'bg-green-50 text-green-700 border-green-200',
   'Claims':           'bg-purple-50 text-purple-700 border-purple-200',
+  'Comparison':       'bg-amber-50 text-amber-700 border-amber-200',
+  'Guides':           'bg-teal-50 text-teal-700 border-teal-200',
+  'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
+}
+
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  'Life Insurance':   'from-blue-500 to-blue-600',
+  'LIC Plans':        'from-amber-500 to-amber-600',
+  'Health Insurance': 'from-green-500 to-green-600',
+  'Tax Planning':     'from-emerald-500 to-emerald-600',
+  'Claims':           'from-violet-500 to-violet-600',
+  'Comparison':       'from-red-500 to-red-600',
+  'Guides':           'from-purple-500 to-purple-600',
+  'Child Plans':      'from-pink-500 to-pink-600',
+}
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  'Life Insurance':   '🛡️',
+  'LIC Plans':        '📋',
+  'Health Insurance': '🏥',
+  'Tax Planning':     '💰',
+  'Claims':           '📁',
+  'Comparison':       '⚖️',
+  'Guides':           '📚',
+  'Child Plans':      '👶',
 }
 
 function formatDate(dateStr: string) {
@@ -141,6 +166,20 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
           </div>
         </section>
 
+        {/* Category Gradient Header */}
+        {(() => {
+          const gradient = CATEGORY_GRADIENTS[post.category] || 'from-gray-400 to-gray-500'
+          const emoji = CATEGORY_EMOJIS[post.category] || '📝'
+          return (
+            <div className={`h-[200px] w-full bg-gradient-to-r ${gradient} flex items-center justify-center text-6xl relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-white/5 opacity-10 mix-blend-overlay" />
+              <div className="absolute -right-12 -bottom-12 w-40 h-40 rounded-full bg-white/10 blur-2xl" />
+              <div className="absolute -left-12 -top-12 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
+              <span className="relative z-10 filter drop-shadow">{emoji}</span>
+            </div>
+          )
+        })()}
+
         {/* Content */}
         <section className="py-12 px-6">
           <div className="max-w-3xl mx-auto">
@@ -162,6 +201,34 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                 ))}
               </div>
             )}
+
+            {/* Related Articles */}
+            {post.relatedSlugs && (post.relatedSlugs as string[]).length > 0 && (() => {
+              const related = (post.relatedSlugs as string[])
+                .map(s => posts.find(p => p.slug === s))
+                .filter(Boolean) as typeof posts
+              if (!related.length) return null
+              return (
+                <div className="mt-10 pt-8 border-t border-gray-100">
+                  <h3 className="font-display font-bold text-navy text-base mb-4">
+                    {lang === 'en' ? 'Related Articles' : 'संबंधित लेख'}
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {related.slice(0, 3).map(r => (
+                      <a key={r.slug} href={`/blog/${r.slug}`}
+                        className="flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-gold/30 hover:bg-gold/5 transition-all group">
+                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider flex-shrink-0 mt-0.5 ${CATEGORY_COLORS[r.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                          {r.category}
+                        </span>
+                        <span className="text-[13px] font-semibold text-navy leading-snug group-hover:text-gold transition-colors">
+                          {lang === 'en' ? r.title : r.titleHi}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
 
             {/* Share */}
             <ShareBar title={title} slug={post.slug} lang={lang} />

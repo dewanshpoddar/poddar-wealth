@@ -58,12 +58,12 @@ export default function HeroSection() {
           {/* Buttons */}
           <div className="flex flex-wrap gap-3 mb-6 animate-fade-up" style={{ animationDelay: '0.25s' }}>
             <Link href="/calculators/life-insurance"
-              className="bg-gold text-white border-none py-3 px-6 rounded-full text-[13px] font-medium
+              className="bg-gold text-white border-none py-3 px-6 rounded-full text-[13px] font-medium min-h-[44px] inline-flex items-center justify-center
                          hover:bg-gold-hover transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta1}
             </Link>
             <Link href="/services/life-insurance"
-              className="bg-transparent text-gray-900 border border-gray-300 py-3 px-6 rounded-full text-[13px]
+              className="bg-transparent text-gray-900 border border-gray-300 py-3 px-6 rounded-full text-[13px] min-h-[44px] inline-flex items-center justify-center
                          hover:border-gold hover:text-gold transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta2}
             </Link>
@@ -155,7 +155,7 @@ export default function HeroSection() {
               </button>
             ))}
             <div className="pt-2.5 mt-1 border-t border-[rgba(184,134,11,0.1)]">
-              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[11px] font-medium py-2.5 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[11px] font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
                 {t.hero.cta3}
               </Link>
             </div>
@@ -196,7 +196,7 @@ export default function HeroSection() {
           </button>
         ))}
         <div className="pt-3 mt-1.5 border-t border-[rgba(184,134,11,0.1)]">
-          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[12px] font-medium py-2.5 rounded-lg hover:bg-gold-hover transition-colors shadow-sm">
+          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[12px] font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
             {t.hero.cta3}
           </Link>
         </div>

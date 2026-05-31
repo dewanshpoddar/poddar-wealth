@@ -1043,5 +1043,85 @@
     "successTitle": "Renewal Request Received!",
     "successMsg": "Ajay sir will personally contact you before your renewal due date. Your policy will not lapse.",
     "trustNote": "We track your renewal dates — no policy lapses on our watch."
+  },
+  "testimonialsPage": {
+    "heroEyebrow": "TRUST & VERIFICATION",
+    "heroTitle": "What Our Families Say",
+    "heroSubtitle": "Real stories of secured futures, matured milestones, and cashless recoveries from families who have trusted Ajay sir since 1994.",
+    "trustStats": {
+      "families": "5000+ Families",
+      "years": "31 Years",
+      "claims": "₹500Cr+ Claims"
+    },
+    "ctaTitle": "Join our growing family",
+    "ctaSubtitle": "Let Mr. Ajay Kumar Poddar build a financial fortress for your family's future.",
+    "ctaButton": "Get Started Now",
+    "maleAvatar": "Male",
+    "femaleAvatar": "Female"
+  },
+  "aboutTimeline": {
+    "title": "The Legacy Timeline",
+    "subtitle": "31-Year Chronology",
+    "items": [
+      {
+        "year": "1994",
+        "title": "Started career with LIC",
+        "desc": "Ajay Kumar Poddar entered the insurance profession with LIC of India to redefine family protection."
+      },
+      {
+        "year": "2005",
+        "title": "1,000 Families Protected",
+        "desc": "Reached a milestone of protecting over 1,000 families across Gorakhpur and Eastern UP."
+      },
+      {
+        "year": "2010",
+        "title": "MDRT USA Qualification",
+        "desc": "Inducted into the elite Million Dollar Round Table (MDRT), USA, marking global professional excellence."
+      },
+      {
+        "year": "2015",
+        "title": "Chairman's Club Recognition",
+        "desc": "Inducted into the premier LIC Chairman's Club, reserved for top-performing insurance advisors in India."
+      },
+      {
+        "year": "2020",
+        "title": "5,000 Families Protected",
+        "desc": "Secured the financial futures of more than 5,000 families, managing substantial coverage legacy."
+      },
+      {
+        "year": "2024",
+        "title": "Digital Presence Launched",
+        "desc": "Launched poddarwealth.com to provide automated premium reviews, financial blueprints, and 24/7 support."
+      }
+    ]
+  },
+  "compare": {
+    "title": "Compare Plans",
+    "hero": "Compare Insurance Plans Side by Side",
+    "heroSub": "Pick 2 or 3 LIC plans and see them side by side — premiums, benefits, and features at a glance.",
+    "selectPlans": "Select plans to compare",
+    "addPlan": "Add a plan",
+    "comparePlans": "Compare Plans",
+    "clearAll": "Clear all",
+    "noPlanSelected": "Select at least 2 plans to compare",
+    "bestFor": "Best For",
+    "entryAge": "Entry Age",
+    "policyTerm": "Policy Term",
+    "minSA": "Min Sum Assured",
+    "deathBenefit": "Death Benefit",
+    "maturityBenefit": "Maturity Benefit",
+    "taxBenefit": "Tax Benefit",
+    "xirr": "Expected XIRR",
+    "keyFeatures": "Key Features",
+    "cta": "Need help choosing? Ask Ajay sir →"
+  },
+  "exitIntent": {
+    "title": "Wait! Get Your FREE Wealth Health Report",
+    "subtitle": "Let Ajay sir review your current insurance and spot the gaps — free, no obligation.",
+    "namePlaceholder": "Your name",
+    "phonePlaceholder": "10-digit mobile",
+    "submit": "Get My Free Report",
+    "successMsg": "Ajay sir will call you within 24 hours. 🙏",
+    "dismiss": "No thanks"
   }
 }

@@ -10,6 +10,7 @@ import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPP
 import { fmt, fmtSA, toWords } from '@/lib/format'
 import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
 import { openLeadPopup } from '@/lib/events'
+import { trackEvent } from '@/lib/analytics'
 import { CAT_BADGE, CAT_AVATAR_COLOR, CATEGORIES } from '@/components/calculators/calc-constants'
 import PlanSearch from '@/components/calculators/PlanSearch'
 import InputsPanel from '@/components/calculators/InputsPanel'
@@ -255,6 +256,9 @@ export default function PremiumCalculatorPage() {
     setPremResult(prem)
     setMatResult(mat)
     setBenefitTable(table)
+    if (selectedPlan && prem) {
+      trackEvent('plan_quote_clicked', { plan: String(selectedPlan.planNo), premium: Math.round(prem.yearlyYear1) })
+    }
     setIsUnlocked(false)
     setUnlockStatus('idle')
     setShowResults(true)

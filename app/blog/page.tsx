@@ -18,6 +18,28 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
 }
 
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  'Life Insurance':   'from-blue-500 to-blue-600',
+  'LIC Plans':        'from-amber-500 to-amber-600',
+  'Health Insurance': 'from-green-500 to-green-600',
+  'Tax Planning':     'from-emerald-500 to-emerald-600',
+  'Claims':           'from-violet-500 to-violet-600',
+  'Comparison':       'from-red-500 to-red-600',
+  'Guides':           'from-purple-500 to-purple-600',
+  'Child Plans':      'from-pink-500 to-pink-600',
+}
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  'Life Insurance':   '🛡️',
+  'LIC Plans':        '📋',
+  'Health Insurance': '🏥',
+  'Tax Planning':     '💰',
+  'Claims':           '📁',
+  'Comparison':       '⚖️',
+  'Guides':           '📚',
+  'Child Plans':      '👶',
+}
+
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-IN', {
     day: 'numeric', month: 'long', year: 'numeric',
@@ -75,39 +97,51 @@ export default function BlogPage() {
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map(post => (
-              <article
-                key={post.slug}
-                className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-200 flex flex-col"
-              >
-                {/* Category + Date header */}
-                <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
-                    {post.category}
-                  </span>
-                  <span className="text-[11px] text-gray-400">{formatDate(post.date)}</span>
-                </div>
-
-                {/* Content */}
-                <div className="px-5 pb-5 flex-1 flex flex-col">
-                  <h2 className="font-display font-bold text-[16px] text-navy leading-snug mb-2">
-                    {lang === 'en' ? post.title : post.titleHi}
-                  </h2>
-                  <p className="text-[13px] text-gray-500 leading-relaxed mb-4 flex-1">
-                    {lang === 'en' ? post.summary : post.summaryHi}
-                  </p>
-                  <div className="flex items-center justify-between mt-auto">
-                    <span className="text-[11px] text-gray-400">{post.author}</span>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-[12px] font-bold text-gold hover:text-amber-700 transition-colors flex items-center gap-1"
-                    >
-                      {t.blog.readMore} →
-                    </Link>
+            {filtered.map(post => {
+              const gradient = CATEGORY_GRADIENTS[post.category] || 'from-gray-400 to-gray-500'
+              const emoji = CATEGORY_EMOJIS[post.category] || '📝'
+              return (
+                <article
+                  key={post.slug}
+                  className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-200 flex flex-col group cursor-default"
+                >
+                  {/* Category Gradient Header */}
+                  <div className={`h-[120px] w-full bg-gradient-to-r ${gradient} flex items-center justify-center text-4xl relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-white/5 opacity-10 mix-blend-overlay" />
+                    <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-white/10 blur-xl" />
+                    <div className="absolute -left-6 -top-6 w-20 h-20 rounded-full bg-white/10 blur-xl" />
+                    <span className="relative z-10 filter drop-shadow transition-transform duration-500 group-hover:scale-110">{emoji}</span>
                   </div>
-                </div>
-              </article>
-            ))}
+
+                  {/* Category + Date header */}
+                  <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                      {post.category}
+                    </span>
+                    <span className="text-[11px] text-gray-400">{formatDate(post.date)}</span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="px-5 pb-5 flex-1 flex flex-col">
+                    <h2 className="font-display font-bold text-[16px] text-navy leading-snug mb-2 group-hover:text-gold transition-colors duration-200">
+                      {lang === 'en' ? post.title : post.titleHi}
+                    </h2>
+                    <p className="text-[13px] text-gray-500 leading-relaxed mb-4 flex-1">
+                      {lang === 'en' ? post.summary : post.summaryHi}
+                    </p>
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-[11px] text-gray-400">{post.author}</span>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="text-[12px] font-bold text-gold hover:text-amber-700 transition-colors flex items-center gap-1 cursor-pointer"
+                      >
+                        {t.blog.readMore} →
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
           </div>
 
           {filtered.length === 0 && (

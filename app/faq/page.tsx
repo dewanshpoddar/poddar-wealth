@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+import { trackEvent } from '@/lib/analytics'
 import {
   ChevronDown,
   ChevronUp,
@@ -46,10 +47,12 @@ export default function FAQPage() {
 
   const toggleItem = (category: Category, idx: number) => {
     const key = `${category}-${idx}`
-    setOpenItems((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }))
+    const isOpening = !openItems[key]
+    if (isOpening) {
+      const item = (faq.items[category] ?? [])[idx]
+      trackEvent('faq_opened', { question: String(item?.q ?? '').slice(0, 60) })
+    }
+    setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }))
   }
 
   // Get active category questions

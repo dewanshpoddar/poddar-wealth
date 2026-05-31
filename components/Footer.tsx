@@ -41,7 +41,7 @@ export default function Footer() {
                 { name: 'About Us', href: '/about' },
                 { name: t.nav.products || 'Products', href: '/products' },
                 { name: t.nav.services || 'Services', href: '/services' },
-                { name: 'Testimonials', href: '/#testimonials' },
+                { name: 'Testimonials', href: '/testimonials' },
                 { name: 'Blog', href: '/blog' },
                 { name: 'FAQ', href: '/faq' },
               ].map((link) => (

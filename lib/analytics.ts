@@ -43,6 +43,13 @@ export type AnalyticsEvent =
   | 'renewal_requested'
   // Lead capture
   | 'lead_submitted'
+  // Compare tool
+  | 'compare_viewed'
+  // FAQ
+  | 'faq_opened'
+  // Exit intent
+  | 'exit_intent_shown'
+  | 'exit_intent_submitted'
 
 export function trackEvent(
   name: AnalyticsEvent,
