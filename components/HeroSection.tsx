@@ -106,6 +106,10 @@ export default function HeroSection() {
                 src={src}
                 alt="Happy Indian family planning their future"
                 className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                fetchPriority={idx === 0 ? 'high' : 'low'}
+                decoding={idx === 0 ? 'sync' : 'async'}
+                width="600" height="700"
               />
             ))}
             {/* Stronger gradient so images pop on mobile */}

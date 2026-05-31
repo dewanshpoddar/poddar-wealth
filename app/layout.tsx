@@ -4,16 +4,26 @@ import Script from 'next/script'
 import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
-const fraunces = { variable: 'fraunces' }
-const plusJakartaSans = { variable: 'plus-jakarta-sans' }
+// next/font must be called at module level (build-time constraint)
+const fraunces = Fraunces({
+  subsets:  ['latin'],
+  weight:   ['400', '500', '600', '700', '900'],
+  style:    ['normal', 'italic'],
+  variable: '--font-display',
+  display:  'swap',
+})
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets:  ['latin'],
+  weight:   ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display:  'swap',
+})
+
 import { LangProvider } from '@/lib/LangContext'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { AIChatButton, MobileCTABar } from '@/src/features/ai-agent'
-import LeadPopup from '@/components/LeadPopup'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
-import WhatsAppButton from '@/components/WhatsAppButton'
-import ExitIntentPopup from '@/components/ExitIntentPopup'
+import ClientFloats from '@/components/ClientFloats'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -23,6 +33,7 @@ export const metadata: Metadata = {
   description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   keywords: ['LIC agent Gorakhpur', 'life insurance Gorakhpur', 'LIC advisor UP', 'Ajay Kumar Poddar', 'wealth management Gorakhpur', 'health insurance UP'],
   authors: [{ name: 'Ajay Kumar Poddar' }],
+  verification: { google: 'yhsT75V26EOLX22AbKa7E9GXKeK36erqfm0DLCq5EdM' },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
@@ -88,11 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main>{children}</main>
           <Footer />
-          <AIChatButton />
-          <MobileCTABar />
-          <WhatsAppButton />
-          <LeadPopup />
-          <ExitIntentPopup />
+          <ClientFloats />
         </LangProvider>
       </body>
     </html>

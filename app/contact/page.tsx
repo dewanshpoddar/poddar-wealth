@@ -113,8 +113,9 @@ export default function ContactPage() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">I want to *</label>
+                      <label htmlFor="wantTo" className="block text-sm font-semibold text-slate-700 mb-1.5">I want to *</label>
                       <select
+                        id="wantTo"
                         required
                         value={form.wantTo}
                         onChange={e => setForm({...form, wantTo: e.target.value})}
@@ -130,8 +131,9 @@ export default function ContactPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">I am *</label>
+                      <label htmlFor="iAm" className="block text-sm font-semibold text-slate-700 mb-1.5">I am *</label>
                       <select
+                        id="iAm"
                         required
                         value={form.iAm}
                         onChange={e => setForm({...form, iAm: e.target.value})}
