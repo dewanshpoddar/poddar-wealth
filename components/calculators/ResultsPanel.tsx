@@ -83,7 +83,7 @@ export default function ResultsPanel({
                         <div className="font-display font-bold text-[13px] text-navy">
                           LIC&apos;s {selectedPlan.name} ({selectedPlan.planNo}-{safeterm}-{ppt})
                         </div>
-                        <div className="text-[11px] text-gray-400">Premium And Benefit Illustration</div>
+                        <div className="text-[11px] text-gray-500">Premium And Benefit Illustration</div>
                       </div>
                     </div>
 
@@ -136,16 +136,16 @@ export default function ResultsPanel({
                           <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
                             <div className="text-[22px] mb-1">🐷</div>
                             <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
-                            <div className="text-[10px] text-gray-400 mb-2">one-time purchase price</div>
+                            <div className="text-[10px] text-gray-500 mb-2">one-time purchase price</div>
                             <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {(premResult.purchasePrice ?? 0).toLocaleString('en-IN')}</div>
-                            <div className="text-[10px] text-gray-400 mt-1">+ GST ₹{(premResult.gst ?? 0).toLocaleString('en-IN')} = ₹{(premResult.totalPayable ?? 0).toLocaleString('en-IN')}</div>
+                            <div className="text-[10px] text-gray-500 mt-1">+ GST ₹{(premResult.gst ?? 0).toLocaleString('en-IN')} = ₹{(premResult.totalPayable ?? 0).toLocaleString('en-IN')}</div>
                           </div>
                           <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
                             <div className="text-[22px] mb-1">🤲</div>
                             <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
-                            <div className="text-[10px] text-gray-400 mb-2">annual pension</div>
+                            <div className="text-[10px] text-gray-500 mb-2">annual pension</div>
                             <div className="font-display font-bold text-[22px] text-green-700 leading-none">₹ {(premResult.annualPension ?? 0).toLocaleString('en-IN')}</div>
-                            <div className="text-[10px] text-gray-400 mt-1">every year for life</div>
+                            <div className="text-[10px] text-gray-500 mt-1">every year for life</div>
                           </div>
                         </div>
                         <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
@@ -166,7 +166,7 @@ export default function ResultsPanel({
                               </div>
                             ))}
                           </div>
-                          <div className="mt-3 text-[10px] text-gray-400 text-center">
+                          <div className="mt-3 text-[10px] text-gray-500 text-center">
                             Annuity rate: ₹{premResult.annuityRate ?? 0}/₹1000 purchase price · Life annuity with return of purchase price option
                           </div>
                         </div>
@@ -177,14 +177,14 @@ export default function ResultsPanel({
                         <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
                           <div className="text-[22px] mb-1">🐷</div>
                           <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
-                          <div className="text-[10px] text-gray-400 mb-2">total premium of</div>
+                          <div className="text-[10px] text-gray-500 mb-2">total premium of</div>
                           <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {Math.round(premResult.totalPaid).toLocaleString('en-IN')}</div>
-                          <div className="text-[10px] text-gray-400 mt-1">over {ppt} year{ppt > 1 ? 's' : ''}</div>
+                          <div className="text-[10px] text-gray-500 mt-1">over {ppt} year{ppt > 1 ? 's' : ''}</div>
                         </div>
                         <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
                           <div className="text-[22px] mb-1">🤲</div>
                           <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
-                          <div className="text-[10px] text-gray-400 mb-2">{isTermPlan ? 'life cover' : isUlip ? 'fund value (market-linked)' : 'total benefit of'}</div>
+                          <div className="text-[10px] text-gray-500 mb-2">{isTermPlan ? 'life cover' : isUlip ? 'fund value (market-linked)' : 'total benefit of'}</div>
                           <div className={`font-display font-bold text-[22px] leading-none ${isTermPlan ? 'text-red-600' : 'text-green-700'}`}>
                             {isTermPlan
                               ? `₹ ${sa.toLocaleString('en-IN')}`
@@ -192,7 +192,7 @@ export default function ResultsPanel({
                               ? 'Market-linked'
                               : (matResult?.maturity ? `₹ ${Math.round(matResult.maturity).toLocaleString('en-IN')}` : '—')}
                           </div>
-                          <div className="text-[10px] text-gray-400 mt-1">
+                          <div className="text-[10px] text-gray-500 mt-1">
                             {isTermPlan ? 'on death claim' : isUlip ? 'depends on NAV at maturity' : `at age ${age + safeterm}`}
                           </div>
                         </div>
@@ -216,14 +216,14 @@ export default function ResultsPanel({
                             <div className="text-center">
                               <div className="text-[11px] font-bold text-gray-500 mb-1">First Year</div>
                               <div className="font-display font-bold text-[22px] text-gold">₹ {Math.round(currentModePrem.instalment1).toLocaleString('en-IN')}</div>
-                              <div className="text-[10px] text-gray-400 mt-0.5">
+                              <div className="text-[10px] text-gray-500 mt-0.5">
                                 per {mode === 'yearly' ? 'year' : mode === 'halfyearly' ? 'half-year' : mode === 'quarterly' ? 'quarter' : 'month'}
                               </div>
                             </div>
                             <div className="text-center">
                               <div className="text-[11px] font-bold text-gray-500 mb-1">Subseq. Year</div>
                               <div className="font-display font-bold text-[22px] text-gold">₹ {Math.round(currentModePrem.instalment2).toLocaleString('en-IN')}</div>
-                              <div className="text-[10px] text-gray-400 mt-0.5">
+                              <div className="text-[10px] text-gray-500 mt-0.5">
                                 per {mode === 'yearly' ? 'year' : mode === 'halfyearly' ? 'half-year' : mode === 'quarterly' ? 'quarter' : 'month'}
                               </div>
                             </div>
@@ -240,7 +240,7 @@ export default function ResultsPanel({
                           </div>
                           {/* Per day — based on yearly equivalent */}
                           {allModesPrem && (
-                            <div className="mt-3 text-center text-[11px] text-gray-400">
+                            <div className="mt-3 text-center text-[11px] text-gray-500">
                               {MODE_LABEL[mode]} Mode · Avg. Premium/Day ≈{' '}
                               <span className="font-bold text-navy">
                                 ₹{Math.round((allModesPrem.find(r => r.mode === 'yearly')?.prem?.yearlyYear1 ?? premResult.yearlyYear1) / 365)}
@@ -267,7 +267,7 @@ export default function ResultsPanel({
                               </div>
                               <form onSubmit={handleUnlock} className="space-y-3 text-left">
                                 <div className="relative">
-                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">📱</span>
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[13px]">📱</span>
                                   <input required type="tel" placeholder="10-digit mobile number"
                                     value={unlockMobile} onChange={e => setUnlockMobile(e.target.value)}
                                     className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
@@ -294,7 +294,7 @@ export default function ResultsPanel({
                                   </select>
                                 </div>
                                 <div className="relative">
-                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[13px]">✉️</span>
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[13px]">✉️</span>
                                   <input type="email" placeholder="Email (optional)"
                                     value={unlockEmail} onChange={e => setUnlockEmail(e.target.value)}
                                     className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
@@ -305,7 +305,7 @@ export default function ResultsPanel({
                                     ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     : <><ArrowRight className="w-4 h-4" /> Unlock Full Report</>}
                                 </button>
-                                <div className="text-[10px] text-gray-400 text-center">🔒 Your data is private and never shared.</div>
+                                <div className="text-[10px] text-gray-500 text-center">🔒 Your data is private and never shared.</div>
                               </form>
                             </div>
                           </div>
@@ -344,7 +344,7 @@ export default function ResultsPanel({
                                 </div>
                               )}
                               <div className="flex justify-between py-3">
-                                <span className="text-[13px] font-bold text-navy">Expected Maturity Amount<br /><span className="font-normal text-[10px] text-gray-400">after {safeterm} years.</span></span>
+                                <span className="text-[13px] font-bold text-navy">Expected Maturity Amount<br /><span className="font-normal text-[10px] text-gray-500">after {safeterm} years.</span></span>
                                 <span className="text-[16px] font-bold text-navy">{Math.round(matResult.maturity).toLocaleString('en-IN')}</span>
                               </div>
                               <div className="flex justify-between py-2.5">
@@ -353,7 +353,7 @@ export default function ResultsPanel({
                               </div>
                             </div>
                             <div className="px-5 pb-3">
-                              <p className="text-[10px] text-gray-400 italic">*Bonus rates and Final Addition Bonus (FAB) rates as per the latest declared rates.</p>
+                              <p className="text-[10px] text-gray-500 italic">*Bonus rates and Final Addition Bonus (FAB) rates as per the latest declared rates.</p>
                             </div>
                           </div>
                         )}
@@ -402,7 +402,7 @@ export default function ResultsPanel({
                                 {ppt < safeterm && (
                                   <div className="text-center">
                                     <div className="text-[11px] font-bold text-navy">Age {age + ppt}</div>
-                                    <div className="text-[10px] text-gray-400">Premiums end</div>
+                                    <div className="text-[10px] text-gray-500">Premiums end</div>
                                   </div>
                                 )}
                                 <div>
@@ -434,7 +434,7 @@ export default function ResultsPanel({
                             <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
                               <span className="text-[16px]">💳</span> Show Full Premium Chart
                             </div>
-                            {showAllModes ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                            {showAllModes ? <ChevronUp className="w-4 h-4 text-gray-500" /> : <ChevronDown className="w-4 h-4 text-gray-500" />}
                           </button>
                           {showAllModes && allModesPrem && (
                             <div className="border-t border-gray-50">
@@ -505,14 +505,14 @@ export default function ResultsPanel({
                               <div className="flex justify-between">
                                 <div>
                                   <div className="text-[12px] font-semibold text-gray-700">Section 80C Deduction</div>
-                                  <div className="text-[10px] text-gray-400">Up to ₹1.5L from taxable income</div>
+                                  <div className="text-[10px] text-gray-500">Up to ₹1.5L from taxable income</div>
                                 </div>
                                 <div className="text-[13px] font-bold text-green-700">{tax80C ? `~${fmt(tax80C)}` : '—'}</div>
                               </div>
                               <div className="flex justify-between">
                                 <div>
                                   <div className="text-[12px] font-semibold text-gray-700">Sec. 10(10D) Maturity</div>
-                                  <div className="text-[10px] text-gray-400">Maturity proceeds tax-free*</div>
+                                  <div className="text-[10px] text-gray-500">Maturity proceeds tax-free*</div>
                                 </div>
                                 <div className="text-[13px] font-bold text-green-700">Tax Free</div>
                               </div>
@@ -536,14 +536,14 @@ export default function ResultsPanel({
                                       <span className="text-gold text-[12px] mt-0.5">+</span>
                                       <div>
                                         <div className="text-[11px] font-semibold text-gray-700">{r.name}</div>
-                                        <div className="text-[10px] text-gray-400 leading-relaxed">{r.desc}</div>
+                                        <div className="text-[10px] text-gray-500 leading-relaxed">{r.desc}</div>
                                       </div>
                                     </div>
                                   )
                                 })}
                               </div>
                             ) : (
-                              <div className="text-[12px] text-gray-400">No riders for this plan.</div>
+                              <div className="text-[12px] text-gray-500">No riders for this plan.</div>
                             )}
                           </div>
                         </div>
@@ -562,7 +562,7 @@ export default function ResultsPanel({
                                 { label: 'Total Bonus',      value: matResult?.totalBonus ? fmt(matResult.totalBonus) : '—' },
                               ].map(({ label, value }) => (
                                 <div key={label} className="bg-white rounded-xl p-3 border border-gold/10 text-center">
-                                  <div className="text-[10px] text-gray-400 mb-0.5">{label}</div>
+                                  <div className="text-[10px] text-gray-500 mb-0.5">{label}</div>
                                   <div className="font-display font-bold text-[16px] text-navy">{value}</div>
                                 </div>
                               ))}
@@ -578,9 +578,9 @@ export default function ResultsPanel({
                               <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
                                 <TrendingUp className="w-4 h-4 text-gold" />
                                 Show Full Premium Chart (Year-wise)
-                                <span className="text-[10px] text-gray-400 font-normal">({benefitTable.length} years)</span>
+                                <span className="text-[10px] text-gray-500 font-normal">({benefitTable.length} years)</span>
                               </div>
-                              {showTable ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                              {showTable ? <ChevronUp className="w-4 h-4 text-gray-500" /> : <ChevronDown className="w-4 h-4 text-gray-500" />}
                             </button>
                             {showTable && (
                               <>

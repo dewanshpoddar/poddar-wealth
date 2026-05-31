@@ -9,7 +9,13 @@ const securityHeaders = [
 
 const nextConfig = {
   async headers() {
-    return [{ source: '/(.*)', headers: securityHeaders }]
+    return [
+      { source: '/(.*)', headers: securityHeaders },
+      {
+        source: '/:all*(svg|jpg|png|webp|woff2)',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ]
   },
   // ─── www → non-www canonical redirect ───────────────────────────────────
   // Redirect poddarwealth.com → www.poddarwealth.com (permanent, SEO-safe)

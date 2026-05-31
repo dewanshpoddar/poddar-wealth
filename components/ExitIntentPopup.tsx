@@ -69,7 +69,7 @@ export default function ExitIntentPopup() {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7 relative">
         <button
           onClick={() => setVisible(false)}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl leading-none"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-600 text-xl leading-none"
           aria-label="Close"
         >
           ✕
@@ -81,7 +81,7 @@ export default function ExitIntentPopup() {
             <h3 className="font-display font-bold text-navy text-lg mb-2">
               {c.successMsg ?? 'Ajay sir will call you within 24 hours.'}
             </h3>
-            <button onClick={() => setVisible(false)} className="mt-4 text-sm text-gray-400 hover:text-navy underline">
+            <button onClick={() => setVisible(false)} className="mt-4 text-sm text-gray-500 hover:text-navy underline">
               Close
             </button>
           </div>
@@ -125,7 +125,7 @@ export default function ExitIntentPopup() {
 
             <button
               onClick={() => setVisible(false)}
-              className="w-full mt-3 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+              className="w-full mt-3 text-xs text-gray-500 hover:text-gray-600 transition-colors"
             >
               {c.dismiss ?? 'No thanks'}
             </button>

@@ -88,8 +88,9 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Name *</label>
+                    <label htmlFor="ct-name" className="block text-sm font-semibold text-slate-700 mb-1.5">Your Name *</label>
                     <input
+                      id="ct-name"
                       type="text"
                       required
                       value={form.name}
@@ -99,8 +100,9 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp / Phone *</label>
+                    <label htmlFor="ct-phone" className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp / Phone *</label>
                     <input
+                      id="ct-phone"
                       type="tel"
                       required
                       value={form.phone}

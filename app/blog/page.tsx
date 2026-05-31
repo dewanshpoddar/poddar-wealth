@@ -118,7 +118,7 @@ export default function BlogPage() {
                     <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
                       {post.category}
                     </span>
-                    <span className="text-[11px] text-gray-400">{formatDate(post.date)}</span>
+                    <span className="text-[11px] text-gray-500">{formatDate(post.date)}</span>
                   </div>
 
                   {/* Content */}
@@ -130,7 +130,7 @@ export default function BlogPage() {
                       {lang === 'en' ? post.summary : post.summaryHi}
                     </p>
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="text-[11px] text-gray-400">{post.author}</span>
+                      <span className="text-[11px] text-gray-500">{post.author}</span>
                       <Link
                         href={`/blog/${post.slug}`}
                         className="text-[12px] font-bold text-gold hover:text-amber-700 transition-colors flex items-center gap-1 cursor-pointer"
@@ -145,7 +145,7 @@ export default function BlogPage() {
           </div>
 
           {filtered.length === 0 && (
-            <div className="text-center py-20 text-gray-400 text-sm">
+            <div className="text-center py-20 text-gray-500 text-sm">
               {lang === 'en' ? 'No articles in this category yet.' : 'इस श्रेणी में अभी कोई लेख नहीं।'}
             </div>
           )}

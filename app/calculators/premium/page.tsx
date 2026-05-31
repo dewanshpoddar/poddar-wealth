@@ -428,7 +428,7 @@ export default function PremiumCalculatorPage() {
             {!selectedPlan && (
               <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-64 flex flex-col items-center justify-center text-center p-8">
                 <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                <div className="font-display font-bold text-gray-400 text-[17px] mb-1">Select a plan to calculate</div>
+                <div className="font-display font-bold text-gray-500 text-[17px] mb-1">Select a plan to calculate</div>
                 <div className="text-[12px] text-gray-300">Choose any LIC plan from the list · or use Quick Selector above</div>
               </div>
             )}
@@ -471,9 +471,9 @@ export default function PremiumCalculatorPage() {
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="font-display font-bold text-[16px] text-navy">Choose Fund</h2>
                       <div className="flex items-center gap-2">
-                        {navLoading && <span className="text-[11px] text-gray-400 animate-pulse">Fetching…</span>}
+                        {navLoading && <span className="text-[11px] text-gray-500 animate-pulse">Fetching…</span>}
                         {!navLoading && navLastUpdated && (
-                          <span className="text-[10px] text-gray-400">
+                          <span className="text-[10px] text-gray-500">
                             Updated {new Date(navLastUpdated).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         )}
@@ -514,7 +514,7 @@ export default function PremiumCalculatorPage() {
                             {fundNav ? (
                               <div className="flex items-center gap-1.5">
                                 <span className="text-[13px] font-bold text-navy">₹{fundNav.nav.toFixed(2)}</span>
-                                <span className="text-[10px] text-gray-400">NAV · {fundNav.date}</span>
+                                <span className="text-[10px] text-gray-500">NAV · {fundNav.date}</span>
                               </div>
                             ) : (
                               <div className="text-[11px] text-gray-300">NAV loading…</div>
@@ -523,7 +523,7 @@ export default function PremiumCalculatorPage() {
                         )
                       })}
                     </div>
-                    <p className="text-[10px] text-gray-400 mt-3">
+                    <p className="text-[10px] text-gray-500 mt-3">
                       NAV updates daily after market close (~6–7 PM IST). Returns are market-linked and not guaranteed.
                       ULIP charges (allocation, mortality, fund management) apply.
                     </p>
@@ -538,7 +538,7 @@ export default function PremiumCalculatorPage() {
                         className="flex items-center gap-1.5 text-[12px] font-bold text-navy bg-gray-100 hover:bg-gold/10 border border-gray-200 hover:border-gold/30 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
                         ← Edit Inputs
                       </button>
-                      <div className="flex-1 text-center text-[11px] text-gray-400 truncate hidden sm:block">
+                      <div className="flex-1 text-center text-[11px] text-gray-500 truncate hidden sm:block">
                         LIC&apos;s {selectedPlan.name} · Age {age} · {isPensionAnnuity ? fmtSA(purchasePrice) : fmtSA(sa)}
                       </div>
                       <button onClick={calculate}
@@ -550,7 +550,7 @@ export default function PremiumCalculatorPage() {
                     <>
                       <div className="flex-1 text-[12px] font-semibold text-navy truncate">
                         LIC&apos;s {selectedPlan.name}
-                        <span className="text-gray-400 font-normal ml-1 text-[11px]">· Plan {selectedPlan.planNo}</span>
+                        <span className="text-gray-500 font-normal ml-1 text-[11px]">· Plan {selectedPlan.planNo}</span>
                       </div>
                       {premResult && (
                         <button onClick={() => setShowResults(true)}

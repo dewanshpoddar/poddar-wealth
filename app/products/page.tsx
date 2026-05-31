@@ -35,9 +35,9 @@ export default function ProductsPage() {
           <p className="text-10 font-bold tracking-[0.18em] uppercase text-navy/45 mb-2">
             Personal Advisory
           </p>
-          <h2 className="text-24 md:text-32 font-display font-bold mb-3 text-navy leading-tight">
+          <h1 className="text-24 md:text-32 font-display font-bold mb-3 text-navy leading-tight">
             Not sure which plan is right for you?
-          </h2>
+          </h1>
           <p className="text-14 text-navy/60 mb-7 leading-relaxed max-w-lg mx-auto">
             Insurance is a long-term commitment. Mr. Ajay Kumar Poddar himself reviews each case to ensure you get the absolute best protection and returns.
           </p>

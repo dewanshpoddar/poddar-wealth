@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
 import { LIC_PLANS_CONTEXT } from '@/lib/lic-plans-context'
-import { GROQ_MODEL } from '@/lib/constants'
+import { env } from '@/lib/env'
 
 const MAX_INPUT_CHARS = 500
+const GROQ_MODEL = env.GROQ_MODEL
 
 function buildSystemPrompt() {
   const now = new Date().toLocaleDateString('en-IN', {
@@ -35,7 +36,7 @@ ${LIC_PLANS_CONTEXT}`
 
 // ── Google Sheets logger (fire-and-forget) ─────────────────────────────────
 async function logToSheets(sessionId: string, userMsg: string, botReply: string) {
-  const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL
+  const url = env.GOOGLE_SHEETS_WEBHOOK_URL
   if (!url) return
   try {
     await fetch(url, {
@@ -54,10 +55,16 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
 // ── Streaming route handler ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
-    const { messages, sessionId } = await req.json()
+    let body: { messages?: unknown; sessionId?: unknown }
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+    const { messages, sessionId } = body
 
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'API key not configured' }, { status: 500 })
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ error: 'No message' }, { status: 400 })
     }
 
     const lastMessage = messages[messages.length - 1]
@@ -68,7 +75,7 @@ export async function POST(req: NextRequest) {
     const safeContent = rawContent.slice(0, MAX_INPUT_CHARS)
     if (!safeContent) return NextResponse.json({ error: 'Empty message' }, { status: 400 })
 
-    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
+    const groq = new Groq({ apiKey: env.GROQ_API_KEY })
 
     // Convert prior turns to Groq format — normalize any non-user role to 'assistant'
     const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
@@ -127,7 +134,7 @@ export async function POST(req: NextRequest) {
 
         controller.close()
 
-        if (sessionId) {
+        if (sessionId && typeof sessionId === 'string') {
           logToSheets(sessionId, safeContent, fullReply)
         }
       },

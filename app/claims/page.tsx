@@ -112,9 +112,9 @@ export default function ClaimsPage() {
                   <div className="w-20 h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto text-gold">
                     <Shield size={40} />
                   </div>
-                  <h3 className="font-display text-[22px] font-bold text-navy">
+                  <h2 className="font-display text-[22px] font-bold text-navy">
                     {lang === 'en' ? 'Poddar Claims Guarantee' : 'पोद्दार क्लेम गारंटी'}
-                  </h3>
+                  </h2>
                   <p className="text-slate-500 text-[13px] leading-relaxed">
                     {lang === 'en'
                       ? 'Every policy issued by our desk comes with life-long personal claim assistance. We visit your home and coordinate with departments directly.'

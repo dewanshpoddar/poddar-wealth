@@ -1,0 +1,150 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { useLang } from '@/lib/LangContext'
+import { Star } from 'lucide-react'
+
+export default function GoogleReviewsBadge() {
+  const { t } = useLang()
+  const [count, setCount] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const animatedRef = useRef(false)
+
+  const reviewT = t.googleReviews || {
+    eyebrow: 'VERIFIED TRUST',
+    heading: '4.9 Rating | 154 Google Reviews',
+    sub: '100% verified external reviews on Google Maps',
+    review1Text: 'Best insurance advisor in Gorakhpur. Very trustworthy.',
+    review1Author: 'R.K.',
+    review2Text: 'Ajay sir helped us with claim settlement in just 30 days.',
+    review2Author: 'S.P.',
+    review3Text: 'Managing our family insurance for 15 years now.',
+    review3Author: 'V.M.',
+    viewOnGoogle: 'View all reviews on Google Maps →'
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (entry.isIntersecting && !animatedRef.current) {
+          animatedRef.current = true
+          let startTimestamp: number | null = null
+          const endValue = 154
+          const duration = 1200 // 1.2 seconds
+
+          const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1)
+            setCount(Math.floor(progress * endValue))
+            if (progress < 1) {
+              window.requestAnimationFrame(step)
+            }
+          };
+
+          window.requestAnimationFrame(step)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className="max-w-5xl mx-auto px-6 mb-16 animate-fade-up"
+    >
+      <a
+        href="https://www.google.com/maps/place/Poddar+Wealth+Management/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block bg-white border border-gold/10 hover:border-gold/30 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden relative cursor-pointer"
+      >
+        {/* Glow decoration */}
+        <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none -z-10" />
+
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
+          
+          {/* Left Column: Aggregated Rating */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left shrink-0">
+            <span className="text-[10px] font-bold text-gold tracking-[0.2em] uppercase mb-2">
+              {reviewT.eyebrow}
+            </span>
+
+            {/* Google Logo and Rating */}
+            <div className="flex items-center gap-3.5 mb-3">
+              <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center p-2 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.69a5.74 5.74 0 0 1-2.48 3.77v3.13h4.01c2.34-2.16 3.68-5.32 3.68-8.75z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.97-1.08 7.96-2.91l-4.01-3.13c-1.12.75-2.55 1.19-3.95 1.19-3.04 0-5.61-2.05-6.53-4.82H1.31v3.23A12 12 0 0 0 12 24z"/>
+                  <path fill="#FBBC05" d="M5.47 14.33a7.16 7.16 0 0 1 0-4.66V6.44H1.31a12 12 0 0 0 0 11.12z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44A12 12 0 0 0 1.31 6.44l4.16 3.23c.92-2.77 3.49-4.82 6.53-4.82z"/>
+                </svg>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-display font-bold text-2xl text-navy">4.9</span>
+                  <div className="flex gap-0.5 text-gold">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={15} className="fill-gold text-gold" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 font-bold tracking-wide uppercase mt-0.5">
+                  {count} Google Reviews
+                </p>
+              </div>
+            </div>
+
+            <p className="text-[13px] text-slate-500 font-medium mb-4">
+              {reviewT.sub}
+            </p>
+
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-gold group-hover:text-amber-700 transition-colors uppercase tracking-wider">
+              {reviewT.viewOnGoogle}
+            </span>
+          </div>
+
+          {/* Right Column: Review Snippets Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+            {[
+              { text: reviewT.review1Text, author: reviewT.review1Author },
+              { text: reviewT.review2Text, author: reviewT.review2Author },
+              { text: reviewT.review3Text, author: reviewT.review3Author },
+            ].map((rev, idx) => (
+              <div
+                key={idx}
+                className="bg-slate-50 border border-slate-100 rounded-2xl p-5 hover:border-gold/15 transition-all duration-300 flex flex-col justify-between"
+              >
+                <p className="text-[12.5px] text-navy leading-relaxed italic mb-4 font-medium">
+                  &ldquo;{rev.text}&rdquo;
+                </p>
+                <div className="flex items-center justify-between border-t border-slate-100/50 pt-3">
+                  <div className="flex gap-0.5 text-gold">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={10} className="fill-gold text-gold" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    — {rev.author}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </a>
+    </div>
+  )
+}

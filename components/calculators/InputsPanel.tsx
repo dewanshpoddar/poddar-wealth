@@ -150,7 +150,7 @@ export default function InputsPanel({
                       <div className="sm:col-span-2">
                         <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Purchase Price (Lump Sum)
-                          <span className="text-gray-400 font-normal ml-1">(min {fmtSA(selectedPlan.minPurchasePrice ?? 100000)})</span>
+                          <span className="text-gray-500 font-normal ml-1">(min {fmtSA(selectedPlan.minPurchasePrice ?? 100000)})</span>
                         </label>
                         <div className="flex items-center gap-2 mb-1">
                           <input type="range" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
@@ -201,7 +201,7 @@ export default function InputsPanel({
                       <div className="sm:col-span-2">
                         <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Survival Benefit Option
-                          <span className="text-gray-400 font-normal ml-1">(paid each year age 20–24)</span>
+                          <span className="text-gray-500 font-normal ml-1">(paid each year age 20–24)</span>
                         </label>
                         <div className="grid grid-cols-4 gap-2">
                           {([5,10,15,20] as const).map(pct => (
@@ -226,7 +226,7 @@ export default function InputsPanel({
                               className={`text-left p-3 rounded-xl border transition-all
                                 ${bimaLakshmiOption === opt ? 'bg-navy text-white border-navy' : 'bg-gray-50 border-gray-100 hover:border-navy/20'}`}>
                               <div className={`text-[12px] font-bold ${bimaLakshmiOption === opt ? 'text-white' : 'text-gray-700'}`}>Option {opt}</div>
-                              <div className={`text-[10px] mt-0.5 ${bimaLakshmiOption === opt ? 'text-white/70' : 'text-gray-400'}`}>
+                              <div className={`text-[10px] mt-0.5 ${bimaLakshmiOption === opt ? 'text-white/70' : 'text-gray-500'}`}>
                                 {opt === 'A' ? '50% SA survival benefit at end of PPT' : 'Deferred survival benefit at maturity'}
                               </div>
                             </button>

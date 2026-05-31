@@ -65,7 +65,7 @@ export default function NotFound() {
           </Link>
         </div>
 
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-500">
           {lang === 'en'
             ? 'Need help? Call Ajay sir directly: '
             : 'मदद चाहिए? अजय सर को सीधे कॉल करें: '}

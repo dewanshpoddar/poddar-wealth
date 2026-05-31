@@ -111,10 +111,11 @@ export default function RenewPage() {
               <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
                 {/* Name */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="rn-name" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {r.name ?? (isHi ? 'पूरा नाम' : 'Full Name')} *
                   </label>
                   <input
+                    id="rn-name"
                     required
                     type="text"
                     value={form.name}
@@ -126,10 +127,11 @@ export default function RenewPage() {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="rn-phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {r.phone ?? (isHi ? 'मोबाइल नंबर' : 'Mobile Number')} *
                   </label>
                   <input
+                    id="rn-phone"
                     required
                     type="tel"
                     inputMode="numeric"
@@ -144,10 +146,11 @@ export default function RenewPage() {
 
                 {/* Policy Number */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="rn-policy" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {r.policyNo ?? (isHi ? 'पॉलिसी नंबर' : 'Policy Number')}
                   </label>
                   <input
+                    id="rn-policy"
                     type="text"
                     value={form.policyNo}
                     onChange={e => setForm(p => ({ ...p, policyNo: e.target.value }))}
@@ -158,10 +161,11 @@ export default function RenewPage() {
 
                 {/* Renewal Date */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="rn-date" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {r.renewDate ?? (isHi ? 'रिन्यूअल देय तारीख' : 'Renewal Due Date')}
                   </label>
                   <input
+                    id="rn-date"
                     type="date"
                     value={form.renewDate}
                     onChange={e => setForm(p => ({ ...p, renewDate: e.target.value }))}
@@ -188,7 +192,7 @@ export default function RenewPage() {
                   </p>
                 )}
 
-                <p className="text-[10px] text-gray-400 text-center">
+                <p className="text-[10px] text-gray-500 text-center">
                   {isHi ? 'आपकी जानकारी निजी है।' : 'Your details are private and never shared. 🔒'}
                 </p>
               </form>

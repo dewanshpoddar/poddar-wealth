@@ -51,9 +51,9 @@ export default function ServicesPage() {
                 {svc.icon}
               </div>
               
-              <h3 className="text-[20px] font-bold text-navy mb-4 group-hover:text-gold transition-colors tracking-tight">
+              <h2 className="text-[20px] font-bold text-navy mb-4 group-hover:text-gold transition-colors tracking-tight">
                 {svc.title}
-              </h3>
+              </h2>
               
               <p className="text-[14px] text-muted leading-relaxed mb-8">
                 {svc.desc}

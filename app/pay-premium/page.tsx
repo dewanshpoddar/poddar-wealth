@@ -107,10 +107,11 @@ export default function PayPremiumPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="pp-name" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {isHi ? 'पूरा नाम *' : 'Full Name *'}
                   </label>
                   <input
+                    id="pp-name"
                     required
                     type="text"
                     value={form.name}
@@ -121,10 +122,11 @@ export default function PayPremiumPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="pp-mobile" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {isHi ? 'मोबाइल नंबर *' : 'Mobile Number *'}
                   </label>
                   <input
+                    id="pp-mobile"
                     required
                     type="tel"
                     inputMode="numeric"
@@ -138,10 +140,11 @@ export default function PayPremiumPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="pp-policy" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {isHi ? 'पॉलिसी नंबर' : 'Policy Number'}
                   </label>
                   <input
+                    id="pp-policy"
                     type="text"
                     value={form.policyNo}
                     onChange={e => handleChange('policyNo', e.target.value)}
@@ -151,10 +154,11 @@ export default function PayPremiumPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="pp-amount" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                     {isHi ? 'प्रीमियम राशि (₹)' : 'Premium Amount (₹)'}
                   </label>
                   <input
+                    id="pp-amount"
                     type="number"
                     min="0"
                     value={form.amount}
@@ -184,7 +188,7 @@ export default function PayPremiumPage() {
                   </p>
                 )}
 
-                <p className="text-[10px] text-gray-400 text-center">
+                <p className="text-[10px] text-gray-500 text-center">
                   {isHi
                     ? 'आपकी जानकारी निजी है और कभी साझा नहीं की जाएगी।'
                     : 'Your details are private and never shared. 🔒'}
@@ -192,7 +196,7 @@ export default function PayPremiumPage() {
               </form>
 
               {/* Direct link fallback */}
-              <p className="text-center text-xs text-gray-400 mt-4">
+              <p className="text-center text-xs text-gray-500 mt-4">
                 {isHi ? 'सीधे LIC पोर्टल पर जाना चाहते हैं? ' : 'Skip and go directly? '}
                 <a
                   href="https://customer.licindia.in/"

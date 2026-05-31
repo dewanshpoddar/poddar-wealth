@@ -134,13 +134,14 @@ export default function BaseLeadForm({
 
           return (
             <div key={field.name} className="space-y-1.5 group">
-              <label className="pw-label flex items-center gap-2">
+              <label htmlFor={field.name} className="pw-label flex items-center gap-2">
                 {field.icon}
                 {field.label}
               </label>
 
               {field.type === 'select' ? (
                 <select
+                  id={field.name}
                   required={field.required}
                   className={`pw-select ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
                   value={value}
@@ -155,6 +156,7 @@ export default function BaseLeadForm({
                 </select>
               ) : field.type === 'textarea' ? (
                 <textarea
+                  id={field.name}
                   required={field.required}
                   className={`pw-textarea ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
                   placeholder={field.placeholder}
@@ -165,13 +167,13 @@ export default function BaseLeadForm({
                 />
               ) : (
                 <input
+                  id={field.name}
                   type={field.type || 'text'}
                   required={field.required}
                   className={`pw-input ${hasError ? 'border-red-400 focus:ring-red-300' : ''}`}
                   placeholder={field.placeholder}
                   value={value}
                   onChange={(e) => {
-                    // For tel fields, strip non-digits automatically
                     const val = field.type === 'tel'
                       ? e.target.value.replace(/\D/g, '').slice(0, 10)
                       : e.target.value

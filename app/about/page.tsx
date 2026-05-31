@@ -18,6 +18,7 @@ import {
   Trophy,
   Star,
   Camera,
+  Sparkles,
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -55,11 +56,12 @@ export default function AboutPage() {
   ]
 
   const valuesIcons = [
-    <ShieldCheck key="1" className="text-blue-500" size={32} />,
-    <Eye key="2" className="text-gold" size={32} />,
-    <Heart key="3" className="text-red-500" size={32} />,
-    <PhoneCall key="4" className="text-green-500" size={32} />
+    <ShieldCheck key="1" className="text-blue-600" size={32} />,
+    <Eye key="2" className="text-amber-500" size={32} />,
+    <Trophy key="3" className="text-red-500" size={32} />,
+    <Sparkles key="4" className="text-violet-500" size={32} />
   ]
+
 
   return (
     <div className="bg-white">
@@ -296,52 +298,143 @@ export default function AboutPage() {
       </section>
 
       {/* ═══ VALUES IN FOCUS (REDUCED PADDING) ═══ */}
-      <section className="py-16 md:py-20 bg-slate-50 relative border-t border-gold/10">
+      {(() => {
+        const coreValues = t.aboutCoreValues || {
+          title: lang === 'en' ? 'Our Core Values' : 'हमारे मूल मूल्य',
+          subtitle: lang === 'en' ? 'Guiding Principles' : 'मार्गदर्शक सिद्धांत',
+          items: [
+            { title: lang === 'en' ? 'Trust' : 'भरोसा (Trust)', desc: lang === 'en' ? 'Your policy is our promise' : 'आपकी पॉलिसी हमारा वादा है' },
+            { title: lang === 'en' ? 'Transparency' : 'पारदर्शिता (Transparency)', desc: lang === 'en' ? 'No hidden charges, ever' : 'कोई छिपा हुआ शुल्क नहीं, कभी भी' },
+            { title: lang === 'en' ? 'Tradition' : 'परंपरा (Tradition)', desc: lang === 'en' ? 'Three decades of on-ground service' : 'तीन दशकों की ऑन-ग्राउंड सेवा' },
+            { title: lang === 'en' ? 'Technology' : 'तकनीक (Technology)', desc: lang === 'en' ? 'Modern tools, traditional values' : 'आधुनिक उपकरण, पारंपरिक मूल्य' }
+          ]
+        }
+        return (
+          <section className="py-16 md:py-20 bg-slate-50 relative border-t border-gold/10">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="text-center mb-16">
+                <span className="text-gold font-bold uppercase tracking-[0.3em] text-[10px] block mb-2">
+                  {coreValues.subtitle}
+                </span>
+                <h2 className="text-[28px] md:text-[32px] font-display font-bold text-slate-900 mb-4 tracking-tight leading-tight">
+                  {coreValues.title}
+                </h2>
+                <p className="text-slate-500 max-w-2xl mx-auto text-[14px] md:text-[15px]">
+                  {lang === 'en' ? 'The principles that have guided us for three decades.' : 'वे सिद्धांत जिन्होंने तीन दशकों से हमारा मार्गदर्शन किया है।'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {(coreValues.items || []).map((v: any, i: number) => (
+                  <MotionDiv
+                    key={i}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl transition-all group"
+                  >
+                    <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-gold/5 transition-all">
+                      {valuesIcons[i]}
+                    </div>
+                    <h3 className="text-[18px] font-bold text-slate-900 mb-3 tracking-tight leading-snug">{v.title}</h3>
+                    <p className="text-[13px] text-slate-500 leading-relaxed font-medium">{v.desc}</p>
+                  </MotionDiv>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })()}
+
+      {/* ═══ INSTITUTIONAL CREDENTIALS GRID ═══ */}
+      <section className="py-20 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-[28px] md:text-[32px] font-display font-bold text-slate-900 mb-4 tracking-tight leading-tight">
-               {t.about.valuesTitle}
+            <span className="text-gold font-bold uppercase tracking-[0.3em] text-[10px] block mb-2">
+              {lang === 'en' ? 'HONORS & CREDENTIALS' : 'सम्मान और साख'}
+            </span>
+            <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy leading-tight">
+              {lang === 'en' ? 'Professional Recognitions' : 'व्यावसायिक मान्यताएं'}
             </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-[14px] md:text-[15px]">The principles that have guided us for three decades.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.about.values.map((v: any, i: number) => (
-              <MotionDiv
-                key={i}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl transition-all group"
-              >
-                <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-gold/5 transition-all">
-                   {valuesIcons[i]}
-                </div>
-                <h3 className="text-[18px] font-bold text-slate-900 mb-3 tracking-tight leading-snug">{v.title}</h3>
-                <p className="text-[13px] text-slate-500 leading-relaxed font-medium">{v.desc}</p>
-              </MotionDiv>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ INSTITUTIONAL BADGES ═══ */}
-      <section className="py-16 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap items-center justify-center gap-16 lg:gap-32">
-             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {/* MDRT */}
+            <MotionDiv 
+              whileHover={{ y: -5 }} 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            >
+              <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA" width={110} height={56} className="object-contain" />
-                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Highest Global Quality</div>
-             </MotionDiv>
-             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-3">
+              </div>
+              <div>
+                <h4 className="text-[14px] font-bold text-navy mb-1">
+                  {lang === 'en' ? 'MDRT USA Member' : 'MDRT यूएसए सदस्य'}
+                </h4>
+                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                  {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}
+                </p>
+              </div>
+            </MotionDiv>
+
+            {/* Chairman's Club */}
+            <MotionDiv 
+              whileHover={{ y: -5 }} 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            >
+              <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/assets/chairmanclub.png" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
-                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Premier Club Member</div>
-             </MotionDiv>
-             <MotionDiv whileHover={{ y: -3 }} className="flex flex-col items-center gap-2">
-                <div className="text-[28px] md:text-[34px] font-display font-bold text-navy leading-none">IRDAI</div>
-                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Registered Authority</div>
-             </MotionDiv>
+              </div>
+              <div>
+                <h4 className="text-[14px] font-bold text-navy mb-1">
+                  {lang === 'en' ? "Chairman's Club" : 'चेयरमैन क्लब'}
+                </h4>
+                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                  {lang === 'en' ? 'Member Since 2015' : '2015 से सदस्य'}
+                </p>
+              </div>
+            </MotionDiv>
+
+            {/* 31 Years */}
+            <MotionDiv 
+              whileHover={{ y: -5 }} 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            >
+              <div className="h-16 flex items-center justify-center mb-4">
+                <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-2xl group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
+                  31
+                </div>
+              </div>
+              <div>
+                <h4 className="text-[14px] font-bold text-navy mb-1">
+                  {lang === 'en' ? 'Advisory Excellence' : 'सलाहकार उत्कृष्टता'}
+                </h4>
+                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                  {lang === 'en' ? 'Established 1994' : '1994 से स्थापित'}
+                </p>
+              </div>
+            </MotionDiv>
+
+            {/* 5000+ Families */}
+            <MotionDiv 
+              whileHover={{ y: -5 }} 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            >
+              <div className="h-16 flex items-center justify-center mb-4">
+                <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-lg group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
+                  5K+
+                </div>
+              </div>
+              <div>
+                <h4 className="text-[14px] font-bold text-navy mb-1">
+                  {lang === 'en' ? 'Families Protected' : 'सुरक्षित परिवार'}
+                </h4>
+                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                  {lang === 'en' ? 'Active Protection' : 'सक्रिय सुरक्षा'}
+                </p>
+              </div>
+            </MotionDiv>
           </div>
         </div>
       </section>

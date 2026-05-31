@@ -83,7 +83,7 @@ export default function ComparePage() {
       {/* Plan selector */}
       <section className="py-10 px-6 bg-slate-50 border-b border-gray-200">
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">
             {c.selectPlans ?? 'Select plans to compare'} ({selected.length}/3)
           </p>
 
@@ -97,7 +97,7 @@ export default function ComparePage() {
                 </span>
               ))}
               <button onClick={() => { setSelected([]); setHasCompared(false) }}
-                className="text-xs text-gray-400 hover:text-red-500 transition-colors underline">
+                className="text-xs text-gray-500 hover:text-red-500 transition-colors underline">
                 {c.clearAll ?? 'Clear all'}
               </button>
             </div>
@@ -109,6 +109,7 @@ export default function ComparePage() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder={isHi ? 'नाम या प्लान नं. से खोजें…' : 'Search by plan name or number…'}
+            aria-label={isHi ? 'प्लान खोजें' : 'Search plans'}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-navy/40 bg-white mb-3"
           />
 
@@ -147,7 +148,7 @@ export default function ComparePage() {
           </button>
 
           {!hasCompared && selected.length < 2 && (
-            <p className="text-center text-xs text-gray-400 mt-3">
+            <p className="text-center text-xs text-gray-500 mt-3">
               {c.noPlanSelected ?? 'Select at least 2 plans to compare'}
             </p>
           )}
@@ -201,7 +202,7 @@ export default function ComparePage() {
                   <div className="divide-y divide-gray-50">
                     {ROWS.map(row => (
                       <div key={row.key} className="flex justify-between items-start px-5 py-3 gap-4">
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wide flex-shrink-0 w-28">
+                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wide flex-shrink-0 w-28">
                           {isHi ? row.hi : row.label}
                         </span>
                         <span className="text-[13px] text-gray-700 text-right">{row.fmt(p)}</span>

@@ -236,6 +236,20 @@ Both endpoints require `CRON_SECRET` header to execute.
   Translation keys added: compare, exitIntent (en.json + hi.json).
   Code: totalSRB→totalBonus fix, DRY server-utils, banner DOM 10→2 copies.
 
+- **2026-05-31 (evening):** Performance optimization sprint.
+  Hero images converted to next/image (fill + sizes="100vw", priority on first).
+  Cache headers added to next.config.js (1yr immutable for svg/jpg/png/webp/woff2).
+  Security headers already present (X-Frame-Options, X-Content-Type-Options, etc.).
+  Heading hierarchy fixed: products page h2→h1, services/page cards h3→h2,
+  claims decorative panel h3→h2.
+  Color contrast: text-gray-400 → text-gray-500 on 12 light-background files.
+  Form a11y: htmlFor+id pairs added to BaseLeadForm, pay-premium, renew, contact;
+  aria-label added to compare search input.
+  GA4: blueprint_completed event wired in WealthBlueprintCalculator (useEffect on step===4).
+  Hydration: suppressHydrationWarning added to <body> in layout.tsx.
+  Frontend agent (parallel): GoogleReviewsBadge, BlogPreview components added.
+  Build: 0 errors.
+
 ---
 
-_Last updated: 2026-05-31_
+_Last updated: 2026-06-01_

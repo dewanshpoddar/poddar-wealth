@@ -25,6 +25,17 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               Securing the future of Gorakhpur families for over 31 years with trust, transparency, and personal care.
             </p>
+            <div className="pt-1">
+              <a
+                href="https://www.google.com/maps/place/Poddar+Wealth+Management/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-gold transition-colors duration-200"
+              >
+                <span className="text-gold font-bold">★</span>
+                <span>{t.googleReviews?.rating || '4.9 on Google (154 reviews)'}</span>
+              </a>
+            </div>
             <div className="text-xs text-gold/60 font-semibold tracking-wider uppercase">
               Excellence in Protection
             </div>

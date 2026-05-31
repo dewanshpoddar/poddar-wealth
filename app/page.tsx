@@ -4,35 +4,44 @@ import TrustSection from '@/components/TrustSection'
 import { WealthBlueprintCalculator } from '@/src/features/wealth-blueprint'
 import ServicesSection from '@/components/ServicesSection'
 import ProductTeaser from '@/components/ProductTeaser'
+import GoogleReviewsBadge from '@/components/GoogleReviewsBadge'
 import TestimonialsSection from '@/components/TestimonialsSection'
+import BlogPreview from '@/components/BlogPreview'
 import FinalCTA from '@/components/FinalCTA'
 
 export default function HomePage() {
   return (
     <>
-      {/* 1 — Hook */}
+      {/* 1 — Hero */}
       <HeroSection />
 
-      {/* 2 — Trust proof */}
+      {/* 2 — Trust stats bar */}
       <TrustSection />
 
-      {/* 3 — Core conversion tool (was section 6) */}
-      <WealthBlueprintCalculator />
+      {/* 3 — Google Reviews Trust Badge */}
+      <GoogleReviewsBadge />
 
-      {/* 4 — Service discovery */}
+      {/* 4 — Services discovery */}
       <ServicesSection />
 
       {/* 5 — Product browser teaser */}
       <ProductTeaser />
 
-      {/* 6 — Social proof */}
+      {/* 6 — Core conversion tool */}
+      <WealthBlueprintCalculator />
+
+      {/* 7 — Social proof (Testimonials) */}
       <TestimonialsSection />
 
-      {/* 7 — Agent teaser strip (subtle — does not interrupt client journey) */}
+      {/* 8 — Blog Preview (latest 3 posts) */}
+      <BlogPreview />
+
+      {/* 9 — Agent teaser strip */}
       <AgentTeaserStrip />
 
-      {/* 8 — About the advisor + final CTA */}
+      {/* 10 — Final CTA */}
       <FinalCTA />
     </>
   )
 }
+

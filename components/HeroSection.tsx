@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const quickIcons = ['🛡', '🎓', '📈', '❤️', '💍']
 
@@ -101,15 +102,15 @@ export default function HeroSection() {
           {/* Photos (Slideshow) */}
           <div className="absolute inset-0 overflow-hidden bg-navy">
             {heroImages.map((src, idx) => (
-              <img
+              <Image
                 key={idx}
                 src={src}
                 alt="Happy Indian family planning their future"
-                className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
-                loading={idx === 0 ? 'eager' : 'lazy'}
-                fetchPriority={idx === 0 ? 'high' : 'low'}
-                decoding={idx === 0 ? 'sync' : 'async'}
-                width="600" height="700"
+                fill
+                sizes="100vw"
+                className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                priority={idx === 0}
+                loading={idx === 0 ? undefined : 'lazy'}
               />
             ))}
             {/* Stronger gradient so images pop on mobile */}

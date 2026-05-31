@@ -76,7 +76,7 @@ const schemaOrg = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
-      <body className="font-sans text-13 text-gray-900 bg-white antialiased">
+      <body className="font-sans text-13 text-gray-900 bg-white antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}

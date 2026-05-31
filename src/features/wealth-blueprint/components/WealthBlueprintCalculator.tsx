@@ -124,6 +124,10 @@ export default function WealthBlueprintCalculator() {
   
   const { bp, narrative, protectionPlan, isHNI, sipAllocs, plan90 } = computed
 
+  useEffect(() => {
+    if (step === 4) trackEvent('blueprint_completed')
+  }, [step])
+
   const slide = { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -20 } }
 
   const ConfidentialBanner = (

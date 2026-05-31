@@ -41,10 +41,12 @@ const CATEGORY_EMOJIS: Record<string, string> = {
   'Child Plans':      '👶',
 }
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-IN', {
+function formatDate(dateStr: string, lang: string) {
+  const dateObj = new Date(dateStr)
+  const formatted = dateObj.toLocaleDateString(lang === 'en' ? 'en-US' : 'hi-IN', {
     day: 'numeric', month: 'long', year: 'numeric',
   })
+  return lang === 'en' ? `Published: ${formatted}` : `प्रकाशित: ${formatted}`
 }
 
 function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: string }) {
@@ -61,7 +63,7 @@ function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: st
 
   return (
     <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-3 flex-wrap">
-      <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+      <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
         {lang === 'en' ? 'Share' : 'शेयर करें'}
       </span>
       <a
@@ -148,7 +150,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
               <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
                 {post.category}
               </span>
-              <span className="text-white/40 text-xs">{formatDate(post.date)}</span>
+              <span className="text-white/40 text-xs">{formatDate(post.date, lang)}</span>
               <span className="text-white/35 text-xs">
                 {lang === 'en' ? `${readingTime} min read` : `${readingTime} मिनट`}
               </span>
@@ -261,7 +263,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
             <div className="mt-8 text-center">
               <Link
                 href="/blog"
-                className="text-sm text-gray-400 hover:text-navy transition-colors"
+                className="text-sm text-gray-500 hover:text-navy transition-colors"
               >
                 ← {t.blog.backToAll}
               </Link>

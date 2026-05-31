@@ -52,8 +52,13 @@ function resolveLeadTab(intent: string, iAm: string, wantTo: string): string {
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json()
-    const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message } = data
+    let data: Record<string, unknown>
+    try {
+      data = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+    const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message } = data as Record<string, string>
 
     // Validate required fields
     if (!name || clean(name, 100).length < 2) {

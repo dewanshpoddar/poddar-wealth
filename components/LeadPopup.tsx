@@ -82,7 +82,7 @@ export default function LeadPopup() {
               {/* Close Button */}
               <button 
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-600 transition-colors z-10"
                 aria-label="Close"
               >
                 <X size={20} />
@@ -116,7 +116,7 @@ export default function LeadPopup() {
                   <button 
                     type="button"
                     onClick={handleClose}
-                    className="w-full text-gray-400 text-[12px] font-medium hover:text-gray-600 transition-colors pt-4 text-center"
+                    className="w-full text-gray-500 text-[12px] font-medium hover:text-gray-600 transition-colors pt-4 text-center"
                   >
                     {t.leadPopup.maybeLater}
                   </button>

@@ -1123,5 +1123,48 @@
     "submit": "Get My Free Report",
     "successMsg": "Ajay sir will call you within 24 hours. 🙏",
     "dismiss": "No thanks"
+  },
+  "googleReviews": {
+    "eyebrow": "VERIFIED TRUST",
+    "heading": "4.9 Rating | 154 Google Reviews",
+    "sub": "100% verified external reviews on Google Maps",
+    "review1Text": "Best insurance advisor in Gorakhpur. Very trustworthy.",
+    "review1Author": "R.K.",
+    "review2Text": "Ajay sir helped us with claim settlement in just 30 days.",
+    "review2Author": "S.P.",
+    "review3Text": "Managing our family insurance for 15 years now.",
+    "review3Author": "V.M.",
+    "viewOnGoogle": "View all reviews on Google Maps →",
+    "rating": "4.9 on Google (154 reviews)"
+  },
+  "blogPreview": {
+    "eyebrow": "LATEST INSIGHTS",
+    "heading": "From Our Knowledge Desk",
+    "sub": "Read practical guides on wealth protection, LIC plans, and tax saving strategies.",
+    "readMore": "Read →",
+    "seeAll": "See all articles →",
+    "mins": "min read"
+  },
+  "aboutCoreValues": {
+    "title": "Our Core Values",
+    "subtitle": "Guiding Principles",
+    "items": [
+      {
+        "title": "Trust",
+        "desc": "Your policy is our promise"
+      },
+      {
+        "title": "Transparency",
+        "desc": "No hidden charges, ever"
+      },
+      {
+        "title": "Tradition",
+        "desc": "Three decades of on-ground service"
+      },
+      {
+        "title": "Technology",
+        "desc": "Modern tools, traditional values"
+      }
+    ]
   }
 }

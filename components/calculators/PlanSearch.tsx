@@ -57,7 +57,7 @@ export default function PlanSearch({
               {/* Search */}
               <div className="px-3 pt-3 pb-2">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
                   <input value={search} onChange={e => setSearch(e.target.value)}
                     placeholder="Search plan name or number…"
                     className="w-full pl-8 pr-3 py-2 text-[12px] border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-gold/40 focus:bg-white transition-all" />
@@ -67,7 +67,7 @@ export default function PlanSearch({
               {/* Plan list with letter-avatar circles */}
               <div className="overflow-y-auto max-h-[420px] px-2 pb-2">
                 {filteredPlans.length === 0 ? (
-                  <div className="py-8 text-center text-[12px] text-gray-400">No plans found</div>
+                  <div className="py-8 text-center text-[12px] text-gray-500">No plans found</div>
                 ) : filteredPlans.map((plan: LicPlan) => {
                   const isSelected = selectedPlan?.planNo === plan.planNo
                   const avatarColor = CAT_AVATAR_COLOR[plan.category] ?? 'bg-navy'
@@ -89,7 +89,7 @@ export default function PlanSearch({
                           )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[10px] text-gray-400 font-medium">Plan {plan.planNo}</span>
+                          <span className="text-[10px] text-gray-500 font-medium">Plan {plan.planNo}</span>
                           {plan.xirr && plan.status !== 'withdrawn' && <span className="text-[10px] text-green-600 font-semibold">· {plan.xirr}</span>}
                           {plan.status === 'withdrawn' && <span className="text-[10px] text-slate-400">· Calc only</span>}
                         </div>
