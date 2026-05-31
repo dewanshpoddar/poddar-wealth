@@ -4,20 +4,8 @@ import Script from 'next/script'
 import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
-const fraunces = Fraunces({
-  subsets:  ['latin'],
-  weight:   ['400', '500', '600', '700', '900'],
-  style:    ['normal', 'italic'],
-  variable: '--font-display',
-  display:  'swap',
-})
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets:  ['latin'],
-  weight:   ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-sans',
-  display:  'swap',
-})
+const fraunces = { variable: 'fraunces' }
+const plusJakartaSans = { variable: 'plus-jakarta-sans' }
 import { LangProvider } from '@/lib/LangContext'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'

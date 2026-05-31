@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { submitLead } from '@/lib/api'
+import { trackEvent } from '@/lib/analytics'
 
 export default function PayPremiumPage() {
   const { lang } = useLang()
@@ -42,9 +43,10 @@ export default function PayPremiumPage() {
         intent: 'pay-premium',
         message: `Policy No: ${form.policyNo} | Amount: ₹${form.amount}`,
       })
+      trackEvent('pay_premium_clicked')
       setStatus('done')
       setTimeout(() => {
-        window.location.href = 'https://customer.licindia.in/'
+        window.open('https://customer.licindia.in/', '_blank', 'noopener,noreferrer')
       }, 1200)
     } catch {
       setStatus('error')

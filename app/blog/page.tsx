@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import posts from '@/lib/data/blog-posts.json'
 
-const CATEGORIES = ['All', 'Life Insurance', 'LIC Plans', 'Health Insurance', 'Tax Planning', 'Claims']
+const CATEGORIES = ['All', 'Life Insurance', 'LIC Plans', 'Health Insurance', 'Tax Planning', 'Claims', 'Comparison', 'Guides', 'Child Plans']
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Life Insurance':   'bg-blue-50 text-blue-700 border-blue-200',
@@ -13,6 +13,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Health Insurance': 'bg-red-50 text-red-700 border-red-200',
   'Tax Planning':     'bg-green-50 text-green-700 border-green-200',
   'Claims':           'bg-purple-50 text-purple-700 border-purple-200',
+  'Comparison':       'bg-amber-50 text-amber-700 border-amber-200',
+  'Guides':           'bg-teal-50 text-teal-700 border-teal-200',
+  'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
 }
 
 function formatDate(dateStr: string) {

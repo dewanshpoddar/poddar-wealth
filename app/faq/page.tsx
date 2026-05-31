@@ -196,6 +196,32 @@ export default function FAQPage() {
         </div>
       </section>
 
+      {/* ═══ RELATED PAGES ═══ */}
+      <section className="py-10 px-8 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">
+            {lang === 'en' ? 'Explore these pages' : 'इन पृष्ठों पर जाएं'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { label: lang === 'en' ? 'File a Claim' : 'क्लेम करें', href: '/claims' },
+              { label: lang === 'en' ? 'Premium Calculator' : 'प्रीमियम कैलकुलेटर', href: '/calculators/premium' },
+              { label: lang === 'en' ? 'All Plans' : 'सभी प्लान', href: '/products' },
+              { label: lang === 'en' ? 'Contact Us' : 'संपर्क करें', href: '/contact' },
+              { label: lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें', href: '/pay-premium' },
+            ].map(({ label, href }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-[13px] font-semibold text-navy bg-white border border-navy/15 px-4 py-2 rounded-full hover:bg-navy hover:text-white hover:border-navy transition-all duration-200"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ CALL-TO-ACTION (CTA) SECTION ═══ */}
       <section className="bg-gold py-16 px-8 relative overflow-hidden text-center">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[100px] rounded-full" />

@@ -112,7 +112,7 @@ export default function Navbar() {
           {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
         </Link>
 
-        <Link href="/contact" className={`text-[14px] font-bold transition-colors duration-500 ${
+        <Link href="/renew" className={`text-[14px] font-bold transition-colors duration-500 ${
           isScrolled ? 'text-white/90 hover:text-gold' : 'text-navy hover:text-gold'
         }`}>{t.nav.renewPolicy}</Link>
         
@@ -146,7 +146,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={`fixed ${isScrolled ? 'top-[72px]' : 'top-[78px]'} left-0 right-0 shadow-2xl z-40 px-8 py-8 flex flex-col gap-6 lg:hidden max-h-[85vh] overflow-y-auto transition-all duration-500 ${
+            className={`fixed ${isScrolled ? 'top-[72px]' : 'top-[78px]'} left-0 right-0 shadow-2xl z-40 px-8 pt-10 pb-8 flex flex-col gap-6 lg:hidden max-h-[85vh] overflow-y-auto transition-all duration-500 ${
               isScrolled ? 'bg-navy-deep border-t border-gold/10' : 'bg-white border-t border-gray-100'
             }`}
           >
@@ -185,9 +185,10 @@ export default function Navbar() {
             <Link href="/pay-premium" onClick={() => setOpen(false)} className={`text-16 font-bold flex items-center gap-2 ${isScrolled ? 'text-gold' : 'text-gold'}`}>
               💳 {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
             </Link>
-            <Link href="/contact" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
-            <Link href="/become-advisor" onClick={() => setOpen(false)} className={`text-[14px] font-medium ${isScrolled ? 'text-white/40 hover:text-white/70' : 'text-slate-400 hover:text-slate-600'}`}>
-              {t.homePage.joinAdvisor}
+            <Link href="/renew" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
+            <Link href="/become-advisor" onClick={() => setOpen(false)}
+              className="w-full flex items-center justify-center gap-2 bg-gold/10 border border-gold/40 text-amber-700 font-bold text-[14px] py-3 px-4 rounded-xl hover:bg-gold/20 transition-colors">
+              🤝 {lang === 'en' ? 'Become an Advisor' : 'सलाहकार बनें'}
             </Link>
             
             <Link href="/contact" onClick={() => setOpen(false)} className="pw-btn pw-btn--gold pw-btn--full mt-2 shadow-xl py-4 text-16">

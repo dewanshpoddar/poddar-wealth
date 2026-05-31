@@ -217,6 +217,20 @@ export default function ContactPage() {
                 <pre className="text-slate-600 text-sm whitespace-pre-wrap font-sans leading-relaxed">{t.contact.officeHours}</pre>
               </div>
 
+              {/* Map link */}
+              <a
+                href="https://www.google.com/maps/search/AD+Mall+Compound+Vijay+Chowk+Gorakhpur+273001"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col w-full h-48 md:h-56 bg-gray-100 rounded-2xl border border-gray-200 items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer"
+              >
+                <div className="text-center px-4">
+                  <span className="text-3xl">📍</span>
+                  <p className="mt-2 font-semibold text-slate-700">View on Google Maps</p>
+                  <p className="text-sm text-slate-500 mt-1">AD Mall Compound, Vijay Chowk, Gorakhpur 273001</p>
+                </div>
+              </a>
+
               <div className="bg-green-50 border border-green-200 rounded-3xl p-6">
                 <h3 className="font-bold text-green-800 mb-3">💬 {t.contactPage.whatsappAlt}</h3>
                 <p className="text-green-700 text-sm mb-4">Ajay responds to WhatsApp messages personally — usually within a few hours during business days.</p>

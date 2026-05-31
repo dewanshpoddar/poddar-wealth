@@ -48,10 +48,10 @@ export default function ServicesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {t.services.items.slice(0, 8).map((svc: any, i: number) => (
-            <div key={i}
+            <Link key={i} href={svc.href ?? '/services'}
               className="bg-white/80 backdrop-blur-md border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
                          hover:shadow-2xl hover:shadow-[rgba(184,134,11,0.15)] hover:border-gold/30 hover:-translate-y-2
-                         transition-all duration-500 group cursor-default relative overflow-hidden">
+                         transition-all duration-500 group cursor-pointer relative overflow-hidden block">
               {svc.badge && (
                 <div className="absolute top-0 right-0 py-1.5 px-4 bg-gold text-white text-[9px] font-bold uppercase tracking-widest rounded-bl-xl shadow-lg z-20">
                   {svc.badge}
@@ -82,7 +82,7 @@ export default function ServicesSection() {
                 </span>
                 <span className="text-navy/0 group-hover:text-gold group-hover:translate-x-1 transition-all duration-500 font-bold text-16">→</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

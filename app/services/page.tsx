@@ -12,7 +12,7 @@ export default function ServicesPage() {
 
       
       {/* Hero Header */}
-      <section className="pt-32 pb-20 bg-navy relative overflow-hidden text-center px-6">
+      <section className="pt-16 md:pt-32 pb-20 bg-navy relative overflow-hidden text-center px-6">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
           <div className="absolute top-0 left-0 w-64 h-64 border border-white rounded-full -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-96 h-96 border border-white rounded-full translate-x-1/2 translate-y-1/2" />
@@ -20,7 +20,7 @@ export default function ServicesPage() {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="pw-eyebrow text-gold/80 mb-4">{t.services.eyebrow}</div>
-          <h1 className="text-[40px] md:text-[56px] font-display font-bold text-white italic leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-display font-bold text-white italic leading-tight mb-6">
             Comprehensive Protection <span className="text-gold">For Everything You Value</span>
           </h1>
           <p className="text-white/60 text-[16px] md:text-[18px] max-w-2xl mx-auto leading-relaxed">

@@ -1029,5 +1029,19 @@
     "backToAll": "Back to all articles",
     "askPoddarJi": "Have questions? Ask Poddar Ji",
     "allCategories": "All"
+  },
+  "renew": {
+    "hero": "Renew Your Insurance Policy",
+    "heroSub": "Stay protected — let us track your renewal dates and remind you before they lapse.",
+    "name": "Full Name",
+    "phone": "Mobile Number",
+    "policyNo": "Policy Number",
+    "renewDate": "Renewal Due Date",
+    "namePlaceholder": "Ramesh Sharma",
+    "policyPlaceholder": "e.g. 123456789",
+    "submit": "Request Renewal Reminder",
+    "successTitle": "Renewal Request Received!",
+    "successMsg": "Ajay sir will personally contact you before your renewal due date. Your policy will not lapse.",
+    "trustNote": "We track your renewal dates — no policy lapses on our watch."
   }
 }

@@ -35,6 +35,14 @@ export type AnalyticsEvent =
   // Agent funnel
   | 'advisor_application_started'
   | 'advisor_application_submitted'
+  // Blog
+  | 'blog_viewed'
+  // Pay premium
+  | 'pay_premium_clicked'
+  // Renewal
+  | 'renewal_requested'
+  // Lead capture
+  | 'lead_submitted'
 
 export function trackEvent(
   name: AnalyticsEvent,

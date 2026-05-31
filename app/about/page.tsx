@@ -134,6 +134,11 @@ export default function AboutPage() {
                   </div>
                ))}
             </div>
+            <div className="mt-4 text-left">
+              <p className="text-[10px] text-slate-400 italic">
+                *Claims Assisted statistic is cumulative across all policies serviced since 1994.
+              </p>
+            </div>
          </div>
       </section>
 

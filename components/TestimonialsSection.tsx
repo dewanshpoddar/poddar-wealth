@@ -1,6 +1,15 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 
+const FEMALE_NAMES = new Set(['sunita', 'priya', 'meena', 'sita', 'geeta', 'anita', 'kavita', 'neha', 'pooja', 'rekha', 'usha', 'lata', 'manju', 'nisha', 'asha', 'radha', 'seema', 'shilpa', 'shreya', 'divya'])
+
+function avatarGradient(name: string) {
+  const first = name.split(' ')[0].toLowerCase()
+  return FEMALE_NAMES.has(first)
+    ? 'bg-gradient-to-br from-pink-400 to-pink-600'
+    : 'bg-gradient-to-br from-blue-400 to-blue-600'
+}
+
 export default function TestimonialsSection() {
   const { t } = useLang()
 
@@ -24,10 +33,7 @@ export default function TestimonialsSection() {
 
             {/* Author */}
             <div className="flex items-center gap-2">
-              <div
-                className="pw-ts-avatar"
-                style={{ background: item.color, color: item.textColor }}
-              >
+              <div className={`pw-ts-avatar text-white ${avatarGradient(item.name)}`}>
                 {item.name.charAt(0)}
               </div>
               <div>

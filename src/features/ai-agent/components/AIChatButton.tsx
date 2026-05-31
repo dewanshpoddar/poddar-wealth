@@ -32,7 +32,7 @@ export default function AIChatButton() {
   }, [isOpen, t.chatbot.curiosityQueries])
 
   return (
-    <div className="fixed bottom-6 right-5 z-[9998] flex flex-col items-end gap-3">
+    <div className="fixed bottom-20 sm:bottom-6 right-5 z-[9980] flex flex-col items-end gap-3">
 
       {/* ── Popup chat window ── */}
       <AnimatePresence>

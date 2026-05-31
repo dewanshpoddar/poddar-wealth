@@ -200,6 +200,33 @@ Both endpoints require `CRON_SECRET` header to execute.
   Calculator components fully typed. Lead capture + cron routes verified.
   11 commits shipped. Production verified working.
 
+- **2026-05-31:** Sprint 1-4 shipped in single session.
+  New pages: /claims, /faq, /blog (15 posts), /pay-premium, 404 (not-found.tsx).
+  Mobile fixes: MobileCTABar imported + rendered, bottom overlap resolved,
+  navbar spacing (pt-10), WhatsApp FAB hidden on mobile (sm:flex),
+  chatbot repositioned (bottom-20 on mobile, z-[9980]).
+  UX: testimonial avatars gendered gradients, service cards clickable (Link),
+  "Join as Advisor" restyled to gold button, external links open new tab.
+  SEO: unique metadata per page (12 layout.tsx files verified working),
+  Schema.org LocalBusiness + Article JSON-LD, sitemap verified (app/sitemap.ts),
+  15 blog posts with bilingual content.
+  GA4: analytics.ts extended (blog_viewed, pay_premium_clicked, lead_submitted),
+  events wired in blog post page and pay-premium page.
+  Blog: reading time display, WhatsApp + copy-link share buttons.
+  Contact: Google Maps link section added.
+  FAQ: Related pages section (claims, calculator, products, contact, pay-premium).
+  Dead link audit: all 14 internal hrefs verified — zero dead links.
+
+- **2026-05-31 (cont):** Final 20% sprint completed.
+  New pages: /renew (policy renewal form + lead capture), 5 service page layout.tsx files (metadata).
+  Navbar: "Renew Policy" href updated to /renew.
+  GA4: renewal_requested event added. analytics.ts event union extended.
+  Blog: Comparison + Guides + Child Plans categories added to filter tabs.
+  Dead links: zero found after scan. All service page layouts added.
+  Translation keys added: renew (en.json + hi.json).
+  Build: 43+ pages, 0 errors.
+  Code: totalSRB→totalBonus fix, DRY server-utils, banner DOM 10→2 copies.
+
 ---
 
-_Last updated: 2026-05-30_
+_Last updated: 2026-05-31_
