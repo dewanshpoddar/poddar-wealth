@@ -79,7 +79,9 @@ export default function BlogPreview() {
           {latestPosts.map((post) => {
             const gradient = CATEGORY_GRADIENTS[post.category] || 'from-gray-400 to-gray-500'
             const emoji = CATEGORY_EMOJIS[post.category] || '📝'
-            const readingTime = Math.ceil(post.content.split(/\s+/).length / 200)
+            const readingTime = lang === 'hi'
+              ? Math.ceil(post.contentHi.length / 5 / 200)
+              : Math.ceil(post.content.split(/\s+/).length / 200)
 
             return (
               <div

@@ -12,6 +12,14 @@ export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [calcAccordionOpen, setCalcAccordionOpen] = useState(false)
+
+  // Reset accordion on mobile menu close
+  useEffect(() => {
+    if (!open) {
+      setCalcAccordionOpen(false)
+    }
+  }, [open])
 
   // Universal Scroll Detection
   useEffect(() => {
@@ -90,16 +98,50 @@ export default function Navbar() {
           {t.nav.services}
         </Link>
 
-        <Link
-          href="/calculators/premium"
-          className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 ${
-            pathname.startsWith('/calculators')
-              ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
-              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-          }`}
-        >
-          {t.nav.calculators}
-        </Link>
+        {/* Calculators Dropdown */}
+        <div className="relative group">
+          <button
+            className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 flex items-center gap-1 bg-transparent border-none cursor-pointer py-2 ${
+              pathname.startsWith('/calculators')
+                ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
+                : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
+            }`}
+          >
+            {t.nav.calculators}
+            <span className="text-[9px] select-none transition-transform duration-300 group-hover:rotate-180">▼</span>
+          </button>
+          
+          <div className="absolute top-full left-0 mt-1 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            <div className={`rounded-xl overflow-hidden shadow-xl border ${
+              isScrolled ? 'bg-navy-deep border-gold/10 text-white' : 'bg-white border-gray-100 text-navy'
+            }`}>
+              <Link
+                href="/calculators/premium"
+                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
+                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
+                }`}
+              >
+                {lang === 'en' ? 'Premium Calculator' : 'प्रीमियम कैलकुलेटर'}
+              </Link>
+              <Link
+                href="/calculators/life-insurance"
+                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
+                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
+                }`}
+              >
+                {lang === 'en' ? 'Life Insurance Calculator' : 'जीवन बीमा कैलकुलेटर'}
+              </Link>
+              <Link
+                href="/calculators/retirement"
+                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
+                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
+                }`}
+              >
+                {lang === 'en' ? 'Retirement Planner' : 'रिटायरमेंट प्लानर'}
+              </Link>
+            </div>
+          </div>
+        </div>
 
         <Link
           href="/compare"
@@ -183,14 +225,60 @@ export default function Navbar() {
             >
               {t.nav.services}
             </Link>
-            <Link
-              href="/calculators/premium"
-              onClick={() => setOpen(false)}
-              className={`text-18 font-bold flex items-center gap-2 ${pathname.startsWith('/calculators') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
-            >
-              {t.nav.calculators}
-              <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
-            </Link>
+            {/* Calculators Accordion */}
+            <div>
+              <button
+                onClick={() => setCalcAccordionOpen(!calcAccordionOpen)}
+                className={`w-full flex items-center justify-between text-18 font-bold bg-transparent border-none p-0 cursor-pointer ${
+                  pathname.startsWith('/calculators') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  {t.nav.calculators}
+                  <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
+                </span>
+                <span className={`text-12 transition-transform duration-300 ${calcAccordionOpen ? 'rotate-180' : ''}`}>▼</span>
+              </button>
+              
+              <AnimatePresence>
+                {calcAccordionOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden flex flex-col gap-3 pl-4 pt-3"
+                  >
+                    <Link
+                      href="/calculators/premium"
+                      onClick={() => setOpen(false)}
+                      className={`text-15 font-semibold transition-colors ${
+                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
+                      }`}
+                    >
+                      {lang === 'en' ? 'Premium Calculator' : 'प्रीमियम कैलकुलेटर'}
+                    </Link>
+                    <Link
+                      href="/calculators/life-insurance"
+                      onClick={() => setOpen(false)}
+                      className={`text-15 font-semibold transition-colors ${
+                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
+                      }`}
+                    >
+                      {lang === 'en' ? 'Life Insurance Calculator' : 'जीवन बीमा कैलकुलेटर'}
+                    </Link>
+                    <Link
+                      href="/calculators/retirement"
+                      onClick={() => setOpen(false)}
+                      className={`text-15 font-semibold transition-colors ${
+                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
+                      }`}
+                    >
+                      {lang === 'en' ? 'Retirement Planner' : 'रिटायरमेंट प्लानर'}
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             <div className={`h-px my-1 w-full ${isScrolled ? 'bg-white/10' : 'bg-gray-100'}`}></div>
 

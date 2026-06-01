@@ -250,6 +250,17 @@ Both endpoints require `CRON_SECRET` header to execute.
   Frontend agent (parallel): GoogleReviewsBadge, BlogPreview components added.
   Build: 0 errors.
 
+- **2026-06-01:** Final production sweep.
+  OG metadata fixed: openGraph.title added to all 16 per-page layouts (was inheriting root).
+  GA4 events: calculator_result wired in ResultsPanel (plan_name, premium, maturity, term).
+  Hindi reading time fixed: charCount/5/200 for hi locale instead of space-split (undercounts Devanagari).
+  Products page LCP fix: CSS backgroundImage → next/image with priority; images.pexels.com added to remotePatterns.
+  All systems verified: Groq API 200, leads 200, cron 200 (with auth) / 401 (without).
+  Lighthouse: SEO 100, A11y 90-95, Perf 56-65 (mobile).
+  Search Console verified, sitemap submitted, Google Business Profile linked (4.9★, 154 reviews).
+  Error boundary (app/error.tsx), env validation (lib/env.ts), API resilience all confirmed live.
+  Build: 0 errors. All routes static/dynamic as expected.
+
 ---
 
 _Last updated: 2026-06-01_

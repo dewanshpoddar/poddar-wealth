@@ -24,8 +24,8 @@ export default function TestimonialsSection() {
       <div className="pw-title">{testimonials.title}</div>
       <div className="pw-subtitle">{testimonials.subtitle}</div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-        {items.slice(0, 3).map((item: any, i: number) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        {items.slice(0, 8).map((item: any, i: number) => (
           <div key={i} className="pw-ts-card">
             {/* Stars */}
             <div className="flex gap-0.5 mb-2">

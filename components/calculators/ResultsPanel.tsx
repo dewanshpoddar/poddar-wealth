@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   ArrowRight, ChevronDown, ChevronUp,
@@ -8,6 +8,7 @@ import { fmt, fmtSA } from '@/lib/format'
 import { MODE_LABEL, SA_PRESETS } from '@/lib/constants'
 import { RIDERS } from '@/lib/lic-plans-data.js'
 import { openLeadPopup } from '@/lib/events'
+import { trackEvent } from '@/lib/analytics'
 import { CAT_AVATAR_COLOR } from './calc-constants'
 
 import { LicPlan, PremiumResult, MaturityResult, BenefitRow } from '@/lib/types/lic-plan'
@@ -61,6 +62,17 @@ export default function ResultsPanel({
   unlockEmail, setUnlockEmail, unlockStatus, handleUnlock, whatsappShare
 }: ResultsPanelProps) {
   const visibleRows = showAllRows ? benefitTable : benefitTable.slice(0, 10);
+
+  useEffect(() => {
+    if (!premResult) return
+    trackEvent('calculator_result', {
+      plan_name: selectedPlan.name,
+      premium: Math.round(premResult.yearlyYear1 ?? 0),
+      maturity: matResult ? Math.round(matResult.maturity) : 0,
+      term: safeterm,
+    })
+  }, [selectedPlan.name, premResult, matResult, safeterm])
+
   return (
     <>
                       {premResult && (

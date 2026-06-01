@@ -107,7 +107,9 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
   const content  = lang === 'en' ? post.content  : post.contentHi
   const summary  = lang === 'en' ? post.summary  : post.summaryHi
   const paragraphs = content.split('\n\n').filter(Boolean)
-  const readingTime = Math.ceil(post.content.split(/\s+/).length / 200)
+  const readingTime = lang === 'hi'
+    ? Math.ceil(post.contentHi.length / 5 / 200)
+    : Math.ceil(post.content.split(/\s+/).length / 200)
 
   const schema = {
     '@context': 'https://schema.org',

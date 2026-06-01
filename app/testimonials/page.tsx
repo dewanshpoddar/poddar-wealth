@@ -23,6 +23,11 @@ const GENDER_MAP: Record<string, 'male' | 'female'> = {
   'किरण त्रिपाठी': 'female',
   'Vikram Malhotra': 'male',
   'विक्रम मल्होत्रा': 'male',
+  'Sunita Verma': 'female',
+  'Rakesh Agarwal': 'male',
+  'Priya Sharma': 'female',
+  'Mohit Gupta': 'male',
+  'Kavita Singh': 'female',
 }
 
 export default function TestimonialsPage() {

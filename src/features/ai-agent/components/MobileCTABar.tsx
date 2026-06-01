@@ -14,9 +14,9 @@ export default function MobileCTABar() {
         bg-white/80 backdrop-blur-md
         border-t border-slate-200/80
         shadow-[0_-4px_24px_rgba(0,0,0,0.10)]
-        pb-safe
+        pb-[env(safe-area-inset-bottom)]
       "
-      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       {/* Call button */}
       <a

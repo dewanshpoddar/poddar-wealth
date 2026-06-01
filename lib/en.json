@@ -426,6 +426,46 @@
         "badge": "NRI family support ✓",
         "color": "#F0F9FF",
         "textColor": "#0369A1"
+      },
+      {
+        "name": "Sunita Verma",
+        "location": "Lucknow · LIC Jeevan Anand",
+        "text": "Ajay sir's advice on LIC Jeevan Anand has secured my family's future completely. His dedication to service is exceptional.",
+        "badge": "Jeevan Anand ✓",
+        "color": "#FEF9EC",
+        "textColor": "#C8960C"
+      },
+      {
+        "name": "Rakesh Agarwal",
+        "location": "Delhi · LIC ULIP Plan",
+        "text": "I invested in LIC's ULIP under Ajay sir's guidance. The returns and life cover balance are perfect for my wealth goals.",
+        "badge": "ULIP Investment ✓",
+        "color": "#E1F5EE",
+        "textColor": "#0F6E56"
+      },
+      {
+        "name": "Priya Sharma",
+        "location": "Noida · LIC Jeevan Labh",
+        "text": "Ajay Kumar Poddar helped me choose LIC Jeevan Labh. He explained the tax benefits and maturity terms so clearly in Hindi.",
+        "badge": "Jeevan Labh ✓",
+        "color": "#E6F1FB",
+        "textColor": "#185FA5"
+      },
+      {
+        "name": "Mohit Gupta",
+        "location": "Gorakhpur · Star Health Assure",
+        "text": "We took a Star Health insurance policy through Ajay sir. His premium calculation was accurate, and the cashless claim process was seamless.",
+        "badge": "Health Cover ✓",
+        "color": "#F5F3FF",
+        "textColor": "#6D28D9"
+      },
+      {
+        "name": "Kavita Singh",
+        "location": "Varanasi · LIC Jeevan Utsav",
+        "text": "LIC Jeevan Utsav recommended by Ajay sir is giving me a guaranteed lifetime regular income. He is the most honest advisor I've met.",
+        "badge": "Lifetime Income ✓",
+        "color": "#ECFDF5",
+        "textColor": "#047857"
       }
     ]
   },
@@ -1166,5 +1206,39 @@
         "desc": "Modern tools, traditional values"
       }
     ]
+  },
+  "keyman": {
+    "heroTitle": "Protect Your Business Key People",
+    "heroSubtitle": "Secure business continuity and save taxes by insuring key employees.",
+    "benefitsTitle": "How Keyman Insurance Protects Your Enterprise",
+    "benefits": [
+      "Ensure business continuity and protect company profits against sudden demise of vital leaders",
+      "Secure company credit lines and protect business loans from sudden bank recalls",
+      "Retain top talents and fund recruitment & training for worthy replacement leaders",
+      "Save company tax with 100% deduction of premium as business expense under Section 80C"
+    ],
+    "advisorTitle": "🏆 Ajay sir's Advisory",
+    "advisorText": "Many business partners in Gorakhpur and UP overlook Keyman Insurance. Besides absolute business protection, the premium paid is 100% tax-free as a business expense, saving substantial company money.",
+    "contactTitle": "Need a custom corporate proposal?",
+    "contactSub": "Send your business requirements directly to Ajay sir on WhatsApp for an instant response.",
+    "ctaConsult": "Discuss Corporate Plan",
+    "ctaWhatsApp": "Chat on WhatsApp"
+  },
+  "criticalIllness": {
+    "heroTitle": "Lump Sum Cover for Life's Biggest Health Challenges",
+    "heroSubtitle": "Focus on recovery, not medical bills, with guaranteed massive cash payouts.",
+    "benefitsTitle": "Comprehensive Financial Shield Against Critical Ailments",
+    "benefits": [
+      "Get a lump sum payout immediately upon diagnosis of cancer, heart attack, or major diseases",
+      "Protect your life savings from high treatment costs and medical inflation",
+      "Clear outstanding loans and home liabilities during the recovery period",
+      "Avail full cashless hospital access at over 12,000+ top network hospitals"
+    ],
+    "advisorTitle": "🏆 Ajay sir's Advisory",
+    "advisorText": "Medical inflation in India is rising at 14% annually. A major diagnosis like cancer or a bypass surgery doesn't just impact health — it can wipe out a lifetime of family savings. A critical illness plan guarantees a massive tax-free cash payout upon diagnosis, ensuring you get top-tier hospital care.",
+    "contactTitle": "Want to compare health floaters vs critical illness cover?",
+    "contactSub": "Discuss details directly with Ajay sir on WhatsApp for clear, honest financial guidance.",
+    "ctaConsult": "Protect My Family",
+    "ctaWhatsApp": "Chat on WhatsApp"
   }
 }

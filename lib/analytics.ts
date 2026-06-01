@@ -50,6 +50,8 @@ export type AnalyticsEvent =
   // Exit intent
   | 'exit_intent_shown'
   | 'exit_intent_submitted'
+  // Calculator result
+  | 'calculator_result'
 
 export function trackEvent(
   name: AnalyticsEvent,
