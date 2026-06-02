@@ -27,10 +27,7 @@ const BlogPreview = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 
-const AgentTeaserStrip = dynamic(
-  () => import('@/components/AgentTeaserStrip'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-16 w-full" /> }
-)
+
 
 const FinalCTA = dynamic(
   () => import('@/components/FinalCTA'),
@@ -73,11 +70,6 @@ export default function HomePage() {
       {/* 8 — Blog Preview (latest 3 posts) */}
       <LazySection height="h-96">
         <BlogPreview />
-      </LazySection>
-
-      {/* 9 — Agent teaser strip */}
-      <LazySection height="h-16">
-        <AgentTeaserStrip />
       </LazySection>
 
       {/* 10 — Final CTA */}

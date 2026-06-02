@@ -7,6 +7,7 @@ import BaseLeadForm from '@/components/base/BaseLeadForm'
 
 export default function BecomeAdvisorPage() {
   const { t, lang } = useLang()
+  const isHi = lang === 'hi'
 
   const fields = [
     { name: 'name' as const, label: t.commonForm.name, icon: <User size={12} />, placeholder: t.agent.placeholders.name, required: true },
@@ -47,6 +48,73 @@ export default function BecomeAdvisorPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Redesigned recruitment panel under the hero */}
+      <section className="bg-amber-50 border-y border-amber-100 py-16 px-6">
+        <div className="max-w-[1240px] mx-auto text-center">
+          <span className="text-amber-600 text-xs uppercase tracking-[0.2em] font-bold block mb-3">
+            {isHi ? 'पोद्दार एडवाइजरी नेटवर्क' : 'PODDAR ADVISORY NETWORK'}
+          </span>
+          <h2 className="text-3xl font-extrabold text-gray-900 leading-tight mb-4">
+            {isHi ? 'भारत की सबसे भरोसेमंद बीमा सलाहकार टीम का हिस्सा बनें' : "Join India's Most Trusted Insurance Advisory Team"}
+          </h2>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto mb-10 font-medium">
+            {isHi 
+              ? 'गोरखपुर और पूर्वी उत्तर प्रदेश में एक सफल करियर बनाएं। हम आपको प्रशिक्षण, तकनीक और ग्राहक संपर्क प्रदान करते हैं।' 
+              : 'Build a highly rewarding, independent career in Gorakhpur and Eastern UP. We support you with elite mentoring, lead flow, and cutting-edge digital platforms.'}
+          </p>
+
+          {/* Benefit Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mb-10">
+            {/* Card 1: Training */}
+            <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">🎓</div>
+              <h3 className="font-bold text-lg text-gray-900 mb-2">
+                {isHi ? 'अकाट्य प्रशिक्षण और मेंटरशिप' : 'Elite Training & Mentoring'}
+              </h3>
+              <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                {isHi 
+                  ? 'अजय कुमार पोद्दार (31+ वर्ष अनुभव) द्वारा व्यक्तिगत रूप से मार्गदर्शन। IRDAI परीक्षा उत्तीर्ण करने और बेहतरीन सेल्स तकनीक सीखने के लिए।'
+                  : 'World-class mentoring by Ajay Kumar Poddar (31+ Years experience) to help you clear the IRDAI exam and build solid sales strategies.'}
+              </p>
+            </div>
+
+            {/* Card 2: Lead Support */}
+            <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">📈</div>
+              <h3 className="font-bold text-lg text-gray-900 mb-2">
+                {isHi ? 'सत्यापित ग्राहक लीड्स' : 'Active Lead Support'}
+              </h3>
+              <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                {isHi 
+                  ? 'गोरखपुर और आसपास के पूर्वी उत्तर प्रदेश के जिलों में सत्यापित और संभावित ग्राहक लीड्स तक सीधी पहुंच।'
+                  : 'Access verified, localized prospective client leads in Gorakhpur and surrounding Eastern UP districts.'}
+              </p>
+            </div>
+
+            {/* Card 3: Technology */}
+            <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">⚡</div>
+              <h3 className="font-bold text-lg text-gray-900 mb-2">
+                {isHi ? 'अत्याधुनिक डिजिटल तकनीक' : 'State-of-the-Art Tech'}
+              </h3>
+              <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                {isHi 
+                  ? 'डील्स को तेजी से क्लोज करने के लिए प्रीमियम कैलकुलेटर, बीमा सुगम इंटीग्रेशन और एआई एडवाइजर टूल्स का उपयोग।'
+                  : 'Utilize our state-of-the-art digital tools like Bima Sugam integrations, premium calculators, and AI advisor support to close deals faster.'}
+              </p>
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <a
+            href="#apply"
+            className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 shadow-md hover:scale-105 active:scale-95"
+          >
+            {isHi ? 'अभी हमारे नेटवर्क से जुड़ें →' : 'Apply to Join Our Network →'}
+          </a>
         </div>
       </section>
 

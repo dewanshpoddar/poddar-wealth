@@ -23,6 +23,7 @@ import {
 
 export default function AboutPage() {
   const { t, lang } = useLang()
+  const isHi = lang === 'hi'
 
   const stats = [
     { num: '31+', label: lang === 'en' ? 'Years Professional' : 'पेशेवर साल' },
@@ -67,7 +68,7 @@ export default function AboutPage() {
     <div className="bg-white">
       
       {/* ═══ MINIMALIST LUXURY HERO (CLIPPED FIX) ═══ */}
-      <section className="relative overflow-hidden bg-warm/30 pt-12 pb-12 lg:pt-24 lg:pb-24 border-b border-gold/5">
+      <section className="relative overflow-hidden bg-warm/30 pt-16 pb-16 lg:pt-24 lg:pb-24 border-b border-gold/5">
         <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
@@ -76,16 +77,27 @@ export default function AboutPage() {
               
               <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-bold uppercase mb-4">
                 <span className="w-7 h-px bg-gold inline-block" />
-                Proven Institutional Legacy
+                {isHi ? 'प्रमाणित संस्थागत विरासत' : 'Proven Institutional Legacy'}
               </div>
               
               <h1 className="font-display text-[30px] md:text-[36px] lg:text-[44px] font-normal italic leading-[1.2] text-slate-900 mb-1">
-                31 Years of <br />
-                <span className="font-bold text-gold not-italic">Institutional Trust</span>
+                {isHi ? (
+                  <>
+                    <span className="font-bold text-gold not-italic">31 वर्षों</span> का <br />
+                    संस्थागत विश्वास
+                  </>
+                ) : (
+                  <>
+                    31 Years of <br />
+                    <span className="font-bold text-gold not-italic">Institutional Trust</span>
+                  </>
+                )}
               </h1>
               
               <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-6 font-medium">
-                Building financial fortresses for Gorakhpur families since 1994. We secure your life&apos;s most precious work with three decades of on-ground excellence and Million Dollar Round Table (USA) credentials.
+                {isHi 
+                  ? '1994 से गोरखपुर के परिवारों के लिए वित्तीय सुरक्षा का निर्माण कर रहे हैं। हम तीन दशकों की ऑन-ग्राउंड उत्कृष्टता और मिलियन डॉलर राउंड टेबल (USA) क्रेडेंशियल्स के साथ आपके जीवन के सबसे अनमोल काम को सुरक्षित करते हैं।'
+                  : "Building financial fortresses for Gorakhpur families since 1994. We secure your life's most precious work with three decades of on-ground excellence and Million Dollar Round Table (USA) credentials."}
               </p>
             </div>
 
@@ -97,11 +109,15 @@ export default function AboutPage() {
             >
                <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 flex flex-col items-center justify-center text-slate-400 group">
                   <Camera size={36} className="text-slate-300 mb-2" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Photo coming soon</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    {isHi ? 'चित्र जल्द ही आ रहा है' : 'Photo coming soon'}
+                  </span>
                   
                   <div className="absolute bottom-8 right-8 w-24 h-24 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex flex-col items-center justify-center text-center p-2">
                      <Star size={12} className="text-gold fill-gold mb-1" />
-                     <div className="text-[8px] font-bold text-white uppercase tracking-[0.2em] leading-tight">Since <br/> 1994</div>
+                     <div className="text-[8px] font-bold text-white uppercase tracking-[0.2em] leading-tight">
+                       {isHi ? <>1994 <br/> से</> : <>Since <br/> 1994</>}
+                     </div>
                   </div>
                </div>
             </MotionDiv>
@@ -128,7 +144,9 @@ export default function AboutPage() {
             </div>
             <div className="mt-4 text-left">
               <p className="text-[10px] text-slate-400 italic">
-                *Claims Assisted statistic is cumulative across all policies serviced since 1994.
+                {isHi 
+                  ? '*दावा सहायता आंकड़े 1994 से सेवा की गई सभी पॉलिसियों के कुल संचयी हैं।'
+                  : '*Claims Assisted statistic is cumulative across all policies serviced since 1994.'}
               </p>
             </div>
          </div>
@@ -148,18 +166,24 @@ export default function AboutPage() {
                   className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden flex flex-col items-center justify-center text-slate-400 group"
                 >
                   <Camera size={48} className="text-slate-300 mb-3" />
-                  <span className="text-[14px] font-bold uppercase tracking-wider text-slate-400">Photo coming soon</span>
+                  <span className="text-[14px] font-bold uppercase tracking-wider text-slate-400">
+                    {isHi ? 'चित्र जल्द ही आ रहा है' : 'Photo coming soon'}
+                  </span>
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/5 via-transparent to-transparent opacity-60 pointer-events-none" />
                 </MotionDiv>
                 
                 <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
                      <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain flex-shrink-0" />
-                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">MDRT USA Member</span>
+                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
+                       {isHi ? 'MDRT यूएसए सदस्य' : 'MDRT USA Member'}
+                     </span>
                    </div>
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
                      <Image src="/assets/chairmanclub.png" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
-                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">Chairman&apos;s Club</span>
+                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
+                       {isHi ? 'चेयरमैन क्लब' : "Chairman's Club"}
+                     </span>
                    </div>
                 </div>
               </div>
@@ -172,20 +196,30 @@ export default function AboutPage() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <span className="w-12 h-px bg-gold" />
-                    <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">Institutional Presence</span>
+                    <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">
+                      {isHi ? 'संस्थागत उपस्थिति' : 'Institutional Presence'}
+                    </span>
                   </div>
                   
-                  <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mb-8 leading-tight">Mr. Ajay Kumar Poddar</h2>
+                  <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mb-8 leading-tight">
+                    {isHi ? 'श्री अजय कुमार पोद्दार' : 'Mr. Ajay Kumar Poddar'}
+                  </h2>
                   
                   <div className="space-y-6 text-[15px] md:text-[16px] text-slate-600 leading-relaxed italic">
                     <p className="not-italic font-medium text-slate-800">
-                      Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994.
+                      {isHi 
+                        ? 'एडी मॉल कंपाउंड, विजय चौक, गोरखपुर — पूर्वी यूपी के केंद्र — में स्थित, अजय कुमार पोद्दार 1994 से परिवारों के भविष्य को सुरक्षित करने में मदद कर रहे हैं।'
+                        : 'Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994.'}
                     </p>
                     <p className="border-l-4 border-gold pl-6 py-2 bg-gold/5 rounded-r-xl">
-                      &ldquo;My mission is not to sell policies, but to build financial fortresses for families who trust us with their life&apos;s work.&rdquo;
+                      {isHi 
+                        ? '“मेरा मिशन केवल पॉलिसियां बेचना नहीं है, बल्कि उन परिवारों के लिए वित्तीय सुरक्षा का निर्माण करना है जो अपने जीवन की मेहनत के साथ हम पर भरोसा करते हैं।”'
+                        : "“My mission is not to sell policies, but to build financial fortresses for families who trust us with their life's work.”"}
                     </p>
                     <p className="not-italic text-[14px] text-slate-500">
-                      With over three decades of on-ground experience, he is recognized globally by the Million Dollar Round Table (MDRT, USA) for his commitment to quality and ethical advisory.
+                      {isHi 
+                        ? 'तीन दशकों से अधिक के ऑन-ग्राउंड अनुभव के साथ, उन्हें गुणवत्ता और नैतिक सलाह के लिए मिलियन डॉलर राउंड टेबल (MDRT, USA) द्वारा वैश्विक स्तर पर मान्यता प्राप्त है।'
+                        : 'With over three decades of on-ground experience, he is recognized globally by the Million Dollar Round Table (MDRT, USA) for his commitment to quality and ethical advisory.'}
                     </p>
                   </div>
 
@@ -195,8 +229,12 @@ export default function AboutPage() {
                         <MapPin size={20} />
                       </div>
                       <div>
-                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">Service Area</div>
-                        <div className="text-[14px] font-bold text-navy">Gorakhpur, Eastern UP</div>
+                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
+                          {isHi ? 'सेवा क्षेत्र' : 'Service Area'}
+                        </div>
+                        <div className="text-[14px] font-bold text-navy">
+                          {isHi ? 'गोरखपुर, पूर्वी यूपी' : 'Gorakhpur, Eastern UP'}
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -435,9 +473,21 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
             <Camera size={18} />
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Memory Lane</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em]">
+              {isHi ? 'स्मृतियों के गलियारे से' : 'Memory Lane'}
+            </span>
           </div>
-          <h2 className="text-[28px] font-display font-bold text-navy tracking-tight leading-tight">31 Years of <span className="text-gold">Life&apos;s Work</span></h2>
+          <h2 className="text-[28px] font-display font-bold text-navy tracking-tight leading-tight">
+            {isHi ? (
+              <>
+                जीवन पर्यन्त सेवा के <span className="text-gold">31 वर्ष</span>
+              </>
+            ) : (
+              <>
+                31 Years of <span className="text-gold">Life&apos;s Work</span>
+              </>
+            )}
+          </h2>
         </div>
 
         <div className="relative group/reel mb-1">
@@ -494,11 +544,15 @@ export default function AboutPage() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[100px] rounded-full -z-0" />
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
            <div className="text-center md:text-left">
-              <h3 className="text-[24px] md:text-[28px] font-display font-bold text-navy mb-2 tracking-tight leading-tight">Ready to plan your family&apos;s future?</h3>
-              <p className="text-navy/60 text-[14px] font-medium">Book a direct consultation with Mr. Ajay Poddar.</p>
+              <h3 className="text-[24px] md:text-[28px] font-display font-bold text-navy mb-2 tracking-tight leading-tight">
+                {isHi ? 'अपने परिवार का भविष्य प्लान करने के लिए तैयार हैं?' : "Ready to plan your family's future?"}
+              </h3>
+              <p className="text-navy/60 text-[14px] font-medium">
+                {isHi ? 'श्री अजय कुमार पोद्दार के साथ सीधे परामर्श बुक करें।' : 'Book a direct consultation with Mr. Ajay Poddar.'}
+              </p>
            </div>
            <Link href="/contact" className="h-12 md:h-14 px-8 md:px-10 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-3 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1 text-center">
-              Start Your Journey Now
+              {isHi ? 'अभी अपनी यात्रा शुरू करें →' : 'Start Your Journey Now →'}
            </Link>
         </div>
       </section>

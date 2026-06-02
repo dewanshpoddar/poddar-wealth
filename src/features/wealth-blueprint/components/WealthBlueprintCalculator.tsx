@@ -159,38 +159,50 @@ export default function WealthBlueprintCalculator() {
   )
 
   return (
-    <section className="bg-white py-14 md:py-18 relative overflow-hidden">
+    <section id="blueprint" className="bg-gradient-to-b from-gray-50 to-white py-20 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(circle at 10% 60%, rgba(201,168,76,0.07) 0%, transparent 55%), radial-gradient(circle at 90% 15%, rgba(4,12,28,0.04) 0%, transparent 50%)' }}/>
 
       <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative">
         {/* Header */}
-        <div className="text-center mb-9">
-          <div className="inline-flex items-center gap-2 bg-[#f5f3ee] rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold"/>
-            <span className="text-10 font-bold tracking-[0.16em] uppercase text-navy/55">Poddar Wealth · Free Planning Tool</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-gold"/>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200/60 rounded-full px-5 py-2 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"/>
+            <span className="text-amber-600 text-xs uppercase tracking-[0.2em] font-semibold">
+              {isHi ? 'पोद्दार वेल्थ · निशुल्क प्लानिंग टूल' : 'PODDAR WEALTH · FREE PLANNING TOOL'}
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"/>
           </div>
-          <h2 className="font-display text-xl md:text-3xl font-bold text-navy leading-tight mb-2">
-            Your Personal Wealth Blueprint
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+            {isHi ? 'आपका व्यक्तिगत वेल्थ ब्लूप्रिंट' : 'Your Personal Wealth Blueprint'}
           </h2>
-          <p className="text-13 text-gray-500 max-w-xl mx-auto leading-relaxed">
-            4 questions. A financial brief at the level of a private wealth advisor — covering your protection gap, retirement reality, and a specific product-level action plan.
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto mt-4 leading-relaxed font-medium">
+            {isHi 
+              ? 'सिर्फ 4 सवालों में। एक अनुभवी प्राइवेट वेल्थ एडवाइजर के स्तर पर तैयार की गई आपकी सुरक्षा, रिटायरमेंट और सटीक निवेश योजना।'
+              : '4 questions. A financial brief at the level of a private wealth advisor — covering your protection gap, retirement reality, and a specific product-level action plan.'}
           </p>
         </div>
 
         {/* Step indicator */}
         {step < 4 && (
-          <div className="flex items-center justify-center gap-1 md:gap-1.5 mb-5 md:mb-7">
-            {['Identity', 'Family', 'Shield', 'Wealth'].map((s, i) => (
-              <div key={i} className="flex items-center gap-1 md:gap-1.5">
-                <div className={`flex items-center gap-1 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-10 font-bold transition-all ${
-                  i === step ? 'bg-navy text-white' : i < step ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-400'
+          <div className="flex items-center justify-center gap-2 md:gap-3 mb-10 md:mb-12">
+            {(isHi ? ['पहचान', 'परिवार', 'सुरक्षा', 'सम्पत्ति'] : ['Identity', 'Family', 'Shield', 'Wealth']).map((s, i) => (
+              <div key={i} className="flex items-center gap-2 md:gap-3">
+                <div className={`flex items-center gap-2 px-3.5 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-xs font-bold transition-all duration-300 ${
+                  i === step 
+                    ? 'bg-amber-500 text-white shadow-md border border-amber-500 scale-105' 
+                    : i < step 
+                      ? 'bg-emerald-600 text-white' 
+                      : 'bg-gray-100 text-gray-400'
                 }`}>
-                  {i < step ? <CheckCircle2 size={9}/> : <span>{i + 1}</span>}
+                  {i < step ? <CheckCircle2 size={12} className="stroke-[3]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">{i + 1}</span>}
                   <span className="hidden sm:inline">{s}</span>
                 </div>
-                {i < 3 && <div className={`w-2 md:w-4 h-px ${i < step ? 'bg-green-300' : 'bg-gray-200'}`}/>}
+                {i < 3 && (
+                  <div className={`h-0.5 w-6 md:w-10 rounded transition-all duration-300 ${
+                    i < step ? 'bg-emerald-600' : 'bg-gray-200'
+                  }`} />
+                )}
               </div>
             ))}
           </div>

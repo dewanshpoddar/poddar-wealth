@@ -20,26 +20,17 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
 }
 
-const CATEGORY_GRADIENTS: Record<string, string> = {
-  'Life Insurance':   'from-blue-500 to-blue-600',
-  'LIC Plans':        'from-amber-500 to-amber-600',
-  'Health Insurance': 'from-green-500 to-green-600',
-  'Tax Planning':     'from-emerald-500 to-emerald-600',
-  'Claims':           'from-violet-500 to-violet-600',
-  'Comparison':       'from-red-500 to-red-600',
-  'Guides':           'from-purple-500 to-purple-600',
-  'Child Plans':      'from-pink-500 to-pink-600',
-}
+import { Shield, Heart, FileText, Calculator, ArrowLeftRight, BookOpen } from 'lucide-react'
 
-const CATEGORY_EMOJIS: Record<string, string> = {
-  'Life Insurance':   '🛡️',
-  'LIC Plans':        '📋',
-  'Health Insurance': '🏥',
-  'Tax Planning':     '💰',
-  'Claims':           '📁',
-  'Comparison':       '⚖️',
-  'Guides':           '📚',
-  'Child Plans':      '👶',
+const CATEGORY_STYLES: Record<string, { bg: string; icon: React.ComponentType<any> }> = {
+  'Life Insurance':   { bg: 'bg-blue-900', icon: Shield },
+  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
+  'LIC Plans':        { bg: 'bg-amber-800', icon: FileText },
+  'Tax Planning':     { bg: 'bg-indigo-900', icon: Calculator },
+  'Comparison':       { bg: 'bg-slate-800', icon: ArrowLeftRight },
+  'Claims':           { bg: 'bg-purple-950', icon: FileText },
+  'Guides':           { bg: 'bg-gray-900', icon: BookOpen },
+  'Child Plans':      { bg: 'bg-rose-900', icon: Heart },
 }
 
 function formatDate(dateStr: string, lang: string) {
@@ -167,16 +158,17 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
           </div>
         </section>
 
-        {/* Category Gradient Header */}
+        {/* Premium Corporate Solid Header */}
         {(() => {
-          const gradient = CATEGORY_GRADIENTS[post.category] || 'from-gray-400 to-gray-500'
-          const emoji = CATEGORY_EMOJIS[post.category] || '📝'
+          const style = CATEGORY_STYLES[post.category] || { bg: 'bg-gray-900', icon: BookOpen }
+          const Icon = style.icon
           return (
-            <div className={`h-[200px] w-full bg-gradient-to-r ${gradient} flex items-center justify-center text-6xl relative overflow-hidden`}>
-              <div className="absolute inset-0 bg-white/5 opacity-10 mix-blend-overlay" />
-              <div className="absolute -right-12 -bottom-12 w-40 h-40 rounded-full bg-white/10 blur-2xl" />
-              <div className="absolute -left-12 -top-12 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
-              <span className="relative z-10 filter drop-shadow">{emoji}</span>
+            <div className={`h-[160px] w-full ${style.bg} flex flex-col items-center justify-center relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-white/5 opacity-5 mix-blend-overlay" />
+              <Icon className="w-12 h-12 text-white mb-2 transition-transform duration-500 hover:scale-110" />
+              <span className="text-xs font-bold text-white/70 uppercase tracking-widest leading-none">
+                {post.category}
+              </span>
             </div>
           )
         })()}

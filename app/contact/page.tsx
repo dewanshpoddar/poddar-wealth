@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
 
 export default function ContactPage() {
   const { t, lang } = useLang()
+  const isHi = lang === 'hi'
   const [form, setForm] = useState({ name: '', phone: '', wantTo: '', iAm: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -14,19 +15,19 @@ export default function ContactPage() {
     e.preventDefault()
     setError('')
     if (!form.name.trim() || form.name.trim().length < 2) {
-      setError('Please enter your full name.')
+      setError(isHi ? 'कृपया अपना पूरा नाम दर्ज करें।' : 'Please enter your full name.')
       return
     }
     if (!/^\d{10}$/.test(form.phone)) {
-      setError('Please enter a valid 10-digit mobile number.')
+      setError(isHi ? 'कृपया 10 अंकों का मोबाइल नंबर दर्ज करें।' : 'Please enter a valid 10-digit mobile number.')
       return
     }
     if (!form.wantTo) {
-      setError('Please select what you want to do.')
+      setError(isHi ? 'कृपया चुनें कि आप क्या करना चाहते हैं।' : 'Please select what you want to do.')
       return
     }
     if (!form.iAm) {
-      setError('Please select who you are.')
+      setError(isHi ? 'कृपया चुनें कि आप कौन हैं।' : 'Please select who you are.')
       return
     }
     setLoading(true)
@@ -50,7 +51,7 @@ export default function ContactPage() {
       setSuccess(true)
     } catch (err) {
       console.error(err)
-      setError('Something went wrong. Please call us at 9415313434.')
+      setError(isHi ? 'कुछ गलत हो गया। कृपया हमें 9415313434 पर कॉल करें।' : 'Something went wrong. Please call us at 9415313434.')
     } finally {
       setLoading(false)
     }
@@ -76,19 +77,23 @@ export default function ContactPage() {
               {success ? (
                 <div className="text-center py-10">
                   <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">{t.contactPage.successTitle}</h3>
-                  <p className="text-slate-500">Ajay will personally get back to you within 24 hours.</p>
+                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">{t.contactPage?.successTitle || (isHi ? 'संदेश सफलतापूर्वक भेजा गया! 🎉' : 'Message Sent Successfully! 🎉')}</h3>
+                  <p className="text-slate-500">
+                    {isHi ? 'अजय सर व्यक्तिगत रूप से 24 घंटों के भीतर आपसे संपर्क करेंगे।' : 'Ajay will personally get back to you within 24 hours.'}
+                  </p>
                   <button
                     onClick={() => { setSuccess(false); setForm({ name: '', phone: '', wantTo: '', iAm: '', message: '' }) }}
                     className="mt-6 text-sm font-bold text-green-700 hover:underline"
                   >
-                    ← Send another message
+                    {isHi ? '← दूसरा संदेश भेजें' : '← Send another message'}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="ct-name" className="block text-sm font-semibold text-slate-700 mb-1.5">Your Name *</label>
+                    <label htmlFor="ct-name" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                      {isHi ? 'आपका नाम *' : 'Your Name *'}
+                    </label>
                     <input
                       id="ct-name"
                       type="text"
@@ -96,11 +101,13 @@ export default function ContactPage() {
                       value={form.name}
                       onChange={e => setForm({...form, name: e.target.value})}
                       className="input-field"
-                      placeholder="Ramesh Sharma"
+                      placeholder={isHi ? 'रमेश शर्मा' : 'Ramesh Sharma'}
                     />
                   </div>
                   <div>
-                    <label htmlFor="ct-phone" className="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp / Phone *</label>
+                    <label htmlFor="ct-phone" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                      {isHi ? 'व्हाट्सएप / फोन *' : 'WhatsApp / Phone *'}
+                    </label>
                     <input
                       id="ct-phone"
                       type="tel"
@@ -108,14 +115,16 @@ export default function ContactPage() {
                       value={form.phone}
                       onChange={e => setForm({...form, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                       className="input-field"
-                      placeholder="10-digit mobile number"
+                      placeholder={isHi ? '10 अंकों का मोबाइल नंबर' : '10-digit mobile number'}
                       inputMode="numeric"
                       maxLength={10}
                     />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="wantTo" className="block text-sm font-semibold text-slate-700 mb-1.5">I want to *</label>
+                      <label htmlFor="wantTo" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        {isHi ? 'मैं चाहता हूँ *' : 'I want to *'}
+                      </label>
                       <select
                         id="wantTo"
                         required
@@ -123,17 +132,19 @@ export default function ContactPage() {
                         onChange={e => setForm({...form, wantTo: e.target.value})}
                         className="input-field appearance-none cursor-pointer"
                       >
-                        <option value="">Select</option>
-                        <option>Protect my family</option>
-                        <option>Create wealth</option>
-                        <option>Plans for Children&apos;s future</option>
-                        <option>Plan for my retirement</option>
-                        <option>Get health cover</option>
-                        <option>Complete financial checkup</option>
+                        <option value="">{isHi ? 'चुनें' : 'Select'}</option>
+                        <option value="Protect my family">{isHi ? 'अपने परिवार को सुरक्षित करना' : 'Protect my family'}</option>
+                        <option value="Create wealth">{isHi ? 'संपत्ति (Wealth) बनाना' : 'Create wealth'}</option>
+                        <option value="Plans for Children's future">{isHi ? 'बच्चों के भविष्य के लिए प्लान' : "Plans for Children's future"}</option>
+                        <option value="Plan for my retirement">{isHi ? 'रिटायरमेंट के लिए प्लान' : 'Plan for my retirement'}</option>
+                        <option value="Get health cover">{isHi ? 'स्वास्थ्य बीमा (Health Cover) लेना' : 'Get health cover'}</option>
+                        <option value="Complete financial checkup">{isHi ? 'पूर्ण वित्तीय जांच' : 'Complete financial checkup'}</option>
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="iAm" className="block text-sm font-semibold text-slate-700 mb-1.5">I am *</label>
+                      <label htmlFor="iAm" className="block text-sm font-semibold text-slate-700 mb-1.5">
+                        {isHi ? 'मैं हूँ *' : 'I am *'}
+                      </label>
                       <select
                         id="iAm"
                         required
@@ -141,24 +152,26 @@ export default function ContactPage() {
                         onChange={e => setForm({...form, iAm: e.target.value})}
                         className="input-field appearance-none cursor-pointer"
                       >
-                        <option value="">Select</option>
-                        <option>Prospective Policy Holder</option>
-                        <option>Existing Policy Holder</option>
-                        <option>An NRI</option>
-                        <option>An agent</option>
-                        <option>Employee</option>
-                        <option>Retired employee</option>
+                        <option value="">{isHi ? 'चुनें' : 'Select'}</option>
+                        <option value="Prospective Policy Holder">{isHi ? 'नया पॉलिसी ग्राहक' : 'Prospective Policy Holder'}</option>
+                        <option value="Existing Policy Holder">{isHi ? 'मौजूदा पॉलिसी ग्राहक' : 'Existing Policy Holder'}</option>
+                        <option value="An NRI">{isHi ? 'एक प्रवासी भारतीय (NRI)' : 'An NRI'}</option>
+                        <option value="An agent">{isHi ? 'एक एजेंट (Agent)' : 'An agent'}</option>
+                        <option value="Employee">{isHi ? 'कर्मचारी (Employee)' : 'Employee'}</option>
+                        <option value="Retired employee">{isHi ? 'सेवानिवृत्त कर्मचारी' : 'Retired employee'}</option>
                       </select>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Your Message</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+                      {isHi ? 'आपका संदेश' : 'Your Message'}
+                    </label>
                     <textarea
                       rows={4}
                       value={form.message}
                       onChange={e => setForm({...form, message: e.target.value})}
                       className="input-field resize-none"
-                      placeholder="Tell us how we can help..."
+                      placeholder={isHi ? 'बताएं कि हम आपकी कैसे मदद कर सकते हैं...' : 'Tell us how we can help...'}
                     />
                   </div>
 
@@ -171,9 +184,11 @@ export default function ContactPage() {
                     disabled={loading}
                     className="btn-primary w-full justify-center py-4 text-base disabled:opacity-70"
                   >
-                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Send Message →'}
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (isHi ? 'संदेश भेजें →' : 'Send Message →')}
                   </button>
-                  <p className="text-xs text-slate-400 text-center">Your details are secure and never shared.</p>
+                  <p className="text-xs text-slate-400 text-center">
+                    {isHi ? 'आपके विवरण पूरी तरह सुरक्षित हैं और कभी साझा नहीं किए जाते।' : 'Your details are secure and never shared.'}
+                  </p>
                 </form>
               )}
             </div>
@@ -188,7 +203,7 @@ export default function ContactPage() {
                       <Phone className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <div className="text-sm text-slate-500">Call / WhatsApp</div>
+                      <div className="text-sm text-slate-500">{isHi ? 'कॉल / व्हाट्सएप' : 'Call / WhatsApp'}</div>
                       <div className="font-semibold text-slate-900 group-hover:text-gold">{t.footer.phone}</div>
                     </div>
                   </a>

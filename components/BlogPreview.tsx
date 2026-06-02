@@ -16,26 +16,17 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
 }
 
-const CATEGORY_GRADIENTS: Record<string, string> = {
-  'Life Insurance':   'from-blue-500 to-blue-600',
-  'LIC Plans':        'from-amber-500 to-amber-600',
-  'Health Insurance': 'from-green-500 to-green-600',
-  'Tax Planning':     'from-emerald-500 to-emerald-600',
-  'Claims':           'from-violet-500 to-violet-600',
-  'Comparison':       'from-red-500 to-red-600',
-  'Guides':           'from-purple-500 to-purple-600',
-  'Child Plans':      'from-pink-500 to-pink-600',
-}
+import { Shield, Heart, FileText, Calculator, ArrowLeftRight, BookOpen } from 'lucide-react'
 
-const CATEGORY_EMOJIS: Record<string, string> = {
-  'Life Insurance':   '🛡️',
-  'LIC Plans':        '📋',
-  'Health Insurance': '🏥',
-  'Tax Planning':     '💰',
-  'Claims':           '📁',
-  'Comparison':       '⚖️',
-  'Guides':           '📚',
-  'Child Plans':      '👶',
+const CATEGORY_STYLES: Record<string, { bg: string; icon: React.ComponentType<any> }> = {
+  'Life Insurance':   { bg: 'bg-blue-900', icon: Shield },
+  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
+  'LIC Plans':        { bg: 'bg-amber-800', icon: FileText },
+  'Tax Planning':     { bg: 'bg-indigo-900', icon: Calculator },
+  'Comparison':       { bg: 'bg-slate-800', icon: ArrowLeftRight },
+  'Claims':           { bg: 'bg-purple-950', icon: FileText },
+  'Guides':           { bg: 'bg-gray-900', icon: BookOpen },
+  'Child Plans':      { bg: 'bg-rose-900', icon: Heart },
 }
 
 export default function BlogPreview() {
@@ -77,8 +68,8 @@ export default function BlogPreview() {
         {/* Post Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {latestPosts.map((post) => {
-            const gradient = CATEGORY_GRADIENTS[post.category] || 'from-gray-400 to-gray-500'
-            const emoji = CATEGORY_EMOJIS[post.category] || '📝'
+            const style = CATEGORY_STYLES[post.category] || { bg: 'bg-gray-900', icon: BookOpen }
+            const Icon = style.icon
             const readingTime = lang === 'hi'
               ? Math.ceil(post.contentHi.length / 5 / 200)
               : Math.ceil(post.content.split(/\s+/).length / 200)
@@ -88,13 +79,12 @@ export default function BlogPreview() {
                 key={post.slug}
                 className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300 flex flex-col group cursor-default"
               >
-                {/* Premium Gradient Header */}
-                <div className={`h-[120px] w-full bg-gradient-to-r ${gradient} flex items-center justify-center text-4xl relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-white/5 opacity-10 mix-blend-overlay" />
-                  <div className="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-white/10 blur-xl" />
-                  <div className="absolute -left-6 -top-6 w-20 h-20 rounded-full bg-white/10 blur-xl" />
-                  <span className="relative z-10 filter drop-shadow transition-transform duration-500 group-hover:scale-110">
-                    {emoji}
+                {/* Premium Corporate Solid Header */}
+                <div className={`h-[120px] w-full ${style.bg} flex flex-col items-center justify-center relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-white/5 opacity-5 mix-blend-overlay" />
+                  <Icon className="w-8 h-8 text-white mb-2 transition-transform duration-500 group-hover:scale-110" />
+                  <span className="text-[10px] font-bold text-white/70 uppercase tracking-widest leading-none">
+                    {post.category}
                   </span>
                 </div>
 
