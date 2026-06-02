@@ -261,6 +261,26 @@ Both endpoints require `CRON_SECRET` header to execute.
   Error boundary (app/error.tsx), env validation (lib/env.ts), API resilience all confirmed live.
   Build: 0 errors. All routes static/dynamic as expected.
 
+- **2026-06-01 (evening) + 2026-06-02:** Full-site UI audit + Blog/SEO infrastructure sprint.
+  UI Audit (8 items): WhatsApp FAB z-index/size fixed (48px max, above MobileCTABar).
+  Blog card headers rebuilt — emoji/gradient → solid category colors + Lucide icons.
+  Footer completely rebuilt: bg-gray-950, 4-column corporate layout, Google reviews, clickable phone numbers, legal bottom bar.
+  Wealth Blueprint section header: amber badge, larger h2, amber step circles + connect lines.
+  Homepage cleaned: AgentTeaserStrip removed entirely.
+  About + Contact pages: full bilingual translation (heroTitle, founderQuote, form labels, placeholders, validation messages).
+  Become Advisor page: new "Join Our Advisory Network" recruitment panel with 3 benefit cards.
+  WhatsApp button: enabled universal visibility (removed hidden sm:flex).
+  Blog/SEO sprint (5 items): JSON-LD Article schema already in blog/[slug]/page.tsx (confirmed).
+  10 new high-intent blog posts added to lib/data/blog-posts.json (total: 30 posts).
+  New slugs: lic-premium-payment-online-guide, best-lic-plan-for-30-year-old, lic-maturity-amount-taxable-or-not,
+  lic-policy-lapse-revival-complete-guide, whole-life-vs-term-insurance-india,
+  lic-jeevan-labh-plan-936-complete-review, lic-surrender-value-calculation,
+  lic-jeevan-shree-plan-review, health-insurance-for-self-employed-india, lic-endowment-vs-ppf-fd-comparison.
+  All posts: bilingual EN/HI, relatedSlugs, soft CTA with 9415313434.
+  Related Articles section already in blog post page (confirmed from prior sprint).
+  Pay-premium page: step-by-step "How to Pay" 3-step guide + payment methods strip added above form.
+  Build: verified 60+ pages, 0 errors (node node_modules/.bin/next build).
+
 ---
 
-_Last updated: 2026-06-01_
+_Last updated: 2026-06-02_

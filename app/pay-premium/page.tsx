@@ -75,8 +75,78 @@ export default function PayPremiumPage() {
         </div>
       </section>
 
+      {/* How to Pay Guide */}
+      <section className="py-10 px-6 bg-slate-50 border-b border-slate-100">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-display font-bold text-xl text-navy mb-2 text-center">
+            {isHi ? 'LIC प्रीमियम ऑनलाइन कैसे भरें?' : 'How to Pay Your LIC Premium Online'}
+          </h2>
+          <p className="text-gray-500 text-sm text-center mb-6">
+            {isHi ? 'यह 3-चरण की प्रक्रिया 5 मिनट से कम समय लेती है' : 'This 3-step process takes less than 5 minutes'}
+          </p>
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            {[
+              {
+                step: '1',
+                titleEn: 'Enter Your Details',
+                titleHi: 'विवरण दर्ज करें',
+                descEn: 'Fill in your name, mobile, policy number, and premium amount below.',
+                descHi: 'नीचे अपना नाम, मोबाइल, पॉलिसी नंबर और प्रीमियम राशि भरें।',
+                icon: '📋',
+              },
+              {
+                step: '2',
+                titleEn: 'We Log Your Intent',
+                titleHi: 'हम आपकी जानकारी नोट करते हैं',
+                descEn: "We record your premium due date so we can send you reminders — your policy never lapses.",
+                descHi: 'हम आपकी देय तारीख नोट करते हैं और समय पर रिमाइंडर भेजते हैं — पॉलिसी कभी लैप्स न हो।',
+                icon: '🛡️',
+              },
+              {
+                step: '3',
+                titleEn: 'Pay on LIC Portal',
+                titleHi: 'LIC पोर्टल पर भुगतान करें',
+                descEn: 'We redirect you to the official LIC customer portal where you complete payment securely.',
+                descHi: 'हम आपको आधिकारिक LIC पोर्टल पर भेजते हैं जहां आप सुरक्षित रूप से भुगतान करते हैं।',
+                icon: '✅',
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex-1 flex items-start gap-3 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0">
+                  {item.step}
+                </div>
+                <div>
+                  <div className="text-lg mb-0.5">{item.icon}</div>
+                  <p className="font-bold text-sm text-navy mb-1">
+                    {isHi ? item.titleHi : item.titleEn}
+                  </p>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    {isHi ? item.descHi : item.descEn}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Payment methods row */}
+          <div className="mt-6 pt-5 border-t border-gray-100">
+            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider text-center mb-3">
+              {isHi ? 'LIC पोर्टल पर स्वीकृत भुगतान तरीके' : 'Accepted on LIC Portal'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {['UPI / BHIM', 'Debit Card', 'Credit Card', 'Net Banking', 'Paytm / PhonePe'].map(method => (
+                <span key={method} className="text-[11px] bg-gray-50 border border-gray-200 text-gray-500 px-3 py-1 rounded-full font-medium">
+                  {method}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Form */}
       <section className="py-12 px-6">
+
         <div className="max-w-md mx-auto">
           {status === 'done' ? (
             <div className="text-center py-10">
