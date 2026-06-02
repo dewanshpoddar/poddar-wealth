@@ -2,14 +2,21 @@ import { NextResponse } from 'next/server'
 
 import { adminNotify } from '@/lib/admin-notify'
 import { clean, isValidPhone, appendToCsv, pushToSheets } from '@/lib/server-utils'
+import { logger } from '@/lib/logger'
+import { leadStats } from '@/lib/lead-stats'
 
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
+const adminWebhookUrl = process.env.ADMIN_SHEETS_WEBHOOK_URL
 
 const HEADERS = [
   'Timestamp', 'Name', 'Mobile', 'Email',
   'City', 'Profession', 'Want To', 'I Am',
   'Intent', 'Experience', 'Message',
 ]
+
+// Deduplication: prevent double-submissions within 60 seconds
+const dedupeMap = new Map<string, number>()
+const DEDUP_WINDOW = 60_000
 
 /**
  * Route each lead to its own dedicated tab — nothing gets merged.
@@ -68,11 +75,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid mobile number — must be 10 digits' }, { status: 400 })
     }
 
+    // Deduplication — silent success to prevent form retry loops
+    const cleanMobile = clean(mobile, 10)
+    const dedupeKey = `${cleanMobile}-${clean(intent ?? 'general', 200)}`
+    const lastSubmit = dedupeMap.get(dedupeKey)
+    if (lastSubmit && Date.now() - lastSubmit < DEDUP_WINDOW) {
+      logger.info('/api/leads', 'Deduplicated lead submission', { mobile: cleanMobile })
+      return NextResponse.json({ success: true, deduplicated: true })
+    }
+    dedupeMap.set(dedupeKey, Date.now())
+
     const timestamp = new Date().toISOString()
     const row = [
       timestamp,
       clean(name, 100),
-      clean(mobile, 10),
+      cleanMobile,
       clean(email, 200),
       clean(city, 100),
       clean(profession, 100),
@@ -101,11 +118,38 @@ export async function POST(request: Request) {
       )
     }
 
+    // 3. Admin notification — one-tap WhatsApp + call links for Ajay sir
+    if (adminWebhookUrl) {
+      const digitsOnly = cleanMobile.replace(/\D/g, '')
+      const notifyPayload = {
+        notification_type: 'new_lead_alert',
+        timestamp,
+        name: clean(name, 100),
+        mobile: cleanMobile,
+        source: clean(intent ?? 'general', 200),
+        whatsapp_link: `https://wa.me/91${digitsOnly}`,
+        call_link: `tel:+91${digitsOnly}`,
+        urgency: 'respond_within_5_minutes',
+      }
+      fetch(adminWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(notifyPayload),
+      }).catch((err) => logger.warn('/api/leads', 'Admin notification failed', { error: String(err) }))
+    }
+
+    // Update in-memory stats
+    const source = clean(intent ?? 'general', 200)
+    leadStats.total++
+    leadStats.bySource[source] = (leadStats.bySource[source] ?? 0) + 1
+    leadStats.lastLead = timestamp
+
+    logger.info('/api/leads', 'Lead captured', { mobile: cleanMobile })
     return NextResponse.json({ success: true })
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : String(error)
     const stack = error instanceof Error ? (error.stack ?? msg) : msg
-    console.error('Lead submission error:', error)
+    logger.error('/api/leads', 'Lead submission crashed', { error: msg })
     adminNotify({
       type: 'API_ERROR', severity: 'error', route: '/api/leads',
       message: `Lead submission crashed: ${msg}`,

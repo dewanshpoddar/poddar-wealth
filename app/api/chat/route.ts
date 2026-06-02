@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
 import { LIC_PLANS_CONTEXT } from '@/lib/lic-plans-context'
 import { env } from '@/lib/env'
+import { checkRateLimit } from '@/lib/rate-limit'
+import { logger } from '@/lib/logger'
 
 const MAX_INPUT_CHARS = 500
 const GROQ_MODEL = env.GROQ_MODEL
@@ -54,6 +56,16 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
 
 // ── Streaming route handler ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+  const { allowed } = checkRateLimit(ip)
+  if (!allowed) {
+    logger.warn('/api/chat', 'Rate limit exceeded', { ip })
+    return NextResponse.json(
+      { error: 'Rate limit exceeded. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': '3600' } }
+    )
+  }
+
   try {
     let body: { messages?: unknown; sessionId?: unknown }
     try {
@@ -144,8 +156,7 @@ export async function POST(req: NextRequest) {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     })
   } catch (error: unknown) {
-    console.error('Chat API error:', error)
-    const msg = error instanceof Error ? error.message : 'Unknown error'
-    return NextResponse.json({ error: msg }, { status: 500 })
+    logger.error('/api/chat', 'Chat API error', { error: String(error) })
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

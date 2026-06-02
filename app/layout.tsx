@@ -50,26 +50,52 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://www.poddarwealth.com/feed.xml',
+    },
+  },
+  manifest: '/manifest.json',
 }
 
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'InsuranceAgency',
   name: 'Poddar Wealth Management',
-  founder: 'Ajay Kumar Poddar',
-  foundingDate: '1994',
   url: 'https://www.poddarwealth.com',
+  logo: 'https://www.poddarwealth.com/favicon.svg',
   telephone: '+919415313434',
   email: 'poddarwealth@gmail.com',
+  foundingDate: '1994',
+  founder: {
+    '@type': 'Person',
+    name: 'Ajay Kumar Poddar',
+    jobTitle: 'MDRT Member & Insurance Advisor',
+  },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'AD Mall Compound, Vijay Chowk',
+    streetAddress: 'AD Mall Compound, Vijay Chowk, Shahpur',
     addressLocality: 'Gorakhpur',
     addressRegion: 'Uttar Pradesh',
     postalCode: '273001',
     addressCountry: 'IN',
   },
-  areaServed: 'Gorakhpur, Eastern Uttar Pradesh',
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 26.7606,
+    longitude: 83.3732,
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '154',
+    bestRating: '5',
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Gorakhpur',
+  },
+  sameAs: ['https://www.google.com/maps/place/Poddar+Wealth+Management/'],
   description: 'Life insurance, health insurance, and wealth planning by MDRT Member Ajay Kumar Poddar since 1994.',
 }
 

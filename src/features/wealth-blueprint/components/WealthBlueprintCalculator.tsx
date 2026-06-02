@@ -105,8 +105,26 @@ function SectionLabel({ n, title }: { n: string; title: string }) {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function WealthBlueprintCalculator() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const { state, actions, computed } = useBlueprintEngine()
+  const [showResults, setShowResults] = useState(false)
+
+  async function handlePDFRequest(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const form = new FormData(e.currentTarget)
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.get('name'),
+          mobile: form.get('phone'),
+          intent: 'wealth-blueprint-pdf',
+        })
+      })
+    } catch {} // fail silently, still show results
+    setShowResults(true)
+  }
   
   // Destructure for template usage
   const { 
@@ -491,7 +509,72 @@ export default function WealthBlueprintCalculator() {
         {step === 4 && (
           <div className="max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
-            {step === 4 && (
+            {!showResults ? (
+              <motion.div
+                key="blueprint-gate"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                className="max-w-md mx-auto my-8"
+              >
+                <div className="bg-gradient-to-br from-amber-50 to-white rounded-3xl p-8 text-center border border-amber-100/60 shadow-xl relative overflow-hidden group">
+                  {/* Decorative badge background */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+                  
+                  <div className="w-16 h-16 bg-amber-500/10 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <Shield size={32} />
+                  </div>
+                  
+                  <h3 className="text-22 font-display font-bold text-navy mb-2">
+                    {lang === 'hi' ? 'आपकी वेल्थ ब्लूप्रिंट रिपोर्ट तैयार है!' : 'Your Wealth Blueprint Report is Ready!'}
+                  </h3>
+                  <p className="text-[13px] text-slate-500 mb-8 max-w-sm mx-auto leading-relaxed">
+                    {lang === 'hi' ? 'अपनी व्यक्तिगत PDF रिपोर्ट पाने के लिए नीचे भरें' : 'Fill below to receive your personalized PDF report'}
+                  </p>
+                  
+                  <form onSubmit={handlePDFRequest} className="space-y-4 max-w-sm mx-auto">
+                    <div className="space-y-1 text-left">
+                      <label className="text-[11px] font-bold text-navy/70 uppercase tracking-wider block mb-1">
+                        {lang === 'hi' ? 'नाम' : 'Your Name'}
+                      </label>
+                      <input
+                        name="name"
+                        placeholder={lang === 'hi' ? 'आपका नाम' : 'Your Name'}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-13 bg-white/50 backdrop-blur-sm transition-all duration-200"
+                      />
+                    </div>
+                    <div className="space-y-1 text-left">
+                      <label className="text-[11px] font-bold text-navy/70 uppercase tracking-wider block mb-1">
+                        {lang === 'hi' ? 'फ़ोन नंबर' : 'Phone Number'}
+                      </label>
+                      <input
+                        name="phone"
+                        type="tel"
+                        placeholder={lang === 'hi' ? '10-अंकीय नंबर' : '10-digit number'}
+                        required
+                        pattern="[0-9]{10}"
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-13 bg-white/50 backdrop-blur-sm transition-all duration-200"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 shadow-md shadow-amber-500/10 hover:shadow-lg hover:shadow-amber-500/25 active:scale-[0.98] text-[13px] tracking-wide uppercase mt-6"
+                    >
+                      {lang === 'hi' ? 'मेरी रिपोर्ट बनाएं' : 'Generate My Report'}
+                    </button>
+                  </form>
+                  
+                  <button
+                    onClick={() => setShowResults(true)}
+                    className="mt-6 text-xs text-slate-400 hover:text-navy hover:underline transition-colors duration-200"
+                  >
+                    {lang === 'hi' ? 'बिना रिपोर्ट के देखें' : 'Skip and view results'}
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
               <motion.div key="s4" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
 
                 {/* ── Header bar ── */}

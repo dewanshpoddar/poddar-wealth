@@ -1240,5 +1240,26 @@
     "contactSub": "Discuss details directly with Ajay sir on WhatsApp for clear, honest financial guidance.",
     "ctaConsult": "Protect My Family",
     "ctaWhatsApp": "Chat on WhatsApp"
+  },
+  "blueprintGate": {
+    "title": "Your Wealth Blueprint Report is Ready!",
+    "subtitle": "Fill below to receive your personalized PDF report",
+    "name": "Your Name",
+    "phone": "Phone Number",
+    "cta": "Generate My Report",
+    "skip": "Skip and view results",
+    "thankYou": "Your report will be shared on WhatsApp within 24 hours"
+  },
+  "premiumReminder": {
+    "title": "Never Miss Your LIC Premium Due Date",
+    "subtitle": "Get free WhatsApp reminders 7 days before your premium is due. Service is 100% FREE.",
+    "name": "Your Name",
+    "phone": "Phone Number (WhatsApp)",
+    "policyNumber": "LIC Policy Number",
+    "dueDate": "Premium Due Date",
+    "amount": "Premium Amount (Optional)",
+    "submit": "Set Reminder",
+    "thankYou": "Ajay sir will send you a WhatsApp reminder 7 days before your premium is due. Service is FREE.",
+    "privacy": "We never share your policy details or phone number. 100% secure."
   }
 }

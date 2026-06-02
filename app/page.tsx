@@ -1,13 +1,40 @@
+'use client'
+import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
-import AgentTeaserStrip from '@/components/AgentTeaserStrip'
 import TrustSection from '@/components/TrustSection'
-import { WealthBlueprintCalculator } from '@/src/features/wealth-blueprint'
 import ServicesSection from '@/components/ServicesSection'
-import ProductTeaser from '@/components/ProductTeaser'
 import GoogleReviewsBadge from '@/components/GoogleReviewsBadge'
-import TestimonialsSection from '@/components/TestimonialsSection'
-import BlogPreview from '@/components/BlogPreview'
-import FinalCTA from '@/components/FinalCTA'
+import LazySection from '@/components/LazySection'
+
+const ProductTeaser = dynamic(
+  () => import('@/components/ProductTeaser'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const WealthBlueprintCalculator = dynamic(
+  () => import('@/src/features/wealth-blueprint/components/WealthBlueprintCalculator'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
+)
+
+const TestimonialsSection = dynamic(
+  () => import('@/components/TestimonialsSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const BlogPreview = dynamic(
+  () => import('@/components/BlogPreview'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const AgentTeaserStrip = dynamic(
+  () => import('@/components/AgentTeaserStrip'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-16 w-full" /> }
+)
+
+const FinalCTA = dynamic(
+  () => import('@/components/FinalCTA'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
 
 export default function HomePage() {
   return (
@@ -25,23 +52,36 @@ export default function HomePage() {
       <ServicesSection />
 
       {/* 5 — Product browser teaser */}
-      <ProductTeaser />
+      <LazySection height="h-96">
+        <ProductTeaser />
+      </LazySection>
 
       {/* 6 — Core conversion tool */}
-      <WealthBlueprintCalculator />
+      <LazySection height="h-96">
+        <WealthBlueprintCalculator />
+      </LazySection>
 
       {/* 7 — Social proof (Testimonials) */}
-      <TestimonialsSection />
+      <LazySection height="h-96">
+        <TestimonialsSection />
+      </LazySection>
 
       {/* 8 — Blog Preview (latest 3 posts) */}
-      <BlogPreview />
+      <LazySection height="h-96">
+        <BlogPreview />
+      </LazySection>
 
       {/* 9 — Agent teaser strip */}
-      <AgentTeaserStrip />
+      <LazySection height="h-16">
+        <AgentTeaserStrip />
+      </LazySection>
 
       {/* 10 — Final CTA */}
-      <FinalCTA />
+      <LazySection height="h-96">
+        <FinalCTA />
+      </LazySection>
     </>
   )
 }
+
 

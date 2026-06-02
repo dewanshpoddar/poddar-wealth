@@ -1,0 +1,17 @@
+{
+  "name": "Poddar Wealth Management",
+  "short_name": "Poddar Wealth",
+  "description": "LIC Insurance & Wealth Planning — Ajay Kumar Poddar, MDRT",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFBF0",
+  "theme_color": "#D4A853",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

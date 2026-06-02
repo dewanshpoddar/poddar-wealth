@@ -1,4 +1,4 @@
-import { ChatBot } from '@/src/features/ai-agent'
+import AIAdvisorClient from './AIAdvisorClient'
 
 export const metadata = {
   title: 'Ask Poddar Ji — AI Insurance Advisor | Poddar Wealth',
@@ -33,7 +33,8 @@ export default function AIAdvisorPage() {
       </section>
 
       {/* Chat section */}
-      <ChatBot />
+      <AIAdvisorClient />
     </div>
   )
 }
+
