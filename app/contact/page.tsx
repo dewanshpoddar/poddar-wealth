@@ -4,7 +4,7 @@ import { useLang } from '@/lib/LangContext'
 import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
 
 export default function ContactPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const [form, setForm] = useState({ name: '', phone: '', wantTo: '', iAm: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -221,19 +221,34 @@ export default function ContactPage() {
                 <pre className="text-slate-600 text-sm whitespace-pre-wrap font-sans leading-relaxed">{t.contact.officeHours}</pre>
               </div>
 
-              {/* Map link */}
-              <a
-                href="https://www.google.com/maps/search/AD+Mall+Compound+Vijay+Chowk+Gorakhpur+273001"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col w-full h-48 md:h-56 bg-gray-100 rounded-2xl border border-gray-200 items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer"
-              >
-                <div className="text-center px-4">
-                  <span className="text-3xl">📍</span>
-                  <p className="mt-2 font-semibold text-slate-700">View on Google Maps</p>
-                  <p className="text-sm text-slate-500 mt-1">AD Mall Compound, Vijay Chowk, Gorakhpur 273001</p>
+              {/* Google Maps embed card */}
+              <div className="bg-white rounded-3xl shadow-card p-6 overflow-hidden border border-slate-100">
+                <h3 className="font-display font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
+                  <span>📍</span> {lang === 'en' ? 'Our Location' : 'हमारा पता'}
+                </h3>
+                <p className="text-slate-500 text-xs mb-4">
+                  AD Mall Compound, Vijay Chowk, Gorakhpur, Uttar Pradesh 273001
+                </p>
+                <div className="rounded-xl overflow-hidden border border-slate-100 h-[300px] w-full relative">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3562.9056637380963!2d83.371286!3d26.747376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39914443194a28d5%3A0xf6a84f3e6955fc18!2sVijay%20Chowk%2C%20Gorakhpur%2C%20Uttar%20Pradesh%20273001!5e0!3m2!1sen!2sin!4v1717200000000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
-              </a>
+                <a
+                  href="https://www.google.com/maps/search/AD+Mall+Compound+Vijay+Chowk+Gorakhpur+273001"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 block text-center text-xs font-bold text-gold hover:text-amber-700 transition-colors uppercase tracking-wider"
+                >
+                  {lang === 'en' ? 'Open in Google Maps →' : 'गूगल मैप्स में खोलें →'}
+                </a>
+              </div>
 
               <div className="bg-green-50 border border-green-200 rounded-3xl p-6">
                 <h3 className="font-bold text-green-800 mb-3">💬 {t.contactPage.whatsappAlt}</h3>

@@ -6,6 +6,7 @@ import { Calculator, ArrowRight, Info, TrendingUp } from 'lucide-react'
 import { PLANS, advisePlans } from '@/lib/lic-plans-data.js'
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
+import WhatsAppShare from '@/components/WhatsAppShare'
 import { LicPlan } from '@/lib/types/lic-plan'
 
 export default function RetirementCalcPage() {
@@ -122,6 +123,11 @@ export default function RetirementCalcPage() {
                           </div>
                         ))}
                       </div>
+                      <WhatsAppShare
+                        text={`I calculated my retirement needs: I need a corpus of ${fmt(result.corpus)} for retirement, requiring monthly savings of ${fmt(result.monthlySavingsNeeded)}! Check your retirement target in 1 min:`}
+                        url="https://www.poddarwealth.com/calculators/retirement"
+                        className="mt-4 w-full justify-center bg-green-600 hover:bg-green-700"
+                      />
                     </div>
                     <p className="text-white/50 text-xs mt-4">↓ Scroll down to see matched LIC pension plans</p>
                   </div>

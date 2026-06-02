@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
@@ -26,13 +27,25 @@ const ROWS = [
   { key: 'bestFor',     label: 'Best For',          hi: 'किसके लिए',            fmt: (p: any) => p.bestFor ?? '—' },
 ]
 
-export default function ComparePage() {
+function ComparePageContent() {
   const { t, lang } = useLang()
   const c = (t as Record<string, any>).compare ?? {}
+
+  const searchParams = useSearchParams()
+  const planParam = searchParams.get('plan')
 
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState<any[]>([])
   const [hasCompared, setHasCompared] = useState(false)
+
+  useEffect(() => {
+    if (planParam) {
+      const match = activePlans.find((p: any) => String(p.planNo) === planParam)
+      if (match && !selected.some(s => s.planNo === match.planNo)) {
+        setSelected([match])
+      }
+    }
+  }, [planParam])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
@@ -240,5 +253,13 @@ export default function ComparePage() {
         </section>
       )}
     </div>
+  )
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white pt-32 text-center text-gray-500">Loading...</div>}>
+      <ComparePageContent />
+    </Suspense>
   )
 }

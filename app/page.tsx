@@ -1,6 +1,7 @@
 'use client'
 import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
+import QuickActions from '@/components/QuickActions'
 import TrustSection from '@/components/TrustSection'
 import ServicesSection from '@/components/ServicesSection'
 import GoogleReviewsBadge from '@/components/GoogleReviewsBadge'
@@ -41,6 +42,9 @@ export default function HomePage() {
     <>
       {/* 1 — Hero */}
       <HeroSection />
+
+      {/* Quick Actions Grid */}
+      <QuickActions />
 
       {/* 2 — Trust stats bar */}
       <TrustSection />

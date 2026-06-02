@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import WhatsAppShare from '@/components/WhatsAppShare'
 import { trackEvent } from '@/lib/analytics'
 import { useLang } from '@/lib/LangContext'
 import {
@@ -877,6 +878,18 @@ export default function WealthBlueprintCalculator() {
                       </div>
                     )}
                   </div>
+                </div>
+
+                {/* Share Block */}
+                <div className="text-center mt-6 pt-5 border-t border-gray-200">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    {lang === 'hi' ? 'इसे दोस्तों के साथ साझा करें' : 'Share this score with friends'}
+                  </p>
+                  <WhatsAppShare 
+                    text={lang === 'hi' ? `मैंने पोद्दार वेल्थ पर अपना वेल्थ ब्लूप्रिंट स्कोर (${bp.score}/100) निकाला। आप भी चेक करें:` : `I got a Wealth Blueprint score of ${bp.score}/100! Check yours here:`}
+                    url="https://www.poddarwealth.com"
+                    className="w-full justify-center"
+                  />
                 </div>
 
                 <p className="text-9 text-gray-400 text-center mt-4 leading-relaxed max-w-xl mx-auto">

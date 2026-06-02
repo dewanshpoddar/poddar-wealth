@@ -6,6 +6,7 @@ import { Calculator, ArrowRight, Info, ChevronDown, ChevronUp, Shield } from 'lu
 import { calculatePremium, generateBenefitTable, PLANS, getPPT } from '@/lib/lic-plans-data.js'
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
+import WhatsAppShare from '@/components/WhatsAppShare'
 
 import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
 
@@ -282,6 +283,11 @@ export default function LifeInsuranceCalcPage() {
                         className="mt-4 w-full bg-white text-gold font-bold py-2.5 rounded-xl text-sm hover:bg-gold/5 transition-colors flex items-center justify-center gap-2">
                         Get Official Quote <ArrowRight className="w-4 h-4" />
                       </button>
+                      <WhatsAppShare
+                        text={`I calculated my LIC Life Insurance premium: ${selectedPlan?.name} (Plan ${planNo}) with ${fmt(sa)} cover is just ${fmt(premResult.instalment1)}/${mode}! Check your needs and premium in 1 min:`}
+                        url="https://www.poddarwealth.com/calculators/life-insurance"
+                        className="mt-2.5 w-full justify-center bg-green-600 hover:bg-green-700"
+                      />
                     </>
                   ) : (
                     <div className="text-white/50 text-sm">Select a plan and set parameters above.</div>

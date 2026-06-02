@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp } from 'lucide-react'
@@ -540,13 +541,20 @@ export default function LicPlans() {
                         </div>
                       </div>
 
-                      <div className="px-4 pb-4 space-y-2">
+                      <div className="px-4 pb-4 space-y-2 text-center">
                         <button onClick={() => handleGetPlan(plan.name.en)}
                           className="w-full h-10 text-white rounded-xl font-bold text-12 shadow-sm transition-all flex items-center justify-center gap-2 group/btn hover:shadow-lg hover:brightness-110 active:scale-[0.98]"
                           style={{ background: `linear-gradient(135deg, ${accent}, ${accent}cc)` }}>
                           {lang === 'en' ? 'Get This Plan' : 'यह प्लान पाएं'}
                           <ArrowRight size={13} className="group-hover/btn:translate-x-1 transition-transform" />
                         </button>
+
+                        <div className="pt-1 pb-1">
+                          <Link href={`/compare?plan=${plan.planNo}`} className="text-amber-600 underline text-sm hover:text-amber-700 transition-colors inline-block cursor-pointer font-semibold">
+                            {lang === 'en' ? 'Compare Plans' : 'प्लान्स की तुलना करें'}
+                          </Link>
+                        </div>
+
                         <button
                           onClick={() => setExpandedPlan(expandedPlan === plan.id ? null : plan.id)}
                           className="w-full text-11 font-semibold text-gray-400 hover:text-navy transition-colors flex items-center justify-center gap-1 py-0.5">

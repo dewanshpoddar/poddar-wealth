@@ -1261,5 +1261,24 @@
     "submit": "Set Reminder",
     "thankYou": "Ajay sir will send you a WhatsApp reminder 7 days before your premium is due. Service is FREE.",
     "privacy": "We never share your policy details or phone number. 100% secure."
+  },
+  "insuranceQuiz": {
+    "title": "Free Insurance Quiz — Find the Right Plan for You",
+    "subtitle": "Answer 4 quick questions to find the absolute best insurance recommendations for your life stage.",
+    "introText": "which insurance do I need | insurance recommendation | best insurance for me",
+    "step1Title": "Step 1: What is your current life stage?",
+    "step2Title": "Step 2: What is your primary financial concern?",
+    "step3Title": "Step 3: What is your monthly income range?",
+    "step4Title": "Step 4: What is your current insurance status?",
+    "step5Title": "Your recommendation is ready!",
+    "step5Subtitle": "Share your contact details to unlock the personalized report and talk to Ajay sir.",
+    "ctaShow": "Show My Recommendation",
+    "skipLink": "View without sharing details",
+    "resultsTitle": "Your Personalized Insurance Recommendation",
+    "resultsSubtitle": "Based on your life stage and priorities, here are your best matched options:",
+    "recommendedPlan": "Recommended Plan",
+    "startingFrom": "Starting from",
+    "whatsappQuery": "Hi Ajay ji, I took your Insurance Quiz and got matched with",
+    "shareText": "Check your insurance needs (2 min):"
   }
 }
