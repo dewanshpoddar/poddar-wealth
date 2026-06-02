@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { submitLead } from '@/lib/api'
 import { trackEvent } from '@/lib/analytics'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function PayPremiumPage() {
   const { lang } = useLang()
@@ -254,7 +255,7 @@ export default function PayPremiumPage() {
 
                 {status === 'error' && (
                   <p className="text-red-500 text-xs text-center">
-                    {isHi ? 'कुछ गलत हुआ। कृपया पुनः प्रयास करें।' : 'Something went wrong. Please try again or call 9415313434.'}
+                    {isHi ? 'कुछ गलत हुआ। कृपया पुनः प्रयास करें।' : `Something went wrong. Please try again or call ${ADVISOR_PHONE}.`}
                   </p>
                 )}
 

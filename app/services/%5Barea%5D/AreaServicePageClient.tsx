@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, User, Phone, MapPin, Shield, Star, Heart, TrendingUp, Award } from 'lucide-react'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const AREAS = [
   { slug: 'golghar', name: 'Golghar', nameHi: 'गोलघर' },
@@ -25,7 +26,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
     { name: 'city' as const, label: t.commonForm.city, icon: <MapPin size={12} />, placeholder: areaData.name, required: true },
   ]
 
-  const WA_LINK = `https://wa.me/919415313434?text=Hello%20Ajay%20sir,%20I%20am%20from%20${areaData.name}%20and%20interested%20in%20insurance%20services.`
+  const WA_LINK = `https://wa.me/91${ADVISOR_PHONE}?text=Hello%20Ajay%20sir,%20I%20am%20from%20${areaData.name}%20and%20interested%20in%20insurance%20services.`
 
   return (
     <div className="pt-20">
@@ -178,7 +179,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
                   <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-navy shrink-0 font-bold">📞</div>
                   <div>
                     <h4 className="font-display font-bold text-sm text-navy">{lang === 'hi' ? 'फोन नंबर' : 'Phone'}</h4>
-                    <p className="text-slate-500 text-13 mt-0.5">Ajay Kumar Poddar: +91 9415313434</p>
+                    <p className="text-slate-500 text-13 mt-0.5">Ajay Kumar Poddar: +91 {ADVISOR_PHONE}</p>
                   </div>
                 </div>
               </div>
@@ -226,7 +227,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20c45a] text-white font-bold h-12 px-8 rounded-full shadow-lg transition-all active:scale-[0.98]"
           >
-            💬 {lang === 'hi' ? `व्हाट्सएप पर अजय सर (9415313434)` : `Chat with Ajay sir (9415313434)`}
+            💬 {lang === 'hi' ? `व्हाट्सएप पर अजय सर (${ADVISOR_PHONE})` : `Chat with Ajay sir (${ADVISOR_PHONE})`}
           </a>
         </div>
       </section>

@@ -5,6 +5,7 @@ import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { User, Phone, MessageSquare, Shield, HelpCircle, Info, Sparkles, MessageCircle, ArrowRight } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function LicBonusPage() {
   const { lang } = useLang()
@@ -231,7 +232,7 @@ export default function LicBonusPage() {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6 pt-6 border-t border-slate-100">
             <a
-              href={`https://wa.me/919415313434?text=Hi%20Ajay%20ji,%20I%20want%20to%20calculate%20my%20LIC%20policy%20bonus%20and%20maturity.`}
+              href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20ji,%20I%20want%20to%20calculate%20my%20LIC%20policy%20bonus%20and%20maturity.`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
@@ -240,7 +241,7 @@ export default function LicBonusPage() {
               {isHi ? 'व्हाट्सएप चैट' : 'Chat on WhatsApp'}
             </a>
             <a
-              href="tel:9415313434"
+              href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
               📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}

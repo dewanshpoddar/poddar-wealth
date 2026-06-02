@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function ContactPage() {
   const { t, lang } = useLang()
@@ -51,7 +52,7 @@ export default function ContactPage() {
       setSuccess(true)
     } catch (err) {
       console.error(err)
-      setError(isHi ? 'कुछ गलत हो गया। कृपया हमें 9415313434 पर कॉल करें।' : 'Something went wrong. Please call us at 9415313434.')
+      setError(isHi ? `कुछ गलत हो गया। कृपया हमें ${ADVISOR_PHONE} पर कॉल करें।` : `Something went wrong. Please call us at ${ADVISOR_PHONE}.`)
     } finally {
       setLoading(false)
     }

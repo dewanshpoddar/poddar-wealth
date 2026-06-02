@@ -4,8 +4,9 @@ import ReactMarkdown from 'react-markdown'
 import { Send, CheckCircle2, Phone, User, MessageCircle, Trash2 } from 'lucide-react'
 import { usePoddarJiChat } from '@/src/features/ai-agent'
 import { submitLead } from '@/lib/api'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
-const WHATSAPP_URL = `https://wa.me/919415313434?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
+const WHATSAPP_URL = `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
 const MAX_INPUT = 500
 
 // ── Typing dots ──────────────────────────────────────────────────────────────
@@ -78,7 +79,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
         {phoneErr && <p className="text-red-500 text-[10px] mt-1 px-1">{phoneErr}</p>}
       </div>
       {status === 'error' && (
-        <p className="text-red-500 text-[10px] px-1">कुछ गड़बड़ हुई। सीधे call करें: 9415313434</p>
+        <p className="text-red-500 text-[10px] px-1">कुछ गड़बड़ हुई। सीधे call करें: {ADVISOR_PHONE}</p>
       )}
       <button
         onClick={submit}
@@ -253,7 +254,7 @@ export default function PoddarJiChatUI({
                     <LeadCard onCaptured={chat.markLeadCaptured} onSkip={chat.dismissLeadCard} />
                   )}
                   {m.card === 'lead_skip' && (
-                    <p className="text-[10px] text-slate-400 mt-2">कोई बात नहीं! जब चाहें call करें: 9415313434</p>
+                    <p className="text-[10px] text-slate-400 mt-2">कोई बात नहीं! जब चाहें call करें: {ADVISOR_PHONE}</p>
                   )}
                 </div>
               </div>

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA, toWords } from '@/lib/format'
-import { SA_PRESETS, MODE_LABEL } from '@/lib/constants'
+import { SA_PRESETS, MODE_LABEL, ADVISOR_PHONE } from '@/lib/constants'
 import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
 import { CAT_BADGE, CAT_AVATAR_COLOR, CATEGORIES } from '@/components/calculators/calc-constants'
@@ -31,7 +31,7 @@ export default function PremiumCalculatorPage() {
       `Age: ${age}, Term: ${safeterm} years`,
       `Please suggest the best option for me.`
     ].join('\n')
-    window.open(`https://wa.me/919415313434?text=${encodeURIComponent(msg)}`, '_blank')
+    window.open(`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`, '_blank')
   }
   /* plan browser */
   const [activeCat,     setActiveCat]     = useState('all')

@@ -1,7 +1,8 @@
 'use client'
 import { Phone } from 'lucide-react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
-const PHONE = '9415313434'
+const PHONE = ADVISOR_PHONE
 const WA_LINK = `https://wa.me/91${PHONE}?text=${encodeURIComponent('Hello Ajay sir, I need help with insurance.')}`
 
 export default function MobileCTABar() {

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { Calendar, ShieldCheck, Clock, CheckCircle2, Loader2, ArrowLeft, BellRing } from 'lucide-react'
 import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function PremiumReminderPage() {
   const { t, lang } = useLang()
@@ -265,7 +266,7 @@ export default function PremiumReminderPage() {
 
             {status === 'error' && (
               <p role="alert" className="text-red-500 text-xs text-center mt-2 font-medium">
-                {lang === 'hi' ? 'कुछ गलत हुआ। कृपया दोबारा प्रयास करें या कॉल करें 9415313434।' : 'Something went wrong. Please try again or call 9415313434.'}
+                {lang === 'hi' ? `कुछ गलत हुआ। कृपया दोबारा प्रयास करें या कॉल करें ${ADVISOR_PHONE}।` : `Something went wrong. Please try again or call ${ADVISOR_PHONE}.`}
               </p>
             )}
           </form>

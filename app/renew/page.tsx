@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function RenewPage() {
   const { t, lang } = useLang()
@@ -93,7 +94,7 @@ export default function RenewPage() {
                   : 'Ajay sir will personally contact you before your renewal due date. Your policy will not lapse.')}
               </p>
               <p className="text-xs text-gold font-semibold mt-4">
-                📞 {isHi ? 'जरूरत हो तो कॉल करें:' : 'Need to call now?'} 9415313434
+                📞 {isHi ? 'जरूरत हो तो कॉल करें:' : 'Need to call now?'} {ADVISOR_PHONE}
               </p>
             </div>
           ) : (
@@ -188,7 +189,7 @@ export default function RenewPage() {
 
                 {status === 'error' && (
                   <p className="text-red-500 text-xs text-center">
-                    {isHi ? 'कुछ गलत हुआ। 9415313434 पर कॉल करें।' : 'Something went wrong. Please call 9415313434.'}
+                    {isHi ? `कुछ गलत हुआ। ${ADVISOR_PHONE} पर कॉल करें।` : `Something went wrong. Please call ${ADVISOR_PHONE}.`}
                   </p>
                 )}
 

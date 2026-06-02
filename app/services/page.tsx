@@ -1,6 +1,7 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 import { motion } from 'framer-motion'
 
@@ -84,7 +85,7 @@ export default function ServicesPage() {
           <p className="text-muted mb-8 italic text-14">Ajay sir personally reviews every profile to suggest the most optimal protection.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="pw-btn pw-btn--gold">Book Free Review</Link>
-            <a href="tel:9415313434" className="pw-btn pw-btn--navy">Call 9415313434</a>
+            <a href={`tel:${ADVISOR_PHONE}`} className="pw-btn pw-btn--navy">Call {ADVISOR_PHONE}</a>
           </div>
         </div>
       </section>

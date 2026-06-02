@@ -4,38 +4,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import posts from '@/lib/data/blog-posts.json'
-
-const CATEGORIES = ['All', 'Life Insurance', 'LIC Plans', 'Health Insurance', 'Tax Planning', 'Claims', 'Comparison', 'Guides', 'Child Plans']
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Life Insurance':   'bg-blue-50 text-blue-700 border-blue-200',
-  'LIC Plans':        'bg-gold/10 text-amber-700 border-gold/30',
-  'Health Insurance': 'bg-red-50 text-red-700 border-red-200',
-  'Tax Planning':     'bg-green-50 text-green-700 border-green-200',
-  'Claims':           'bg-purple-50 text-purple-700 border-purple-200',
-  'Comparison':       'bg-amber-50 text-amber-700 border-amber-200',
-  'Guides':           'bg-teal-50 text-teal-700 border-teal-200',
-  'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
-}
-
-import { Shield, Heart, FileText, Calculator, ArrowLeftRight, BookOpen } from 'lucide-react'
-
-const CATEGORY_STYLES: Record<string, { bg: string; icon: React.ComponentType<any> }> = {
-  'Life Insurance':   { bg: 'bg-blue-900', icon: Shield },
-  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
-  'LIC Plans':        { bg: 'bg-amber-800', icon: FileText },
-  'Tax Planning':     { bg: 'bg-indigo-900', icon: Calculator },
-  'Comparison':       { bg: 'bg-slate-800', icon: ArrowLeftRight },
-  'Claims':           { bg: 'bg-purple-950', icon: FileText },
-  'Guides':           { bg: 'bg-gray-900', icon: BookOpen },
-  'Child Plans':      { bg: 'bg-rose-900', icon: Heart },
-}
-
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-IN', {
-    day: 'numeric', month: 'long', year: 'numeric',
-  })
-}
+import {
+  CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
+  CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
+  BLOG_CATEGORIES,
+  formatBlogDateShort,
+} from '@/lib/blog-utils'
 
 export default function BlogPage() {
   const { t, lang } = useLang()
@@ -69,7 +43,7 @@ export default function BlogPage() {
       {/* Category tabs */}
       <div className="sticky top-[78px] z-40 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 py-3 flex gap-2 overflow-x-auto scrollbar-none">
-          {CATEGORIES.map(cat => (
+          {BLOG_CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -89,7 +63,7 @@ export default function BlogPage() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(post => {
-              const style = CATEGORY_STYLES[post.category] || { bg: 'bg-gray-900', icon: BookOpen }
+              const style = CATEGORY_STYLES[post.category] || CATEGORY_STYLES_DEFAULT
               const Icon = style.icon
               return (
                 <article
@@ -107,10 +81,10 @@ export default function BlogPage() {
 
                   {/* Category + Date header */}
                   <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? CATEGORY_COLORS_DEFAULT}`}>
                       {post.category}
                     </span>
-                    <span className="text-[11px] text-gray-500">{formatDate(post.date)}</span>
+                    <span className="text-[11px] text-gray-500">{formatBlogDateShort(post.date)}</span>
                   </div>
 
                   {/* Content */}

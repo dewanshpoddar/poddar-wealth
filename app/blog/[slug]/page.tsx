@@ -8,38 +8,11 @@ import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
 import posts from '@/lib/data/blog-posts.json'
 import WhatsAppShare from '@/components/WhatsAppShare'
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Life Insurance':   'bg-blue-50 text-blue-700 border-blue-200',
-  'LIC Plans':        'bg-gold/10 text-amber-700 border-gold/30',
-  'Health Insurance': 'bg-red-50 text-red-700 border-red-200',
-  'Tax Planning':     'bg-green-50 text-green-700 border-green-200',
-  'Claims':           'bg-purple-50 text-purple-700 border-purple-200',
-  'Comparison':       'bg-amber-50 text-amber-700 border-amber-200',
-  'Guides':           'bg-teal-50 text-teal-700 border-teal-200',
-  'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
-}
-
-import { Shield, Heart, FileText, Calculator, ArrowLeftRight, BookOpen } from 'lucide-react'
-
-const CATEGORY_STYLES: Record<string, { bg: string; icon: React.ComponentType<any> }> = {
-  'Life Insurance':   { bg: 'bg-blue-900', icon: Shield },
-  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
-  'LIC Plans':        { bg: 'bg-amber-800', icon: FileText },
-  'Tax Planning':     { bg: 'bg-indigo-900', icon: Calculator },
-  'Comparison':       { bg: 'bg-slate-800', icon: ArrowLeftRight },
-  'Claims':           { bg: 'bg-purple-950', icon: FileText },
-  'Guides':           { bg: 'bg-gray-900', icon: BookOpen },
-  'Child Plans':      { bg: 'bg-rose-900', icon: Heart },
-}
-
-function formatDate(dateStr: string, lang: string) {
-  const dateObj = new Date(dateStr)
-  const formatted = dateObj.toLocaleDateString(lang === 'en' ? 'en-US' : 'hi-IN', {
-    day: 'numeric', month: 'long', year: 'numeric',
-  })
-  return lang === 'en' ? `Published: ${formatted}` : `प्रकाशित: ${formatted}`
-}
+import {
+  CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
+  CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
+  formatBlogDate, getReadingTime,
+} from '@/lib/blog-utils'
 
 function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: string }) {
   const [copied, setCopied] = useState(false)
@@ -95,9 +68,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
   const content  = lang === 'en' ? post.content  : post.contentHi
   const summary  = lang === 'en' ? post.summary  : post.summaryHi
   const paragraphs = content.split('\n\n').filter(Boolean)
-  const readingTime = lang === 'hi'
-    ? Math.ceil(post.contentHi.length / 5 / 200)
-    : Math.ceil(post.content.split(/\s+/).length / 200)
+  const readingTime = getReadingTime(post.content, post.contentHi, lang)
 
   const schema = {
     '@context': 'https://schema.org',
@@ -137,10 +108,10 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
               ← {t.blog.backToAll}
             </Link>
             <div className="flex items-center gap-3 mb-4 flex-wrap">
-              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? CATEGORY_COLORS_DEFAULT}`}>
                 {post.category}
               </span>
-              <span className="text-white/40 text-xs">{formatDate(post.date, lang)}</span>
+              <span className="text-white/40 text-xs">{formatBlogDate(post.date, lang)}</span>
               <span className="text-white/35 text-xs">
                 {lang === 'en' ? `${readingTime} min read` : `${readingTime} मिनट`}
               </span>
@@ -160,7 +131,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
         {/* Premium Corporate Solid Header */}
         {(() => {
-          const style = CATEGORY_STYLES[post.category] || { bg: 'bg-gray-900', icon: BookOpen }
+          const style = CATEGORY_STYLES[post.category] || CATEGORY_STYLES_DEFAULT
           const Icon = style.icon
           return (
             <div className={`h-[160px] w-full ${style.bg} flex flex-col items-center justify-center relative overflow-hidden`}>
@@ -210,7 +181,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                     {related.slice(0, 3).map(r => (
                       <a key={r.slug} href={`/blog/${r.slug}`}
                         className="flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-gold/30 hover:bg-gold/5 transition-all group">
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider flex-shrink-0 mt-0.5 ${CATEGORY_COLORS[r.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider flex-shrink-0 mt-0.5 ${CATEGORY_COLORS[r.category] ?? CATEGORY_COLORS_DEFAULT}`}>
                           {r.category}
                         </span>
                         <span className="text-[13px] font-semibold text-navy leading-snug group-hover:text-gold transition-colors">

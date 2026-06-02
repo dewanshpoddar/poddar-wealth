@@ -1,33 +1,13 @@
 'use client'
 
-import React from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import posts from '@/lib/data/blog-posts.json'
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Life Insurance':   'bg-blue-50 text-blue-700 border-blue-200',
-  'LIC Plans':        'bg-gold/10 text-amber-700 border-gold/30',
-  'Health Insurance': 'bg-red-50 text-red-700 border-red-200',
-  'Tax Planning':     'bg-green-50 text-green-700 border-green-200',
-  'Claims':           'bg-purple-50 text-purple-700 border-purple-200',
-  'Comparison':       'bg-amber-50 text-amber-700 border-amber-200',
-  'Guides':           'bg-teal-50 text-teal-700 border-teal-200',
-  'Child Plans':      'bg-pink-50 text-pink-700 border-pink-200',
-}
-
-import { Shield, Heart, FileText, Calculator, ArrowLeftRight, BookOpen } from 'lucide-react'
-
-const CATEGORY_STYLES: Record<string, { bg: string; icon: React.ComponentType<any> }> = {
-  'Life Insurance':   { bg: 'bg-blue-900', icon: Shield },
-  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
-  'LIC Plans':        { bg: 'bg-amber-800', icon: FileText },
-  'Tax Planning':     { bg: 'bg-indigo-900', icon: Calculator },
-  'Comparison':       { bg: 'bg-slate-800', icon: ArrowLeftRight },
-  'Claims':           { bg: 'bg-purple-950', icon: FileText },
-  'Guides':           { bg: 'bg-gray-900', icon: BookOpen },
-  'Child Plans':      { bg: 'bg-rose-900', icon: Heart },
-}
+import {
+  CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
+  CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
+  getReadingTime,
+} from '@/lib/blog-utils'
 
 export default function BlogPreview() {
   const { t, lang } = useLang()
@@ -68,11 +48,9 @@ export default function BlogPreview() {
         {/* Post Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {latestPosts.map((post) => {
-            const style = CATEGORY_STYLES[post.category] || { bg: 'bg-gray-900', icon: BookOpen }
+            const style = CATEGORY_STYLES[post.category] || CATEGORY_STYLES_DEFAULT
             const Icon = style.icon
-            const readingTime = lang === 'hi'
-              ? Math.ceil(post.contentHi.length / 5 / 200)
-              : Math.ceil(post.content.split(/\s+/).length / 200)
+            const readingTime = getReadingTime(post.content, post.contentHi, lang)
 
             return (
               <div
@@ -90,7 +68,7 @@ export default function BlogPreview() {
 
                 {/* Card Meta & Header */}
                 <div className="px-6 pt-5 pb-3 flex items-center justify-between">
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? CATEGORY_COLORS_DEFAULT}`}>
                     {post.category}
                   </span>
                   <span className="text-[11px] text-slate-400">

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function KeymanInsurancePage() {
   const { t, lang } = useLang()
@@ -14,7 +15,7 @@ export default function KeymanInsurancePage() {
     { name: 'city' as const, label: t.commonForm.city, icon: <MapPin size={12} />, placeholder: t.commonForm.city, required: true },
   ]
 
-  const WA_LINK = "https://wa.me/919415313434"
+  const WA_LINK = `https://wa.me/91${ADVISOR_PHONE}`
 
   return (
     <div className="pt-20">
@@ -86,7 +87,7 @@ export default function KeymanInsurancePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 bg-[#25D366] text-white font-bold h-12 px-8 rounded-full shadow-lg hover:bg-[#20c45a] active:scale-[0.98] transition-all"
           >
-            {lang === 'en' ? 'Send WhatsApp Query (9415313434)' : 'व्हाट्सएप पर सवाल भेजें (9415313434)'}
+            {lang === 'en' ? `Send WhatsApp Query (${ADVISOR_PHONE})` : `व्हाट्सएप पर सवाल भेजें (${ADVISOR_PHONE})`}
           </a>
         </div>
       </section>

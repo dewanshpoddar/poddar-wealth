@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import AreaServicePageClient from './AreaServicePageClient'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const AREAS = [
   { slug: 'golghar', name: 'Golghar', nameHi: 'गोलघर' },
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const areaData = AREAS.find((a) => a.slug === area) || AREAS[0]
   
   const title = `Best LIC Agent in ${areaData.name}, Gorakhpur — Poddar Wealth`
-  const description = `Looking for a trusted LIC insurance advisor in ${areaData.name}? Ajay Kumar Poddar, MDRT member, 31 years experience. Call 9415313434.`
+  const description = `Looking for a trusted LIC insurance advisor in ${areaData.name}? Ajay Kumar Poddar, MDRT member, 31 years experience. Call ${ADVISOR_PHONE}.`
   
   return {
     title,

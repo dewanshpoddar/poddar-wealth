@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 // next/font must be called at module level (build-time constraint)
 const fraunces = Fraunces({
@@ -64,7 +65,7 @@ const schemaOrg = {
   name: 'Poddar Wealth Management',
   url: 'https://www.poddarwealth.com',
   logo: 'https://www.poddarwealth.com/favicon.svg',
-  telephone: '+919415313434',
+  telephone: `+91${ADVISOR_PHONE}`,
   email: 'poddarwealth@gmail.com',
   foundingDate: '1994',
   founder: {

@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export type Message = {
   from:  'bot' | 'user'
@@ -9,13 +10,13 @@ export type Message = {
 
 // ── Fallback responses (when API fails) ────────────────────────────────────
 const FALLBACK: Record<string, string> = {
-  term:       'Term plan (jaise LIC Jeevan Amar) mein sirf pure protection milti hai — premium sabse kam hota hai. 30 saal ke liye ₹50L cover roughly ₹4,200-5,500/saal. Exact quote ke liye Ajay sir se milein: 9415313434.',
-  health:     'Star Health Family Health Optima plan 4 logo ke liye roughly ₹10,000-14,000/saal mein ₹5L cover deta hai. 14,000+ cashless hospitals. Call 9415313434.',
-  retirement: 'LIC Jeevan Shanti aur Jeevan Umang retirement ke liye bahut acche hain. 35 saal mein ₹10,000/month se shuru karke 60 tak ₹1Cr+ ban sakta hai. Call 9415313434.',
-  child:      'LIC Jeevan Tarun baccho ki padhai aur shaadi ke liye best hai. 4 options hain survival benefit ke liye. Jaldi start karne par zyada benefit milta hai. Call 9415313434.',
-  claim:      'LIC claim: death certificate, policy documents aur claim form LIC branch mein submit karein. Ajay sir har claim mein personally help karte hain. 30-45 din mein settle hota hai. Call 9415313434.',
+  term:       `Term plan (jaise LIC Jeevan Amar) mein sirf pure protection milti hai — premium sabse kam hota hai. 30 saal ke liye ₹50L cover roughly ₹4,200-5,500/saal. Exact quote ke liye Ajay sir se milein: ${ADVISOR_PHONE}.`,
+  health:     `Star Health Family Health Optima plan 4 logo ke liye roughly ₹10,000-14,000/saal mein ₹5L cover deta hai. 14,000+ cashless hospitals. Call ${ADVISOR_PHONE}.`,
+  retirement: `LIC Jeevan Shanti aur Jeevan Umang retirement ke liye bahut acche hain. 35 saal mein ₹10,000/month se shuru karke 60 tak ₹1Cr+ ban sakta hai. Call ${ADVISOR_PHONE}.`,
+  child:      `LIC Jeevan Tarun baccho ki padhai aur shaadi ke liye best hai. 4 options hain survival benefit ke liye. Jaldi start karne par zyada benefit milta hai. Call ${ADVISOR_PHONE}.`,
+  claim:      `LIC claim: death certificate, policy documents aur claim form LIC branch mein submit karein. Ajay sir har claim mein personally help karte hain. 30-45 din mein settle hota hai. Call ${ADVISOR_PHONE}.`,
   mdrt:       'MDRT (Million Dollar Round Table) duniya ka sabse prestigious insurance award hai — sirf top 1% agents qualify karte hain. Ajay sir MDRT member hain, isliye aapko world-class advice milti hai.',
-  default:    'Main Poddar Ji hun — Poddar Wealth Management ka AI advisor. LIC, Star Health, retirement, ya kisi bhi insurance topic par sawaal puchiye. Personalized advice ke liye: 9415313434.',
+  default:    `Main Poddar Ji hun — Poddar Wealth Management ka AI advisor. LIC, Star Health, retirement, ya kisi bhi insurance topic par sawaal puchiye. Personalized advice ke liye: ${ADVISOR_PHONE}.`,
 }
 
 function getFallback(msg: string): string {

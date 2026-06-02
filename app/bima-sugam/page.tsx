@@ -4,6 +4,7 @@ import { useLang } from '@/lib/LangContext'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { User, Phone, MessageSquare, MessageCircle, Shield, HelpCircle, Info, Sparkles, Award } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function BimaSugamPage() {
   const { lang } = useLang()
@@ -258,7 +259,7 @@ export default function BimaSugamPage() {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6 pt-6 border-t border-slate-100">
             <a
-              href={`https://wa.me/919415313434?text=Hi Ajay ji, I have questions about Bima Sugam portal.`}
+              href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi Ajay ji, I have questions about Bima Sugam portal.`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
@@ -267,7 +268,7 @@ export default function BimaSugamPage() {
               {isHi ? 'व्हाट्सएप चैट' : 'Chat on WhatsApp'}
             </a>
             <a
-              href="tel:9415313434"
+              href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
               📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}

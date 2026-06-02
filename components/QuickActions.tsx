@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight } from 'lucide-react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function QuickActions() {
   const { lang } = useLang()
@@ -54,7 +55,7 @@ export default function QuickActions() {
         en: 'WhatsApp or Call',
         hi: 'व्हाट्सएप या डायरेक्ट कॉल'
       },
-      href: 'https://wa.me/919415313434?text=Hi%20Ajay%20ji,%20I%20need%20insurance%20advice.',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20ji,%20I%20need%20insurance%20advice.`,
       isExternal: true
     }
   ]

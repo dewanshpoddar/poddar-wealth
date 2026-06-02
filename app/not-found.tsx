@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { Home, Shield, Phone, BookOpen, Calculator, Sparkles, MessageCircle } from 'lucide-react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function NotFound() {
   const { lang } = useLang()
@@ -116,7 +117,7 @@ export default function NotFound() {
         {/* WhatsApp Direct Support CTA at bottom */}
         <div className="border-t border-white/10 pt-8">
           <a
-            href="https://wa.me/919415313434?text=Hi Ajay ji, I landed on a 404 page and need help."
+            href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi Ajay ji, I landed on a 404 page and need help.`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3.5 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"

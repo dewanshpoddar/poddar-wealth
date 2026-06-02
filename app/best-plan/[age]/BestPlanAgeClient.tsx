@@ -6,6 +6,7 @@ import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { User, Phone, MessageSquare, Shield, HelpCircle, Sparkles, MessageCircle, ArrowRight, Award } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 interface ParamsProp {
   params: Promise<{ age: string }>
@@ -392,7 +393,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6 pt-6 border-t border-slate-100">
             <a
-              href={`https://wa.me/919415313434?text=Hi%20Ajay%20ji,%20I%20want%20to%20know%20the%20best%20LIC%20plan%20for%20a%20${data.label}%20year%20old.`}
+              href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20ji,%20I%20want%20to%20know%20the%20best%20LIC%20plan%20for%20a%20${data.label}%20year%20old.`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
@@ -401,7 +402,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
               {isHi ? 'व्हाट्सएप चैट' : 'Chat on WhatsApp'}
             </a>
             <a
-              href="tel:9415313434"
+              href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
               📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}

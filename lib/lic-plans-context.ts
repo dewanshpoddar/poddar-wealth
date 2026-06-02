@@ -1,7 +1,7 @@
 /**
  * Compact LIC + Star Health plan reference injected into the AI system prompt.
  * Keeps the bot grounded in real data instead of hallucinating premiums.
- * Approximate premiums only — direct users to Ajay sir (9415313434) for exact figures.
+ * Approximate premiums only — direct users to Ajay sir for exact figures.
  */
 
 export const LIC_PLANS_CONTEXT = `

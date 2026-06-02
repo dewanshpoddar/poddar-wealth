@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, ArrowLeft, Check, Sparkles, MessageCircle, AlertCircle, Share2, HelpCircle } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 // Recommendation mapping dictionary for all 25 combinations of lifeStage + concern
 interface Recommendation {
@@ -345,7 +346,7 @@ export default function InsuranceQuizPage() {
   const planTitleText = isHi ? rec.planName : rec.planName
   const whyText = isHi ? rec.whyHi : rec.why
   const priceText = isHi ? rec.startingPriceHi : rec.startingPrice
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
     `${q.whatsappQuery || 'Hi Ajay ji, I took your Insurance Quiz and got matched with'} ${rec.planName}.`
   )}`
 
@@ -640,7 +641,7 @@ export default function InsuranceQuizPage() {
                   {lang === 'en' ? 'Talk to Ajay Sir on WhatsApp' : 'व्हाट्सएप पर अजय सर से बात करें'}
                 </a>
                 <a
-                  href="tel:9415313434"
+                  href={`tel:${ADVISOR_PHONE}`}
                   className="w-full bg-slate-100 hover:bg-slate-200 text-navy font-bold py-3 px-4 rounded-xl text-xs md:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   📞 {lang === 'en' ? 'Call Ajay Sir Directly' : 'अजय सर को सीधे कॉल करें'}

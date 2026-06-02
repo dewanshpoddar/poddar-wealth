@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import {
   PhoneCall,
   FileText,
@@ -35,7 +36,7 @@ export default function ClaimsPage() {
     stats: [],
     ctaTitle: 'Need immediate claim support?',
     ctaSubtitle: 'Talk to Ajay sir directly for end-to-end guidance. No third-party agents.',
-    ctaCall: 'Call Ajay sir directly: 9415313434',
+    ctaCall: `Call Ajay sir directly: ${ADVISOR_PHONE}`,
     ctaWhatsapp: 'Chat on WhatsApp'
   }
 
@@ -79,14 +80,14 @@ export default function ClaimsPage() {
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
-                  href="tel:9415313434"
+                  href={`tel:${ADVISOR_PHONE}`}
                   className="h-12 px-6 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] gap-2 hover:bg-navy-light transition-all shadow-md hover:-translate-y-0.5"
                 >
                   <PhoneCall size={16} />
-                  Call 9415313434
+                  Call {ADVISOR_PHONE}
                 </a>
                 <a
-                  href={`https://wa.me/919415313434?text=${encodeURIComponent(
+                  href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
                     lang === 'en'
                       ? 'Hello Ajay sir, I need assistance with an insurance claim.'
                       : 'नमस्ते अजय सर, मुझे इंश्योरेंस क्लेम में सहायता चाहिए।'
@@ -240,14 +241,14 @@ export default function ClaimsPage() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <a
-              href="tel:9415313434"
+              href={`tel:${ADVISOR_PHONE}`}
               className="h-14 px-8 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-2 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1 text-center"
             >
               <PhoneCall size={18} />
               {claims.ctaCall}
             </a>
             <a
-              href="https://wa.me/919415313434"
+              href={`https://wa.me/91${ADVISOR_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
               className="h-14 px-8 bg-white text-navy rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-2 hover:bg-slate-50 transition-all shadow-xl hover:-translate-y-1 text-center border border-navy/5"

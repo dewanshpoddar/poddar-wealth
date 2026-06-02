@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 import { submitLead, LeadData } from '@/lib/api'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 interface Field {
   name: keyof LeadData
@@ -208,7 +209,7 @@ export default function BaseLeadForm({
 
       {status === 'error' && (
         <p role="alert" className="text-red-500 text-xs text-center mt-2">
-          Something went wrong. Please try again or call 9415313434.
+          Something went wrong. Please try again or call {ADVISOR_PHONE}.
         </p>
       )}
     </form>

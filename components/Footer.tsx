@@ -3,6 +3,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function Footer() {
   const { t, lang } = useLang()
@@ -153,10 +154,10 @@ export default function Footer() {
                 <span className="text-amber-500 text-sm leading-none">📞</span>
                 <div className="flex flex-col gap-1">
                   <a 
-                    href="tel:+919415313434" 
+                    href={`tel:+91${ADVISOR_PHONE}`} 
                     className="text-gray-400 hover:text-white transition-colors"
                   >
-                    +91 9415313434
+                    +91 {ADVISOR_PHONE}
                   </a>
                   <a 
                     href="tel:+917007937104" 
@@ -170,12 +171,12 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <span className="text-amber-500 text-sm leading-none">💬</span>
                 <a 
-                  href={`https://wa.me/919415313434`} 
+                  href={`https://wa.me/91${ADVISOR_PHONE}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  WhatsApp: +91 94153 13434
+                  WhatsApp: +91 {ADVISOR_PHONE.slice(0, 5)} {ADVISOR_PHONE.slice(5)}
                 </a>
               </div>
 
