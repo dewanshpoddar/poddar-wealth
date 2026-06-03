@@ -246,7 +246,7 @@ export default function FAQPage() {
               href="/ai-advisor"
               className="inline-flex h-14 px-10 bg-navy text-white rounded-full items-center justify-center font-bold text-[14px] md:text-[15px] gap-2.5 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1"
             >
-              <span>✨</span>
+              
               {faq.ctaButton}
             </Link>
           </div>

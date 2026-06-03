@@ -73,7 +73,7 @@ export default function PremiumReminderPage() {
           </div>
           
           <h2 className="font-display font-bold text-2xl text-navy mb-4">
-            {lang === 'hi' ? 'रिमाइंडर सफलतापूर्वक सेट किया गया! 🎉' : 'Reminder Set Successfully! 🎉'}
+            {lang === 'hi' ? 'रिमाइंडर सफलतापूर्वक सेट किया गया!' : 'Reminder Set Successfully!'}
           </h2>
           <p className="text-[14px] text-slate-500 leading-relaxed mb-8">
             {t.premiumReminder.thankYou}
@@ -111,7 +111,7 @@ export default function PremiumReminderPage() {
         {/* Left Column: Visual copy & benefits */}
         <div className="text-center lg:text-left">
           <div className="inline-flex items-center gap-2 bg-navy/5 border border-navy/10 rounded-full px-4 py-1.5 text-[11px] font-bold tracking-widest text-navy/70 uppercase mb-6">
-            🔔 {lang === 'hi' ? 'निःशुल्क व्हाट्सएप सेवा' : 'Free WhatsApp Service'}
+            {lang === 'hi' ? 'निःशुल्क व्हाट्सएप सेवा' : 'Free WhatsApp Service'}
           </div>
           
           <h1 className="font-display font-bold text-36 md:text-48 text-navy leading-tight mb-5">

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   ArrowRight, ChevronDown, ChevronUp,
-  Share2, CheckCircle2, Info, Shield, TrendingUp, Star
+  Share2, CheckCircle2, Info, Shield, TrendingUp, Star,
+  Lock, Smartphone, Mail, Umbrella, Coins, PiggyBank, HandCoins, CalendarDays
 } from 'lucide-react'
 import { fmt, fmtSA } from '@/lib/format'
 import { MODE_LABEL, SA_PRESETS } from '@/lib/constants'
@@ -106,13 +107,13 @@ export default function ResultsPanel({
                       </div>
                       <div className="divide-y divide-gray-50">
                         {[
-                          { icon: '🛡️', label: 'Sum Assured', value: `₹ ${sa.toLocaleString('en-IN')}` },
-                          { icon: '⏱️', label: 'Term',         value: `${safeterm} Years.` },
-                          { icon: '💳', label: 'Premium Payment', value: `${ppt} Years.` },
+                          { icon: 'shield', label: 'Sum Assured', value: `₹ ${sa.toLocaleString('en-IN')}` },
+                          { icon: 'clock', label: 'Term',         value: `${safeterm} Years.` },
+                          { icon: 'card', label: 'Premium Payment', value: `${ppt} Years.` },
                         ].map(({ icon, label, value }) => (
                           <div key={label} className="flex items-center justify-between px-5 py-3">
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-[14px]">{icon}</div>
+                              <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">{icon === 'shield' ? <Shield size={14} className="text-white" /> : icon === 'clock' ? <CalendarDays size={14} className="text-white" /> : <Coins size={14} className="text-white" />}</div>
                               <span className="text-[13px] font-medium text-gray-700">{label}</span>
                             </div>
                             <span className="text-[13px] font-bold text-navy">{value}</span>
@@ -131,7 +132,7 @@ export default function ResultsPanel({
                           </div>
                           <div className="flex items-center justify-between px-5 py-3">
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-[14px]">🛡️</div>
+                              <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center"><Shield size={14} className="text-white" /></div>
                               <span className="text-[13px] font-medium text-gray-700">Accidental Death And Disability Cover</span>
                             </div>
                             <span className="text-[13px] font-bold text-navy">₹ {sa.toLocaleString('en-IN')}</span>
@@ -146,14 +147,14 @@ export default function ResultsPanel({
                       <div className="space-y-3">
                         <div className="grid grid-cols-2 gap-3">
                           <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
-                            <div className="text-[22px] mb-1">🐷</div>
+                            <div className="mb-1"><PiggyBank size={22} className="text-amber-500" /></div>
                             <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
                             <div className="text-[10px] text-gray-500 mb-2">one-time purchase price</div>
                             <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {(premResult.purchasePrice ?? 0).toLocaleString('en-IN')}</div>
                             <div className="text-[10px] text-gray-500 mt-1">+ GST ₹{(premResult.gst ?? 0).toLocaleString('en-IN')} = ₹{(premResult.totalPayable ?? 0).toLocaleString('en-IN')}</div>
                           </div>
                           <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
-                            <div className="text-[22px] mb-1">🤲</div>
+                            <div className="mb-1"><HandCoins size={22} className="text-green-600" /></div>
                             <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
                             <div className="text-[10px] text-gray-500 mb-2">annual pension</div>
                             <div className="font-display font-bold text-[22px] text-green-700 leading-none">₹ {(premResult.annualPension ?? 0).toLocaleString('en-IN')}</div>
@@ -162,7 +163,7 @@ export default function ResultsPanel({
                         </div>
                         <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
                           <div className="flex items-center gap-3 mb-3">
-                            <span className="text-[24px]">📅</span>
+                            <CalendarDays size={22} className="text-amber-500" />
                             <div className="font-bold text-[14px] text-navy">Pension Payout Breakdown</div>
                           </div>
                           <div className="grid grid-cols-2 gap-3">
@@ -187,14 +188,14 @@ export default function ResultsPanel({
                       /* ── STANDARD: You Pay / You Get ── */
                       <div className="grid grid-cols-2 gap-3">
                         <div className="bg-white rounded-2xl p-5 border-2 border-gold/25 shadow-sm">
-                          <div className="text-[22px] mb-1">🐷</div>
+                          <div className="mb-1"><PiggyBank size={22} className="text-amber-500" /></div>
                           <div className="text-[11px] font-bold text-gold uppercase tracking-wider">You Pay</div>
                           <div className="text-[10px] text-gray-500 mb-2">total premium of</div>
                           <div className="font-display font-bold text-[22px] text-navy leading-none">₹ {Math.round(premResult.totalPaid).toLocaleString('en-IN')}</div>
                           <div className="text-[10px] text-gray-500 mt-1">over {ppt} year{ppt > 1 ? 's' : ''}</div>
                         </div>
                         <div className="bg-white rounded-2xl p-5 border-2 border-green-200 shadow-sm">
-                          <div className="text-[22px] mb-1">🤲</div>
+                          <div className="mb-1"><HandCoins size={22} className="text-green-600" /></div>
                           <div className="text-[11px] font-bold text-green-600 uppercase tracking-wider">You Get</div>
                           <div className="text-[10px] text-gray-500 mb-2">{isTermPlan ? 'life cover' : isUlip ? 'fund value (market-linked)' : 'total benefit of'}</div>
                           <div className={`font-display font-bold text-[22px] leading-none ${isTermPlan ? 'text-red-600' : 'text-green-700'}`}>
@@ -219,7 +220,7 @@ export default function ResultsPanel({
                       return (
                         <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
                           <div className="flex items-center gap-3 mb-4">
-                            <span className="text-[24px]">💰</span>
+                            <Coins size={22} className="text-amber-500" />
                             <div className="font-bold text-[14px] text-navy">
                               {mode === 'yearly' ? 'Yearly Premium' : `${MODE_LABEL[mode]} Premium`}
                             </div>
@@ -241,7 +242,7 @@ export default function ResultsPanel({
                             </div>
                           </div>
                           {/* Mode toggle on results */}
-                          <div className="grid grid-cols-4 gap-1.5 pt-3 border-t border-gray-50">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5 pt-3 border-t border-gray-50">
                             {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
                               <button key={m} onClick={() => setMode(m)}
                                 className={`text-[11px] font-bold py-2 rounded-lg border transition-all
@@ -270,7 +271,7 @@ export default function ResultsPanel({
                           <div className="absolute inset-0 backdrop-blur-sm bg-white/60" />
                           <div className="absolute inset-0 flex items-center justify-center p-4">
                             <div className="bg-white rounded-2xl shadow-2xl border border-gold/20 w-full max-w-sm p-6 text-center">
-                              <div className="text-[36px] mb-2">🔓</div>
+                              <div className="mb-2 flex justify-center"><Lock size={32} className="text-amber-500" /></div>
                               <div className="font-display font-bold text-[18px] text-navy mb-1">
                                 {clientName ? `${salutation} ${clientName}, your full report is ready!` : 'Your full report is ready!'}
                               </div>
@@ -279,7 +280,7 @@ export default function ResultsPanel({
                               </div>
                               <form onSubmit={handleUnlock} className="space-y-3 text-left">
                                 <div className="relative">
-                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[13px]">📱</span>
+                                  <Smartphone size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                                   <input required type="tel" placeholder="10-digit mobile number"
                                     value={unlockMobile} onChange={e => setUnlockMobile(e.target.value)}
                                     className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
@@ -306,7 +307,7 @@ export default function ResultsPanel({
                                   </select>
                                 </div>
                                 <div className="relative">
-                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-[13px]">✉️</span>
+                                  <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                                   <input type="email" placeholder="Email (optional)"
                                     value={unlockEmail} onChange={e => setUnlockEmail(e.target.value)}
                                     className="w-full pl-9 pr-3 py-3 border border-gray-200 rounded-xl text-[13px] bg-gray-50 focus:outline-none focus:border-gold/50 focus:bg-white transition-all" />
@@ -317,7 +318,7 @@ export default function ResultsPanel({
                                     ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     : <><ArrowRight className="w-4 h-4" /> Unlock Full Report</>}
                                 </button>
-                                <div className="text-[10px] text-gray-500 text-center">🔒 Your data is private and never shared.</div>
+                                <div className="text-[10px] text-gray-500 text-center flex items-center justify-center gap-1"><Lock size={10} /> Your data is private and never shared.</div>
                               </form>
                             </div>
                           </div>
@@ -382,13 +383,13 @@ export default function ResultsPanel({
                               <div className="flex justify-between items-start mb-1 px-2">
                                 <div />
                                 <div className="text-center text-[10px] text-blue-600 font-semibold">
-                                  ☂️ You get Life Cover<br />
+                                  <span className="inline-flex items-center gap-1"><Umbrella size={12} /> You get Life Cover</span><br />
                                   <span className="text-[9px]">({fmtSA(sa)} to {fmt(matResult.maturity)})</span>
                                 </div>
                                 <div className="text-right text-[10px] text-green-600 font-semibold">
                                   You get<br/>Lump Sum<br/>
                                   <span className="font-bold text-[11px]">{fmt(matResult.maturity)}</span><br/>
-                                  <span className="text-[16px]">💰</span>
+                                  <Coins size={16} className="text-amber-500" />
                                 </div>
                               </div>
                               {/* Timeline bar */}
@@ -409,7 +410,7 @@ export default function ResultsPanel({
                               <div className="flex justify-between text-center px-2">
                                 <div>
                                   <div className="text-[11px] font-bold text-navy">Age {age}</div>
-                                  <div className="text-[10px] text-gold font-semibold">₹{Math.round(premResult.yearlyYear1).toLocaleString('en-IN')}/yr 🐷</div>
+                                  <div className="text-[10px] text-gold font-semibold">₹{Math.round(premResult.yearlyYear1).toLocaleString('en-IN')}/yr</div>
                                 </div>
                                 {ppt < safeterm && (
                                   <div className="text-center">
@@ -424,7 +425,7 @@ export default function ResultsPanel({
                               </div>
                             </div>
                             {/* Bottom 3-cell summary */}
-                            <div className="grid grid-cols-3 border border-navy/10 rounded-xl overflow-hidden mt-2">
+                            <div className="grid grid-cols-1 md:grid-cols-3 border border-navy/10 rounded-xl overflow-hidden mt-2">
                               {[
                                 { label: 'Total\nPremium Paid', value: Math.round(premResult.totalPaid).toLocaleString('en-IN'), color: 'text-navy' },
                                 { label: 'Total\nReturns',      value: Math.round(matResult.maturity).toLocaleString('en-IN'),   color: 'text-green-700' },
@@ -444,7 +445,7 @@ export default function ResultsPanel({
                           <button onClick={() => setShowAllModes(!showAllModes)}
                             className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors">
                             <div className="flex items-center gap-2 text-navy font-bold text-[13px]">
-                              <span className="text-[16px]">💳</span> Show Full Premium Chart
+                              <Coins size={16} className="text-amber-500" /> Show Full Premium Chart
                             </div>
                             {showAllModes ? <ChevronUp className="w-4 h-4 text-gray-500" /> : <ChevronDown className="w-4 h-4 text-gray-500" />}
                           </button>
@@ -567,7 +568,7 @@ export default function ResultsPanel({
                               <Star className="w-4 h-4 text-gold" />
                               <div className="font-bold text-[13px] text-gold">Key Insights</div>
                             </div>
-                            <div className="grid grid-cols-3 gap-3">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                               {[
                                 { label: 'Expected XIRR',    value: xirr ? `~${xirr}% p.a.` : selectedPlan.xirr ?? '—' },
                                 { label: 'Money Multiplier', value: multiplier ? `${multiplier}×` : '—' },
@@ -621,7 +622,7 @@ export default function ResultsPanel({
                                           <td className="px-3 py-2 font-bold text-red-600">{fmt(row.deathBenefit)}</td>
                                           <td className="px-3 py-2 text-amber-600">{row.gsv ? fmt(row.gsv) : '—'}</td>
                                           <td className="px-3 py-2 font-bold text-green-700">
-                                            {row.maturityPayout ? `🎉 ${fmt(row.maturityPayout)}` : row.survivalPayout ? `💰 ${fmt(row.survivalPayout)}` : '—'}
+                                            {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '—'}
                                           </td>
                                         </tr>
                                       ))}

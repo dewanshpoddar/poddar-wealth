@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import { Calculator, ArrowRight, Info, TrendingUp } from 'lucide-react'
+import { Calculator, ArrowRight, Info, TrendingUp, Sun } from 'lucide-react'
 import { PLANS, advisePlans } from '@/lib/lic-plans-data.js'
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
@@ -133,7 +133,7 @@ export default function RetirementCalcPage() {
                   </div>
                 ) : (
                   <div className="bg-white rounded-3xl shadow-card p-8 h-full flex flex-col items-center justify-center text-center min-h-80">
-                    <span className="text-6xl mb-4">🌅</span>
+                    <Sun size={48} className="text-amber-400 mb-4" />
                     <h3 className="font-display font-bold text-xl text-slate-900 mb-2">Plan Your Retirement</h3>
                     <p className="text-slate-400 text-sm">Enter your details and click calculate to discover how much you need.</p>
                   </div>

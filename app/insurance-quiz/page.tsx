@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import { ArrowRight, ArrowLeft, Check, Sparkles, MessageCircle, AlertCircle, Share2, HelpCircle } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Check, Sparkles, MessageCircle, AlertCircle, Share2, HelpCircle, GraduationCap, Heart, Baby, Home, Landmark, Shield, TrendingUp, HeartPulse, Percent, XCircle, FileText, CheckCircle2, Phone } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
@@ -250,19 +250,19 @@ export default function InsuranceQuizPage() {
 
   // Options lists bilingual
   const lifeStages = [
-    { key: 'career', icon: '🎓', en: 'Just started career (22-28)', hi: 'करियर की शुरुआत (22-28)' },
-    { key: 'married', icon: '💑', en: 'Newly married (25-35)', hi: 'नवविवाहित (25-35)' },
-    { key: 'parent', icon: '👶', en: 'Parent with young kids (28-45)', hi: 'छोटे बच्चों के माता-पिता (28-45)' },
-    { key: 'midcareer', icon: '🏠', en: 'Mid-career building wealth (35-50)', hi: 'मिड-करियर धन निर्माण (35-50)' },
-    { key: 'retirement', icon: '🧓', en: 'Planning retirement (45-60)', hi: 'रिटायरमेंट की योजना (45-60)' },
+    { key: 'career', icon: <GraduationCap size={20} className="text-amber-500" />, en: 'Just started career (22-28)', hi: 'करियर की शुरुआत (22-28)' },
+    { key: 'married', icon: <Heart size={20} className="text-amber-500" />, en: 'Newly married (25-35)', hi: 'नवविवाहित (25-35)' },
+    { key: 'parent', icon: <Baby size={20} className="text-amber-500" />, en: 'Parent with young kids (28-45)', hi: 'छोटे बच्चों के माता-पिता (28-45)' },
+    { key: 'midcareer', icon: <Home size={20} className="text-amber-500" />, en: 'Mid-career building wealth (35-50)', hi: 'मिड-करियर धन निर्माण (35-50)' },
+    { key: 'retirement', icon: <Landmark size={20} className="text-amber-500" />, en: 'Planning retirement (45-60)', hi: 'रिटायरमेंट की योजना (45-60)' },
   ]
 
   const concerns = [
-    { key: 'protection', icon: '🛡️', en: 'Family protection if something happens to me', hi: 'मेरे बाद परिवार की वित्तीय सुरक्षा' },
-    { key: 'wealth', icon: '💰', en: 'Building wealth for the future', hi: 'भविष्य के लिए धन का निर्माण' },
-    { key: 'education', icon: '🎓', en: "Children's education savings", hi: 'बच्चों की उच्च शिक्षा के लिए बचत' },
-    { key: 'health', icon: '🏥', en: 'Medical emergency coverage', hi: 'मेडिकल इमरजेंसी/इलाज का खर्च' },
-    { key: 'tax', icon: '📈', en: 'Tax saving under Sec 80C', hi: 'धारा 80C के तहत टैक्स बचत' },
+    { key: 'protection', icon: <Shield size={20} className="text-amber-500" />, en: 'Family protection if something happens to me', hi: 'मेरे बाद परिवार की वित्तीय सुरक्षा' },
+    { key: 'wealth', icon: <TrendingUp size={20} className="text-amber-500" />, en: 'Building wealth for the future', hi: 'भविष्य के लिए धन का निर्माण' },
+    { key: 'education', icon: <GraduationCap size={20} className="text-amber-500" />, en: "Children's education savings", hi: 'बच्चों की उच्च शिक्षा के लिए बचत' },
+    { key: 'health', icon: <HeartPulse size={20} className="text-amber-500" />, en: 'Medical emergency coverage', hi: 'मेडिकल इमरजेंसी/इलाज का खर्च' },
+    { key: 'tax', icon: <Percent size={20} className="text-amber-500" />, en: 'Tax saving under Sec 80C', hi: 'धारा 80C के तहत टैक्स बचत' },
   ]
 
   const incomes = [
@@ -273,10 +273,10 @@ export default function InsuranceQuizPage() {
   ]
 
   const insuranceStatuses = [
-    { key: 'none', icon: '❌', en: 'No insurance', hi: 'कोई बीमा नहीं है' },
-    { key: 'group', icon: '📄', en: 'Only employer group insurance', hi: 'केवल कंपनी का ग्रुप बीमा' },
-    { key: 'life', icon: '✅', en: 'Have LIC or other life insurance', hi: 'LIC या अन्य जीवन बीमा है' },
-    { key: 'both', icon: '✅✅', en: 'Have both life and health insurance', hi: 'जीवन बीमा और स्वास्थ्य बीमा दोनों हैं' },
+    { key: 'none', icon: <XCircle size={20} className="text-red-500" />, en: 'No insurance', hi: 'कोई बीमा नहीं है' },
+    { key: 'group', icon: <FileText size={20} className="text-amber-500" />, en: 'Only employer group insurance', hi: 'केवल कंपनी का ग्रुप बीमा' },
+    { key: 'life', icon: <CheckCircle2 size={20} className="text-emerald-500" />, en: 'Have LIC or other life insurance', hi: 'LIC या अन्य जीवन बीमा है' },
+    { key: 'both', icon: <CheckCircle2 size={20} className="text-emerald-600" />, en: 'Have both life and health insurance', hi: 'जीवन बीमा और स्वास्थ्य बीमा दोनों हैं' },
   ]
 
   const handleSelectOption = (field: string, value: string) => {
@@ -644,7 +644,8 @@ export default function InsuranceQuizPage() {
                   href={`tel:${ADVISOR_PHONE}`}
                   className="w-full bg-slate-100 hover:bg-slate-200 text-navy font-bold py-3 px-4 rounded-xl text-xs md:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  📞 {lang === 'en' ? 'Call Ajay Sir Directly' : 'अजय सर को सीधे कॉल करें'}
+                  <Phone size={14} />
+                  <span>{lang === 'en' ? 'Call Ajay Sir Directly' : 'अजय सर को सीधे कॉल करें'}</span>
                 </a>
               </div>
 

@@ -2,7 +2,7 @@
 
 import { useLang } from '@/lib/LangContext'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
-import { User, Phone, MessageSquare, Shield, HelpCircle, Info, Sparkles, MessageCircle, ArrowRight } from 'lucide-react'
+import { User, Phone, MessageSquare, Shield, HelpCircle, Info, Sparkles, MessageCircle, ArrowRight, Trophy, BarChart3 } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
@@ -35,7 +35,7 @@ export default function LicBonusPage() {
         <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🏆 {isHi ? 'एलआईसी बोनस दरें 2026' : 'LIC Bonus Rates 2026'}
+            <Trophy size={16} className="inline mr-1" />{isHi ? 'एलआईसी बोनस दरें 2026' : 'LIC Bonus Rates 2026'}
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
@@ -97,7 +97,7 @@ export default function LicBonusPage() {
             <Info className="text-red-500 flex-shrink-0 mt-0.5" size={20} />
             <div className="text-slate-700 text-xs md:text-sm leading-relaxed">
               <span className="font-extrabold text-red-700 block mb-1">
-                {isHi ? '⚠️ महत्वपूर्ण घोषणा (Indicative Disclaimer)' : '⚠️ Indicative Rates Disclaimer'}
+                {isHi ? 'महत्वपूर्ण घोषणा (Indicative Disclaimer)' : 'Indicative Rates Disclaimer'}
               </span>
               {isHi ? (
                 <>यहाँ दी गई बोनस दरें एलआईसी द्वारा हाल ही में घोषित दरों पर आधारित <strong>सांकेतिक (indicative)</strong> हैं। वास्तविक बोनस दरें हर साल एलआईसी के आधिकारिक मूल्यांकन के बाद घोषित की जाती हैं और यह भिन्न हो सकती हैं। नवीनतम प्रमाणित दरों और अपने प्लान की सटीक बोनस रिपोर्ट के लिए आप हमारी टीम से संपर्क कर सकते हैं।</>
@@ -214,7 +214,7 @@ export default function LicBonusPage() {
               href="/calculators/premium"
               className="inline-flex items-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs md:text-sm px-6 py-3.5 rounded-xl shadow-sm transition-all group"
             >
-              📊 {isHi ? 'प्रीमियम एवं मैच्योरिटी कैलकुलेटर का उपयोग करें' : 'Open Premium & Maturity Calculator'}
+              <BarChart3 size={16} className="inline mr-1" />{isHi ? 'प्रीमियम एवं मैच्योरिटी कैलकुलेटर का उपयोग करें' : 'Open Premium & Maturity Calculator'}
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
@@ -223,7 +223,7 @@ export default function LicBonusPage() {
             fields={fields}
             intent="LIC Bonus Rates 2026"
             submitText={isHi ? 'बोनस रिपोर्ट प्राप्त करें →' : 'Request Free Bonus Report →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Report Request Received! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Report Request Received!'}
             successMessage={isHi
               ? 'अजय सर जल्द ही आपको व्हाट्सएप पर आपकी पॉलिसी की बोनस और मैच्योरिटी रिपोर्ट भेजेंगे।'
               : 'Ajay sir will WhatsApp your customized bonus and maturity calculation breakdown within 24 hours.'}
@@ -244,7 +244,7 @@ export default function LicBonusPage() {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              <Phone size={16} className="inline mr-1" />{isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

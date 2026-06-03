@@ -38,7 +38,7 @@ export default function BenefitTable({ data, sa, showAllRows, setShowAllRows }: 
               <td className="px-3 py-2 font-bold text-red-600">{fmt(row.deathBenefit)}</td>
               <td className="px-3 py-2 text-amber-600">{row.gsv ? fmt(row.gsv) : '—'}</td>
               <td className="px-3 py-2 font-bold text-green-700">
-                {row.maturityPayout ? `🎉 ${fmt(row.maturityPayout)}` : row.survivalPayout ? `💰 ${fmt(row.survivalPayout)}` : '—'}
+                {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '—'}
               </td>
             </tr>
           ))}

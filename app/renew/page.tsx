@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, RefreshCw, Phone, Shield, Lock } from 'lucide-react'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
 import { ADVISOR_PHONE } from '@/lib/constants'
@@ -61,7 +61,7 @@ export default function RenewPage() {
       <section className="bg-navy py-14 px-6">
         <div className="max-w-2xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🔄 {isHi ? 'पॉलिसी रिन्यूअल' : 'Policy Renewal'}
+            <RefreshCw size={16} className="inline mr-1" />{isHi ? 'पॉलिसी रिन्यूअल' : 'Policy Renewal'}
           </div>
           <h1 className="font-display font-bold text-3xl md:text-4xl text-white mb-3 leading-tight">
             {r.hero ?? (isHi ? 'अपनी बीमा पॉलिसी रिन्यू करें' : 'Renew Your Insurance Policy')}
@@ -94,14 +94,14 @@ export default function RenewPage() {
                   : 'Ajay sir will personally contact you before your renewal due date. Your policy will not lapse.')}
               </p>
               <p className="text-xs text-gold font-semibold mt-4">
-                📞 {isHi ? 'जरूरत हो तो कॉल करें:' : 'Need to call now?'} {ADVISOR_PHONE}
+                <Phone size={14} className="inline mr-1" />{isHi ? 'जरूरत हो तो कॉल करें:' : 'Need to call now?'} {ADVISOR_PHONE}
               </p>
             </div>
           ) : (
             <>
               {/* Trust note */}
               <div className="bg-gold/5 border border-gold/20 rounded-2xl p-4 mb-6 flex items-start gap-3">
-                <span className="text-xl mt-0.5">🛡️</span>
+                <Shield size={20} className="text-amber-500 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {r.trustNote ?? (isHi
                     ? 'हम आपकी रिन्यूअल तारीखें ट्रैक करते हैं — हमारे साथ कोई पॉलिसी लैप्स नहीं होती।'
@@ -194,7 +194,7 @@ export default function RenewPage() {
                 )}
 
                 <p className="text-[10px] text-gray-500 text-center">
-                  {isHi ? 'आपकी जानकारी निजी है।' : 'Your details are private and never shared. 🔒'}
+                  {isHi ? 'आपकी जानकारी निजी है।' : 'Your details are private and never shared.'}
                 </p>
               </form>
             </>

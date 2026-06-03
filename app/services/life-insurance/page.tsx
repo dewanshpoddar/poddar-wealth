@@ -23,11 +23,11 @@ export default function LifeInsurancePage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center text-white">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🛡️ Life Insurance</div>
+              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">Life Insurance</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">{t.lifeInsurance.heroTitle}</h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">{t.lifeInsurance.heroSubtitle}</p>
               <div className="flex gap-4">
-                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-brand-700 font-bold px-6 py-3.5 rounded-xl hover:bg-brand-50 transition-colors">
+                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-amber-700 font-bold px-6 py-3.5 rounded-xl hover:bg-amber-50 transition-colors">
                   Protect My Family <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link href="/calculators/life-insurance" className="btn-secondary border-white/30 text-white hover:bg-white/10">
@@ -58,9 +58,9 @@ export default function LifeInsurancePage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 bg-brand-50 border border-brand-100 rounded-2xl p-5">
-                <div className="font-display font-bold text-brand-900 text-lg mb-1">🏆 Ajay&apos;s Advice</div>
-                <p className="text-brand-800 text-sm leading-relaxed">&quot;The best time to buy life insurance is when you&apos;re young and healthy. Your premiums will be lowest and your family will be protected the longest.&quot;</p>
+              <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-5">
+                <div className="font-display font-bold text-amber-900 text-lg mb-1">Ajay's Advice</div>
+                <p className="text-amber-800 text-sm leading-relaxed">&quot;The best time to buy life insurance is when you&apos;re young and healthy. Your premiums will be lowest and your family will be protected the longest.&quot;</p>
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
@@ -79,7 +79,7 @@ export default function LifeInsurancePage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {t.lifeInsurance.types.map((type, i) => (
               <div key={i} className="card relative">
-                <div className="absolute top-4 right-4 badge bg-brand-100 text-brand-700">{type.tag}</div>
+                <div className="absolute top-4 right-4 badge bg-amber-100 text-amber-700">{type.tag}</div>
                 <h3 className="font-display font-bold text-lg text-slate-900 mt-4 mb-2">{type.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{type.desc}</p>
               </div>

@@ -25,7 +25,7 @@ export default function PolicyRevivalPage() {
         <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🔄 {isHi ? 'एलआईसी पॉलिसी पुनरुद्धार' : 'LIC Policy Revival'}
+            {isHi ? 'एलआईसी पॉलिसी पुनरुद्धार' : 'LIC Policy Revival'}
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
@@ -228,7 +228,7 @@ export default function PolicyRevivalPage() {
             fields={fields}
             intent="LIC Policy Revival"
             submitText={isHi ? 'अजय सर की सहायता लें →' : 'Request Revival Support from Ajay Sir →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Support Request Received! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Support Request Received!'}
             successMessage={isHi
               ? 'अजय सर जल्द ही आपसे संपर्क कर आपकी पॉलिसी को बहाल कराने की प्रक्रिया शुरू करेंगे।'
               : 'Ajay sir will contact you within 24 hours to help calculate pending dues and prepare documents.'}
@@ -249,7 +249,7 @@ export default function PolicyRevivalPage() {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

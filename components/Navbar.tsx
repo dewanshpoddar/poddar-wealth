@@ -1,302 +1,271 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
-import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import Image from 'next/image'
-import LangToggle from './LangToggle'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
   const pathname = usePathname()
-  const [open, setOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [calcAccordionOpen, setCalcAccordionOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [calcOpen, setCalcOpen] = useState(false)
+  const [calcMobileOpen, setCalcMobileOpen] = useState(false)
+  const calcRef = useRef<HTMLDivElement>(null)
 
-  // Reset accordion on mobile menu close
+  // Close mobile menu on route change
+  useEffect(() => { setMobileOpen(false) }, [pathname])
+
+  // Close calc dropdown on outside click
   useEffect(() => {
-    if (!open) {
-      setCalcAccordionOpen(false)
+    if (!calcOpen) return
+    function handler(e: MouseEvent) {
+      if (calcRef.current && !calcRef.current.contains(e.target as Node)) setCalcOpen(false)
     }
-  }, [open])
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [calcOpen])
 
-  // Universal Scroll Detection
+  // Prevent body scroll when mobile menu open
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
 
-  const isActive = (path: string) => pathname === path
+  const isActive = (path: string) =>
+    path === '/' ? pathname === '/' : pathname.startsWith(path)
+
+  const linkCls = (path: string) =>
+    `text-sm font-medium transition-colors duration-200 ${
+      isActive(path) ? 'text-amber-400' : 'text-gray-400 hover:text-white'
+    }`
+
+  const calcLinks = [
+    { href: '/calculators/premium',       en: 'Premium Calculator',     hi: 'प्रीमियम कैलकुलेटर' },
+    { href: '/calculators/life-insurance',en: 'Life Insurance Calculator',hi:'जीवन बीमा कैलकुलेटर' },
+    { href: '/calculators/retirement',    en: 'Retirement Planner',      hi: 'रिटायरमेंट प्लानर' },
+    { href: '/calculators/surrender-value',en:'Surrender Value',         hi: 'सरेंडर वैल्यू' },
+    { href: '/calculators/maturity',      en: 'Maturity Calculator',     hi: 'मैच्योरिटी कैलकुलेटर' },
+    { href: '/calculators/loan',          en: 'Loan Against Policy',     hi: 'पॉलिसी पर लोन' },
+  ]
 
   return (
-    <nav className={`pw-nav transition-all duration-500 ${
-      isScrolled 
-        ? 'bg-navy shadow-2xl border-none h-[72px]' 
-        : 'bg-white h-[78px]'
-    }`}>
+    <>
+      <nav className="sticky top-0 z-50 h-16 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
-      {/* Logo Area */}
-      <Link href="/" className="pw-logo-area flex-shrink-0">
-        <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center p-1.5 shadow-sm overflow-hidden transition-all duration-500 flex-shrink-0 ${
-          isScrolled ? 'bg-white shadow-none' : 'bg-white shadow-gold-sm border-gold/10 border'
-        }`}>
-          <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" width={56} height={56} className="w-full h-full object-contain scale-110" priority />
-        </div>
-        {/* Logo text — hidden below 400px to give room for lang toggle + hamburger */}
-        <div className="flex-col min-w-0 hidden [@media(min-width:400px)]:flex">
-          <span className={`pw-logo-text uppercase transition-colors duration-500 truncate ${
-            isScrolled ? 'text-white' : 'text-navy'
-          } text-[11px] sm:text-[13px] md:text-[16px]`}>
-            Poddar Wealth Management
-          </span>
-          <span className={`pw-logo-sub italic transition-colors duration-500 hidden sm:block ${
-            isScrolled ? 'text-gold/90 font-medium' : 'text-gold/80'
-          }`}>
-            Excellence in Protection Since 1994
-          </span>
-        </div>
-      </Link>
+          {/* LEFT — Logo */}
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <div className="w-9 h-9 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center p-1 shrink-0">
+              <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={32} height={32} className="w-full h-full object-contain" priority />
+            </div>
+            <span className="text-lg font-semibold text-white hidden [@media(min-width:380px)]:block">
+              Poddar Wealth
+            </span>
+          </Link>
 
-      {/* Desktop Nav */}
-      <div className="hidden lg:flex items-center gap-5 xl:gap-8">
-        <Link 
-          href="/about" 
-          className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 ${
-            isActive('/about') 
-              ? (isScrolled ? 'text-gold' : 'text-navy scale-105') 
-              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-          }`}
-        >
-          {t.nav.about}
-        </Link>
-        <Link 
-          href="/products" 
-          className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 ${
-            isActive('/products') 
-              ? (isScrolled ? 'text-gold' : 'text-navy scale-105') 
-              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-          }`}
-        >
-          {t.nav.products}
-        </Link>
-        <Link 
-          href="/services" 
-          className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 ${
-            isActive('/services') 
-              ? (isScrolled ? 'text-gold' : 'text-navy scale-105') 
-              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-          }`}
-        >
-          {t.nav.services}
-        </Link>
+          {/* CENTER — Desktop nav links */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/about"    className={linkCls('/about')}>{t.nav.about}</Link>
+            <Link href="/products" className={linkCls('/products')}>{t.nav.products}</Link>
+            <Link href="/services" className={linkCls('/services')}>{t.nav.services}</Link>
 
-        {/* Calculators Dropdown */}
-        <div className="relative group">
-          <button
-            className={`pw-nav-link text-[14px] font-bold tracking-wide transition-all duration-500 flex items-center gap-1 bg-transparent border-none cursor-pointer py-2 ${
-              pathname.startsWith('/calculators')
-                ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
-                : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-            }`}
-          >
-            {t.nav.calculators}
-            <span className="text-[9px] select-none transition-transform duration-300 group-hover:rotate-180">▼</span>
-          </button>
-          
-          <div className="absolute top-full left-0 mt-1 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-            <div className={`rounded-xl overflow-hidden shadow-xl border ${
-              isScrolled ? 'bg-navy-deep border-gold/10 text-white' : 'bg-white border-gray-100 text-navy'
-            }`}>
-              <Link
-                href="/calculators/premium"
-                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
-                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
+            {/* Calculators dropdown */}
+            <div className="relative" ref={calcRef}>
+              <button
+                onClick={() => setCalcOpen(v => !v)}
+                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                  isActive('/calculators') ? 'text-amber-400' : 'text-gray-400 hover:text-white'
                 }`}
               >
-                {lang === 'en' ? 'Premium Calculator' : 'प्रीमियम कैलकुलेटर'}
-              </Link>
-              <Link
-                href="/calculators/life-insurance"
-                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
-                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
-                }`}
+                {t.nav.calculators}
+                <ChevronDown size={14} className={`transition-transform duration-200 ${calcOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {calcOpen && (
+                <div className="absolute top-full left-0 mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-xl p-2 min-w-[220px] z-50">
+                  {calcLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setCalcOpen(false)}
+                      className={`block px-4 py-2.5 text-sm rounded-lg transition-colors ${
+                        isActive(href)
+                          ? 'text-amber-400 bg-gray-800/50'
+                          : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                      }`}
+                    >
+                      {lang === 'en' ? en : hi}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link href="/compare" className={linkCls('/compare')}>
+              {lang === 'en' ? 'Compare' : 'तुलना'}
+            </Link>
+            <Link href="/blog" className={linkCls('/blog')}>
+              {lang === 'en' ? 'Blog' : 'ब्लॉग'}
+            </Link>
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex items-center gap-4">
+            {/* Language toggle */}
+            <div className="hidden md:flex items-center gap-1 text-xs">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'text-amber-400 font-semibold' : 'text-gray-500 hover:text-gray-300'}`}
               >
-                {lang === 'en' ? 'Life Insurance Calculator' : 'जीवन बीमा कैलकुलेटर'}
-              </Link>
-              <Link
-                href="/calculators/retirement"
-                className={`block px-4 py-2.5 text-[13px] font-semibold transition-colors ${
-                  isScrolled ? 'hover:bg-gold/10 hover:text-gold text-white/90' : 'hover:bg-gray-50 hover:text-navy text-gray-700'
-                }`}
+                EN
+              </button>
+              <span className="text-gray-700">/</span>
+              <button
+                onClick={() => setLang('hi')}
+                className={`px-2 py-1 rounded transition-colors ${lang === 'hi' ? 'text-amber-400 font-semibold' : 'text-gray-500 hover:text-gray-300'}`}
               >
-                {lang === 'en' ? 'Retirement Planner' : 'रिटायरमेंट प्लानर'}
-              </Link>
+                हि
+              </button>
+            </div>
+
+            {/* Get Free Quote — desktop */}
+            <Link
+              href="/contact"
+              className="hidden md:inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+            >
+              {t.nav.getQuote}
+            </Link>
+
+            {/* Mobile lang + hamburger */}
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
+                className="text-xs text-gray-400 hover:text-white px-2 py-1"
+              >
+                {lang === 'en' ? 'हि' : 'EN'}
+              </button>
+              <button
+                onClick={() => setMobileOpen(v => !v)}
+                aria-label="Toggle menu"
+                className="text-gray-300 hover:text-white p-1"
+              >
+                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
             </div>
           </div>
         </div>
+      </nav>
 
-        <Link
-          href="/compare"
-          className={`pw-nav-link text-[13px] font-bold tracking-wide transition-all duration-500 flex items-center gap-1 ${
-            isActive('/compare')
-              ? (isScrolled ? 'text-gold' : 'text-navy scale-105')
-              : (isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-500 hover:text-navy')
-          }`}
-        >
-          ⚖️ {lang === 'en' ? 'Compare' : 'तुलना'}
-          <span className="bg-gold text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
-        </Link>
-
-        {/* Language toggle */}
-        <LangToggle scrolled={isScrolled} />
-
-        <Link href="/pay-premium" className={`text-[13px] font-bold px-3 py-1.5 rounded-lg border transition-all duration-500 ${
-          isScrolled
-            ? 'border-gold/40 text-gold hover:bg-gold/10'
-            : 'border-navy/20 text-navy hover:border-navy hover:text-navy'
-        }`}>
-          {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
-        </Link>
-
-        <Link href="/renew" className={`text-[14px] font-bold transition-colors duration-500 ${
-          isScrolled ? 'text-white/90 hover:text-gold' : 'text-navy hover:text-gold'
-        }`}>{t.nav.renewPolicy}</Link>
-        
-        <Link href="/contact" className={`pw-nav-cta hidden xl:block shadow-xl ${
-          isScrolled ? 'bg-gold hover:bg-gold-hover' : 'bg-navy hover:bg-navy-mid'
-        }`}>
-          {t.nav.getQuote}
-        </Link>
-      </div>
-
-      {/* Mobile: language toggle + hamburger */}
-      <div className="lg:hidden flex items-center gap-2">
-        {/* Language toggle — always visible on mobile for Hindi users */}
-        <LangToggle scrolled={isScrolled} />
-
-        <button
-          className={`font-bold text-20 bg-transparent border-none cursor-pointer p-2 transition-colors duration-500 ${
-            isScrolled ? 'text-white' : 'text-navy'
-          }`}
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? '✕' : '☰'}
-        </button>
-      </div>
-
-      {/* Mobile Menu (Sticky at top of content) */}
-      <AnimatePresence>
-        {open && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={`fixed ${isScrolled ? 'top-[72px]' : 'top-[78px]'} left-0 right-0 shadow-2xl z-40 px-8 pt-10 pb-8 flex flex-col gap-6 lg:hidden max-h-[85vh] overflow-y-auto transition-all duration-500 ${
-              isScrolled ? 'bg-navy-deep border-t border-gold/10' : 'bg-white border-t border-gray-100'
-            }`}
-          >
-            <Link 
-              href="/about" 
-              onClick={() => setOpen(false)} 
-              className={`text-18 font-bold ${isActive('/about') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
-            >
-              {t.nav.about}
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[100] bg-gray-950 flex flex-col md:hidden overflow-y-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800/50">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg overflow-hidden bg-white/5 p-1">
+                <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={28} height={28} className="w-full h-full object-contain" />
+              </div>
+              <span className="text-base font-semibold text-white">Poddar Wealth</span>
             </Link>
-            <Link 
-              href="/products" 
-              onClick={() => setOpen(false)} 
-              className={`text-18 font-bold ${isActive('/products') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
-            >
-              {t.nav.products}
-            </Link>
-            <Link
-              href="/services"
-              onClick={() => setOpen(false)}
-              className={`text-18 font-bold ${isActive('/services') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')}`}
-            >
-              {t.nav.services}
-            </Link>
-            {/* Calculators Accordion */}
-            <div>
-              <button
-                onClick={() => setCalcAccordionOpen(!calcAccordionOpen)}
-                className={`w-full flex items-center justify-between text-18 font-bold bg-transparent border-none p-0 cursor-pointer ${
-                  pathname.startsWith('/calculators') ? 'text-gold' : (isScrolled ? 'text-white' : 'text-navy')
+            <button onClick={() => setMobileOpen(false)} className="text-gray-400 hover:text-white p-1">
+              <X size={22} />
+            </button>
+          </div>
+
+          {/* Nav links */}
+          <div className="flex-1 px-0">
+            {[
+              { href: '/about',    label: t.nav.about },
+              { href: '/products', label: t.nav.products },
+              { href: '/services', label: t.nav.services },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={`block py-4 px-6 text-base font-medium border-b border-gray-800/50 ${
+                  isActive(href) ? 'text-amber-400' : 'text-gray-300'
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  {t.nav.calculators}
-                  <span className="bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none">New</span>
-                </span>
-                <span className={`text-12 transition-transform duration-300 ${calcAccordionOpen ? 'rotate-180' : ''}`}>▼</span>
+                {label}
+              </Link>
+            ))}
+
+            {/* Calculators accordion */}
+            <div className="border-b border-gray-800/50">
+              <button
+                onClick={() => setCalcMobileOpen(v => !v)}
+                className={`w-full flex items-center justify-between py-4 px-6 text-base font-medium ${
+                  isActive('/calculators') ? 'text-amber-400' : 'text-gray-300'
+                }`}
+              >
+                <span>{t.nav.calculators}</span>
+                <ChevronDown size={16} className={`transition-transform duration-200 ${calcMobileOpen ? 'rotate-180' : ''}`} />
               </button>
-              
-              <AnimatePresence>
-                {calcAccordionOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden flex flex-col gap-3 pl-4 pt-3"
-                  >
+              {calcMobileOpen && (
+                <div className="pb-2 px-6 flex flex-col gap-0.5">
+                  {calcLinks.map(({ href, en, hi }) => (
                     <Link
-                      href="/calculators/premium"
-                      onClick={() => setOpen(false)}
-                      className={`text-15 font-semibold transition-colors ${
-                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`py-3 text-sm border-b border-gray-800/30 last:border-0 ${
+                        isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400'
                       }`}
                     >
-                      {lang === 'en' ? 'Premium Calculator' : 'प्रीमियम कैलकुलेटर'}
+                      {lang === 'en' ? en : hi}
                     </Link>
-                    <Link
-                      href="/calculators/life-insurance"
-                      onClick={() => setOpen(false)}
-                      className={`text-15 font-semibold transition-colors ${
-                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
-                      }`}
-                    >
-                      {lang === 'en' ? 'Life Insurance Calculator' : 'जीवन बीमा कैलकुलेटर'}
-                    </Link>
-                    <Link
-                      href="/calculators/retirement"
-                      onClick={() => setOpen(false)}
-                      className={`text-15 font-semibold transition-colors ${
-                        isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-navy'
-                      }`}
-                    >
-                      {lang === 'en' ? 'Retirement Planner' : 'रिटायरमेंट प्लानर'}
-                    </Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div className={`h-px my-1 w-full ${isScrolled ? 'bg-white/10' : 'bg-gray-100'}`}></div>
+            {[
+              { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना' },
+              { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग' },
+            ].map(({ href, en, hi }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={`block py-4 px-6 text-base font-medium border-b border-gray-800/50 ${
+                  isActive(href) ? 'text-amber-400' : 'text-gray-300'
+                }`}
+              >
+                {lang === 'en' ? en : hi}
+              </Link>
+            ))}
+          </div>
 
-            <Link href="/pay-premium" onClick={() => setOpen(false)} className={`text-16 font-bold flex items-center gap-2 ${isScrolled ? 'text-gold' : 'text-gold'}`}>
-              💳 {lang === 'en' ? 'Pay Premium' : 'प्रीमियम भरें'}
-            </Link>
-            <Link href="/renew" onClick={() => setOpen(false)} className={`text-16 font-semibold ${isScrolled ? 'text-white/80' : 'text-navy/80'}`}>{t.nav.renewPolicy}</Link>
-            <Link href="/become-advisor" onClick={() => setOpen(false)}
-              className="w-full flex items-center justify-center gap-2 bg-gold/10 border border-gold/40 text-amber-700 font-bold text-[14px] py-3 px-4 rounded-xl hover:bg-gold/20 transition-colors">
-              🤝 {lang === 'en' ? 'Become an Advisor' : 'सलाहकार बनें'}
-            </Link>
-            
-            <Link href="/contact" onClick={() => setOpen(false)} className="pw-btn pw-btn--gold pw-btn--full mt-2 shadow-xl py-4 text-16">
+          {/* Bottom CTA */}
+          <div className="px-6 pb-8 pt-4 space-y-3">
+            {/* Language toggle */}
+            <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-3 py-1.5 rounded-lg border transition-colors ${lang === 'en' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLang('hi')}
+                className={`px-3 py-1.5 rounded-lg border transition-colors ${lang === 'hi' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
+              >
+                हिंदी
+              </button>
+            </div>
+            <Link
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm py-4 rounded-xl transition-colors"
+            >
               {t.nav.getQuote}
             </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

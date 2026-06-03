@@ -33,7 +33,7 @@ export default function ConsultationSection({ intent = 'Service Consultation' }:
   ]
 
   return (
-    <section className="py-20 bg-navy relative overflow-hidden">
+    <section id="lead-form" className="py-20 bg-navy relative overflow-hidden">
       {/* Background texture */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"

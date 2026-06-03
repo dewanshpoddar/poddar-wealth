@@ -2,7 +2,19 @@
 
 import Image from 'next/image'
 import { useLang } from '@/lib/LangContext'
-import { User, Phone, MapPin, Briefcase, MessageSquare } from 'lucide-react'
+import { User, Phone, MapPin, Briefcase, MessageSquare, Coins, Clock, GraduationCap, Trophy, Lock, Heart, Handshake, TrendingUp, Zap } from 'lucide-react'
+
+function BenefitIcon({ icon }: { icon: string }) {
+  const map: Record<string, React.ReactNode> = {
+    '💰': <Coins size={28} className="text-amber-500" />,
+    '⏰': <Clock size={28} className="text-amber-500" />,
+    '🎓': <GraduationCap size={28} className="text-amber-500" />,
+    '🏆': <Trophy size={28} className="text-amber-500" />,
+    '🔒': <Lock size={28} className="text-amber-500" />,
+    '❤️': <Heart size={28} className="text-amber-500" />,
+  }
+  return <>{map[icon] ?? <Briefcase size={28} className="text-amber-500" />}</>
+}
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 
 export default function BecomeAdvisorPage() {
@@ -38,7 +50,7 @@ export default function BecomeAdvisorPage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center text-white">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🤝 Join Our Team</div>
+              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6"><Handshake size={14} className="inline mr-1" />Join Our Team</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">{t.becomeAdvisor.heroTitle}</h1>
               <p className="text-white/80 text-xl leading-relaxed">{t.becomeAdvisor.heroSubtitle}</p>
             </div>
@@ -70,7 +82,7 @@ export default function BecomeAdvisorPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mb-10">
             {/* Card 1: Training */}
             <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-4">🎓</div>
+              <div className="mb-4"><GraduationCap size={28} className="text-amber-500" /></div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">
                 {isHi ? 'अकाट्य प्रशिक्षण और मेंटरशिप' : 'Elite Training & Mentoring'}
               </h3>
@@ -83,7 +95,7 @@ export default function BecomeAdvisorPage() {
 
             {/* Card 2: Lead Support */}
             <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-4">📈</div>
+              <div className="mb-4"><TrendingUp size={28} className="text-amber-500" /></div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">
                 {isHi ? 'सत्यापित ग्राहक लीड्स' : 'Active Lead Support'}
               </h3>
@@ -96,7 +108,7 @@ export default function BecomeAdvisorPage() {
 
             {/* Card 3: Technology */}
             <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-4">⚡</div>
+              <div className="mb-4"><Zap size={28} className="text-amber-500" /></div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">
                 {isHi ? 'अत्याधुनिक डिजिटल तकनीक' : 'State-of-the-Art Tech'}
               </h3>
@@ -122,12 +134,12 @@ export default function BecomeAdvisorPage() {
       <section className="section-padding bg-white">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight">{t.becomeAdvisor.whyTitle}</h2>
+            <h2 className="font-display font-bold text-2xl md:text-3xl text-slate-900 leading-tight">{t.becomeAdvisor.whyTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.becomeAdvisor.benefits.map((b: any, i: number) => (
               <div key={i} className="bg-white border border-slate-100 rounded-2xl p-6 shadow-card group hover:-translate-y-1 hover:border-gold/30 hover:shadow-xl transition-all duration-300 border-2 border-transparent">
-                <div className="text-4xl mb-4">{b.icon}</div>
+                <div className="mb-4"><BenefitIcon icon={b.icon} /></div>
                 <h3 className="font-display font-bold text-lg text-slate-900 mb-2">{b.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{b.desc}</p>
               </div>
@@ -140,17 +152,17 @@ export default function BecomeAdvisorPage() {
       <section className="section-padding bg-navy text-white">
         <div className="section-container">
           <div className="text-center mb-10">
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-white">{t.becomeAdvisor.incomeTitle}</h2>
+            <h2 className="font-display font-bold text-2xl md:text-3xl text-white">{t.becomeAdvisor.incomeTitle}</h2>
           </div>
           <div className="max-w-3xl mx-auto">
             <div className="bg-white/10 backdrop-blur rounded-2xl overflow-hidden">
-              <div className="grid grid-cols-3 bg-white/20 px-6 py-3 text-white/70 text-sm font-semibold">
+              <div className="hidden md:grid grid-cols-3 bg-white/20 px-6 py-3 text-white/70 text-sm font-semibold">
                 <div>Level</div>
                 <div>Monthly Policies</div>
                 <div>Monthly Income</div>
               </div>
               {t.becomeAdvisor.incomeData.map((row: any, i: number) => (
-                <div key={i} className={`grid grid-cols-3 px-6 py-4 text-sm ${i % 2 === 0 ? 'bg-white/5' : ''}`}>
+                <div key={i} className={`grid grid-cols-1 md:grid-cols-3 px-6 py-4 text-sm ${i % 2 === 0 ? 'bg-white/5' : ''}`}>
                   <div className="font-semibold text-white">{row.level}</div>
                   <div className="text-white/70">{row.policies}</div>
                   <div className="font-bold text-green-400">{row.income}</div>
@@ -176,7 +188,7 @@ export default function BecomeAdvisorPage() {
                 fields={fields}
                 intent="Advisor Recruitment"
                 submitText={lang === 'en' ? "Apply Now — It's Free →" : "अभी आवेदन करें — यह मुफ़्त है →"}
-                successTitle={lang === 'en' ? 'Application Received! 🎉' : 'आवेदन प्राप्त हुआ! 🎉'}
+                successTitle={lang === 'en' ? 'Application Received!' : 'आवेदन प्राप्त हुआ!'}
                 successMessage={lang === 'en' 
                   ? 'Ajay will personally review your application and call you within 24 hours. Welcome to the journey!' 
                   : 'अजय सर व्यक्तिगत रूप से आपके आवेदन की समीक्षा करेंगे और 24 घंटों के भीतर आपको कॉल करेंगे।'}

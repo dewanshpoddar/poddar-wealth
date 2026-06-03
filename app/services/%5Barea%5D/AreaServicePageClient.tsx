@@ -62,7 +62,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20c45a] text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-[1.02] shadow-lg active:scale-[0.98] text-sm"
                 >
-                  <span className="text-16">💬</span> {lang === 'hi' ? 'अजय सर से बात करें' : `Contact Ajay sir for ${areaData.name}`}
+                  {lang === 'hi' ? 'अजय सर से बात करें' : `Contact Ajay sir for ${areaData.name}`}
                 </a>
               </div>
             </div>
@@ -176,7 +176,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-navy shrink-0 font-bold">📞</div>
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-navy shrink-0"><Phone size={18} /></div>
                   <div>
                     <h4 className="font-display font-bold text-sm text-navy">{lang === 'hi' ? 'फोन नंबर' : 'Phone'}</h4>
                     <p className="text-slate-500 text-13 mt-0.5">Ajay Kumar Poddar: +91 {ADVISOR_PHONE}</p>
@@ -227,7 +227,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20c45a] text-white font-bold h-12 px-8 rounded-full shadow-lg transition-all active:scale-[0.98]"
           >
-            💬 {lang === 'hi' ? `व्हाट्सएप पर अजय सर (${ADVISOR_PHONE})` : `Chat with Ajay sir (${ADVISOR_PHONE})`}
+            {lang === 'hi' ? `व्हाट्सएप पर अजय सर (${ADVISOR_PHONE})` : `Chat with Ajay sir (${ADVISOR_PHONE})`}
           </a>
         </div>
       </section>

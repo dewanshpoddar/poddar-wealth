@@ -250,7 +250,7 @@ export default function BimaSugamPage() {
             fields={fields}
             intent="Bima Sugam Guide"
             submitText={isHi ? 'अजय सर से बात करें →' : 'Request Guidance from Ajay Sir →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Request Received! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Request Received!'}
             successMessage={isHi
               ? 'अजय सर 24 घंटे के भीतर आपको व्हाट्सएप या फोन पर संपर्क करेंगे।'
               : 'Ajay sir will personally call or WhatsApp you within 24 hours to guide you.'}
@@ -271,7 +271,7 @@ export default function BimaSugamPage() {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              <Phone size={16} className="inline mr-1" />{isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

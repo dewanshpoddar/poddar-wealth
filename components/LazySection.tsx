@@ -4,8 +4,12 @@ import { useRef, useState, useEffect, type ReactNode } from 'react'
 export default function LazySection({ children, height = 'h-32' }: { children: ReactNode; height?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
-  
+
   useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setVisible(true)
+      return
+    }
     const el = ref.current
     if (!el) return
     const observer = new IntersectionObserver(

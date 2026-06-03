@@ -173,7 +173,7 @@ export default function WealthBlueprintCalculator() {
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"/>
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
             {isHi ? 'आपका व्यक्तिगत वेल्थ ब्लूप्रिंट' : 'Your Personal Wealth Blueprint'}
           </h2>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto mt-4 leading-relaxed font-medium">
@@ -311,7 +311,7 @@ export default function WealthBlueprintCalculator() {
                 </div>
                 <div className="mb-5">
                   <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldChildren}</label>
-                  <div className="grid grid-cols-5 gap-2 max-w-sm">
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 max-w-sm">
                     {[0,1,2,3,4].map(n => (
                       <button key={n} onClick={() => setChildren(n)}
                         className={`h-11 rounded-xl border-2 text-13 font-bold transition-all ${children === n ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
@@ -387,7 +387,7 @@ export default function WealthBlueprintCalculator() {
                 </div>
                 <div className="mb-6">
                   <label className="text-11 font-semibold text-navy/75 block mb-2">Target retirement age</label>
-                  <div className="grid grid-cols-5 gap-2 max-w-md">
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 max-w-md">
                     {[45,50,55,60,65].map(n => (
                       <button key={n} onClick={() => setRetAge(n)}
                         className={`py-2 rounded-xl border-2 text-12 font-bold transition-all ${retirementAge === n ? 'border-gold bg-gold/10 text-navy' : 'border-gray-200 bg-white text-navy/60 hover:border-gold/40'}`}>

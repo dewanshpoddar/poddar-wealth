@@ -7,6 +7,7 @@ import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
 import { PLANS } from '@/lib/lic-plans-data.js'
 import { openLeadPopup } from '@/lib/events'
+import { Scale, Phone, Calculator, X, Check } from 'lucide-react'
 
 const activePlans = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
 
@@ -80,7 +81,7 @@ function ComparePageContent() {
       <section className="bg-navy py-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            ⚖️ {c.title ?? (isHi ? 'प्लान तुलना' : 'Compare Plans')}
+            <Scale size={16} className="inline mr-1" />{c.title ?? (isHi ? 'प्लान तुलना' : 'Compare Plans')}
           </div>
           <h1 className="font-display font-bold text-3xl md:text-4xl text-white mb-3 leading-tight">
             {c.hero ?? (isHi ? 'बीमा प्लान की साथ-साथ तुलना करें' : 'Compare Insurance Plans Side by Side')}
@@ -106,7 +107,7 @@ function ComparePageContent() {
               {selected.map((p: any) => (
                 <span key={p.planNo} className="inline-flex items-center gap-2 bg-navy text-white text-xs font-bold px-3 py-1.5 rounded-full">
                   {p.name}
-                  <button onClick={() => togglePlan(p)} className="hover:text-gold transition-colors text-white/70">✕</button>
+                  <button onClick={() => togglePlan(p)} className="hover:text-gold transition-colors text-white/70"><X size={14} /></button>
                 </span>
               ))}
               <button onClick={() => { setSelected([]); setHasCompared(false) }}
@@ -141,7 +142,7 @@ function ComparePageContent() {
                       : 'bg-white border-gray-200 text-gray-700 hover:border-navy/30'
                   }`}>
                   <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'bg-gold border-gold' : 'border-current'}`}>
-                    {isSelected && <span className="text-navy text-[10px] font-bold">✓</span>}
+                    {isSelected && <Check size={10} className="text-navy" />}
                   </span>
                   <div className="min-w-0">
                     <div className="font-semibold truncate">{plan.name}</div>
@@ -241,11 +242,11 @@ function ComparePageContent() {
                   onClick={() => openLeadPopup('Plan comparison consultation')}
                   className="bg-navy text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-navy/90 transition-colors"
                 >
-                  📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+                  <Phone size={16} className="inline mr-1" />{isHi ? 'कॉल करें' : 'Call Ajay Sir'}
                 </button>
                 <Link href="/calculators/premium"
                   className="bg-gold text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-amber-600 transition-colors">
-                  🧮 {isHi ? 'प्रीमियम कैलकुलेटर' : 'Calculate Premium'}
+                  <Calculator size={16} className="inline mr-1" />{isHi ? 'प्रीमियम कैलकुलेटर' : 'Calculate Premium'}
                 </Link>
               </div>
             </div>

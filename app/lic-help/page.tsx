@@ -2,7 +2,7 @@
 
 import { useLang } from '@/lib/LangContext'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
-import { User, Phone, MessageSquare, Download, CheckCircle2, Shield, Info, Sparkles, MessageCircle } from 'lucide-react'
+import { User, Phone, MessageSquare, Download, CheckCircle2, Shield, Info, Sparkles, MessageCircle, Bot, Smartphone } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
@@ -25,7 +25,7 @@ export default function LicHelpPage() {
         <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🛡️ {isHi ? 'LIC ग्राहक सहायता' : 'LIC Customer Help'}
+            <Shield size={16} className="inline mr-1" />{isHi ? 'LIC ग्राहक सहायता' : 'LIC Customer Help'}
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
@@ -72,7 +72,7 @@ export default function LicHelpPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl hover:border-gold/30 hover:bg-gold/5 transition-all cursor-pointer group"
               >
-                <span className="text-2xl">🤖</span>
+                <Bot size={24} className="text-indigo-500" />
                 <div>
                   <div className="font-bold text-navy group-hover:text-gold transition-colors">Android Play Store</div>
                   <div className="text-xs text-slate-400">Download for Android phones</div>
@@ -84,7 +84,7 @@ export default function LicHelpPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl hover:border-gold/30 hover:bg-gold/5 transition-all cursor-pointer group"
               >
-                <span className="text-2xl">🍏</span>
+                <Smartphone size={24} className="text-gray-600" />
                 <div>
                   <div className="font-bold text-navy group-hover:text-gold transition-colors">Apple App Store</div>
                   <div className="text-xs text-slate-400">Download for iPhone / iPad</div>
@@ -232,7 +232,7 @@ export default function LicHelpPage() {
             fields={fields}
             intent="MyLIC Help"
             submitText={isHi ? 'अजय सर से सहायता लें →' : 'Request App Help from Ajay Sir →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Support Request Received! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Support Request Received!'}
             successMessage={isHi
               ? 'अजय सर 24 घंटे के भीतर आपको फोन या व्हाट्सएप पर संपर्क कर सहायता करेंगे।'
               : 'Ajay sir will personally call or WhatsApp you within 24 hours to resolve your LIC portal issues.'}
@@ -253,7 +253,7 @@ export default function LicHelpPage() {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              <Phone size={16} className="inline mr-1" />{isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

@@ -25,7 +25,7 @@ export default function FinalCTA() {
             <div className="pw-eyebrow text-gold font-bold tracking-[0.2em] mb-2">{t.aboutSection.eyebrow}</div>
             <h2 className="pw-title text-navy text-2xl md:text-3xl font-bold mb-4">{t.aboutSection.name}</h2>
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-              {t.aboutSection.badges.map((badge: any, i: number) => (
+              {(t.aboutSection?.badges ?? []).map((badge: any, i: number) => (
                 <span
                   key={i}
                   className={`pw-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${

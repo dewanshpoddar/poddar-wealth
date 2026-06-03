@@ -527,7 +527,7 @@ export default function LicPlans() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-1.5">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5">
                           {[
                             { label: lang === 'en' ? 'Entry Age' : 'आयु', val: plan.entryAge || '—' },
                             { label: lang === 'en' ? 'Cover'     : 'कवर', val: plan.sumAssured || '—' },

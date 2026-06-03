@@ -161,10 +161,10 @@ export default function ProductTeaser() {
                transition={{ repeat: Infinity, duration: 70, ease: "linear" }}
                className="flex gap-16 items-center whitespace-nowrap"
              >
-               {[...tickerPlans, ...tickerPlans, ...tickerPlans].map((plan, i) => (
+               {[...tickerPlans, ...tickerPlans].map((plan, i) => (
                  <div key={i} className="flex items-center gap-16">
                    <span className="text-20 font-display font-bold text-white/80 hover:text-white transition-colors">{plan}</span>
-                   <span className="text-gold/20 text-12">✦</span>
+                   <span className="text-gold/20 text-12">·</span>
                  </div>
                ))}
              </motion.div>

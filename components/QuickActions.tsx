@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Calculator, ClipboardList, CreditCard, Phone } from 'lucide-react'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function QuickActions() {
@@ -10,7 +10,7 @@ export default function QuickActions() {
 
   const actions = [
     {
-      icon: '🧮',
+      icon: <Calculator className="w-5 h-5 text-amber-500" />,
       title: {
         en: 'Calculate Premium',
         hi: 'प्रीमियम कैलकुलेटर'
@@ -22,7 +22,7 @@ export default function QuickActions() {
       href: '/calculators/premium'
     },
     {
-      icon: '📋',
+      icon: <ClipboardList className="w-5 h-5 text-amber-500" />,
       title: {
         en: 'Insurance Quiz',
         hi: 'बीमा क्विज़'
@@ -34,7 +34,7 @@ export default function QuickActions() {
       href: '/insurance-quiz'
     },
     {
-      icon: '💳',
+      icon: <CreditCard className="w-5 h-5 text-amber-500" />,
       title: {
         en: 'Pay Premium',
         hi: 'प्रीमियम भुगतान'
@@ -46,7 +46,7 @@ export default function QuickActions() {
       href: '/pay-premium'
     },
     {
-      icon: '📞',
+      icon: <Phone className="w-5 h-5 text-amber-500" />,
       title: {
         en: 'Talk to Ajay Sir',
         hi: 'अजय सर से बात करें'
@@ -61,7 +61,7 @@ export default function QuickActions() {
   ]
 
   return (
-    <section className="bg-slate-50 py-8 px-4 border-b border-gray-100">
+    <section className="bg-slate-50 py-16 px-4 border-b border-gray-100">
       <div className="max-w-[1240px] mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {actions.map((act, i) => {
@@ -71,7 +71,7 @@ export default function QuickActions() {
             const cardContent = (
               <div className="flex items-center gap-3 h-full w-full">
                 {/* Left side: Icon */}
-                <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center text-xl flex-shrink-0 group-hover:scale-105 transition-transform shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   {act.icon}
                 </div>
                 {/* Right side: Text */}

@@ -30,7 +30,7 @@ export default function HealthInsurancePage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center text-white">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🏥 Health Insurance</div>
+              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">Health Insurance</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
                 Medical Bills Shouldn&apos;t Wipe Out Your Savings
               </h1>
@@ -80,7 +80,7 @@ export default function HealthInsurancePage() {
             {types.map((type, i) => (
               <div key={i} className="card relative">
                 <div className="absolute top-4 right-4 badge bg-emerald-100 text-emerald-700">{type.tag}</div>
-                <div className="text-3xl mb-3">🏥</div>
+                
                 <h3 className="font-display font-bold text-lg text-slate-900 mt-2 mb-2">{type.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{type.desc}</p>
               </div>

@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import {
   Calculator, ArrowRight, ChevronDown, ChevronUp,
-  Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star, RefreshCw
+  Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star, RefreshCw,
+  AlertTriangle, MessageCircle
 } from 'lucide-react'
 import { PLANS, calculatePremium, calculateMaturity, generateBenefitTable, getPPT, RIDERS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA, toWords } from '@/lib/format'
@@ -358,7 +359,7 @@ export default function PremiumCalculatorPage() {
       matLine,
       xirr ? `Expected XIRR: ~${xirr}% p.a.` : '',
       ``,
-      `📞 Contact Ajay Kumar Poddar for official quote`,
+      `Contact Ajay Kumar Poddar for official quote`,
       `https://poddarwealth.com/contact`,
     ].filter(Boolean).join('\n')
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank')
@@ -456,7 +457,7 @@ export default function PremiumCalculatorPage() {
                   </div>
                   {selectedPlan.status === 'withdrawn' ? (
                     <div className="bg-slate-500/20 border border-slate-400/30 text-slate-200 text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      📦 Discontinued — Calc only
+                      Discontinued — Calc only
                     </div>
                   ) : selectedPlan.xirr && (
                     <div className="bg-gold/10 border border-gold/20 text-gold text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
@@ -565,7 +566,7 @@ export default function PremiumCalculatorPage() {
                 {/* ── Error banner ── */}
                 {calcError && !showResults && (
                   <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3 mb-3">
-                    <span className="text-red-500 text-[18px] leading-none mt-0.5">⚠</span>
+                    <AlertTriangle size={16} className="text-red-500 mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="text-[12px] font-bold text-red-700 mb-0.5">Calculation Error</div>
                       <div className="text-[11px] text-red-600">{calcError}</div>
@@ -614,7 +615,7 @@ export default function PremiumCalculatorPage() {
                         onClick={shareResultWithAjay}
                         className="w-full inline-flex h-14 bg-green-500 hover:bg-green-600 text-white font-bold text-[14px] md:text-[15px] rounded-xl items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-500/25 hover:-translate-y-0.5 cursor-pointer"
                       >
-                        <span className="text-[18px]">💬</span>
+                        <MessageCircle size={18} className="text-white" />
                         {t.calculator.shareWhatsApp}
                       </button>
                     </div>

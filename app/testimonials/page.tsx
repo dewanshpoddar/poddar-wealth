@@ -58,7 +58,7 @@ export default function TestimonialsPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.08),transparent_40%)]" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            ✨ {pageT.heroEyebrow}
+            {pageT.heroEyebrow}
           </div>
           <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4 leading-tight">
             {pageT.heroTitle}

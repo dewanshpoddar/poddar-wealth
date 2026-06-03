@@ -3,8 +3,29 @@ import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
+import { 
+  Shield, GraduationCap, Landmark, HeartPulse, Heart, 
+  Handshake, Zap, ClipboardCheck, Trophy 
+} from 'lucide-react'
 
-const quickIcons = ['🛡', '🎓', '📈', '❤️', '💍']
+const quickIcons = [
+  <Shield key="shield" className="w-4 h-4 text-amber-500" />,
+  <GraduationCap key="grad" className="w-4 h-4 text-amber-500" />,
+  <Landmark key="landmark" className="w-4 h-4 text-amber-500" />,
+  <HeartPulse key="health" className="w-4 h-4 text-amber-500" />,
+  <Heart key="marriage" className="w-4 h-4 text-amber-500" />
+]
+
+function getWhyUsIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🤝': return <Handshake className="w-5 h-5 text-amber-500" />
+    case '⚡': return <Zap className="w-5 h-5 text-amber-500" />
+    case '📋': return <ClipboardCheck className="w-5 h-5 text-amber-500" />
+    case '🏆': return <Trophy className="w-5 h-5 text-amber-500" />
+    default: return <Handshake className="w-5 h-5 text-amber-500" />
+  }
+}
 
 const heroImages = [
   '/assets/hero-family.png',
@@ -160,7 +181,7 @@ export default function HeroSection() {
               </button>
             ))}
             <div className="pt-2.5 mt-1 border-t border-[rgba(184,134,11,0.1)]">
-              <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[11px] font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
+              <Link href="/calculators/life-insurance" className="block w-full text-center bg-amber-500 text-white text-[11px] font-medium py-3 rounded-lg hover:bg-amber-600 transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
                 {t.hero.cta3}
               </Link>
             </div>
@@ -201,7 +222,7 @@ export default function HeroSection() {
           </button>
         ))}
         <div className="pt-3 mt-1.5 border-t border-[rgba(184,134,11,0.1)]">
-          <Link href="/calculators/life-insurance" className="block w-full text-center bg-gold text-white text-[12px] font-medium py-3 rounded-lg hover:bg-gold-hover transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
+          <Link href="/calculators/life-insurance" className="block w-full text-center bg-amber-500 text-white text-[12px] font-medium py-3 rounded-lg hover:bg-amber-600 transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
             {t.hero.cta3}
           </Link>
         </div>
@@ -214,8 +235,8 @@ export default function HeroSection() {
             <div className={`flex items-start gap-3.5 px-4 lg:px-6 py-4 transition-all duration-300 
                             hover:bg-white hover:shadow-xl hover:shadow-gold/5 cursor-default rounded-2xl
                             ${i < t.whyUs.length - 1 ? 'lg:border-r border-gold/5' : ''}`}>
-              <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center text-lg flex-shrink-0 mt-0.5 shadow-sm">
-                {item.icon}
+              <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                {getWhyUsIcon(item.icon)}
               </div>
               <div>
                 <div className="text-[13px] font-bold text-slate-900 mb-0.5 tracking-tight">{item.title}</div>

@@ -197,7 +197,7 @@
         "title": "Critical illness",
         "desc": "Lump sum payout for heart, cancer & major ailments",
         "tag": "Health+",
-        "href": "/services/health-insurance"
+        "href": "/services/critical-illness"
       },
       {
         "icon": "🏢",
@@ -205,7 +205,7 @@
         "title": "Keyman insurance",
         "desc": "Protect business continuity by insuring key employees",
         "tag": "Business",
-        "href": "/services/life-insurance"
+        "href": "/services/keyman-insurance"
       },
       {
         "icon": "🚶‍♂️",
@@ -1280,5 +1280,73 @@
     "startingFrom": "Starting from",
     "whatsappQuery": "Hi Ajay ji, I took your Insurance Quiz and got matched with",
     "shareText": "Check your insurance needs (2 min):"
+  },
+  "surrenderCalculator": {
+    "title": "LIC Surrender Value Calculator 2026",
+    "subtitle": "Calculate your LIC policy surrender value instantly. Free online tool.",
+    "planLabel": "Select LIC Plan",
+    "sumAssuredLabel": "Sum Assured (₹)",
+    "annualPremiumLabel": "Annual Premium (₹)",
+    "totalPremiumsPaidLabel": "Total Premiums Paid (₹)",
+    "policyYearLabel": "Policy Year (Completed)",
+    "calculateButton": "Calculate Surrender Value",
+    "resultTitle": "Surrender Value Estimate",
+    "guaranteedSurrenderValue": "Guaranteed Surrender Value",
+    "estimatedPaidUpValue": "Estimated Paid-up Value",
+    "surrenderRatio": "Surrender Ratio",
+    "recommendation": "Recommendation",
+    "disclaimer": "Disclaimer",
+    "exactQuery": "Want exact calculation? Talk to Ajay sir",
+    "whatsappCTA": "Discuss with Ajay Sir on WhatsApp",
+    "disclaimerText": "Special Surrender Value (SSV) is usually higher than Guaranteed Surrender Value (GSV). Talk to Ajay sir for exact values.",
+    "errorCompletedYears": "LIC policies require at least 3 completed policy years of premium payments to acquire a surrender value.",
+    "loading": "Calculating..."
+  },
+  "maturityCalculator": {
+    "title": "LIC Maturity Calculator 2026",
+    "subtitle": "Estimate the maturity returns for your LIC policies. Free online tool.",
+    "planLabel": "Select LIC Plan",
+    "ageLabel": "Age (18-60)",
+    "sumAssuredLabel": "Sum Assured (₹)",
+    "termLabel": "Policy Term (Years)",
+    "premiumModeLabel": "Premium Payment Mode",
+    "calculateButton": "Calculate Maturity Amount",
+    "resultTitle": "Estimated Maturity Returns",
+    "totalPremiumsPaid": "Total Premiums You'll Pay",
+    "estimatedMaturity": "Estimated Maturity Amount",
+    "accruedBonus": "Accrued Bonus",
+    "estimatedFAB": "Estimated FAB (Final Additional Bonus)",
+    "effectiveReturn": "Effective Return",
+    "disclaimer": "Disclaimer",
+    "exactQuery": "Get exact projection? Talk to Ajay sir",
+    "whatsappCTA": "Discuss Projections on WhatsApp",
+    "disclaimerText": "This is an indicative calculation. Actual maturity depends on LIC's declared bonus rates which vary annually. Contact Ajay sir for exact projections.",
+    "loading": "Calculating..."
+  },
+  "loanCalculator": {
+    "title": "LIC Policy Loan Calculator",
+    "subtitle": "Calculate the maximum loan amount available against your LIC policy. Free online tool.",
+    "planLabel": "Select LIC Plan",
+    "sumAssuredLabel": "Sum Assured (₹)",
+    "policyYearLabel": "Policy Years Completed",
+    "bonusAccruedLabel": "Bonus Accrued (₹, Optional)",
+    "bonusHelper": "Leave blank if unsure — we'll estimate without bonus",
+    "calculateButton": "Calculate Loan Amount",
+    "resultTitle": "Loan Eligibility Details",
+    "maxLoanAmount": "Maximum Loan Amount",
+    "estimatedInterestRate": "Estimated Interest Rate",
+    "monthlyInterest": "Monthly Interest Obligation",
+    "annualInterest": "Annual Interest Obligation",
+    "disclaimer": "Disclaimer",
+    "applyQuery": "Apply for loan through Ajay sir",
+    "whatsappCTA": "Apply via Ajay Sir on WhatsApp",
+    "disclaimerText": "This is an estimate based on LIC general guidelines. Actual loan eligibility is determined by LIC branch after policy verification.",
+    "errorCompletedYears": "Loan against policy is only available after completing at least 3 policy years.",
+    "loading": "Calculating..."
+  },
+  "mobileCTABar": {
+    "call": "Call Ajay sir",
+    "whatsapp": "WhatsApp",
+    "whatsappText": "Hello Ajay sir, I need help with insurance."
   }
 }

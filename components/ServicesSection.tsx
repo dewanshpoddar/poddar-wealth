@@ -1,13 +1,48 @@
 'use client'
-import type { ReactElement } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
+import { 
+  Shield, Users, HeartPulse, Calculator, GraduationCap, Landmark, 
+  Stethoscope, Building2, ShieldCheck, Ribbon, UserCheck, Heart, Users2 
+} from 'lucide-react'
 
-const iconSvgs: Record<string, ReactElement> = {
-  blue: <svg width="16" height="16" fill="#185FA5" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>,
-  red: <svg width="16" height="16" fill="#A32D2D" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>,
-  orange: <svg width="16" height="16" fill="#854F0B" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>,
-  green: <svg width="16" height="16" fill="#0F6E56" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18V17h2v-4.82l2 1.09V17c0 1.1 2.24 2 5 2s5-.9 5-2v-3.73L23 9l-11-6z"/></svg>,
+function getServiceIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🛡':
+      return <Shield className="w-6 h-6 text-amber-500" />
+    case '👨‍👩‍👧‍👦':
+    case '👨👩👧👦':
+      return <Users className="w-6 h-6 text-amber-500" />
+    case '👨‍⚕️':
+    case '👨⚕️':
+      return <HeartPulse className="w-6 h-6 text-amber-500" />
+    case '💼':
+      return <Calculator className="w-6 h-6 text-amber-500" />
+    case '👧':
+      return <GraduationCap className="w-6 h-6 text-amber-500" />
+    case '👴':
+      return <Landmark className="w-6 h-6 text-amber-500" />
+    case '🩺':
+      return <Stethoscope className="w-6 h-6 text-amber-500" />
+    case '🏢':
+      return <Building2 className="w-6 h-6 text-amber-500" />
+    case '🚶‍♂️':
+    case '🚶':
+    case '🚶♂️':
+      return <ShieldCheck className="w-6 h-6 text-amber-500" />
+    case '🎗️':
+    case '🎗':
+      return <Ribbon className="w-6 h-6 text-amber-500" />
+    case '🧔':
+      return <UserCheck className="w-6 h-6 text-amber-500" />
+    case '👰':
+      return <Heart className="w-6 h-6 text-amber-500" />
+    case '👥':
+      return <Users2 className="w-6 h-6 text-amber-500" />
+    default:
+      return <Shield className="w-6 h-6 text-amber-500" />
+  }
 }
 
 const iconBgs: Record<string, string> = {
@@ -25,7 +60,7 @@ export default function ServicesSection() {
       {/* Decorative gradient background element */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-      <div className="max-w-[1240px] mx-auto px-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
@@ -64,7 +99,7 @@ export default function ServicesSection() {
 
                 <div className="absolute inset-0 bg-gold/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
-                  {svc.icon}
+                  {getServiceIcon(svc.icon)}
                 </div>
               </div>
 

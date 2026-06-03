@@ -5,6 +5,14 @@ import { useLang } from '@/lib/LangContext'
 import { submitLead } from '@/lib/api'
 import { trackEvent } from '@/lib/analytics'
 import { ADVISOR_PHONE } from '@/lib/constants'
+import { Lock, CheckCircle, Shield, ClipboardList } from 'lucide-react'
+
+function StepIcon({ icon }: { icon: string }) {
+  if (icon === 'clipboard') return <ClipboardList size={20} className="text-amber-500" />
+  if (icon === 'shield')    return <Shield size={20} className="text-amber-500" />
+  if (icon === 'check')     return <CheckCircle size={20} className="text-green-500" />
+  return null
+}
 
 export default function PayPremiumPage() {
   const { lang } = useLang()
@@ -60,7 +68,7 @@ export default function PayPremiumPage() {
       <section className="bg-navy py-14 px-6">
         <div className="max-w-2xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🔒 {isHi ? 'सुरक्षित भुगतान' : 'Secure Payment'}
+            <Lock size={16} className="inline mr-1" />{isHi ? 'सुरक्षित भुगतान' : 'Secure Payment'}
           </div>
           <h1 className="font-display font-bold text-3xl md:text-4xl text-white mb-3 leading-tight">
             {isHi ? 'LIC प्रीमियम ऑनलाइन भरें' : 'Pay Your LIC Premium Online'}
@@ -93,7 +101,7 @@ export default function PayPremiumPage() {
                 titleHi: 'विवरण दर्ज करें',
                 descEn: 'Fill in your name, mobile, policy number, and premium amount below.',
                 descHi: 'नीचे अपना नाम, मोबाइल, पॉलिसी नंबर और प्रीमियम राशि भरें।',
-                icon: '📋',
+                icon: 'clipboard',
               },
               {
                 step: '2',
@@ -101,7 +109,7 @@ export default function PayPremiumPage() {
                 titleHi: 'हम आपकी जानकारी नोट करते हैं',
                 descEn: "We record your premium due date so we can send you reminders — your policy never lapses.",
                 descHi: 'हम आपकी देय तारीख नोट करते हैं और समय पर रिमाइंडर भेजते हैं — पॉलिसी कभी लैप्स न हो।',
-                icon: '🛡️',
+                icon: 'shield',
               },
               {
                 step: '3',
@@ -109,7 +117,7 @@ export default function PayPremiumPage() {
                 titleHi: 'LIC पोर्टल पर भुगतान करें',
                 descEn: 'We redirect you to the official LIC customer portal where you complete payment securely.',
                 descHi: 'हम आपको आधिकारिक LIC पोर्टल पर भेजते हैं जहां आप सुरक्षित रूप से भुगतान करते हैं।',
-                icon: '✅',
+                icon: 'check',
               },
             ].map((item, i) => (
               <div key={i} className="flex-1 flex items-start gap-3 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
@@ -117,7 +125,7 @@ export default function PayPremiumPage() {
                   {item.step}
                 </div>
                 <div>
-                  <div className="text-lg mb-0.5">{item.icon}</div>
+                  <div className="mb-0.5"><StepIcon icon={item.icon} /></div>
                   <p className="font-bold text-sm text-navy mb-1">
                     {isHi ? item.titleHi : item.titleEn}
                   </p>
@@ -151,7 +159,7 @@ export default function PayPremiumPage() {
         <div className="max-w-md mx-auto">
           {status === 'done' ? (
             <div className="text-center py-10">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">✅</div>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle size={32} className="text-green-500" /></div>
               <h2 className="font-display font-bold text-xl text-navy mb-2">
                 {isHi ? 'रीडायरेक्ट हो रहे हैं...' : 'Redirecting to LIC portal...'}
               </h2>
@@ -163,7 +171,7 @@ export default function PayPremiumPage() {
             <>
               {/* Trust strip */}
               <div className="bg-gold/5 border border-gold/20 rounded-2xl p-4 mb-6 flex items-start gap-3">
-                <span className="text-2xl mt-0.5">🛡️</span>
+                <Shield size={20} className="text-amber-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-bold text-navy text-sm">
                     {isHi ? 'आपकी जानकारी क्यों?' : 'Why do we ask for your details?'}
@@ -262,7 +270,7 @@ export default function PayPremiumPage() {
                 <p className="text-[10px] text-gray-500 text-center">
                   {isHi
                     ? 'आपकी जानकारी निजी है और कभी साझा नहीं की जाएगी।'
-                    : 'Your details are private and never shared. 🔒'}
+                    : 'Your details are private and never shared.'}
                 </p>
               </form>
 

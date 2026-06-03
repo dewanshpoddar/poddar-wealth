@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
+import { X, CheckCircle, TrendingUp } from 'lucide-react'
 
 const SESSION_KEY = 'pw_exit_shown'
 
@@ -72,12 +73,12 @@ export default function ExitIntentPopup() {
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-600 text-xl leading-none"
           aria-label="Close"
         >
-          ✕
+          <X size={18} />
         </button>
 
         {status === 'done' ? (
           <div className="text-center py-4">
-            <div className="text-4xl mb-3">🙏</div>
+            <div className="flex justify-center mb-3"><CheckCircle size={36} className="text-green-500" /></div>
             <h3 className="font-display font-bold text-navy text-lg mb-2">
               {c.successMsg ?? 'Ajay sir will call you within 24 hours.'}
             </h3>
@@ -87,7 +88,7 @@ export default function ExitIntentPopup() {
           </div>
         ) : (
           <>
-            <div className="text-3xl mb-3 text-center">💰</div>
+            <div className="flex justify-center mb-3"><TrendingUp size={28} className="text-amber-500" /></div>
             <h3 className="font-display font-bold text-navy text-xl mb-2 text-center leading-snug">
               {c.title ?? 'Wait! Get Your FREE Wealth Health Report'}
             </h3>

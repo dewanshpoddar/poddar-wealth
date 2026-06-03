@@ -4,6 +4,7 @@ import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ADVISOR_PHONE } from '@/lib/constants'
+import { MapPin, Phone, MessageCircle, Mail } from 'lucide-react'
 
 export default function Footer() {
   const { t, lang } = useLang()
@@ -19,7 +20,7 @@ export default function Footer() {
   ]
 
   const resources = [
-    { name: isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/plans' },
+    { name: isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
     { name: isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
     { name: isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
     { name: isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },
@@ -144,14 +145,14 @@ export default function Footer() {
             </h4>
             <div className="space-y-4 text-xs font-semibold">
               <div className="flex items-start gap-2.5">
-                <span className="text-amber-500 text-sm leading-none mt-0.5">📍</span>
+                <MapPin className="text-amber-500 w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span className="leading-relaxed text-gray-400">
                   {t.footer.address || 'AD Mall Compound, Vijay Chowk, Gorakhpur, U.P. 273001'}
                 </span>
               </div>
               
               <div className="flex items-center gap-2.5">
-                <span className="text-amber-500 text-sm leading-none">📞</span>
+                <Phone className="text-amber-500 w-4 h-4 flex-shrink-0" />
                 <div className="flex flex-col gap-1">
                   <a 
                     href={`tel:+91${ADVISOR_PHONE}`} 
@@ -159,6 +160,7 @@ export default function Footer() {
                   >
                     +91 {ADVISOR_PHONE}
                   </a>
+                  {/* TODO: Verify this number with Dewansh — is 7007937104 intentional? Primary advisor phone is 9415313434 */}
                   <a 
                     href="tel:+917007937104" 
                     className="text-gray-400 hover:text-white transition-colors"
@@ -169,7 +171,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <span className="text-amber-500 text-sm leading-none">💬</span>
+                <MessageCircle className="text-amber-500 w-4 h-4 flex-shrink-0" />
                 <a 
                   href={`https://wa.me/91${ADVISOR_PHONE}`} 
                   target="_blank" 
@@ -181,7 +183,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <span className="text-amber-500 text-sm leading-none">✉️</span>
+                <Mail className="text-amber-500 w-4 h-4 flex-shrink-0" />
                 <a 
                   href="mailto:poddarwealth@gmail.com" 
                   className="text-gray-400 hover:text-white transition-colors"

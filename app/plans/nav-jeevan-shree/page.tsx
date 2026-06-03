@@ -268,7 +268,7 @@ export default function NavJeevanShreePage() {
             fields={fields}
             intent="LIC Nav Jeevan Shree"
             submitText={isHi ? 'अजय सर से परामर्श लें →' : 'Request Advice from Ajay Sir →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Request Received! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Request Received!'}
             successMessage={isHi
               ? 'अजय सर 24 घंटे के भीतर आपको फोन या व्हाट्सएप पर संपर्क करेंगे।'
               : 'Ajay sir will contact you within 24 hours to provide customized estimates.'}
@@ -289,7 +289,7 @@ export default function NavJeevanShreePage() {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              <Phone size={16} className="inline mr-1" />{isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

@@ -75,7 +75,7 @@ export default function ChildPlanningPage() {
               { goal: 'Study Abroad', now: '₹50–80 Lakh', in15yrs: '₹1.5–2.5 Cr', icon: '✈️' },
             ].map((edu, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-card p-5">
-                <div className="text-3xl mb-3">{edu.icon}</div>
+                
                 <h3 className="font-bold text-slate-900 mb-3">{edu.goal}</h3>
                 <div className="space-y-2">
                   <div>

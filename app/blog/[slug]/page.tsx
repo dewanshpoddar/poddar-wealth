@@ -8,6 +8,7 @@ import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
 import posts from '@/lib/data/blog-posts.json'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import { Phone } from 'lucide-react'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
   CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
@@ -46,7 +47,7 @@ function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: st
       >
         {copied
           ? (lang === 'en' ? '✓ Copied!' : '✓ कॉपी हो गया!')
-          : (lang === 'en' ? '🔗 Copy link' : '🔗 लिंक कॉपी करें')}
+          : (lang === 'en' ? 'Copy link' : 'लिंक कॉपी करें')}
       </button>
     </div>
   )
@@ -210,13 +211,13 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   href="/ai-advisor"
                   className="inline-flex items-center justify-center gap-2 bg-gold text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-amber-600 transition-colors"
                 >
-                  ✨ {lang === 'en' ? 'Ask Poddar Ji' : 'पोद्दार जी से पूछें'}
+                  {lang === 'en' ? 'Ask Poddar Ji' : 'पोद्दार जी से पूछें'}
                 </Link>
                 <button
                   onClick={() => openLeadPopup(`Blog inquiry: ${post.title}`)}
                   className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-6 py-3 rounded-full hover:bg-white/20 transition-colors"
                 >
-                  📞 {lang === 'en' ? 'Call Ajay Sir' : 'अजय सर को कॉल करें'}
+                  <Phone size={14} className="inline mr-1" />{lang === 'en' ? 'Call Ajay Sir' : 'अजय सर को कॉल करें'}
                 </button>
               </div>
             </div>

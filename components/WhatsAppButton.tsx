@@ -12,7 +12,7 @@ export default function WhatsAppButton() {
       href={`https://wa.me/${t.whatsapp.number}?text=Namaste Ajay sir, I want to know about insurance plans.`}
       target="_blank"
       rel="noopener noreferrer"
-      className="pw-wa-float"
+      className="pw-wa-float hidden md:flex"
       aria-label="Chat on WhatsApp"
       onClick={() => trackEvent('whatsapp_clicked', { source_page: pathname, source_component: 'floating_button' })}
     >

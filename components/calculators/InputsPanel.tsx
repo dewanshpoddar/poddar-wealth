@@ -203,7 +203,7 @@ export default function InputsPanel({
                           Survival Benefit Option
                           <span className="text-gray-500 font-normal ml-1">(paid each year age 20–24)</span>
                         </label>
-                        <div className="grid grid-cols-4 gap-2">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                           {([5,10,15,20] as const).map(pct => (
                             <button key={pct} onClick={() => setSurvivalBenefitPct(pct)}
                               className={`text-[12px] font-bold py-2.5 rounded-xl border transition-all
@@ -239,7 +239,7 @@ export default function InputsPanel({
                     {!isPensionAnnuity && (
                       <div>
                         <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Premium Mode</label>
-                        <div className="grid grid-cols-4 gap-1">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                           {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
                             <button key={m} onClick={() => setMode(m)}
                               className={`text-[11px] font-bold py-2 rounded-lg border transition-all
@@ -259,7 +259,7 @@ export default function InputsPanel({
                           <button key={g} onClick={() => setGender(g)}
                             className={`flex-1 text-[11px] font-bold py-2 rounded-lg border transition-all
                               ${gender === g ? 'bg-navy text-white border-navy' : 'bg-gray-50 text-gray-500 border-gray-100'}`}>
-                            {g === 'male' ? '♂ Male' : '♀ Female'}
+                            {g === 'male' ? 'Male' : 'Female'}
                           </button>
                         ))}
                       </div>
@@ -267,7 +267,7 @@ export default function InputsPanel({
                         <button onClick={() => setSmoker((s: boolean) => !s)}
                           className={`mt-2 w-full text-[11px] font-bold py-1.5 rounded-lg border transition-all
                             ${smoker ? 'bg-red-50 text-red-600 border-red-200' : 'bg-gray-50 text-gray-500 border-gray-100'}`}>
-                          🚬 Smoker {smoker ? '(+25% surcharge)' : '(click if applicable)'}
+                          Smoker {smoker ? '(+25% surcharge)' : '(click if applicable)'}
                         </button>
                       )}
                     </div>

@@ -48,30 +48,7 @@
   .pw-subtitle--muted { @apply text-muted; }
   .pw-subtitle--green { @apply text-agent-mid; }
 
-  /* ── Navigation ──────────────────────────────────────────── */
-  .pw-nav {
-    @apply bg-white px-4 sm:px-8 flex items-center justify-between h-[78px] sticky top-0 z-50 shadow-sm transition-all duration-300;
-    border-bottom: 1px solid rgba(184,134,11,0.18);
-  }
-  .pw-logo-area  { @apply flex items-center gap-3; }
-  .pw-logo-icon  {
-    @apply w-10 h-10 rounded-sm bg-white border border-gray-100 flex items-center justify-center p-1 shadow-sm flex-shrink-0;
-  }
-  .pw-logo-text  { @apply text-[17px] font-bold text-navy tracking-logo block leading-tight; }
-  .pw-logo-sub   { @apply text-[10px] text-gray-500 tracking-wider uppercase block font-semibold; }
-  .pw-nav-link   { @apply text-[13px] font-semibold text-gray-600 hover:text-gold transition-colors duration-150; }
-  .pw-nav-cta    {
-    @apply text-[12px] font-bold bg-gold text-white px-4 py-2 rounded-md shadow-gold
-           hover:bg-gold-hover transition-all duration-150 hover:-translate-y-px;
-  }
-  .pw-lang-toggle {
-    @apply flex items-center bg-gray-50/50 rounded-lg overflow-hidden border border-gray-100 p-1 relative;
-    min-width: 84px;
-  }
-  .pw-lang-btn {
-    @apply text-[10px] font-bold px-0 py-1.5 bg-transparent border-none rounded-md
-           cursor-pointer transition-colors duration-300 relative z-10 w-1/2 text-center;
-  }
+  /* ── Navigation — removed (Navbar fully rewritten with inline Tailwind) ── */
 
 
 

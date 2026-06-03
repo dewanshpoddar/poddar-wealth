@@ -271,7 +271,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
         <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-white/60 mb-5">
-            🏆 {isHi ? `आयु वर्ग ${data.range} के लिए सर्वोत्तम प्लान` : `Best Plans for Age ${data.range}`}
+            {isHi ? `आयु वर्ग ${data.range} के लिए सर्वोत्तम प्लान` : `Best Plans for Age ${data.range}`}
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
@@ -359,7 +359,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
             href="/insurance-quiz"
             className="inline-flex items-center gap-2 bg-gold hover:bg-amber-600 text-white font-bold text-xs md:text-sm px-6 py-3.5 rounded-xl shadow-md transition-colors"
           >
-            📋 {isHi ? 'फ्री इंश्योरेंस क्विज़ शुरू करें' : 'Start Free Insurance Quiz'}
+            {isHi ? 'फ्री इंश्योरेंस क्विज़ शुरू करें' : 'Start Free Insurance Quiz'}
             <ArrowRight size={14} />
           </Link>
         </section>
@@ -384,7 +384,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
             fields={fields}
             intent={`Best Plan for Age ${data.slug}`}
             submitText={isHi ? 'अजय सर से बात करें →' : 'Request Advice from Ajay Sir →'}
-            successTitle={isHi ? 'अनुरोध प्राप्त हुआ! 🎉' : 'Consultation Scheduled! 🎉'}
+            successTitle={isHi ? 'अनुरोध प्राप्त हुआ!' : 'Consultation Scheduled!'}
             successMessage={isHi
               ? 'अजय सर 24 घंटे के भीतर आपको फोन या व्हाट्सएप पर संपर्क करके विवरण प्रस्तुत करेंगे।'
               : 'Ajay sir will personally contact you within 24 hours with premium calculations and plan outlines.'}
@@ -405,7 +405,7 @@ export default function BestPlanAgeClient({ params }: ParamsProp) {
               href={`tel:${ADVISOR_PHONE}`}
               className="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy/90 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-sm transition-colors cursor-pointer"
             >
-              📞 {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
+              {isHi ? 'कॉल करें' : 'Call Ajay Sir'}
             </a>
           </div>
 

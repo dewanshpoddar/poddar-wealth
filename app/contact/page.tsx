@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
-import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2 } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2, MessageCircle } from 'lucide-react'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function ContactPage() {
@@ -63,7 +63,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="bg-hero-gradient hero-pattern py-16 md:py-20">
         <div className="section-container text-center text-white">
-          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">📞 Contact Us</div>
+          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5"><Phone size={16} /> Contact Us</div>
           <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.contact.heroTitle}</h1>
           <p className="text-white/75 text-lg max-w-xl mx-auto">{t.contact.heroSubtitle}</p>
         </div>
@@ -78,7 +78,7 @@ export default function ContactPage() {
               {success ? (
                 <div className="text-center py-10">
                   <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">{t.contactPage?.successTitle || (isHi ? 'संदेश सफलतापूर्वक भेजा गया! 🎉' : 'Message Sent Successfully! 🎉')}</h3>
+                  <h3 className="font-display font-bold text-xl text-slate-900 mb-2">{t.contactPage?.successTitle || (isHi ? 'संदेश सफलतापूर्वक भेजा गया!' : 'Message Sent Successfully!')}</h3>
                   <p className="text-slate-500">
                     {isHi ? 'अजय सर व्यक्तिगत रूप से 24 घंटों के भीतर आपसे संपर्क करेंगे।' : 'Ajay will personally get back to you within 24 hours.'}
                   </p>
@@ -240,7 +240,7 @@ export default function ContactPage() {
               {/* Google Maps embed card */}
               <div className="bg-white rounded-3xl shadow-card p-6 overflow-hidden border border-slate-100">
                 <h3 className="font-display font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                  <span>📍</span> {lang === 'en' ? 'Our Location' : 'हमारा पता'}
+                  <MapPin size={18} /> {lang === 'en' ? 'Our Location' : 'हमारा पता'}
                 </h3>
                 <p className="text-slate-500 text-xs mb-4">
                   AD Mall Compound, Vijay Chowk, Gorakhpur, Uttar Pradesh 273001
@@ -267,7 +267,7 @@ export default function ContactPage() {
               </div>
 
               <div className="bg-green-50 border border-green-200 rounded-3xl p-6">
-                <h3 className="font-bold text-green-800 mb-3">💬 {t.contactPage.whatsappAlt}</h3>
+                <h3 className="font-bold text-green-800 mb-3 flex items-center gap-2"><MessageCircle size={18} /> {t.contactPage.whatsappAlt}</h3>
                 <p className="text-green-700 text-sm mb-4">Ajay responds to WhatsApp messages personally — usually within a few hours during business days.</p>
                 <a
                   href={`https://wa.me/${t.whatsapp.number}?text=Hi Ajay ji, I need insurance advice.`}

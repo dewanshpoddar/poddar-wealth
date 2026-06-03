@@ -2,8 +2,50 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
-
 import { motion } from 'framer-motion'
+import { 
+  Shield, Users, HeartPulse, Calculator, GraduationCap, Landmark, 
+  Stethoscope, Building2, ShieldCheck, Ribbon, UserCheck, Heart, Users2 
+} from 'lucide-react'
+
+function getServiceIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🛡':
+      return <Shield className="w-6 h-6 text-amber-500" />
+    case '👨‍👩‍👧‍👦':
+    case '👨👩👧👦':
+      return <Users className="w-6 h-6 text-amber-500" />
+    case '👨‍⚕️':
+    case '👨⚕️':
+      return <HeartPulse className="w-6 h-6 text-amber-500" />
+    case '💼':
+      return <Calculator className="w-6 h-6 text-amber-500" />
+    case '👧':
+      return <GraduationCap className="w-6 h-6 text-amber-500" />
+    case '👴':
+      return <Landmark className="w-6 h-6 text-amber-500" />
+    case '🩺':
+      return <Stethoscope className="w-6 h-6 text-amber-500" />
+    case '🏢':
+      return <Building2 className="w-6 h-6 text-amber-500" />
+    case '🚶‍♂️':
+    case '🚶':
+    case '🚶♂️':
+      return <ShieldCheck className="w-6 h-6 text-amber-500" />
+    case '🎗️':
+    case '🎗':
+      return <Ribbon className="w-6 h-6 text-amber-500" />
+    case '🧔':
+      return <UserCheck className="w-6 h-6 text-amber-500" />
+    case '👰':
+      return <Heart className="w-6 h-6 text-amber-500" />
+    case '👥':
+      return <Users2 className="w-6 h-6 text-amber-500" />
+    default:
+      return <Shield className="w-6 h-6 text-amber-500" />
+  }
+}
 
 export default function ServicesPage() {
   const { t } = useLang()
@@ -48,8 +90,8 @@ export default function ServicesPage() {
                 </div>
               )}
 
-              <div className="w-16 h-16 rounded-2xl bg-warm flex items-center justify-center text-3xl mb-8 group-hover:bg-gold/10 transition-colors">
-                {svc.icon}
+              <div className="w-16 h-16 rounded-2xl bg-warm flex items-center justify-center mb-8 group-hover:bg-gold/10 transition-colors">
+                {getServiceIcon(svc.icon)}
               </div>
               
               <h2 className="text-[20px] font-bold text-navy mb-4 group-hover:text-gold transition-colors tracking-tight">
