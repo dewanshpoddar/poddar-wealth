@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 const whyPoints = [
   'Your family loses your income if something happens to you',
@@ -37,7 +38,7 @@ export default function LifeInsurancePage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image src="https://images.unsplash.com/photo-1511895426328-dc8714191011?w=600&q=80" alt="Family protection" width={600} height={450} className="w-full object-cover" />
+                <ServiceHeroImage category="life-insurance" className="w-[600px] h-[450px]" />
               </div>
             </div>
           </div>
@@ -64,7 +65,7 @@ export default function LifeInsurancePage() {
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&q=80" alt="Protected family" width={600} height={450} className="w-full object-cover" />
+              <ServiceHeroImage category="life-insurance" className="w-[600px] h-[450px]" />
             </div>
           </div>
         </div>

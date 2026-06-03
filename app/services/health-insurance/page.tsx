@@ -57,7 +57,7 @@ export default function HealthInsurancePage() {
               <Image src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" alt="Family health" width={600} height={450} className="w-full object-cover" />
             </div>
             <div>
-              <h2 className="section-title mb-6">What Your Health Plan Covers</h2>
+              <h2 className="section-title mb-6">{t.healthInsurance.coversTitle}</h2>
               <ul className="space-y-3">
                 {features.map((f, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -74,7 +74,7 @@ export default function HealthInsurancePage() {
       <section className="section-padding bg-slate-50">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="section-title">Types of Health Insurance</h2>
+            <h2 className="section-title">{t.healthInsurance.typesTitle}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {types.map((type, i) => (

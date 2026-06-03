@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/calculators/surrender-value`,           lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/calculators/maturity`,                  lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/calculators/loan`,                      lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/calculators/policy-health`,             lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/become-advisor`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/contact`,                               lastModified: now, changeFrequency: 'yearly',  priority: 0.6 },
     { url: `${BASE_URL}/blog`,                                  lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },

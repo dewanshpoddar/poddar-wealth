@@ -107,6 +107,7 @@ function SectionLabel({ n, title }: { n: string; title: string }) {
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function WealthBlueprintCalculator() {
   const { t, lang } = useLang()
+  const isHi = lang === 'hi'
   const { state, actions, computed } = useBlueprintEngine()
   const [showResults, setShowResults] = useState(false)
 

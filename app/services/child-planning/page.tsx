@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
+import { useLang } from '@/lib/LangContext'
 
 const features = [
   'Funds auto-continue even if parent passes away',
@@ -14,6 +16,7 @@ const features = [
 ]
 
 export default function ChildPlanningPage() {
+  const { t } = useLang()
   return (
     <div className="pt-20">
       <section className="bg-gradient-to-br from-violet-900 via-violet-800 to-violet-900 hero-pattern section-padding">
@@ -33,7 +36,7 @@ export default function ChildPlanningPage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="Child education planning" width={600} height={450} className="w-full object-cover" />
+                <ServiceHeroImage category="child-planning" className="w-[600px] h-[450px]" />
               </div>
             </div>
           </div>
@@ -44,10 +47,10 @@ export default function ChildPlanningPage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="Child planning" width={600} height={450} className="w-full object-cover" />
+              <ServiceHeroImage category="child-planning" className="w-[600px] h-[450px]" />
             </div>
             <div>
-              <h2 className="section-title mb-6">Why a Dedicated Child Plan?</h2>
+              <h2 className="section-title mb-6">{t.childPlanningService.whyTitle}</h2>
               <ul className="space-y-3">
                 {features.map((f, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -64,7 +67,7 @@ export default function ChildPlanningPage() {
       <section className="section-padding bg-violet-50">
         <div className="section-container">
           <div className="text-center mb-10">
-            <h2 className="section-title">Education Cost Reality Check</h2>
+            <h2 className="section-title">{t.childPlanningService.realityCheckTitle}</h2>
             <p className="section-subtitle">Plan today for tomorrow&apos;s costs</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

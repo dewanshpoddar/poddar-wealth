@@ -12,7 +12,15 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [calcOpen, setCalcOpen] = useState(false)
   const [calcMobileOpen, setCalcMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const calcRef = useRef<HTMLDivElement>(null)
+
+  // Scroll detection for background transition
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [pathname])
@@ -36,33 +44,53 @@ export default function Navbar() {
   const isActive = (path: string) =>
     path === '/' ? pathname === '/' : pathname.startsWith(path)
 
+  // Nav link with hover underline effect
   const linkCls = (path: string) =>
-    `text-sm font-medium transition-colors duration-200 ${
-      isActive(path) ? 'text-amber-400' : 'text-gray-400 hover:text-white'
-    }`
+    `relative text-sm font-medium transition-colors duration-200 pb-0.5
+     after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0
+     hover:after:w-full after:bg-amber-500 after:transition-all after:duration-300
+     ${isActive(path) ? 'text-white after:w-full' : 'text-gray-400 hover:text-white'}`
 
   const calcLinks = [
-    { href: '/calculators/premium',       en: 'Premium Calculator',     hi: 'प्रीमियम कैलकुलेटर' },
-    { href: '/calculators/life-insurance',en: 'Life Insurance Calculator',hi:'जीवन बीमा कैलकुलेटर' },
-    { href: '/calculators/retirement',    en: 'Retirement Planner',      hi: 'रिटायरमेंट प्लानर' },
-    { href: '/calculators/surrender-value',en:'Surrender Value',         hi: 'सरेंडर वैल्यू' },
-    { href: '/calculators/maturity',      en: 'Maturity Calculator',     hi: 'मैच्योरिटी कैलकुलेटर' },
-    { href: '/calculators/loan',          en: 'Loan Against Policy',     hi: 'पॉलिसी पर लोन' },
+    { href: '/calculators/premium',        en: 'Premium Calculator',      hi: 'प्रीमियम कैलकुलेटर' },
+    { href: '/calculators/life-insurance', en: 'Life Insurance Calculator',hi: 'जीवन बीमा कैलकुलेटर' },
+    { href: '/calculators/retirement',     en: 'Retirement Planner',       hi: 'रिटायरमेंट प्लानर' },
+    { href: '/calculators/surrender-value',en: 'Surrender Value',          hi: 'सरेंडर वैल्यू' },
+    { href: '/calculators/maturity',       en: 'Maturity Calculator',      hi: 'मैच्योरिटी कैलकुलेटर' },
+    { href: '/calculators/loan',           en: 'Loan Against Policy',      hi: 'पॉलिसी पर लोन' },
+    { href: '/calculators/policy-health',  en: 'Policy Health Score',      hi: 'पॉलिसी हेल्थ स्कोर', isNew: true, hasDivider: true },
   ]
 
   return (
     <>
-      <nav className="sticky top-0 z-50 h-16 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50">
+      {/* Scroll-triggered background transition */}
+      <nav className={`sticky top-0 z-50 h-16 transition-all duration-300 ${
+        scrolled
+          ? 'bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 shadow-lg'
+          : 'bg-transparent border-b border-transparent'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
-          {/* LEFT — Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-9 h-9 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center p-1 shrink-0">
-              <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={32} height={32} className="w-full h-full object-contain" priority />
+          {/* LEFT — Logo with tagline */}
+          <Link href="/" className="flex items-center gap-3 shrink-0">
+            <div className="w-[50px] h-[50px] rounded-xl overflow-hidden bg-white/5 flex items-center justify-center p-1 shrink-0">
+              <Image
+                src="/assets/pwm-logo.svg"
+                alt="Poddar Wealth Management"
+                width={50}
+                height={50}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
-            <span className="text-lg font-semibold text-white hidden [@media(min-width:380px)]:block">
-              Poddar Wealth
-            </span>
+            <div className="flex flex-col hidden [@media(min-width:400px)]:flex">
+              <span className="text-base font-bold tracking-wide text-white uppercase leading-tight">
+                Poddar Wealth Management
+              </span>
+              <span className="text-[10px] font-medium tracking-widest uppercase text-amber-500 hidden sm:block">
+                Excellence in Protection Since 1994
+              </span>
+            </div>
           </Link>
 
           {/* CENTER — Desktop nav links */}
@@ -75,29 +103,42 @@ export default function Navbar() {
             <div className="relative" ref={calcRef}>
               <button
                 onClick={() => setCalcOpen(v => !v)}
-                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
-                  isActive('/calculators') ? 'text-amber-400' : 'text-gray-400 hover:text-white'
-                }`}
+                className={`relative flex items-center gap-0.5 text-sm font-medium transition-colors duration-200 pb-0.5
+                  after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0
+                  hover:after:w-full after:bg-amber-500 after:transition-all after:duration-300
+                  ${isActive('/calculators') ? 'text-white after:w-full' : 'text-gray-400 hover:text-white'}`}
               >
                 {t.nav.calculators}
-                <ChevronDown size={14} className={`transition-transform duration-200 ${calcOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={14}
+                  className={`ml-1 transition-transform duration-200 ${
+                    calcOpen ? 'rotate-180 text-white' : 'text-gray-400'
+                  }`}
+                />
               </button>
 
               {calcOpen && (
                 <div className="absolute top-full left-0 mt-2 bg-gray-900 border border-gray-800 rounded-xl shadow-xl p-2 min-w-[220px] z-50">
-                  {calcLinks.map(({ href, en, hi }) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setCalcOpen(false)}
-                      className={`block px-4 py-2.5 text-sm rounded-lg transition-colors ${
-                        isActive(href)
-                          ? 'text-amber-400 bg-gray-800/50'
-                          : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                      }`}
-                    >
-                      {lang === 'en' ? en : hi}
-                    </Link>
+                  {calcLinks.map(({ href, en, hi, isNew, hasDivider }) => (
+                    <div key={href}>
+                      {hasDivider && <div className="my-1 border-t border-gray-800/50" />}
+                      <Link
+                        href={href}
+                        onClick={() => setCalcOpen(false)}
+                        className={`flex items-center px-4 py-2.5 text-sm rounded-lg transition-colors ${
+                          isActive(href)
+                            ? 'text-amber-400 bg-gray-800/50'
+                            : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                        }`}
+                      >
+                        <span>{lang === 'en' ? en : hi}</span>
+                        {isNew && (
+                          <span className="bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-2 font-bold">
+                            {lang === 'en' ? 'New' : 'नया'}
+                          </span>
+                        )}
+                      </Link>
+                    </div>
                   ))}
                 </div>
               )}
@@ -113,7 +154,7 @@ export default function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
-            {/* Language toggle */}
+            {/* Language toggle — desktop */}
             <div className="hidden md:flex items-center gap-1 text-xs">
               <button
                 onClick={() => setLang('en')}
@@ -130,15 +171,15 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Get Free Quote — desktop */}
+            {/* Get a free quote — desktop */}
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+              className="hidden md:inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hover:shadow-md transition-shadow"
             >
               {t.nav.getQuote}
             </Link>
 
-            {/* Mobile lang + hamburger */}
+            {/* Mobile: lang toggle + hamburger */}
             <div className="md:hidden flex items-center gap-2">
               <button
                 onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
@@ -158,23 +199,30 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* Mobile full-screen drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-[100] bg-gray-950 flex flex-col md:hidden overflow-y-auto">
-          {/* Header */}
+          {/* Drawer header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800/50">
-            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg overflow-hidden bg-white/5 p-1">
-                <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={28} height={28} className="w-full h-full object-contain" />
+            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5">
+              <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/5 p-1 flex-shrink-0">
+                <Image src="/assets/pwm-logo.svg" alt="PWM" width={36} height={36} className="w-full h-full object-contain" />
               </div>
-              <span className="text-base font-semibold text-white">Poddar Wealth</span>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-wide text-white uppercase leading-tight">
+                  Poddar Wealth Management
+                </span>
+                <span className="text-[9px] font-medium tracking-widest uppercase text-amber-500 hidden sm:block">
+                  Excellence in Protection Since 1994
+                </span>
+              </div>
             </Link>
             <button onClick={() => setMobileOpen(false)} className="text-gray-400 hover:text-white p-1">
               <X size={22} />
             </button>
           </div>
 
-          {/* Nav links */}
+          {/* Drawer nav links */}
           <div className="flex-1 px-0">
             {[
               { href: '/about',    label: t.nav.about },
@@ -202,21 +250,31 @@ export default function Navbar() {
                 }`}
               >
                 <span>{t.nav.calculators}</span>
-                <ChevronDown size={16} className={`transition-transform duration-200 ${calcMobileOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${calcMobileOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {calcMobileOpen && (
                 <div className="pb-2 px-6 flex flex-col gap-0.5">
-                  {calcLinks.map(({ href, en, hi }) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`py-3 text-sm border-b border-gray-800/30 last:border-0 ${
-                        isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400'
-                      }`}
-                    >
-                      {lang === 'en' ? en : hi}
-                    </Link>
+                  {calcLinks.map(({ href, en, hi, isNew, hasDivider }) => (
+                    <div key={href} className="w-full">
+                      {hasDivider && <div className="my-1 border-t border-gray-800/30" />}
+                      <Link
+                        href={href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center py-3 text-sm border-b border-gray-800/30 w-full ${
+                          isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400'
+                        }`}
+                      >
+                        <span>{lang === 'en' ? en : hi}</span>
+                        {isNew && (
+                          <span className="bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-2 font-bold">
+                            {lang === 'en' ? 'New' : 'नया'}
+                          </span>
+                        )}
+                      </Link>
+                    </div>
                   ))}
                 </div>
               )}
@@ -239,9 +297,8 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Bottom CTA */}
+          {/* Drawer bottom: lang + CTA */}
           <div className="px-6 pb-8 pt-4 space-y-3">
-            {/* Language toggle */}
             <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
               <button
                 onClick={() => setLang('en')}

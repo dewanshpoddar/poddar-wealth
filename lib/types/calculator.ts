@@ -34,6 +34,39 @@ export interface MaturityResult {
   disclaimer: string
 }
 
+// Policy Health Score
+export interface PolicyHealthInput {
+  sumAssured: number
+  annualPremium: number
+  policyYear: number
+  currentAge: number
+  annualIncome: number
+  dependents: number
+  hasHealthInsurance: boolean
+  hasTermInsurance: boolean
+  planType: 'endowment' | 'term' | 'ulip' | 'money-back' | 'whole-life'
+}
+
+export interface PolicyHealthBreakdown {
+  score: number
+  max: number
+  comment: string
+}
+
+export interface PolicyHealthResult {
+  totalScore: number
+  grade: 'A+' | 'A' | 'B' | 'C' | 'D'
+  breakdown: {
+    coverageAdequacy: PolicyHealthBreakdown
+    premiumAffordability: PolicyHealthBreakdown
+    maturityProgress: PolicyHealthBreakdown
+    protectionMix: PolicyHealthBreakdown
+    dependentCoverage: PolicyHealthBreakdown
+  }
+  recommendations: string[]
+  summary: string
+}
+
 // Loan Against Policy Calculator
 export interface LoanInput {
   planNumber: string

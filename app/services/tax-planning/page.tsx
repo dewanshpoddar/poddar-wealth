@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
+import { useLang } from '@/lib/LangContext'
 
 const benefits = [
   'Save up to ₹1.5 lakh per year under Section 80C with LIC premiums',
@@ -41,6 +43,7 @@ const taxTools = [
 ]
 
 export default function TaxPlanningPage() {
+  const { t } = useLang()
   return (
     <div className="pt-20">
 
@@ -75,13 +78,7 @@ export default function TaxPlanningPage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80"
-                  alt="Tax planning and wealth management"
-                  width={600}
-                  height={450}
-                  className="w-full object-cover"
-                />
+                <ServiceHeroImage category="tax-planning" className="w-[600px] h-[450px]" />
               </div>
             </div>
           </div>
@@ -94,7 +91,7 @@ export default function TaxPlanningPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight mb-6">
-                Protect Your Wealth from Taxes
+                {t.taxPlanningService.whyTitle}
               </h2>
               <ul className="space-y-3">
                 {benefits.map((b, i) => (
@@ -112,13 +109,7 @@ export default function TaxPlanningPage() {
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-xl">
-              <Image
-                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80"
-                alt="Tax savings planning"
-                width={600}
-                height={450}
-                className="w-full object-cover"
-              />
+              <ServiceHeroImage category="tax-planning" className="w-[600px] h-[450px]" />
             </div>
           </div>
         </div>
@@ -129,7 +120,7 @@ export default function TaxPlanningPage() {
         <div className="section-container">
           <div className="text-center mb-12">
             <h2 className="font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight mb-3">
-              Your Tax-Saving Toolkit
+              {t.taxPlanningService.toolkitTitle}
             </h2>
             <p className="text-slate-500 text-lg">Four government-approved deductions — maximise all of them</p>
           </div>
@@ -154,7 +145,7 @@ export default function TaxPlanningPage() {
         <div className="section-container">
           <div className="text-center mb-10">
             <h2 className="font-display font-bold text-3xl text-slate-900 mb-3">
-              How Much Can You Save?
+              {t.taxPlanningService.howMuchTitle}
             </h2>
             <p className="text-slate-500">Annual tax savings for a salaried individual in the 30% tax bracket</p>
           </div>

@@ -30,7 +30,7 @@
     "eyebrow": "India's most trusted insurance advisor",
     "headline": "Your Family's Protection,",
     "headlineGold": "31 Years of Wealth Trust.",
-    "subtitle": "Life insurance, health insurance, and comprehensive wealth planning for Indian families — by Mr. Ajay Kumar Poddar, MDRT Member & Chairman's Club awardee.",
+    "subtitle": "Life insurance, health insurance, and wealth planning for Indian families. By Mr. Ajay Kumar Poddar, MDRT Member and Chairman's Club awardee.",
     "cta1": "Get Wealth Health Report",
     "cta2": "Book Free Wealth Consultation",
     "cta3": "Get Free Wealth Quote",
@@ -213,7 +213,7 @@
         "title": "Personal accident",
         "desc": "Coverage for accidental death, disability & hospital bills",
         "tag": "Safety",
-        "href": "/services/health-insurance"
+        "href": "/services/personal-accident"
       },
       {
         "icon": "🎗️",
@@ -221,7 +221,7 @@
         "title": "Cancer cover",
         "desc": "Dedicated cancer-only protection for early & major stages",
         "tag": "Cancer",
-        "href": "/services/life-insurance"
+        "href": "/services/cancer-cover"
       },
       {
         "icon": "🧔",
@@ -229,7 +229,7 @@
         "title": "Term life (high cover)",
         "desc": "Large life cover at low premiums for your family",
         "tag": "Protection",
-        "href": "/services/life-insurance",
+        "href": "/services/term-life",
         "badge": "Millennials Choice"
       },
       {
@@ -246,7 +246,7 @@
         "title": "Group health",
         "desc": "Medical benefits for small & large business teams",
         "tag": "Team",
-        "href": "/services/health-insurance"
+        "href": "/services/group-health"
       }
     ]
   },
@@ -1348,5 +1348,140 @@
     "call": "Call Ajay sir",
     "whatsapp": "WhatsApp",
     "whatsappText": "Hello Ajay sir, I need help with insurance."
+  },
+  "personalAccident": {
+    "heroTitle": "Personal Accident Insurance — Complete Protection",
+    "heroSubtitle": "Financial security when life throws unexpected challenges. Protect your family's income against accidental death and disability.",
+    "whyTitle": "Why You Need Personal Accident Protection",
+    "whatIsIt": "Accidents happen without warning. While health insurance covers hospital bills, it does not replace lost income due to disability. Personal accident insurance pays a lump sum to support your family if you are unable to work.",
+    "coversTitle": "What is Covered?",
+    "covers": [
+      "Lump sum payment of 100% sum assured in case of accidental death",
+      "Payouts up to 100% for permanent total or partial disability like loss of limbs",
+      "Coverage for hospitalization charges and medical bills arising from an accident"
+    ],
+    "whoNeedsTitle": "Who Needs Personal Accident Cover?",
+    "whoNeeds": "Daily commuters, field workers, and self-employed professionals need this protection the most. In my 31 years of experience, I have seen how an accident can derail a family's finances. I recommend this for every earning member.",
+    "plansTitle": "Leading Accident Plans",
+    "plansText": "You can opt for riders like the LIC Accidental Death and Disability Benefit Rider. Standalone plans like the Star Health Accident Care Policy also offer excellent benefits. These plans are affordable, costing around ₹200 to ₹500 per year for a ₹10 lakh cover.",
+    "diffTitle": "How it Differs from Life Insurance",
+    "diffText": "Life insurance pays your family only in case of death. Personal accident insurance covers both death and living disabilities. It helps you manage house expenses and medical bills while you recover.",
+    "claimsTitle": "Simple Claim Process",
+    "claimsText": "To claim, inform the company immediately. Submit the First Information Report (FIR), hospital bills, and a medical certificate from a government doctor. Ajay sir will help you handle all the paperwork.",
+    "ctaConsult": "Get Accident Cover Today",
+    "ctaWhatsApp": "Discuss Accident Plans"
+  },
+  "cancerCover": {
+    "heroTitle": "Cancer Insurance — Early Detection Saves Lives & Money",
+    "heroSubtitle": "Do not let cancer drain your hard-earned life savings. Secure payouts on early and major stage diagnosis.",
+    "whyTitle": "Why Standalone Cancer Cover is Essential",
+    "whyText": "Cancer treatment costs in India range from ₹5 lakh to ₹30 lakh. Standard health insurance often falls short or runs out quickly. A dedicated cancer cover pays a lump sum to help you seek the best treatment.",
+    "featuresTitle": "Key Features of Cancer Cover",
+    "features": [
+      "Lump sum payouts on early detection to start treatment early",
+      "Waiver of future premiums if diagnosed with early-stage cancer",
+      "100% payout of the sum assured on major stage detection"
+    ],
+    "plansTitle": "LIC and Star Health Cancer Plans",
+    "plansText": "The LIC Cancer Cover plan provides fixed benefits that do not depend on actual hospital bills. Star Health also offers dedicated cancer care policies. Premiums are low when you are young and remain fixed for the policy term.",
+    "stageTitle": "Early vs Advanced Stage Payouts",
+    "stageText": "Early-stage diagnosis pays 25% of the sum assured and waives premiums for three years. Advanced-stage detection pays 100% of the sum assured. This lump sum can be used for travel, therapy, or regular home bills.",
+    "howItWorksTitle": "Works Alongside Regular Health Insurance",
+    "howItWorksText": "Health insurance pays hospital bills directly. Cancer cover pays you a lump sum cash benefit. You can use this money for daily household expenses, loan EMIs, or treatment not covered by your health plan.",
+    "ctaConsult": "Get Cancer Cover Quote",
+    "ctaWhatsApp": "Discuss Cancer Cover"
+  },
+  "termLife": {
+    "heroTitle": "Term Life Insurance — Maximum Protection at Lowest Cost",
+    "heroSubtitle": "Pure protection with no maturity value. Secure a massive financial cover for your family at an affordable price.",
+    "whyTitle": "Why Everyone Under 45 Needs Term Cover",
+    "whyText": "If you have dependents, you need term insurance. It is the cheapest way to secure your family's future. In my experience, buying a plan early locks in low premiums that stay same for life.",
+    "ruleTitle": "The 10x Income Rule for Coverage",
+    "ruleText": "I recommend keeping your sum assured at least 10 times your annual income. If your yearly salary is ₹10 lakh, your term cover must be at least ₹1 crore. This ensures your family can pay off loans and live comfortably.",
+    "plansTitle": "LIC Tech Term vs e-Term Comparison",
+    "plansText": "LIC Tech Term is an online-only plan with lower premiums and simple processing. LIC e-Term is also popular. Both offer the reliability of LIC's high claim settlement ratio, which is above 98.6%.",
+    "ridersTitle": "Add Protection with Riders",
+    "riders": [
+      "Accidental death rider for extra payout in case of accidents",
+      "Critical illness rider that pays a lump sum on major illness diagnosis",
+      "Waiver of premium rider to keep cover active if you get disabled"
+    ],
+    "ctaConsult": "Get Term Insurance Quote",
+    "ctaWhatsApp": "Discuss Term Plans"
+  },
+  "groupHealth": {
+    "heroTitle": "Group Health Insurance for Companies & Families",
+    "heroSubtitle": "Protect your team or your entire family under a single floater plan. Save on premiums while getting quality healthcare.",
+    "whyTitle": "Why Employer Cover is Not Enough",
+    "whyText": "Corporate health insurance only covers you while you are employed there. If you change jobs, start a business, or retire, you are left with zero cover. You must have a personal health insurance backup.",
+    "familyTitle": "Family Floater vs Individual Plans",
+    "familyText": "A family floater covers your spouse, kids, and parents under one policy. It is cheaper than buying separate covers. Star Health family plans offer excellent floater benefits for local families.",
+    "plansTitle": "Star Health and LIC Options",
+    "plansText": "Star Health is the leader in health insurance, offering fast cashless claims. LIC also offers health protection plans. We help you choose the right sum assured based on your family's age and health history.",
+    "featuresTitle": "Key Features to Compare",
+    "features": [
+      "Room rent limits to avoid high out-of-pocket room charges",
+      "Co-payment terms that define how much you pay during claims",
+      "No-claim bonus which increases your coverage limit for free"
+    ],
+    "ctaConsult": "Get Group Health Quote",
+    "ctaWhatsApp": "Discuss Health Plans"
+  },
+  "policyHealth": {
+    "title": "Policy Health Score",
+    "subtitle": "Get a free health score for your insurance portfolio. Find out if you're underinsured, overinsured, or just right.",
+    "step1": "Your Policy",
+    "step2": "About You",
+    "step3": "Your Protection",
+    "planType": "Plan Type",
+    "sumAssured": "Sum Assured (₹)",
+    "annualPremium": "Annual Premium (₹)",
+    "policyYear": "Policy Year",
+    "age": "Current Age",
+    "annualIncome": "Annual Income (₹)",
+    "dependents": "Number of Dependents",
+    "hasTerm": "Do you have term insurance?",
+    "hasHealth": "Do you have health insurance?",
+    "checkScore": "Check My Score",
+    "newBadge": "New",
+    "scoreTitle": "Your Insurance Health Score",
+    "grade": "Grade",
+    "recommendationsTitle": "Recommended Next Steps",
+    "detailedReview": "Want a detailed review? Talk to Ajay sir.",
+    "shareWhatsApp": "Share your score",
+    "shareText": "My insurance health score is {score}/100 ({grade}). Check yours free at poddarwealth.com/calculators/policy-health",
+    "planTypes": {
+      "endowment": "Endowment Plan",
+      "term": "Term Insurance",
+      "ulip": "ULIP Plan",
+      "money-back": "Money-Back Plan",
+      "whole-life": "Whole Life Insurance"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "breakdown": {
+      "coverageAdequacy": "Coverage Adequacy",
+      "premiumAffordability": "Premium Affordability",
+      "maturityProgress": "Policy Progress",
+      "protectionMix": "Protection Mix",
+      "dependentCoverage": "Dependent Coverage"
+    }
+  },
+  "healthInsurance": {
+    "coversTitle": "What Your Health Plan Covers",
+    "typesTitle": "Types of Health Insurance"
+  },
+  "childPlanningService": {
+    "whyTitle": "Why a Dedicated Child Plan?",
+    "realityCheckTitle": "Education Cost Reality Check"
+  },
+  "taxPlanningService": {
+    "whyTitle": "Protect Your Wealth from Taxes",
+    "toolkitTitle": "Your Tax-Saving Toolkit",
+    "howMuchTitle": "How Much Can You Save?"
+  },
+  "retirementService": {
+    "nestEggTitle": "Build Your Retirement Nest Egg",
+    "powerEarlyTitle": "The Power of Starting Early"
   }
 }

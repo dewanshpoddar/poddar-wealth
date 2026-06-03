@@ -1,4 +1,5 @@
 'use client'
+import { Component, type ReactNode, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
 import QuickActions from '@/components/QuickActions'
@@ -6,6 +7,21 @@ import TrustSection from '@/components/TrustSection'
 import ServicesSection from '@/components/ServicesSection'
 import GoogleReviewsBadge from '@/components/GoogleReviewsBadge'
 import LazySection from '@/components/LazySection'
+
+// Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
+class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  render() {
+    if (this.state.hasError) return null
+    return this.props.children
+  }
+}
 
 const ProductTeaser = dynamic(
   () => import('@/components/ProductTeaser'),
@@ -26,8 +42,6 @@ const BlogPreview = dynamic(
   () => import('@/components/BlogPreview'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
-
-
 
 const FinalCTA = dynamic(
   () => import('@/components/FinalCTA'),
@@ -53,31 +67,49 @@ export default function HomePage() {
       <ServicesSection />
 
       {/* 5 — Product browser teaser */}
-      <LazySection height="h-96">
-        <ProductTeaser />
-      </LazySection>
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <ProductTeaser />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 6 — Core conversion tool */}
-      <LazySection height="h-96">
-        <WealthBlueprintCalculator />
-      </LazySection>
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <WealthBlueprintCalculator />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 7 — Social proof (Testimonials) */}
-      <LazySection height="h-96">
-        <TestimonialsSection />
-      </LazySection>
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <TestimonialsSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 8 — Blog Preview (latest 3 posts) */}
-      <LazySection height="h-96">
-        <BlogPreview />
-      </LazySection>
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <BlogPreview />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
-      {/* 10 — Final CTA */}
-      <LazySection height="h-96">
-        <FinalCTA />
-      </LazySection>
+      {/* 9 — Final CTA */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <FinalCTA />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
     </>
   )
 }
-
-

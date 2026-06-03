@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import ConsultationSection from './ConsultationSection'
+import ServiceHeroImage from './ServiceHeroImage'
 
 interface ServicePageWrapperProps {
   icon: string
@@ -11,7 +12,8 @@ interface ServicePageWrapperProps {
   subtitle: string
   primaryCta: { label: string; href: string }
   secondaryCta: { label: string; href: string }
-  image: { src: string; alt: string }
+  image?: { src: string; alt: string }
+  category?: string
   consultationIntent?: string
   children: React.ReactNode
 }
@@ -24,6 +26,7 @@ export default function ServicePageWrapper({
   primaryCta,
   secondaryCta,
   image,
+  category,
   consultationIntent,
   children,
 }: ServicePageWrapperProps) {
@@ -58,13 +61,17 @@ export default function ServicePageWrapper({
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={600}
-                  height={450}
-                  className="w-full object-cover"
-                />
+                {category ? (
+                  <ServiceHeroImage category={category} className="w-[600px] h-[450px]" />
+                ) : image ? (
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={600}
+                    height={450}
+                    className="w-full object-cover"
+                  />
+                ) : null}
               </div>
             </div>
           </div>

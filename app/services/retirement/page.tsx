@@ -3,6 +3,8 @@ import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import ServicePageWrapper from '@/components/ServicePageWrapper'
 import { CheckCircle2 } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
+import { useLang } from '@/lib/LangContext'
 
 const benefits = [
   'Build a retirement corpus through disciplined monthly investments',
@@ -14,6 +16,7 @@ const benefits = [
 ]
 
 export default function RetirementPage() {
+  const { t } = useLang()
   return (
     <ServicePageWrapper
       icon="🌅"
@@ -22,7 +25,7 @@ export default function RetirementPage() {
       subtitle="Don't depend on your children in old age. Start planning today and enjoy financial freedom in your golden years."
       primaryCta={{ label: 'Plan My Retirement', href: '#consultation' }}
       secondaryCta={{ label: 'Calculate Corpus', href: '/calculators/retirement' }}
-      image={{ src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80', alt: 'Happy retirement' }}
+      category="retirement"
       consultationIntent="Retirement Planning Consultation"
     >
       {/* Benefits */}
@@ -30,7 +33,7 @@ export default function RetirementPage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="section-title mb-6">Build Your Retirement Nest Egg</h2>
+              <h2 className="section-title mb-6">{t.retirementService.nestEggTitle}</h2>
               <ul className="space-y-3">
                 {benefits.map((b, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -41,13 +44,7 @@ export default function RetirementPage() {
               </ul>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image
-                src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=600&q=80"
-                alt="Retirement planning"
-                width={600}
-                height={450}
-                className="w-full object-cover"
-              />
+              <ServiceHeroImage category="retirement" className="w-[600px] h-[450px]" />
             </div>
           </div>
         </div>
@@ -57,7 +54,7 @@ export default function RetirementPage() {
       <section className="section-padding bg-gold/5">
         <div className="section-container">
           <div className="text-center mb-10">
-            <h2 className="section-title">The Power of Starting Early</h2>
+            <h2 className="section-title">{t.retirementService.powerEarlyTitle}</h2>
             <p className="section-subtitle">See how the same ₹5,000/month can give dramatically different results</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">

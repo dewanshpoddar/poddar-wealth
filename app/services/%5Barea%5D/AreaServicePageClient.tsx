@@ -6,6 +6,7 @@ import { useLang } from '@/lib/LangContext'
 import { ArrowRight, User, Phone, MapPin, Shield, Star, Heart, TrendingUp, Award } from 'lucide-react'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { ADVISOR_PHONE } from '@/lib/constants'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 const AREAS = [
   { slug: 'golghar', name: 'Golghar', nameHi: 'गोलघर' },
@@ -69,12 +70,9 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
             
             <div className="hidden lg:block relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 group relative max-w-[500px] mx-auto aspect-[4/3] bg-slate-800">
-                <Image 
-                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&q=80" 
-                  alt="Ajay Kumar Poddar Financial Advisor" 
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
-                  priority 
+                <ServiceHeroImage 
+                  category="area-service" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
               </div>
             </div>

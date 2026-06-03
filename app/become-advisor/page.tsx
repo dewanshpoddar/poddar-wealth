@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useLang } from '@/lib/LangContext'
 import { User, Phone, MapPin, Briefcase, MessageSquare, Coins, Clock, GraduationCap, Trophy, Lock, Heart, Handshake, TrendingUp, Zap } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 function BenefitIcon({ icon }: { icon: string }) {
   const map: Record<string, React.ReactNode> = {
@@ -56,7 +57,7 @@ export default function BecomeAdvisorPage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&q=80" alt="Advisor team" width={600} height={450} className="w-full object-cover" />
+                <ServiceHeroImage category="become-advisor" className="w-[600px] h-[450px]" />
               </div>
             </div>
           </div>
