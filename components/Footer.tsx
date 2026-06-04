@@ -25,6 +25,7 @@ export default function Footer() {
     { name: isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
     { name: isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },
     { name: isHi ? 'MyLIC सहायता' : 'MyLIC Help', href: '/lic-help' },
+    { name: isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder', href: '/premium-reminder' },
   ]
 
   return (

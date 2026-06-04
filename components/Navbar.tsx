@@ -104,6 +104,8 @@ export default function Navbar() {
             <div className="relative" ref={calcRef}>
               <button
                 onClick={() => setCalcOpen(v => !v)}
+                aria-expanded={calcOpen}
+                aria-haspopup="true"
                 className={`relative flex items-center gap-0.5 text-sm font-medium transition-colors duration-200 pb-0.5
                   after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0
                   hover:after:w-full after:bg-amber-500 after:transition-all after:duration-300
@@ -205,7 +207,8 @@ export default function Navbar() {
               </div>
               <button
                 onClick={() => setMobileOpen(v => !v)}
-                aria-label="Toggle menu"
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileOpen}
                 className="text-gray-300 hover:text-white p-1"
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
