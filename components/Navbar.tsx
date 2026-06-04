@@ -71,23 +71,24 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
-          {/* LEFT — Logo with tagline */}
-          <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-[50px] h-[50px] rounded-xl overflow-hidden bg-white/5 flex items-center justify-center p-1 shrink-0">
+          {/* LEFT — Logo with brand name */}
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 min-w-0">
+            <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/5 flex items-center justify-center p-1 flex-shrink-0">
               <Image
                 src="/assets/pwm-logo.svg"
                 alt="Poddar Wealth Management"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 className="w-full h-full object-contain"
                 priority
               />
             </div>
-            <div className="flex flex-col hidden [@media(min-width:400px)]:flex">
-              <span className="text-base font-bold tracking-wide text-white uppercase leading-tight">
-                Poddar Wealth Management
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11px] sm:text-sm font-bold tracking-wide text-white uppercase leading-tight truncate">
+                <span className="hidden sm:inline">Poddar Wealth Management</span>
+                <span className="sm:hidden">Poddar Wealth</span>
               </span>
-              <span className="text-[10px] font-medium tracking-widest uppercase text-amber-500 hidden sm:block">
+              <span className="text-[9px] font-medium tracking-widest uppercase text-amber-500 hidden md:block">
                 Excellence in Protection Since 1994
               </span>
             </div>
@@ -154,20 +155,23 @@ export default function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
-            {/* Language toggle — desktop */}
-            <div className="hidden md:flex items-center gap-1 text-xs">
+            {/* Language pill toggle — desktop */}
+            <div className="hidden md:flex bg-gray-800 rounded-full p-0.5">
               <button
                 onClick={() => setLang('en')}
-                className={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'text-amber-400 font-semibold' : 'text-gray-500 hover:text-gray-300'}`}
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+                  lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                }`}
               >
                 EN
               </button>
-              <span className="text-gray-700">/</span>
               <button
                 onClick={() => setLang('hi')}
-                className={`px-2 py-1 rounded transition-colors ${lang === 'hi' ? 'text-amber-400 font-semibold' : 'text-gray-500 hover:text-gray-300'}`}
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+                  lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                }`}
               >
-                हि
+                हिंदी
               </button>
             </div>
 
@@ -179,14 +183,26 @@ export default function Navbar() {
               {t.nav.getQuote}
             </Link>
 
-            {/* Mobile: lang toggle + hamburger */}
+            {/* Mobile: pill lang toggle + hamburger */}
             <div className="md:hidden flex items-center gap-2">
-              <button
-                onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-                className="text-xs text-gray-400 hover:text-white px-2 py-1"
-              >
-                {lang === 'en' ? 'हि' : 'EN'}
-              </button>
+              <div className="flex bg-gray-800 rounded-full p-0.5">
+                <button
+                  onClick={() => setLang('en')}
+                  className={`px-2 py-0.5 text-[10px] font-medium rounded-full transition-all duration-200 ${
+                    lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLang('hi')}
+                  className={`px-2 py-0.5 text-[10px] font-medium rounded-full transition-all duration-200 ${
+                    lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                  }`}
+                >
+                  हि
+                </button>
+              </div>
               <button
                 onClick={() => setMobileOpen(v => !v)}
                 aria-label="Toggle menu"

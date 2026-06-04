@@ -29,6 +29,7 @@ export type AnalyticsEvent =
   | 'plan_quote_clicked'
   | 'products_filter_applied'
   // Engagement
+  | 'call_clicked'
   | 'whatsapp_clicked'
   | 'ai_chat_opened'
   | 'ai_chat_message_sent'

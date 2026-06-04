@@ -108,12 +108,12 @@ export async function POST(req: NextRequest) {
     // Retry once on 429 rate-limit with 2s back-off
     let stream
     try {
-      stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true })
+      stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true }, { timeout: 8000 })
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : ''
       if (msg.includes('429')) {
         await new Promise(r => setTimeout(r, 2000))
-        stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true })
+        stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true }, { timeout: 8000 })
       } else {
         throw e
       }

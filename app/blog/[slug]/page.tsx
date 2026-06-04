@@ -88,7 +88,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
     },
     datePublished: post.date,
     dateModified:  post.date,
-    keywords: post.tags.join(', '),
+    keywords: (post.tags ?? []).join(', '),
   }
 
   return (
@@ -157,9 +157,9 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
             </div>
 
             {/* Tags */}
-            {post.tags.length > 0 && (
+            {(post.tags ?? []).length > 0 && (
               <div className="mt-8 pt-6 border-t border-gray-100 flex flex-wrap gap-2">
-                {post.tags.map(tag => (
+                {(post.tags ?? []).map(tag => (
                   <span key={tag} className="text-[11px] bg-gray-100 text-gray-500 px-3 py-1 rounded-full">
                     #{tag}
                   </span>
