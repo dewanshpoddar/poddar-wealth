@@ -67,7 +67,7 @@ export default function Navbar() {
       <nav className={`sticky top-0 z-50 h-16 transition-all duration-300 ${
         scrolled
           ? 'bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 shadow-lg'
-          : 'bg-transparent border-b border-transparent'
+          : 'bg-gray-950/90 md:bg-transparent border-b border-gray-800 md:border-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
@@ -84,11 +84,11 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11px] sm:text-sm font-bold tracking-wide text-white uppercase leading-tight truncate">
+              <span className="text-[11px] sm:text-sm font-bold tracking-wide text-white uppercase leading-tight truncate" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}>
                 <span className="hidden sm:inline">Poddar Wealth Management</span>
                 <span className="sm:hidden">Poddar Wealth</span>
               </span>
-              <span className="text-[9px] font-medium tracking-widest uppercase text-amber-500 hidden md:block">
+              <span className="text-[9px] font-medium tracking-widest uppercase text-amber-500 hidden md:block" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                 Excellence in Protection Since 1994
               </span>
             </div>
@@ -190,19 +190,19 @@ export default function Navbar() {
               <div className="flex bg-gray-800 rounded-full p-0.5">
                 <button
                   onClick={() => setLang('en')}
-                  className={`px-2 py-0.5 text-[10px] font-medium rounded-full transition-all duration-200 ${
-                    lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                  className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 ${
+                    lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-400 hover:text-gray-300'
                   }`}
                 >
                   EN
                 </button>
                 <button
                   onClick={() => setLang('hi')}
-                  className={`px-2 py-0.5 text-[10px] font-medium rounded-full transition-all duration-200 ${
-                    lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                  className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 ${
+                    lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-400 hover:text-gray-300'
                   }`}
                 >
-                  हि
+                  हिंदी
                 </button>
               </div>
               <button

@@ -2,8 +2,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
-import { motion } from 'framer-motion'
-import { 
+import {
   Shield, Users, HeartPulse, Calculator, GraduationCap, Landmark, 
   Stethoscope, Building2, ShieldCheck, Ribbon, UserCheck, Heart, Users2 
 } from 'lucide-react'
@@ -76,12 +75,8 @@ export default function ServicesPage() {
       <section className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {t.services.items.map((svc: any, i: number) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
               className="bg-white border border-gray-100 rounded-3xl p-8 hover:shadow-2xl hover:shadow-gold/10 hover:border-gold/30 hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden"
             >
               {svc.badge && (
@@ -115,7 +110,7 @@ export default function ServicesPage() {
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>

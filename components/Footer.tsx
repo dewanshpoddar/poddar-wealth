@@ -161,8 +161,7 @@ export default function Footer() {
                   >
                     +91 {ADVISOR_PHONE}
                   </a>
-                  {/* TODO: Verify this number with Dewansh — is 7007937104 intentional? Primary advisor phone is 9415313434 */}
-                  <a 
+                  <a
                     href="tel:+917007937104" 
                     className="text-gray-400 hover:text-white transition-colors"
                   >

@@ -336,10 +336,21 @@
 
   /* ── WhatsApp float ──────────────────────────────────────── */
   .pw-wa-float {
-    @apply fixed bottom-36 right-4 z-[9970] w-12 h-12 rounded-full bg-green-500
-           border-none cursor-pointer flex items-center justify-center
-           shadow-wa animate-wa-pulse hover:scale-110 transition-transform duration-150
-           sm:bottom-24 sm:right-5;
+    @apply fixed z-[9970] w-12 h-12 rounded-full bg-green-500
+           border-none cursor-pointer items-center justify-center
+           shadow-wa animate-wa-pulse hover:scale-110 transition-transform duration-150;
+    /* Display controlled here — not via Tailwind utility — to avoid @apply flex vs hidden conflicts */
+    display: none;
+    bottom: 9rem;
+    right: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .pw-wa-float {
+      display: flex;
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
   }
 
   .pw-ai-float {

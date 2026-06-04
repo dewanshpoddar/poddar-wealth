@@ -1,7 +1,6 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
@@ -65,7 +64,7 @@ export default function LifeInsurancePage() {
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <ServiceHeroImage category="life-insurance" className="w-[600px] h-[450px]" />
+              <ServiceHeroImage category="life-insurance" className="w-full h-48 md:h-[450px]" />
             </div>
           </div>
         </div>
