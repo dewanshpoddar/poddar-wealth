@@ -1,8 +1,8 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
@@ -43,7 +43,7 @@ export default function CriticalIllnessPage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" alt="Critical Illness Cover" width={600} height={450} className="w-full object-cover" priority />
+                <ServiceHeroImage category="cancer-cover" className="w-full h-[450px]" />
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function CriticalIllnessPage() {
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=80" alt="Health recovery" width={600} height={450} className="w-full object-cover" />
+              <ServiceHeroImage category="cancer-cover" className="w-full h-48 md:h-[450px]" />
             </div>
           </div>
         </div>

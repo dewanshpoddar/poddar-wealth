@@ -1,8 +1,8 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
@@ -43,7 +43,7 @@ export default function KeymanInsurancePage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="Keyman Protection" width={600} height={450} className="w-full object-cover" priority />
+                <ServiceHeroImage category="keyman-insurance" className="w-full h-[450px]" />
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function KeymanInsurancePage() {
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt="Business planning" width={600} height={450} className="w-full object-cover" />
+              <ServiceHeroImage category="keyman-insurance" className="w-full h-48 md:h-[450px]" />
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ const sections = [
   },
   {
     title: 'Google Analytics',
-    body: `Our website uses Google Analytics 4 (GA4) to understand how visitors use the site — pages visited, session duration, and general geographic region. GA4 data is aggregated and does not personally identify you. No advertising features or remarketing lists are enabled. You can opt out using the Google Analytics Opt-out Browser Add-on available at tools.google.com/dlpage/gaoptout.`,
+    body: `Our website uses Google Analytics 4 (GA4) to understand how visitors use the site — pages visited, session duration, and general geographic region. GA4 data is aggregated and does not personally identify you. No advertising features or remarketing lists are enabled.\n\nGA4 only activates after you accept cookies via our consent banner. If you decline, analytics tracking stays off for your visit. You can also opt out at any time using the Google Analytics Opt-out Browser Add-on at tools.google.com/dlpage/gaoptout.`,
   },
   {
     title: 'Third Parties',
@@ -28,7 +28,15 @@ const sections = [
   },
   {
     title: 'Cookies',
-    body: `Our website uses only essential cookies required for navigation and your language preference (Hindi/English). We do not use advertising cookies, tracking pixels, or cross-site behavioural analytics. Google Analytics uses its own cookies to measure aggregate site usage — see the Google Analytics section above.`,
+    body: `We use two types of cookies. Essential cookies keep the site working — your language preference (Hindi/English) and session state. These can't be disabled.\n\nAnalytics cookies (via GA4) are optional. We ask for your consent via the banner at the bottom of the page. Accept to help us improve the site; decline and GA4 won't run. Your choice is remembered for 30 days.`,
+  },
+  {
+    title: 'WhatsApp Contact',
+    body: `When you contact us via WhatsApp, your phone number and messages are processed through Meta's WhatsApp platform, subject to Meta's privacy policy. We use this information only to respond to your insurance inquiry and provide advisory services. We don't add you to broadcast lists without your explicit request.`,
+  },
+  {
+    title: 'Lead Forms',
+    body: `Information you submit through our contact forms — name, phone number, and insurance needs — is stored securely in a private Google Sheets spreadsheet. This data is not shared with third parties or used for automated marketing. We retain contact information for up to 2 years, after which it is deleted. You can request deletion at any time by contacting us directly.`,
   },
   {
     title: 'Your Rights',

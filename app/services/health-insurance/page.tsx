@@ -1,9 +1,9 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 const features = [
   'Cashless treatment at 10,000+ hospitals across India',
@@ -43,7 +43,7 @@ export default function HealthInsurancePage() {
             </div>
             <div className="hidden lg:block">
               <div className="rounded-3xl overflow-hidden shadow-hero">
-                <Image src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Health insurance" width={600} height={450} className="w-full object-cover" />
+                <ServiceHeroImage category="health-insurance" className="w-full h-[450px]" />
               </div>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function HealthInsurancePage() {
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <Image src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" alt="Family health" width={600} height={450} className="w-full object-cover" />
+              <ServiceHeroImage category="health-insurance" className="w-full h-48 md:h-[450px]" />
             </div>
             <div>
               <h2 className="section-title mb-6">{t.healthInsurance.coversTitle}</h2>

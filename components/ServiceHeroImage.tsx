@@ -14,6 +14,7 @@ const heroConfig: Record<string, { bg: string; Icon: LucideIcon; label: string }
   'tax-planning':      { bg: 'bg-violet-950',  Icon: Calculator,   label: 'Tax Planning' },
   'child-planning':    { bg: 'bg-teal-900',    Icon: GraduationCap,label: 'Child Planning' },
   'retirement':        { bg: 'bg-amber-900',   Icon: Landmark,     label: 'Retirement' },
+  'keyman-insurance':  { bg: 'bg-slate-900',   Icon: Users,        label: 'Keyman Insurance' },
   'become-advisor':    { bg: 'bg-gray-900',    Icon: Users,        label: 'Become Advisor' },
   'area-service':      { bg: 'bg-gray-800',    Icon: MapPin,       label: 'Local Service' },
   'personal-accident': { bg: 'bg-orange-900', Icon: ShieldCheck,  label: 'Personal Accident' },
