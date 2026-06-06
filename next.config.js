@@ -1,3 +1,5 @@
+const { withSentryConfig } = require("@sentry/nextjs");
+
 /** @type {import('next').NextConfig} */
 const csp = [
   "default-src 'self'",
@@ -5,7 +7,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https: blob:",
-  "connect-src 'self' https://api.groq.com https://www.google-analytics.com https://script.google.com https://www.googletagmanager.com",
+  "connect-src 'self' https://api.groq.com https://www.google-analytics.com https://script.google.com https://www.googletagmanager.com https://o*.ingest.sentry.io",
   "frame-src 'self' https://www.google.com",
   "media-src 'self'",
 ].join('; ')
@@ -29,8 +31,6 @@ const nextConfig = {
       },
     ]
   },
-  // ─── www → non-www canonical redirect ───────────────────────────────────
-  // Redirect poddarwealth.com → www.poddarwealth.com (permanent, SEO-safe)
   async redirects() {
     return [
       {
@@ -44,18 +44,9 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'plus.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.pexels.com',
-      },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'plus.unsplash.com' },
+      { protocol: 'https', hostname: 'images.pexels.com' },
     ],
   },
   typescript: {
@@ -66,4 +57,10 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withSentryConfig(nextConfig, {
+  silent: true,
+  org: "poddar-wealth",
+  project: "poddarwealth",
+  disableLogger: true,
+  dryRun: !process.env.SENTRY_AUTH_TOKEN,
+})

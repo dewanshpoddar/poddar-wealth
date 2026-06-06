@@ -25,6 +25,9 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 import ClientFloats from '@/components/ClientFloats'
+import CookieBanner from '@/components/CookieBanner'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -103,20 +106,27 @@ const schemaOrg = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://api.groq.com" />
+      </head>
       <body className="font-sans text-13 text-gray-900 bg-white antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
-        {/* ── Google Analytics 4 ── */}
+        {/* ── Google Analytics 4 — default-deny until consent given ── */}
         {GA_ID && (
           <>
+            <Script id="ga4-consent-default" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'denied'});`}
+            </Script>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
               strategy="afterInteractive"
             />
             <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}',{page_path:window.location.pathname});`}
+              {`gtag('js',new Date());gtag('config','${GA_ID}',{page_path:window.location.pathname});`}
             </Script>
           </>
         )}
@@ -127,7 +137,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="pb-16 md:pb-0">{children}</main>
           <Footer />
           <ClientFloats />
+          <CookieBanner />
         </LangProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

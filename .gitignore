@@ -50,3 +50,6 @@ leads.csv
 
 # Local env backups
 .env.local.backup-*
+
+# sentry
+.sentry/
