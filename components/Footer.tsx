@@ -26,6 +26,8 @@ export default function Footer() {
     { name: isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },
     { name: isHi ? 'MyLIC सहायता' : 'MyLIC Help', href: '/lic-help' },
     { name: isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder', href: '/premium-reminder' },
+    { name: isHi ? 'LIC बोनस गणना' : 'LIC Bonus Calculator', href: '/lic-bonus' },
+    { name: isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival', href: '/policy-revival' },
   ]
 
   return (
