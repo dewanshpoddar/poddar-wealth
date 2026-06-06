@@ -157,20 +157,21 @@ export default function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
-            {/* Language pill toggle — desktop */}
-            <div className="hidden md:flex bg-gray-800 rounded-full p-0.5">
+            {/* Language toggle — desktop */}
+            <div className="hidden md:flex items-center gap-1">
               <button
                 onClick={() => setLang('en')}
-                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
-                  lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`text-xs font-semibold transition-colors duration-200 ${
+                  lang === 'en' ? 'text-amber-500' : 'text-gray-400 hover:text-gray-300'
                 }`}
               >
                 EN
               </button>
+              <span className="text-gray-600 text-xs mx-0.5">/</span>
               <button
                 onClick={() => setLang('hi')}
-                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
-                  lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`text-xs font-semibold transition-colors duration-200 ${
+                  lang === 'hi' ? 'text-amber-500' : 'text-gray-400 hover:text-gray-300'
                 }`}
               >
                 हिंदी
@@ -180,26 +181,27 @@ export default function Navbar() {
             {/* Get a free quote — desktop */}
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm hover:shadow-md transition-shadow"
+              className="hidden md:inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md"
             >
               {t.nav.getQuote}
             </Link>
 
-            {/* Mobile: pill lang toggle + hamburger */}
+            {/* Mobile: lang toggle + hamburger */}
             <div className="md:hidden flex items-center gap-2">
-              <div className="flex bg-gray-800 rounded-full p-0.5">
+              <div className="flex items-center gap-1">
                 <button
                   onClick={() => setLang('en')}
-                  className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 ${
-                    lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-400 hover:text-gray-300'
+                  className={`text-[10px] font-semibold transition-colors duration-200 ${
+                    lang === 'en' ? 'text-amber-500' : 'text-gray-400'
                   }`}
                 >
                   EN
                 </button>
+                <span className="text-gray-600 text-[10px] mx-0.5">/</span>
                 <button
                   onClick={() => setLang('hi')}
-                  className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 ${
-                    lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-400 hover:text-gray-300'
+                  className={`text-[10px] font-semibold transition-colors duration-200 ${
+                    lang === 'hi' ? 'text-amber-500' : 'text-gray-400'
                   }`}
                 >
                   हिंदी

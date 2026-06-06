@@ -26,12 +26,12 @@ export default function LifeInsurancePage() {
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">Life Insurance</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">{t.lifeInsurance.heroTitle}</h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">{t.lifeInsurance.heroSubtitle}</p>
-              <div className="flex gap-4">
-                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-amber-700 font-bold px-6 py-3.5 rounded-xl hover:bg-amber-50 transition-colors">
-                  Protect My Family <ArrowRight className="w-4 h-4" />
+              <div className="flex flex-wrap gap-3">
+                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+                  Get a Free Quote
                 </Link>
-                <Link href="/calculators/life-insurance" className="btn-secondary border-white/30 text-white hover:bg-white/10">
-                  Calculate Coverage
+                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-amber-700 font-bold px-6 py-3 rounded-xl hover:bg-amber-50 transition-colors">
+                  Protect My Family <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
@@ -63,8 +63,18 @@ export default function LifeInsurancePage() {
                 <p className="text-amber-800 text-sm leading-relaxed">&quot;The best time to buy life insurance is when you&apos;re young and healthy. Your premiums will be lowest and your family will be protected the longest.&quot;</p>
               </div>
             </div>
-            <div className="rounded-3xl overflow-hidden shadow-card-hover">
-              <ServiceHeroImage category="life-insurance" className="w-full h-48 md:h-[450px]" />
+            <div className="rounded-3xl bg-blue-950 p-8 md:p-10 flex flex-col gap-6 shadow-card-hover">
+              {[
+                { label: 'Families Protected', value: '2,000+', sub: 'in Gorakhpur & Purvanchal' },
+                { label: 'Claim Settlement', value: '98.6%', sub: 'LIC of India (2023-24)' },
+                { label: 'Years of Service', value: '31+', sub: 'serving since 1994' },
+              ].map(({ label, value, sub }) => (
+                <div key={label} className="border-b border-white/10 pb-5 last:border-0 last:pb-0">
+                  <div className="text-3xl font-display font-bold text-amber-400 mb-0.5">{value}</div>
+                  <div className="text-white text-sm font-semibold">{label}</div>
+                  <div className="text-white/40 text-xs">{sub}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
