@@ -1,4 +1,4 @@
-import blogPosts from '@/lib/data/blog-posts.json'
+import blogIndex from '@/lib/data/blog-index.json'
 
 function escapeXml(s: string): string {
   return s
@@ -9,7 +9,7 @@ function escapeXml(s: string): string {
 }
 
 export async function GET() {
-  const sorted = [...blogPosts].sort(
+  const sorted = [...blogIndex].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
