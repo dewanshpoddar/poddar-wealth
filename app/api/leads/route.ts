@@ -12,6 +12,7 @@ const HEADERS = [
   'Timestamp', 'Name', 'Mobile', 'Email',
   'City', 'Profession', 'Want To', 'I Am',
   'Intent', 'Experience', 'Message',
+  'Page URL', 'Language', 'UTM Source', 'UTM Medium', 'UTM Campaign',
 ]
 
 // Deduplication: prevent double-submissions within 60 seconds
@@ -65,7 +66,8 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message } = data as Record<string, string>
+    const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message,
+            pageUrl, language, utmSource, utmMedium, utmCampaign } = data as Record<string, string>
 
     // Validate required fields
     if (!name || clean(name, 100).length < 2) {
@@ -98,6 +100,11 @@ export async function POST(request: Request) {
       clean(intent, 200),
       clean(experience, 200),
       clean(message, 1000),
+      clean(pageUrl, 500),
+      clean(language, 10),
+      clean(utmSource, 100),
+      clean(utmMedium, 100),
+      clean(utmCampaign, 200),
     ]
 
     // 1. Always write to local CSV as backup (CSV injection prevention inside appendToCsv)
