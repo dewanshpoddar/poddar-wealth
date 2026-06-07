@@ -25,7 +25,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
 import ClientFloats from '@/components/ClientFloats'
-import CookieBanner from '@/components/CookieBanner'
+import ClientOnlyBanner from '@/components/ClientOnlyBanner'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -109,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
+        <link rel="preload" as="image" href="/assets/hero-family.png" />
       </head>
       <body className="font-sans text-13 text-gray-900 bg-white antialiased" suppressHydrationWarning>
         <script
@@ -137,7 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="pb-16 md:pb-0">{children}</main>
           <Footer />
           <ClientFloats />
-          <CookieBanner />
+          <ClientOnlyBanner />
         </LangProvider>
         <Analytics />
         <SpeedInsights />

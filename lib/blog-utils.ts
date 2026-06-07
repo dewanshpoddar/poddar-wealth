@@ -26,14 +26,14 @@ export const CATEGORY_COLORS_DEFAULT = 'bg-gray-100 text-gray-600 border-gray-20
 // ─── Category header styles (solid-color hero blocks with icons) ───────────
 
 export const CATEGORY_STYLES: Record<string, { bg: string; icon: ComponentType<{ className?: string }> }> = {
-  'Life Insurance':   { bg: 'bg-blue-900',    icon: Shield },
-  'Health Insurance': { bg: 'bg-emerald-800', icon: Heart },
-  'LIC Plans':        { bg: 'bg-amber-800',   icon: FileText },
-  'Tax Planning':     { bg: 'bg-indigo-900',  icon: Calculator },
-  'Comparison':       { bg: 'bg-slate-800',   icon: ArrowLeftRight },
+  'Life Insurance':   { bg: 'bg-blue-950',    icon: Shield },
+  'Health Insurance': { bg: 'bg-emerald-900', icon: Heart },
+  'LIC Plans':        { bg: 'bg-amber-950',   icon: FileText },
+  'Tax Planning':     { bg: 'bg-violet-950',  icon: Calculator },
+  'Comparison':       { bg: 'bg-slate-900',   icon: ArrowLeftRight },
   'Claims':           { bg: 'bg-purple-950',  icon: FileText },
-  'Guides':           { bg: 'bg-gray-900',    icon: BookOpen },
-  'Child Plans':      { bg: 'bg-rose-900',    icon: Heart },
+  'Guides':           { bg: 'bg-teal-900',    icon: BookOpen },
+  'Child Plans':      { bg: 'bg-rose-950',    icon: Heart },
 }
 
 export const CATEGORY_STYLES_DEFAULT = { bg: 'bg-gray-900', icon: BookOpen }

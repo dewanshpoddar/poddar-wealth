@@ -7,14 +7,7 @@ import { ArrowRight, User, Phone, MapPin, Shield, Star, Heart, TrendingUp, Award
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
-
-const AREAS = [
-  { slug: 'golghar', name: 'Golghar', nameHi: 'गोलघर' },
-  { slug: 'shahpur', name: 'Shahpur', nameHi: 'शाहपुर' },
-  { slug: 'padrauna', name: 'Padrauna', nameHi: 'पडरौना' },
-  { slug: 'deoria', name: 'Deoria', nameHi: 'देवरिया' },
-  { slug: 'kushinagar', name: 'Kushinagar', nameHi: 'कुशीनगर' },
-]
+import { AREAS } from '@/lib/data/areas'
 
 export default function AreaServicePageClient({ params }: { params: Promise<{ area: string }> }) {
   const { area } = use(params)

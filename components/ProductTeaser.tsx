@@ -43,7 +43,7 @@ export default function ProductTeaser() {
   ]
 
   return (
-    <section className="py-24 bg-navy relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-navy relative overflow-hidden">
       {/* Background Accents - Material consistency */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-white/[0.03] -z-10 skew-x-12 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gold/[0.05] -z-10 -skew-x-12 -translate-x-1/3" />
@@ -70,7 +70,7 @@ export default function ProductTeaser() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-36 md:text-52 font-display font-bold text-white mb-8 leading-tight tracking-tight"
+              className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight tracking-tight"
             >
               {lang === 'en' 
                 ? 'Explore 26+ Premium Wealth & Protection Plans' 

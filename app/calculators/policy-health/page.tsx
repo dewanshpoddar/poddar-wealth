@@ -251,7 +251,7 @@ Please help me review these gaps and suggest the right plans.`
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Wizard Form Side (Steps 1-3) */}
-          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
+          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-8">
             {/* Step Indicators */}
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
               {[
@@ -582,7 +582,7 @@ Please help me review these gaps and suggest the right plans.`
             )}
 
             {result && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
                 
                 {/* Score Section */}
                 <div className="flex flex-col items-center text-center">

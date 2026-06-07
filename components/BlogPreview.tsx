@@ -27,7 +27,7 @@ export default function BlogPreview() {
     .slice(0, 3)
 
   return (
-    <section className="bg-slate-50 py-24 relative overflow-hidden border-t border-slate-100">
+    <section className="bg-slate-50 py-16 md:py-20 relative overflow-hidden border-t border-slate-100">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -37,7 +37,7 @@ export default function BlogPreview() {
             {previewT.eyebrow}
             <span className="w-8 h-px bg-gold" />
           </div>
-          <h2 className="font-display text-[32px] lg:text-[40px] font-normal italic text-navy leading-[1.1] mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-navy mb-4">
             {previewT.heading}
           </h2>
           <p className="text-[14px] text-muted leading-relaxed max-w-md mx-auto">
@@ -55,7 +55,7 @@ export default function BlogPreview() {
             return (
               <div
                 key={post.slug}
-                className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300 flex flex-col group cursor-default"
+                className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300 flex flex-col group cursor-default"
               >
                 {/* Premium Corporate Solid Header */}
                 <div className={`h-[120px] w-full ${style.bg} flex flex-col items-center justify-center relative overflow-hidden`}>

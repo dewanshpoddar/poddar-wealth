@@ -297,7 +297,7 @@ export default function PoddarJiChatUI({
             key={chip}
             onClick={() => chat.sendMessage(activeQueries[i])}
             disabled={chat.typing || chat.streaming}
-            className="flex-shrink-0 text-[10px] px-2.5 py-1 rounded-full bg-navy/5 text-navy border border-navy/10 hover:bg-navy hover:text-white transition-all whitespace-nowrap disabled:opacity-40"
+            className="flex-shrink-0 text-[10px] px-2.5 py-2.5 rounded-full bg-navy/5 text-navy border border-navy/10 hover:bg-navy hover:text-white transition-all whitespace-nowrap disabled:opacity-40"
           >
             {chip}
           </button>
@@ -326,7 +326,7 @@ export default function PoddarJiChatUI({
           </button>
         </div>
         {chat.input.length > 450 && (
-          <p className="text-[9px] text-amber-500 mt-1 px-1">{MAX_INPUT - chat.input.length} characters left</p>
+          <p className="text-[9px] text-amber-700 mt-1 px-1">{MAX_INPUT - chat.input.length} characters left</p>
         )}
         <p className="text-[9px] text-slate-400 text-center mt-1.5 leading-snug">{disclaimer}</p>
       </div>

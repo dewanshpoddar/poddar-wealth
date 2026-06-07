@@ -2,6 +2,7 @@
 
 import { use, useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { openLeadPopup } from '@/lib/events'
@@ -36,7 +37,9 @@ function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: st
         text={`${title} — Read here:`}
         url={shareUrl}
         className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold px-3.5 py-2 rounded-full transition-colors"
-      />
+      >
+        {lang === 'en' ? 'WhatsApp' : 'व्हाट्सएप'}
+      </WhatsAppShare>
       <button
         onClick={copyLink}
         className={`inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-full border transition-colors ${
@@ -59,6 +62,20 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
   const post = posts.find(p => p.slug === slug)
 
   if (!post) notFound()
+
+  // Scroll Progress Bar state & effect
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Fire once on mount
   useEffect(() => {
@@ -99,6 +116,11 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
       />
 
       <div className="min-h-screen bg-white pt-20">
+        {/* Scroll Progress Bar */}
+        <div 
+          className="fixed top-0 left-0 h-1 bg-amber-500 z-[100] transition-all duration-100" 
+          style={{ width: `${scrollProgress}%` }} 
+        />
         {/* Hero */}
         <section className="bg-navy py-14 px-6">
           <div className="max-w-3xl mx-auto">
@@ -178,22 +200,62 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   <h3 className="font-display font-bold text-navy text-base mb-4">
                     {lang === 'en' ? 'Related Articles' : 'संबंधित लेख'}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {related.slice(0, 3).map(r => (
-                      <a key={r.slug} href={`/blog/${r.slug}`}
-                        className="flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-gold/30 hover:bg-gold/5 transition-all group">
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider flex-shrink-0 mt-0.5 ${CATEGORY_COLORS[r.category] ?? CATEGORY_COLORS_DEFAULT}`}>
-                          {r.category}
-                        </span>
-                        <span className="text-[13px] font-semibold text-navy leading-snug group-hover:text-gold transition-colors">
-                          {lang === 'en' ? r.title : r.titleHi}
-                        </span>
-                      </a>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {related.slice(0, 2).map(r => {
+                      const relStyle = CATEGORY_STYLES[r.category] || CATEGORY_STYLES_DEFAULT
+                      const RelIcon = relStyle.icon
+                      return (
+                        <Link key={r.slug} href={`/blog/${r.slug}`}
+                          className="flex flex-col rounded-2xl border border-gray-100 bg-white hover:border-gold/30 hover:shadow-md transition-all duration-300 group cursor-pointer overflow-hidden">
+                          <div className={`h-20 w-full ${relStyle.bg} flex items-center justify-center relative`}>
+                            <RelIcon className="w-6 h-6 text-white/80 group-hover:scale-110 transition-transform duration-300" />
+                          </div>
+                          <div className="p-4 flex-1 flex flex-col justify-between">
+                            <span className={`text-[9px] font-bold px-2.5 py-0.5 rounded-full border uppercase tracking-wider self-start mb-2 ${CATEGORY_COLORS[r.category] ?? CATEGORY_COLORS_DEFAULT}`}>
+                              {r.category}
+                            </span>
+                            <h4 className="text-[13px] font-bold text-navy leading-snug group-hover:text-gold transition-colors line-clamp-2">
+                              {lang === 'en' ? r.title : r.titleHi}
+                            </h4>
+                          </div>
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
               )
             })()}
+
+            {/* Premium Author Bio Card */}
+            <div className="mt-12 p-6 rounded-2xl border border-gray-100 bg-slate-50/50 flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+              <div className="shrink-0 w-24 h-24 rounded-full bg-slate-900 border border-gold/20 shadow-md relative overflow-hidden">
+                <Image 
+                  src="/assets/ajay-poddar.svg" 
+                  alt={post.author}
+                  fill
+                  className="object-cover object-top scale-[1.25] origin-top"
+                />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="text-gold font-bold text-[10px] tracking-[0.15em] uppercase mb-1">
+                  {lang === 'en' ? 'AUTHOR' : 'लेखक'}
+                </div>
+                <h4 className="text-navy text-lg font-bold mb-2">{post.author}</h4>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  {lang === 'en'
+                    ? 'Ajay Kumar Poddar is a veteran financial advisor with over 31 years of experience, a premier MDRT member, and a recipient of the LIC Chairman\'s Club award. He helps Gorakhpur families secure their future with absolute transparency and trust.'
+                    : 'अजय कुमार पोद्दार 31 से अधिक वर्षों के अनुभव वाले एक अनुभवी वित्तीय सलाहकार हैं, जो एक प्रमुख MDRT सदस्य और LIC चेयरमैन क्लब पुरस्कार के प्राप्तकर्ता हैं। वह गोरखपुर के परिवारों को पूर्ण पारदर्शिता और विश्वास के साथ सुरक्षित करने में मदद करते हैं।'}
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                  <span className="bg-gold/10 text-gold border border-gold/20 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider">
+                    MDRT Member
+                  </span>
+                  <span className="bg-navy/5 text-navy/70 border border-navy/10 px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider">
+                    {lang === 'en' ? "Chairman's Club" : 'चेयरमैन क्लब'}
+                  </span>
+                </div>
+              </div>
+            </div>
 
             {/* Share */}
             <ShareBar title={title} slug={post.slug} lang={lang} />

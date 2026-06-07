@@ -19,7 +19,7 @@ export default function TestimonialsSection() {
   const items = testimonials.items || []
 
   return (
-    <section className="pw-section pw-section--warm">
+    <section className="pw-section bg-white">
       <div className="pw-eyebrow">{testimonials.eyebrow}</div>
       <div className="pw-title">{testimonials.title}</div>
       <div className="pw-subtitle">{testimonials.subtitle}</div>

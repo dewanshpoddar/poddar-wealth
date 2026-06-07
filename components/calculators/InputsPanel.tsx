@@ -111,7 +111,7 @@ export default function InputsPanel({
                         </div>
                         <div className="flex justify-between text-[10px] mt-0.5">
                           <span className="text-gray-300">{minTerm} yrs</span>
-                          <span className="text-amber-600 font-semibold">PPT: {ppt} yrs</span>
+                          <span className="text-amber-700 font-semibold">PPT: {ppt} yrs</span>
                           <span className="text-gray-300">{maxTerm} yrs</span>
                         </div>
                       </div>

@@ -1,14 +1,7 @@
 import type { Metadata } from 'next'
 import AreaServicePageClient from './AreaServicePageClient'
 import { ADVISOR_PHONE } from '@/lib/constants'
-
-const AREAS = [
-  { slug: 'golghar', name: 'Golghar', nameHi: 'गोलघर' },
-  { slug: 'shahpur', name: 'Shahpur', nameHi: 'शाहपुर' },
-  { slug: 'padrauna', name: 'Padrauna', nameHi: 'पडरौना' },
-  { slug: 'deoria', name: 'Deoria', nameHi: 'देवरिया' },
-  { slug: 'kushinagar', name: 'Kushinagar', nameHi: 'कुशीनगर' },
-]
+import { AREAS } from '@/lib/data/areas'
 
 export function generateStaticParams() {
   return AREAS.map((area) => ({

@@ -56,7 +56,7 @@ export default function ServicesSection() {
   const { t } = useLang()
 
   return (
-    <section className="bg-warm/40 py-24 relative overflow-hidden">
+    <section className="bg-slate-50 py-16 md:py-20 relative overflow-hidden">
       {/* Decorative gradient background element */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
@@ -67,7 +67,7 @@ export default function ServicesSection() {
               <span className="w-8 h-px bg-gold" />
               {t.services.eyebrow}
             </div>
-            <h2 className="font-display text-[32px] lg:text-[40px] font-normal italic text-navy leading-[1.1] mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-navy mb-4">
               {t.services.title}
             </h2>
             <p className="text-[14px] text-muted leading-relaxed max-w-sm">
@@ -84,8 +84,8 @@ export default function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {t.services.items.slice(0, 8).map((svc: any, i: number) => (
             <Link key={i} href={svc.href ?? '/services'}
-              className="bg-white/80 backdrop-blur-md border border-[rgba(184,134,11,0.1)] rounded-2xl p-8
-                         hover:shadow-2xl hover:shadow-[rgba(184,134,11,0.15)] hover:border-gold/30 hover:-translate-y-2
+              className="bg-white border border-gray-100 shadow-sm rounded-2xl p-8
+                         hover:shadow-md hover:border-gold/30 hover:-translate-y-2
                          transition-all duration-500 group cursor-pointer relative overflow-hidden block">
               {svc.badge && (
                 <div className="absolute top-0 right-0 py-1.5 px-4 bg-gold text-white text-[9px] font-bold uppercase tracking-widest rounded-bl-xl shadow-lg z-20">

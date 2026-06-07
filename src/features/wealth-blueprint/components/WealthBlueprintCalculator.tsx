@@ -160,7 +160,7 @@ export default function WealthBlueprintCalculator() {
   )
 
   return (
-    <section id="blueprint" className="bg-gradient-to-b from-gray-50 to-white py-20 md:py-24 relative overflow-hidden">
+    <section id="blueprint" className="bg-amber-50/30 py-16 md:py-20 border-y border-amber-100/30 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(circle at 10% 60%, rgba(201,168,76,0.07) 0%, transparent 55%), radial-gradient(circle at 90% 15%, rgba(4,12,28,0.04) 0%, transparent 50%)' }}/>
 

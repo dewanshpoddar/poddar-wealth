@@ -97,7 +97,7 @@ export default function LifeInsuranceCalcPage() {
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      {t.lifeCalc.age}: <span className="text-brand-600">{form.age} years</span>
+                      {t.lifeCalc.age}: <span className="text-amber-700">{form.age} years</span>
                     </label>
                     <input type="range" min="18" max="60" value={form.age}
                       onChange={e => setForm({ ...form, age: +e.target.value })}
@@ -113,7 +113,7 @@ export default function LifeInsuranceCalcPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      {t.lifeCalc.dependents}: <span className="text-brand-600">{form.dependents}</span>
+                      {t.lifeCalc.dependents}: <span className="text-amber-700">{form.dependents}</span>
                     </label>
                     <input type="range" min="0" max="6" value={form.dependents}
                       onChange={e => setForm({ ...form, dependents: +e.target.value })}
@@ -135,7 +135,7 @@ export default function LifeInsuranceCalcPage() {
               {/* Coverage result */}
               <div>
                 {need ? (
-                  <div className="bg-brand-700 rounded-3xl p-8 text-white h-full flex flex-col justify-between">
+                  <div className="bg-navy-light rounded-3xl p-8 text-white h-full flex flex-col justify-between">
                     <div>
                       <div className="text-white/70 text-sm mb-2">{t.lifeCalc.resultSubtitle}</div>
                       <div className="font-display font-bold text-5xl text-white mb-1">{fmt(need.recommended)}</div>
@@ -156,7 +156,7 @@ export default function LifeInsuranceCalcPage() {
                   </div>
                 ) : (
                   <div className="bg-white rounded-3xl shadow-card p-8 h-full flex flex-col items-center justify-center text-center min-h-80">
-                    <Calculator className="w-16 h-16 text-brand-200 mb-4" />
+                    <Calculator className="w-16 h-16 text-navy-light/30 mb-4" />
                     <h3 className="font-display font-bold text-xl text-slate-900 mb-2">Enter Your Details</h3>
                     <p className="text-slate-400 text-sm">Fill in your information and click Calculate.</p>
                   </div>
@@ -177,7 +177,7 @@ export default function LifeInsuranceCalcPage() {
                   <Shield className="w-4 h-4" /> Step 2 — Get a Real LIC Premium Quote
                 </div>
                 <h2 className="font-display font-bold text-2xl text-slate-900">
-                  Your coverage need is <span className="text-brand-600">{fmt(need.recommended)}</span>.
+                  Your coverage need is <span className="text-amber-700">{fmt(need.recommended)}</span>.
                   Here&apos;s what LIC charges.
                 </h2>
               </div>
@@ -193,8 +193,8 @@ export default function LifeInsuranceCalcPage() {
                         onClick={() => setPlanNo(p.planNo)}
                         className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-all border
                           ${planNo === p.planNo
-                            ? 'bg-brand-700 text-white border-brand-700 font-semibold'
-                            : 'bg-white text-slate-700 border-slate-100 hover:border-brand-200'}`}>
+                            ? 'bg-navy-light text-white border-navy-light font-semibold'
+                            : 'bg-white text-slate-700 border-slate-100 hover:border-navy-light/40'}`}>
                         <div className="font-medium leading-tight">{p.name}</div>
                         <div className={`text-xs mt-0.5 ${planNo === p.planNo ? 'text-white/70' : 'text-slate-400'}`}>
                           Plan {p.planNo} · {p.category} · {p.xirr} XIRR
@@ -209,7 +209,7 @@ export default function LifeInsuranceCalcPage() {
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Adjust Parameters</div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Sum Assured: <span className="text-brand-600">{fmt(sa)}</span>
+                      Sum Assured: <span className="text-amber-700">{fmt(sa)}</span>
                     </label>
                     <input type="range" min="500000" max="10000000" step="500000" value={sa}
                       onChange={e => setSa(+e.target.value)}
@@ -218,7 +218,7 @@ export default function LifeInsuranceCalcPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Policy Term: <span className="text-brand-600">{term} years</span>
+                      Policy Term: <span className="text-amber-700">{term} years</span>
                     </label>
                     <input type="range" min="10" max="35" step="1" value={term}
                       onChange={e => setTerm(+e.target.value)}
@@ -231,7 +231,7 @@ export default function LifeInsuranceCalcPage() {
                       {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
                         <button key={m} onClick={() => setMode(m)}
                           className={`py-1.5 rounded-lg text-xs font-semibold transition-all border
-                            ${mode === m ? 'bg-brand-700 text-white border-brand-700' : 'bg-white text-slate-600 border-slate-200 hover:border-brand-300'}`}>
+                            ${mode === m ? 'bg-navy-light text-white border-navy-light' : 'bg-white text-slate-600 border-slate-200 hover:border-navy-light/60'}`}>
                           {m.charAt(0).toUpperCase() + m.slice(1)}
                         </button>
                       ))}
@@ -240,7 +240,7 @@ export default function LifeInsuranceCalcPage() {
                 </div>
 
                 {/* Premium output */}
-                <div className="bg-brand-700 rounded-2xl p-5 text-white flex flex-col justify-between">
+                <div className="bg-navy-light rounded-2xl p-5 text-white flex flex-col justify-between">
                   <div className="text-xs font-bold text-white/60 uppercase tracking-wider mb-3">Premium Breakdown</div>
                   {premResult ? (
                     <>
@@ -307,7 +307,7 @@ export default function LifeInsuranceCalcPage() {
                   {showTable && (
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs">
-                        <thead className="bg-brand-700 text-white">
+                        <thead className="bg-navy-light text-white">
                           <tr>
                             {['Year','Age','Premium Paid','Cum. Paid','Annual Bonus','Cum. Bonus','Death Benefit','Surrender Value','Maturity'].map(h => (
                               <th key={h} className="px-3 py-2.5 text-left font-semibold whitespace-nowrap">{h}</th>

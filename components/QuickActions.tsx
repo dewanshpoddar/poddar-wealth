@@ -61,9 +61,9 @@ export default function QuickActions() {
   ]
 
   return (
-    <section className="bg-slate-50 py-16 px-4 border-b border-gray-100">
+    <section className="bg-white py-16 md:py-20 px-4 border-b border-gray-100">
       <div className="max-w-[1240px] mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {actions.map((act, i) => {
             const title = act.title[lang as 'en' | 'hi'] || act.title.en
             const sub = act.sub[lang as 'en' | 'hi'] || act.sub.en
@@ -76,9 +76,9 @@ export default function QuickActions() {
                 </div>
                 {/* Right side: Text */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-[12.5px] font-extrabold text-navy truncate group-hover:text-gold transition-colors leading-snug">
+                  <h2 className="text-[12.5px] font-extrabold text-navy truncate group-hover:text-gold transition-colors leading-snug">
                     {title}
-                  </h3>
+                  </h2>
                   <p className="text-[10px] text-gray-500 truncate mt-0.5 font-medium leading-tight">
                     {sub}
                   </p>

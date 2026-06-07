@@ -13,7 +13,7 @@ export default function TermLifePage() {
       label={lang === 'en' ? 'Term Life' : 'टर्म लाइफ'}
       title={tm.heroTitle}
       subtitle={tm.heroSubtitle}
-      primaryCta={{ label: lang === 'en' ? 'Calculate Coverage' : 'कवरेज कैलकुलेट करें', href: '/calculators/life-insurance' }}
+      primaryCta={{ label: lang === 'en' ? 'Get a Free Quote' : 'फ्री कोटेशन प्राप्त करें', href: '#lead-form' }}
       secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/919415313434` }}
       category="term-life"
       consultationIntent="Term Life Insurance Consultation"

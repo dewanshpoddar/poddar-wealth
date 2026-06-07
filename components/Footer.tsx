@@ -93,9 +93,9 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
+            <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
               {isHi ? 'त्वरित लिंक्स' : 'Quick Links'}
-            </h4>
+            </h3>
             <ul className="space-y-3.5">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -112,9 +112,9 @@ export default function Footer() {
 
           {/* Column 3: Tools & Resources */}
           <div>
-            <h4 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
+            <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
               {isHi ? 'साधन और संसाधन' : 'Tools & Resources'}
-            </h4>
+            </h3>
             <ul className="space-y-3.5 font-medium">
               {resources.map((link) => (
                 <li key={link.name}>
@@ -143,9 +143,9 @@ export default function Footer() {
 
           {/* Column 4: Contact Info */}
           <div>
-            <h4 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
+            <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
               {isHi ? 'संपर्क सूत्र' : 'Contact Details'}
-            </h4>
+            </h3>
             <div className="space-y-4 text-xs font-semibold">
               <div className="flex items-start gap-2.5">
                 <MapPin className="text-amber-500 w-4 h-4 flex-shrink-0 mt-0.5" />

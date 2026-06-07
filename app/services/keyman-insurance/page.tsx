@@ -28,7 +28,7 @@ export default function KeymanInsurancePage() {
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">{t.keyman.heroTitle}</h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">{t.keyman.heroSubtitle}</p>
               <div className="flex gap-4 flex-wrap">
-                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-brand-700 font-bold px-6 py-3.5 rounded-xl hover:bg-brand-50 transition-colors">
+                <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-amber-700 font-bold px-6 py-3.5 rounded-xl hover:bg-amber-50 transition-colors">
                   {t.keyman.ctaConsult} <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
@@ -64,9 +64,9 @@ export default function KeymanInsurancePage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 bg-brand-50 border border-brand-100 rounded-2xl p-5">
-                <div className="font-display font-bold text-brand-900 text-lg mb-1">{t.keyman.advisorTitle}</div>
-                <p className="text-brand-800 text-sm leading-relaxed">&quot;{t.keyman.advisorText}&quot;</p>
+              <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-5">
+                <div className="font-display font-bold text-amber-900 text-lg mb-1">{t.keyman.advisorTitle}</div>
+                <p className="text-amber-800 text-sm leading-relaxed">&quot;{t.keyman.advisorText}&quot;</p>
               </div>
             </div>
             <div className="rounded-3xl overflow-hidden shadow-card-hover">

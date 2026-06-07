@@ -67,7 +67,7 @@ export default function Navbar() {
       <nav className={`sticky top-0 z-50 h-16 transition-all duration-300 ${
         scrolled
           ? 'bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 shadow-lg'
-          : 'bg-gray-950/90 md:bg-transparent border-b border-gray-800 md:border-transparent'
+          : 'bg-gray-950 md:bg-gradient-to-b md:from-black/50 md:via-black/20 md:to-transparent border-b border-gray-800 md:border-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
@@ -323,13 +323,13 @@ export default function Navbar() {
             <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
               <button
                 onClick={() => setLang('en')}
-                className={`px-3 py-1.5 rounded-lg border transition-colors ${lang === 'en' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
+                className={`px-3 py-2.5 rounded-lg border transition-colors ${lang === 'en' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
               >
                 English
               </button>
               <button
                 onClick={() => setLang('hi')}
-                className={`px-3 py-1.5 rounded-lg border transition-colors ${lang === 'hi' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
+                className={`px-3 py-2.5 rounded-lg border transition-colors ${lang === 'hi' ? 'border-amber-500 text-amber-400' : 'border-gray-700 hover:border-gray-500'}`}
               >
                 हिंदी
               </button>

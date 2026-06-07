@@ -20,11 +20,11 @@ export default function RetirementPage() {
   return (
     <ServicePageWrapper
       icon="🌅"
-      label="Retirement Planning"
-      title="Retire with Dignity — On Your Own Terms"
-      subtitle="Don't depend on your children in old age. Start planning today and enjoy financial freedom in your golden years."
-      primaryCta={{ label: 'Plan My Retirement', href: '#consultation' }}
-      secondaryCta={{ label: 'Calculate Corpus', href: '/calculators/retirement' }}
+      label={lang === 'en' ? 'Retirement Planning' : 'रिटायरमेंट प्लानिंग'}
+      title={lang === 'en' ? 'Retire with Dignity — On Your Own Terms' : 'सम्मान के साथ रिटायर हों — अपनी शर्तों पर'}
+      subtitle={lang === 'en' ? "Don't depend on your children in old age. Start planning today and enjoy financial freedom in your golden years." : 'बुढ़ापे में बच्चों पर निर्भर न रहें। आज ही प्लानिंग शुरू करें और अपने सुनहरे वर्षों में वित्तीय स्वतंत्रता का आनंद लें।'}
+      primaryCta={{ label: lang === 'en' ? 'Plan My Retirement' : 'रिटायरमेंट प्लान करें', href: '#lead-form' }}
+      secondaryCta={{ label: lang === 'en' ? 'Calculate Corpus' : 'कॉर्पस कैलकुलेट करें', href: '/calculators/retirement' }}
       category="retirement"
       consultationIntent="Retirement Planning Consultation"
     >
