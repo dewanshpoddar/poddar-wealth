@@ -109,7 +109,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
-        <link rel="preload" as="image" href="/assets/hero-family.png" />
       </head>
       <body className="font-sans text-13 text-gray-900 bg-white antialiased" suppressHydrationWarning>
         <script

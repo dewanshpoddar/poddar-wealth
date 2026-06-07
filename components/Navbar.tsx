@@ -59,6 +59,7 @@ export default function Navbar() {
     { href: '/calculators/maturity',       en: 'Maturity Calculator',      hi: 'मैच्योरिटी कैलकुलेटर' },
     { href: '/calculators/loan',           en: 'Loan Against Policy',      hi: 'पॉलिसी पर लोन' },
     { href: '/calculators/policy-health',  en: 'Policy Health Score',      hi: 'पॉलिसी हेल्थ स्कोर', isNew: true, hasDivider: true },
+    { href: '/analyzers/policy-document',  en: 'AI Policy Analyzer',       hi: 'AI पॉलिसी विश्लेषक', isNew: true, hasDivider: true },
   ]
 
   return (
@@ -67,7 +68,7 @@ export default function Navbar() {
       <nav className={`sticky top-0 z-50 h-16 transition-all duration-300 ${
         scrolled
           ? 'bg-gray-950/95 backdrop-blur-sm border-b border-gray-800 shadow-lg'
-          : 'bg-gray-950 md:bg-gradient-to-b md:from-black/50 md:via-black/20 md:to-transparent border-b border-gray-800 md:border-transparent'
+          : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent border-b border-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
@@ -84,9 +85,8 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11px] sm:text-sm font-bold tracking-wide text-white uppercase leading-tight truncate" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}>
-                <span className="hidden sm:inline">Poddar Wealth Management</span>
-                <span className="sm:hidden">Poddar Wealth</span>
+              <span className="text-[10px] sm:text-sm font-bold tracking-wide text-white uppercase leading-tight" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}>
+                Poddar Wealth Management
               </span>
               <span className="text-[9px] font-medium tracking-widest uppercase text-amber-500 hidden md:block" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
                 Excellence in Protection Since 1994

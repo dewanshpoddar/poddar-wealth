@@ -344,10 +344,10 @@
     display: none;
     bottom: 1.5rem;
     right: 1.5rem;
-    z-index: 40;
+    z-index: 9950;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .pw-wa-float {
       display: flex;
     }
