@@ -184,7 +184,7 @@ export default function PolicyHealthCalculatorPage() {
 
   const getScoreColor = (score: number) => {
     if (score < 50) return 'text-red-500 stroke-red-500'
-    if (score < 65) return 'text-amber-500 stroke-amber-500'
+    if (score < 65) return 'text-amber-700 stroke-amber-700'
     if (score < 80) return 'text-yellow-500 stroke-yellow-500'
     if (score < 90) return 'text-green-500 stroke-green-500'
     return 'text-emerald-500 stroke-emerald-500'

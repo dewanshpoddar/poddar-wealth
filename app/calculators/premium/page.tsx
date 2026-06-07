@@ -532,19 +532,19 @@ export default function PremiumCalculatorPage() {
                 )}
 
                 {/* ── Nav bar: always visible above form or results ── */}
-                <div className="sticky top-[72px] md:top-[86px] z-30 bg-white rounded-2xl border border-gold/10 shadow-md mb-3 px-4 py-2.5 flex items-center gap-2">
+                <div className="sticky top-[72px] md:top-[86px] z-30 bg-white rounded-2xl border border-gold/10 shadow-md mb-3 px-4 py-2 flex items-center gap-2">
                   {showResults ? (
                     <>
                       <button onClick={() => setShowResults(false)}
-                        className="flex items-center gap-1.5 text-[12px] font-bold text-navy bg-gray-100 hover:bg-gold/10 border border-gray-200 hover:border-gold/30 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-navy bg-gray-100 hover:bg-gold/10 border border-gray-200 hover:border-gold/30 h-11 px-4 rounded-xl transition-all whitespace-nowrap">
                         ← Edit Inputs
                       </button>
                       <div className="flex-1 text-center text-[11px] text-gray-500 truncate hidden sm:block">
                         LIC&apos;s {selectedPlan.name} · Age {age} · {isPensionAnnuity ? fmtSA(purchasePrice) : fmtSA(sa)}
                       </div>
                       <button onClick={calculate}
-                        className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-gold hover:bg-gold-hover px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
-                        <RefreshCw className="w-3 h-3" /> Recalculate
+                        className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-gold hover:bg-gold-hover h-11 px-4 rounded-xl transition-all whitespace-nowrap">
+                        <RefreshCw className="w-3.5 h-3.5" /> Recalculate
                       </button>
                     </>
                   ) : (
@@ -555,7 +555,7 @@ export default function PremiumCalculatorPage() {
                       </div>
                       {premResult && (
                         <button onClick={() => setShowResults(true)}
-                          className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-navy hover:bg-navy/90 px-3 py-1.5 rounded-lg transition-all whitespace-nowrap">
+                          className="flex items-center gap-1.5 text-[12px] font-bold text-white bg-navy hover:bg-navy/90 h-11 px-4 rounded-xl transition-all whitespace-nowrap">
                           View Results →
                         </button>
                       )}

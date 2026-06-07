@@ -11,6 +11,7 @@ export default function CookieBanner() {
   return (
     <CookieConsent
       location="bottom"
+      containerClasses="cookie-banner-container"
       buttonText="Accept"
       declineButtonText="Decline"
       enableDeclineButton

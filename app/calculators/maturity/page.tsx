@@ -333,7 +333,7 @@ Can you please suggest the best combination for maximizing my returns?`
                   <div className="bg-amber-50/20 rounded-2xl p-6 text-center border border-amber-100/50">
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5">{s.estimatedMaturity}</div>
                     <div className="text-3xl font-bold text-amber-600">{fmt(result.estimatedMaturity)}</div>
-                    <div className="text-[11px] text-amber-500 mt-1">({result.estimatedMaturity.toLocaleString('en-IN')})</div>
+                    <div className="text-[11px] text-amber-700 mt-1">({result.estimatedMaturity.toLocaleString('en-IN')})</div>
                   </div>
                 </div>
 

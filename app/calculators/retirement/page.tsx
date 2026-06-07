@@ -64,35 +64,35 @@ export default function RetirementCalcPage() {
                 <h2 className="font-display font-bold text-2xl text-slate-900 mb-6">Your Retirement Details</h2>
                 <div className="space-y-5">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="currentAge" className="block text-sm font-semibold text-slate-700 mb-2">
                       {t.retirementCalc.currentAge}: <span className="text-gold">{form.currentAge} years</span>
                     </label>
-                    <input type="range" min="20" max="55" value={form.currentAge}
+                    <input id="currentAge" type="range" min="20" max="55" value={form.currentAge}
                       onChange={e => setForm({ ...form, currentAge: +e.target.value })}
                       className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>20</span><span>55</span></div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="retirementAge" className="block text-sm font-semibold text-slate-700 mb-2">
                       {t.retirementCalc.retirementAge}: <span className="text-gold">{form.retirementAge} years</span>
                     </label>
-                    <input type="range" min="45" max="70" value={form.retirementAge}
+                    <input id="retirementAge" type="range" min="45" max="70" value={form.retirementAge}
                       onChange={e => setForm({ ...form, retirementAge: +e.target.value })}
                       className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>45</span><span>70</span></div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">{t.retirementCalc.monthlyExpense}</label>
-                    <input type="number" value={form.monthlyExpense}
+                    <label htmlFor="monthlyExpense" className="block text-sm font-semibold text-slate-700 mb-2">{t.retirementCalc.monthlyExpense}</label>
+                    <input id="monthlyExpense" type="number" value={form.monthlyExpense}
                       onChange={e => setForm({ ...form, monthlyExpense: +e.target.value })}
                       className="input-field" placeholder="40000" />
                     <div className="text-xs text-slate-400 mt-1">= {fmt(form.monthlyExpense)}/month today</div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="inflation" className="block text-sm font-semibold text-slate-700 mb-2">
                       {t.retirementCalc.inflation}: <span className="text-gold">{form.inflation}%</span>
                     </label>
-                    <input type="range" min="4" max="10" step="0.5" value={form.inflation}
+                    <input id="inflation" type="range" min="4" max="10" step="0.5" value={form.inflation}
                       onChange={e => setForm({ ...form, inflation: +e.target.value })}
                       className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>4%</span><span>10%</span></div>

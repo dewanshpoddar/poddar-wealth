@@ -60,7 +60,7 @@ export default function InputsPanel({
 
                   {/* Name + Salutation */}
                   <div className="pb-4 border-b border-gray-50">
-                    <label className="block text-[12px] font-semibold text-gray-600 mb-2">
+                    <label htmlFor="clientName" className="block text-[12px] font-semibold text-gray-600 mb-2">
                       Client Name <span className="text-gray-300 font-normal">(personalises report)</span>
                     </label>
                     <div className="flex gap-2">
@@ -73,7 +73,7 @@ export default function InputsPanel({
                           </button>
                         ))}
                       </div>
-                      <input type="text" placeholder="e.g. Rajesh Kumar" value={clientName}
+                      <input id="clientName" type="text" placeholder="e.g. Rajesh Kumar" value={clientName}
                         onChange={e => setClientName(e.target.value)}
                         className="flex-1 px-3 py-2 text-[13px] border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-gold/40 focus:bg-white transition-all" />
                     </div>
@@ -83,12 +83,12 @@ export default function InputsPanel({
 
                     {/* ── Age: slider + number ── */}
                     <div>
-                      <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Age</label>
+                      <label htmlFor="ageNumber" className="block text-[12px] font-semibold text-gray-600 mb-1.5">Age</label>
                       <div className="flex items-center gap-2 mb-1.5">
-                        <input type="range" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                        <input aria-label="Age slider" type="range" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
                           value={age} onChange={e => setAge(+e.target.value)}
                           className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
-                        <input type="number" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
+                        <input id="ageNumber" type="number" min={selectedPlan.minAge ?? 0} max={selectedPlan.maxAge ?? 65}
                           value={age} onChange={e => setAge(Math.min(selectedPlan.maxAge ?? 65, Math.max(selectedPlan.minAge ?? 0, +e.target.value)))}
                           className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                       </div>
@@ -100,12 +100,12 @@ export default function InputsPanel({
                     {/* ── Term: slider + number (hidden for pure annuity plans) ── */}
                     {!isPensionAnnuity && (
                       <div>
-                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">Policy Term</label>
+                        <label htmlFor="termNumber" className="block text-[12px] font-semibold text-gray-600 mb-1.5">Policy Term</label>
                         <div className="flex items-center gap-2 mb-1.5">
-                          <input type="range" min={minTerm} max={maxTerm}
+                          <input aria-label="Policy term slider" type="range" min={minTerm} max={maxTerm}
                             value={safeterm} onChange={e => setTerm(+e.target.value)}
                             className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
-                          <input type="number" min={minTerm} max={maxTerm}
+                          <input id="termNumber" type="number" min={minTerm} max={maxTerm}
                             value={safeterm} onChange={e => setTerm(Math.min(maxTerm, Math.max(minTerm, +e.target.value)))}
                             className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                         </div>
@@ -120,7 +120,7 @@ export default function InputsPanel({
                     {/* ── Sum Assured (non-pension, non-ULIP) ── */}
                     {!isPensionAnnuity && !isUlip && (
                       <div className="sm:col-span-2">
-                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                        <label htmlFor="saNumber" className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Sum Assured
                           {selectedPlan.minSA && selectedPlan.minSA > sa && <span className="text-red-400 text-[10px] ml-1">(min {fmtSA(selectedPlan.minSA)})</span>}
                         </label>
@@ -134,10 +134,10 @@ export default function InputsPanel({
                           ))}
                         </div>
                         <div className="flex items-center gap-2 mb-1">
-                          <input type="range" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                          <input aria-label="Sum assured slider" type="range" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
                             value={sa} onChange={e => setSa(+e.target.value)}
                             className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
-                          <input type="number" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
+                          <input id="saNumber" type="number" min={selectedPlan.minSA ?? 100000} max={10000000} step={100000}
                             value={sa} onChange={e => setSa(Math.min(10000000, Math.max(selectedPlan.minSA ?? 100000, +e.target.value)))}
                             className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                         </div>
@@ -148,15 +148,15 @@ export default function InputsPanel({
                     {/* ── Purchase Price (pension/annuity plans) ── */}
                     {isPensionAnnuity && (
                       <div className="sm:col-span-2">
-                        <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
+                        <label htmlFor="ppNumber" className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Purchase Price (Lump Sum)
                           <span className="text-gray-500 font-normal ml-1">(min {fmtSA(selectedPlan.minPurchasePrice ?? 100000)})</span>
                         </label>
                         <div className="flex items-center gap-2 mb-1">
-                          <input type="range" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                          <input aria-label="Purchase price slider" type="range" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
                             value={purchasePrice} onChange={e => setPurchasePrice(+e.target.value)}
                             className="flex-1 accent-[#b8860b] h-1.5 rounded-full" />
-                          <input type="number" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
+                          <input id="ppNumber" type="number" min={selectedPlan.minPurchasePrice ?? 100000} max={20000000} step={100000}
                             value={purchasePrice} onChange={e => setPurchasePrice(Math.max(selectedPlan.minPurchasePrice ?? 100000, +e.target.value))}
                             className="w-28 px-2 py-1.5 text-[12px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                         </div>

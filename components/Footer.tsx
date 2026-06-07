@@ -21,6 +21,7 @@ export default function Footer() {
 
   const resources = [
     { name: isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
+    { name: isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Policy Analyzer', href: '/analyzers/policy-document' },
     { name: isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
     { name: isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
     { name: isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },

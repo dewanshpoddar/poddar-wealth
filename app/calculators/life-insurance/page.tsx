@@ -96,33 +96,33 @@ export default function LifeInsuranceCalcPage() {
                 </h2>
                 <div className="space-y-5">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="age" className="block text-sm font-semibold text-slate-700 mb-2">
                       {t.lifeCalc.age}: <span className="text-amber-700">{form.age} years</span>
                     </label>
-                    <input type="range" min="18" max="60" value={form.age}
+                    <input id="age" type="range" min="18" max="60" value={form.age}
                       onChange={e => setForm({ ...form, age: +e.target.value })}
                       className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>18</span><span>60</span></div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.income}</label>
-                    <input type="number" value={form.income}
+                    <label htmlFor="income" className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.income}</label>
+                    <input id="income" type="number" value={form.income}
                       onChange={e => setForm({ ...form, income: +e.target.value })}
                       className="input-field" placeholder="600000" />
                     <div className="text-xs text-slate-400 mt-1">= {fmt(form.income)} per year</div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label htmlFor="dependents" className="block text-sm font-semibold text-slate-700 mb-2">
                       {t.lifeCalc.dependents}: <span className="text-amber-700">{form.dependents}</span>
                     </label>
-                    <input type="range" min="0" max="6" value={form.dependents}
+                    <input id="dependents" type="range" min="0" max="6" value={form.dependents}
                       onChange={e => setForm({ ...form, dependents: +e.target.value })}
                       className="w-full accent-gold h-2 rounded-full" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>0</span><span>6</span></div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.existing}</label>
-                    <input type="number" value={form.existing}
+                    <label htmlFor="existing" className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.existing}</label>
+                    <input id="existing" type="number" value={form.existing}
                       onChange={e => setForm({ ...form, existing: +e.target.value })}
                       className="input-field" placeholder="0" />
                   </div>

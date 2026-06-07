@@ -76,9 +76,9 @@ export default function QuickActions() {
                 </div>
                 {/* Right side: Text */}
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-[12.5px] font-extrabold text-navy truncate group-hover:text-gold transition-colors leading-snug">
+                  <h3 className="text-[12.5px] font-extrabold text-navy truncate group-hover:text-gold transition-colors leading-snug">
                     {title}
-                  </h2>
+                  </h3>
                   <p className="text-[10px] text-gray-500 truncate mt-0.5 font-medium leading-tight">
                     {sub}
                   </p>

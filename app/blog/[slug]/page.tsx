@@ -10,6 +10,7 @@ import { trackEvent } from '@/lib/analytics'
 import posts from '@/lib/data/blog-posts.json'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { Phone } from 'lucide-react'
+import NewsletterSignup from '@/components/NewsletterSignup'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
   CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
@@ -188,7 +189,14 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                 ))}
               </div>
             )}
+          </div>
+        </section>
 
+        {/* Newsletter Signup (auto-hides if cookie set) */}
+        <NewsletterSignup />
+
+        <section className="py-12 px-6">
+          <div className="max-w-3xl mx-auto">
             {/* Related Articles */}
             {post.relatedSlugs && (post.relatedSlugs as string[]).length > 0 && (() => {
               const related = (post.relatedSlugs as string[])

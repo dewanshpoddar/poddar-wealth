@@ -475,3 +475,10 @@
   ::-webkit-scrollbar-track { background: #f1f1f1; }
   ::-webkit-scrollbar-thumb { background: #C8960C; border-radius: 3px; }
 }
+
+/* Cookie consent overlap adjustment for mobile viewports */
+@media (max-width: 639px) {
+  .cookie-banner-container {
+    bottom: 56px !important;
+  }
+}

@@ -227,7 +227,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800/50">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5">
               <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/5 p-1 flex-shrink-0">
-                <Image src="/assets/pwm-logo.svg" alt="PWM" width={36} height={36} className="w-full h-full object-contain" />
+                <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Management logo" width={36} height={36} className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold tracking-wide text-white uppercase leading-tight">

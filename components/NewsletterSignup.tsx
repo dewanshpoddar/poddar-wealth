@@ -1,12 +1,19 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 
 export default function NewsletterSignup() {
   const { t } = useLang()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [hasSubscribedCookie, setHasSubscribedCookie] = useState(false)
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      setHasSubscribedCookie(document.cookie.includes('subscribed=true'))
+    }
+  }, [])
 
   const newsletterT = t.newsletter || {
     title: 'Get Insurance Insights Weekly',
@@ -37,10 +44,15 @@ export default function NewsletterSignup() {
 
       setStatus('success')
       setEmail('')
+      if (typeof document !== 'undefined') {
+        document.cookie = "subscribed=true; path=/; max-age=31536000; SameSite=Lax"
+      }
     } catch (err) {
       setStatus('error')
     }
   }
+
+  if (hasSubscribedCookie) return null
 
   return (
     <section className="bg-gray-950 py-12 px-6 border-t border-gray-900">

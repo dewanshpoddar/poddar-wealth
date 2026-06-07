@@ -137,7 +137,7 @@ export default function ProductTeaser() {
                     {item.icon}
                   </motion.div>
                   
-                  <h4 className="text-18 font-bold text-white mb-2 group-hover:text-gold transition-colors">{item.title}</h4>
+                  <h3 className="text-18 font-bold text-white mb-2 group-hover:text-gold transition-colors">{item.title}</h3>
                   <p className="text-14 text-white/50 leading-snug">{item.desc}</p>
                 </motion.div>
               ))}
