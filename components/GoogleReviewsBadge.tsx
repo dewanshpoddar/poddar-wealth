@@ -5,7 +5,7 @@ import { useLang } from '@/lib/LangContext'
 import { Star } from 'lucide-react'
 
 export default function GoogleReviewsBadge() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const [count, setCount] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const animatedRef = useRef(false)
@@ -68,7 +68,7 @@ export default function GoogleReviewsBadge() {
         href="https://www.google.com/maps/place/Poddar+Wealth+Management/"
         target="_blank"
         rel="noopener noreferrer"
-        className="block bg-white border border-gold/10 hover:border-gold/30 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden relative cursor-pointer"
+        className="block bg-white border border-gray-100 shadow-sm rounded-3xl p-8 hover:shadow-md transition-all duration-300 group overflow-hidden relative cursor-pointer"
       >
         {/* Glow decoration */}
         <div className="absolute right-0 top-0 w-80 h-80 bg-gold/5 rounded-full blur-[80px] pointer-events-none -z-10" />
@@ -110,16 +110,29 @@ export default function GoogleReviewsBadge() {
               {reviewT.sub}
             </p>
 
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-gold group-hover:text-amber-700 transition-colors uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-gold group-hover:text-amber-700 transition-colors uppercase tracking-wider mb-5">
               {reviewT.viewOnGoogle}
             </span>
+
+            {/* Trust Credentials */}
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+              <span className="bg-gold/10 text-gold border border-gold/20 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                MDRT Member
+              </span>
+              <span className="bg-navy/5 text-navy/70 border border-navy/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                {lang === 'hi' ? 'चेयरमैन क्लब' : "Chairman's Club"}
+              </span>
+            </div>
           </div>
 
           {/* Right Column: Review Snippets Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
             {[
+              // TODO: Replace with real Google reviews
               { text: reviewT.review1Text, author: reviewT.review1Author },
+              // TODO: Replace with real Google reviews
               { text: reviewT.review2Text, author: reviewT.review2Author },
+              // TODO: Replace with real Google reviews
               { text: reviewT.review3Text, author: reviewT.review3Author },
             ].map((rev, idx) => (
               <div

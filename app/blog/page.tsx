@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import posts from '@/lib/data/blog-posts.json'
+import NewsletterSignup from '@/components/NewsletterSignup'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
   CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
@@ -137,6 +138,9 @@ export default function BlogPage() {
           </Link>
         </div>
       </section>
+      
+      {/* Newsletter Signup */}
+      <NewsletterSignup />
     </div>
   )
 }

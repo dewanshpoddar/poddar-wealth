@@ -1168,11 +1168,11 @@
     "eyebrow": "VERIFIED TRUST",
     "heading": "4.9 Rating | 154 Google Reviews",
     "sub": "100% verified external reviews on Google Maps",
-    "review1Text": "Best insurance advisor in Gorakhpur. Very trustworthy.",
+    "review1Text": "Ajay sir helped my family choose the right plan. Very knowledgeable.",
     "review1Author": "R.K.",
-    "review2Text": "Ajay sir helped us with claim settlement in just 30 days.",
+    "review2Text": "31 years of trust. Best LIC advisor in Gorakhpur.",
     "review2Author": "S.P.",
-    "review3Text": "Managing our family insurance for 15 years now.",
+    "review3Text": "Fast claim settlement. Recommended to everyone.",
     "review3Author": "V.M.",
     "viewOnGoogle": "View all reviews on Google Maps →",
     "rating": "4.9 on Google (154 reviews)"
@@ -1483,5 +1483,43 @@
   "retirementService": {
     "nestEggTitle": "Build Your Retirement Nest Egg",
     "powerEarlyTitle": "The Power of Starting Early"
+  },
+  "policyAnalyzer": {
+    "badge": "AI-POWERED",
+    "title": "Understand Your LIC Policy in Seconds",
+    "subtitle": "Upload your policy document and get a clear, plain-language summary. No jargon. No confusion.",
+    "privacyNotice": "🔒 Secure — your document is never stored. Analysis happens instantly.",
+    "dropzoneTitle": "Drop your LIC policy PDF here",
+    "dropzoneSubtitle": "or click to browse — Max 5MB",
+    "analyzeButton": "Analyze Policy",
+    "loadingReading": "Reading your policy document...",
+    "loadingAnalyzing": "Analyzing with AI...",
+    "loadingPreparing": "Preparing your summary...",
+    "resultsTitle": "Your Policy Summary",
+    "recommendationTitle": "What We Recommend",
+    "discussCta": "Discuss with Ajay sir",
+    "errorMessage": "We couldn't read this document. It might be a scanned copy. Try uploading a text-based PDF, or call Ajay sir for a free policy review.",
+    "disclaimer": "Disclaimer: This analysis is AI-generated based on the document uploaded. Please verify the details with your official policy document or consult a licensed advisor before making decisions.",
+    "details": {
+      "policyType": "Policy Type",
+      "policyNumber": "Policy Number",
+      "sumAssured": "Sum Assured",
+      "premiumAmount": "Premium Amount",
+      "startDate": "Start Date",
+      "maturityDate": "Maturity Date",
+      "nominee": "Nominee",
+      "status": "Status",
+      "bonusAccrued": "Bonus Accrued",
+      "loanOutstanding": "Loan Outstanding",
+      "benefitsRiders": "Benefits & Riders"
+    }
+  },
+  "newsletter": {
+    "title": "Get Insurance Insights Weekly",
+    "subtitle": "Premium reminders, market updates, and tips from 31 years of experience. No spam, ever.",
+    "placeholder": "your@email.com",
+    "button": "Subscribe",
+    "success": "You're in! Check your inbox for a welcome message.",
+    "error": "Something went wrong. Try again or WhatsApp us."
   }
 }

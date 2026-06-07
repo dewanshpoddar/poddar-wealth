@@ -48,6 +48,11 @@ const FinalCTA = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 
+const NewsletterSignup = dynamic(
+  () => import('@/components/NewsletterSignup'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 rounded-xl h-48 w-full" /> }
+)
+
 export default function HomePage() {
   return (
     <>
@@ -98,6 +103,15 @@ export default function HomePage() {
         <LazySection height="h-96">
           <Suspense fallback={null}>
             <BlogPreview />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* Newsletter Signup */}
+      <SectionBoundary>
+        <LazySection height="h-48">
+          <Suspense fallback={null}>
+            <NewsletterSignup />
           </Suspense>
         </LazySection>
       </SectionBoundary>
