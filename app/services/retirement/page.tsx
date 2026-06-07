@@ -16,7 +16,7 @@ const benefits = [
 ]
 
 export default function RetirementPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   return (
     <ServicePageWrapper
       icon="🌅"
