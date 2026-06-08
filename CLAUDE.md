@@ -281,6 +281,29 @@ Both endpoints require `CRON_SECRET` header to execute.
   Pay-premium page: step-by-step "How to Pay" 3-step guide + payment methods strip added above form.
   Build: verified 60+ pages, 0 errors (node node_modules/.bin/next build).
 
+- **2026-06-08:** DRY Contact Refactoring + QA Linting + Pay-Premium enhancements.
+  DRY: Replaced all hardcoded instances of Ajay Kumar Poddar's phone number with the centralized `ADVISOR_PHONE` constant defined in `lib/constants.ts`.
+  Lint & QA: Fixed unescaped JSX single quotes in `WealthBlueprintPDF.tsx`, `plans/nav-jeevan-shree/page.tsx`, and `services/life-insurance/page.tsx`.
+  Policy Analyzer API: Replaced legacy `require` call in `policy-document/route.ts` with standard `import` syntax to resolve ESLint import rules.
+  Article Schema: Structured JSON-LD Article schema in `app/blog/[slug]/page.tsx` updated to support correct `author.url`, `publisher.url`, and `mainEntityOfPage`.
+  Pay-Premium: Implemented full 5-step "How to Pay LIC Premium Online — Step by Step" guide above lead form with direct gateway link to `customer.onlineportal.licindia.in` and call/trouble support link.
+
+- **2026-06-08 (Sprint 5):** All remaining backend tasks from months 2-8 roadmap.
+  Blog architecture: blog-posts.json deleted (was 356KB). All consumers (BlogPreview, blog/page,
+  blog/[slug]/page) now use blog-index.json (126KB). /api/blog/[slug] serves individual content
+  from lib/data/blog-content/*.json (per-post ~3-8KB).
+  JSON-LD: InsuranceAgency schema added to all 11 service page layouts + area service page via lib/schema.ts.
+  PDF Report: lib/reports/WealthBlueprintPDF.tsx (4-page: cover, score breakdown, recommendations, about).
+  POST /api/reports/wealth-blueprint with 3/hr/IP rate limit.
+  Chatbot memory: history capped at last 10 messages (5 exchanges) in app/api/chat/route.ts.
+  Email service: lib/email.ts with sendWelcomeEmail() via Resend API. Added to newsletter subscribe route.
+  RESEND_API_KEY added to .env.example. (Action: sign up resend.com, verify poddarwealth.com domain)
+  Blog posts: 30 new posts added. Total: 100 posts. lib/data/blog-index.json has all 100 entries.
+  Reviews API: lib/data/reviews.json (8 reviews) + GET /api/reviews (1hr cache).
+  Build: 0 errors. First Load JS shared: 105 kB.
+  4 commits: ffd7a2e, 9169dcc, c711919, 2c37e9b.
+
 ---
 
-_Last updated: 2026-06-02_
+_Last updated: 2026-06-08_
+

@@ -87,68 +87,82 @@ export default function PayPremiumPage() {
       {/* How to Pay Guide */}
       <section className="py-10 px-6 bg-slate-50 border-b border-slate-100">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-display font-bold text-xl text-navy mb-2 text-center">
-            {isHi ? 'LIC प्रीमियम ऑनलाइन कैसे भरें?' : 'How to Pay Your LIC Premium Online'}
+          <h2 className="font-display font-bold text-2xl text-navy mb-2 text-center">
+            {isHi ? 'LIC प्रीमियम ऑनलाइन कैसे भरें — स्टेप बाय स्टेप' : 'How to Pay LIC Premium Online — Step by Step'}
           </h2>
-          <p className="text-gray-500 text-sm text-center mb-6">
-            {isHi ? 'यह 3-चरण की प्रक्रिया 5 मिनट से कम समय लेती है' : 'This 3-step process takes less than 5 minutes'}
+          <p className="text-gray-500 text-sm text-center mb-8">
+            {isHi ? 'इन 5 आसान स्टेप्स का पालन करें और भुगतान पूरा करें' : 'Follow these 5 simple steps to complete your payment'}
           </p>
-          <div className="flex flex-col sm:flex-row items-start gap-4">
+
+          <div className="space-y-4">
             {[
               {
                 step: '1',
-                titleEn: 'Enter Your Details',
-                titleHi: 'विवरण दर्ज करें',
-                descEn: 'Fill in your name, mobile, policy number, and premium amount below.',
-                descHi: 'नीचे अपना नाम, मोबाइल, पॉलिसी नंबर और प्रीमियम राशि भरें।',
-                icon: 'clipboard',
+                textEn: 'Go to licindia.in → Click "Online Premium Payment"',
+                textHi: 'licindia.in पर जाएं → "Online Premium Payment" पर क्लिक करें',
               },
               {
                 step: '2',
-                titleEn: 'We Log Your Intent',
-                titleHi: 'हम आपकी जानकारी नोट करते हैं',
-                descEn: "We record your premium due date so we can send you reminders — your policy never lapses.",
-                descHi: 'हम आपकी देय तारीख नोट करते हैं और समय पर रिमाइंडर भेजते हैं — पॉलिसी कभी लैप्स न हो।',
-                icon: 'shield',
+                textEn: 'Enter your Policy Number',
+                textHi: 'अपनी पॉलिसी संख्या (Policy Number) दर्ज करें',
               },
               {
                 step: '3',
-                titleEn: 'Pay on LIC Portal',
-                titleHi: 'LIC पोर्टल पर भुगतान करें',
-                descEn: 'We redirect you to the official LIC customer portal where you complete payment securely.',
-                descHi: 'हम आपको आधिकारिक LIC पोर्टल पर भेजते हैं जहां आप सुरक्षित रूप से भुगतान करते हैं।',
-                icon: 'check',
+                textEn: 'Enter Date of Birth',
+                textHi: 'अपनी जन्म तिथि (Date of Birth) दर्ज करें',
+              },
+              {
+                step: '4',
+                textEn: 'Select premium amount and payment method',
+                textHi: 'प्रीमियम राशि और भुगतान का तरीका चुनें',
+              },
+              {
+                step: '5',
+                textEn: 'Pay via UPI, Net Banking, or Card',
+                textHi: 'UPI, नेट बैंकिंग, या कार्ड के माध्यम से भुगतान करें',
               },
             ].map((item, i) => (
-              <div key={i} className="flex-1 flex items-start gap-3 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
-                <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center text-white text-xs font-extrabold flex-shrink-0">
+              <div key={i} className="flex items-center gap-4 bg-white border border-gray-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-8 h-8 rounded-full bg-gold/10 text-gold flex items-center justify-center text-sm font-extrabold flex-shrink-0">
                   {item.step}
                 </div>
-                <div>
-                  <div className="mb-0.5"><StepIcon icon={item.icon} /></div>
-                  <p className="font-bold text-sm text-navy mb-1">
-                    {isHi ? item.titleHi : item.titleEn}
-                  </p>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    {isHi ? item.descHi : item.descEn}
-                  </p>
-                </div>
+                <p className="font-semibold text-sm text-slate-700 leading-relaxed">
+                  {isHi ? item.textHi : item.textEn}
+                </p>
               </div>
             ))}
           </div>
 
-          {/* Payment methods row */}
-          <div className="mt-6 pt-5 border-t border-gray-100">
-            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider text-center mb-3">
-              {isHi ? 'LIC पोर्टल पर स्वीकृत भुगतान तरीके' : 'Accepted on LIC Portal'}
+          <div className="mt-8 text-center bg-navy/5 border border-navy/10 rounded-2xl p-6">
+            <p className="text-sm text-slate-600 mb-4">
+              {isHi ? 'आधिकारिक भुगतान गेटवे पर सीधे जाएं:' : 'Go directly to the official LIC payment gateway:'}
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {['UPI / BHIM', 'Debit Card', 'Credit Card', 'Net Banking', 'Paytm / PhonePe'].map(method => (
-                <span key={method} className="text-[11px] bg-gray-50 border border-gray-200 text-gray-500 px-3 py-1 rounded-full font-medium">
-                  {method}
-                </span>
-              ))}
+            <a
+              href="https://customer.onlineportal.licindia.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-navy hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+            >
+              {isHi ? 'LIC ग्राहक पोर्टल खोलें' : 'Open LIC Customer Portal'} →
+            </a>
+          </div>
+
+          {/* Having trouble support banner */}
+          <div className="mt-6 bg-amber-50 border border-amber-100 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+              <p className="font-bold text-amber-900 text-sm">
+                {isHi ? 'भुगतान करने में समस्या आ रही है?' : 'Having trouble paying?'}
+              </p>
+              <p className="text-amber-800 text-xs mt-1">
+                {isHi ? 'अजय सर से सीधे संपर्क करें और तुरंत सहायता प्राप्त करें।' : 'Ajay sir can help you complete the payment immediately.'}
+              </p>
             </div>
+            <a
+              href={`tel:${ADVISOR_PHONE}`}
+              className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition-colors whitespace-nowrap"
+            >
+              {isHi ? 'कॉल करें: ' : 'Call Ajay sir: '} +91 {ADVISOR_PHONE}
+            </a>
           </div>
         </div>
       </section>
