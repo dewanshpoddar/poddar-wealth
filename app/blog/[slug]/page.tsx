@@ -7,14 +7,14 @@ import { notFound } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
-import posts from '@/lib/data/blog-posts.json'
+import posts from '@/lib/data/blog-index.json'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { Phone } from 'lucide-react'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
   CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
-  formatBlogDate, getReadingTime,
+  formatBlogDate,
 } from '@/lib/blog-utils'
 
 function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: string }) {
@@ -64,6 +64,14 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
   if (!post) notFound()
 
+  // Load content from individual file
+  let blogContent
+  try {
+    blogContent = require(`@/lib/data/blog-content/${slug}.json`)
+  } catch (e) {
+    notFound()
+  }
+
   // Scroll Progress Bar state & effect
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -84,10 +92,10 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
   }, [post.slug, post.category])
 
   const title    = lang === 'en' ? post.title    : post.titleHi
-  const content  = lang === 'en' ? post.content  : post.contentHi
+  const content  = lang === 'en' ? (blogContent?.content ?? '') : (blogContent?.contentHi ?? '')
   const summary  = lang === 'en' ? post.summary  : post.summaryHi
   const paragraphs = content.split('\n\n').filter(Boolean)
-  const readingTime = getReadingTime(post.content, post.contentHi, lang)
+  const readingTime = post.readTime ?? 3
 
   const schema = {
     '@context': 'https://schema.org',
@@ -96,8 +104,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
     description: post.summary,
     author: {
       '@type': 'Person',
-      name: post.author,
-      jobTitle: 'IRDAI Authorised Insurance Agent, MDRT Member',
+      name: 'Ajay Kumar Poddar',
+      url: 'https://www.poddarwealth.com/about',
     },
     publisher: {
       '@type': 'Organization',
@@ -105,7 +113,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
       url: 'https://www.poddarwealth.com',
     },
     datePublished: post.date,
-    dateModified:  post.date,
+    dateModified: post.date,
+    mainEntityOfPage: `https://www.poddarwealth.com/blog/${post.slug}`,
     keywords: (post.tags ?? []).join(', '),
   }
 
@@ -172,7 +181,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         <section className="py-12 px-6">
           <div className="max-w-3xl mx-auto">
             <div className="prose prose-slate max-w-none">
-              {paragraphs.map((para, i) => (
+              {paragraphs.map((para: string, i: number) => (
                 <p key={i} className="text-[15px] text-slate-700 leading-relaxed mb-5">
                   {para}
                 </p>

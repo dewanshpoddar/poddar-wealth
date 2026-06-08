@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import posts from '@/lib/data/blog-posts.json'
+import posts from '@/lib/data/blog-index.json'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
   CATEGORY_STYLES, CATEGORY_STYLES_DEFAULT,
@@ -50,7 +50,7 @@ export default function BlogPreview() {
           {latestPosts.map((post) => {
             const style = CATEGORY_STYLES[post.category] || CATEGORY_STYLES_DEFAULT
             const Icon = style.icon
-            const readingTime = getReadingTime(post.content, post.contentHi, lang)
+            const readingTime = post.readTime || 2
 
             return (
               <div

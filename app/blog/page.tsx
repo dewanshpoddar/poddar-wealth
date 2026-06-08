@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import posts from '@/lib/data/blog-posts.json'
+import posts from '@/lib/data/blog-index.json'
 import NewsletterSignup from '@/components/NewsletterSignup'
 import {
   CATEGORY_COLORS, CATEGORY_COLORS_DEFAULT,
@@ -18,7 +18,10 @@ export default function BlogPage() {
 
   const filtered = activeCategory === 'All'
     ? posts
-    : posts.filter(p => p.category === activeCategory)
+    : posts.filter(p => 
+        p.category === activeCategory || 
+        (Array.isArray(p.tags) && p.tags.some(tag => tag.toLowerCase() === activeCategory.toLowerCase()))
+      )
 
   return (
     <div className="min-h-screen bg-white pt-20">
