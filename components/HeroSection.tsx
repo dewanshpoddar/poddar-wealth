@@ -128,7 +128,8 @@ export default function HeroSection() {
                 src={src}
                 alt="Happy Indian family planning their future"
                 fill
-                sizes="100vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={75}
                 className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                 priority={idx === 0}
                 loading={idx === 0 ? undefined : 'lazy'}

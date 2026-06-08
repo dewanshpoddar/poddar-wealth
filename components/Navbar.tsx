@@ -3,8 +3,9 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X, Search } from 'lucide-react'
 import Image from 'next/image'
+import SearchModal from '@/components/SearchModal'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [calcOpen, setCalcOpen] = useState(false)
   const [calcMobileOpen, setCalcMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const calcRef = useRef<HTMLDivElement>(null)
 
   // Scroll detection for background transition
@@ -60,6 +62,7 @@ export default function Navbar() {
     { href: '/calculators/loan',           en: 'Loan Against Policy',      hi: 'पॉलिसी पर लोन' },
     { href: '/calculators/policy-health',  en: 'Policy Health Score',      hi: 'पॉलिसी हेल्थ स्कोर', isNew: true, hasDivider: true },
     { href: '/analyzers/policy-document',  en: 'AI Policy Analyzer',       hi: 'AI पॉलिसी विश्लेषक', isNew: true, hasDivider: true },
+    { href: '/nav-tracker',                en: 'LIC ULIP NAV Tracker',     hi: 'LIC ULIP NAV ट्रैकर', isNew: true, hasDivider: true },
   ]
 
   return (
@@ -157,6 +160,15 @@ export default function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
+            {/* Search Button — desktop */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Open Search"
+              className="hidden md:flex items-center justify-center text-gray-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition-all cursor-pointer"
+            >
+              <Search size={18} />
+            </button>
+
             {/* Language toggle — desktop */}
             <div className="hidden md:flex items-center gap-1">
               <button
@@ -186,8 +198,15 @@ export default function Navbar() {
               {t.nav.getQuote}
             </Link>
 
-            {/* Mobile: lang toggle + hamburger */}
+            {/* Mobile: lang toggle + search + hamburger */}
             <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                aria-label="Open Search"
+                className="text-gray-300 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-all"
+              >
+                <Search size={20} />
+              </button>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setLang('en')}
@@ -344,6 +363,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      {isSearchOpen && <SearchModal onClose={() => setIsSearchOpen(false)} />}
     </>
   )
 }

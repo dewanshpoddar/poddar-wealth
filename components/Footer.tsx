@@ -16,11 +16,13 @@ export default function Footer() {
     { name: t.nav.products || (isHi ? 'उत्पाद' : 'Products'), href: '/products' },
     { name: t.nav.services || (isHi ? 'सेवाएं' : 'Services'), href: '/services' },
     { name: isHi ? 'ब्लॉग' : 'Blog', href: '/blog' },
+    { name: isHi ? 'मित्र को रेफर करें' : 'Refer a Friend', href: '/refer' },
     { name: isHi ? 'संपर्क करें' : 'Contact', href: '/contact' },
   ]
 
   const resources = [
     { name: isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
+    { name: isHi ? 'LIC ULIP NAV ट्रैकर' : 'LIC ULIP NAV Tracker', href: '/nav-tracker' },
     { name: isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Policy Analyzer', href: '/analyzers/policy-document' },
     { name: isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
     { name: isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },

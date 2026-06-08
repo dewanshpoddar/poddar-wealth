@@ -50,6 +50,18 @@ export function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
+  // ── Referral cookie capture ────────────────────────────────────────────────
+  const refCode = req.nextUrl.searchParams.get('ref')
+  if (refCode && /^PWM-[A-Z0-9]{5}$/.test(refCode)) {
+    const res = NextResponse.next()
+    res.cookies.set('pw_ref', refCode, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      sameSite: 'lax',
+    })
+    return res
+  }
+
   // ── Language handling (page routes only) ─────────────────────────────────────
   const lang = resolveLang(req)
   const hasParam = req.nextUrl.searchParams.has('lang')
