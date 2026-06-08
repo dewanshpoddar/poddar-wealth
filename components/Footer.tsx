@@ -3,34 +3,41 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import { MapPin, Phone, MessageCircle, Mail } from 'lucide-react'
 
 export default function Footer() {
   const { t, lang } = useLang()
+  const pathname = usePathname()
+
+  if (pathname?.startsWith('/lp/')) return null
+
   const isHi = lang === 'hi'
+  const isBn = lang === 'bn'
 
   const quickLinks = [
-    { name: isHi ? 'मुख्य पृष्ठ' : 'Home', href: '/' },
-    { name: isHi ? 'हमारे बारे में' : 'About Us', href: '/about' },
-    { name: t.nav.products || (isHi ? 'उत्पाद' : 'Products'), href: '/products' },
-    { name: t.nav.services || (isHi ? 'सेवाएं' : 'Services'), href: '/services' },
-    { name: isHi ? 'ब्लॉग' : 'Blog', href: '/blog' },
-    { name: isHi ? 'मित्र को रेफर करें' : 'Refer a Friend', href: '/refer' },
-    { name: isHi ? 'संपर्क करें' : 'Contact', href: '/contact' },
+    { name: isBn ? 'হোম' : isHi ? 'मुख्य पृष्ठ' : 'Home', href: '/' },
+    { name: isBn ? 'আমাদের সম্পর্কে' : isHi ? 'हमारे बारे में' : 'About Us', href: '/about' },
+    { name: t.nav.products || (isBn ? 'পণ্যসমূহ' : isHi ? 'उत्पाद' : 'Products'), href: '/products' },
+    { name: t.nav.services || (isBn ? 'সেবাসমূহ' : isHi ? 'सेवाएं' : 'Services'), href: '/services' },
+    { name: isBn ? 'ব্লগ' : isHi ? 'ब्लॉग' : 'Blog', href: '/blog' },
+    { name: isBn ? 'বন্ধুকে রেফার করুন' : isHi ? 'मित्र को रेफर करें' : 'Refer a Friend', href: '/refer' },
+    { name: isBn ? 'যোগাযোগ' : isHi ? 'संपर्क करें' : 'Contact', href: '/contact' },
   ]
 
   const resources = [
-    { name: isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
-    { name: isHi ? 'LIC ULIP NAV ट्रैकर' : 'LIC ULIP NAV Tracker', href: '/nav-tracker' },
-    { name: isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Policy Analyzer', href: '/analyzers/policy-document' },
-    { name: isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
-    { name: isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
-    { name: isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },
-    { name: isHi ? 'MyLIC सहायता' : 'MyLIC Help', href: '/lic-help' },
-    { name: isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder', href: '/premium-reminder' },
-    { name: isHi ? 'LIC बोनस गणना' : 'LIC Bonus Calculator', href: '/lic-bonus' },
-    { name: isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival', href: '/policy-revival' },
+    { name: isBn ? 'প্রিমিয়াম ক্যালকুলেটর' : isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
+    { name: isBn ? 'LIC ULIP NAV ট্র্যাকার' : isHi ? 'LIC ULIP NAV ट्रैकर' : 'LIC ULIP NAV Tracker', href: '/nav-tracker' },
+    { name: isBn ? 'AI পলিসি বিশ্লেষক' : isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Policy Analyzer', href: '/analyzers/policy-document' },
+    { name: isBn ? 'ভিডিও গ্যালারি' : isHi ? 'वीडियो गैलरी' : 'Video Gallery', href: '/videos' },
+    { name: isBn ? 'ইনস্যুরেন্স কুইজ' : isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
+    { name: isBn ? 'ওয়েলথ ব্লুপ্রিন্ট' : isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
+    { name: isBn ? 'বীমা সুগম গাইড' : isHi ? 'बीमा सुगम गाइड' : 'Bima Sugam Guide', href: '/bima-sugam' },
+    { name: isBn ? 'MyLIC সহায়তা' : isHi ? 'MyLIC सहायता' : 'MyLIC Help', href: '/lic-help' },
+    { name: isBn ? 'প্রিমিয়াম রিমাইন্ডার' : isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder', href: '/premium-reminder' },
+    { name: isBn ? 'LIC বোনাস গণনা' : isHi ? 'LIC बोनस गणना' : 'LIC Bonus Calculator', href: '/lic-bonus' },
+    { name: isBn ? 'পলিসি পুনরুজ্জীবন' : isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival', href: '/policy-revival' },
   ]
 
   return (
@@ -54,16 +61,18 @@ export default function Footer() {
               </div>
               <div>
                 <span className="text-white font-bold text-[14px] leading-snug block uppercase tracking-wider">
-                  {isHi ? 'पोद्दार वेल्थ मैनेजमेंट' : 'Poddar Wealth'}
+                  {isBn ? 'পোদ্দার ওয়েলথ ম্যানেজমেন্ট' : isHi ? 'पोद्दार वेल्थ मैनेजमेंट' : 'Poddar Wealth'}
                 </span>
                 <span className="text-amber-500 text-[10px] uppercase tracking-widest font-semibold mt-0.5 block">
-                  {isHi ? 'स्थापना 1994' : 'Since 1994'}
+                  {isBn ? '১৯৯৪ থেকে' : isHi ? 'स्थापना 1994' : 'Since 1994'}
                 </span>
               </div>
             </div>
 
             <p className="text-gray-400 text-xs leading-relaxed max-w-xs font-medium">
-              {isHi 
+              {isBn 
+                ? '৩১ বছরেরও বেশি সময় ধরে সততা, সম্পূর্ণ স্বচ্ছতা এবং ব্যক্তিগত যত্নের সাথে গোরক্ষপুরের পরিবারগুলির ভবিষ্যৎ সুরক্ষিত করছি।'
+                : isHi 
                 ? '31 वर्षों से अधिक के अटूट विश्वास और व्यक्तिगत सेवा के साथ गोरखपुर के परिवारों के भविष्य को सुरक्षित कर रहे हैं।'
                 : 'Securing the future of Gorakhpur families for over 31 years with trust, absolute transparency, and personalized care.'}
             </p>
@@ -87,7 +96,7 @@ export default function Footer() {
                     4.9 / 5.0
                   </span>
                   <span className="text-xs text-gray-500">
-                    (154 {isHi ? 'समीक्षाएं' : 'reviews'})
+                    (154 {isBn ? 'রিভিউ' : isHi ? 'समीक्षाएं' : 'reviews'})
                   </span>
                 </div>
               </a>
@@ -97,7 +106,7 @@ export default function Footer() {
           {/* Column 2: Quick Links */}
           <div>
             <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
-              {isHi ? 'त्वरित लिंक्स' : 'Quick Links'}
+              {isBn ? 'সহজ লিঙ্কসমূহ' : isHi ? 'त्वरित लिंक्स' : 'Quick Links'}
             </h3>
             <ul className="space-y-3.5">
               {quickLinks.map((link) => (
@@ -116,7 +125,7 @@ export default function Footer() {
           {/* Column 3: Tools & Resources */}
           <div>
             <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
-              {isHi ? 'साधन और संसाधन' : 'Tools & Resources'}
+              {isBn ? 'টুলস ও রিসোর্স' : isHi ? 'साधन और संसाधन' : 'Tools & Resources'}
             </h3>
             <ul className="space-y-3.5 font-medium">
               {resources.map((link) => (
@@ -138,7 +147,7 @@ export default function Footer() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                   </span>
-                  {isHi ? 'पोद्दार जी (AI सलाहकार)' : 'AI Advisor (Poddar Ji)'}
+                  {isBn ? 'পোদ্দার জী (AI উপদেষ্টা)' : isHi ? 'पोद्दार जी (AI सलाहकार)' : 'AI Advisor (Poddar Ji)'}
                 </Link>
               </li>
             </ul>
@@ -147,7 +156,7 @@ export default function Footer() {
           {/* Column 4: Contact Info */}
           <div>
             <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
-              {isHi ? 'संपर्क सूत्र' : 'Contact Details'}
+              {isBn ? 'যোগাযোগের তথ্য' : isHi ? 'संपर्क सूत्र' : 'Contact Details'}
             </h3>
             <div className="space-y-4 text-xs font-semibold">
               <div className="flex items-start gap-2.5">
@@ -166,7 +175,7 @@ export default function Footer() {
                   >
                     +91 {ADVISOR_PHONE}
                   </a>
-                  <a
+                  <a 
                     href="tel:+917007937104" 
                     className="text-gray-400 hover:text-white transition-colors"
                   >
@@ -199,10 +208,10 @@ export default function Footer() {
 
               <div className="pt-2 border-t border-gray-900 flex flex-col gap-1">
                 <span className="text-white/60 text-[10px] uppercase tracking-wider block">
-                  {isHi ? 'कार्यालय समय' : 'Office Hours'}
+                  {isBn ? 'অফিসের সময়' : isHi ? 'कार्यालय समय' : 'Office Hours'}
                 </span>
                 <span className="text-gray-500 text-[11px] font-medium">
-                  {isHi ? 'सोमवार - शनिवार: सुबह 9:00 - शाम 6:00' : 'Mon - Sat: 9:00 AM - 6:00 PM'}
+                  {isBn ? 'সোম - শনি: সকাল ৯:০০ - সন্ধ্যা ৬:০০' : isHi ? 'सोमवार - शनिवार: सुबह 9:00 - शाम 6:00' : 'Mon - Sat: 9:00 AM - 6:00 PM'}
                 </span>
               </div>
             </div>
@@ -216,7 +225,7 @@ export default function Footer() {
             {t.footer.rights || `© 2026 PODDAR WEALTH MANAGEMENT`}
             <span className="mx-2 hidden md:inline">|</span>
             <span className="text-amber-500/80 font-bold block md:inline mt-1 md:mt-0">
-              {isHi ? 'एमडीआरटी (MDRT) सदस्य | चेयरमैन क्लब अवॉर्डी' : 'MDRT Member | Chairman\'s Club awardee'}
+              {isBn ? 'MDRT সদস্য | চেয়ারম্যানস ক্লাব অ্যাওয়ার্ডপ্রাপ্ত' : isHi ? 'एमडीआरटी (MDRT) सदस्य | चेयरमैन क्लब अवॉर्डी' : 'MDRT Member | Chairman\'s Club awardee'}
             </span>
           </div>
 
@@ -225,14 +234,14 @@ export default function Footer() {
               href="/privacy-policy" 
               className="text-[11px] text-gray-500 hover:text-white font-medium transition-colors"
             >
-              {isHi ? 'गोपनीयता नीति' : 'Privacy Policy'}
+              {isBn ? 'গোপনীয়তা নীতি' : isHi ? 'गोपनीयता नीति' : 'Privacy Policy'}
             </Link>
             <span className="text-gray-800">·</span>
             <Link 
               href="/terms" 
               className="text-[11px] text-gray-500 hover:text-white font-medium transition-colors"
             >
-              {isHi ? 'सेवा की शर्तें' : 'Terms of Service'}
+              {isBn ? 'শর্তাবলী' : isHi ? 'सेवा की शर्तें' : 'Terms of Service'}
             </Link>
           </div>
 

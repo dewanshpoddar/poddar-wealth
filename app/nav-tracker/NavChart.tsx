@@ -259,8 +259,8 @@ export default function NavChart({ data, isHi = false }: NavChartProps) {
         <div
           className="absolute z-10 bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 shadow-xl pointer-events-none text-xs font-semibold text-white flex flex-col gap-0.5"
           style={{
-            left: `${hoverPos.x - 60}px`,
-            top: `${hoverPos.y - 65}px`
+            left: `${Math.max(4, Math.min(width - 124, hoverPos.x - 60))}px`,
+            top: `${hoverPos.y - 65 < 4 ? hoverPos.y + 15 : hoverPos.y - 65}px`
           }}
         >
           <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">

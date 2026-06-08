@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 
 // Index-stable links for each plan in t.banner.plans array
@@ -11,6 +12,9 @@ const PLAN_LINKS = [
 
 export default function ProblemSolutionSection() {
   const { t } = useLang()
+  const pathname = usePathname()
+
+  if (pathname?.startsWith('/lp/')) return null
 
   return (
     <div className="bg-navy py-2.5 overflow-hidden whitespace-nowrap flex relative z-50 shadow-md border-b border-gold/20">

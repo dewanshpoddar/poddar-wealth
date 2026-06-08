@@ -2,6 +2,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+import { usePathname } from 'next/navigation'
 import {
   Calculator, ArrowRight, ChevronDown, ChevronUp,
   Share2, CheckCircle2, Info, Search, Shield, TrendingUp, Star, RefreshCw,
@@ -20,7 +21,9 @@ import ResultsPanel from '@/components/calculators/ResultsPanel'
 import { LicPlan, PremiumResult, MaturityResult, BenefitRow, FundOption } from '@/lib/types/lic-plan'
 
 export default function PremiumCalculatorPage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const pathname = usePathname()
+  const isLP = pathname?.startsWith('/lp/')
 
   function shareResultWithAjay() {
     if (!selectedPlan || !premResult) return
@@ -610,14 +613,29 @@ export default function PremiumCalculatorPage() {
                     />
 
                     {/* WhatsApp share with Ajay sir CTA */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-6 text-center">
-                      <button
-                        onClick={shareResultWithAjay}
-                        className="w-full inline-flex h-14 bg-green-500 hover:bg-green-600 text-white font-bold text-[14px] md:text-[15px] rounded-xl items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-500/25 hover:-translate-y-0.5 cursor-pointer"
-                      >
-                        <MessageCircle size={18} className="text-white" />
-                        {t.calculator.shareWhatsApp}
-                      </button>
+                    <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.08)] p-6 text-center space-y-4">
+                      {isLP ? (
+                        <>
+                          <p className="text-xs font-bold text-navy uppercase tracking-wider block">
+                            {lang === 'en' ? "Want an expert's opinion?" : "क्या आप किसी विशेषज्ञ की सलाह चाहते हैं?"}
+                          </p>
+                          <button
+                            onClick={shareResultWithAjay}
+                            className="w-full inline-flex h-14 bg-green-500 hover:bg-green-600 text-white font-bold text-[14px] md:text-[15px] rounded-xl items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-500/25 hover:-translate-y-0.5 cursor-pointer font-sans"
+                          >
+                            <MessageCircle size={18} className="text-white" />
+                            {lang === 'en' ? 'Consult with Ajay Sir' : 'अजय सर से परामर्श करें'}
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={shareResultWithAjay}
+                          className="w-full inline-flex h-14 bg-green-500 hover:bg-green-600 text-white font-bold text-[14px] md:text-[15px] rounded-xl items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-500/25 hover:-translate-y-0.5 cursor-pointer"
+                        >
+                          <MessageCircle size={18} className="text-white" />
+                          {t.calculator.shareWhatsApp}
+                        </button>
+                      )}
                     </div>
                   </div>{/* end results panel */}
                 </div>{/* end slide container */}

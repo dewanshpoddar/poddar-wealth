@@ -2,8 +2,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import en from './en.json'
 import hi from './hi.json'
+import bn from './bn.json'
 
-type Lang = 'en' | 'hi'
+type Lang = 'en' | 'hi' | 'bn'
 type Translations = typeof en
 
 interface LangContextType {
@@ -16,12 +17,32 @@ const COOKIE_KEY   = 'pw_lang'
 const STORAGE_KEY  = 'pw_lang'
 const COOKIE_MAX   = 60 * 60 * 24 * 365  // 1 year
 
+// Helper to deeply merge objects
+function deepMerge(target: any, source: any): any {
+  const output = { ...target };
+  if (target && typeof target === 'object' && !Array.isArray(target) &&
+      source && typeof source === 'object' && !Array.isArray(source)) {
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = deepMerge(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
+}
+
 // ── Cookie helpers (no external dependency) ──────────────────────────────────
 function getCookie(): Lang | null {
   if (typeof document === 'undefined') return null
   const m = document.cookie.match(/(?:^|;\s*)pw_lang=([^;]+)/)
   const v = m?.[1]
-  return v === 'hi' ? 'hi' : v === 'en' ? 'en' : null
+  return v === 'hi' ? 'hi' : v === 'en' ? 'en' : v === 'bn' ? 'bn' : null
 }
 
 function setCookie(lang: Lang) {
@@ -33,28 +54,20 @@ function setCookie(lang: Lang) {
 function getUrlParam(): Lang | null {
   if (typeof window === 'undefined') return null
   const v = new URLSearchParams(window.location.search).get('lang')
-  return v === 'hi' ? 'hi' : v === 'en' ? 'en' : null
+  return v === 'hi' ? 'hi' : v === 'en' ? 'en' : v === 'bn' ? 'bn' : null
 }
 
 // ── Browser language detection (first-time visitors) ────────────────────────
-// Follows Amazon/Facebook pattern: detect Hindi browser users automatically
 function detectBrowserLang(): Lang {
   if (typeof navigator === 'undefined') return 'en'
   const langs = navigator.languages ?? [navigator.language]
   for (const l of langs) {
     if (l.startsWith('hi')) return 'hi'
+    if (l.startsWith('bn')) return 'bn'
   }
   return 'en'
 }
 
-/**
- * Priority chain (same as Amazon/Facebook/Google):
- *  1. URL ?lang= param          — explicit link, highest trust
- *  2. Cookie pw_lang            — returning user, private-mode safe
- *  3. localStorage pw_lang      — fast read, same-device persistence
- *  4. navigator.languages       — first-time visitor auto-detect
- *  5. 'en'                      — safe default
- */
 function resolveInitialLang(): Lang {
   const fromUrl     = getUrlParam()
   if (fromUrl) return fromUrl
@@ -64,7 +77,7 @@ function resolveInitialLang(): Lang {
 
   try {
     const fromStore = localStorage.getItem(STORAGE_KEY) as Lang | null
-    if (fromStore === 'hi' || fromStore === 'en') return fromStore
+    if (fromStore === 'hi' || fromStore === 'en' || fromStore === 'bn') return fromStore
   } catch { /* private mode may throw */ }
 
   return detectBrowserLang()
@@ -94,7 +107,14 @@ export function LangProvider({ children }: { children: ReactNode }) {
   }, [lang])
 
   const setLang = (l: Lang) => setLangState(l)
-  const t = lang === 'hi' ? hi as unknown as Translations : en
+
+  // bn falls back to hi, hi falls back to en
+  const mergedHi = deepMerge(en, hi)
+  const t = lang === 'bn'
+    ? deepMerge(mergedHi, bn) as unknown as Translations
+    : lang === 'hi'
+      ? mergedHi as unknown as Translations
+      : en
 
   return (
     <LangContext.Provider value={{ lang, setLang, t }}>

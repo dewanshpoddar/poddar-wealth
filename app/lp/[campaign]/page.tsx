@@ -1,0 +1,298 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
+import { Shield, Trophy, Star, Phone, MessageCircle, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+// Dynamically import calculator pages to keep micro-site templates fast-loading
+const PremiumCalculatorPage = dynamic(() => import('@/app/calculators/premium/page'), { ssr: false })
+const PolicyHealthCalculatorPage = dynamic(() => import('@/app/calculators/policy-health/page'), { ssr: false })
+
+export default function LandingCampaignPage() {
+  const params = useParams()
+  const campaign = params?.campaign as string
+
+  // Lead Form State (for life-insurance campaign)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+
+  // Handle Lead Form Submit
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!name || !phone) return
+
+    setLoading(true)
+    setErrorMsg('')
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          mobile: phone,
+          intent: `Landing Page Campaign: ${campaign}`
+        })
+      })
+      if (res.ok) {
+        setSuccess(true)
+        setName('')
+        setPhone('')
+      } else {
+        setErrorMsg('Failed to submit. Please try again or WhatsApp directly.')
+      }
+    } catch {
+      setErrorMsg('Failed to submit. Please try again or WhatsApp directly.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 1. CAMPAIGN A: Life Insurance Landing Page
+  if (campaign === 'life-insurance') {
+    return (
+      <div className="bg-gray-950 text-white min-h-screen flex flex-col font-sans">
+        {/* Minimal Header */}
+        <header className="bg-gray-900/50 border-b border-gray-800 h-12 flex items-center justify-between px-6 shrink-0 z-50">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/assets/pwm-logo.svg"
+              alt="Poddar Wealth Logo"
+              width={24}
+              height={24}
+              className="bg-white/5 p-0.5 rounded"
+            />
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-white">
+              Poddar Wealth
+            </span>
+          </div>
+          <a
+            href={`tel:+91${ADVISOR_PHONE}`}
+            className="flex items-center gap-1.5 text-[10px] sm:text-xs font-black text-amber-500 hover:text-amber-400 uppercase tracking-widest font-sans"
+          >
+            <Phone size={11} />
+            +91 {ADVISOR_PHONE}
+          </a>
+        </header>
+
+        {/* Hero Section */}
+        <main className="flex-1 flex flex-col justify-center items-center px-6 py-12 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-[80px] pointer-events-none" />
+          
+          <div className="w-full max-w-lg space-y-8 text-center">
+            
+            {/* Header Content */}
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest">
+                <Shield size={11} className="animate-pulse" />
+                MDRT Certified Advisor
+              </span>
+              <h1 className="text-3xl sm:text-5xl font-display font-black leading-tight text-white tracking-tight">
+                Secure Your Family&apos;s <span className="text-amber-500">Financial Future</span>
+              </h1>
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto font-medium">
+                Protect your dependents, grow your wealth, and save taxes with customized LIC life insurance plans tailored personally by Ajay Kumar Poddar.
+              </p>
+            </div>
+
+            {/* Inline Trust Stats */}
+            <div className="grid grid-cols-3 gap-2 py-4 border-y border-gray-800/80 max-w-md mx-auto">
+              <div className="text-center">
+                <div className="text-sm sm:text-base font-black text-white font-sans">31+</div>
+                <div className="text-[8px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Years Service</div>
+              </div>
+              <div className="text-center border-x border-gray-800/80">
+                <div className="text-sm sm:text-base font-black text-white font-sans">5000+</div>
+                <div className="text-[8px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Families</div>
+              </div>
+              <div className="text-center">
+                <div className="text-sm sm:text-base font-black text-amber-500 font-sans flex items-center justify-center gap-0.5">
+                  4.9<Star size={10} className="fill-current text-amber-500" />
+                </div>
+                <div className="text-[8px] sm:text-[9px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Google Rating</div>
+              </div>
+            </div>
+
+            {/* Lead Form Card */}
+            <div className="bg-gray-900/60 border border-gray-800 rounded-3xl p-6 shadow-2xl relative text-left">
+              {!success ? (
+                <form onSubmit={handleLeadSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 gap-3.5">
+                    <div>
+                      <label htmlFor="name" className="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1 px-1">
+                        Full Name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="e.g. Ramesh Sharma"
+                        className="w-full bg-gray-950 border border-gray-800 hover:border-gray-700 focus:border-amber-500 rounded-xl px-4 py-3 text-xs outline-none text-white font-semibold placeholder-gray-700"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1 px-1">
+                        WhatsApp Mobile Number
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        required
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                        placeholder="10-digit number"
+                        className="w-full bg-gray-950 border border-gray-800 hover:border-gray-700 focus:border-amber-500 rounded-xl px-4 py-3 text-xs outline-none text-white font-semibold placeholder-gray-700 font-sans"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-gray-800 text-white font-black text-xs py-3.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/10"
+                  >
+                    {loading ? (
+                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      'Get Free Consultation'
+                    )}
+                  </button>
+
+                  {errorMsg && (
+                    <div className="bg-rose-950/20 border border-rose-900/40 text-rose-400 text-[10px] font-bold py-2 rounded-xl text-center flex items-center justify-center gap-1">
+                      <AlertCircle size={10} />
+                      {errorMsg}
+                    </div>
+                  )}
+                </form>
+              ) : (
+                <div className="text-center py-6 space-y-4 animate-fade-in">
+                  <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-white text-base font-extrabold mb-1">Consultation Request Sent!</h3>
+                    <p className="text-gray-400 text-xs font-semibold leading-relaxed">
+                      Ajay sir (MDRT Member) will call you shortly on your WhatsApp number.
+                    </p>
+                  </div>
+                  <a
+                    href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
+                      'Hello Ajay sir, I requested a free consultation from your life insurance landing page. Please help me review policy options.'
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs py-3.5 rounded-xl items-center justify-center gap-1.5 shadow-md shadow-emerald-500/10 font-sans"
+                  >
+                    <MessageCircle size={14} className="fill-current" />
+                    Chat on WhatsApp Now
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Badges footer */}
+            <div className="flex items-center justify-center gap-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest pt-2">
+              <span className="flex items-center gap-1">
+                <Shield size={12} className="text-amber-500" />
+                MDRT Member
+              </span>
+              <span className="flex items-center gap-1">
+                <Trophy size={12} className="text-amber-500" />
+                Chairman&apos;s Club
+              </span>
+            </div>
+
+          </div>
+        </main>
+
+        {/* Persistent WhatsApp Floating Button */}
+        <a
+          href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
+            'Hello Ajay sir, I need advice regarding life insurance plans.'
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 animate-wa-pulse"
+          title="Consult on WhatsApp"
+        >
+          <MessageCircle size={24} className="fill-current" />
+        </a>
+      </div>
+    )
+  }
+
+  // 2. CAMPAIGN B & C: Calculator / Health Check Landing Pages
+  return (
+    <div className="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
+      {/* Minimal Header */}
+      <header className="bg-white border-b border-slate-100 h-12 flex items-center justify-between px-6 shrink-0 z-50">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/assets/pwm-logo.svg"
+            alt="Poddar Wealth Logo"
+            width={24}
+            height={24}
+          />
+          <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-navy">
+            Poddar Wealth
+          </span>
+        </div>
+        <a
+          href={`tel:+91${ADVISOR_PHONE}`}
+          className="flex items-center gap-1.5 text-[10px] sm:text-xs font-black text-amber-600 hover:text-amber-700 uppercase tracking-widest font-sans"
+        >
+          <Phone size={11} />
+          +91 {ADVISOR_PHONE}
+        </a>
+      </header>
+
+      {/* Embedded Component Main Panel */}
+      <main className="flex-grow">
+        {campaign === 'calculator' ? (
+          <div className="pb-12">
+            <PremiumCalculatorPage />
+          </div>
+        ) : campaign === 'health-check' ? (
+          <div className="pb-12">
+            <PolicyHealthCalculatorPage />
+          </div>
+        ) : (
+          <div className="py-24 text-center px-6">
+            <h1 className="text-xl font-bold text-navy">Campaign Page Not Found</h1>
+            <p className="text-gray-500 text-xs mt-2">Please verify the URL or return to home.</p>
+            <Link
+              href="/"
+              className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl mt-6 transition-all"
+            >
+              Return Home
+            </Link>
+          </div>
+        )}
+      </main>
+
+      {/* Persistent WhatsApp Floating Button */}
+      <a
+        href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
+          `Hello Ajay sir, I checked your ${campaign === 'calculator' ? 'Premium Calculator' : 'Policy Health Score'} on your landing page. I would like to consult with you.`
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 animate-wa-pulse"
+        title="Consult on WhatsApp"
+      >
+        <MessageCircle size={24} className="fill-current" />
+      </a>
+    </div>
+  )
+}

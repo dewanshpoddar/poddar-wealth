@@ -3,16 +3,84 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
+import { usePathname } from 'next/navigation'
 import { Calculator, Info, Phone, RefreshCw, AlertCircle, ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Download } from 'lucide-react'
 import { fmt, fmtSA } from '@/lib/format'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import type { PolicyHealthResult } from '@/lib/types/calculator'
 
+function LpLeadForm({ campaign }: { campaign: string }) {
+  const { lang } = useLang()
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!name || !phone) return
+    setLoading(true)
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          mobile: phone,
+          intent: `Landing Page Results Form: ${campaign}`
+        })
+      })
+      if (res.ok) setSuccess(true)
+    } catch {}
+    setLoading(false)
+  }
+
+  if (success) {
+    return (
+      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center text-xs font-bold text-emerald-800">
+        {lang === 'en' ? 'Consultation request sent! Ajay sir will call you shortly.' : 'पরামর্শ अनुरोध भेजा गया! अजय सर जल्द ही आपको कॉल करेंगे।'}
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-2 mt-2">
+      <input
+        type="text"
+        required
+        value={name}
+        onChange={e => setName(e.target.value)}
+        placeholder={lang === 'en' ? 'Your Name' : 'आपका नाम'}
+        className="w-full h-10 px-3 border border-gray-200 rounded-xl bg-gray-50 text-xs font-semibold focus:outline-none focus:border-gold focus:bg-white text-navy"
+      />
+      <input
+        type="tel"
+        required
+        pattern="[0-9]{10}"
+        maxLength={10}
+        value={phone}
+        onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
+        placeholder={lang === 'en' ? 'WhatsApp Number' : 'व्हाट्सएप नंबर'}
+        className="w-full h-10 px-3 border border-gray-200 rounded-xl bg-gray-50 text-xs font-semibold focus:outline-none focus:border-gold focus:bg-white text-navy font-sans"
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full h-10 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl flex items-center justify-center cursor-pointer transition-all shadow-sm"
+      >
+        {loading ? 'Submitting...' : (lang === 'en' ? 'Get Detailed Review' : 'विस्तृत समीक्षा प्राप्त करें')}
+      </button>
+    </form>
+  )
+}
+
 type PlanType = 'endowment' | 'term' | 'ulip' | 'money-back' | 'whole-life'
 
 export default function PolicyHealthCalculatorPage() {
   const { t, lang } = useLang()
+  const pathname = usePathname()
+  const isLP = pathname?.startsWith('/lp/')
   const p = t.policyHealth || {
     title: 'Policy Health Score',
     subtitle: "Get a free health score for your insurance portfolio. Find out if you're underinsured, overinsured, or just right.",
@@ -741,25 +809,36 @@ Please help me review these gaps and suggest the right plans.`
                   </div>
                   
                   <div className="border-t border-amber-200/50 pt-4 mt-2">
-                    <p className="text-xs font-bold text-slate-800 mb-3">{p.detailedReview}</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <a
-                        href={getWhatsAppCTAUrl(result.totalScore, result.grade)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex h-11 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
-                      >
-                        <MessageCircle size={16} />
-                        {lang === 'en' ? 'Discuss on WhatsApp' : 'व्हाट्सएप पर चर्चा करें'}
-                      </a>
-                      <a
-                        href={`tel:${ADVISOR_PHONE}`}
-                        className="inline-flex h-11 bg-navy hover:bg-navy/95 text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
-                      >
-                        <Phone size={14} />
-                        {lang === 'en' ? 'Call Ajay Sir' : 'अजय सर को कॉल करें'}
-                      </a>
-                    </div>
+                    {isLP ? (
+                      <>
+                        <p className="text-xs font-bold text-slate-800 mb-2">
+                          {lang === 'en' ? `Your score is ${result.totalScore}/100. Get a free detailed review.` : `आपका स्कोर ${result.totalScore}/100 है। मुफ्त विस्तृत समीक्षा प्राप्त करें।`}
+                        </p>
+                        <LpLeadForm campaign="health-check" />
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-xs font-bold text-slate-800 mb-3">{p.detailedReview}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <a
+                            href={getWhatsAppCTAUrl(result.totalScore, result.grade)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex h-11 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
+                          >
+                            <MessageCircle size={16} />
+                            {lang === 'en' ? 'Discuss on WhatsApp' : 'व्हाट्सएप पर चर्चा करें'}
+                          </a>
+                          <a
+                            href={`tel:${ADVISOR_PHONE}`}
+                            className="inline-flex h-11 bg-navy hover:bg-navy/95 text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
+                          >
+                            <Phone size={14} />
+                            {lang === 'en' ? 'Call Ajay Sir' : 'अजय सर को कॉल करें'}
+                          </a>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 

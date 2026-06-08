@@ -1587,5 +1587,16 @@
     "typeService": "Service",
     "typeFaq": "FAQ",
     "searchBtn": "Search"
+  },
+  "videos": {
+    "heroTitle": "Insurance Insights by Ajay Kumar Poddar",
+    "heroSubtitle": "Video guides on life insurance, health insurance, and wealth planning",
+    "comingSoonTitle": "Videos Coming Soon",
+    "comingSoonDesc": "Ajay sir is recording expert insurance videos. Subscribe to get notified when they launch.",
+    "subscribeBtn": "Subscribe",
+    "placeholderName": "Your Name",
+    "placeholderEmail": "Your Email",
+    "successMessage": "Subscribed successfully!",
+    "askPoddarJi": "Ask Poddar Ji"
   }
 }
