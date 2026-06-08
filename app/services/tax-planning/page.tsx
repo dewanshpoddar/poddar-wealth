@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import ConsultationSection from '@/components/ConsultationSection'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Shield, Heart, Landmark, Coins, Trophy } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
 import { useLang } from '@/lib/LangContext'
 
@@ -17,25 +17,25 @@ const benefits = [
 
 const taxTools = [
   {
-    icon: '🛡️',
+    icon: <Shield className="w-8 h-8 text-gold" />,
     title: 'Section 80C',
     limit: '₹1.5 Lakh/year',
     desc: 'Life insurance premiums, PPF, ELSS, NSC — all count toward this limit.',
   },
   {
-    icon: '❤️',
+    icon: <Heart className="w-8 h-8 text-gold" />,
     title: 'Section 80D',
     limit: '₹50,000/year',
     desc: 'Health insurance premiums for self, spouse, children, and parents.',
   },
   {
-    icon: '🏛️',
+    icon: <Landmark className="w-8 h-8 text-gold" />,
     title: 'Section 80CCD(1B)',
     limit: '₹50,000/year',
     desc: 'Additional NPS contribution — over and above the 80C limit.',
   },
   {
-    icon: '💰',
+    icon: <Coins className="w-8 h-8 text-gold" />,
     title: 'Section 10(10D)',
     limit: 'Unlimited',
     desc: 'Life insurance maturity and death benefits — completely tax-free.',
@@ -53,7 +53,7 @@ export default function TaxPlanningPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center text-white">
             <div>
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">
-                💰 Wealth & Tax Planning
+                <Coins className="w-4 h-4 text-gold" /> Wealth & Tax Planning
               </div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
                 Keep More of What You Earn
@@ -102,7 +102,9 @@ export default function TaxPlanningPage() {
                 ))}
               </ul>
               <div className="mt-8 bg-gold/5 border border-gold/20 rounded-2xl p-5">
-                <div className="font-display font-bold text-navy text-lg mb-1">🏆 Ajay&apos;s Advice</div>
+                <div className="font-display font-bold text-navy text-lg mb-1 flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-gold" /> Ajay&apos;s Advice
+                </div>
                 <p className="text-navy/80 text-sm leading-relaxed">
                   &quot;Most families overpay tax simply because their insurance and investments are not structured correctly. A single review session can save you ₹30,000–₹80,000 every year.&quot;
                 </p>

@@ -1,7 +1,7 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
+import { ArrowRight, CheckCircle2, User, Phone, MapPin, Trophy } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
 import { ADVISOR_PHONE } from '@/lib/constants'
@@ -65,7 +65,10 @@ export default function CriticalIllnessPage() {
                 ))}
               </ul>
               <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-5">
-                <div className="font-display font-bold text-amber-900 text-lg mb-1">{t.criticalIllness.advisorTitle}</div>
+                <div className="font-display font-bold text-amber-900 text-lg mb-1 flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-amber-600 flex-shrink-0" />
+                  {t.criticalIllness.advisorTitle}
+                </div>
                 <p className="text-amber-800 text-sm leading-relaxed">&quot;{t.criticalIllness.advisorText}&quot;</p>
               </div>
             </div>

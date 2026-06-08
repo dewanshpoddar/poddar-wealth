@@ -33,7 +33,7 @@ export default function GroupHealthPage() {
               </p>
             </div>
             <div className="bg-cyan-50 border border-cyan-100 rounded-3xl p-8 shadow-sm">
-              <h3 className="font-display font-bold text-cyan-950 text-xl mb-4">🏆 {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
+              <h3 className="font-display font-bold text-cyan-950 text-xl mb-4">★ {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
               <p className="text-cyan-900 text-sm leading-relaxed mb-4">
                 {lang === 'en'
                   ? "An employer-provided health policy is good, but it is temporary. If you lose your job or retire, you have zero cover. Getting a personal backup policy when you are young and healthy is vital to secure your family."

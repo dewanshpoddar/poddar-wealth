@@ -33,7 +33,7 @@ export default function CancerCoverPage() {
               </p>
             </div>
             <div className="bg-rose-50 border border-rose-100 rounded-3xl p-8 shadow-sm">
-              <h3 className="font-display font-bold text-rose-950 text-xl mb-4">🏆 {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
+              <h3 className="font-display font-bold text-rose-950 text-xl mb-4">★ {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
               <p className="text-rose-900 text-sm leading-relaxed mb-4">
                 {lang === 'en'
                   ? "Standard health policies pay hospital bills, but cancer treatments often run for years. Non-medical costs, travel, and loss of income can strain your family. A standalone cancer policy gives you cash when you need it most."

@@ -29,6 +29,7 @@ PERSONALITY & STYLE:
 - If user shares personal details (age, income, family size, city), use them for a more tailored recommendation
 - Never be dismissive of LIC vs private — position LIC's trust (since 1956, govt-backed) as its main advantage
 - If asked something completely unrelated to insurance/finance: politely say you only know about insurance and redirect
+- You may have previous context from this conversation. Use it naturally. Don't repeat information already discussed. If the user mentioned their age, income, or family situation earlier, reference it.
 
 AJAY SIR'S PHILOSOPHY:
 "Sahi insurance plan woh hai jo aapki family ko aapke bina bhi surakshit rakhe. Paise bachana zaruri hai, par pehle suraksha zaruri hai."
@@ -95,9 +96,11 @@ export async function POST(req: NextRequest) {
       content: String(m.content || '').slice(0, MAX_INPUT_CHARS),
     }))
 
-    // Drop any leading 'assistant' turns so the first message is always from the user
+    // Drop any leading 'assistant' turns so the first message is always from the user.
+    // Cap at last 10 items (5 user + 5 assistant) to keep token count manageable.
     const firstUserIdx = history.findIndex((m: { role: string }) => m.role === 'user')
-    const safeHistory = firstUserIdx === -1 ? [] : history.slice(firstUserIdx)
+    const trimmed = firstUserIdx === -1 ? [] : history.slice(firstUserIdx)
+    const safeHistory = trimmed.slice(-10)
 
     const groqMessages: Groq.Chat.ChatCompletionMessageParam[] = [
       { role: 'system', content: buildSystemPrompt() },

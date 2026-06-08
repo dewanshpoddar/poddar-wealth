@@ -33,7 +33,7 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
           <div className="grid lg:grid-cols-2 gap-12 items-center text-white">
             <div className="text-center lg:text-left">
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4.5 py-1.5 text-xs font-semibold tracking-wider uppercase mb-6 text-gold">
-                🏆 {lang === 'en' ? 'MDRT Advisor Near You' : 'आपके नज़दीक MDRT एडवाइज़र'}
+                <Award size={14} className="text-gold" /> {lang === 'en' ? 'MDRT Advisor Near You' : 'आपके नज़दीक MDRT एडवाइज़र'}
               </div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
                 {lang === 'hi' 

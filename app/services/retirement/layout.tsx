@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getServiceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Retirement Income Plans — LIC Pension & Annuity | Poddar Wealth',
@@ -10,5 +11,17 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  const schema = getServiceSchema(
+    'Retirement Planning',
+    'https://www.poddarwealth.com/services/retirement'
+  )
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      {children}
+    </>
+  )
 }

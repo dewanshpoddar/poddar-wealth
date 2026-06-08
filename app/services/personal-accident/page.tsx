@@ -33,7 +33,7 @@ export default function PersonalAccidentPage() {
               </p>
             </div>
             <div className="bg-amber-50 border border-amber-100 rounded-3xl p-8 shadow-sm">
-              <h3 className="font-display font-bold text-amber-900 text-xl mb-4">🏆 {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
+              <h3 className="font-display font-bold text-amber-900 text-xl mb-4">★ {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
               <p className="text-amber-800 text-sm leading-relaxed mb-4">
                 {lang === 'en'
                   ? "An accident can halt your income instantly. While health insurance covers hospital bills, a personal accident policy pays you a lump sum for disability and loss of earnings. It is the cheapest protection you can buy."

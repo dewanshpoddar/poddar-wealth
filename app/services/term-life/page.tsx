@@ -33,7 +33,7 @@ export default function TermLifePage() {
               </p>
             </div>
             <div className="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 shadow-sm">
-              <h3 className="font-display font-bold text-indigo-950 text-xl mb-4">🏆 {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
+              <h3 className="font-display font-bold text-indigo-950 text-xl mb-4">★ {lang === 'en' ? "Ajay's Advisory" : "अजय सर की सलाह"}</h3>
               <p className="text-indigo-900 text-sm leading-relaxed mb-4">
                 {lang === 'en'
                   ? "Many buy endowment plans thinking of returns, but they end up heavily underinsured. Term insurance is pure protection. It lets you secure a ₹1 Crore cover for your family for the cost of a dinner out. It is a must-have."
