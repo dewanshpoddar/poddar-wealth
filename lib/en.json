@@ -18,7 +18,7 @@
     "taxPlanning": "Wealth & Tax saving"
   },
   "banner": {
-    "text": "New LIC & Star Health plans launched — May 2026",
+    "text": "New LIC & Star Health plans launched in May 2026",
     "plans": [
       "LIC Jeevan Utsav",
       "Star Arogya Sanjeevani",
@@ -34,7 +34,7 @@
     "cta1": "Get Wealth Health Report",
     "cta2": "Book Free Wealth Consultation",
     "cta3": "Get Free Wealth Quote",
-    "trustQuote": "31 years of showing up — not just selling.",
+    "trustQuote": "31 years of showing up, not just selling.",
     "quickTitle": "What are you planning for?",
     "quickItems": [
       {
@@ -83,7 +83,7 @@
     {
       "icon": "🏆",
       "title": "Award-winning trust",
-      "sub": "MDRT Member & Chairman's Club — since 1994."
+      "sub": "MDRT Member & Chairman's Club, since 1994."
     }
   ],
   "trust": {
@@ -93,7 +93,7 @@
       {
         "icon": "🏆",
         "title": "MDRT Member",
-        "desc": "Million Dollar Round Table — top 1% of advisors globally"
+        "desc": "Million Dollar Round Table, top 1% of advisors globally"
       },
       {
         "icon": "⭐",
@@ -146,7 +146,7 @@
   "services": {
     "eyebrow": "Our services",
     "title": "Everything your family needs",
-    "subtitle": "From life cover to health plans, tax saving to keyman insurance — all under one roof in Gorakhpur.",
+    "subtitle": "From life cover to health plans, tax saving to keyman insurance, all under one one roof in Gorakhpur.",
     "items": [
       {
         "icon": "👨‍👩‍👧‍👦",
@@ -253,9 +253,9 @@
   "calculator": {
     "shareWhatsApp": "Share results with Ajay sir on WhatsApp",
     "shareWhatsAppHi": "अजय सर के साथ WhatsApp पर परिणाम साझा करें",
-    "eyebrow": "PODDAR WEALTH MANAGEMENT — free tool",
+    "eyebrow": "PODDAR WEALTH MANAGEMENT: free tool",
     "title": "LIC & Star Health premium calculator",
-    "subtitle": "Get an instant estimate for any plan. Actual premium depends on medical history — Ajay sir will confirm.",
+    "subtitle": "Get an instant estimate for any plan. Actual premium depends on medical history. Ajay sir will confirm.",
     "tabs": {
       "life": "Life insurance",
       "health": "Health insurance"
@@ -283,20 +283,20 @@
     "plans": [
       {
         "name": "LIC Jeevan Amar",
-        "type": "Pure term — no maturity benefit",
+        "type": "Pure term: no maturity benefit",
         "desc": "Lowest premium, highest cover. Best for income replacement.",
         "badge": "Most popular"
       },
       {
         "name": "LIC New Jeevan Anand",
         "type": "Endowment + whole life",
-        "desc": "Double benefit — death cover + maturity bonus at term end.",
+        "desc": "Double benefit, death cover + maturity bonus at term end.",
         "badge": "With returns"
       },
       {
         "name": "LIC Jeevan Umang",
         "type": "Whole life + annual payout",
-        "desc": "Survival benefit every year — lifetime income.",
+        "desc": "Survival benefit every year, providing lifetime income.",
         "badge": "Lifetime cover"
       }
     ],
@@ -312,9 +312,9 @@
     "incomeReplacement": "of income replacement"
   },
   "moat": {
-    "eyebrow": "PODDAR WEALTH MANAGEMENT — exclusive tool",
+    "eyebrow": "PODDAR WEALTH MANAGEMENT: exclusive tool",
     "title": "Your family's financial moat score",
-    "subtitle": "Answer 12 quick questions — get a personalised protection score across 4 pillars. Free, instant, no registration.",
+    "subtitle": "Answer 12 quick questions, get a personalised protection score across 4 pillars. Free, instant, no registration.",
     "steps": [
       "Life cover",
       "Health cover",
@@ -323,13 +323,13 @@
       "Your score"
     ],
     "gapsTitle": "Key gaps identified",
-    "ctaTitle": "Get Ajay sir to fix these gaps — free consultation",
+    "ctaTitle": "Get Ajay sir to fix these gaps, free consultation",
     "ctaSub": "Call 9415313434 or click to send your score"
   },
   "emotional": {
     "quote": "Aapke jaane ke baad bhi,",
     "quoteGold": "aapka parivaar surakshit rahe.",
-    "story": "For 31 years, Ajay Kumar Poddar has been sitting across the table from Gorakhpur families — understanding their dreams, their fears, and building protection around both. Not just policies. Peace of mind.",
+    "story": "For 31 years, Ajay Kumar Poddar has been sitting across the table from Gorakhpur families, understanding their dreams, their fears, and building protection around both. Not just policies. Peace of mind.",
     "stats": [
       {
         "num": "5000+",
@@ -346,14 +346,14 @@
     ],
     "trustCard": {
       "title": "Gorakhpur ki families ka bharosa",
-      "desc": "Every family in our register has a story — a goal protected, a claim settled, a future secured."
+      "desc": "Every family in our register has a story, a goal protected, a claim settled, a future secured."
     },
     "promise": {
       "title": "The Poddar Promise",
       "items": [
-        "Home visit for policy explanation — in Hindi",
-        "Claim support at every step — we sit with you",
-        "No pressure, no targets — only what fits your family",
+        "Home visit for policy explanation, in Hindi",
+        "Claim support at every step, we sit with you",
+        "No pressure, no targets, only what fits your family",
         "Premium collection at our Vijay Chowk centre"
       ]
     }
@@ -361,7 +361,7 @@
   "testimonials": {
     "eyebrow": "Real families, real stories",
     "title": "What Gorakhpur families say",
-    "subtitle": "31 years of keeping promises — one family at a time.",
+    "subtitle": "31 years of keeping promises, one family at a time.",
     "items": [
       {
         "name": "Sunita Devi",
@@ -472,7 +472,7 @@
   "chatbot": {
     "eyebrow": "Available 24 / 7",
     "title": "Ask Poddar Ji",
-    "subtitle": "31 years of LIC and Star Health expertise, now available at any hour. Ask in Hindi or English — get an answer in seconds.",
+    "subtitle": "31 years of LIC and Star Health expertise, now available at any hour. Ask in Hindi or English, get an answer in seconds.",
     "topicsLabel": "Try asking:",
     "topics": [
       "Term cover for age 35, ₹6L income",
@@ -484,20 +484,20 @@
     ],
     "curiosityQueries": [
       "₹50L term plan ka premium kitna hoga?",
-      "LIC vs Private — kaunsa safe hai?",
+      "LIC vs Private, kaunsa safe hai?",
       "Bachche ki padhai ke liye plan?",
       "Star Health Gorakhpur mein cashless kahan?",
       "Ajay sir ki top 3 policy kaunsi hai?",
       "Retirement ke liye ₹10,000/month kaafi hai?"
     ],
     "headerName": "Poddar Ji",
-    "statusText": "Online — replies in seconds",
+    "statusText": "Online: replies in seconds",
     "badges": [
       "LIC expert",
       "Star Health",
       "Hindi + English"
     ],
-    "greeting": "Namaste! Main Poddar Ji hun — Poddar Wealth Management ka AI insurance advisor. 🙏\n\nLIC, Star Health, retirement, tax planning — koi bhi sawaal Hindi ya English mein puchiye.\n\nAap kya jaanna chahte hain?",
+    "greeting": "Namaste! Main Poddar Ji hun, Poddar Wealth Management ka AI insurance advisor. 🙏\n\nLIC, Star Health, retirement, tax planning, koi bhi sawaal Hindi ya English mein puchiye.\n\nAap kya jaanna chahte hain?",
     "chips": [
       "टर्म प्लान क्या है?",
       "बच्चों का प्लान",
@@ -512,18 +512,18 @@
       "Retirement ke liye LIC Jeevan Shanti ya Jeevan Umang mein kya difference hai?",
       "LIC claim process kya hai? Documents kya chahiye?"
     ],
-    "placeholder": "Ask Poddar Ji — Hindi ya English mein...",
-    "disclaimer": "AI responses are indicative. Exact premiums confirmed by Ajay sir — 9415313434"
+    "placeholder": "Ask Poddar Ji: Hindi ya English mein...",
+    "disclaimer": "AI responses are indicative. Exact premiums confirmed by Ajay sir: 9415313434"
   },
   "agent": {
     "eyebrow": "Career opportunity",
     "title": "Become an LIC agent under Ajay Kumar Poddar",
     "subtitle": "Join Eastern UP's most experienced Agency Recruitment Officer and build a lifelong income. Full training, mentorship, and the backing of 31 years of trust.",
     "perks": [
-      "Lifetime renewal commission — earn while you sleep",
+      "Lifetime renewal commission, earn while you sleep",
       "Full training & mentorship from an MDRT professional",
       "Work from Gorakhpur, Deoria, Kushinagar, or anywhere in UP",
-      "Flexible hours — suitable for housewives, retired persons, graduates",
+      "Flexible hours, suitable for housewives, retired persons, graduates",
       "Bonus, contests, and Chairman's Club recognition"
     ],
     "formTitle": "Express your interest",
@@ -539,14 +539,14 @@
       "city": "e.g. Gorakhpur, Deoria",
       "profession": "e.g. Graduate, Housewife, Retired"
     },
-    "submit": "Send interest — Ajay sir will call you"
+    "submit": "Send interest, Ajay sir will call you"
   },
   "aboutSection": {
     "eyebrow": "Meet your advisor",
     "name": "Ajay Kumar Poddar",
     "badges": [
       {
-        "text": "MDRT Member — USA",
+        "text": "MDRT Member (USA)",
         "type": "gold"
       },
       {
@@ -562,7 +562,7 @@
         "type": "blue"
       }
     ],
-    "bio": "Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994. With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognised by the Million Dollar Round Table (MDRT, USA)."
+    "bio": "Based at AD Mall Compound, Vijay Chowk, Gorakhpur, the heart of Eastern UP, Ajay Kumar Poddar has been helping families secure their future since 1994. With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognised by the Million Dollar Round Table (MDRT, USA)."
   },
   "footer": {
     "brand": "PODDAR WEALTH MANAGEMENT",
@@ -580,11 +580,11 @@
   },
   "about": {
     "heroTitle": "31 Years of Putting Families First",
-    "heroSubtitle": "Meet Ajay Kumar Poddar — Gorakhpur's most trusted insurance advisor",
+    "heroSubtitle": "Meet Ajay Kumar Poddar, Gorakhpur's most trusted insurance advisor",
     "storyTitle": "The Story Behind Poddar Wealth",
-    "story": "Since 1994, Ajay Kumar Poddar has been helping families in Eastern UP secure their future. Today, Poddar Wealth is a name synonymous with trust, simplicity, and genuine care — protecting 5000+ families across Gorakhpur, Deoria, Kushinagar, and beyond.",
+    "story": "Since 1994, Ajay Kumar Poddar has been helping families in Eastern UP secure their future. Today, Poddar Wealth is a name synonymous with trust, simplicity, and genuine care, protecting 5000+ families across Gorakhpur, Deoria, Kushinagar, and beyond.",
     "missionTitle": "Our Mission",
-    "mission": "To make insurance simple, honest, and accessible for every Indian family — regardless of income or education level.",
+    "mission": "To make insurance simple, honest, and accessible for every Indian family, regardless of income or education level.",
     "valuesTitle": "Our Values",
     "values": [
       {
@@ -595,7 +595,7 @@
       {
         "icon": "💡",
         "title": "Simplicity",
-        "desc": "We explain complex products in plain, simple language — in Hindi"
+        "desc": "We explain complex products in plain, simple language, in Hindi"
       },
       {
         "icon": "❤️",
@@ -605,12 +605,12 @@
       {
         "icon": "📞",
         "title": "Always Available",
-        "desc": "Personal advisor who picks up your calls — 9415313434"
+        "desc": "Personal advisor who picks up your calls, 9415313434"
       }
     ]
   },
   "lifeInsurance": {
-    "heroTitle": "Life Insurance: The Ultimate Gift to Your Family",
+    "heroTitle": "Life Insurance: The Essential Gift to Your Family",
     "heroSubtitle": "If something happens to you, your family's dreams shouldn't die too.",
     "whyTitle": "Why Every Earning Member Needs Life Insurance",
     "typesTitle": "Types of Life Insurance",
@@ -639,13 +639,13 @@
   },
   "becomeAdvisor": {
     "heroTitle": "Build a Career That Protects Families",
-    "heroSubtitle": "Join Ajay Kumar Poddar's team — Eastern UP's most experienced Agency Recruitment Officer",
+    "heroSubtitle": "Join Ajay Kumar Poddar's team, Eastern UP's most experienced Agency Recruitment Officer",
     "whyTitle": "Why Become an LIC Agent?",
     "benefits": [
       {
         "icon": "💰",
         "title": "Lifetime Commission",
-        "desc": "Renewal commission keeps coming — earn while you sleep."
+        "desc": "Renewal commission keeps coming, earn while you sleep."
       },
       {
         "icon": "⏰",
@@ -707,7 +707,7 @@
     ]
   },
   "contact": {
-    "heroTitle": "Let's Talk — We're Here for You",
+    "heroTitle": "Let's Talk, We're Here for You",
     "heroSubtitle": "A real person will answer. No bots, no call centers.",
     "formTitle": "Send Us a Message",
     "infoTitle": "Contact Information",
@@ -742,7 +742,7 @@
   },
   "leadForm": {
     "title": "Get Your Free Insurance Review",
-    "subtitle": "Tell us about yourself — we'll recommend the best plan",
+    "subtitle": "Tell us about yourself, we'll recommend the best plan",
     "name": "Your Name",
     "phone": "WhatsApp Number",
     "age": "Your Age",
@@ -820,7 +820,7 @@
     },
     "saveBadge": "Private · Confidential · Free",
     "saveTitle": "Get Ajay sir's personal review of this blueprint",
-    "saveBody": "Ajay sir personally reviews every blueprint submitted here and calls with a specific, no-script action plan — not a sales call. Your data is never sold or shared.",
+    "saveBody": "Ajay sir personally reviews every blueprint submitted here and calls with a specific, no-script action plan, not a sales call. Your data is never sold or shared.",
     "namePlaceholder": "Your name",
     "phonePlaceholder": "WhatsApp number",
     "saveBtn": "Save & Book Call",
@@ -833,9 +833,9 @@
     "eyebrow": "Free Consultation",
     "heading": "Book a free 30-min call",
     "headingGold": "with Ajay sir personally.",
-    "body": "No scripts. No call centre. Ajay Kumar Poddar reviews your situation himself and recommends exactly what your family needs — nothing more.",
+    "body": "No scripts. No call centre. Ajay Kumar Poddar reviews your situation himself and recommends exactly what your family needs, nothing more.",
     "trust": [
-      "MDRT Member — top 1% of advisors globally",
+      "MDRT Member, top 1% of advisors globally",
       "31 years · Personal call, not a call centre",
       "5,000+ families protected across India"
     ],
@@ -843,7 +843,7 @@
     "responseTime": "2–4 hours",
     "responseContext": "on business days",
     "formTitle": "Get your free plan review",
-    "formSubtitle": "Just your name and number — Ajay does the rest.",
+    "formSubtitle": "Just your name and number, Ajay does the rest.",
     "submitText": "Book Free Call with Ajay →",
     "successTitle": "Call booked! 🎉",
     "successMessage": "Ajay sir will personally call you within 2–4 hours on business days. No scripts, no sales pressure.",
@@ -912,7 +912,7 @@
     "heroEyebrow": "CLAIM SUPPORT CENTRE",
     "heroTitle": "We stand with you",
     "heroTitleGold": "during claims.",
-    "heroSubtitle": "For over three decades, Ajay Kumar Poddar has personally hand-delivered claims to families when they needed it most. No call centres, no automation — just complete support when it matters.",
+    "heroSubtitle": "For over three decades, Ajay Kumar Poddar has personally hand-delivered claims to families when they needed it most. No call centres, no automation, just complete support when it matters.",
     "processTitle": "Simple 4-Step Claim Process",
     "processSubtitle": "We guide you and handle the paperwork at every single stage.",
     "steps": [
@@ -1022,7 +1022,7 @@
         },
         {
           "q": "What is term insurance?",
-          "a": "Term insurance (such as LIC Jeevan Amar) is pure life protection. It offers the maximum life cover (Sum Assured) at the lowest possible premium. It does not have a maturity benefit, making it the highest-leverage tool to secure your family's future income if something happens to you."
+          "a": "Term insurance (such as LIC Jeevan Amar) is pure life protection. It offers the maximum life cover (Sum Assured) at the lowest possible premium. It does not have a maturity benefit, making it the most efficient tool to secure your family's future income if something happens to you."
         },
         {
           "q": "What is an endowment plan?",
@@ -1072,7 +1072,7 @@
   },
   "renew": {
     "hero": "Renew Your Insurance Policy",
-    "heroSub": "Stay protected — let us track your renewal dates and remind you before they lapse.",
+    "heroSub": "Stay protected, let us track your renewal dates and remind you before they lapse.",
     "name": "Full Name",
     "phone": "Mobile Number",
     "policyNo": "Policy Number",
@@ -1082,7 +1082,7 @@
     "submit": "Request Renewal Reminder",
     "successTitle": "Renewal Request Received!",
     "successMsg": "Ajay sir will personally contact you before your renewal due date. Your policy will not lapse.",
-    "trustNote": "We track your renewal dates — no policy lapses on our watch."
+    "trustNote": "We track your renewal dates, no policy lapses on our watch."
   },
   "testimonialsPage": {
     "heroEyebrow": "TRUST & VERIFICATION",
@@ -1138,7 +1138,7 @@
   "compare": {
     "title": "Compare Plans",
     "hero": "Compare Insurance Plans Side by Side",
-    "heroSub": "Pick 2 or 3 LIC plans and see them side by side — premiums, benefits, and features at a glance.",
+    "heroSub": "Pick 2 or 3 LIC plans and see them side by side: premiums, benefits, and features at a glance.",
     "selectPlans": "Select plans to compare",
     "addPlan": "Add a plan",
     "comparePlans": "Compare Plans",
@@ -1157,7 +1157,7 @@
   },
   "exitIntent": {
     "title": "Wait! Get Your FREE Wealth Health Report",
-    "subtitle": "Let Ajay sir review your current insurance and spot the gaps — free, no obligation.",
+    "subtitle": "Let Ajay sir review your current insurance and spot the gaps, free, no obligation.",
     "namePlaceholder": "Your name",
     "phonePlaceholder": "10-digit mobile",
     "submit": "Get My Free Report",
@@ -1227,7 +1227,7 @@
   "criticalIllness": {
     "heroTitle": "Lump Sum Cover for Life's Biggest Health Challenges",
     "heroSubtitle": "Focus on recovery, not medical bills, with guaranteed massive cash payouts.",
-    "benefitsTitle": "Comprehensive Financial Shield Against Critical Ailments",
+    "benefitsTitle": "Complete Financial Shield Against Critical Ailments",
     "benefits": [
       "Get a lump sum payout immediately upon diagnosis of cancer, heart attack, or major diseases",
       "Protect your life savings from high treatment costs and medical inflation",
@@ -1235,7 +1235,7 @@
       "Avail full cashless hospital access at over 12,000+ top network hospitals"
     ],
     "advisorTitle": "Ajay sir's Advisory",
-    "advisorText": "Medical inflation in India is rising at 14% annually. A major diagnosis like cancer or a bypass surgery doesn't just impact health — it can wipe out a lifetime of family savings. A critical illness plan guarantees a massive tax-free cash payout upon diagnosis, ensuring you get top-tier hospital care.",
+    "advisorText": "Medical inflation in India is rising at 14% annually. A major diagnosis like cancer or a bypass surgery doesn't just impact health. It can wipe out a lifetime of family savings. A critical illness plan guarantees a massive tax-free cash payout upon diagnosis, ensuring you get top-tier hospital care.",
     "contactTitle": "Want to compare health floaters vs critical illness cover?",
     "contactSub": "Discuss details directly with Ajay sir on WhatsApp for clear, honest financial guidance.",
     "ctaConsult": "Protect My Family",
@@ -1263,7 +1263,7 @@
     "privacy": "We never share your policy details or phone number. 100% secure."
   },
   "insuranceQuiz": {
-    "title": "Free Insurance Quiz — Find the Right Plan for You",
+    "title": "Free Insurance Quiz, Find the Right Plan for You",
     "subtitle": "Answer 4 quick questions to find the absolute best insurance recommendations for your life stage.",
     "introText": "which insurance do I need | insurance recommendation | best insurance for me",
     "step1Title": "Step 1: What is your current life stage?",
@@ -1330,7 +1330,7 @@
     "sumAssuredLabel": "Sum Assured (₹)",
     "policyYearLabel": "Policy Years Completed",
     "bonusAccruedLabel": "Bonus Accrued (₹, Optional)",
-    "bonusHelper": "Leave blank if unsure — we'll estimate without bonus",
+    "bonusHelper": "Leave blank if unsure, we'll estimate without bonus",
     "calculateButton": "Calculate Loan Amount",
     "resultTitle": "Loan Eligibility Details",
     "maxLoanAmount": "Maximum Loan Amount",
@@ -1350,7 +1350,7 @@
     "whatsappText": "Hello Ajay sir, I need help with insurance."
   },
   "personalAccident": {
-    "heroTitle": "Personal Accident Insurance — Complete Protection",
+    "heroTitle": "Personal Accident Insurance, Complete Protection",
     "heroSubtitle": "Financial security when life throws unexpected challenges. Protect your family's income against accidental death and disability.",
     "whyTitle": "Why You Need Personal Accident Protection",
     "whatIsIt": "Accidents happen without warning. While health insurance covers hospital bills, it does not replace lost income due to disability. Personal accident insurance pays a lump sum to support your family if you are unable to work.",
@@ -1372,7 +1372,7 @@
     "ctaWhatsApp": "Discuss Accident Plans"
   },
   "cancerCover": {
-    "heroTitle": "Cancer Insurance — Early Detection Saves Lives & Money",
+    "heroTitle": "Cancer Insurance, Early Detection Saves Lives & Money",
     "heroSubtitle": "Do not let cancer drain your hard-earned life savings. Secure payouts on early and major stage diagnosis.",
     "whyTitle": "Why Standalone Cancer Cover is Essential",
     "whyText": "Cancer treatment costs in India range from ₹5 lakh to ₹30 lakh. Standard health insurance often falls short or runs out quickly. A dedicated cancer cover pays a lump sum to help you seek the best treatment.",
@@ -1392,7 +1392,7 @@
     "ctaWhatsApp": "Discuss Cancer Cover"
   },
   "termLife": {
-    "heroTitle": "Term Life Insurance — Maximum Protection at Lowest Cost",
+    "heroTitle": "Term Life Insurance, Maximum Protection at Lowest Cost",
     "heroSubtitle": "Pure protection with no maturity value. Secure a massive financial cover for your family at an affordable price.",
     "whyTitle": "Why Everyone Under 45 Needs Term Cover",
     "whyText": "If you have dependents, you need term insurance. It is the cheapest way to secure your family's future. In my experience, buying a plan early locks in low premiums that stay same for life.",
@@ -1492,9 +1492,9 @@
     "badge": "AI-POWERED",
     "title": "Understand Your LIC Policy in Seconds",
     "subtitle": "Upload your policy document and get a clear, plain-language summary. No jargon. No confusion.",
-    "privacyNotice": "🔒 Secure — your document is never stored. Analysis happens instantly.",
+    "privacyNotice": "🔒 Secure, your document is never stored. Analysis happens instantly.",
     "dropzoneTitle": "Drop your LIC policy PDF here",
-    "dropzoneSubtitle": "or click to browse — Max 5MB",
+    "dropzoneSubtitle": "or click to browse, Max 5MB",
     "analyzeButton": "Analyze Policy",
     "loadingReading": "Reading your policy document...",
     "loadingAnalyzing": "Analyzing with AI...",

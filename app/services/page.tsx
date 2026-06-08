@@ -63,7 +63,7 @@ export default function ServicesPage() {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="pw-eyebrow text-gold/80 mb-4">{t.services.eyebrow}</div>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-white italic leading-tight mb-6">
-            Comprehensive Protection <span className="text-gold">For Everything You Value</span>
+            Complete Protection <span className="text-gold">For Everything You Value</span>
           </h1>
           <p className="text-white/60 text-[16px] md:text-[18px] max-w-2xl mx-auto leading-relaxed">
             {t.services.subtitle}

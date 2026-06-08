@@ -15,8 +15,8 @@ const features = [
 ]
 
 const types = [
-  { title: 'Individual Health Plan', desc: 'Comprehensive coverage for one person, ideal for young professionals.', tag: 'Individual' },
-  { title: 'Family Floater Plan', desc: 'One plan covers entire family — cost-effective and convenient.', tag: 'Most Popular' },
+  { title: 'Individual Health Plan', desc: 'Complete coverage for one person, ideal for young professionals.', tag: 'Individual' },
+  { title: 'Family Floater Plan', desc: 'One plan covers entire family, cost-effective and convenient.', tag: 'Most Popular' },
   { title: 'Senior Citizen Plan', desc: 'Specialized plans for parents aged 60+, covering pre-existing conditions.', tag: 'For Parents' },
   { title: 'Critical Illness Plan', desc: 'Lump-sum payout on diagnosis of major illness like cancer, heart attack.', tag: 'Add-on' },
 ]

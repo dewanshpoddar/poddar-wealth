@@ -18,14 +18,14 @@ const CATEGORY_LABEL: Record<string, string> = {
 
 const ROWS = [
   { key: 'type',        label: 'Plan Type',        hi: 'प्लान प्रकार',       fmt: (p: any) => CATEGORY_LABEL[p.category] ?? p.category },
-  { key: 'entryAge',    label: 'Entry Age',         hi: 'प्रवेश आयु',         fmt: (p: any) => `${p.minAge}–${p.maxAge} yrs` },
-  { key: 'term',        label: 'Policy Term',       hi: 'पॉलिसी अवधि',        fmt: (p: any) => p.minTerm && p.maxTerm ? `${p.minTerm}–${p.maxTerm} yrs` : p.ppt === 'single' ? 'Single Premium' : 'Flexible' },
-  { key: 'minSA',       label: 'Min Sum Assured',   hi: 'न्यूनतम बीमा राशि',   fmt: (p: any) => p.minSA ? `₹${(p.minSA / 100000).toFixed(0)}L` : '—' },
+  { key: 'entryAge',    label: 'Entry Age',         hi: 'प्रवेश आयु',         fmt: (p: any) => `${p.minAge}-${p.maxAge} yrs` },
+  { key: 'term',        label: 'Policy Term',       hi: 'पॉलिसी अवधि',        fmt: (p: any) => p.minTerm && p.maxTerm ? `${p.minTerm}-${p.maxTerm} yrs` : p.ppt === 'single' ? 'Single Premium' : 'Flexible' },
+  { key: 'minSA',       label: 'Min Sum Assured',   hi: 'न्यूनतम बीमा राशि',   fmt: (p: any) => p.minSA ? `₹${(p.minSA / 100000).toFixed(0)}L` : '-' },
   { key: 'death',       label: 'Death Benefit',     hi: 'मृत्यु लाभ',          fmt: (p: any) => p.deathBenefitFormula ?? 'Sum Assured + Bonus' },
   { key: 'maturity',    label: 'Maturity Benefit',  hi: 'मैच्योरिटी लाभ',      fmt: (p: any) => p.category === 'term' ? 'None (pure protection)' : (p.maturityFormula ?? 'SA + Bonuses') },
-  { key: 'xirr',       label: 'Expected XIRR',     hi: 'अपेक्षित XIRR',       fmt: (p: any) => p.xirr ?? '—' },
+  { key: 'xirr',       label: 'Expected XIRR',     hi: 'अपेक्षित XIRR',       fmt: (p: any) => p.xirr ?? '-' },
   { key: 'tax',         label: 'Tax Benefit',       hi: 'टैक्स लाभ',           fmt: () => '80C + 10(10D)' },
-  { key: 'bestFor',     label: 'Best For',          hi: 'किसके लिए',            fmt: (p: any) => p.bestFor ?? '—' },
+  { key: 'bestFor',     label: 'Best For',          hi: 'किसके लिए',            fmt: (p: any) => p.bestFor ?? '-' },
 ]
 
 function ComparePageContent() {

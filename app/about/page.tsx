@@ -111,13 +111,15 @@ export default function AboutPage() {
                animate={{ opacity: 1, scale: 1 }}
                className="relative lg:block hidden"
             >
-               <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 flex flex-col items-center justify-center text-slate-400 group">
-                  <Camera size={36} className="text-slate-300 mb-2" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    {isHi ? 'चित्र जल्द ही आ रहा है' : 'Photo coming soon'}
-                  </span>
+               <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 group">
+                  <Image
+                    src="/assets/gorakhpur-office-render.png"
+                    alt="Gorakhpur Office Render"
+                    fill
+                    className="object-cover"
+                  />
                   
-                  <div className="absolute bottom-8 right-8 w-24 h-24 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex flex-col items-center justify-center text-center p-2">
+                  <div className="absolute bottom-8 right-8 w-24 h-24 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex flex-col items-center justify-center text-center p-2 z-10">
                      <Star size={12} className="text-gold fill-gold mb-1" />
                      <div className="text-[8px] font-bold text-white uppercase tracking-[0.2em] leading-tight">
                        {isHi ? <>1994 <br/> से</> : <>Since <br/> 1994</>}
@@ -167,12 +169,14 @@ export default function AboutPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden flex flex-col items-center justify-center text-slate-400 group"
+                  className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden group"
                 >
-                  <Camera size={48} className="text-slate-300 mb-3" />
-                  <span className="text-[14px] font-bold uppercase tracking-wider text-slate-400">
-                    {isHi ? 'चित्र जल्द ही आ रहा है' : 'Photo coming soon'}
-                  </span>
+                  <Image
+                    src="/assets/ajay-poddar.svg"
+                    alt="Ajay Kumar Poddar"
+                    fill
+                    className="object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/5 via-transparent to-transparent opacity-60 pointer-events-none" />
                 </MotionDiv>
                 

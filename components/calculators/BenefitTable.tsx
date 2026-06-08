@@ -30,15 +30,15 @@ export default function BenefitTable({ data, sa, showAllRows, setShowAllRows }: 
                 ${row.survivalPayout ? 'bg-amber-50/60' : ''}`}>
               <td className="px-3 py-2 font-bold text-gold">{row.year}</td>
               <td className="px-3 py-2 text-gray-500">{row.age}</td>
-              <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '—'}</td>
+              <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '-'}</td>
               <td className="px-3 py-2 font-semibold">{fmt(row.cumPremiumPaid)}</td>
               <td className="px-3 py-2">{fmtSA(sa)}</td>
-              <td className="px-3 py-2 text-blue-600">{row.annualBonus ? fmt(row.annualBonus) : '—'}</td>
-              <td className="px-3 py-2 text-blue-700 font-semibold">{row.cumBonus ? fmt(row.cumBonus) : '—'}</td>
+              <td className="px-3 py-2 text-blue-600">{row.annualBonus ? fmt(row.annualBonus) : '-'}</td>
+              <td className="px-3 py-2 text-blue-700 font-semibold">{row.cumBonus ? fmt(row.cumBonus) : '-'}</td>
               <td className="px-3 py-2 font-bold text-red-600">{fmt(row.deathBenefit)}</td>
-              <td className="px-3 py-2 text-amber-700">{row.gsv ? fmt(row.gsv) : '—'}</td>
+              <td className="px-3 py-2 text-amber-700">{row.gsv ? fmt(row.gsv) : '-'}</td>
               <td className="px-3 py-2 font-bold text-green-700">
-                {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '—'}
+                {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '-'}
               </td>
             </tr>
           ))}

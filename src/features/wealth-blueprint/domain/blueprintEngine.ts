@@ -188,7 +188,7 @@ export function getProtectionPlan(p: WealthProfile, bp: ReturnType<typeof calcBl
       no: '01', category: 'Pure Term Life Insurance', planName: plan, planDetail: detail,
       cover: `₹${bp.termNeedL} Lakhs sum assured`,
       monthly: bp.termMo, annual: bp.termMo * 12,
-      why: `Closes your ₹${fmt(bp.gapL)}L protection gap. A pure term plan is the highest-leverage financial product that exists: ₹${fmt(bp.termMo)}/month buys ₹${fmt(bp.termNeedL)}L of coverage. LIC's claim settlement ratio: 98.6% (FY2024). Premium locked at today's age — any delay increases premium permanently.`,
+      why: `Closes your ₹${fmt(bp.gapL)}L protection gap. A pure term plan is the most efficient financial product that exists: ₹${fmt(bp.termMo)}/month buys ₹${fmt(bp.termNeedL)}L of coverage. LIC's claim settlement ratio: 98.6% (FY2024). Premium locked at today's age — any delay increases premium permanently.`,
       priority: 'critical',
     })
   }

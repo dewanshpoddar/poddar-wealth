@@ -71,8 +71,8 @@ export default function NavJeevanShreePage() {
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi
-              ? 'एलआईसी नव जीवन श्री प्लान — सम्पूर्ण जानकारी 2026'
-              : 'LIC Nav Jeevan Shree Plan — Complete Details 2026'}
+              ? 'एलआईसी नव जीवन श्री प्लान: सम्पूर्ण जानकारी 2026'
+              : 'LIC Nav Jeevan Shree Plan: Complete Details 2026'}
           </h1>
           <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             {isHi
@@ -109,9 +109,9 @@ export default function NavJeevanShreePage() {
             </p>
             <p>
               {isHi ? (
-                <>इसके साथ ही, एलआईसी ने इस प्लान के साथ एक विशेष स्वास्थ्य संरक्षण राइडर — <strong>Critical Illness Health Rider</strong> पेश किया है, जो गंभीर बीमारियों की स्थिति में एक बड़ा वित्तीय सहारा बनता है।</>
+                <>इसके साथ ही, एलआईसी ने इस प्लान के साथ एक विशेष स्वास्थ्य संरक्षण राइडर, <strong>Critical Illness Health Rider</strong>, पेश किया है, जो गंभीर बीमारियों की स्थिति में एक बड़ा वित्तीय सहारा बनता है।</>
               ) : (
-                <>Additionally, the plan features a highly comprehensive **Critical Illness Health Rider**, which serves as an essential safety net by providing lump-sum financial support upon the diagnosis of major critical illnesses.</>
+                <>Additionally, the plan features a protective **Critical Illness Health Rider**, which serves as an essential safety net by providing lump-sum financial support upon the diagnosis of major critical illnesses.</>
               )}
             </p>
           </div>
@@ -199,9 +199,9 @@ export default function NavJeevanShreePage() {
           <div className="text-slate-600 text-sm md:text-base space-y-4 leading-relaxed">
             <p>
               {isHi ? (
-                <>एलआईसी का यह नया <strong>Critical Illness Health Rider</strong> एक बहुत बड़ा गेम-चेंजर है। आज के समय में कैंसर, दिल का दौरा, ब्रेन स्ट्रोक या किडनी फेलियर जैसी बीमारियाँ न केवल शारीरिक बल्कि गंभीर वित्तीय संकट भी लाती हैं।</>
+                <>एलआईसी का यह नया <strong>Critical Illness Health Rider</strong> एक बहुत ही महत्वपूर्ण सुरक्षा राइडर है। आज के समय में कैंसर, दिल का दौरा, ब्रेन स्ट्रोक या किडनी फेलियर जैसी बीमारियाँ न केवल शारीरिक बल्कि गंभीर वित्तीय संकट भी लाती हैं।</>
               ) : (
-                <>{"LIC's"} new **Critical Illness Health Rider** launched in 2026 is a massive game-changer. Severe health issues like cancer, stroke, cardiac arrests, or kidney failure often bring severe emotional and extreme financial strains on the entire household.</>
+                <>{"LIC's"} new **Critical Illness Health Rider** launched in 2026 is a crucial protective upgrade. Severe health issues like cancer, stroke, cardiac arrests, or kidney failure often bring severe emotional and extreme financial strains on the entire household.</>
               )}
             </p>
             <p>

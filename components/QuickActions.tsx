@@ -28,8 +28,8 @@ export default function QuickActions() {
         hi: 'बीमा क्विज़'
       },
       sub: {
-        en: '2 min — find the right plan',
-        hi: '2 मिनट — सही प्लान का पता लगाएं'
+        en: '2 min: find the right plan',
+        hi: '2 मिनट: सही प्लान का पता लगाएं'
       },
       href: '/insurance-quiz'
     },

@@ -267,7 +267,7 @@ export default function ContactPage() {
               </div>
 
               <div className="bg-green-50 border border-green-200 rounded-3xl p-6">
-                <h3 className="font-bold text-green-800 mb-3 flex items-center gap-2"><MessageCircle size={18} /> {t.contactPage.whatsappAlt}</h3>
+                <h3 className="font-bold text-green-800 mb-3 flex items-center gap-2"><MessageCircle size={18} /> {t.contactPage?.whatsappAlt || (isHi ? 'क्या आप व्हाट्सएप पसंद करते हैं?' : 'Prefer WhatsApp?')}</h3>
                 <p className="text-green-700 text-sm mb-4">Ajay responds to WhatsApp messages personally — usually within a few hours during business days.</p>
                 <a
                   href={`https://wa.me/${t.whatsapp.number}?text=Hi Ajay ji, I need insurance advice.`}

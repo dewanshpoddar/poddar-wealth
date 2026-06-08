@@ -93,7 +93,7 @@ export default function ExitIntentPopup() {
               {c.title ?? 'Wait! Get Your FREE Wealth Health Report'}
             </h3>
             <p className="text-gray-500 text-sm text-center mb-5 leading-relaxed">
-              {c.subtitle ?? 'Let Ajay sir review your current insurance and spot the gaps — free, no obligation.'}
+              {c.subtitle ?? 'Let Ajay sir review your current insurance and spot the gaps, free, no obligation.'}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">

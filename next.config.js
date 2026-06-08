@@ -22,6 +22,7 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  optimizeFonts: false,
   async headers() {
     return [
       { source: '/(.*)', headers: securityHeaders },
@@ -68,4 +69,4 @@ module.exports = withSentryConfig(nextConfig, {
   project: "poddarwealth",
   disableLogger: true,
   dryRun: !process.env.SENTRY_AUTH_TOKEN,
-})
+});

@@ -23,7 +23,7 @@ function ChatWindow() {
   )
 }
 
-export default function ChatBot() {
+export default function ChatBot({ standalone = false }: { standalone?: boolean }) {
   const { t } = useLang()
 
   const trustPoints = [
@@ -31,6 +31,14 @@ export default function ChatBot() {
     { icon: <Trophy className="w-4 h-4 text-amber-500" />, text: 'MDRT-level expertise built in' },
     { icon: <Zap className="w-4 h-4 text-amber-500" />, text: 'Instant replies, available 24/7' },
   ]
+
+  if (standalone) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-12">
+        <ChatWindow />
+      </div>
+    )
+  }
 
   return (
     <section className="py-20 lg:py-24 bg-white border-t border-slate-100 overflow-hidden">

@@ -11,5 +11,5 @@ const AIChatWidget = dynamic(
 )
 
 export default function AIAdvisorClient() {
-  return <AIChatWidget />
+  return <AIChatWidget standalone />
 }

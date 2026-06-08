@@ -203,7 +203,7 @@ export default function ResultsPanel({
                               ? `₹ ${sa.toLocaleString('en-IN')}`
                               : isUlip
                               ? 'Market-linked'
-                              : (matResult?.maturity ? `₹ ${Math.round(matResult.maturity).toLocaleString('en-IN')}` : '—')}
+                              : (matResult?.maturity ? `₹ ${Math.round(matResult.maturity).toLocaleString('en-IN')}` : '-')}
                           </div>
                           <div className="text-[10px] text-gray-500 mt-1">
                             {isTermPlan ? 'on death claim' : isUlip ? 'depends on NAV at maturity' : `at age ${age + safeterm}`}
@@ -379,7 +379,7 @@ export default function ResultsPanel({
                         {!isTermPlan && matResult && matResult.maturity > 0 && (
                           <div className="bg-white rounded-2xl border border-[rgba(184,134,11,0.08)] shadow-sm p-5">
                             <div className="bg-navy px-5 py-2.5 -mx-5 -mt-5 mb-5 rounded-t-2xl">
-                              <span className="text-white font-bold text-[12px]">Benefit Pattern — Illustration</span>
+                              <span className="text-white font-bold text-[12px]">Benefit Pattern: Illustration</span>
                             </div>
                             {/* Visual timeline */}
                             <div className="relative py-6 px-4">
@@ -433,7 +433,7 @@ export default function ResultsPanel({
                               {[
                                 { label: 'Total\nPremium Paid', value: Math.round(premResult.totalPaid).toLocaleString('en-IN'), color: 'text-navy' },
                                 { label: 'Total\nReturns',      value: Math.round(matResult.maturity).toLocaleString('en-IN'),   color: 'text-green-700' },
-                                { label: `Tax Saved\n(30% Slab)`, value: tax80C ? Math.round(tax80C).toLocaleString('en-IN') : '—', color: 'text-blue-600' },
+                                { label: `Tax Saved\n(30% Slab)`, value: tax80C ? Math.round(tax80C).toLocaleString('en-IN') : '-', color: 'text-blue-600' },
                               ].map(({ label, value }, i) => (
                                 <div key={i} className={`bg-navy text-center py-3 px-2 ${i < 2 ? 'border-r border-white/10' : ''}`}>
                                   <div className="text-[9px] text-white/60 leading-tight whitespace-pre-line mb-1">{label}</div>
@@ -524,7 +524,7 @@ export default function ResultsPanel({
                                   <div className="text-[12px] font-semibold text-gray-700">Section 80C Deduction</div>
                                   <div className="text-[10px] text-gray-500">Up to ₹1.5L from taxable income</div>
                                 </div>
-                                <div className="text-[13px] font-bold text-green-700">{tax80C ? `~${fmt(tax80C)}` : '—'}</div>
+                                <div className="text-[13px] font-bold text-green-700">{tax80C ? `~${fmt(tax80C)}` : '-'}</div>
                               </div>
                               <div className="flex justify-between">
                                 <div>
@@ -574,9 +574,9 @@ export default function ResultsPanel({
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                               {[
-                                { label: 'Expected XIRR',    value: xirr ? `~${xirr}% p.a.` : selectedPlan.xirr ?? '—' },
-                                { label: 'Money Multiplier', value: multiplier ? `${multiplier}×` : '—' },
-                                { label: 'Total Bonus',      value: matResult?.totalBonus ? fmt(matResult.totalBonus) : '—' },
+                                { label: 'Expected XIRR',    value: xirr ? `~${xirr}% p.a.` : selectedPlan.xirr ?? '-' },
+                                { label: 'Money Multiplier', value: multiplier ? `${multiplier}×` : '-' },
+                                { label: 'Total Bonus',      value: matResult?.totalBonus ? fmt(matResult.totalBonus) : '-' },
                               ].map(({ label, value }) => (
                                 <div key={label} className="bg-white rounded-xl p-3 border border-gold/10 text-center">
                                   <div className="text-[10px] text-gray-500 mb-0.5">{label}</div>
@@ -618,15 +618,15 @@ export default function ResultsPanel({
                                             ${row.survivalPayout ? 'bg-amber-50/60' : ''}`}>
                                           <td className="px-3 py-2 font-bold text-gold">{row.year}</td>
                                           <td className="px-3 py-2 text-gray-500">{row.age}</td>
-                                          <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '—'}</td>
+                                          <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '-'}</td>
                                           <td className="px-3 py-2 font-semibold">{fmt(row.cumPremiumPaid)}</td>
                                           <td className="px-3 py-2">{fmtSA(sa)}</td>
-                                          <td className="px-3 py-2 text-blue-600">{row.annualBonus ? fmt(row.annualBonus) : '—'}</td>
-                                          <td className="px-3 py-2 text-blue-700 font-semibold">{row.cumBonus ? fmt(row.cumBonus) : '—'}</td>
+                                          <td className="px-3 py-2 text-blue-600">{row.annualBonus ? fmt(row.annualBonus) : '-'}</td>
+                                          <td className="px-3 py-2 text-blue-700 font-semibold">{row.cumBonus ? fmt(row.cumBonus) : '-'}</td>
                                           <td className="px-3 py-2 font-bold text-red-600">{fmt(row.deathBenefit)}</td>
-                                          <td className="px-3 py-2 text-amber-700">{row.gsv ? fmt(row.gsv) : '—'}</td>
+                                          <td className="px-3 py-2 text-amber-700">{row.gsv ? fmt(row.gsv) : '-'}</td>
                                           <td className="px-3 py-2 font-bold text-green-700">
-                                            {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '—'}
+                                            {row.maturityPayout ? fmt(row.maturityPayout) : row.survivalPayout ? fmt(row.survivalPayout) : '-'}
                                           </td>
                                         </tr>
                                       ))}
@@ -648,7 +648,7 @@ export default function ResultsPanel({
                         <div className="flex flex-col sm:flex-row gap-3">
                           {selectedPlan.status === 'withdrawn' ? (
                             <div className="flex-1 bg-slate-100 border border-slate-200 text-slate-500 font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 text-[13px]">
-                              <Info className="w-4 h-4" /> Plan discontinued — for legacy policy calc only
+                              <Info className="w-4 h-4" /> Plan discontinued, for legacy policy calc only
                             </div>
                           ) : (
                             <button

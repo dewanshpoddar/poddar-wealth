@@ -174,7 +174,7 @@ export default function GoogleReviewsBadge() {
                       ))}
                     </div>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                      — {author}
+                      - {author}
                     </span>
                   </div>
                 </div>

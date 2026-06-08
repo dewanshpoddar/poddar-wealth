@@ -11,7 +11,7 @@ export default function ClientOnlyBanner() {
 
   useEffect(() => {
     const cookies = document.cookie.split(';').map(c => c.trim())
-    const consent = cookies.find(c => c.startsWith('CookieConsent='))
+    const consent = cookies.find(c => c.startsWith('poddar-wealth-consent='))
     if (consent) {
       // Returning visitor — restore GA4 consent without loading the library
       if (consent.includes('=true') && typeof gtag !== 'undefined') {
