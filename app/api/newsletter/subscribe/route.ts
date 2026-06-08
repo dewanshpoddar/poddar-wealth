@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { clean, pushToSheets } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
+import { sendWelcomeEmail } from '@/lib/email'
 import type { NewsletterSubscribeResponse } from '@/lib/types/newsletter'
 
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
@@ -78,5 +79,7 @@ export async function POST(request: Request): Promise<NextResponse<NewsletterSub
   }
 
   logger.info('/api/newsletter/subscribe', 'New subscriber', { ip })
+  // Fire-and-forget welcome email — don't fail subscription if email fails
+  sendWelcomeEmail(email).catch(() => {})
   return NextResponse.json({ success: true, message: 'Subscribed successfully! Welcome to Poddar Wealth insights.' })
 }
