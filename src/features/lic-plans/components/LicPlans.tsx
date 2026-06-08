@@ -4,8 +4,35 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
-import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp, Trophy, Flame, TrendingUp, Star, Sparkles, Landmark, Coins, Infinity as InfinityIcon, GraduationCap, LineChart, BarChart3, Sprout } from 'lucide-react'
 import { openLeadPopup } from '@/lib/events'
+
+function getBadgeIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🏆': return <Trophy size={11} className="inline" />
+    case '🔥': return <Flame size={11} className="inline fill-current" />
+    case '📈': return <TrendingUp size={11} className="inline" />
+    case '⭐': return <Star size={11} className="inline fill-current" />
+    case '✨': return <Sparkles size={11} className="inline" />
+    default: return null
+  }
+}
+
+function getCategoryIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🏦': return <Landmark size={14} className="inline" />
+    case '💰': return <Coins size={14} className="inline" />
+    case '♾️': return <InfinityIcon size={14} className="inline" />
+    case '🛡️': return <Shield size={14} className="inline" />
+    case '🎓': return <GraduationCap size={14} className="inline" />
+    case '📈': return <LineChart size={14} className="inline" />
+    case '📊': return <BarChart3 size={14} className="inline" />
+    case '🌾': return <Sprout size={14} className="inline" />
+    default: return null
+  }
+}
 
 import { useLicPlans } from '../hooks/useLicPlans'
 import {
@@ -486,7 +513,7 @@ export default function LicPlans() {
                       <div className="relative h-16 flex-shrink-0 flex items-center justify-between px-4"
                         style={{ background: `linear-gradient(120deg, ${accent}18 0%, ${accent}08 100%)`, borderBottom: `2px solid ${accent}22` }}>
                         <div className="flex items-center gap-1.5">
-                          <span className="text-16">{catIcon}</span>
+                          <span className="text-14 flex items-center">{getCategoryIcon(catIcon)}</span>
                           <span className="text-10 font-bold uppercase tracking-wider" style={{ color: accent }}>{catLabel}</span>
                         </div>
                         <span className="text-10 font-bold bg-white/70 border text-gray-400 px-2 py-0.5 rounded-lg"
@@ -500,7 +527,7 @@ export default function LicPlans() {
                           {badge && (
                             <span className="inline-flex items-center gap-1 text-10 font-bold px-2 py-0.5 rounded-full"
                               style={{ background: badge.bg, color: badge.color }}>
-                              {badge.icon} {badge.label}
+                              {getBadgeIcon(badge.icon)} {badge.label}
                             </span>
                           )}
                           <h3 className="text-15 font-bold text-navy leading-snug group-hover:text-[#1a3a72] transition-colors">

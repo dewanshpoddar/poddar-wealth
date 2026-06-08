@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
+import { PDFParse } from 'pdf-parse'
 import { clean } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
 import { adminNotify } from '@/lib/admin-notify'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import type { PolicyAnalysis, AnalyzerResponse, AnalyzerError } from '@/lib/types/analyzer'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
@@ -49,7 +51,7 @@ Return ONLY a JSON object with these exact keys:
   "recommendation": "One specific, actionable recommendation for this policyholder based on the policy details"
 }
 
-The summary and recommendation must be written in simple English that someone with no insurance knowledge can understand. The recommendation should be specific to what you see in the document (e.g. 'Your policy matures in 2027 — start planning how to reinvest the maturity amount', or 'Your policy is lapsed — contact Ajay Kumar Poddar at 9415313434 immediately to revive it before the revival period ends').
+The summary and recommendation must be written in simple English that someone with no insurance knowledge can understand. The recommendation should be specific to what you see in the document (e.g. 'Your policy matures in 2027 — start planning how to reinvest the maturity amount', or 'Your policy is lapsed — contact Ajay Kumar Poddar at ${ADVISOR_PHONE} immediately to revive it before the revival period ends').
 
 Policy document text:
 ${text}`
@@ -68,7 +70,7 @@ export async function POST(request: Request): Promise<NextResponse<AnalyzerRespo
     // Rate limit
     if (!checkRateLimit(ip)) {
       return NextResponse.json(
-        { success: false, error: 'Too many requests. You can analyze up to 5 documents per hour. Call Ajay sir at 9415313434 for immediate assistance.' },
+        { success: false, error: `Too many requests. You can analyze up to 5 documents per hour. Call Ajay sir at ${ADVISOR_PHONE} for immediate assistance.` },
         { status: 429 }
       )
     }
@@ -101,11 +103,13 @@ export async function POST(request: Request): Promise<NextResponse<AnalyzerRespo
     try {
       const arrayBuffer = await file.arrayBuffer()
       const buffer = Buffer.from(arrayBuffer)
-      // Use direct lib path to avoid pdf-parse loading its test PDF
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const pdfParse = require('pdf-parse/lib/pdf-parse.js')
-      const data = await pdfParse(buffer)
-      pdfText = data.text?.trim() ?? ''
+      const parser = new PDFParse({ data: buffer })
+      try {
+        const data = await parser.getText()
+        pdfText = data.text?.trim() ?? ''
+      } finally {
+        await parser.destroy()
+      }
     } catch (err) {
       logger.warn('/api/analyzers/policy-document', 'PDF parse failed', { error: String(err) })
       return NextResponse.json(
@@ -146,7 +150,7 @@ export async function POST(request: Request): Promise<NextResponse<AnalyzerRespo
         detail: String(err),
       }).catch(() => {})
       return NextResponse.json(
-        { success: false, error: 'Analysis service temporarily unavailable. Please try again in a moment or call Ajay sir at 9415313434.' },
+        { success: false, error: `Analysis service temporarily unavailable. Please try again in a moment or call Ajay sir at ${ADVISOR_PHONE}.` },
         { status: 500 }
       )
     }
@@ -162,7 +166,7 @@ export async function POST(request: Request): Promise<NextResponse<AnalyzerRespo
     return NextResponse.json({
       success: true,
       analysis,
-      disclaimer: 'This analysis is AI-generated and may contain errors. Please verify all details with your LIC branch or call Ajay Kumar Poddar at 9415313434 for a complete personal review.',
+      disclaimer: `This analysis is AI-generated and may contain errors. Please verify all details with your LIC branch or call Ajay Kumar Poddar at ${ADVISOR_PHONE} for a complete personal review.`,
     })
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : String(error)

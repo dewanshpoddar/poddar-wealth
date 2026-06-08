@@ -103,8 +103,8 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
 function BotText({ text, showCursor }: { text: string; showCursor: boolean }) {
   return (
     <div className="text-[12px] leading-relaxed prose prose-sm max-w-none
-      prose-p:my-0.5 prose-ul:my-1 prose-li:my-0 prose-strong:text-navy
-      prose-p:text-slate-700 prose-li:text-slate-700">
+      prose-p:my-0.5 prose-ul:my-1 prose-li:my-0 prose-strong:text-navy dark:prose-strong:text-amber-500
+      prose-p:text-slate-700 dark:prose-p:text-gray-200 prose-li:text-slate-700 dark:prose-li:text-gray-200">
       <ReactMarkdown>{text}</ReactMarkdown>
       {showCursor && (
         <span className="inline-block w-0.5 h-3 bg-slate-400 ml-0.5 animate-pulse align-middle" />
@@ -231,15 +231,15 @@ export default function PoddarJiChatUI({
           )
 
           return (
-            <div key={i} className={`flex gap-2 ${isUser ? 'flex-row-reverse' : ''}`}>
+            <div key={i} className={`flex gap-2 ${isUser ? 'justify-end text-right' : ''}`}>
               {!isUser && (
                 <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0 mt-0.5">PJ</div>
               )}
-              <div className={`max-w-[80%] ${isUser ? '' : 'flex-1'}`}>
+              <div className={`max-w-[80%] ${isUser ? 'ml-auto' : 'flex-1 text-left'}`}>
                 <div className={`px-3.5 py-2.5 rounded-2xl ${
                   isUser
-                    ? 'bg-navy text-white rounded-br-sm text-[12px] leading-relaxed'
-                    : 'bg-white text-slate-700 border border-slate-100 rounded-bl-sm shadow-sm'
+                    ? 'bg-amber-500/10 text-slate-800 dark:text-slate-200 rounded-br-sm text-[12px] leading-relaxed text-right'
+                    : 'bg-gray-100 dark:bg-gray-800 text-slate-700 dark:text-gray-200 border-none rounded-bl-sm shadow-sm'
                 }`}>
                   {isUser ? (
                     m.text
@@ -264,9 +264,10 @@ export default function PoddarJiChatUI({
 
         {/* Typing indicator (800ms delay before stream starts) */}
         {chat.typing && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-start">
             <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0">PJ</div>
-            <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-sm px-3.5 py-3 shadow-sm">
+            <div className="bg-gray-100 dark:bg-gray-800 border-none rounded-2xl rounded-bl-sm px-3.5 py-3 shadow-sm flex items-center gap-2 max-w-[80%]">
+              <span className="text-[12px] text-slate-500 dark:text-slate-400">Poddar Ji is thinking</span>
               <TypingDots />
             </div>
           </div>

@@ -101,9 +101,30 @@ function getLeadDone(): boolean {
 }
 
 // ── Main hook ──────────────────────────────────────────────────────────────
+// ── Main hook ──────────────────────────────────────────────────────────────
 export function usePoddarJiChat(greeting: string) {
   const [sessionId]  = useState(getOrCreateSessionId)
-  const [messages, setMessages]   = useState<Message[]>(() => loadCachedMessages(greeting))
+  const [history, setHistory] = useState<Array<{role: string, content: string}>>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      const saved = sessionStorage.getItem('poddarji_history')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+  
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const initialMsgs = history.map(h => ({
+      from: (h.role === 'user' ? 'user' : 'bot') as 'user' | 'bot',
+      text: h.content
+    }))
+    if (initialMsgs.length === 0) {
+      return [{ from: 'bot', text: greeting }]
+    }
+    return initialMsgs
+  })
+
   const [input, setInput]         = useState('')
   const [typing, setTyping]       = useState(false)
   const [streaming, setStreaming] = useState(false)
@@ -111,8 +132,12 @@ export function usePoddarJiChat(greeting: string) {
   const [followUps, setFollowUps] = useState<string[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
 
-  // Persist messages to localStorage on every change (fast, device-local cache)
-  useEffect(() => { saveMessages(messages) }, [messages])
+  // Persist history to sessionStorage on every change
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('poddarji_history', JSON.stringify(history))
+    }
+  }, [history])
 
   // Auto-scroll
   useEffect(() => {
@@ -133,10 +158,11 @@ export function usePoddarJiChat(greeting: string) {
 
   const clearChat = () => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(LS_MSGS)
+      sessionStorage.removeItem('poddarji_history')
       localStorage.removeItem(LS_SID)
       localStorage.removeItem(LS_LEADDONE)
     }
+    setHistory([])
     setMessages([{ from: 'bot', text: greeting }])
     setLeadDone(false)
     setFollowUps([])
@@ -149,8 +175,9 @@ export function usePoddarJiChat(greeting: string) {
     setInput('')
     setFollowUps([])
 
-    const updated: Message[] = [...messages, { from: 'user', text }]
-    setMessages(updated)
+    const updatedHistory = [...history, { role: 'user', content: text }]
+    setHistory(updatedHistory)
+    setMessages(prev => [...prev, { from: 'user', text }])
     setTyping(true)
 
     try {
@@ -159,10 +186,8 @@ export function usePoddarJiChat(greeting: string) {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            sessionId,
-            messages: updated
-              .filter(m => !m.card)
-              .map(m => ({ role: m.from === 'user' ? 'user' : 'assistant', content: m.text })),
+            message: text,
+            conversationHistory: updatedHistory.slice(-10)
           }),
         }),
         new Promise<void>(r => setTimeout(r, 800)),
@@ -190,12 +215,14 @@ export function usePoddarJiChat(greeting: string) {
         })
       }
 
-      // Stream done — turn off cursor
+      // Stream done
       setStreaming(false)
       setFollowUps(getFollowUps(fullText))
 
-      // Lead card injection after 3 user messages (only once, only if not already done)
-      // Check full messages state (includes cached history), not just current session's updated
+      // Append bot response to history
+      setHistory(prev => [...prev, { role: 'assistant', content: fullText }])
+
+      // Lead card injection
       setMessages(prev => {
         const totalUserCount = prev.filter(m => m.from === 'user').length
         const alreadyHasCard = prev.some(m => m.card)
@@ -210,6 +237,7 @@ export function usePoddarJiChat(greeting: string) {
       const fallback = getFallback(text)
       const errorPrefix = '⚠️ _Abhi thoda connection issue hai — yeh mera best answer hai:_\n\n'
       const fullFallback = errorPrefix + fallback
+      
       setMessages(prev => {
         const msgs = [...prev]
         if (msgs[msgs.length - 1]?.from === 'bot' && msgs[msgs.length - 1]?.text === '') {
@@ -218,6 +246,9 @@ export function usePoddarJiChat(greeting: string) {
         }
         return [...msgs, { from: 'bot', text: fullFallback }]
       })
+
+      setHistory(prev => [...prev, { role: 'assistant', content: fullFallback }])
+
       fetch('/api/chat/log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -4,9 +4,17 @@ import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
 import QuickActions from '@/components/QuickActions'
 import TrustSection from '@/components/TrustSection'
-import ServicesSection from '@/components/ServicesSection'
-import GoogleReviewsBadge from '@/components/GoogleReviewsBadge'
 import LazySection from '@/components/LazySection'
+
+const ServicesSection = dynamic(
+  () => import('@/components/ServicesSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
+)
+
+const GoogleReviewsSection = dynamic(
+  () => import('@/components/GoogleReviewsSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
 
 // Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
@@ -65,11 +73,23 @@ export default function HomePage() {
       {/* 2 — Trust stats bar */}
       <TrustSection />
 
-      {/* 3 — Google Reviews Trust Badge */}
-      <GoogleReviewsBadge />
+      {/* 3 — Google Reviews Live Widget */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <GoogleReviewsSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 4 — Services discovery */}
-      <ServicesSection />
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <ServicesSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 5 — Product browser teaser */}
       <SectionBoundary>

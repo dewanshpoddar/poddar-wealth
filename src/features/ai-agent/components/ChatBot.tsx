@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { usePoddarJiChat } from '../hooks/usePoddarJiChat'
 import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
+import { Languages, Trophy, Zap } from 'lucide-react'
 
 function ChatWindow() {
   const { t } = useLang()
@@ -26,9 +27,9 @@ export default function ChatBot() {
   const { t } = useLang()
 
   const trustPoints = [
-    { icon: '🇮🇳', text: 'Answers in Hindi & English' },
-    { icon: '🏆', text: 'MDRT-level expertise built in' },
-    { icon: '⚡', text: 'Instant replies, available 24/7' },
+    { icon: <Languages className="w-4 h-4 text-amber-500" />, text: 'Answers in Hindi & English' },
+    { icon: <Trophy className="w-4 h-4 text-amber-500" />, text: 'MDRT-level expertise built in' },
+    { icon: <Zap className="w-4 h-4 text-amber-500" />, text: 'Instant replies, available 24/7' },
   ]
 
   return (
@@ -65,7 +66,7 @@ export default function ChatBot() {
                   transition={{ delay: i * 0.1 }}
                   className="flex items-center gap-3"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-navy/5 flex items-center justify-center text-[16px] flex-shrink-0">{item.icon}</div>
+                  <div className="w-8 h-8 rounded-lg bg-navy/5 flex items-center justify-center flex-shrink-0">{item.icon}</div>
                   <span className="text-[14px] font-medium text-slate-700">{item.text}</span>
                 </motion.div>
               ))}

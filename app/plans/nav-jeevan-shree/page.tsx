@@ -143,7 +143,7 @@ export default function NavJeevanShreePage() {
                 <>
                   <li><strong>Maturity Benefit:</strong> On survival to the end of the policy term, the policyholder receives the full Basic Sum Assured along with accrued bonuses in a lump sum.</li>
                   <li><strong>Death Benefit:</strong> In case of an unfortunate demise during the term, a substantial sum assured is paid to the nominee to secure their lifestyle.</li>
-                  <li><strong>Compounding Bonus:</strong> The plan participates in LIC's annual profits by accumulating reversionary bonuses, enhancing the maturity fund value.</li>
+                  <li><strong>Compounding Bonus:</strong> The plan participates in {"LIC's"} annual profits by accumulating reversionary bonuses, enhancing the maturity fund value.</li>
                   <li><strong>Loan Facility:</strong> Access liquidity during emergencies through policy loans after 2 years for regular plans, or almost instantly for single premium modes.</li>
                   <li><strong>Tax Savings:</strong> Under Section 80C, premiums paid qualify for tax deductions, and the maturity payout is tax-exempt under Section 10(10D).</li>
                 </>
@@ -183,7 +183,7 @@ export default function NavJeevanShreePage() {
               ) : (
                 <>
                   <li><strong>Risk-Averse Investors:</strong> Individuals seeking stable, sovereign-backed returns without exposing their hard-earned capital to stock market volatility.</li>
-                  <li><strong>Dual Goal Seekers:</strong> Families wanting to combine essential life protection with systematic wealth building for future milestones like children's higher education.</li>
+                  <li><strong>Dual Goal Seekers:</strong> Families wanting to combine essential life protection with systematic wealth building for future milestones like {"children's"} higher education.</li>
                   <li><strong>Lump Sum Investors:</strong> Wealthy individuals wanting to securely park a lump sum in the Single Premium option while securing immediate tax advantages.</li>
                 </>
               )}
@@ -201,7 +201,7 @@ export default function NavJeevanShreePage() {
               {isHi ? (
                 <>एलआईसी का यह नया <strong>Critical Illness Health Rider</strong> एक बहुत बड़ा गेम-चेंजर है। आज के समय में कैंसर, दिल का दौरा, ब्रेन स्ट्रोक या किडनी फेलियर जैसी बीमारियाँ न केवल शारीरिक बल्कि गंभीर वित्तीय संकट भी लाती हैं।</>
               ) : (
-                <>LIC's new **Critical Illness Health Rider** launched in 2026 is a massive game-changer. Severe health issues like cancer, stroke, cardiac arrests, or kidney failure often bring severe emotional and extreme financial strains on the entire household.</>
+                <>{"LIC's"} new **Critical Illness Health Rider** launched in 2026 is a massive game-changer. Severe health issues like cancer, stroke, cardiac arrests, or kidney failure often bring severe emotional and extreme financial strains on the entire household.</>
               )}
             </p>
             <p>

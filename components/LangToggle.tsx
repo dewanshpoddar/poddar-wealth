@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 
 interface LangToggleProps {
@@ -78,14 +77,12 @@ export default function LangToggle({ scrolled = false }: LangToggleProps) {
       tabIndex={0}
     >
       {/* Sliding pill */}
-      <motion.div
-        className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-colors duration-500 ${pill}`}
-        initial={false}
-        animate={{
+      <div
+        className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-all duration-300 ${pill}`}
+        style={{
           left:  lang === 'en' ? '4px' : 'calc(50% + 2px)',
           width: 'calc(50% - 6px)',
         }}
-        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
       />
 
       {/* EN button */}

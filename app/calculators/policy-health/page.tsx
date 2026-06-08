@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import { Calculator, Info, Phone, RefreshCw, AlertCircle, ArrowRight, ArrowLeft, CheckCircle2, MessageCircle } from 'lucide-react'
+import { Calculator, Info, Phone, RefreshCw, AlertCircle, ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Download } from 'lucide-react'
 import { fmt, fmtSA } from '@/lib/format'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import WhatsAppShare from '@/components/WhatsAppShare'
@@ -38,6 +38,10 @@ export default function PolicyHealthCalculatorPage() {
     shareText: 'My insurance health score is {score}/100 ({grade}). Check yours free at poddarwealth.com/calculators/policy-health',
     yes: 'Yes',
     no: 'No',
+    downloadReport: 'Download Your Wealth Blueprint (PDF)',
+    generatingReport: 'Generating your report...',
+    nameLabel: 'Your Name (for the report)',
+    namePlaceholder: 'e.g. Rahul Kumar',
     planTypes: {
       endowment: 'Endowment Plan',
       term: 'Term Insurance',
@@ -67,14 +71,54 @@ export default function PolicyHealthCalculatorPage() {
   const [currentAge, setCurrentAge] = useState<number>(35)
   const [annualIncome, setAnnualIncome] = useState<number>(600000)
   const [dependents, setDependents] = useState<number>(2)
+  const [userName, setUserName] = useState<string>('')
 
   // Step 3: Your Protection
   const [hasTermInsurance, setHasTermInsurance] = useState<boolean>(false)
   const [hasHealthInsurance, setHasHealthInsurance] = useState<boolean>(true)
 
   const [loading, setLoading] = useState(false)
+  const [downloading, setDownloading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<PolicyHealthResult | null>(null)
+
+  async function downloadReport() {
+    if (!result) return
+    setDownloading(true)
+    try {
+      const res = await fetch('/api/reports/wealth-blueprint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: userName || 'Valued Client',
+          sumAssured,
+          annualPremium,
+          policyYear,
+          currentAge,
+          annualIncome,
+          dependents,
+          hasHealthInsurance,
+          hasTermInsurance,
+          planType,
+          ...result
+        })
+      })
+      if (!res.ok) {
+        throw new Error('Failed to generate report')
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `wealth-blueprint.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err: any) {
+      alert(lang === 'en' ? 'Failed to download report. Please try again.' : 'रिपोर्ट डाउनलोड करने में विफल। कृपया पुनः प्रयास करें।')
+    } finally {
+      setDownloading(false)
+    }
+  }
 
   const handleNext = () => {
     setError(null)
@@ -383,6 +427,21 @@ Please help me review these gaps and suggest the right plans.`
                   <h2 className="font-display font-bold text-lg text-navy mb-4">
                     {lang === 'en' ? 'Tell Us About You' : 'अपने बारे में बताएं'}
                   </h2>
+
+                  {/* Name */}
+                  <div>
+                    <label htmlFor="userName" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                      {p.nameLabel}
+                    </label>
+                    <input
+                      id="userName"
+                      type="text"
+                      placeholder={p.namePlaceholder}
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
+                    />
+                  </div>
 
                   {/* Age */}
                   <div>
@@ -703,6 +762,26 @@ Please help me review these gaps and suggest the right plans.`
                     </div>
                   </div>
                 </div>
+
+                {/* Download PDF Report */}
+                <button
+                  type="button"
+                  onClick={downloadReport}
+                  disabled={downloading}
+                  className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors w-full justify-center mt-6 disabled:opacity-75 cursor-pointer"
+                >
+                  {downloading ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>{p.generatingReport}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Download size={18} />
+                      <span>{p.downloadReport}</span>
+                    </>
+                  )}
+                </button>
 
                 {/* Share Section */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">

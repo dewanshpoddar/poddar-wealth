@@ -1217,7 +1217,7 @@
       "Retain top talents and fund recruitment & training for worthy replacement leaders",
       "Save company tax with 100% deduction of premium as business expense under Section 80C"
     ],
-    "advisorTitle": "🏆 Ajay sir's Advisory",
+    "advisorTitle": "Ajay sir's Advisory",
     "advisorText": "Many business partners in Gorakhpur and UP overlook Keyman Insurance. Besides absolute business protection, the premium paid is 100% tax-free as a business expense, saving substantial company money.",
     "contactTitle": "Need a custom corporate proposal?",
     "contactSub": "Send your business requirements directly to Ajay sir on WhatsApp for an instant response.",
@@ -1234,7 +1234,7 @@
       "Clear outstanding loans and home liabilities during the recovery period",
       "Avail full cashless hospital access at over 12,000+ top network hospitals"
     ],
-    "advisorTitle": "🏆 Ajay sir's Advisory",
+    "advisorTitle": "Ajay sir's Advisory",
     "advisorText": "Medical inflation in India is rising at 14% annually. A major diagnosis like cancer or a bypass surgery doesn't just impact health — it can wipe out a lifetime of family savings. A critical illness plan guarantees a massive tax-free cash payout upon diagnosis, ensuring you get top-tier hospital care.",
     "contactTitle": "Want to compare health floaters vs critical illness cover?",
     "contactSub": "Discuss details directly with Ajay sir on WhatsApp for clear, honest financial guidance.",
@@ -1465,7 +1465,11 @@
       "maturityProgress": "Policy Progress",
       "protectionMix": "Protection Mix",
       "dependentCoverage": "Dependent Coverage"
-    }
+    },
+    "downloadReport": "Download Your Wealth Blueprint (PDF)",
+    "generatingReport": "Generating your report...",
+    "nameLabel": "Your Name (for the report)",
+    "namePlaceholder": "e.g. Rahul Kumar"
   },
   "healthInsurance": {
     "coversTitle": "What Your Health Plan Covers",
@@ -1521,5 +1525,10 @@
     "button": "Subscribe",
     "success": "You're in! Check your inbox for a welcome message.",
     "error": "Something went wrong. Try again or WhatsApp us."
+  },
+  "reviewsWidget": {
+    "heading": "What families say about us",
+    "subheading": "4.9/5.0 from 154+ Google Reviews",
+    "seeAll": "See all reviews on Google"
   }
 }
