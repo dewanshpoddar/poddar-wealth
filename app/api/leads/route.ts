@@ -4,6 +4,7 @@ import { adminNotify } from '@/lib/admin-notify'
 import { clean, isValidPhone, appendToCsv, pushToSheets } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
 import { leadStats } from '@/lib/lead-stats'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
 const adminWebhookUrl = process.env.ADMIN_SHEETS_WEBHOOK_URL
@@ -59,6 +60,12 @@ function resolveLeadTab(intent: string, iAm: string, wantTo: string): string {
 }
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+  const { allowed } = await checkRateLimit(ip, 5, 60, 'rl-leads')
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
+  }
+
   try {
     let data: Record<string, unknown>
     try {

@@ -54,7 +54,7 @@ function getGrade(score: number): 'A+' | 'A' | 'B' | 'C' | 'D' {
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-  const { allowed } = checkRateLimit(ip)
+  const { allowed } = await checkRateLimit(ip, 15, 3600, 'rl-calc-policy-health')
   if (!allowed) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
   }

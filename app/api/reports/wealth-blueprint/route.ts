@@ -3,24 +3,8 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import React from 'react'
 import { WealthBlueprintPDF } from '@/lib/reports/WealthBlueprintPDF'
 import { logger } from '@/lib/logger'
+import { checkRateLimit } from '@/lib/rate-limit'
 import type { WealthBlueprintReportInput } from '@/lib/types/reports'
-
-// Per-IP rate limit: 3 reports/hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-const RATE_WINDOW = 60 * 60 * 1000
-const RATE_LIMIT = 3
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW })
-    return true
-  }
-  if (entry.count >= RATE_LIMIT) return false
-  entry.count++
-  return true
-}
 
 function isValidInput(data: unknown): data is WealthBlueprintReportInput {
   if (typeof data !== 'object' || data === null) return false
@@ -35,7 +19,8 @@ export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   const startTime = Date.now()
 
-  if (!checkRateLimit(ip)) {
+  const { allowed } = await checkRateLimit(ip, 3, 3600, 'rl-blueprint-pdf')
+  if (!allowed) {
     return NextResponse.json(
       { error: 'Too many reports. Please wait before generating another.' },
       { status: 429 }

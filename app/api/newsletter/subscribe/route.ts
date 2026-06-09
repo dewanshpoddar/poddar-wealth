@@ -2,16 +2,12 @@ import { NextResponse } from 'next/server'
 import { clean, pushToSheets } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
 import { sendWelcomeEmail } from '@/lib/email'
+import { checkRateLimit } from '@/lib/rate-limit'
 import type { NewsletterSubscribeResponse } from '@/lib/types/newsletter'
 
 const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-// Per-IP rate limit: 3 subscribes/hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-const RATE_WINDOW = 60 * 60 * 1000
-const RATE_LIMIT = 3
 
 // Per-email dedup: 24-hour window
 const emailDedupeMap = new Map<string, number>()
@@ -19,22 +15,11 @@ const DEDUP_WINDOW = 24 * 60 * 60 * 1000
 
 const HEADERS = ['Timestamp', 'Email', 'Source', 'Language']
 
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW })
-    return true
-  }
-  if (entry.count >= RATE_LIMIT) return false
-  entry.count++
-  return true
-}
-
 export async function POST(request: Request): Promise<NextResponse<NewsletterSubscribeResponse>> {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
 
-  if (!checkRateLimit(ip)) {
+  const { allowed } = await checkRateLimit(ip, 3, 3600, 'rl-newsletter')
+  if (!allowed) {
     return NextResponse.json(
       { success: false, error: 'Please try again later.' },
       { status: 429 }

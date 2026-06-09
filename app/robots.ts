@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        disallow: ['/api/', '/admin/', '/lp/'],
       },
     ],
     sitemap: 'https://www.poddarwealth.com/sitemap.xml',

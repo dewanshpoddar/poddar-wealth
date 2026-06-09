@@ -58,12 +58,12 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
 // ── Streaming route handler ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-  const { allowed } = checkRateLimit(ip)
+  const { allowed } = await checkRateLimit(ip, 30, 60, 'rl-chat')
   if (!allowed) {
     logger.warn('/api/chat', 'Rate limit exceeded', { ip })
     return NextResponse.json(
       { error: 'Rate limit exceeded. Please try again later.' },
-      { status: 429, headers: { 'Retry-After': '3600' } }
+      { status: 429, headers: { 'Retry-After': '60' } }
     )
   }
 

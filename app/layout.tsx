@@ -141,6 +141,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </LangProvider>
         <Analytics />
         <SpeedInsights />
+        <Script id="pwa-sw-register" strategy="afterInteractive">
+          {`if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').catch(err => {
+                console.warn('Service worker registration failed:', err);
+              });
+            });
+          }`}
+        </Script>
       </body>
     </html>
   )

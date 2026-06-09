@@ -47,7 +47,7 @@ function validateInput(body: unknown): body is {
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-  const { allowed } = checkRateLimit(ip)
+  const { allowed } = await checkRateLimit(ip, 15, 3600, 'rl-calc-maturity')
   if (!allowed) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
   }

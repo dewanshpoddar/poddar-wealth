@@ -57,6 +57,9 @@ const SITE_HEALTH = [
   { label: 'blog-index.json', value: '~165 KB', status: 'yellow' },
   { label: 'TypeScript errors', value: '0', status: 'green' },
   { label: 'ESLint errors', value: '0', status: 'green' },
+  { label: 'Translation Keys (EN)', value: '494 / 494 (100%)', status: 'green' },
+  { label: 'Translation Keys (HI)', value: '494 / 494 (100%)', status: 'green' },
+  { label: 'Translation Keys (BN)', value: '61 / 494 (12%)', status: 'yellow' },
   { label: 'Last deploy', value: '2026-06-08', status: 'green' },
 ];
 

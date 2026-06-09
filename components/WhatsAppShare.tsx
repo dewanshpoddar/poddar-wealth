@@ -13,7 +13,17 @@ export default function WhatsAppShare({ text, url, className = '', children }: W
     if (!shareUrl && typeof window !== 'undefined') {
       shareUrl = window.location.href
     }
-    const fullText = `${text} ${shareUrl || ''}`.trim()
+    
+    let fullText = text
+    if (shareUrl) {
+      if (!fullText.includes(shareUrl)) {
+        fullText = `${text}\n🔗 ${shareUrl}`
+      }
+    }
+    
+    // Add a highly professional signature/CTA
+    fullText = `${fullText}\n\n💼 Poddar Wealth Management\n📞 Contact Ajay Kumar Poddar (MDRT, Chairman's Club) at +91 94153 13434 for expert advice.`
+
     const finalUrl = `https://wa.me/?text=${encodeURIComponent(fullText)}`
     window.open(finalUrl, '_blank', 'noopener,noreferrer')
   }

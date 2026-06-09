@@ -1,20 +1,38 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import React, { useState, useEffect, Suspense } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
-import { Shield, Trophy, Star, Phone, MessageCircle, RefreshCw, AlertCircle, CheckCircle } from 'lucide-react'
+import { Shield, Trophy, Star, Phone, MessageCircle, AlertCircle, CheckCircle } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
 // Dynamically import calculator pages to keep micro-site templates fast-loading
 const PremiumCalculatorPage = dynamic(() => import('@/app/calculators/premium/page'), { ssr: false })
 const PolicyHealthCalculatorPage = dynamic(() => import('@/app/calculators/policy-health/page'), { ssr: false })
 
-export default function LandingCampaignPage() {
+function LandingCampaignPageContent() {
   const params = useParams()
+  const searchParams = useSearchParams()
   const campaign = params?.campaign as string
+
+  // Read UTM parameters
+  const utm_source = searchParams?.get('utm_source') || ''
+  const utm_medium = searchParams?.get('utm_medium') || ''
+  const utm_campaign = searchParams?.get('utm_campaign') || ''
+
+  // Log LP view event on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'lp_view', {
+        campaign,
+        utm_source,
+        utm_medium,
+        utm_campaign,
+      })
+    }
+  }, [campaign, utm_source, utm_medium, utm_campaign])
 
   // Lead Form State (for life-insurance campaign)
   const [name, setName] = useState('')
@@ -37,7 +55,10 @@ export default function LandingCampaignPage() {
         body: JSON.stringify({
           name,
           mobile: phone,
-          intent: `Landing Page Campaign: ${campaign}`
+          intent: `Landing Page Campaign: ${campaign}`,
+          utm_source,
+          utm_medium,
+          utm_campaign,
         })
       })
       if (res.ok) {
@@ -188,7 +209,9 @@ export default function LandingCampaignPage() {
                   </div>
                   <a
                     href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
-                      'Hello Ajay sir, I requested a free consultation from your life insurance landing page. Please help me review policy options.'
+                      `Hello Ajay sir, I requested a free consultation from your life insurance landing page (${campaign}).` +
+                      (utm_source ? ` Source: ${utm_source}.` : '') +
+                      (utm_campaign ? ` Campaign: ${utm_campaign}.` : '')
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -219,7 +242,8 @@ export default function LandingCampaignPage() {
         {/* Persistent WhatsApp Floating Button */}
         <a
           href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
-            'Hello Ajay sir, I need advice regarding life insurance plans.'
+            `Hello Ajay sir, I need advice regarding life insurance plans.` +
+            (utm_source ? ` (Source: ${utm_source}, Campaign: ${utm_campaign})` : '')
           )}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -284,7 +308,9 @@ export default function LandingCampaignPage() {
       {/* Persistent WhatsApp Floating Button */}
       <a
         href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
-          `Hello Ajay sir, I checked your ${campaign === 'calculator' ? 'Premium Calculator' : 'Policy Health Score'} on your landing page. I would like to consult with you.`
+          `Hello Ajay sir, I checked your ${campaign === 'calculator' ? 'Premium Calculator' : 'Policy Health Score'} on your landing page.` +
+          ` I would like to consult with you.` +
+          (utm_source ? ` (Source: ${utm_source}, Campaign: ${utm_campaign})` : '')
         )}`}
         target="_blank"
         rel="noopener noreferrer"
@@ -294,5 +320,17 @@ export default function LandingCampaignPage() {
         <MessageCircle size={24} className="fill-current" />
       </a>
     </div>
+  )
+}
+
+export default function LandingCampaignPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <LandingCampaignPageContent />
+    </Suspense>
   )
 }

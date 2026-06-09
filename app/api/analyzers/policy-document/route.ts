@@ -5,6 +5,7 @@ import { clean } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
 import { adminNotify } from '@/lib/admin-notify'
 import { ADVISOR_PHONE } from '@/lib/constants'
+import { checkRateLimit } from '@/lib/rate-limit'
 import type { PolicyAnalysis, AnalyzerResponse, AnalyzerError } from '@/lib/types/analyzer'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
@@ -12,23 +13,6 @@ const MODEL = process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
 const MAX_TEXT_CHARS = 4000
-
-// Per-IP rate limiting: 5 requests per hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-const RATE_WINDOW = 60 * 60 * 1000 // 1 hour
-const RATE_LIMIT = 5
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW })
-    return true
-  }
-  if (entry.count >= RATE_LIMIT) return false
-  entry.count++
-  return true
-}
 
 const SYSTEM_PROMPT = `You are an expert LIC insurance policy analyzer helping Indian policyholders understand their policies in simple language. Always respond with valid JSON only, no markdown, no extra text.`
 
@@ -68,7 +52,8 @@ export async function POST(request: Request): Promise<NextResponse<AnalyzerRespo
 
   try {
     // Rate limit
-    if (!checkRateLimit(ip)) {
+    const { allowed } = await checkRateLimit(ip, 5, 3600, 'rl-policy-analyzer')
+    if (!allowed) {
       return NextResponse.json(
         { success: false, error: `Too many requests. You can analyze up to 5 documents per hour. Call Ajay sir at ${ADVISOR_PHONE} for immediate assistance.` },
         { status: 429 }

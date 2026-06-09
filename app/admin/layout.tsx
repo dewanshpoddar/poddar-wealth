@@ -60,12 +60,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   // Route protection logic
-  const isLeadsRoute = pathname === '/admin/leads';
-  const isDevRoute = pathname === '/admin/architecture' || pathname === '/admin/docs';
+  const isLeadsOrReferralsRoute = pathname === '/admin/leads' || pathname === '/admin/referrals';
+  const isDevRoute = 
+    pathname === '/admin/architecture' || 
+    pathname === '/admin/docs' || 
+    pathname === '/admin/seo' || 
+    pathname === '/admin/sprints';
 
   const hasAccess = () => {
     if (!authenticated) return false;
-    if (isLeadsRoute && role !== 'admin') return false;
+    if (isLeadsOrReferralsRoute && role !== 'admin') return false;
     if (isDevRoute && role === 'viewer') return false;
     return true;
   };
@@ -193,21 +197,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             pathname === '/admin' ? 'text-white' : 'text-gray-400 hover:text-white'
           }`}
         >
-          Metrics
+          Dashboard
         </Link>
         
-        {/* Leads Pipeline Link (Admin only) */}
-        {role === 'admin' && (
-          <Link 
-            href="/admin/leads" 
-            className={`text-xs font-bold uppercase tracking-widest transition-colors ${
-              pathname === '/admin/leads' ? 'text-white' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            Leads Pipeline
-          </Link>
-        )}
-
         {/* Developer routes (Admin & Dev) */}
         {role !== 'viewer' && (
           <>
@@ -226,6 +218,50 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               }`}
             >
               Docs
+            </Link>
+          </>
+        )}
+
+        {/* Leads & Referrals Link (Admin only) */}
+        {role === 'admin' && (
+          <>
+            <Link 
+              href="/admin/leads" 
+              className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                pathname === '/admin/leads' ? 'text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Leads
+            </Link>
+            <Link 
+              href="/admin/referrals" 
+              className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                pathname === '/admin/referrals' ? 'text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Referrals
+            </Link>
+          </>
+        )}
+
+        {/* Dev metrics/status (Admin & Dev) */}
+        {role !== 'viewer' && (
+          <>
+            <Link 
+              href="/admin/seo" 
+              className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                pathname === '/admin/seo' ? 'text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              SEO
+            </Link>
+            <Link 
+              href="/admin/sprints" 
+              className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                pathname === '/admin/sprints' ? 'text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Sprints
             </Link>
           </>
         )}
