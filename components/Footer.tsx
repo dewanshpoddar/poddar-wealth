@@ -7,6 +7,29 @@ import { usePathname } from 'next/navigation'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import { MapPin, Phone, MessageCircle, Mail } from 'lucide-react'
 
+// Inline SVG components for trademarked social icons since they aren't in Lucide-react core
+const Facebook = ({ size = 17 }: { size?: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+)
+
+const Youtube = ({ size = 17 }: { size?: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+    <polygon points="10 15 15 12 10 9" />
+  </svg>
+)
+
+const Linkedin = ({ size = 17 }: { size?: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+)
+
+
 export default function Footer() {
   const { t, lang } = useLang()
   const pathname = usePathname()
@@ -99,6 +122,22 @@ export default function Footer() {
                     (154 {isBn ? 'রিভিউ' : isHi ? 'समीक्षाएं' : 'reviews'})
                   </span>
                 </div>
+              </a>
+            </div>
+
+            {/* Social Media Icons */}
+            <div className="flex items-center gap-4 pt-3 border-t border-gray-900/60">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="Facebook">
+                <Facebook size={17} />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="YouTube">
+                <Youtube size={17} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="LinkedIn">
+                <Linkedin size={17} />
+              </a>
+              <a href={`https://wa.me/91${ADVISOR_PHONE}`} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="WhatsApp">
+                <MessageCircle size={17} />
               </a>
             </div>
           </div>
