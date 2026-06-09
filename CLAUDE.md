@@ -302,8 +302,18 @@ Both endpoints require `CRON_SECRET` header to execute.
   Reviews API: lib/data/reviews.json (8 reviews) + GET /api/reviews (1hr cache).
   Build: 0 errors. First Load JS shared: 105 kB.
   4 commits: ffd7a2e, 9169dcc, c711919, 2c37e9b.
+- **2026-06-09 (Sprint 7 & 8):** Final Sprints Hardening, PWA, and SEO dashboards.
+  PWA Support: Service worker `public/sw.js` (cache-first client caching) + `/offline` custom emergency contact layout.
+  UTM integration: Campaign lead parameters capturing on `/lp/[campaign]` routes + prefilled WhatsApp query string propagation + GA4 event + sitemap crawler block.
+  Video Embed: Lite performance thumbnails component `components/VideoEmbed.tsx` replacing iframe load on-click.
+  OG Engine: Edge dynamic OG generator `app/blog/[slug]/opengraph-image.tsx` using `ImageResponse`.
+  WhatsApp CTA: Expanded sharing metadata CTA inside `components/WhatsAppShare.tsx`.
+  KV Rate Limiter: Zero-dependency client `/pipeline` API client in `lib/rate-limiter-kv.ts` + local Map memory fallbacks.
+  Admin Panels: /admin/seo dynamic sitemap status checking, /admin/sprints history timeline log, and expanded layout sidebar navigation options.
+  Bengali stats: completions metrics displayed under main admin index.
+  Build: verified 0 errors, 102 static pages compiled.
 
 ---
 
-_Last updated: 2026-06-08_
+_Last updated: 2026-06-09_
 
