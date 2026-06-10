@@ -624,7 +624,7 @@ export default function PremiumCalculatorPage() {
                             className="w-full inline-flex h-14 bg-green-500 hover:bg-green-600 text-white font-bold text-[14px] md:text-[15px] rounded-xl items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-500/25 hover:-translate-y-0.5 cursor-pointer font-sans"
                           >
                             <MessageCircle size={18} className="text-white" />
-                            {lang === 'en' ? 'Consult with Ajay Sir' : 'अजय सर से परामर्श करें'}
+                            {lang === 'en' ? 'Get expert quote' : lang === 'hi' ? 'अजय सर से परामर्श करें' : 'অজয় স্যারের সাথে परामर्श করুন'}
                           </button>
                         </>
                       ) : (

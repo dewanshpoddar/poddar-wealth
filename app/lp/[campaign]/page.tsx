@@ -286,10 +286,58 @@ function LandingCampaignPageContent() {
         {campaign === 'calculator' ? (
           <div className="pb-12">
             <PremiumCalculatorPage />
+            <div className="max-w-4xl mx-auto px-6 mt-8">
+              <div className="bg-white border border-slate-100 rounded-3xl p-8 shadow-xl text-center space-y-4">
+                <h3 className="text-lg font-extrabold text-[#12152a]">
+                  Need a Customized, Official LIC Quote?
+                </h3>
+                <p className="text-gray-500 text-xs max-w-lg mx-auto leading-relaxed font-medium">
+                  Tabular rates are illustrative. Get a personalized, official quotation directly from Ajay Kumar Poddar (MDRT Member) based on your health history.
+                </p>
+                <div className="pt-2">
+                  <a
+                    href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
+                      `Hello Ajay sir, I calculated my LIC premium on your landing page and would like to get a customized expert quote.` +
+                      (utm_source ? ` (Source: ${utm_source}, Campaign: ${utm_campaign})` : '')
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer font-sans"
+                  >
+                    <MessageCircle size={16} className="fill-current text-white" />
+                    Get expert quote on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         ) : campaign === 'health-check' ? (
           <div className="pb-12">
             <PolicyHealthCalculatorPage />
+            <div className="max-w-4xl mx-auto px-6 mt-8">
+              <div className="bg-white border border-slate-100 rounded-3xl p-8 shadow-xl text-center space-y-4">
+                <h3 className="text-lg font-extrabold text-[#12152a]">
+                  Want Ajay sir to Review Your Gaps?
+                </h3>
+                <p className="text-gray-500 text-xs max-w-lg mx-auto leading-relaxed font-medium">
+                  Get a free, detailed, professional policy health review to identify coverage gaps and optimize your insurance premiums.
+                </p>
+                <div className="pt-2">
+                  <a
+                    href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(
+                      `Hello Ajay sir, I checked my Policy Health Score on your landing page and would like a professional review of my gaps.` +
+                      (utm_source ? ` (Source: ${utm_source}, Campaign: ${utm_campaign})` : '')
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer font-sans"
+                  >
+                    <MessageCircle size={16} className="fill-current text-white" />
+                    Consult on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="py-24 text-center px-6">

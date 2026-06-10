@@ -15,7 +15,9 @@
     "healthInsurance": "Health Solutions",
     "retirement": "Retirement Wealth",
     "childPlanning": "Child wealth Future",
-    "taxPlanning": "Wealth & Tax saving"
+    "taxPlanning": "Wealth & Tax saving",
+    "compare": "Compare Plans",
+    "blog": "Blog"
   },
   "banner": {
     "text": "New LIC & Star Health plans launched in May 2026",
@@ -1611,5 +1613,42 @@
     "placeholderEmail": "Your Email",
     "successMessage": "Subscribed successfully!",
     "askPoddarJi": "Ask Poddar Ji"
+  },
+  "clientPortal": {
+    "heroTitle": "Your Policy Hub",
+    "heroSubtitle": "Quick access to all policy servicing tools",
+    "needHelp": "Need help? Call Ajay sir: 9415313434",
+    "cards": {
+      "mylic": {
+        "title": "MyLIC Portal",
+        "desc": "Access your official LIC account, track premium history, and check loan status directly.",
+        "btn": "Open Portal"
+      },
+      "payPremium": {
+        "title": "Pay Premium",
+        "desc": "Pay your LIC premiums online securely through official gateways without convenience fees.",
+        "btn": "Pay Now"
+      },
+      "healthScore": {
+        "title": "Policy Health Score",
+        "desc": "Run a comprehensive audit on your current policies to check coverage adequacy and gaps.",
+        "btn": "Check Score"
+      },
+      "aiAnalyzer": {
+        "title": "AI Analyzer",
+        "desc": "Upload your policy document PDF to extract key terms, benefits, and hidden terms instantly.",
+        "btn": "Analyze Now"
+      },
+      "navTracker": {
+        "title": "NAV Tracker",
+        "desc": "Track daily Net Asset Value (NAV) of active LIC ULIP funds and set email price alerts.",
+        "btn": "Track NAV"
+      },
+      "contact": {
+        "title": "Contact Ajay sir",
+        "desc": "Connect directly with Ajay Kumar Poddar on WhatsApp for claims or policy servicing help.",
+        "btn": "WhatsApp Ajay sir"
+      }
+    }
   }
 }

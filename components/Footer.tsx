@@ -68,12 +68,12 @@ export default function Footer() {
   ]
 
   const customerCare = [
-    { name: isBn ? 'পলিশি রিনিউ করুন' : isHi ? 'पॉलिसी रिन्यू' : 'Renew Policy', href: '/renew' },
-    { name: isBn ? 'দাবি সহায়তা' : isHi ? 'दावा सहायता' : 'Claim Support', href: '/claims' },
-    { name: isBn ? 'পলিসি পুনরুজ্জীবন' : isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival', href: '/policy-revival' },
+    { name: isBn ? 'বীমা সুগম' : isHi ? 'बीमा सुगम' : 'Bima Sugam', href: '/bima-sugam' },
     { name: isBn ? 'MyLIC সহায়তা' : isHi ? 'MyLIC सहायता' : 'MyLIC Help', href: '/lic-help' },
     { name: isBn ? 'প্রিমিয়াম রিমাইন্ডার' : isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder', href: '/premium-reminder' },
-    { name: isBn ? 'LIC বোনাস গণনা' : isHi ? 'LIC बोनस गणना' : 'LIC Bonus Calculator', href: '/lic-bonus' },
+    { name: isBn ? 'পলিসি পুনরুজ্জীবন' : isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival', href: '/policy-revival' },
+    { name: isBn ? 'প্রিমিয়াম পেমেন্ট' : isHi ? 'प्रीमियम भुगतान' : 'Pay Premium', href: '/pay-premium' },
+    { name: isBn ? 'দাবি সহায়তা' : isHi ? 'दावा सहायता' : 'Claims', href: '/claims' },
   ]
 
   return (

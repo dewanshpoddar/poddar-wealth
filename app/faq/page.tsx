@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
+import { useSearchParams } from 'next/navigation'
 import {
   ChevronDown,
   ChevronUp,
@@ -17,9 +18,17 @@ import {
 
 type Category = 'general' | 'lic' | 'health' | 'claims'
 
-export default function FAQPage() {
+function FAQContent() {
   const { t, lang } = useLang()
   const [activeCategory, setActiveCategory] = useState<Category>('general')
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const cat = searchParams?.get('cat') as Category
+    if (cat && ['general', 'lic', 'health', 'claims'].includes(cat)) {
+      setActiveCategory(cat)
+    }
+  }, [searchParams])
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
 
   // Cast translations to any to access the dynamically added faq key safely
@@ -253,5 +262,17 @@ export default function FAQPage() {
         </div>
       </section>
     </div>
+  )
+}
+
+export default function FAQPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center animate-pulse">
+        <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <FAQContent />
+    </Suspense>
   )
 }

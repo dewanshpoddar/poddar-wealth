@@ -1,24 +1,8 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { ADVISOR_PHONE } from '@/lib/constants'
-
-// next/font must be called at module level (build-time constraint)
-const fraunces = Fraunces({
-  subsets:  ['latin'],
-  weight:   ['400', '500', '600', '700', '900'],
-  style:    ['normal', 'italic'],
-  variable: '--font-display',
-  display:  'swap',
-})
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets:  ['latin'],
-  weight:   ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-sans',
-  display:  'swap',
-})
 
 import { LangProvider } from '@/lib/LangContext'
 import Navbar from '@/components/Navbar'
@@ -105,8 +89,11 @@ const schemaOrg = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
+    <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
       </head>

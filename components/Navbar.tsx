@@ -117,6 +117,14 @@ export default function Navbar() {
               {t.nav.products}
             </Link>
 
+            <Link href="/compare" className={linkCls('/compare')}>
+              {t.nav.compare}
+            </Link>
+
+            <Link href="/blog" className={linkCls('/blog')}>
+              {t.nav.blog}
+            </Link>
+
             {/* Calculators Dropdown on Hover */}
             <div className="relative group/calc">
               <button className={`flex items-center gap-1 text-[13px] lg:text-sm font-medium transition-colors duration-200 pb-0.5 cursor-pointer ${
@@ -207,7 +215,7 @@ export default function Navbar() {
               <Search size={16} />
             </button>
 
-            {/* Prominent Language Switcher Box (Only EN & Hindi) */}
+            {/* Prominent Language Switcher Box (EN, Hindi & Bengali) */}
             <div className={`flex items-center rounded-lg border p-1 text-[10px] font-bold gap-1 transition-all duration-200 ${
               scrolled
                 ? 'border-white/10 bg-white/5 text-gray-300'
@@ -234,18 +242,29 @@ export default function Navbar() {
               >
                 हिंदी
               </button>
+              <span className={`text-[9px] ${scrolled ? 'text-white/20' : 'text-gray-300'}`}>|</span>
+              <button
+                onClick={() => setLang('bn')}
+                className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors ${
+                  lang === 'bn'
+                    ? scrolled ? 'bg-amber-500 text-white font-extrabold' : 'bg-amber-600 text-white font-extrabold'
+                    : scrolled ? 'hover:text-white' : 'hover:text-[#12152a]'
+                }`}
+              >
+                বাংলা
+              </button>
             </div>
 
             {/* Login Link: Prominent text link */}
             <Link
-              href="/admin"
+              href="/client"
               className={`text-[13px] font-bold tracking-tight transition-colors duration-200 ${
                 scrolled
                   ? 'text-white hover:text-amber-400'
                   : 'text-slate-900 hover:text-amber-600'
               }`}
             >
-              {lang === 'en' ? 'Login' : lang === 'hi' ? 'लॉगिन' : 'লগইন'}
+              {lang === 'en' ? 'Client Login' : lang === 'hi' ? 'क्लाइंट लॉगिन' : 'ক্লায়েন্ট লগইন'}
             </Link>
 
             {/* Primary CTA Consultation Button (Sleek mixed-case button matching reference) */}
@@ -433,7 +452,7 @@ export default function Navbar() {
             {[
               { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना', bn: 'প্ল্যান তুলনা' },
               { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग',         bn: 'ব্লগ' },
-              { href: '/admin',   en: 'Client Login',  hi: 'क्লাइंट लॉगिन', bn: 'ক্লায়েন্ট লগইন' },
+              { href: '/client',  en: 'Client Login',  hi: 'क्लाइंट लॉगिन', bn: 'ক্লায়েন্ট লগইন' },
             ].map(({ href, en, hi, bn }) => (
               <Link
                 key={href}

@@ -1,6 +1,7 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 const CookieBanner = dynamic(() => import('./CookieBanner'), { ssr: false })
 
@@ -8,6 +9,7 @@ declare function gtag(...args: unknown[]): void
 
 export default function ClientOnlyBanner() {
   const [show, setShow] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const cookies = document.cookie.split(';').map(c => c.trim())
@@ -22,6 +24,7 @@ export default function ClientOnlyBanner() {
     }
   }, [])
 
+  if (pathname?.startsWith('/lp/')) return null
   if (!show) return null
   return <CookieBanner />
 }

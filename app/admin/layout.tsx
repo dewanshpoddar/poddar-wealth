@@ -65,6 +65,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     pathname === '/admin/architecture' || 
     pathname === '/admin/docs' || 
     pathname === '/admin/seo' || 
+    pathname === '/admin/ab' || 
     pathname === '/admin/sprints';
 
   const hasAccess = () => {
@@ -254,6 +255,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               }`}
             >
               SEO
+            </Link>
+            <Link 
+              href="/admin/ab" 
+              className={`text-xs font-bold uppercase tracking-widest transition-colors ${
+                pathname === '/admin/ab' ? 'text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              A/B Tests
             </Link>
             <Link 
               href="/admin/sprints" 
