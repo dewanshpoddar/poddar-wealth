@@ -40,9 +40,10 @@ async function fetchNavFromLIC(): Promise<Record<string, number> | null> {
 }
 
 export async function GET(req: NextRequest) {
-  // Verify CRON_SECRET
+  // Verify CRON_SECRET (only enforce if the secret is configured)
   const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  const cronSecret = process.env.CRON_SECRET?.trim()
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

@@ -13,7 +13,7 @@ const HEADERS = [
   'Timestamp', 'Name', 'Mobile', 'Email',
   'City', 'Profession', 'Want To', 'I Am',
   'Intent', 'Experience', 'Message',
-  'Page URL', 'Language', 'UTM Source', 'UTM Medium', 'UTM Campaign',
+  'Page URL', 'Language', 'UTM Source', 'UTM Medium', 'UTM Campaign', 'Referral Code',
 ]
 
 // Deduplication: prevent double-submissions within 60 seconds
@@ -74,7 +74,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
     const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message,
-            pageUrl, language, utmSource, utmMedium, utmCampaign } = data as Record<string, string>
+            pageUrl, language, utmSource, utmMedium, utmCampaign, referralCode } = data as Record<string, string>
+
+    // Also check referral cookie from request headers
+    const cookieHeader = request.headers.get('cookie') ?? ''
+    const refCookieMatch = cookieHeader.match(/(?:^|;\s*)pw_ref=([^;]+)/)
+    const resolvedReferral = clean(referralCode ?? refCookieMatch?.[1] ?? '', 20)
 
     // Validate required fields
     if (!name || clean(name, 100).length < 2) {
@@ -112,6 +117,7 @@ export async function POST(request: Request) {
       clean(utmSource, 100),
       clean(utmMedium, 100),
       clean(utmCampaign, 200),
+      resolvedReferral,
     ]
 
     // 1. Always write to local CSV as backup (CSV injection prevention inside appendToCsv)

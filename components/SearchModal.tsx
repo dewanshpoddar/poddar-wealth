@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
-import { X, Search, FileText, Calculator, Shield, CornerDownLeft, Sparkles } from 'lucide-react'
+import { X, Search, FileText, Calculator, Shield, CornerDownLeft, Sparkles, HelpCircle } from 'lucide-react'
 import blogIndex from '@/lib/data/blog-index.json'
 
 // Local directories for fallback search
@@ -33,7 +33,7 @@ const CALCULATORS = [
 ]
 
 interface SearchResult {
-  type: 'blog' | 'calculator' | 'service'
+  type: 'blog' | 'calculator' | 'service' | 'faq'
   title: string
   url: string
   excerpt: string
@@ -45,43 +45,98 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
+  
   const inputRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
 
   const s = t.search || {}
   const isHi = lang === 'hi'
 
+  // Load recent searches from sessionStorage on mount
   useEffect(() => {
-    // Focus search input on mount
+    try {
+      const saved = sessionStorage.getItem('recent_searches')
+      if (saved) {
+        setRecentSearches(JSON.parse(saved))
+      }
+    } catch (e) {
+      console.warn('Failed to load recent searches', e)
+    }
+
+    // Focus input and lock body scroll
     inputRef.current?.focus()
-    // Prevent body scroll
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = ''
     }
   }, [])
 
-  // Close on Escape or click outside
+  const addRecentSearch = (term: string) => {
+    const cleaned = term.trim()
+    if (!cleaned) return
+    const updated = [
+      cleaned,
+      ...recentSearches.filter(s => s.toLowerCase() !== cleaned.toLowerCase())
+    ].slice(0, 5)
+
+    setRecentSearches(updated)
+    try {
+      sessionStorage.setItem('recent_searches', JSON.stringify(updated))
+    } catch (e) {
+      console.warn('Failed to save recent search', e)
+    }
+  }
+
+  // Keyboard navigation logic
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (results.length > 0) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          setSelectedIndex(prev => (prev + 1) % results.length)
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          setSelectedIndex(prev => (prev - 1 + results.length) % results.length)
+        } else if (e.key === 'Enter') {
+          if (selectedIndex >= 0 && selectedIndex < results.length) {
+            e.preventDefault()
+            handleResultClick(results[selectedIndex].url)
+          }
+        }
+      }
     }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [results, selectedIndex])
+
+  // Click outside to close
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         onClose()
       }
     }
-    window.addEventListener('keydown', handleKeyDown)
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [onClose])
 
-  // Debounced search logic
+  // Debounced search logic (including FAQs)
   useEffect(() => {
     const cleanQuery = query.trim().toLowerCase()
+    setSelectedIndex(-1) // reset selection index when query changes
+
     if (cleanQuery.length < 2) {
       setResults([])
       return
@@ -101,7 +156,6 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           }
         }
       } catch (err) {
-        // Fallback to client-side search if API fails or 404s
         console.warn('Backend search API failed, using client-side fallback')
       }
 
@@ -138,7 +192,31 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
         }
       })
 
-      // 3. Match Blogs (limit to top 15 matches)
+      // 3. Match FAQs
+      const faqData = (t as any).faq || {}
+      const faqItems = faqData.items || {}
+      const matchedFaqs: SearchResult[] = []
+      Object.keys(faqItems).forEach(cat => {
+        const items = faqItems[cat] || []
+        items.forEach((item: any) => {
+          if (item && item.q && item.a) {
+            const matchesQuery = 
+              item.q.toLowerCase().includes(cleanQuery) || 
+              item.a.toLowerCase().includes(cleanQuery)
+            if (matchesQuery) {
+              matchedFaqs.push({
+                type: 'faq',
+                title: item.q,
+                url: `/faq?cat=${cat}`,
+                excerpt: item.a
+              })
+            }
+          }
+        })
+      })
+      matchedResults.push(...matchedFaqs.slice(0, 4))
+
+      // 4. Match Blogs (limit to top 10 matches)
       const matches: SearchResult[] = []
       blogIndex.forEach(blog => {
         const title = isHi ? blog.titleHi : blog.title
@@ -148,7 +226,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
         const matchesQuery = 
           title.toLowerCase().includes(cleanQuery) ||
           summary.toLowerCase().includes(cleanQuery) ||
-          excerptText.toLowerCase().includes(cleanQuery) ||
+          (excerptText ?? '').toLowerCase().includes(cleanQuery) ||
           blog.category.toLowerCase().includes(cleanQuery) ||
           (blog.tags && blog.tags.some(tag => tag.toLowerCase().includes(cleanQuery)))
 
@@ -162,35 +240,51 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
         }
       })
 
-      matchedResults.push(...matches.slice(0, 10))
+      matchedResults.push(...matches.slice(0, 8))
       setResults(matchedResults.slice(0, 15))
       setLoading(false)
-    }, 300)
+    }, 200)
 
     return () => clearTimeout(timer)
-  }, [query, isHi])
+  }, [query, isHi, t])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (query.trim()) {
+      addRecentSearch(query.trim())
       router.push(`/search?q=${encodeURIComponent(query.trim())}`)
       onClose()
     }
   }
 
   const handleResultClick = (url: string) => {
+    if (query.trim()) {
+      addRecentSearch(query.trim())
+    }
     router.push(url)
     onClose()
   }
 
+  const renderNoResults = () => {
+    return lang === 'en' ? (
+      <>
+        No results for &apos;<span className="text-amber-500 font-bold">{query}</span>&apos;. Try asking Poddar Ji →
+      </>
+    ) : (
+      <>
+        &apos;<span className="text-amber-500 font-bold">{query}</span>&apos; के लिए कोई परिणाम नहीं मिला। पोद्दार जी से पूछें →
+      </>
+    )
+  }
+
   return (
-    <div className="fixed inset-0 z-[10000] bg-gray-950/70 backdrop-blur-md flex items-start justify-center pt-[10vh] px-4">
+    <div className="fixed inset-0 z-[10000] bg-gray-950/70 backdrop-blur-md flex items-start justify-center md:pt-[10vh] p-0 md:px-4">
       <div 
         ref={modalRef}
-        className="bg-gray-900 border border-gray-800 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
+        className="bg-gray-900 border border-gray-800 md:rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col h-full md:h-auto md:max-h-[75vh]"
       >
         {/* Search header */}
-        <form onSubmit={handleSearchSubmit} className="flex items-center gap-3 px-6 py-4 border-b border-gray-800">
+        <form onSubmit={handleSearchSubmit} className="flex items-center gap-3 px-6 py-5 border-b border-gray-800 shrink-0">
           <Search size={20} className="text-gray-400 flex-shrink-0" />
           <input
             ref={inputRef}
@@ -204,7 +298,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
             <button 
               type="button" 
               onClick={() => setQuery('')}
-              className="text-gray-500 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors"
+              className="text-gray-500 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
             >
               <X size={16} />
             </button>
@@ -212,11 +306,35 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           <button 
             type="button" 
             onClick={onClose}
-            className="text-xs font-bold text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 px-3 py-1.5 rounded-xl transition-all"
+            className="text-xs font-bold text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 px-3 py-1.5 rounded-xl transition-all cursor-pointer"
           >
             ESC
           </button>
         </form>
+
+        {/* Recent Searches Panel (displayed only when input is empty or too short) */}
+        {query.trim().length < 2 && recentSearches.length > 0 && (
+          <div className="p-5 border-b border-gray-800/40 shrink-0 bg-gray-950/10">
+            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">
+              {isHi ? 'हालिया खोजें' : 'Recent Searches'}
+            </div>
+            <div className="flex flex-wrap gap-2 px-1">
+              {recentSearches.map((term, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setQuery(term)
+                    inputRef.current?.focus()
+                  }}
+                  className="text-[11px] font-semibold text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700/80 px-3 py-1.5 rounded-xl transition-colors cursor-pointer"
+                >
+                  {term}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Results area */}
         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
@@ -230,35 +348,57 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           ) : results.length > 0 ? (
             <div className="space-y-1">
               {results.map((res, i) => {
-                const Icon = res.type === 'blog' ? FileText : res.type === 'calculator' ? Calculator : Shield
+                const Icon = 
+                  res.type === 'blog' ? FileText : 
+                  res.type === 'calculator' ? Calculator : 
+                  res.type === 'service' ? Shield : HelpCircle
+                
                 const badgeColor = 
                   res.type === 'blog' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 
                   res.type === 'calculator' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 
-                  'bg-green-500/10 text-green-400 border-green-500/20'
+                  res.type === 'service' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
+                  'bg-purple-500/10 text-purple-400 border-purple-500/20'
+
+                const badgeLabel =
+                  res.type === 'blog' ? (s.typeBlog || 'Blog') :
+                  res.type === 'calculator' ? (s.typeCalculator || 'Calculator') :
+                  res.type === 'service' ? (s.typeService || 'Service') : 'FAQ'
+
+                const isSelected = selectedIndex === i
 
                 return (
                   <div
                     key={i}
                     onClick={() => handleResultClick(res.url)}
-                    className="w-full flex items-start gap-4 p-3.5 rounded-2xl hover:bg-gray-800/60 cursor-pointer transition-all border border-transparent hover:border-gray-800 group"
+                    className={`w-full flex items-start gap-4 p-3.5 rounded-2xl cursor-pointer transition-all border ${
+                      isSelected 
+                        ? 'bg-gray-800 border-gray-700' 
+                        : 'border-transparent hover:bg-gray-800/60 hover:border-gray-800'
+                    } group`}
                   >
-                    <div className="w-10 h-10 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center text-amber-500 flex-shrink-0 group-hover:bg-amber-500/10 group-hover:border-amber-500/20 transition-all">
+                    <div className={`w-10 h-10 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center text-amber-500 flex-shrink-0 transition-all ${
+                      isSelected ? 'bg-amber-500/10 border-amber-500/20' : 'group-hover:bg-amber-500/10 group-hover:border-amber-500/20'
+                    }`}>
                       <Icon size={18} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border ${badgeColor}`}>
-                          {res.type === 'blog' ? (s.typeBlog || 'Blog') : res.type === 'calculator' ? (s.typeCalculator || 'Calculator') : (s.typeService || 'Service')}
+                          {badgeLabel}
                         </span>
                       </div>
-                      <h4 className="text-sm font-bold text-white leading-snug group-hover:text-amber-400 transition-colors truncate">
+                      <h4 className={`text-sm font-bold leading-snug transition-colors truncate ${
+                        isSelected ? 'text-amber-400' : 'text-white group-hover:text-amber-400'
+                      }`}>
                         {res.title}
                       </h4>
                       <p className="text-xs text-gray-400 line-clamp-1 mt-1 leading-normal font-medium">
                         {res.excerpt}
                       </p>
                     </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[10px] font-bold text-amber-500 uppercase tracking-widest self-center flex-shrink-0">
+                    <div className={`transition-opacity flex items-center gap-1 text-[10px] font-bold text-amber-500 uppercase tracking-widest self-center flex-shrink-0 ${
+                      isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}>
                       <span>GO</span>
                       <CornerDownLeft size={10} />
                     </div>
@@ -268,19 +408,20 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
             </div>
           ) : query.trim().length >= 2 ? (
             <div className="py-16 text-center">
-              <p className="text-gray-400 text-sm mb-3">
-                {s.noResults || 'No results found. Try a different term or ask Poddar Ji'}
+              <p className="text-gray-400 text-sm mb-5 font-semibold">
+                {renderNoResults()}
               </p>
               <button
+                type="button"
                 onClick={() => handleResultClick('/ai-advisor')}
-                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20"
+                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer"
               >
                 <Sparkles size={14} />
                 {s.askPoddarJi || 'Ask Poddar Ji'}
               </button>
             </div>
           ) : (
-            <div className="py-12 text-center text-gray-500 text-xs font-medium uppercase tracking-wider">
+            <div className="py-16 text-center text-gray-500 text-xs font-bold uppercase tracking-wider">
               {isHi ? 'खोजना शुरू करने के लिए कम से कम 2 अक्षर टाइप करें...' : 'Type at least 2 characters to start searching...'}
             </div>
           )}

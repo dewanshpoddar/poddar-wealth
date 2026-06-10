@@ -135,6 +135,30 @@ function SearchResultsContent() {
         }
       })
 
+      // FAQ matching
+      const faqData = (t as any).faq || {}
+      const faqItems = faqData.items || {}
+      const matchedFaqs: SearchResult[] = []
+      Object.keys(faqItems).forEach(cat => {
+        const items = faqItems[cat] || []
+        items.forEach((item: any) => {
+          if (item && item.q && item.a) {
+            const matchesQuery = 
+              item.q.toLowerCase().includes(cleanQuery) || 
+              item.a.toLowerCase().includes(cleanQuery)
+            if (matchesQuery) {
+              matchedFaqs.push({
+                type: 'faq',
+                title: item.q,
+                url: `/faq?cat=${cat}`,
+                excerpt: item.a
+              })
+            }
+          }
+        })
+      })
+      matchedResults.push(...matchedFaqs)
+
       // 3. Blogs
       blogIndex.forEach(blog => {
         const titleText = isHi ? blog.titleHi : blog.title
@@ -144,7 +168,7 @@ function SearchResultsContent() {
         const matchesQuery = 
           titleText.toLowerCase().includes(cleanQuery) ||
           summaryText.toLowerCase().includes(cleanQuery) ||
-          excerptText.toLowerCase().includes(cleanQuery) ||
+          (excerptText ?? '').toLowerCase().includes(cleanQuery) ||
           blog.category.toLowerCase().includes(cleanQuery) ||
           (blog.tags && blog.tags.some(tag => tag.toLowerCase().includes(cleanQuery)))
 
@@ -227,16 +251,17 @@ function SearchResultsContent() {
         ) : results.length > 0 ? (
           <div className="space-y-6">
             {results.map((res, idx) => {
-              const Icon = res.type === 'blog' ? FileText : res.type === 'calculator' ? Calculator : Shield
-              const badgeLabel = 
-                res.type === 'blog' ? (s.typeBlog || 'Blog') :
-                res.type === 'calculator' ? (s.typeCalculator || 'Calculator') :
-                res.type === 'service' ? (s.typeService || 'Service') : (s.typeFaq || 'FAQ')
-              
-              const badgeColor = 
-                res.type === 'blog' ? 'bg-blue-50 text-blue-700 border-blue-100' :
-                res.type === 'calculator' ? 'bg-amber-50 text-amber-700 border-amber-100' :
-                'bg-green-50 text-green-700 border-green-100'
+               const Icon = res.type === 'blog' ? FileText : res.type === 'calculator' ? Calculator : res.type === 'service' ? Shield : HelpCircle
+               const badgeLabel = 
+                 res.type === 'blog' ? (s.typeBlog || 'Blog') :
+                 res.type === 'calculator' ? (s.typeCalculator || 'Calculator') :
+                 res.type === 'service' ? (s.typeService || 'Service') : (s.typeFaq || 'FAQ')
+               
+               const badgeColor = 
+                 res.type === 'blog' ? 'bg-blue-50 text-blue-700 border-blue-100' :
+                 res.type === 'calculator' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                 res.type === 'service' ? 'bg-green-50 text-green-700 border-green-100' :
+                 'bg-purple-50 text-purple-700 border-purple-100'
 
               return (
                 <div 

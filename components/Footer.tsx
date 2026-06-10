@@ -42,25 +42,29 @@ export default function Footer() {
   const quickLinks = [
     { name: isBn ? 'হোম' : isHi ? 'मुख्य पृष्ठ' : 'Home', href: '/' },
     { name: isBn ? 'আমাদের সম্পর্কে' : isHi ? 'हमारे बारे में' : 'About Us', href: '/about' },
-    { name: isBn ? 'ব্লগ' : isHi ? 'ब्लॉग' : 'Blog', href: '/blog' },
+    { name: isBn ? 'পণ্য' : isHi ? 'उत्पाद' : 'Products', href: '/products' },
+    { name: isBn ? 'পরিষেবা' : isHi ? 'सेवाएं' : 'Services', href: '/services' },
+    { name: isBn ? 'ব্লগ' : isHi ? 'ব্লগ' : 'Blog', href: '/blog' },
+    { name: isBn ? 'যোগাযোগ' : isHi ? 'সম্পর্ক করুন' : 'Contact', href: '/contact' },
     { name: isBn ? 'বন্ধুকে রেফার করুন' : isHi ? 'मित्र को रेफर करें' : 'Refer a Friend', href: '/refer' },
-    { name: isBn ? 'যোগাযোগ' : isHi ? 'संपर्क करें' : 'Contact', href: '/contact' },
   ]
 
   const ourProducts = [
     { name: isBn ? 'এলআইসি সঞ্চয় পরিকল্পনা' : isHi ? 'LIC बचत योजनाएं' : 'LIC Savings Plans', href: '/services/life-insurance' },
     { name: isBn ? 'স্বাস্থ্য বীমা' : isHi ? 'स्वास्थ्य बीमा' : 'Health Insurance', href: '/services/health-insurance' },
-    { name: isBn ? 'পরিকল্পনা তুলনা করুন' : isHi ? 'प्लान की तुलना' : 'Compare Plans', href: '/compare' },
-    { name: isBn ? 'সমস্ত পণ্য' : isHi ? 'सभी उत्पाद' : 'All Products', href: '/products' },
+    { name: isBn ? 'শিশু পরিকল্পনা' : isHi ? 'बाल योजना' : 'Child Plans', href: '/services/child-planning' },
+    { name: isBn ? 'অবসর পরিকল্পনা' : isHi ? 'सेवानिवृत्ति योजना' : 'Retirement Plans', href: '/services/retirement' },
+    { name: isBn ? 'টার্ম লাইফ' : isHi ? 'टर्म लाइफ' : 'Term Life', href: '/services/term-life' },
+    { name: isBn ? 'ক্রিটিকাল ইলনেস' : isHi ? 'गंभीर बीमारी' : 'Critical Illness', href: '/services/critical-illness' },
   ]
 
   const onlineTools = [
     { name: isBn ? 'প্রিমিয়াম ক্যালকুলেটর' : isHi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator', href: '/calculators/premium' },
-    { name: isBn ? 'LIC ULIP NAV ট্র্যাকার' : isHi ? 'LIC ULIP NAV ट्रैकर' : 'LIC ULIP NAV Tracker', href: '/nav-tracker' },
-    { name: isBn ? 'AI পলিসি বিশ্লেষক' : isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Policy Analyzer', href: '/analyzers/policy-document' },
-    { name: isBn ? 'পলিসি হেলথ স্কোর' : isHi ? 'पॉलिसी हेल्थ स्कोर' : 'Policy Health Score', href: '/#blueprint' },
-    { name: isBn ? 'ভিডিও গ্যালারি' : isHi ? 'वीडियो गैलरी' : 'Video Gallery', href: '/videos' },
-    { name: isBn ? 'ইনস্যুরেন্স কুইজ' : isHi ? 'इन्शुरन्स क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
+    { name: isBn ? 'বীমা কুইজ' : isHi ? 'बीमा क्विज़' : 'Insurance Quiz', href: '/insurance-quiz' },
+    { name: isBn ? 'ওয়েলথ ব্লুপ্রিন্ট' : isHi ? 'वेल्थ ब्लूप्रिंट' : 'Wealth Blueprint', href: '/#blueprint' },
+    { name: isBn ? 'AI পলিসি বিশ্লেষক' : isHi ? 'AI पॉलिसी विश्लेषक' : 'AI Analyzer', href: '/analyzers/policy-document' },
+    { name: isBn ? 'LIC ULIP NAV ট্র্যাকার' : isHi ? 'LIC ULIP NAV ट्रैकर' : 'NAV Tracker', href: '/nav-tracker' },
+    { name: isBn ? 'ভিডিও' : isHi ? 'वीडियो' : 'Videos', href: '/videos' },
   ]
 
   const customerCare = [
