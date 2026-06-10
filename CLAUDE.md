@@ -313,7 +313,29 @@ Both endpoints require `CRON_SECRET` header to execute.
   Bengali stats: completions metrics displayed under main admin index.
   Build: verified 0 errors, 102 static pages compiled.
 
+- **2026-06-10 (Sprint 9):** Final backend sprint — flow fixes, content expansion, new features.
+  Phase 1 (Flow fixes): Referral cookie (pw_ref) now captured in lead row + HEADERS; cron CRON_SECRET guard
+  fixed in update-nav, birthday-anniversary, premium-reminders, weekly-digest (pattern: `cronSecret &&` guard
+  prevents blocking when env var is unset); Footer.tsx corrupted ourProducts array reconstructed;
+  TypeScript errors in search/page.tsx and SearchModal.tsx fixed (optional chaining on excerptText).
+  Phase 2 (Blog): 30 new posts added — total 130 posts (lib/data/blog-index.json + 30 new content files
+  in lib/data/blog-content/). Batches: 10 LIC plan reviews, 10 how-to guides, 10 Hindi + trending posts.
+  Phase 3 (Areas): 10 Bihar/Jharkhand cities added to lib/data/areas.ts — total 30 area pages.
+  Unique descriptions added for all 10 new cities (Patna, Gaya, Muzaffarpur, Bhagalpur, Darbhanga,
+  Purnia, Siwan, Chapra, Ranchi, Dhanbad). Area metadata updated to use per-city description.
+  Phase 4 (Client Portal): app/client/page.tsx already existed with full implementation — confirmed.
+  Phase 5 (Google Places): app/api/reviews/live/route.ts created — live Google Places API with
+  24-hour ISR cache, graceful fallback to lib/data/reviews.json if API key missing or fetch fails.
+  GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID added to .env.example.
+  Phase 6 (A/B Testing): lib/ab-testing.ts (getVariant deterministic hash), app/api/ab/track/route.ts
+  (POST events → lib/data/ab-results.json, max 10000 entries), lib/data/ab-results.json initialized.
+  Admin /admin/ab page already existed with full UI — confirmed in nav.
+  Phase 7 (Chatbot): buildSystemPrompt() upgraded with Gorakhpur uncle persona, Hinglish style,
+  local examples, conversation rules, and two few-shot examples in app/api/chat/route.ts.
+  Phase 8 (Cleanup): TypeScript 0 errors, build 0 errors. TODO documented (GoogleReviewsBadge static data).
+  Build: verified 0 errors, 130 blog posts, 30 area pages.
+
 ---
 
-_Last updated: 2026-06-09_
+_Last updated: 2026-06-10_
 
