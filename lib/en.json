@@ -146,7 +146,7 @@
   "services": {
     "eyebrow": "Our services",
     "title": "Everything your family needs",
-    "subtitle": "From life cover to health plans, tax saving to keyman insurance, all under one one roof in Gorakhpur.",
+    "subtitle": "From life cover to health plans, tax saving to keyman insurance, all under one roof for families across India.",
     "items": [
       {
         "icon": "👨‍👩‍👧‍👦",
@@ -360,40 +360,44 @@
   },
   "testimonials": {
     "eyebrow": "Real families, real stories",
-    "title": "What Gorakhpur families say",
+    "title": "Trusted by families across India",
     "subtitle": "31 years of keeping promises, one family at a time.",
     "items": [
       {
         "name": "Sunita Devi",
-        "location": "Gorakhpur · LIC Jeevan Amar",
+        "location": "New Delhi · LIC Jeevan Amar",
         "text": "Mere pati ke jaane ke baad Ajay sir ne 45 din mein ₹25 lakh ka claim dilwaya. Unke bina yeh possible nahi hota.",
         "badge": "Claim settled ✓",
         "color": "#FEF9EC",
-        "textColor": "#C8960C"
+        "textColor": "#C8960C",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Ramesh Gupta",
-        "location": "Deoria · LIC Jeevan Tarun",
+        "location": "Mumbai · LIC Jeevan Tarun",
         "text": "Bachche ki padhai ke liye 15 saal pehle Ajay sir ne plan banaya tha. Aaj mera beta IIT mein hai. Thank you sir.",
         "badge": "Child plan matured ✓",
         "color": "#E1F5EE",
-        "textColor": "#0F6E56"
+        "textColor": "#0F6E56",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Alok Srivastava",
-        "location": "Kushinagar · Star Health",
+        "location": "Bengaluru · Star Health",
         "text": "Hospital mein ₹3.8 lakh ka bill aaya. Star Health ne 7 din mein cashless settle kar diya. Ajay sir ne plan sahi choose karaya tha.",
         "badge": "Cashless claim ✓",
         "color": "#E6F1FB",
-        "textColor": "#185FA5"
+        "textColor": "#185FA5",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Devendra Singh",
-        "location": "Gorakhpur · LIC Pension Plan",
+        "location": "Pune · LIC Pension Plan",
         "text": "After retiring as a teacher, I was worried about regular expenses. Ajay sir set up a pension plan that ensures a guaranteed income hits my bank account on the 1st of every month.",
         "badge": "Pension started ✓",
         "color": "#F5F3FF",
-        "textColor": "#6D28D9"
+        "textColor": "#6D28D9",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Rahul Verma",
@@ -401,23 +405,26 @@
         "text": "At 25, I wanted to secure my parents' future. Ajay sir explained term insurance clearly and helped me get a large cover at a very affordable premium. The online process was seamless.",
         "badge": "First term plan ✓",
         "color": "#ECFDF5",
-        "textColor": "#047857"
+        "textColor": "#047857",
+        "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Sanjay Agrawal",
-        "location": "Deoria · Keyman Insurance",
+        "location": "Kolkata · Keyman Insurance",
         "text": "When my business partner passed away unexpectedly, our Keyman Insurance policy kept our company stable. Ajay sir handled the entire claim and helped save the jobs of our 15 employees.",
         "badge": "Business secured ✓",
         "color": "#FFF5F5",
-        "textColor": "#C53030"
+        "textColor": "#C53030",
+        "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Kiran Tripathi",
-        "location": "Gorakhpur · Daughter's Marriage Fund",
+        "location": "Jaipur · Daughter's Marriage Fund",
         "text": "I had started a small saving plan for my daughter 18 years ago on Ajay sir's advice. The policy matured just before her wedding, allowing us to manage all expenses without taking any loans.",
         "badge": "Marriage fund matured ✓",
         "color": "#FFF7ED",
-        "textColor": "#C2410C"
+        "textColor": "#C2410C",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Vikram Malhotra",
@@ -425,15 +432,17 @@
         "text": "Living in Dubai, managing my parents' health and life policies in Gorakhpur was a challenge. Ajay sir takes care of everything end-to-end, from premium reminders to offline support, with complete honesty.",
         "badge": "NRI family support ✓",
         "color": "#F0F9FF",
-        "textColor": "#0369A1"
+        "textColor": "#0369A1",
+        "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Sunita Verma",
-        "location": "Lucknow · LIC Jeevan Anand",
+        "location": "Patna · LIC Jeevan Anand",
         "text": "Ajay sir's advice on LIC Jeevan Anand has secured my family's future completely. His dedication to service is exceptional.",
         "badge": "Jeevan Anand ✓",
         "color": "#FEF9EC",
-        "textColor": "#C8960C"
+        "textColor": "#C8960C",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Rakesh Agarwal",
@@ -441,7 +450,8 @@
         "text": "I invested in LIC's ULIP under Ajay sir's guidance. The returns and life cover balance are perfect for my wealth goals.",
         "badge": "ULIP Investment ✓",
         "color": "#E1F5EE",
-        "textColor": "#0F6E56"
+        "textColor": "#0F6E56",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Priya Sharma",
@@ -449,15 +459,17 @@
         "text": "Ajay Kumar Poddar helped me choose LIC Jeevan Labh. He explained the tax benefits and maturity terms so clearly in Hindi.",
         "badge": "Jeevan Labh ✓",
         "color": "#E6F1FB",
-        "textColor": "#185FA5"
+        "textColor": "#185FA5",
+        "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Mohit Gupta",
-        "location": "Gorakhpur · Star Health Assure",
+        "location": "Indore · Star Health Assure",
         "text": "We took a Star Health insurance policy through Ajay sir. His premium calculation was accurate, and the cashless claim process was seamless.",
         "badge": "Health Cover ✓",
         "color": "#F5F3FF",
-        "textColor": "#6D28D9"
+        "textColor": "#6D28D9",
+        "avatar": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=120&h=120&q=80"
       },
       {
         "name": "Kavita Singh",
@@ -465,7 +477,8 @@
         "text": "LIC Jeevan Utsav recommended by Ajay sir is giving me a guaranteed lifetime regular income. He is the most honest advisor I've met.",
         "badge": "Lifetime Income ✓",
         "color": "#ECFDF5",
-        "textColor": "#047857"
+        "textColor": "#047857",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&h=120&q=80"
       }
     ]
   },

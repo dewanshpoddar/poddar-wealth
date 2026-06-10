@@ -48,7 +48,7 @@ export default function ProductTeaser() {
       <div className="absolute top-0 right-0 w-1/3 h-full bg-white/[0.03] -z-10 skew-x-12 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gold/[0.05] -z-10 -skew-x-12 -translate-x-1/3" />
       
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 mb-20">
           
           {/* Left Content - The Hook */}
@@ -70,7 +70,7 @@ export default function ProductTeaser() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight tracking-tight"
+              className="font-display text-2xl md:text-3xl font-bold text-white mb-8 leading-tight tracking-tight"
             >
               {lang === 'en' 
                 ? 'Explore 26+ Premium Wealth & Protection Plans' 

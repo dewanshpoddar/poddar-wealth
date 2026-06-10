@@ -61,8 +61,8 @@ export default function QuickActions() {
   ]
 
   return (
-    <section className="bg-white py-16 md:py-20 px-4 border-b border-gray-100">
-      <div className="max-w-[1240px] mx-auto">
+    <section className="bg-white py-16 md:py-20 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {actions.map((act, i) => {
             const title = act.title[lang as 'en' | 'hi'] || act.title.en
@@ -87,13 +87,18 @@ export default function QuickActions() {
               </div>
             )
 
+            const isTalkCard = act.href.includes('wa.me')
+            const cardClass = isTalkCard
+              ? "bg-amber-50/50 border border-amber-200/40 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-gold hover:border-gold/40 hover:bg-amber-50 hover:-translate-y-0.5 transition-all duration-300 group min-h-[64px] flex items-center cursor-pointer w-full"
+              : "bg-white border border-gray-100 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-gold-sm hover:border-gold/30 hover:-translate-y-0.5 transition-all duration-300 group min-h-[64px] flex items-center cursor-pointer w-full"
+
             return act.isExternal ? (
               <a
                 key={i}
                 href={act.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border border-gray-100 rounded-2xl p-3 md:p-4 hover:shadow-md hover:border-gold/15 transition-all duration-300 group min-h-[64px] flex items-center cursor-pointer"
+                className={cardClass}
               >
                 {cardContent}
               </a>
@@ -101,7 +106,7 @@ export default function QuickActions() {
               <Link
                 key={i}
                 href={act.href}
-                className="bg-white border border-gray-100 rounded-2xl p-3 md:p-4 hover:shadow-md hover:border-gold/15 transition-all duration-300 group min-h-[64px] flex items-center cursor-pointer"
+                className={cardClass}
               >
                 {cardContent}
               </Link>

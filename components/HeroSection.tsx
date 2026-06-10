@@ -230,22 +230,26 @@ export default function HeroSection() {
       </div>
 
       {/* ═══ WHY US STRIP ═══ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-gold/10 bg-warm/50 px-2 lg:px-4 py-2">
-        {t.whyUs && t.whyUs.map((item: any, i: number) => (
-          <div key={i} className="p-1">
-            <div className={`flex items-start gap-3.5 px-4 lg:px-6 py-4 transition-all duration-300 
-                            hover:bg-white hover:shadow-xl hover:shadow-gold/5 cursor-default rounded-2xl
-                            ${i < t.whyUs.length - 1 ? 'lg:border-r border-gold/5' : ''}`}>
-              <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
-                {getWhyUsIcon(item.icon)}
+      <div className="border-t border-gold/10 bg-warm/50">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4">
+            {t.whyUs && t.whyUs.map((item: any, i: number) => (
+              <div key={i} className="p-1">
+                <div className={`flex items-start gap-3.5 px-4 lg:px-6 py-4 transition-all duration-300 
+                                hover:bg-white/30 cursor-default rounded-2xl
+                                ${i < t.whyUs.length - 1 ? 'lg:border-r border-gold/15' : ''}`}>
+                  <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                    {getWhyUsIcon(item.icon)}
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-bold text-slate-900 mb-0.5 tracking-tight">{item.title}</div>
+                    <div className="text-[11px] text-slate-500 leading-relaxed font-medium">{item.sub}</div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="text-[13px] font-bold text-slate-900 mb-0.5 tracking-tight">{item.title}</div>
-                <div className="text-[11px] text-slate-500 leading-relaxed font-medium">{item.sub}</div>
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </>
   )

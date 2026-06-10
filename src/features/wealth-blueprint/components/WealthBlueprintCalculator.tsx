@@ -164,7 +164,7 @@ export default function WealthBlueprintCalculator() {
       <div className="absolute inset-0 pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(circle at 10% 60%, rgba(201,168,76,0.07) 0%, transparent 55%), radial-gradient(circle at 90% 15%, rgba(4,12,28,0.04) 0%, transparent 50%)' }}/>
 
-      <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200/60 rounded-full px-5 py-2 mb-6">
@@ -174,7 +174,7 @@ export default function WealthBlueprintCalculator() {
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"/>
           </div>
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
             {isHi ? 'आपका व्यक्तिगत वेल्थ ब्लूप्रिंट' : 'Your Personal Wealth Blueprint'}
           </h2>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto mt-4 leading-relaxed font-medium">

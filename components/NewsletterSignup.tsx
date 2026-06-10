@@ -55,12 +55,12 @@ export default function NewsletterSignup() {
   if (hasSubscribedCookie) return null
 
   return (
-    <section className="bg-gray-950 py-12 px-6 border-t border-gray-900">
-      <div className="max-w-[1240px] mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+    <section className="bg-gray-950 py-12 border-t border-gray-900">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
         
         {/* Left Column: Text */}
         <div className="max-w-xl">
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
+          <h2 className="font-display text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
             {newsletterT.title}
           </h2>
           <p className="text-gray-400 text-xs md:text-sm leading-relaxed font-semibold">

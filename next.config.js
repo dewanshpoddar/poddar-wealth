@@ -63,10 +63,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withSentryConfig(nextConfig, {
-  silent: true,
-  org: "poddar-wealth",
-  project: "poddarwealth",
-  disableLogger: true,
-  dryRun: !process.env.SENTRY_AUTH_TOKEN,
-});
+module.exports = nextConfig;

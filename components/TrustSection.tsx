@@ -45,11 +45,11 @@ export default function TrustSection() {
   ]
 
   return (
-    <section className="bg-slate-50 py-16 md:py-20 border-y border-slate-100 relative overflow-hidden">
+    <section className="bg-slate-50 py-12 md:py-14 border-y border-slate-100 relative overflow-hidden">
       {/* Top subtle gold line decorative bar */}
       <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-200/10 via-gold/30 to-amber-200/10" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="flex md:grid md:grid-cols-5 items-stretch gap-4 md:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none py-2 px-2 -mx-4 md:mx-0 md:px-0 scroll-smooth">
           {stats.map((stat, idx) => {
             const isLink = !!stat.link
@@ -58,10 +58,10 @@ export default function TrustSection() {
             const cardContent = (
               <div className="flex flex-col items-center justify-center text-center h-full">
                 {/* Number with tabular-nums */}
-                <div className="text-2xl md:text-3xl font-display font-extrabold text-navy tracking-tight tabular-nums flex items-center justify-center gap-1 group-hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl md:text-4xl font-display font-extrabold text-navy tracking-tight tabular-nums flex items-center justify-center gap-1 group-hover:scale-105 transition-transform duration-300">
                   {stat.num.includes('★') ? (
                     <span className="flex items-center text-amber-700 gap-0.5">
-                      4.9<Star size={20} className="fill-amber-500 text-amber-500 inline-block align-middle mb-1" /> Google
+                      4.9<Star size={22} className="fill-amber-500 text-amber-500 inline-block align-middle mb-1" /> Google
                     </span>
                   ) : (
                     <span className="text-navy bg-clip-text bg-gradient-to-b from-navy to-navy/80">{stat.num}</span>
@@ -85,9 +85,12 @@ export default function TrustSection() {
                   href={stat.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[180px] md:min-w-0 flex-1 flex-shrink-0 snap-center py-5 px-4 rounded-2xl bg-white hover:shadow-md border border-gray-100 hover:border-gold/20 shadow-sm transition-all duration-300 group cursor-pointer block"
+                  className="min-w-[180px] md:min-w-0 flex-1 flex-shrink-0 snap-center py-6 px-4 relative group cursor-pointer block hover:scale-[1.02] transition-transform duration-300"
                 >
                   {cardContent}
+                  {idx < stats.length - 1 && (
+                    <div className="hidden md:block absolute right-0 top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-gold/25 to-transparent" />
+                  )}
                 </a>
               )
             }
@@ -95,9 +98,12 @@ export default function TrustSection() {
             return (
               <div
                 key={idx}
-                className="min-w-[180px] md:min-w-0 flex-1 flex-shrink-0 snap-center py-5 px-4 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all duration-300 group"
+                className="min-w-[180px] md:min-w-0 flex-1 flex-shrink-0 snap-center py-6 px-4 relative group"
               >
                 {cardContent}
+                {idx < stats.length - 1 && (
+                  <div className="hidden md:block absolute right-0 top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-gold/25 to-transparent" />
+                )}
               </div>
             )
           })}

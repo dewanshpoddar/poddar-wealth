@@ -60,25 +60,19 @@ export default function ServicesSection() {
       {/* Decorative gradient background element */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="max-w-xl">
-            <div className="flex items-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
-              <span className="w-8 h-px bg-gold" />
-              {t.services.eyebrow}
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-navy mb-4">
-              {t.services.title}
-            </h2>
-            <p className="text-[14px] text-muted leading-relaxed max-w-sm">
-              {t.services.subtitle}
-            </p>
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
+            <span className="w-8 h-px bg-gold" />
+            {t.services.eyebrow}
+            <span className="w-8 h-px bg-gold" />
           </div>
-          <Link href="/services" className="hidden md:flex items-center gap-2 group text-13 font-bold text-navy hover:text-gold transition-colors">
-            {t.servicesSection.exploreAll}
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-navy mb-4">
+            {t.services.title}
+          </h2>
+          <p className="text-[14px] text-muted leading-relaxed max-w-xl mx-auto">
+            {t.services.subtitle}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -119,6 +113,13 @@ export default function ServicesSection() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Centered CTA Link at Bottom */}
+        <div className="text-center mt-12">
+          <Link href="/services" className="inline-flex items-center gap-2 text-xs font-bold text-navy hover:text-gold uppercase tracking-wider transition-colors duration-200 cursor-pointer">
+            {t.servicesSection.exploreAll} →
+          </Link>
         </div>
       </div>
     </section>
