@@ -14,9 +14,9 @@ const ServicesSection = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
 )
 
-const ProductTeaser = dynamic(
-  () => import('@/components/ProductTeaser'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
+const PopularPlans = dynamic(
+  () => import('@/components/PopularPlans'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
 )
 
 const TestimonialsSection = dynamic(
@@ -26,6 +26,16 @@ const TestimonialsSection = dynamic(
 
 const BlogPreview = dynamic(
   () => import('@/components/BlogPreview'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const JoinAdvisorSection = dynamic(
+  () => import('@/components/JoinAdvisorSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-amber-50 rounded-xl h-64 w-full" /> }
+)
+
+const AboutFounder = dynamic(
+  () => import('@/components/AboutFounder'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 
@@ -39,7 +49,6 @@ const FinalCTA = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 
-// Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
     super(props)
@@ -60,19 +69,19 @@ export default function HomePage() {
       {/* 1 — Hero */}
       <HeroSection />
 
-      {/* 2 — Ask Poddar Ji Widget */}
+      {/* 2 — Ask Poddar Ji widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Life Stage Navigator */}
-      <LifeEventsNavigator />
-
-      {/* 4 — Trust stats bar */}
-      <TrustSection />
-
-      {/* 5 — Protection Check Section (Placed above services!) */}
+      {/* 3 — Protection Check ("What happens if income stops?") */}
       <ProtectionCheckSection />
 
-      {/* 6 — Services discovery */}
+      {/* 4 — Life Stages Navigator */}
+      <LifeEventsNavigator />
+
+      {/* 5 — Trust stats bar */}
+      <TrustSection />
+
+      {/* 6 — How We Help You (goal-oriented services) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -81,19 +90,19 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 6.5 — Product Teaser (navy blue background) */}
+      {/* 7 — Popular Plans (curated 6-plan strip) */}
       <SectionBoundary>
-        <LazySection height="h-96">
+        <LazySection height="h-48">
           <Suspense fallback={null}>
-            <ProductTeaser />
+            <PopularPlans />
           </Suspense>
         </LazySection>
       </SectionBoundary>
 
-      {/* 7 — Quick Actions Grid */}
+      {/* 8 — Calculator quick actions */}
       <QuickActions />
 
-      {/* 8 — Social proof (Testimonials & Reviews merged) */}
+      {/* 9 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -102,7 +111,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 9 — Blog Preview (latest 3 posts) */}
+      {/* 10 — Blog preview carousel */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -111,7 +120,25 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 10 — Newsletter Signup */}
+      {/* 11 — Join as Insurance Advisor */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <JoinAdvisorSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 12 — About the Founder */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <AboutFounder />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 13 — Newsletter signup */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -120,7 +147,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 11 — Final CTA */}
+      {/* 14 — Final CTA */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
