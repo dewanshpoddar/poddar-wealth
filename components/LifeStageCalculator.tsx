@@ -27,14 +27,14 @@ export default function LifeStageCalculator({ slug }: LifeStageCalculatorProps) 
   switch (slug) {
     case 'first-job':
     case 'bought-home':
-      return <LifeInsuranceCalculator hideHero={true} />
+      return <LifeInsuranceCalculator  />
     case 'just-married':
     case 'protect-health':
-      return <PolicyHealthCalculator hideHero={true} />
+      return <PolicyHealthCalculator  />
     case 'became-parent':
-      return <PremiumCalculator hideHero={true} />
+      return <PremiumCalculator  />
     case 'planning-retirement':
-      return <RetirementCalculator hideHero={true} />
+      return <RetirementCalculator  />
     default:
       return null
   }

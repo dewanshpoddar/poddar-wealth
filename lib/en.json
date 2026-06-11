@@ -1639,6 +1639,22 @@
     "successMessage": "Subscribed successfully!",
     "askPoddarJi": "Ask Poddar Ji"
   },
+  "joinAdvisor": {
+    "eyebrow": "CAREER OPPORTUNITY",
+    "title": "Build Your Career in Insurance",
+    "subtitle": "Join Ajay sir's team. Financial independence, flexible hours, mentorship from an MDRT Member.",
+    "benefits": [
+      { "title": "₹50K-2L/month", "description": "Earning potential" },
+      { "title": "Flexible Hours", "description": "Work on your terms" },
+      { "title": "MDRT Training", "description": "Learn from the best" }
+    ],
+    "cta": "Apply Now"
+  },
+  "founderSection": {
+    "eyebrow": "About the Founder",
+    "title": "Meet Ajay Kumar Poddar",
+    "subtitle": "Managing Director, Poddar Wealth Management"
+  },
   "clientPortal": {
     "heroTitle": "Your Policy Hub",
     "heroSubtitle": "Quick access to all policy servicing tools",

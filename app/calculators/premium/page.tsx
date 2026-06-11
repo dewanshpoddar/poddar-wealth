@@ -20,7 +20,8 @@ import ResultsPanel from '@/components/calculators/ResultsPanel'
 
 import { LicPlan, PremiumResult, MaturityResult, BenefitRow, FundOption } from '@/lib/types/lic-plan'
 
-export default function PremiumCalculatorPage({ hideHero = false }: { hideHero?: boolean }) {
+export default function PremiumCalculatorPage() {
+  const hideHero = false
   const { t, lang } = useLang()
   const pathname = usePathname()
   const isLP = pathname?.startsWith('/lp/')

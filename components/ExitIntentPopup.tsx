@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
 import { X, CheckCircle, TrendingUp } from 'lucide-react'
+import { popupCoordinator } from '@/lib/popup-coordinator'
 
 const SESSION_KEY = 'pw_exit_shown'
 
@@ -18,25 +19,36 @@ export default function ExitIntentPopup() {
 
   function show() {
     if (shownRef.current || sessionStorage.getItem(SESSION_KEY)) return
-    shownRef.current = true
-    sessionStorage.setItem(SESSION_KEY, '1')
-    setVisible(true)
-    trackEvent('exit_intent_shown')
+    popupCoordinator.request('exit-intent', () => {
+      shownRef.current = true
+      sessionStorage.setItem(SESSION_KEY, '1')
+      setVisible(true)
+      trackEvent('exit_intent_shown')
+    })
+  }
+
+  function dismiss() {
+    setVisible(false)
+    popupCoordinator.release('exit-intent')
   }
 
   useEffect(() => {
-    // Desktop: mouse leaves viewport
+    // Desktop only: mouse leaves viewport
     const onMouseLeave = (e: MouseEvent) => {
+      if ('ontouchstart' in window) return
       if (e.clientY <= 0) show()
     }
     document.addEventListener('mouseleave', onMouseLeave)
 
-    // Mobile: 30s inactivity timer
-    const timer = setTimeout(show, 30000)
+    // Non-touch only: 30s inactivity timer
+    let timer: ReturnType<typeof setTimeout> | undefined
+    if (!('ontouchstart' in window)) {
+      timer = setTimeout(show, 30000)
+    }
 
     return () => {
       document.removeEventListener('mouseleave', onMouseLeave)
-      clearTimeout(timer)
+      if (timer) clearTimeout(timer)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -65,11 +77,11 @@ export default function ExitIntentPopup() {
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.65)' }}
-      onClick={e => { if (e.target === e.currentTarget) setVisible(false) }}
+      onClick={e => { if (e.target === e.currentTarget) dismiss() }}
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7 relative">
         <button
-          onClick={() => setVisible(false)}
+          onClick={dismiss}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-600 text-xl leading-none"
           aria-label="Close"
         >
@@ -82,7 +94,7 @@ export default function ExitIntentPopup() {
             <h3 className="font-display font-bold text-navy text-lg mb-2">
               {c.successMsg ?? 'Ajay sir will call you within 24 hours.'}
             </h3>
-            <button onClick={() => setVisible(false)} className="mt-4 text-sm text-gray-500 hover:text-navy underline">
+            <button onClick={dismiss} className="mt-4 text-sm text-gray-500 hover:text-navy underline">
               Close
             </button>
           </div>
@@ -125,7 +137,7 @@ export default function ExitIntentPopup() {
             </form>
 
             <button
-              onClick={() => setVisible(false)}
+              onClick={dismiss}
               className="w-full mt-3 text-xs text-gray-500 hover:text-gray-600 transition-colors"
             >
               {c.dismiss ?? 'No thanks'}

@@ -190,6 +190,10 @@ export async function POST(req: NextRequest) {
     })
   } catch (error: unknown) {
     logger.error('/api/chat', 'Chat API error', { error: String(error) })
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({
+      response: "Abhi Poddar Ji thoda busy hain. Aap directly Ajay sir se baat karein — 9415313434. WhatsApp par bhi message kar sakte hain.",
+      cached: false,
+      fallback: true,
+    }, { status: 200 })
   }
 }

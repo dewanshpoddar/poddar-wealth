@@ -77,7 +77,8 @@ function LpLeadForm({ campaign }: { campaign: string }) {
 
 type PlanType = 'endowment' | 'term' | 'ulip' | 'money-back' | 'whole-life'
 
-export default function PolicyHealthCalculatorPage({ hideHero = false }: { hideHero?: boolean }) {
+export default function PolicyHealthCalculatorPage() {
+  const hideHero = false
   const { t, lang } = useLang()
   const pathname = usePathname()
   const isLP = pathname?.startsWith('/lp/')

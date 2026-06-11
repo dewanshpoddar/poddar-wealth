@@ -9,7 +9,8 @@ import { openLeadPopup } from '@/lib/events'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { LicPlan } from '@/lib/types/lic-plan'
 
-export default function RetirementCalcPage({ hideHero = false }: { hideHero?: boolean }) {
+export default function RetirementCalcPage() {
+  const hideHero = false
   const { t } = useLang()
   const [form, setForm] = useState({ currentAge: 30, retirementAge: 60, monthlyExpense: 40000, inflation: 6 })
   const [result, setResult] = useState<null | {

@@ -13,7 +13,8 @@ import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
 const TERM_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => p.category === 'term')
 const ENDOWMENT_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => ['endowment', 'wholelife'].includes(p.category))
 
-export default function LifeInsuranceCalcPage({ hideHero = false }: { hideHero?: boolean }) {
+export default function LifeInsuranceCalcPage() {
+  const hideHero = false
   const { t } = useLang()
 
   // Step 1 — coverage need
