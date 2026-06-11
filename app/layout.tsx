@@ -121,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LangProvider>
           <ProblemSolutionSection />
           <Navbar />
-          <main className="pb-16 md:pb-0">{children}</main>
+          <main className="pb-20 md:pb-0">{children}</main>
           <Footer />
           <ClientFloats />
           <ClientOnlyBanner />

@@ -46,15 +46,13 @@ export default function BlogPreview() {
         
         {/* Section Header (Centered) */}
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
-            <span className="w-8 h-px bg-gold" />
+          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {previewT.eyebrow}
-            <span className="w-8 h-px bg-gold" />
-          </div>
-          <h2 className="text-center font-display font-bold text-2xl md:text-3xl text-navy mb-4">
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
             {previewT.heading}
           </h2>
-          <p className="text-center text-[14px] text-muted leading-relaxed max-w-xl mx-auto">
+          <p className="text-gray-500 mt-2 text-center">
             {previewT.sub}
           </p>
         </div>

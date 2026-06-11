@@ -17,8 +17,8 @@ export default function AboutFounder() {
       ? (rawFounderSection as FounderSectionTranslation)
       : {
           eyebrow: lang === 'en' ? 'ABOUT THE FOUNDER' : lang === 'hi' ? 'संस्थापक के बारे में' : 'প্রতিষ্ঠাতা সম্পর্কে',
-          title: lang === 'en' ? 'Ajay Kumar Poddar' : lang === 'hi' ? 'श्री अजय कुमार पोद्दार' : 'শ্রী অজয় কুমার পোদ্दार',
-          subtitle: lang === 'en' ? '31+ years of on-ground insurance and wealth planning experience' : lang === 'hi' ? 'ऑन-ग्राउंड बीमा और वेल्थ प्लानिंग का 31+ वर्षों का अटूट भरोसा' : 'অন-গ্রাউন্ড বীমা এবং সম্পদ পরিকল্পনার 31+ বছরের অভিজ্ঞতা'
+          title: lang === 'en' ? 'Meet Ajay Kumar Poddar' : lang === 'hi' ? 'अजय कुमार पोद्दार से मिलें' : 'শ্রী অজয় কুমার পোদ্দার',
+          subtitle: lang === 'en' ? 'Managing Director, Poddar Wealth Management' : lang === 'hi' ? 'प्रबंध निदेशक, पोद्दार वेल्थ मैनेजमेंट' : 'অন-গ্রাউন্ড বীমা এবং সম্পদ পরিকল্পনার 31+ বছরের অভিজ্ঞতা'
         }
 
   const aboutSection = t.aboutSection ?? {
@@ -34,13 +34,13 @@ export default function AboutFounder() {
         
         {/* Section Heading */}
         <div className="text-center mb-10">
-          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2">
+          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {f.eyebrow}
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
             {f.title}
           </h2>
-          <p className="text-gray-500 mt-2 text-sm max-w-xl mx-auto">
+          <p className="text-gray-500 mt-2 text-center">
             {f.subtitle}
           </p>
         </div>

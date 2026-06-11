@@ -47,13 +47,13 @@ export default function ServicesSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         <div className="text-center mb-12">
-          <p className="text-amber-500 text-xs font-bold uppercase tracking-widest mb-2">
+          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {hi ? 'हमारी सेवाएं' : 'OUR SERVICES'}
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
             {hi ? 'हम आपकी कैसे मदद करते हैं' : 'How We Help You'}
           </h2>
-          <p className="text-gray-500 mt-3 max-w-xl mx-auto text-sm leading-relaxed">
+          <p className="text-gray-500 mt-2 text-center">
             {hi
               ? 'अपना लक्ष्य चुनें। हम सही सुरक्षा खोज देंगे।'
               : "Choose your goal. We'll find the right protection."}

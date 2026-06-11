@@ -47,13 +47,13 @@ export default function JoinAdvisorSection() {
     <section className="bg-gradient-to-r from-amber-500 to-amber-600 py-16 text-white">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <p className="text-white/70 text-sm font-semibold uppercase tracking-wider mb-2">
+          <p className="text-white/70 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {c.eyebrow}
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-center">
             {c.title}
           </h2>
-          <p className="text-white/80 mt-3 max-w-xl mx-auto text-sm leading-relaxed">
+          <p className="text-white/80 mt-2 text-center max-w-xl mx-auto">
             {c.subtitle}
           </p>
         </div>

@@ -44,11 +44,6 @@ const NewsletterSignup = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 rounded-xl h-48 w-full" /> }
 )
 
-const FinalCTA = dynamic(
-  () => import('@/components/FinalCTA'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
-)
-
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
     super(props)
@@ -72,16 +67,19 @@ export default function HomePage() {
       {/* 2 — Ask Poddar Ji widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Protection Check ("What happens if income stops?") */}
+      {/* 3 — Calculator quick actions (MOVE HERE right after Poddar Ji) */}
+      <QuickActions />
+
+      {/* 4 — Protection Check ("What happens if income stops?") */}
       <ProtectionCheckSection />
 
-      {/* 4 — Life Stages Navigator */}
+      {/* 5 — Life Stages Navigator */}
       <LifeEventsNavigator />
 
-      {/* 5 — Trust stats bar */}
+      {/* 6 — Trust stats bar */}
       <TrustSection />
 
-      {/* 6 — How We Help You (goal-oriented services) */}
+      {/* 7 — How We Help You (goal-oriented services) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -90,7 +88,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 7 — Popular Plans (curated 6-plan strip) */}
+      {/* 8 — Popular Plans (curated premium dark grid) */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -98,9 +96,6 @@ export default function HomePage() {
           </Suspense>
         </LazySection>
       </SectionBoundary>
-
-      {/* 8 — Calculator quick actions */}
-      <QuickActions />
 
       {/* 9 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
       <SectionBoundary>
@@ -129,16 +124,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 12 — About the Founder */}
-      <SectionBoundary>
-        <LazySection height="h-64">
-          <Suspense fallback={null}>
-            <AboutFounder />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 13 — Newsletter signup */}
+      {/* 12 — Newsletter signup */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -147,11 +133,11 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 14 — Final CTA */}
+      {/* 13 — About the Founder (rendered after newsletter, only once) */}
       <SectionBoundary>
-        <LazySection height="h-96">
+        <LazySection height="h-64">
           <Suspense fallback={null}>
-            <FinalCTA />
+            <AboutFounder />
           </Suspense>
         </LazySection>
       </SectionBoundary>

@@ -101,14 +101,12 @@ export default function TestimonialsSection() {
         {/* Unified Eyebrow, Title & Subtitle (Centered) */}
         <div className="text-center mb-12 flex flex-col items-center">
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
-            <span className="w-8 h-px bg-gold" />
+          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {testimonials.eyebrow || (lang === 'en' ? "Real families, real stories" : "असली परिवार, असली कहानियां")}
-            <span className="w-8 h-px bg-gold" />
-          </div>
+          </p>
 
           {/* Main Title */}
-          <h2 className="text-center font-display font-bold text-2xl md:text-3xl text-navy mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
             {headingText}
           </h2>
 
@@ -117,7 +115,7 @@ export default function TestimonialsSection() {
             href="https://g.page/poddar-wealth-management/review"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-full px-4 py-2 text-xs font-semibold text-slate-700 transition-all mb-4 hover:border-gold/50 shadow-sm"
+            className="inline-flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-full px-4 py-2 text-xs font-semibold text-slate-700 transition-all my-3 hover:border-gold/50 shadow-sm"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -135,7 +133,7 @@ export default function TestimonialsSection() {
           </a>
 
           {/* Subtitle */}
-          <p className="text-center text-[14px] text-muted leading-relaxed max-w-xl mx-auto mb-6">
+          <p className="text-gray-500 mt-2 text-center">
             {subtitleText}
           </p>
 

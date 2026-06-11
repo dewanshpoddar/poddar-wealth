@@ -40,15 +40,13 @@ export default function LifeEventsNavigator() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.14em] text-gold font-medium uppercase mb-4">
-            <span className="w-8 h-px bg-gold" />
+          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
             {lang === 'hi' ? 'लाइफ स्टेज नेविगेटर' : 'LIFE STAGES'}
-            <span className="w-8 h-px bg-gold" />
-          </div>
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-navy mb-4">
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
             {title}
           </h2>
-          <p className="text-[14px] text-slate-500 leading-relaxed max-w-xl mx-auto">
+          <p className="text-gray-500 mt-2 text-center">
             {subtitle}
           </p>
         </div>
