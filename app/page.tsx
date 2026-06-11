@@ -14,6 +14,11 @@ const ServicesSection = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
 )
 
+const ProductTeaser = dynamic(
+  () => import('@/components/ProductTeaser'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
+)
+
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
@@ -72,6 +77,15 @@ export default function HomePage() {
         <LazySection height="h-96">
           <Suspense fallback={null}>
             <ServicesSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 6.5 — Product Teaser (navy blue background) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <ProductTeaser />
           </Suspense>
         </LazySection>
       </SectionBoundary>
