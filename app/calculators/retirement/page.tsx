@@ -9,7 +9,7 @@ import { openLeadPopup } from '@/lib/events'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { LicPlan } from '@/lib/types/lic-plan'
 
-export default function RetirementCalcPage() {
+export default function RetirementCalcPage({ hideHero = false }: { hideHero?: boolean }) {
   const { t } = useLang()
   const [form, setForm] = useState({ currentAge: 30, retirementAge: 60, monthlyExpense: 40000, inflation: 6 })
   const [result, setResult] = useState<null | {
@@ -43,16 +43,18 @@ export default function RetirementCalcPage() {
   }
 
   return (
-    <div className="pt-20">
-      <section className="bg-gradient-to-br from-navy to-navy-deep hero-pattern py-14">
-        <div className="section-container text-center text-white">
-          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">
-            <Calculator className="w-4 h-4" /> Retirement Calculator
+    <div className={hideHero ? "" : "pt-20"}>
+      {!hideHero && (
+        <section className="bg-gradient-to-br from-navy to-navy-deep hero-pattern py-14">
+          <div className="section-container text-center text-white">
+            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">
+              <Calculator className="w-4 h-4" /> Retirement Calculator
+            </div>
+            <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.retirementCalc.title}</h1>
+            <p className="text-white/75 text-lg max-w-xl mx-auto">{t.retirementCalc.subtitle}</p>
           </div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.retirementCalc.title}</h1>
-          <p className="text-white/75 text-lg max-w-xl mx-auto">{t.retirementCalc.subtitle}</p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── STEP 1: Corpus need ── */}
       <section className="section-padding bg-slate-50">

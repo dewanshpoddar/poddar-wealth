@@ -215,7 +215,7 @@ export default function Navbar() {
               <Search size={16} />
             </button>
 
-            {/* Prominent Language Switcher Box (EN, Hindi & Bengali) */}
+            {/* Prominent Language Switcher Box (EN & Hindi) */}
             <div className={`flex items-center rounded-lg border p-1 text-[10px] font-bold gap-1 transition-all duration-200 ${
               scrolled
                 ? 'border-white/10 bg-white/5 text-gray-300'
@@ -241,17 +241,6 @@ export default function Navbar() {
                 }`}
               >
                 हिंदी
-              </button>
-              <span className={`text-[9px] ${scrolled ? 'text-white/20' : 'text-gray-300'}`}>|</span>
-              <button
-                onClick={() => setLang('bn')}
-                className={`px-1.5 py-0.5 rounded cursor-pointer transition-colors ${
-                  lang === 'bn'
-                    ? scrolled ? 'bg-amber-500 text-white font-extrabold' : 'bg-amber-600 text-white font-extrabold'
-                    : scrolled ? 'hover:text-white' : 'hover:text-[#12152a]'
-                }`}
-              >
-                বাংলা
               </button>
             </div>
 
@@ -288,7 +277,7 @@ export default function Navbar() {
             
             {/* Mobile Language selector */}
             <div className="flex items-center gap-1.5 font-sans">
-              {(['en', 'hi', 'bn'] as const).map((l, i) => (
+              {(['en', 'hi'] as const).map((l, i) => (
                 <span key={l} className="flex items-center gap-1.5">
                   {i > 0 && <span className={scrolled ? 'text-gray-800' : 'text-gray-300'}>|</span>}
                   <button
@@ -299,7 +288,7 @@ export default function Navbar() {
                         : scrolled ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400 hover:text-[#12152a]'
                     }`}
                   >
-                    {l === 'en' ? 'EN' : l === 'hi' ? 'हि' : 'বা'}
+                    {l === 'en' ? 'EN' : 'हि'}
                   </button>
                 </span>
               ))}

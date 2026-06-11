@@ -20,7 +20,7 @@ import ResultsPanel from '@/components/calculators/ResultsPanel'
 
 import { LicPlan, PremiumResult, MaturityResult, BenefitRow, FundOption } from '@/lib/types/lic-plan'
 
-export default function PremiumCalculatorPage() {
+export default function PremiumCalculatorPage({ hideHero = false }: { hideHero?: boolean }) {
   const { t, lang } = useLang()
   const pathname = usePathname()
   const isLP = pathname?.startsWith('/lp/')
@@ -392,24 +392,26 @@ export default function PremiumCalculatorPage() {
   const visibleRows = showAllRows ? benefitTable : benefitTable.slice(0, 10)
 
   return (
-    <div className="min-h-screen bg-warm pt-[78px]">
+    <div className={hideHero ? "bg-white" : "min-h-screen bg-warm pt-[78px]"}>
 
       {/* ── Hero ─────────────────────────────── */}
-      <div className="bg-navy py-10 px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-            <Calculator className="w-3.5 h-3.5" /> LIC Premium Calculator
+      {!hideHero && (
+        <div className="bg-navy py-10 px-6 text-center relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
+              <Calculator className="w-3.5 h-3.5" /> LIC Premium Calculator
+            </div>
+            <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
+              Calculate Your <span className="text-gold">Exact LIC Premium</span>
+            </h1>
+            <p className="text-white/60 text-[14px] max-w-xl mx-auto">
+              34 active plans · real tabular rates · ULIP live NAV · year-by-year benefit table · WhatsApp share
+            </p>
           </div>
-          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-            Calculate Your <span className="text-gold">Exact LIC Premium</span>
-          </h1>
-          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            34 active plans · real tabular rates · ULIP live NAV · year-by-year benefit table · WhatsApp share
-          </p>
         </div>
-      </div>
+      )}
 
       {/* ── Main layout ──────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">

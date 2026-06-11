@@ -2,8 +2,10 @@
 import { Component, type ReactNode, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
-import QuickActions from '@/components/QuickActions'
+import AskPoddarJiWidget from '@/components/AskPoddarJiWidget'
+import LifeEventsNavigator from '@/components/LifeEventsNavigator'
 import TrustSection from '@/components/TrustSection'
+import QuickActions from '@/components/QuickActions'
 import LazySection from '@/components/LazySection'
 
 const ServicesSection = dynamic(
@@ -11,8 +13,23 @@ const ServicesSection = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
 )
 
-const GoogleReviewsSection = dynamic(
-  () => import('@/components/GoogleReviewsSection'),
+const TestimonialsSection = dynamic(
+  () => import('@/components/TestimonialsSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const BlogPreview = dynamic(
+  () => import('@/components/BlogPreview'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const NewsletterSignup = dynamic(
+  () => import('@/components/NewsletterSignup'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 rounded-xl h-48 w-full" /> }
+)
+
+const FinalCTA = dynamic(
+  () => import('@/components/FinalCTA'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 
@@ -31,58 +48,22 @@ class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boo
   }
 }
 
-const ProductTeaser = dynamic(
-  () => import('@/components/ProductTeaser'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
-)
-
-const WealthBlueprintCalculator = dynamic(
-  () => import('@/src/features/wealth-blueprint/components/WealthBlueprintCalculator'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
-)
-
-const TestimonialsSection = dynamic(
-  () => import('@/components/TestimonialsSection'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
-)
-
-const BlogPreview = dynamic(
-  () => import('@/components/BlogPreview'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
-)
-
-const FinalCTA = dynamic(
-  () => import('@/components/FinalCTA'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
-)
-
-const NewsletterSignup = dynamic(
-  () => import('@/components/NewsletterSignup'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 rounded-xl h-48 w-full" /> }
-)
-
 export default function HomePage() {
   return (
     <>
       {/* 1 — Hero */}
       <HeroSection />
 
-      {/* Quick Actions Grid */}
-      <QuickActions />
+      {/* 2 — Ask Poddar Ji Widget */}
+      <AskPoddarJiWidget />
 
-      {/* 2 — Trust stats bar */}
+      {/* 3 — Life Events Navigator */}
+      <LifeEventsNavigator />
+
+      {/* 4 — Trust stats bar */}
       <TrustSection />
 
-      {/* 3 — Google Reviews Live Widget */}
-      <SectionBoundary>
-        <LazySection height="h-64">
-          <Suspense fallback={null}>
-            <GoogleReviewsSection />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 4 — Services discovery */}
+      {/* 5 — Services discovery */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -91,25 +72,10 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 5 — Product browser teaser */}
-      <SectionBoundary>
-        <LazySection height="h-96">
-          <Suspense fallback={null}>
-            <ProductTeaser />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
+      {/* 6 — Quick Actions Grid */}
+      <QuickActions />
 
-      {/* 6 — Core conversion tool */}
-      <SectionBoundary>
-        <LazySection height="h-96">
-          <Suspense fallback={null}>
-            <WealthBlueprintCalculator />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 7 — Social proof (Testimonials) */}
+      {/* 7 — Social proof (Testimonials & Reviews merged) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -127,7 +93,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* Newsletter Signup */}
+      {/* 9 — Newsletter Signup */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -136,7 +102,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 9 — Final CTA */}
+      {/* 10 — Final CTA */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>

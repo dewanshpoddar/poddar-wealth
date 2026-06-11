@@ -1,4 +1,5 @@
 'use client'
+import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
 const AIChatWidget = dynamic(
@@ -11,5 +12,14 @@ const AIChatWidget = dynamic(
 )
 
 export default function AIAdvisorClient() {
-  return <AIChatWidget standalone />
+  return (
+    <Suspense fallback={
+      <div className="animate-pulse bg-gray-100 rounded-2xl h-[500px] w-full flex items-center justify-center">
+        <p className="text-gray-400">Loading Poddar Ji...</p>
+      </div>
+    }>
+      <AIChatWidget standalone />
+    </Suspense>
+  )
 }
+

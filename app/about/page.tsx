@@ -6,8 +6,8 @@ const MotionDiv = dynamic(
   () => import('framer-motion').then(mod => ({ default: mod.motion.div })),
   { ssr: false }
 )
-const GoogleReviewsSection = dynamic(
-  () => import('@/components/GoogleReviewsSection'),
+const TestimonialsSection = dynamic(
+  () => import('@/components/TestimonialsSection'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
 )
 import Image from 'next/image'
@@ -547,8 +547,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Google Reviews Live Widget */}
-      <GoogleReviewsSection />
+      {/* Testimonials & Reviews Widget */}
+      <TestimonialsSection />
       
       {/* FINAL CTA STRIP */}
       <section className="bg-gold py-12 px-6 relative overflow-hidden">

@@ -77,7 +77,7 @@ function LpLeadForm({ campaign }: { campaign: string }) {
 
 type PlanType = 'endowment' | 'term' | 'ulip' | 'money-back' | 'whole-life'
 
-export default function PolicyHealthCalculatorPage() {
+export default function PolicyHealthCalculatorPage({ hideHero = false }: { hideHero?: boolean }) {
   const { t, lang } = useLang()
   const pathname = usePathname()
   const isLP = pathname?.startsWith('/lp/')
@@ -339,25 +339,27 @@ Please help me review these gaps and suggest the right plans.`
     : ''
 
   return (
-    <div className="min-h-screen bg-warm pt-[78px]">
+    <div className={hideHero ? "bg-white" : "min-h-screen bg-warm pt-[78px]"}>
       {/* Hero Header */}
-      <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} 
-        />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-            <Calculator className="w-3.5 h-3.5" /> {p.title}
+      {!hideHero && (
+        <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
+          <div 
+            className="absolute inset-0 opacity-[0.04] pointer-events-none"
+            style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} 
+          />
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
+              <Calculator className="w-3.5 h-3.5" /> {p.title}
+            </div>
+            <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
+              {p.title}
+            </h1>
+            <p className="text-white/60 text-[14px] max-w-xl mx-auto">
+              {p.subtitle}
+            </p>
           </div>
-          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-            {p.title}
-          </h1>
-          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            {p.subtitle}
-          </p>
         </div>
-      </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

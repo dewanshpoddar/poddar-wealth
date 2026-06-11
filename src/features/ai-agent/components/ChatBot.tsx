@@ -5,9 +5,26 @@ import { usePoddarJiChat } from '../hooks/usePoddarJiChat'
 import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
 import { Languages, Trophy, Zap } from 'lucide-react'
 
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useRef } from 'react'
+
 function ChatWindow() {
   const { t } = useLang()
   const chat = usePoddarJiChat(t.chatbot.greeting)
+  const searchParams = useSearchParams()
+  const q = searchParams.get('q')
+  const triggeredRef = useRef(false)
+
+  useEffect(() => {
+    if (q && !triggeredRef.current) {
+      triggeredRef.current = true
+      // Use setTimeout to ensure chatbot greeting is fully loaded and chat logic is ready
+      const timer = setTimeout(() => {
+        chat.sendMessage(q)
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [q, chat])
 
   return (
     <PoddarJiChatUI
@@ -22,6 +39,7 @@ function ChatWindow() {
     />
   )
 }
+
 
 export default function ChatBot({ standalone = false }: { standalone?: boolean }) {
   const { t } = useLang()

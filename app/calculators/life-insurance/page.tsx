@@ -13,7 +13,7 @@ import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
 const TERM_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => p.category === 'term')
 const ENDOWMENT_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => ['endowment', 'wholelife'].includes(p.category))
 
-export default function LifeInsuranceCalcPage() {
+export default function LifeInsuranceCalcPage({ hideHero = false }: { hideHero?: boolean }) {
   const { t } = useLang()
 
   // Step 1 — coverage need
@@ -72,17 +72,18 @@ export default function LifeInsuranceCalcPage() {
   }, [premResult, benefitTable, term])
 
   return (
-    <div className="pt-20">
-      {/* Hero */}
-      <section className="bg-hero-gradient hero-pattern py-14">
-        <div className="section-container text-center text-white">
-          <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">
-            <Calculator className="w-4 h-4" /> Life Insurance Calculator
+    <div className={hideHero ? "" : "pt-20"}>
+      {!hideHero && (
+        <section className="bg-hero-gradient hero-pattern py-14">
+          <div className="section-container text-center text-white">
+            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">
+              <Calculator className="w-4 h-4" /> Life Insurance Calculator
+            </div>
+            <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.lifeCalc.title}</h1>
+            <p className="text-white/75 text-lg max-w-xl mx-auto">{t.lifeCalc.subtitle}</p>
           </div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.lifeCalc.title}</h1>
-          <p className="text-white/75 text-lg max-w-xl mx-auto">{t.lifeCalc.subtitle}</p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── STEP 1: Coverage Need ── */}
       <section className="section-padding bg-slate-50">
