@@ -340,21 +340,30 @@
   .pw-footer-disclaimer { @apply text-10 text-muted opacity-70 mt-1; }
 
   /* ── WhatsApp float ──────────────────────────────────────── */
+  /* Styling moved to Tailwind classes on the component. CSS class kept for backward compat only. */
   .pw-wa-float {
-    @apply w-12 h-12 rounded-full bg-green-500
-           border-none cursor-pointer items-center justify-center
-           shadow-wa animate-wa-pulse hover:scale-110 transition-transform duration-150;
-    /* position and display controlled via raw CSS — avoids Tailwind @apply vs utility conflicts */
-    position: fixed;
     display: none;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 9950;
   }
 
   @media (min-width: 640px) {
     .pw-wa-float {
       display: flex;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 40;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      background-color: rgb(34 197 94);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      transition: background-color 0.15s ease;
+    }
+    .pw-wa-float:hover {
+      background-color: rgb(22 163 74);
     }
   }
 

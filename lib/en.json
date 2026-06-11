@@ -1546,6 +1546,31 @@
     "subheading": "4.9/5.0 from 154+ Google Reviews",
     "seeAll": "See all reviews on Google"
   },
+  "heroV2": {
+    "headline": "What Happens to Your Family If Your Income Stops Tomorrow?",
+    "subheadline": "Find the right life, health, and retirement cover in minutes.",
+    "cta_primary": "Check My Coverage",
+    "cta_secondary": "Ask Poddar Ji"
+  },
+  "founderStory": {
+    "story": "For 31 years, I've sat across dining tables, hospital waiting rooms, and family discussions — helping people protect what matters most.\n\nI started in 1994 with one belief: every family deserves someone who understands their finances AND cares about their future. Not someone who pushes products. Someone who listens.\n\nToday, I've helped 5,000 families across Gorakhpur, Basti, Varanasi, and beyond. Some of them are into their third generation with me. Their parents trusted me. Now their children do too.\n\nMy approach is simple: I ask about your life, not your budget. The right plan follows naturally.",
+    "signature": "Ajay Kumar Poddar",
+    "credentials": "MDRT Member · Chairman's Club Awardee · 31 Years of Service"
+  },
+  "lifeEvents": {
+    "title": "What's Your Situation?",
+    "subtitle": "Choose what applies to you — we'll show you exactly what you need"
+  },
+  "reviewsSection": {
+    "sectionTitle": "Trusted by 5,000+ Families",
+    "googleBadge": "Google Reviews 4.9★ · 154+ reviews",
+    "seeAll": "See all Google reviews →"
+  },
+  "chatbotWidget": {
+    "prompt": "Ask Poddar Ji anything about insurance",
+    "placeholder": "E.g. How much life insurance do I need?",
+    "cta": "Ask Now"
+  },
   "navTracker": {
     "heroTitle": "LIC ULIP NAV Tracker",
     "heroSubtitle": "Track your fund's net asset value daily",
