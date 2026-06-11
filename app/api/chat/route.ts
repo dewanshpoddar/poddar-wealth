@@ -6,7 +6,7 @@ import { checkRateLimit } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
 
 const MAX_INPUT_CHARS = 500
-const GROQ_MODEL = env.GROQ_MODEL
+const GROQ_MODEL = process.env.GROQ_MODEL || env.GROQ_MODEL || 'llama-3.3-70b-versatile'
 
 function buildSystemPrompt() {
   const now = new Date().toLocaleDateString('en-IN', {
@@ -87,8 +87,25 @@ async function logToSheets(sessionId: string, userMsg: string, botReply: string)
 
 // ── Streaming route handler ────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  // Guard 1: GROQ_API_KEY check
+  if (!process.env.GROQ_API_KEY && !env.GROQ_API_KEY) {
+    return NextResponse.json({
+      response: "Poddar Ji abhi setup ho raha hai. Seedha Ajay sir se baat karein: 9415313434.",
+      fallback: true
+    })
+  }
+
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-  const { allowed } = await checkRateLimit(ip, 30, 60, 'rl-chat')
+  
+  // Guard 2: Rate limit check wrapped in try-catch
+  let allowed = true
+  try {
+    const res = await checkRateLimit(ip, 30, 60, 'rl-chat')
+    allowed = res.allowed
+  } catch (e) {
+    console.warn('Rate limiter unavailable, skipping:', e)
+  }
+
   if (!allowed) {
     logger.warn('/api/chat', 'Rate limit exceeded', { ip })
     return NextResponse.json(
@@ -118,7 +135,7 @@ export async function POST(req: NextRequest) {
     const safeContent = rawContent.slice(0, MAX_INPUT_CHARS)
     if (!safeContent) return NextResponse.json({ error: 'Empty message' }, { status: 400 })
 
-    const groq = new Groq({ apiKey: env.GROQ_API_KEY })
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || env.GROQ_API_KEY })
 
     // Convert prior turns to Groq format — normalize any non-user role to 'assistant'
     const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
@@ -188,7 +205,10 @@ export async function POST(req: NextRequest) {
     return new Response(readable, {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
+    console.error('Groq error:', error?.message || error)
+    console.error('Groq status:', error?.status)
+    console.error('Groq error body:', JSON.stringify(error?.error))
     logger.error('/api/chat', 'Chat API error', { error: String(error) })
     return NextResponse.json({
       response: "Abhi Poddar Ji thoda busy hain. Aap directly Ajay sir se baat karein — 9415313434. WhatsApp par bhi message kar sakte hain.",
