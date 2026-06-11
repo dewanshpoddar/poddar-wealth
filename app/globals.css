@@ -73,9 +73,7 @@
            hover:bg-navy hover:text-white;
   }
   .pw-btn--green   { @apply bg-agent-mid text-white hover:bg-agent-light; }
-  .pw-btn--whatsapp {
-    @apply bg-green-500 text-white text-11 px-3.5 py-1.5 rounded-pill hover:bg-green-600;
-  }
+
   .pw-btn--navy    { @apply bg-navy text-white hover:bg-navy-mid; }
   .pw-btn--sm      { @apply text-11 px-3 py-1.5; }
   .pw-btn--full    { @apply w-full justify-center; }
@@ -339,33 +337,7 @@
   .pw-footer-contact  { @apply text-11 text-gold mt-1; }
   .pw-footer-disclaimer { @apply text-10 text-muted opacity-70 mt-1; }
 
-  /* ── WhatsApp float ──────────────────────────────────────── */
-  /* Styling moved to Tailwind classes on the component. CSS class kept for backward compat only. */
-  .pw-wa-float {
-    display: none;
-  }
 
-  @media (min-width: 640px) {
-    .pw-wa-float {
-      display: flex;
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 40;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 9999px;
-      background-color: rgb(34 197 94);
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      transition: background-color 0.15s ease;
-    }
-    .pw-wa-float:hover {
-      background-color: rgb(22 163 74);
-    }
-  }
 
   .pw-ai-float {
     @apply fixed bottom-24 right-6 z-50 px-5 py-2.5 rounded-full 

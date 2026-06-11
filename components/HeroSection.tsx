@@ -1,101 +1,256 @@
 'use client'
-
+import { useState, useEffect } from 'react'
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import Image from 'next/image'
+import { 
+  Shield, GraduationCap, Landmark, HeartPulse, Heart, 
+  Handshake, Zap, ClipboardCheck, Trophy 
+} from 'lucide-react'
+
+const quickIcons = [
+  <Shield key="shield" className="w-4 h-4 text-amber-500" />,
+  <GraduationCap key="grad" className="w-4 h-4 text-amber-500" />,
+  <Landmark key="landmark" className="w-4 h-4 text-amber-500" />,
+  <HeartPulse key="health" className="w-4 h-4 text-amber-500" />,
+  <Heart key="marriage" className="w-4 h-4 text-amber-500" />
+]
+
+function getWhyUsIcon(emoji: string) {
+  const cleanEmoji = emoji.replace(/[\ufe0f\u200d]/g, '').trim()
+  switch (cleanEmoji) {
+    case '🤝': return <Handshake className="w-5 h-5 text-amber-500" />
+    case '⚡': return <Zap className="w-5 h-5 text-amber-500" />
+    case '📋': return <ClipboardCheck className="w-5 h-5 text-amber-500" />
+    case '🏆': return <Trophy className="w-5 h-5 text-amber-500" />
+    default: return <Handshake className="w-5 h-5 text-amber-500" />
+  }
+}
+
+const heroImages = [
+  '/assets/hero-family.png',
+  '/assets/hero-education.png',
+  '/assets/hero-retirement.png',
+  '/assets/hero-health.png',
+  '/assets/hero-marriage.png'
+]
 
 export default function HeroSection() {
-  const { t, lang } = useLang()
+  const { t } = useLang()
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const hero = t.heroV2 || {
-    headline: "What Happens to Your Family If Your Income Stops Tomorrow?",
-    subheadline: "Find the right life, health, and retirement cover in minutes.",
-    cta_primary: "Check My Coverage",
-    cta_secondary: "Ask Poddar Ji"
-  }
-
-  const badgeText = lang === 'hi' ? 'मुफ्त कवरेज चेक' : 'FREE COVERAGE CHECK'
-  const cardTitle = lang === 'hi' ? 'आपका सुरक्षा स्कोर: ???' : 'Your Protection Score: ???'
-  const cardSub = lang === 'hi' 
-    ? 'क्या आप पर्याप्त रूप से बीमित हैं? 2 मिनट में ऑडिट करें।' 
-    : 'Are you underinsured, overinsured, or just right? Check now.'
-  const cardCta = lang === 'hi' ? '2-मिनट का टेस्ट लें' : 'Take the 2-minute check'
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+    }, 4500)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <section className="relative bg-gray-950 text-white overflow-hidden py-20 md:py-28 border-b border-gray-900">
-      {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute right-0 top-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+    <>
+      {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
+      <div className="grid lg:grid-cols-2 lg:h-[clamp(580px,calc(100vh-200px),700px)]">
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* LEFT SIDE (60%): Headline + sub + CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Small amber badge */}
-            <div className="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-extrabold tracking-widest uppercase px-3.5 py-1.5 rounded-full mb-6">
-              <Sparkles size={11} className="animate-pulse text-amber-400" />
-              {badgeText}
-            </div>
 
-            {/* Main Headline */}
-            <h1 className="font-display text-3xl md:text-5xl lg:text-[46px] font-bold leading-tight tracking-tight text-white mb-6">
-              {hero.headline}
-            </h1>
+        {/* ── LEFT ── */}
+        <div className="flex flex-col justify-center px-8 lg:px-[52px] pt-8 pb-6 lg:pt-10 lg:pb-8 bg-warm/30 relative">
 
-            {/* Subtext */}
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed max-w-xl mb-8 font-medium">
-              {hero.subheadline}
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-              <Link
-                href="/calculators/policy-health"
-                className="w-full sm:w-auto text-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition-all shadow-md shadow-amber-500/15 hover:shadow-amber-500/25 active:scale-[0.98]"
-              >
-                {hero.cta_primary}
-              </Link>
-              <Link
-                href="/ai-advisor"
-                className="w-full sm:w-auto text-center bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition-all active:scale-[0.98]"
-              >
-                {hero.cta_secondary}
-              </Link>
-            </div>
+          {/* Eyebrow */}
+          <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-medium uppercase mb-3 animate-fade-up">
+            <span className="w-7 h-px bg-gold inline-block" />
+            {t.hero.eyebrow}
           </div>
 
-          {/* RIGHT SIDE (40%): Mini Protection Score Card */}
-          <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
-            <Link
-              href="/calculators/policy-health"
-              className="group w-full max-w-sm bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] hover:border-amber-500/35 rounded-3xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative overflow-hidden block cursor-pointer"
-            >
-              {/* Card accent glow */}
-              <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/15 transition-colors" />
-              
-              <div className="relative z-10 flex flex-col items-center text-center">
-                {/* Gauge placeholder with radial look */}
-                <div className="w-24 h-24 rounded-full border-4 border-dashed border-white/20 flex items-center justify-center mb-6 group-hover:border-amber-500/40 group-hover:rotate-12 transition-all duration-500">
-                  <span className="text-xl font-extrabold text-white/50 group-hover:text-white transition-colors">???</span>
-                </div>
+          {/* Headlines */}
+          <h1 className="font-display text-[28px] md:text-[34px] lg:text-[38px] font-normal italic leading-[1.2] text-gray-900 mb-0.5 animate-fade-up"
+              style={{ animationDelay: '0.05s' }}>
+            {t.hero.headline}
+          </h1>
+          <div className="font-display text-[26px] md:text-[32px] lg:text-[36px] font-bold leading-[1.18] text-gold animate-fade-up"
+               style={{ animationDelay: '0.1s' }}>
+            {t.hero.headlineGold}
+          </div>
 
-                <h3 className="font-display text-lg md:text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
-                  {cardTitle}
-                </h3>
-                <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 font-medium">
-                  {cardSub}
-                </p>
-                
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 group-hover:text-amber-300 uppercase tracking-wider transition-colors">
-                  {cardCta} <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </div>
+          {/* Description */}
+          <p className="text-[13px] text-muted leading-[1.65] mt-3 mb-5 max-w-[400px] animate-fade-up"
+             style={{ animationDelay: '0.2s' }}>
+            {t.hero.subtitle}
+          </p>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-3 mb-6 animate-fade-up" style={{ animationDelay: '0.25s' }}>
+            <Link href="/calculators/life-insurance"
+              className="bg-gold text-white border-none py-3 px-6 rounded-full text-[13px] font-medium min-h-[44px] inline-flex items-center justify-center
+                         hover:bg-gold-hover transition-all duration-200 hover:-translate-y-px">
+              {t.hero.cta1}
+            </Link>
+            <Link href="/services/life-insurance"
+              className="bg-transparent text-gray-900 border border-gray-300 py-3 px-6 rounded-full text-[13px] min-h-[44px] inline-flex items-center justify-center
+                         hover:border-gold hover:text-gold transition-all duration-200 hover:-translate-y-px">
+              {t.hero.cta2}
             </Link>
           </div>
 
+          {/* ── Trust stats 2×2 ── */}
+          <div className="pt-5 mt-1 border-t border-[rgba(184,134,11,0.18)] animate-fade-up" style={{ animationDelay: '0.35s' }}>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 max-w-[360px]">
+              {t.trust.stats.map((stat: any, i: number) => (
+                <div key={i} className={`relative flex flex-col items-start
+                  ${i % 2 === 0 ? 'pr-6 border-r border-[rgba(184,134,11,0.14)]' : ''}
+                  ${i < 2       ? 'pb-4 border-b border-[rgba(184,134,11,0.14)]' : ''}
+                `}>
+                  <div className="font-display text-[22px] lg:text-[25px] font-bold text-gray-900 leading-none tracking-tight">
+                    {stat.num}
+                  </div>
+                  <div className="text-[9px] text-muted tracking-[0.06em] uppercase font-medium leading-tight mt-[3px]">
+                    {stat.label}
+                  </div>
+
+                  {/* 2 dots below */}
+                  <div className="flex gap-[3px] mt-1.5">
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/20 inline-block" />
+                    <span className="w-[5px] h-[5px] rounded-full bg-gold/50 inline-block" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── RIGHT — image carousel ── */}
+        <div className="relative bg-navy h-[60vw] max-h-[420px] lg:h-full lg:max-h-none">
+
+          {/* Photos (Slideshow) */}
+          <div className="absolute inset-0 overflow-hidden bg-navy">
+            {heroImages.map((src, idx) => (
+              <Image
+                key={idx}
+                src={src}
+                alt="Happy Indian family planning their future"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={75}
+                className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                priority={idx === 0}
+                loading={idx === 0 ? undefined : 'lazy'}
+              />
+            ))}
+            {/* Stronger gradient so images pop on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/10 to-navy/20 pointer-events-none" />
+          </div>
+
+          {/* Dot Navigation — visible on all sizes */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentImageIndex(idx)}
+                className={`transition-all duration-300 rounded-full h-1.5 ${idx === currentImageIndex ? 'w-6 bg-gold' : 'w-1.5 bg-white/50 hover:bg-white/80'}`}
+                aria-label={`Slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Mobile badge — bottom left corner (replaces the broken chip) */}
+          <div className="absolute bottom-8 left-4 lg:hidden z-10">
+            <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"/>
+              <span className="text-[10px] font-bold text-white/90 tracking-wider uppercase">{t.trustSection.mdrtBadge}</span>
+            </div>
+          </div>
+
+          {/* Plan card — desktop only, overlapping into left column */}
+          <div className="hidden lg:block absolute bottom-6 -left-16 w-[230px] bg-white rounded-2xl p-4
+                          border border-[rgba(184,134,11,0.12)] z-20 shadow-2xl animate-slide-in">
+            <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
+              {t.hero.quickTitle}
+            </p>
+            {t.hero.quickItems.map((item: any, i: number) => (
+              <button key={i} onClick={() => setCurrentImageIndex(i)}
+                className={`w-full flex items-center gap-2 py-[7px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                           last:border-b-0 rounded-md transition-colors duration-300 group no-underline text-left
+                           ${i === currentImageIndex ? 'bg-gold/10' : 'hover:bg-gold-pale'}`}>
+                <div className={`w-[26px] h-[26px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors duration-300
+                                ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
+                  {quickIcons[i]}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] font-medium text-gray-900 leading-tight">{item.title}</div>
+                  <div className="text-[10px] text-muted mt-0.5 truncate">{item.sub}</div>
+                </div>
+                <span className={`text-13 text-gold transition-opacity ml-auto ${i === currentImageIndex ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>›</span>
+              </button>
+            ))}
+            <div className="pt-2.5 mt-1 border-t border-[rgba(184,134,11,0.1)]">
+              <Link href="/calculators/life-insurance" className="block w-full text-center bg-amber-500 text-white text-[11px] font-medium py-3 rounded-lg hover:bg-amber-600 transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
+                {t.hero.cta3}
+              </Link>
+            </div>
+          </div>
+
+          {/* "Why families trust us" chip — desktop only */}
+          <div className="hidden lg:block absolute bottom-10 right-6 bg-white/[0.07] border border-white/[0.12]
+                          rounded-xl px-4 py-3 max-w-[170px] z-10 animate-fade-up"
+               style={{ animationDelay: '0.55s' }}>
+            <div className="text-[10px] text-[rgba(245,200,66,0.7)] tracking-[0.1em] mb-1.5 font-medium uppercase">
+              {t.trust.title.split(' ').slice(0, 3).join(' ')}
+            </div>
+            <div className="text-[12px] text-white/75 leading-relaxed italic font-display">
+              &ldquo;{t.hero.trustQuote}&rdquo;
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+
+      {/* Mobile-only plan card */}
+      <div className="lg:hidden bg-white mx-4 -mt-6 relative z-20 rounded-2xl p-4 border border-[rgba(184,134,11,0.12)] shadow-xl mb-4">
+        <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
+          {t.hero.quickTitle}
+        </p>
+        {t.hero.quickItems.map((item: any, i: number) => (
+          <button key={i} onClick={() => setCurrentImageIndex(i)}
+            className="w-full flex items-center text-left gap-2.5 py-[8px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                       last:border-b-0 rounded-md hover:bg-gold-pale transition-colors group no-underline">
+            <div className={`w-[28px] h-[28px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors
+                            ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>
+              {quickIcons[i]}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[12px] font-medium text-gray-900 leading-tight">{item.title}</div>
+              <div className="text-[10px] text-muted mt-0.5 truncate">{item.sub}</div>
+            </div>
+            <span className="text-13 text-gold opacity-0 group-hover:opacity-100 transition-opacity ml-auto">›</span>
+          </button>
+        ))}
+        <div className="pt-3 mt-1.5 border-t border-[rgba(184,134,11,0.1)]">
+          <Link href="/calculators/life-insurance" className="block w-full text-center bg-amber-500 text-white text-[12px] font-medium py-3 rounded-lg hover:bg-amber-600 transition-colors shadow-sm min-h-[44px] flex items-center justify-center">
+            {t.hero.cta3}
+          </Link>
+        </div>
+      </div>
+
+      {/* ═══ WHY US STRIP ═══ */}
+      <div className="border-t border-gold/10 bg-warm/50">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4">
+            {t.whyUs && t.whyUs.map((item: any, i: number) => (
+              <div key={i} className="p-1">
+                <div className={`flex items-start gap-3.5 px-4 lg:px-6 py-4 transition-all duration-300 
+                                hover:bg-white/30 cursor-default rounded-2xl
+                                ${i < t.whyUs.length - 1 ? 'lg:border-r border-gold/15' : ''}`}>
+                  <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                    {getWhyUsIcon(item.icon)}
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-bold text-slate-900 mb-0.5 tracking-tight">{item.title}</div>
+                    <div className="text-[11px] text-slate-500 leading-relaxed font-medium">{item.sub}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
   )
 }

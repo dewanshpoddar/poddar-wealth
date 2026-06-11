@@ -210,25 +210,24 @@ export default function AboutPage() {
                   </div>
                   
                   <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mb-8 leading-tight">
-                    {isHi ? 'श्री अजय कुमार पोद्दार' : 'Mr. Ajay Kumar Poddar'}
+                    {t.founderStory?.signature || (isHi ? 'श्री अजय कुमार पोद्दार' : 'Mr. Ajay Kumar Poddar')}
                   </h2>
                   
-                  <div className="space-y-6 text-[15px] md:text-[16px] text-slate-600 leading-relaxed italic">
-                    <p className="not-italic font-medium text-slate-800">
-                      {isHi 
-                        ? 'एडी मॉल कंपाउंड, विजय चौक, गोरखपुर — पूर्वी यूपी के केंद्र — में स्थित, अजय कुमार पोद्दार 1994 से परिवारों के भविष्य को सुरक्षित करने में मदद कर रहे हैं।'
-                        : 'Based at AD Mall Compound, Vijay Chowk, Gorakhpur — the heart of Eastern UP — Ajay Kumar Poddar has been helping families secure their future since 1994.'}
-                    </p>
-                    <p className="border-l-4 border-gold pl-6 py-2 bg-gold/5 rounded-r-xl">
-                      {isHi 
-                        ? '“मेरा मिशन केवल पॉलिसियां बेचना नहीं है, बल्कि उन परिवारों के लिए वित्तीय सुरक्षा का निर्माण करना है जो अपने जीवन की मेहनत के साथ हम पर भरोसा करते हैं।”'
-                        : "“My mission is not to sell policies, but to build financial fortresses for families who trust us with their life's work.”"}
-                    </p>
-                    <p className="not-italic text-[14px] text-slate-500">
-                      {isHi 
-                        ? 'तीन दशकों से अधिक के ऑन-ग्राउंड अनुभव के साथ, उन्हें गुणवत्ता और नैतिक सलाह के लिए मिलियन डॉलर राउंड टेबल (MDRT, USA) द्वारा वैश्विक स्तर पर मान्यता प्राप्त है।'
-                        : 'With over three decades of on-ground experience, he is recognized globally by the Million Dollar Round Table (MDRT, USA) for his commitment to quality and ethical advisory.'}
-                    </p>
+                  <div className="space-y-6 text-[15px] md:text-[16px] text-slate-600 leading-relaxed">
+                    {(t.founderStory?.story || '').split('\n\n').filter(Boolean).map((para: string, idx: number) => (
+                      <p 
+                        key={idx} 
+                        className={
+                          idx === 1 
+                            ? "border-l-4 border-gold pl-6 py-2 bg-gold/5 rounded-r-xl italic font-serif text-slate-700" 
+                            : idx === 0 
+                              ? "font-medium text-slate-800" 
+                              : "text-[14px] text-slate-500"
+                        }
+                      >
+                        {para}
+                      </p>
+                    ))}
                   </div>
 
                   <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-slate-200">

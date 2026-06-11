@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection'
 import AskPoddarJiWidget from '@/components/AskPoddarJiWidget'
 import LifeEventsNavigator from '@/components/LifeEventsNavigator'
 import TrustSection from '@/components/TrustSection'
+import ProtectionCheckSection from '@/components/ProtectionCheckSection'
 import QuickActions from '@/components/QuickActions'
 import LazySection from '@/components/LazySection'
 
@@ -57,13 +58,16 @@ export default function HomePage() {
       {/* 2 — Ask Poddar Ji Widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Life Events Navigator */}
+      {/* 3 — Life Stage Navigator */}
       <LifeEventsNavigator />
 
       {/* 4 — Trust stats bar */}
       <TrustSection />
 
-      {/* 5 — Services discovery */}
+      {/* 5 — Protection Check Section (Placed above services!) */}
+      <ProtectionCheckSection />
+
+      {/* 6 — Services discovery */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -72,10 +76,10 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 6 — Quick Actions Grid */}
+      {/* 7 — Quick Actions Grid */}
       <QuickActions />
 
-      {/* 7 — Social proof (Testimonials & Reviews merged) */}
+      {/* 8 — Social proof (Testimonials & Reviews merged) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -84,7 +88,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 8 — Blog Preview (latest 3 posts) */}
+      {/* 9 — Blog Preview (latest 3 posts) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -93,7 +97,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 9 — Newsletter Signup */}
+      {/* 10 — Newsletter Signup */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -102,7 +106,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 10 — Final CTA */}
+      {/* 11 — Final CTA */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>

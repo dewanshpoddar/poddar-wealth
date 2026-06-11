@@ -266,39 +266,32 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Navigation Controls (Tablet/Mobile: < md screen) */}
-          <div className="md:hidden flex items-center gap-3.5">
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              aria-label="Open Search"
-              className={`p-1.5 rounded-lg transition-all cursor-pointer ${controlCls}`}
-            >
-              <Search size={18} />
-            </button>
-            
+          <div className="md:hidden flex items-center gap-2">
             {/* Mobile Language selector */}
-            <div className="flex items-center gap-1.5 font-sans">
-              {(['en', 'hi'] as const).map((l, i) => (
-                <span key={l} className="flex items-center gap-1.5">
-                  {i > 0 && <span className={scrolled ? 'text-gray-800' : 'text-gray-300'}>|</span>}
-                  <button
-                    onClick={() => setLang(l)}
-                    className={`text-[10px] font-bold transition-colors cursor-pointer ${
-                      lang === l
-                        ? 'text-amber-500'
-                        : scrolled ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400 hover:text-[#12152a]'
-                    }`}
-                  >
-                    {l === 'en' ? 'EN' : 'हि'}
-                  </button>
-                </span>
-              ))}
+            <div className="flex bg-gray-800/50 rounded-full p-0.5">
+              <button
+                className={`px-2 py-0.5 text-[10px] font-semibold rounded-full cursor-pointer transition-colors ${
+                  lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                }`}
+                onClick={() => setLang('en')}
+              >
+                EN
+              </button>
+              <button
+                className={`px-2 py-0.5 text-[10px] font-semibold rounded-full cursor-pointer transition-colors ${
+                  lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400'
+                }`}
+                onClick={() => setLang('hi')}
+              >
+                हिंदी
+              </button>
             </div>
 
             <button
               onClick={() => setMobileOpen(v => !v)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
-              className={`p-1 cursor-pointer ${
+              className={`cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors rounded-lg ${
                 scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
               }`}
             >
