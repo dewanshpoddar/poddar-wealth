@@ -164,13 +164,22 @@ export default function Navbar() {
                       {label(en, hi)}
                     </Link>
                   ))}
+                  <div className={`my-1 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
+                  <Link
+                    href="/become-advisor"
+                    className={`block px-4 py-2 text-xs rounded-lg transition-colors font-semibold text-amber-500 hover:text-amber-600 ${
+                      scrolled ? 'hover:bg-white/5' : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    {label('Join as Advisor →', 'सलाहकार बनें →')}
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-4 shrink-0">
             <button
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
@@ -203,9 +212,7 @@ export default function Navbar() {
 
             <Link
               href="/client"
-              className={`text-sm transition-colors duration-200 cursor-pointer ${
-                scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-slate-900 font-medium'
-              }`}
+              className="text-sm text-gray-400 hover:text-white"
             >
               {label('Client Login', 'क्लाइंट लॉगिन')}
             </Link>
@@ -223,27 +230,33 @@ export default function Navbar() {
         <div className="md:hidden flex items-center gap-2 px-4 h-16 w-full">
           <Link href="/" className="flex items-center gap-2 flex-1 min-w-0" onClick={() => setMobileOpen(false)}>
             <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={36} height={36} className="flex-shrink-0" />
-            <span className={`min-w-0 truncate text-sm font-bold uppercase tracking-wide transition-colors ${
+            <span className={`flex-1 min-w-0 truncate text-sm font-bold uppercase tracking-wide transition-colors ${
               scrolled ? 'text-amber-400' : 'text-amber-600'
             }`}>
               Poddar Wealth
             </span>
           </Link>
 
-          {/* Mobile: EN / हिंदी only */}
-          <div className="flex bg-gray-800/50 rounded-full p-0.5 flex-shrink-0 border border-white/5">
+          {/* Mobile: E / हि only */}
+          <div className={`flex rounded-full p-0.5 flex-shrink-0 border ${
+            scrolled ? 'bg-gray-800/50 border-white/5' : 'bg-gray-100 border-gray-200'
+          }`}>
             <button
               onClick={() => setLang('en')}
-              className={`w-7 h-7 text-[9px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-                lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+              className={`w-6 h-6 text-xs font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+                lang === 'en'
+                  ? 'bg-amber-500 text-white'
+                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
-              EN
+              E
             </button>
             <button
               onClick={() => setLang('hi')}
-              className={`w-7 h-7 text-[9px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-                lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+              className={`w-6 h-6 text-[11px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+                lang === 'hi'
+                  ? 'bg-amber-500 text-white'
+                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
               हि
