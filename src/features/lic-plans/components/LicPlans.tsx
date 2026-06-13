@@ -336,8 +336,6 @@ export default function LicPlans() {
           />
           <div className="absolute inset-0"
             style={{ background: 'linear-gradient(105deg, rgba(4,12,28,0.96) 0%, rgba(5,16,38,0.88) 38%, rgba(6,18,42,0.6) 58%, rgba(6,18,42,0.15) 100%)' }} />
-          <div className="absolute inset-0 opacity-[0.06]"
-            style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
           <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full opacity-30 pointer-events-none"
             style={{ background: 'radial-gradient(circle at 80% 90%, #c9a84c 0%, transparent 60%)' }} />
 
@@ -353,7 +351,7 @@ export default function LicPlans() {
                 {lang === 'en' ? <>Your Money.<br />Protected. Growing.</> : <>आपका पैसा।<br />सुरक्षित। बढ़ता हुआ।</>}
               </motion.h1>
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.16 }}
-                className="text-14 md:text-15 text-white/55 max-w-lg leading-relaxed">
+                className="text-14 md:text-15 text-white/75 max-w-lg leading-relaxed">
                 {lang === 'en'
                   ? "Explore India's most trusted insurance plans — for savings, protection, retirement, and growth."
                   : 'बचत, सुरक्षा, सेवानिवृत्ति और वृद्धि के लिए भारत के सबसे भरोसेमंद बीमा प्लान।'}
@@ -367,7 +365,7 @@ export default function LicPlans() {
                 { val: '68+', label: lang === 'en' ? 'Years of Trust' : 'वर्षों का विश्वास', sub: lang === 'en' ? 'Since 1956, Govt. backed' : '1956 से, सरकार समर्थित' },
               ].map(({ val, label, sub }) => (
                 <div key={label}
-                  className="relative overflow-hidden rounded-2xl px-5 py-4 border border-white/12"
+                  className="relative overflow-hidden rounded-2xl px-5 py-4 border border-white/12 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 hover:border-white/20"
                   style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)' }}>
                   <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full bg-[#c9a84c]" />
                   <div className="text-30 font-bold text-white leading-none tracking-tight">{val}</div>
