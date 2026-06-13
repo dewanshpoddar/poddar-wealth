@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, Info, CheckCircle2, Zap, SlidersHorizontal, X, Search, Shield, ChevronDown, ChevronUp, Trophy, Flame, TrendingUp, Star, Sparkles, Landmark, Coins, Infinity as InfinityIcon, GraduationCap, LineChart, BarChart3, Sprout } from 'lucide-react'
@@ -325,8 +326,16 @@ export default function LicPlans() {
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden mb-6" style={{ minHeight: 260 }}>
+          <Image
+            src="https://images.pexels.com/photos/1128318/pexels-photo-1128318.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-[right_20%]"
+          />
           <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(105deg, rgba(4,12,28,1) 0%, rgba(5,16,38,0.97) 40%, rgba(6,24,52,0.9) 70%, rgba(8,30,60,0.85) 100%)' }} />
+            style={{ background: 'linear-gradient(105deg, rgba(4,12,28,0.96) 0%, rgba(5,16,38,0.88) 38%, rgba(6,18,42,0.6) 58%, rgba(6,18,42,0.15) 100%)' }} />
           <div className="absolute inset-0 opacity-[0.06]"
             style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
           <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full opacity-30 pointer-events-none"
