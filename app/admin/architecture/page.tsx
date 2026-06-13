@@ -1,4 +1,6 @@
-export const metadata = { robots: 'noindex,nofollow' };
+'use client';
+
+import { useEffect, useState } from 'react';
 
 type PageStatus = 'live' | 'new' | 'pending';
 
@@ -149,13 +151,46 @@ const statusColors: Record<PageStatus, string> = {
   pending: 'bg-gray-800 text-gray-400',
 };
 
+interface LiveStats {
+  content: { blogPosts: number; areaPages: number }
+  infrastructure: { apiRoutes: number }
+  estimatedPages: number
+}
+
 export default function ArchitecturePage() {
+  const [live, setLive] = useState<LiveStats | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/metrics')
+      .then(r => r.json())
+      .then((d: LiveStats) => setLive(d))
+      .catch(() => {})
+  }, [])
+
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-white mb-1">Site Architecture</h1>
         <p className="text-gray-500 text-sm">Complete page inventory + user journey flows</p>
       </div>
+
+      {/* Live stats banner */}
+      {live && (
+        <div className="bg-gray-900 border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
+          <span className="text-gray-400">
+            <span className="text-amber-400 font-bold text-base">{live.content.blogPosts}</span> blog posts
+          </span>
+          <span className="text-gray-400">
+            <span className="text-blue-400 font-bold text-base">{live.content.areaPages}</span> area pages
+          </span>
+          <span className="text-gray-400">
+            <span className="text-purple-400 font-bold text-base">{live.infrastructure.apiRoutes}</span> API routes
+          </span>
+          <span className="text-gray-400">
+            <span className="text-emerald-400 font-bold text-base">{live.estimatedPages}</span> est. total pages
+          </span>
+        </div>
+      )}
 
       {/* Site sections */}
       {siteSections.map(section => (

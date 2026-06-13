@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { 
-  Play, 
-  ChevronDown, 
-  ChevronUp, 
-  Activity, 
-  FlaskConical, 
-  TrendingUp, 
-  CheckCircle,
+import { useState, useEffect } from 'react';
+import {
+  Play,
+  ChevronDown,
+  ChevronUp,
+  Activity,
+  FlaskConical,
+  TrendingUp,
   PlusCircle
 } from 'lucide-react';
 
@@ -58,6 +57,14 @@ const INITIAL_TESTS: TestItem[] = [
 export default function ABTestAdminPage() {
   const [tests, setTests] = useState<TestItem[]>(INITIAL_TESTS);
   const [expandedRow, setExpandedRow] = useState<string | null>('hero-cta-text');
+  const [liveEventCount, setLiveEventCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/metrics')
+      .then(r => r.json())
+      .then((d: { features: { abTests: number } }) => setLiveEventCount(d.features.abTests))
+      .catch(() => {});
+  }, []);
 
   // Form states
   const [testName, setTestName] = useState('');
@@ -68,7 +75,7 @@ export default function ABTestAdminPage() {
     setExpandedRow(expandedRow === id ? null : id);
   };
 
-  const handleCreateTest = (e: React.FormEvent) => {
+  const handleCreateTest = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!testName || !variantADesc || !variantBDesc) return;
 
@@ -117,6 +124,11 @@ export default function ABTestAdminPage() {
         <p className="text-gray-500 text-sm">
           Run conversion optimization tests on client portal and landing page routes
         </p>
+        {liveEventCount !== null && (
+          <p className="text-xs text-gray-500 mt-2">
+            <span className="text-amber-400 font-bold text-sm">{liveEventCount}</span> tracked events in lib/data/ab-results.json
+          </p>
+        )}
       </div>
 
       {/* Grid: Active Tests Table & Create Test Form */}

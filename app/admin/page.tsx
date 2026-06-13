@@ -1,181 +1,114 @@
-'use client';
+'use client'
+import { useEffect, useState, useCallback } from 'react'
+import Link from 'next/link'
+import { RefreshCw, Database, Activity, CheckCircle, Link2, AlertCircle } from 'lucide-react'
 
-import { useState, useEffect } from 'react';
-import { Shield, RefreshCw, Terminal, Eye, Link2, Activity, Database, AlertCircle, CheckCircle } from 'lucide-react';
-
-interface MetricItem {
-  label: string;
-  value: string;
+interface LeadStatus { total: number; new: number; contacted: number; meeting: number; converted: number; lost: number }
+interface Metrics {
+  content: {
+    blogPosts: number
+    blogIndexSizeKB: number
+    blogLatest: { title: string; date: string } | null
+    blogCategoryList: string[]
+    areaPages: number
+    calculators: number
+    lifeEvents: number
+    servicePages: number
+    reviews: number
+    searchIndexEntries: number
+  }
+  admin: { pages: number; activityLogEntries: number }
+  crm: { leads: LeadStatus; referrals: { total: number; active: number }; newsletter: number }
+  features: {
+    navTracker: { funds: number; alerts: number }
+    abTests: number
+    cronJobs: number
+    cronList: { path: string; schedule: string }[]
+  }
+  infrastructure: {
+    apiRoutes: number
+    envVars: Record<string, boolean | string>
+    envConfigured: number
+    envTotal: number
+    lastBuild: string
+    environment: string
+    nextVersion: string
+    reactVersion: string
+  }
+  i18n: { enKeys: number; hiKeys: number; parity: boolean; gap: number }
+  estimatedPages: number
+  timestamp: string
 }
 
-interface ApiLogItem {
-  timestamp: string;
-  method: string;
-  endpoint: string;
-  status: number;
-  ip: string;
+function Skeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div key={i} className="h-20 bg-gray-800 rounded-xl animate-pulse" />
+      ))}
+    </div>
+  )
 }
 
-const DEFAULT_METRICS: MetricItem[] = [
-  { label: 'Total Pages', value: '100+' },
-  { label: 'Blog Posts', value: '100' },
-  { label: 'Tools / Calculators', value: '8' },
-  { label: 'Area Pages', value: '20' },
-  { label: 'Service Pages', value: '12' },
-  { label: 'API Routes', value: '17' },
-];
-
-const MOCK_API_LOGS: ApiLogItem[] = [
-  { timestamp: '2026-06-08T22:01:05Z', method: 'POST', endpoint: '/api/leads', status: 200, ip: '192.168.1.5' },
-  { timestamp: '2026-06-08T22:00:58Z', method: 'GET', endpoint: '/api/nav', status: 200, ip: '103.45.21.90' },
-  { timestamp: '2026-06-08T21:59:12Z', method: 'POST', endpoint: '/api/chat', status: 200, ip: '45.112.98.34' },
-  { timestamp: '2026-06-08T21:58:30Z', method: 'GET', endpoint: '/api/reviews', status: 304, ip: '103.45.21.90' },
-  { timestamp: '2026-06-08T21:55:00Z', method: 'POST', endpoint: '/api/reports/wealth-blueprint', status: 201, ip: '172.56.23.109' },
-  { timestamp: '2026-06-08T21:54:15Z', method: 'GET', endpoint: '/api/admin/metrics', status: 200, ip: '127.0.0.1' },
-  { timestamp: '2026-06-08T21:50:22Z', method: 'POST', endpoint: '/api/admin/auth', status: 200, ip: '127.0.0.1' },
-  { timestamp: '2026-06-08T21:49:50Z', method: 'POST', endpoint: '/api/admin/auth', status: 401, ip: '127.0.0.1' },
-  { timestamp: '2026-06-08T21:45:10Z', method: 'GET', endpoint: '/api/cron/refresh-nav', status: 200, ip: '23.45.67.89' },
-  { timestamp: '2026-06-08T21:30:15Z', method: 'POST', endpoint: '/api/referrals/generate', status: 200, ip: '45.112.98.34' },
-  { timestamp: '2026-06-08T21:28:44Z', method: 'GET', endpoint: '/api/lic-plans', status: 200, ip: '120.48.91.22' },
-  { timestamp: '2026-06-08T21:20:00Z', method: 'POST', endpoint: '/api/cron/check-plan-status', status: 200, ip: '23.45.67.89' }
-];
+function StatCard({ label, value, color = 'amber', sub }: { label: string; value: string | number; color?: string; sub?: string }) {
+  const colors: Record<string, string> = {
+    amber: 'text-amber-400',
+    blue: 'text-blue-400',
+    green: 'text-emerald-400',
+    purple: 'text-purple-400',
+    indigo: 'text-indigo-400',
+    gray: 'text-white',
+    red: 'text-red-400',
+  }
+  return (
+    <div className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4">
+      <div className={`text-3xl font-black ${colors[color] ?? colors.amber}`}>{value}</div>
+      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">{label}</div>
+      {sub && <div className="text-[9px] text-gray-600 mt-0.5 font-medium">{sub}</div>}
+    </div>
+  )
+}
 
 const MONITORING_LINKS = [
+  { label: 'Google Analytics', url: 'https://analytics.google.com' },
   { label: 'Vercel Dashboard', url: 'https://vercel.com/dewanshpoddar/poddar-wealth' },
-  { label: 'Google Analytics 4', url: 'https://analytics.google.com' },
-  { label: 'Google Search Console', url: 'https://search.google.com/search-console' },
+  { label: 'Search Console', url: 'https://search.google.com/search-console' },
+  { label: 'Google Business', url: 'https://business.google.com' },
   { label: 'Groq Console', url: 'https://console.groq.com' },
   { label: 'Resend Dashboard', url: 'https://resend.com' },
-  { label: 'UptimeRobot', url: 'https://uptimerobot.com' },
-];
-
-const SITE_HEALTH = [
-  { label: 'Lighthouse SEO', value: '100', status: 'green' },
-  { label: 'Lighthouse A11y', value: '90–95', status: 'green' },
-  { label: 'Lighthouse Perf (mobile)', value: '56–65', status: 'yellow' },
-  { label: 'First Load JS (shared)', value: '105 kB', status: 'green' },
-  { label: 'blog-index.json', value: '~165 KB', status: 'yellow' },
-  { label: 'TypeScript errors', value: '0', status: 'green' },
-  { label: 'ESLint errors', value: '0', status: 'green' },
-  { label: 'Translation Keys (EN)', value: '494 / 494 (100%)', status: 'green' },
-  { label: 'Translation Keys (HI)', value: '494 / 494 (100%)', status: 'green' },
-  { label: 'Translation Keys (BN)', value: '61 / 494 (12%)', status: 'yellow' },
-  { label: 'Last deploy', value: '2026-06-08', status: 'green' },
-];
-
-const SPRINTS = [
-  {
-    name: 'Sprint 1–4',
-    date: '2026-05-31',
-    items: [
-      '/claims, /faq, /blog (15 posts), /pay-premium, 404 page',
-      'Mobile fixes: MobileCTABar, navbar spacing, chatbot position',
-      'SEO: unique metadata, Schema.org, sitemap, 15 bilingual blog posts',
-      'GA4 events: blog_viewed, pay_premium_clicked, lead_submitted',
-      'Dead links audit: zero dead links found',
-    ],
-  },
-  {
-    name: 'Sprint 5',
-    date: '2026-06-08',
-    items: [
-      'Blog architecture: blog-posts.json → blog-index.json + 100 per-post files',
-      'JSON-LD InsuranceAgency schema on all 11 service + area page layouts',
-      'PDF Report: WealthBlueprintPDF (4-page) + /api/reports/wealth-blueprint',
-      'Chatbot memory capped at 10 messages (5 exchanges)',
-      'Email service: lib/email.ts (Resend) + sendWelcomeEmail on newsletter subscribe',
-      '30 new blog posts → total 100 posts in blog-index.json',
-      'Reviews API: /api/reviews with 1hr cache',
-    ],
-  },
-  {
-    name: 'Sprint 6 (today)',
-    date: '2026-06-08',
-    items: [
-      'Admin dashboard: /admin, /admin/architecture, /admin/docs',
-      'Auth API: /api/admin/auth (ADMIN_DASHBOARD_PASSWORD)',
-      'robots.txt: Disallow: /admin/ added',
-      'Sitemap: /admin/* excluded',
-      'Blog architecture verified: 100 files, 0 broken relatedSlugs',
-      'API health verified across 17 routes',
-    ],
-  },
-];
-
-const PENDING_TASKS = [
-  { task: 'Sign up at resend.com + verify poddarwealth.com domain', priority: 'High' },
-  { task: 'Add ADMIN_DASHBOARD_PASSWORD to Vercel env vars', priority: 'High' },
-  { task: 'Add RESEND_API_KEY to Vercel env vars', priority: 'High' },
-  { task: 'Submit sitemap to Google Search Console (if not done)', priority: 'Medium' },
-  { task: 'Set up UptimeRobot for poddarwealth.com (free uptime alerts)', priority: 'Medium' },
-  { task: 'Set up Sentry DSN for error tracking', priority: 'Low' },
-  { task: 'Move components/calculators/ → src/features/premium-calculator/ (FSD)', priority: 'Low' },
-  { task: 'Fix ResultsPanel: totalSRB → totalBonus (tech debt)', priority: 'Low' },
-  { task: 'Add /login page (navbar login link is dead)', priority: 'Low' },
-];
-
-function StatusDot({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    green: 'bg-emerald-500 shadow-emerald-500/20',
-    yellow: 'bg-amber-500 shadow-amber-500/20',
-    red: 'bg-rose-500 shadow-rose-500/20',
-  };
-  return <span className={`inline-block w-2 h-2 rounded-full ${colors[status] ?? 'bg-gray-500'} shadow-sm mr-2.5`} />;
-}
+]
 
 export default function AdminDashboard() {
-  const [role, setRole] = useState<'admin' | 'developer' | 'viewer'>('viewer');
-  const [metrics, setMetrics] = useState<MetricItem[]>(DEFAULT_METRICS);
-  const [apiLogs, setApiLogs] = useState<ApiLogItem[]>(MOCK_API_LOGS);
-  const [loading, setLoading] = useState(false);
-  const [lastRefreshed, setLastRefreshed] = useState<string>('');
+  const [metrics, setMetrics] = useState<Metrics | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [lastRefresh, setLastRefresh] = useState<string>('')
+  const [role, setRole] = useState<string>('viewer')
 
-  // Fetch metrics & logs from /api/admin/metrics
-  const fetchMetricsData = async () => {
-    setLoading(true);
+  const fetchMetrics = useCallback(async () => {
     try {
-      const res = await fetch('/api/admin/metrics');
+      const res = await fetch('/api/admin/metrics')
       if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          if (data.metrics) setMetrics(data.metrics);
-          if (data.apiLogs) setApiLogs(data.apiLogs);
-        }
+        const data: Metrics = await res.json()
+        setMetrics(data)
       }
-    } catch (err) {
-      console.warn('Backend metrics API unavailable, displaying cache fallback', err);
-    } finally {
-      setLoading(false);
-      setLastRefreshed(new Date().toLocaleTimeString());
+      setLastRefresh(new Date().toLocaleTimeString())
+    } catch { /* silent */ } finally {
+      setLoading(false)
     }
-  };
+  }, [])
 
   useEffect(() => {
-    // Read role from cookie
-    const cookies = document.cookie.split('; ');
-    const roleCookie = cookies.find((c) => c.startsWith('admin_role='));
-    const activeRole = (roleCookie?.split('=')[1] as any) || 'viewer';
-    setRole(activeRole);
-
-    fetchMetricsData();
-
-    // Set 60s auto refresh interval loop
-    const interval = setInterval(() => {
-      fetchMetricsData();
-    }, 60000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const getStatusColor = (status: number) => {
-    if (status >= 200 && status < 300) return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
-    if (status >= 300 && status < 400) return 'text-amber-400 bg-amber-500/10 border-amber-500/20';
-    return 'text-rose-400 bg-rose-500/10 border-rose-500/20';
-  };
+    const cookies = document.cookie.split('; ')
+    const roleCookie = cookies.find(c => c.startsWith('admin_role='))
+    setRole(roleCookie?.split('=')[1] ?? 'viewer')
+    fetchMetrics()
+    const t = setInterval(fetchMetrics, 60000)
+    return () => clearInterval(t)
+  }, [fetchMetrics])
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
-      {/* Welcome Heading */}
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">Poddar Wealth — System Metrics</h1>
@@ -183,15 +116,14 @@ export default function AdminDashboard() {
             Current Session Role: <span className="text-amber-500 font-bold uppercase">[{role}]</span> · Auto-refreshing every 60s
           </p>
         </div>
-        
         <div className="flex items-center gap-2.5">
-          {lastRefreshed && (
-            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider font-sans">
-              Refreshed: {lastRefreshed}
+          {lastRefresh && (
+            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+              Refreshed: {lastRefresh}
             </span>
           )}
           <button
-            onClick={fetchMetricsData}
+            onClick={fetchMetrics}
             disabled={loading}
             className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 px-4 py-2.5 rounded-xl transition-all cursor-pointer bg-gray-900"
           >
@@ -201,176 +133,210 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Metrics Card Grid */}
-      <section>
-        <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
-          <Database size={14} className="text-amber-500" />
-          Site Metrics
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {metrics.map((m) => (
-            <div key={m.label} className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-2xl font-black text-amber-400 font-sans">{m.value}</p>
-              <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">{m.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Active API logs Table (Last 20 requests) */}
-      <section>
-        <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
-          <Activity size={14} className="text-amber-500" />
-          Live Request Logs (Last 20 Accesses)
-        </h2>
-        <div className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-gray-800/80 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-950/40">
-                  <th className="px-6 py-4">Timestamp</th>
-                  <th className="px-6 py-4">Method</th>
-                  <th className="px-6 py-4">Endpoint</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Client IP</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-800/40 font-mono text-xs">
-                {apiLogs.map((log, idx) => (
-                  <tr key={idx} className="hover:bg-gray-800/10 transition-colors">
-                    <td className="px-6 py-3 whitespace-nowrap text-gray-500">
-                      {new Date(log.timestamp).toLocaleTimeString()}
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap font-bold text-gray-300">
-                      {log.method}
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap font-sans font-bold text-white">
-                      {log.endpoint}
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap">
-                      <span className={`px-2 py-0.5 rounded-md border text-[10px] font-bold ${getStatusColor(log.status)}`}>
-                        {log.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-3 whitespace-nowrap text-gray-500">
-                      {log.ip}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Grid: Health & Quick Links (Hides Quick links for Viewer) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        {/* Left Column: Health */}
-        <section className="space-y-3">
-          <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
-            <CheckCircle size={14} className="text-amber-500" />
-            Performance & Health status
-          </h2>
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
-            {SITE_HEALTH.map((h) => (
-              <div key={h.label} className="flex items-center justify-between px-5 py-3">
-                <span className="text-gray-300 text-xs font-bold uppercase tracking-wider flex items-center">
-                  <StatusDot status={h.status} />
-                  {h.label}
-                </span>
-                <span className="text-white text-xs font-mono font-bold">{h.value}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Right Column: Monitoring Links (Restricted to non-Viewers only) */}
-        {role !== 'viewer' ? (
-          <section className="space-y-3">
-            <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
-              <Link2 size={14} className="text-amber-500" />
-              Developer Administration Controls
-            </h2>
-            <div className="grid grid-cols-2 gap-3">
-              {MONITORING_LINKS.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-900 border border-gray-800 rounded-2xl p-4 hover:border-amber-500 transition-all duration-300 group"
-                >
-                  <p className="text-white text-xs font-extrabold uppercase tracking-wider group-hover:text-amber-400 transition-colors">
-                    {l.label}
-                  </p>
-                  <p className="text-gray-500 text-[10px] mt-1.5 truncate font-mono font-medium">
-                    {l.url.replace('https://', '')}
-                  </p>
-                </a>
-              ))}
-            </div>
-          </section>
-        ) : (
-          <div className="bg-gray-900/30 border border-gray-800/50 rounded-3xl p-6 flex flex-col justify-center items-center text-center">
-            <AlertCircle size={24} className="text-gray-500 mb-3" />
-            <h3 className="text-white font-extrabold text-sm mb-1">External Console Access Restricted</h3>
-            <p className="text-gray-500 text-xs leading-relaxed max-w-xs font-medium">
-              Vercel, GA4, Resend, and Search Console admin links are hidden for the metric viewer role.
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* Sprints & Tasks: Hide/Restrict for Viewer */}
-      {role !== 'viewer' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
-          
-          {/* Sprint History */}
-          <section className="space-y-3">
-            <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest">Sprint Deploy History</h2>
-            <div className="space-y-4">
-              {SPRINTS.map((s) => (
-                <div key={s.name} className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-amber-400 font-extrabold text-xs uppercase tracking-wider">{s.name}</span>
-                    <span className="text-gray-500 text-[11px] font-bold font-sans">{s.date}</span>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {s.items.map((item, i) => (
-                      <li key={i} className="text-gray-400 text-xs flex gap-2 font-medium">
-                        <span className="text-emerald-500 text-xs font-bold">✓</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Pending Tasks */}
-          <section className="space-y-3">
-            <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest">Next Launch Tasklist</h2>
-            <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
-              {PENDING_TASKS.map((t) => (
-                <div key={t.task} className="flex items-start justify-between px-5 py-3.5 gap-4">
-                  <span className="text-gray-300 text-xs font-medium leading-relaxed">{t.task}</span>
-                  <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shrink-0 ${
-                    t.priority === 'High' ? 'bg-rose-950 text-rose-400 border border-rose-900/40' :
-                    t.priority === 'Medium' ? 'bg-amber-950 text-amber-400 border border-amber-900/40' :
-                    'bg-gray-950 text-gray-400 border border-gray-800'
-                  }`}>
-                    {t.priority}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-
+      {loading && <Skeleton />}
+      {!loading && !metrics && (
+        <div className="p-8 text-red-400 bg-red-950/30 border border-red-900/40 rounded-2xl">
+          Failed to load metrics. Check /api/admin/metrics.
         </div>
       )}
 
+      {metrics && (() => {
+        const { content, admin, crm, features, infrastructure, i18n } = metrics
+        return (
+          <>
+            {/* Site Overview */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                <Database size={14} className="text-amber-500" />
+                Site Metrics
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <StatCard label="Blog Posts" value={content.blogPosts} color="amber" />
+                <StatCard label="Area Pages" value={content.areaPages} color="blue" />
+                <StatCard label="Tools" value={content.calculators + content.lifeEvents} sub="calc + life events" color="green" />
+                <StatCard label="API Routes" value={infrastructure.apiRoutes} color="purple" />
+                <StatCard label="Est. Total Pages" value={metrics.estimatedPages} color="indigo" />
+                <StatCard label="Admin Pages" value={admin.pages} color="gray" />
+              </div>
+            </section>
+
+            {/* CRM */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                <Activity size={14} className="text-amber-500" />
+                CRM & Leads
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <StatCard label="Total Leads" value={crm.leads.total} color="gray" />
+                <StatCard label="New" value={crm.leads.new} color="blue" />
+                <StatCard label="Contacted" value={crm.leads.contacted} color="amber" />
+                <StatCard label="Meeting" value={crm.leads.meeting} color="purple" />
+                <StatCard label="Converted" value={crm.leads.converted} color="green" />
+                <StatCard label="Newsletter" value={crm.newsletter} sub="subscribers" color="indigo" />
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
+                <StatCard label="Referral Codes" value={crm.referrals.total} sub={`${crm.referrals.active} active`} color="gray" />
+                <Link href="/admin/leads" className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 flex items-center justify-between hover:bg-amber-500/20 transition-colors">
+                  <span className="text-sm font-bold text-amber-400">View Leads →</span>
+                </Link>
+                <Link href="/admin/referrals" className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-between hover:bg-blue-500/20 transition-colors">
+                  <span className="text-sm font-bold text-blue-400">View Referrals →</span>
+                </Link>
+              </div>
+            </section>
+
+            {/* Environment Health */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                <CheckCircle size={14} className="text-amber-500" />
+                Environment Health —{' '}
+                <span className={infrastructure.envConfigured === infrastructure.envTotal ? 'text-emerald-400' : 'text-amber-400'}>
+                  {infrastructure.envConfigured}/{infrastructure.envTotal} configured
+                </span>
+              </h2>
+              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                {Object.entries(infrastructure.envVars).map(([key, val]) => {
+                  const ok = val === true || (typeof val === 'string' && val !== 'not set')
+                  return (
+                    <div key={key} className="flex items-center gap-2 text-xs">
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${ok ? 'bg-emerald-500' : 'bg-red-400'}`} />
+                      <span className={ok ? 'text-gray-300 font-mono' : 'text-red-400 font-mono font-semibold'}>{key}</span>
+                      {typeof val === 'string' && val !== 'not set' && (
+                        <span className="text-gray-500 truncate">{val}</span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+
+            {/* Features */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3">Features</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <StatCard label="NAV Funds Tracked" value={features.navTracker.funds} sub={`${features.navTracker.alerts} alerts active`} color="gray" />
+                <StatCard label="A/B Test Events" value={features.abTests} color="indigo" />
+                <StatCard label="Cron Jobs" value={features.cronJobs} sub="scheduled" color="amber" />
+                <Link href="/admin/ab" className="bg-gray-900 border border-gray-800 rounded-2xl p-4 hover:border-amber-500/40 transition-colors flex flex-col justify-between">
+                  <div className="text-2xl font-black text-white">{features.cronJobs}</div>
+                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">A/B Tests →</div>
+                </Link>
+              </div>
+              {features.cronList.length > 0 && (
+                <div className="mt-3 bg-gray-900 border border-gray-800 rounded-2xl divide-y divide-gray-800/60">
+                  {features.cronList.map(c => (
+                    <div key={c.path} className="flex justify-between px-5 py-3 text-xs">
+                      <span className="font-mono text-amber-400">{c.path}</span>
+                      <span className="text-gray-500">{c.schedule}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* Content Details */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3">Content</h2>
+              <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
+                {[
+                  ['Blog categories', content.blogCategoryList.join(', ') || 'none'],
+                  ['Latest post', content.blogLatest ? `${content.blogLatest.title} · ${content.blogLatest.date}` : 'none'],
+                  ['Blog index size', `${content.blogIndexSizeKB} KB`],
+                  ['Reviews', String(content.reviews)],
+                  ['Search index entries', String(content.searchIndexEntries)],
+                  ['Service pages', String(content.servicePages)],
+                  ['Area pages', String(content.areaPages)],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex justify-between px-5 py-3 text-sm">
+                    <span className="text-gray-500">{label}</span>
+                    <span className="font-medium text-gray-300 truncate max-w-xs text-right">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* i18n */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3">i18n Status</h2>
+              <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
+                {[
+                  ['English keys', String(i18n.enKeys)],
+                  ['Hindi keys', String(i18n.hiKeys)],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex justify-between px-5 py-3 text-sm">
+                    <span className="text-gray-500">{label}</span>
+                    <span className="font-medium text-white">{value}</span>
+                  </div>
+                ))}
+                <div className="flex justify-between px-5 py-3 text-sm">
+                  <span className="text-gray-500">Parity</span>
+                  <span className={`font-semibold ${i18n.parity ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {i18n.parity ? '✓ Perfect' : `${i18n.gap} keys missing`}
+                  </span>
+                </div>
+              </div>
+            </section>
+
+            {/* Infrastructure */}
+            <section>
+              <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3">Infrastructure</h2>
+              <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
+                {[
+                  ['Next.js', infrastructure.nextVersion],
+                  ['React', infrastructure.reactVersion],
+                  ['Environment', infrastructure.environment],
+                  ['Last build', infrastructure.lastBuild ? new Date(infrastructure.lastBuild).toLocaleString() : 'unknown'],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex justify-between px-5 py-3 text-sm">
+                    <span className="text-gray-500">{label}</span>
+                    <span className="font-medium text-white font-mono text-xs">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Monitoring links (role-gated) */}
+            {role !== 'viewer' ? (
+              <section>
+                <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                  <Link2 size={14} className="text-amber-500" />
+                  External Consoles
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {MONITORING_LINKS.map(l => (
+                    <a
+                      key={l.label}
+                      href={l.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900 border border-gray-800 rounded-2xl p-4 hover:border-amber-500/40 transition-all group"
+                    >
+                      <p className="text-white text-xs font-extrabold uppercase tracking-wider group-hover:text-amber-400 transition-colors">
+                        {l.label}
+                      </p>
+                      <p className="text-gray-500 text-[10px] mt-1 truncate font-mono">
+                        {l.url.replace('https://', '')}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <div className="bg-gray-900/30 border border-gray-800/50 rounded-3xl p-6 flex flex-col justify-center items-center text-center">
+                <AlertCircle size={24} className="text-gray-500 mb-3" />
+                <h3 className="text-white font-extrabold text-sm mb-1">External Console Access Restricted</h3>
+                <p className="text-gray-500 text-xs leading-relaxed max-w-xs font-medium">
+                  Vercel, GA4, Resend, and Search Console links are hidden for the viewer role.
+                </p>
+              </div>
+            )}
+
+            <p className="text-xs text-gray-600 text-right pb-4">
+              Data as of {new Date(metrics.timestamp).toLocaleString()} · Auto-refreshes every 60s
+            </p>
+          </>
+        )
+      })()}
     </div>
-  );
+  )
 }

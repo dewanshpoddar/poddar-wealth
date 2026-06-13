@@ -1,4 +1,13 @@
-export const metadata = { robots: 'noindex,nofollow' };
+'use client';
+
+import { useEffect, useState } from 'react';
+
+interface DocsData {
+  claudeMd: string
+  envExample: string
+  packageJson: string
+  vercelJson: string
+}
 
 const envVars = [
   { name: 'GROQ_API_KEY', description: 'Groq API key — https://console.groq.com (free, 14400 req/day)', required: true },
@@ -25,12 +34,6 @@ const conventions = [
   { rule: 'Fonts', detail: 'Use next/font/google via CSS vars (--font-sans, --font-display). No @import.' },
 ];
 
-const agentBoundaries = [
-  { agent: 'Claude (you)', territory: 'app/api/*, lib/*, middleware.ts, next.config.*, scripts/*' },
-  { agent: 'Gemini', territory: 'components/*.tsx, src/features/*, en.json, hi.json' },
-  { agent: 'Either', territory: 'app/(pages)/* — but coordinate to avoid conflicts' },
-];
-
 const commitConvention = [
   { prefix: 'feat:', example: 'feat: add /renew page with lead capture' },
   { prefix: 'fix:', example: 'fix: chatbot history role order bug' },
@@ -39,20 +42,6 @@ const commitConvention = [
   { prefix: 'perf:', example: 'perf: convert hero images to next/image' },
   { prefix: 'security:', example: 'security: add sheetName whitelist to /api/track' },
 ];
-
-const claudePromptPrefix = `CONTEXT: Read /Users/dewanshpoddar/PW/CLAUDE.md first.
-Working directory: /Users/dewanshpoddar/PW
-Do NOT touch: components/*.tsx, en.json, hi.json (Gemini territory).
-You CAN touch: app/api/*, lib/*, middleware.ts, next.config.*
-
-TASK:`;
-
-const geminiPromptPrefix = `Context: This is the Poddar Wealth Management Next.js 15 project.
-Working directory: /Users/dewanshpoddar/PW
-Do NOT touch: app/api/*, lib/server-utils.ts, middleware.ts (Claude territory).
-You CAN touch: components/*.tsx, src/features/*, lib/en.json, lib/hi.json
-
-Task:`;
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -63,7 +52,31 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
+function FileSection({ title, content }: { title: string; content: string }) {
+  return (
+    <details className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <summary className="px-5 py-3 text-sm font-semibold text-amber-400 cursor-pointer hover:bg-gray-800/40 transition-colors select-none">
+        {title}
+      </summary>
+      <pre className="overflow-auto text-xs bg-gray-950 text-green-300 p-4 rounded-b-xl max-h-96 whitespace-pre-wrap break-all">
+        {content}
+      </pre>
+    </details>
+  );
+}
+
 export default function DocsPage() {
+  const [docs, setDocs] = useState<DocsData | null>(null)
+  const [loadingDocs, setLoadingDocs] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/admin/docs')
+      .then(r => r.json())
+      .then((d: DocsData) => setDocs(d))
+      .catch(() => {})
+      .finally(() => setLoadingDocs(false))
+  }, [])
+
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
@@ -98,18 +111,6 @@ export default function DocsPage() {
         </div>
       </Section>
 
-      {/* Agent boundaries */}
-      <Section title="Agent Boundaries (Claude vs Gemini)">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
-          {agentBoundaries.map(b => (
-            <div key={b.agent} className="flex gap-4 px-5 py-3">
-              <span className={`text-sm font-medium shrink-0 w-24 ${b.agent === 'Claude (you)' ? 'text-blue-400' : b.agent === 'Gemini' ? 'text-purple-400' : 'text-gray-400'}`}>{b.agent}</span>
-              <code className="text-gray-300 text-xs font-mono">{b.territory}</code>
-            </div>
-          ))}
-        </div>
-      </Section>
-
       {/* Git convention */}
       <Section title="Git Commit Convention">
         <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
@@ -119,20 +120,6 @@ export default function DocsPage() {
               <code className="text-gray-300 text-xs font-mono">{c.example}</code>
             </div>
           ))}
-        </div>
-      </Section>
-
-      {/* Agent prompts */}
-      <Section title="Agent Prompt Templates">
-        <div className="space-y-4">
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-            <p className="text-blue-400 text-sm font-medium mb-3">Claude Prompt Prefix</p>
-            <pre className="text-gray-300 text-xs font-mono whitespace-pre-wrap bg-gray-950 p-4 rounded-lg">{claudePromptPrefix}</pre>
-          </div>
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-            <p className="text-purple-400 text-sm font-medium mb-3">Gemini Prompt Prefix</p>
-            <pre className="text-gray-300 text-xs font-mono whitespace-pre-wrap bg-gray-950 p-4 rounded-lg">{geminiPromptPrefix}</pre>
-          </div>
         </div>
       </Section>
 
@@ -153,6 +140,26 @@ export default function DocsPage() {
             </div>
           ))}
         </div>
+      </Section>
+
+      {/* Live file viewer */}
+      <Section title="Live Project Files">
+        {loadingDocs ? (
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 text-center text-gray-500 text-sm animate-pulse">
+            Loading files from /api/admin/docs…
+          </div>
+        ) : docs ? (
+          <div className="space-y-3">
+            <FileSection title="CLAUDE.md — Project memory & conventions" content={docs.claudeMd} />
+            <FileSection title=".env.example — Required environment variables" content={docs.envExample} />
+            <FileSection title="package.json — Dependencies & scripts" content={docs.packageJson} />
+            <FileSection title="vercel.json — Cron jobs & deploy config" content={docs.vercelJson} />
+          </div>
+        ) : (
+          <div className="bg-red-950/30 border border-red-900/40 rounded-xl p-5 text-red-400 text-sm">
+            Failed to load files from /api/admin/docs.
+          </div>
+        )}
       </Section>
     </div>
   );

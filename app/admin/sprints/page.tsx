@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, GitCommit, CheckCircle2, ChevronRight, Activity, Award } from 'lucide-react';
 
 interface SprintItem {
@@ -81,7 +81,22 @@ const HISTORICAL_SPRINTS: SprintItem[] = [
   }
 ];
 
+interface LiveStats {
+  content: { blogPosts: number }
+  infrastructure: { apiRoutes: number; lastBuild: string }
+  estimatedPages: number
+}
+
 export default function SprintsTimeline() {
+  const [live, setLive] = useState<LiveStats | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/metrics')
+      .then(r => r.json())
+      .then((d: LiveStats) => setLive(d))
+      .catch(() => {})
+  }, [])
+
   const getStatusBadge = (status: SprintItem['status']) => {
     switch (status) {
       case 'shipped':
@@ -109,6 +124,26 @@ export default function SprintsTimeline() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      {/* Live stats banner */}
+      {live && (
+        <div className="bg-gray-900 border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
+          <span className="text-gray-400">
+            <span className="text-amber-400 font-bold text-base">{live.estimatedPages}</span> est. pages
+          </span>
+          <span className="text-gray-400">
+            <span className="text-blue-400 font-bold text-base">{live.content.blogPosts}</span> blog posts
+          </span>
+          <span className="text-gray-400">
+            <span className="text-purple-400 font-bold text-base">{live.infrastructure.apiRoutes}</span> API routes
+          </span>
+          {live.infrastructure.lastBuild && (
+            <span className="text-gray-500">
+              Last build: {new Date(live.infrastructure.lastBuild).toLocaleString()}
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Title */}
       <div>
         <div className="flex items-center gap-2 text-amber-500 text-xs font-bold uppercase tracking-widest mb-1.5">
