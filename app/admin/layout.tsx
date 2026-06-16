@@ -39,8 +39,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       const data = await r.json();
       setLoading(false);
       if (data.success) {
-        document.cookie = 'admin_auth=true; path=/admin; max-age=86400; SameSite=Strict';
-        document.cookie = `admin_role=${selectedRole}; path=/admin; max-age=86400; SameSite=Strict`;
+        // Set cookies at root path (path=/) so they are shared with API routes under /api
+        document.cookie = 'admin_auth=true; path=/; max-age=86400; SameSite=Strict';
+        document.cookie = `admin_role=${selectedRole}; path=/; max-age=86400; SameSite=Strict`;
         setRole(selectedRole);
         setAuthenticated(true);
       } else {
@@ -53,8 +54,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   const logout = () => {
-    document.cookie = 'admin_auth=; path=/admin; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
-    document.cookie = 'admin_role=; path=/admin; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
+    document.cookie = 'admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
+    document.cookie = 'admin_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
+    document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
     setAuthenticated(false);
     router.push('/admin');
   };

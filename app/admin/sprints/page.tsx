@@ -92,8 +92,12 @@ export default function SprintsTimeline() {
 
   useEffect(() => {
     fetch('/api/admin/metrics')
-      .then(r => r.json())
-      .then((d: LiveStats) => setLive(d))
+      .then(r => r.ok ? r.json() : null)
+      .then((d: LiveStats | null) => {
+        if (d && d.content && d.infrastructure) {
+          setLive(d)
+        }
+      })
       .catch(() => {})
   }, [])
 

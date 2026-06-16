@@ -19,10 +19,22 @@ export interface Lead {
   updatedAt: string
 }
 
+import { verifySession } from '@/lib/admin-auth'
+
 function auth(req: NextRequest) {
+  // 1. Check header secret key (for server-to-server crons/integrations)
   const secret = process.env.ADMIN_SECRET
-  if (!secret) return false
-  return req.headers.get('x-admin-secret') === secret
+  if (secret && req.headers.get('x-admin-secret') === secret) return true
+
+  // 2. Check signed HttpOnly cookie (for browser admin dashboard UI)
+  const token = req.cookies.get('admin_session')?.value
+  if (token) {
+    const session = verifySession(token)
+    // Optional: role restriction check (only admin can manage leads)
+    if (session && session.role === 'admin') return true
+  }
+
+  return false
 }
 
 function readLeads(): Lead[] {

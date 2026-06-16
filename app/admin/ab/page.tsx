@@ -61,8 +61,12 @@ export default function ABTestAdminPage() {
 
   useEffect(() => {
     fetch('/api/admin/metrics')
-      .then(r => r.json())
-      .then((d: { features: { abTests: number } }) => setLiveEventCount(d.features.abTests))
+      .then(r => r.ok ? r.json() : null)
+      .then((d: any) => {
+        if (d && d.features) {
+          setLiveEventCount(d.features.abTests);
+        }
+      })
       .catch(() => {});
   }, []);
 

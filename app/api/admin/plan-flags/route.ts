@@ -43,14 +43,27 @@ function writeFlags(flags: Record<string, PlanFlag>) {
   fs.writeFileSync(FLAGS_PATH, JSON.stringify(flags, null, 2))
 }
 
-function auth(req: Request) {
+import { NextRequest } from 'next/server'
+import { verifySession } from '@/lib/admin-auth'
+
+function auth(req: NextRequest) {
+  // 1. Check header secret key (for server-to-server crons/integrations)
   const secret = process.env.ADMIN_SECRET || process.env.SYNC_SECRET
-  if (!secret) return false
-  return req.headers.get('x-admin-secret') === secret
+  if (secret && req.headers.get('x-admin-secret') === secret) return true
+
+  // 2. Check signed HttpOnly cookie (for browser admin dashboard UI)
+  const token = req.cookies.get('admin_session')?.value
+  if (token) {
+    const session = verifySession(token)
+    // Dev and Admin roles can manage plan flags
+    if (session && (session.role === 'admin' || session.role === 'developer')) return true
+  }
+
+  return false
 }
 
 // ── GET — view all flags ────────────────────────────────────────────────────
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const flags = readFlags()
@@ -70,7 +83,7 @@ export async function GET(req: Request) {
 }
 
 // ── POST — manually act on a flag ──────────────────────────────────────────
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json().catch(() => null)

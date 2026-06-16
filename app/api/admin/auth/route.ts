@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { signSession } from '@/lib/admin-auth'
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
@@ -12,7 +13,20 @@ export async function POST(req: NextRequest) {
   }
 
   if (body.password === adminPassword) {
-    return NextResponse.json({ success: true })
+    const role = body.role || 'viewer'
+    const token = signSession(role)
+    const response = NextResponse.json({ success: true })
+    
+    // Set cryptographically signed session token in secure HttpOnly cookie
+    response.cookies.set('admin_session', token, {
+      path: '/',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 // 24 hours
+    })
+    
+    return response
   }
 
   return NextResponse.json({ success: false }, { status: 401 })
