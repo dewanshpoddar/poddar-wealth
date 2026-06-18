@@ -45,6 +45,7 @@ export default function AdminLeadsPage() {
           const data = await res.json()
           if (data && data.leads) {
             setLeads(data.leads)
+            setLoading(false)
             return
           }
         }

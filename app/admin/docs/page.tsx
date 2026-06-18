@@ -71,8 +71,12 @@ export default function DocsPage() {
 
   useEffect(() => {
     fetch('/api/admin/docs')
-      .then(r => r.json())
-      .then((d: DocsData) => setDocs(d))
+      .then(r => r.ok ? r.json() : null)
+      .then((d: DocsData | null) => {
+        if (d && d.claudeMd) {
+          setDocs(d);
+        }
+      })
       .catch(() => {})
       .finally(() => setLoadingDocs(false))
   }, [])

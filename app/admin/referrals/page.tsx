@@ -3,6 +3,9 @@ export const metadata = { robots: 'noindex,nofollow' };
 import fs from 'fs'
 import path from 'path'
 
+import { cookies } from 'next/headers'
+import { verifySession } from '@/lib/admin-auth'
+
 interface Referral {
   code: string
   referrerPhone: string
@@ -19,7 +22,19 @@ function getReferrals(): Referral[] {
   } catch { return [] }
 }
 
-export default function ReferralsPage() {
+export default async function ReferralsPage() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('admin_session')?.value
+  const session = token ? verifySession(token) : null
+
+  if (!session || session.role !== 'admin') {
+    return (
+      <div className="max-w-5xl mx-auto py-12 text-center text-rose-500 font-bold">
+        Access Denied: Admin session is invalid or has expired. Please log in first.
+      </div>
+    )
+  }
+
   const referrals = getReferrals()
   const sorted = [...referrals].sort((a, b) => b.uses - a.uses)
   const totalUses = referrals.reduce((s, r) => s + r.uses, 0)
