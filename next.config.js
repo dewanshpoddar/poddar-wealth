@@ -58,6 +58,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  serverExternalPackages: ['pdf-parse', '@react-pdf/renderer', 'sharp'],
   typescript: {
     ignoreBuildErrors: true,
   },
