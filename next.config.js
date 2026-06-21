@@ -1,5 +1,3 @@
-const { withSentryConfig } = require("@sentry/nextjs");
-
 /** @type {import('next').NextConfig} */
 const csp = [
   "default-src 'self'",
@@ -7,7 +5,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https: blob:",
-  "connect-src 'self' https://api.groq.com https://www.google-analytics.com https://script.google.com https://www.googletagmanager.com https://o*.ingest.sentry.io",
+  "connect-src 'self' https://api.groq.com https://www.google-analytics.com https://script.google.com https://www.googletagmanager.com",
   "frame-src 'self' https://www.google.com",
   "media-src 'self'",
 ].join('; ')
@@ -22,7 +20,6 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
-  optimizeFonts: false,
   webpack: (config, { dev }) => {
     if (!dev) {
       config.cache = false;
