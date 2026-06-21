@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import blogIndex from '@/lib/data/blog-index.json'
+import { AREAS } from '@/lib/data/areas'
 
 const BASE_URL = 'https://www.poddarwealth.com'
 
@@ -54,31 +55,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/best-plan/40`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/best-plan/45`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/best-plan/50`,                          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    // Local area service pages
-    { url: `${BASE_URL}/services/golghar`,          lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/shahpur`,          lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/padrauna`,         lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/deoria`,           lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/kushinagar`,       lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/maharajganj`,      lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/basti`,            lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/siddharthnagar`,   lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/sant-kabir-nagar`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/azamgarh`,         lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/mau`,              lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/ballia`,           lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/jaunpur`,          lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/gonda`,            lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/bahraich`,         lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/sultanpur`,        lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/varanasi`,         lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/lucknow`,          lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/prayagraj`,        lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services/faizabad-ayodhya`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     // Tools & AI
     { url: `${BASE_URL}/ai-advisor`,                lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/analyzers/policy-document`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
   ]
+
+  // Dynamic area service pages
+  const areaPages: MetadataRoute.Sitemap = AREAS.map((area) => ({
+    url: `${BASE_URL}/services/${area.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
 
   // Dynamic blog posts
   const blogPages: MetadataRoute.Sitemap = blogIndex.map((post) => ({
@@ -88,6 +76,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...blogPages]
+  return [...staticPages, ...areaPages, ...blogPages]
 }
-
