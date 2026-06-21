@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Shield, User, ChevronRight, ArrowLeft, ExternalLink, TrendingUp, MessageCircle } from 'lucide-react'
@@ -11,6 +11,13 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    const authCookie = document.cookie.split('; ').find(c => c.startsWith('admin_auth='))
+    if (authCookie?.split('=')[1] === 'true') {
+      router.replace('/admin')
+    }
+  }, [router])
 
   async function handleAdminLogin() {
     if (!password) return

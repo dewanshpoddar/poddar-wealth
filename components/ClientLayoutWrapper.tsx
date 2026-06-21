@@ -12,14 +12,18 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
   const pathname = usePathname()
   const hideChrome = pathname?.startsWith('/admin') || pathname === '/login'
 
+  if (hideChrome) {
+    return <LangProvider>{children}</LangProvider>
+  }
+
   return (
     <LangProvider>
-      {!hideChrome && <ProblemSolutionSection />}
-      {!hideChrome && <Navbar />}
-      <main className={hideChrome ? '' : 'pb-20 md:pb-0'}>{children}</main>
-      {!hideChrome && <Footer />}
-      {!hideChrome && <ClientFloats />}
-      {!hideChrome && <ClientOnlyBanner />}
+      <ProblemSolutionSection />
+      <Navbar />
+      <main className="pb-20 md:pb-0">{children}</main>
+      <Footer />
+      <ClientFloats />
+      <ClientOnlyBanner />
     </LangProvider>
   )
 }
