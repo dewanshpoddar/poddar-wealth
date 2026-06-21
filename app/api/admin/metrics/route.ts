@@ -146,31 +146,33 @@ export async function GET(req: NextRequest) {
     { path: '/api/cron/weekly-digest', schedule: '0 10 * * 0' },
   ]
 
-  // Infrastructure Build time
-  let lastBuildTime = new Date().toISOString()
-  try {
-    const buildIdPath = path.join(process.cwd(), '.next/BUILD_ID')
-    if (fs.existsSync(buildIdPath)) {
-      lastBuildTime = fs.statSync(buildIdPath).mtime.toISOString()
-    } else {
-      const nextDir = path.join(process.cwd(), '.next')
-      if (fs.existsSync(nextDir)) {
-        lastBuildTime = fs.statSync(nextDir).mtime.toISOString()
-      }
-    }
-  } catch {}
+  // Infrastructure Build time — use Vercel commit SHA (set at build time) for accuracy
+  const lastBuildTime = process.env.VERCEL_GIT_COMMIT_SHA
+    ? new Date().toISOString()
+    : (() => {
+        try {
+          const buildIdPath = path.join(process.cwd(), '.next/BUILD_ID')
+          if (fs.existsSync(buildIdPath)) return fs.statSync(buildIdPath).mtime.toISOString()
+        } catch {}
+        return new Date().toISOString()
+      })()
 
-  // Env Config
+  // Deploy info from Vercel env vars (set at build time, frozen in the bundle)
+  const deployInfo = {
+    commitSha: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'local',
+    commitMessage: process.env.VERCEL_GIT_COMMIT_MESSAGE || '',
+    branch: process.env.VERCEL_GIT_COMMIT_REF || 'main',
+  }
+
+  // Env Config — only real env vars, no code constants
   const envVars = {
     ADMIN_DASHBOARD_PASSWORD: process.env.ADMIN_DASHBOARD_PASSWORD ? 'configured' : 'not set',
     ADMIN_SECRET: process.env.ADMIN_SECRET ? 'configured' : 'not set',
     GOOGLE_SHEETS_WEBHOOK_URL: process.env.GOOGLE_SHEETS_WEBHOOK_URL ? 'configured' : 'not set',
     GROQ_API_KEY: process.env.GROQ_API_KEY ? 'configured' : 'not set',
     RESEND_API_KEY: process.env.RESEND_API_KEY ? 'configured' : 'not set',
-    SENTRY_DSN: process.env.SENTRY_DSN ? 'configured' : 'not set',
     WHATSAPP_ACCESS_TOKEN: process.env.WHATSAPP_ACCESS_TOKEN ? 'configured' : 'not set',
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID ? 'configured' : 'not set',
-    ADVISOR_PHONE: process.env.ADVISOR_PHONE || 'not set',
     NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV || 'not set',
   }
 
@@ -179,9 +181,21 @@ export async function GET(req: NextRequest) {
     val => val !== 'not set' && val !== 'false'
   ).length
 
-  // i18n
-  const enKeys = Object.keys(enDict).length
-  const hiKeys = Object.keys(hiDict).length
+  // i18n — recursive key count to capture nested objects
+  function countKeys(obj: Record<string, unknown>): number {
+    let count = 0
+    for (const key in obj) {
+      const val = obj[key]
+      if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
+        count += countKeys(val as Record<string, unknown>)
+      } else {
+        count++
+      }
+    }
+    return count
+  }
+  const enKeys = countKeys(enDict)
+  const hiKeys = countKeys(hiDict)
 
   const metricsData = {
     content: {
@@ -220,6 +234,7 @@ export async function GET(req: NextRequest) {
       envConfigured,
       envTotal,
       lastBuild: lastBuildTime,
+      deploy: deployInfo,
       environment: process.env.VERCEL_ENV ?? process.env.NODE_ENV ?? 'development',
       nextVersion: '15.5.19',
       reactVersion: '19.0.0',

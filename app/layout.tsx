@@ -4,12 +4,7 @@ import Script from 'next/script'
 import './globals.css'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
-import { LangProvider } from '@/lib/LangContext'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import ProblemSolutionSection from '@/components/ProblemSolutionSection'
-import ClientFloats from '@/components/ClientFloats'
-import ClientOnlyBanner from '@/components/ClientOnlyBanner'
+import ClientLayoutWrapper from '@/components/ClientLayoutWrapper'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -118,14 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         )}
 
-        <LangProvider>
-          <ProblemSolutionSection />
-          <Navbar />
-          <main className="pb-20 md:pb-0">{children}</main>
-          <Footer />
-          <ClientFloats />
-          <ClientOnlyBanner />
-        </LangProvider>
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
         <Analytics />
         <SpeedInsights />
         <Script id="pwa-sw-register" strategy="afterInteractive">

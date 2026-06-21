@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Shield, Terminal, Eye, Lock, ArrowLeft, AlertCircle } from 'lucide-react';
+import { Shield, Terminal, Eye, AlertCircle } from 'lucide-react';
 
 type AdminRole = 'admin' | 'developer' | 'viewer';
 
@@ -12,9 +12,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
   const [role, setRole] = useState<AdminRole>('viewer');
-  const [password, setPassword] = useState('');
-  const [selectedRole, setSelectedRole] = useState<AdminRole>('admin');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const cookies = document.cookie.split('; ');
@@ -24,41 +21,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (authCookie?.split('=')[1] === 'true') {
       setAuthenticated(true);
       setRole((roleCookie?.split('=')[1] as AdminRole) || 'viewer');
+    } else {
+      router.replace('/login');
     }
-  }, []);
-
-  const login = async () => {
-    if (!password) return;
-    setLoading(true);
-    try {
-      const r = await fetch('/api/admin/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, role: selectedRole }),
-      });
-      const data = await r.json();
-      setLoading(false);
-      if (data.success) {
-        // Set cookies at root path (path=/) so they are shared with API routes under /api
-        document.cookie = 'admin_auth=true; path=/; max-age=86400; SameSite=Strict';
-        document.cookie = `admin_role=${selectedRole}; path=/; max-age=86400; SameSite=Strict`;
-        setRole(selectedRole);
-        setAuthenticated(true);
-      } else {
-        alert('Wrong password');
-      }
-    } catch {
-      setLoading(false);
-      alert('Authentication request failed');
-    }
-  };
+  }, [router]);
 
   const logout = () => {
     document.cookie = 'admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
     document.cookie = 'admin_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
     document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict';
     setAuthenticated(false);
-    router.push('/admin');
+    router.push('/login');
   };
 
   // Route protection logic
@@ -78,110 +51,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   if (!authenticated) {
-    return (
-      <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
-            
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                <Lock size={18} />
-              </div>
-              <div>
-                <h1 className="text-white text-lg font-bold">Admin Portal</h1>
-                <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Internal access only</p>
-              </div>
-            </div>
-
-            {/* Selectable Role Cards */}
-            <div className="space-y-3 mb-6">
-              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">
-                Select Workspace Role
-              </label>
-              
-              <div className="grid grid-cols-3 gap-2">
-                {/* Admin Role */}
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('admin')}
-                  className={`p-3 rounded-2xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                    selectedRole === 'admin'
-                      ? 'bg-amber-500/10 border-amber-500 text-amber-400'
-                      : 'bg-gray-950 border-gray-800 text-gray-500 hover:border-gray-700 hover:text-gray-300'
-                  }`}
-                >
-                  <Shield size={16} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Admin</span>
-                </button>
-
-                {/* Developer Role */}
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('developer')}
-                  className={`p-3 rounded-2xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                    selectedRole === 'developer'
-                      ? 'bg-amber-500/10 border-amber-500 text-amber-400'
-                      : 'bg-gray-950 border-gray-800 text-gray-500 hover:border-gray-700 hover:text-gray-300'
-                  }`}
-                >
-                  <Terminal size={16} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Dev</span>
-                </button>
-
-                {/* Viewer Role */}
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('viewer')}
-                  className={`p-3 rounded-2xl border text-center flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                    selectedRole === 'viewer'
-                      ? 'bg-amber-500/10 border-amber-500 text-amber-400'
-                      : 'bg-gray-950 border-gray-800 text-gray-500 hover:border-gray-700 hover:text-gray-300'
-                  }`}
-                >
-                  <Eye size={16} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Viewer</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Password input */}
-            <div className="space-y-3 mb-6">
-              <label htmlFor="pass" className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1">
-                Security Password
-              </label>
-              <input
-                id="pass"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && login()}
-                placeholder="••••••••••••"
-                className="w-full bg-gray-950 text-white px-4 py-3 rounded-xl border border-gray-800 hover:border-gray-700 focus:border-amber-500 transition-colors outline-none text-sm font-semibold"
-              />
-            </div>
-
-            <button
-              onClick={login}
-              disabled={loading}
-              className="w-full bg-amber-500 hover:bg-amber-600 disabled:bg-gray-800 text-white font-bold text-sm py-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              {loading ? (
-                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                'Authenticate'
-              )}
-            </button>
-          </div>
-          
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-gray-500 hover:text-white uppercase tracking-widest mt-6 group transition-colors"
-          >
-            <ArrowLeft size={12} className="group-hover:-translate-x-0.5 transition-transform" />
-            Back to Site
-          </Link>
-        </div>
-    );
+    return null; // useEffect handles redirect to /login
   }
 
   // Handle access restrictions

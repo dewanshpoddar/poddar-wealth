@@ -211,7 +211,7 @@ export default function Navbar() {
             </div>
 
             <Link
-              href="/client"
+              href="/login"
               className="text-sm text-gray-400 hover:text-white"
             >
               {label('Client Login', 'क्लाइंट लॉगिन')}
@@ -392,7 +392,7 @@ export default function Navbar() {
             {[
               { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना' },
               { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग' },
-              { href: '/client',  en: 'Client Login',  hi: 'क्लाइंट लॉगिन' },
+              { href: '/login',  en: 'Client Login',  hi: 'क्लाइंट लॉगिन' },
             ].map(({ href, en, hi }) => (
               <Link
                 key={href}
