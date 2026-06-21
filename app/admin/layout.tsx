@@ -79,9 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (!authenticated) {
     return (
-      <>
-        <meta name="robots" content="noindex,nofollow" />
-        <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
           <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
             
@@ -183,7 +181,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             Back to Site
           </Link>
         </div>
-      </>
     );
   }
 
@@ -281,9 +278,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <>
-      <meta name="robots" content="noindex,nofollow" />
-      <div className="min-h-screen bg-gray-950 text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col font-sans">
         
         {/* Header navigation bar */}
         <header className="bg-gray-900 border-b border-gray-800/80 px-6 py-4 flex items-center justify-between shrink-0 shadow-lg">
@@ -329,7 +324,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
           )}
         </main>
-      </div>
-    </>
+    </div>
   );
 }

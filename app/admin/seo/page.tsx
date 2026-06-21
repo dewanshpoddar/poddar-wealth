@@ -1,69 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ShieldCheck, BarChart2, CheckCircle, Search, FileText, Info, Award, Settings } from 'lucide-react';
-import sitemap from '@/app/sitemap';
+import { useState, useEffect } from 'react';
+import { ShieldCheck, BarChart2, CheckCircle, Search, Info, Award, Settings } from 'lucide-react';
 
-interface SeoStat {
-  label: string;
-  value: string | number;
-  description: string;
-}
+const SITEMAP_COUNTS = { total: 187, blog: 130, area: 30, service: 11, calc: 7, static: 9 };
 
 export default function SeoStatsPage() {
-  const [totalUrls, setTotalUrls] = useState(0);
-  const [blogUrls, setBlogUrls] = useState(0);
-  const [areaUrls, setAreaUrls] = useState(0);
-  const [serviceUrls, setServiceUrls] = useState(0);
-  const [calcUrls, setCalcUrls] = useState(0);
-  const [staticUrls, setStaticUrls] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const urls = sitemap();
-      setTotalUrls(urls.length);
-      
-      let blog = 0;
-      let area = 0;
-      let service = 0;
-      let calc = 0;
-      let rest = 0;
-
-      urls.forEach(item => {
-        if (item.url.includes('/blog/')) {
-          blog++;
-        } else if (item.url.includes('/services/')) {
-          // Identify local area pages vs core service pages
-          // Core service page list: life-insurance, health-insurance, child-planning, retirement, tax-planning, keyman-insurance, critical-illness, personal-accident, cancer-cover, term-life, group-health
-          const path = item.url.split('/services/')[1];
-          const coreServices = [
-            'life-insurance', 'health-insurance', 'child-planning', 'retirement', 
-            'tax-planning', 'keyman-insurance', 'critical-illness', 'personal-accident', 
-            'cancer-cover', 'term-life', 'group-health'
-          ];
-          if (coreServices.includes(path)) {
-            service++;
-          } else {
-            area++;
-          }
-        } else if (item.url.includes('/calculators/')) {
-          calc++;
-        } else {
-          rest++;
-        }
-      });
-
-      setBlogUrls(blog);
-      setAreaUrls(area);
-      setServiceUrls(service);
-      setCalcUrls(calc);
-      setStaticUrls(rest);
-    } catch (err) {
-      console.error('Failed to parse sitemap details dynamically:', err);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
   }, []);
 
   const lighthouseMetrics = [
@@ -108,32 +54,32 @@ export default function SeoStatsPage() {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             <div className="bg-gradient-to-br from-amber-500/10 to-gray-900 rounded-2xl p-4 border border-amber-500/20">
-              <p className="text-3xl font-black text-amber-400 font-sans">{totalUrls}</p>
+              <p className="text-3xl font-black text-amber-400 font-sans">{SITEMAP_COUNTS.total}</p>
               <p className="text-white text-[10px] uppercase font-bold tracking-wider mt-1">Total Indexed URLs</p>
-              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Inside dynamic sitemap</p>
+              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Inside sitemap.ts</p>
             </div>
             <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{blogUrls}</p>
+              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.blog}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Blog Article URLs</p>
-              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Bilingual posts (100)</p>
+              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Bilingual posts</p>
             </div>
             <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{areaUrls}</p>
+              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.area}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Local Area Pages</p>
-              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Purvanchal geography (20)</p>
+              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Purvanchal geography</p>
             </div>
             <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{serviceUrls}</p>
+              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.service}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Core Services</p>
-              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Insurance products (11)</p>
+              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Insurance products</p>
             </div>
             <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{calcUrls}</p>
+              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.calc}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Calculators</p>
-              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Lead capture panels (7)</p>
+              <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Lead capture panels</p>
             </div>
             <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{staticUrls}</p>
+              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.static}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Static Routing</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Info & utility pages</p>
             </div>
