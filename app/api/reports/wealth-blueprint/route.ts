@@ -42,8 +42,6 @@ export async function POST(request: Request) {
 
   try {
     const element = React.createElement(WealthBlueprintPDF, { data })
-    // renderToBuffer expects a @react-pdf/renderer Document element; cast needed
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pdfBuffer = await renderToBuffer(element as any)
 
     logger.info('/api/reports/wealth-blueprint', 'PDF generated', {
@@ -51,7 +49,6 @@ export async function POST(request: Request) {
       elapsedMs: Date.now() - startTime,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return new Response(pdfBuffer as any, {
       headers: {
         'Content-Type': 'application/pdf',
