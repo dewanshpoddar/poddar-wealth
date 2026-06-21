@@ -2,8 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import { ShieldCheck, BarChart2, CheckCircle, Search, Info, Award, Settings } from 'lucide-react';
+import { AREAS } from '@/lib/data/areas';
+import blogIndex from '@/lib/data/blog-index.json';
 
-const SITEMAP_COUNTS = { total: 187, blog: 130, area: 30, service: 11, calc: 7, static: 9 };
+const blogCount = blogIndex.length;
+const areaCount = AREAS.length;
+const serviceCount = 11;
+const calcCount = 7;
+const staticCount = 9;
+const totalCount = blogCount + areaCount + serviceCount + calcCount + staticCount;
+
+const SITEMAP_COUNTS = {
+  total: totalCount,
+  blog: blogCount,
+  area: areaCount,
+  service: serviceCount,
+  calc: calcCount,
+  static: staticCount,
+};
 
 export default function SeoStatsPage() {
   const [loading, setLoading] = useState(true);
@@ -21,8 +37,8 @@ export default function SeoStatsPage() {
 
   const schemaCoverages = [
     { type: 'LocalBusiness JSON-LD', count: 1, target: 'Home Page', status: 'verified' },
-    { type: 'Article JSON-LD Schema', count: 100, target: 'Blog Posts', status: 'verified' },
-    { type: 'InsuranceAgency Schema', count: 31, target: 'Service & Area Pages', status: 'verified' },
+    { type: 'Article JSON-LD Schema', count: blogCount, target: 'Blog Posts', status: 'verified' },
+    { type: 'InsuranceAgency Schema', count: areaCount + serviceCount, target: 'Service & Area Pages', status: 'verified' },
     { type: 'FAQPage JSON-LD Schema', count: 1, target: 'FAQ Section', status: 'verified' },
   ];
 
