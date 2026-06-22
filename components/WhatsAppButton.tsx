@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function WhatsAppButton() {
   const [show, setShow] = useState(false)
@@ -16,7 +17,7 @@ export default function WhatsAppButton() {
 
   return (
     <a
-      href="https://wa.me/919415313434?text=Hi%20Ajay%20sir"
+      href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20sir`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
