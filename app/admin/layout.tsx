@@ -55,10 +55,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         - Mobile: pt-16 (to offset fixed top bar)
         - Desktop: md:pt-0, md:ml-60 (to offset fixed sidebar)
       */}
-      <div className="pt-16 md:pt-0 md:ml-60 flex flex-col flex-1 min-h-screen">
-        <main className="p-4 md:p-6 flex-1 flex flex-col">
+      <div className="pt-16 md:pt-0 md:ml-60 flex flex-col flex-1 overflow-x-hidden">
+        <main className="p-4 md:p-6 flex-1 flex flex-col min-w-0">
           {hasAccess() ? (
-            <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+            <div>
               {children}
             </div>
           ) : (

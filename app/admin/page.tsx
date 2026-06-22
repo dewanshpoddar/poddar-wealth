@@ -73,7 +73,7 @@ function StatCard({
   return (
     <div className={`bg-white border border-gray-200 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ${className}`}>
       <div>
-        <p className="text-xs text-gray-400 uppercase tracking-wider mb-2 font-medium">{label}</p>
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-medium">{label}</p>
         <p className="text-3xl font-medium text-gray-900 font-mono tracking-tight">{value}</p>
       </div>
       {sub && <p className="text-xs text-gray-400 mt-2 font-medium">{sub}</p>}
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
           <>
             {/* Site Overview */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <Database size={14} className="text-amber-500" />
                 Site Metrics
               </h2>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
 
             {/* CRM */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <Activity size={14} className="text-amber-500" />
                 CRM & Leads
               </h2>
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
 
             {/* Environment Health */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <CheckCircle size={14} className="text-amber-500" />
                 Environment Health —{' '}
                 <span className={infrastructure.envConfigured === infrastructure.envTotal ? 'text-emerald-600' : 'text-amber-600 font-mono'}>
@@ -238,7 +238,7 @@ export default function AdminDashboard() {
 
             {/* Features */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">Features</h2>
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest">Features</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard label="NAV Funds Tracked" value={features.navTracker.funds} sub={`${features.navTracker.alerts} alerts active`} />
                 <StatCard label="A/B Test Events" value={features.abTests} />
@@ -262,7 +262,7 @@ export default function AdminDashboard() {
 
             {/* Activity Log */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <Activity size={14} className="text-amber-500" />
                 System Activity Log
               </h2>
@@ -304,7 +304,7 @@ export default function AdminDashboard() {
 
             {/* Content Details */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">Content</h2>
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest">Content</h2>
               <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['Blog categories', content.blogCategoryList.join(', ') || 'none'],
@@ -325,7 +325,7 @@ export default function AdminDashboard() {
 
             {/* i18n */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">i18n Status</h2>
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest">i18n Status</h2>
               <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['English keys', String(i18n.enKeys)],
@@ -347,7 +347,7 @@ export default function AdminDashboard() {
 
             {/* Infrastructure */}
             <section className="space-y-3">
-              <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">Infrastructure</h2>
+              <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest">Infrastructure</h2>
               <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['Next.js', infrastructure.nextVersion],
@@ -366,7 +366,7 @@ export default function AdminDashboard() {
             {/* Monitoring links */}
             {role !== 'viewer' ? (
               <section className="space-y-3">
-                <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-1.5">
+                <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-1.5">
                   <Link2 size={14} className="text-amber-500" />
                   External Consoles
                 </h2>

@@ -140,7 +140,7 @@ export default function ABTestAdminPage() {
         
         {/* Left: Active Tests List */}
         <section className="lg:col-span-8 space-y-4">
-          <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+          <h2 className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
             <Activity size={14} className="text-amber-500" />
             Active Experiments ({tests.length})
           </h2>
@@ -275,7 +275,7 @@ export default function ABTestAdminPage() {
 
         {/* Right: Create Experiment Form */}
         <section className="lg:col-span-4 space-y-4">
-          <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+          <h2 className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
             <FlaskConical size={14} className="text-amber-500" />
             Create Experiment
           </h2>

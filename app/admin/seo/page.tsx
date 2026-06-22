@@ -58,7 +58,7 @@ export default function SeoStatsPage() {
 
       {/* Dynamic Sitemap Counts Grid */}
       <section>
-        <h2 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
+        <h2 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5">
           <BarChart2 size={14} className="text-amber-500" />
           Sitemap URL Distribution
         </h2>
@@ -108,7 +108,7 @@ export default function SeoStatsPage() {
         <div className="space-y-8">
           {/* Lighthouse */}
           <section className="space-y-3">
-            <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+            <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
               <Award size={14} className="text-amber-500" />
               Lighthouse Performance Metrics
             </h3>
@@ -129,7 +129,7 @@ export default function SeoStatsPage() {
 
           {/* Crawler Rules */}
           <section className="space-y-3">
-            <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+            <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
               <Settings size={14} className="text-amber-500" />
               Crawling & Robot Filters (robots.ts)
             </h3>
@@ -167,7 +167,7 @@ export default function SeoStatsPage() {
 
         {/* Right Side: Schema JSON-LD Audit */}
         <section className="space-y-3">
-          <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+          <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
             <ShieldCheck size={14} className="text-amber-500" />
             Structured Data & Schema Coverage
           </h3>
