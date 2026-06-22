@@ -130,7 +130,7 @@ export default function ABTestAdminPage() {
         </p>
         {liveEventCount !== null && (
           <p className="text-xs text-gray-500 mt-2">
-            <span className="text-amber-400 font-bold text-sm">{liveEventCount}</span> tracked events in lib/data/ab-results.json
+            <span className="text-amber-600 font-bold text-sm">{liveEventCount}</span> tracked events in lib/data/ab-results.json
           </p>
         )}
       </div>
@@ -179,7 +179,7 @@ export default function ABTestAdminPage() {
                           <td className="px-6 py-4 text-center font-mono font-bold text-gray-600">{test.split}</td>
                           <td className="px-6 py-4 text-center">
                             {test.winner !== '—' ? (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700">
                                 {test.winner}
                               </span>
                             ) : (
@@ -189,7 +189,7 @@ export default function ABTestAdminPage() {
                           <td className="px-6 py-4">
                             <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                               test.status === 'Running' 
-                                ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' 
+                                ? 'bg-amber-50 border-amber-100 text-amber-700' 
                                 : 'bg-gray-50 text-gray-500 border-gray-200'
                             }`}>
                               {test.status}
@@ -210,7 +210,7 @@ export default function ABTestAdminPage() {
                                     <div className="bg-white border border-gray-200/60 p-4 rounded-2xl">
                                       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Variant A (Control)</p>
                                       <p className="text-sm font-bold text-gray-900 mb-2 truncate" title={test.variantA}>{test.variantA}</p>
-                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
+                                      <div className="flex justify-between text-xs font-semibold text-gray-500 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
                                         <span className="text-gray-900 font-mono">{calcConversionRate(test.conversionsA, test.impressionsA)}</span>
                                       </div>
@@ -222,11 +222,11 @@ export default function ABTestAdminPage() {
 
                                     <div className="bg-white border border-gray-200/60 p-4 rounded-2xl relative overflow-hidden">
                                       <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none" />
-                                      <p className="text-[10px] font-bold text-amber-500 uppercase tracking-wider mb-1">Variant B (Challenger)</p>
+                                      <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider mb-1">Variant B (Challenger)</p>
                                       <p className="text-sm font-bold text-gray-900 mb-2 truncate" title={test.variantB}>{test.variantB}</p>
-                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
+                                      <div className="flex justify-between text-xs font-semibold text-gray-500 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
-                                        <span className="text-amber-400 font-mono">{calcConversionRate(test.conversionsB, test.impressionsB)}</span>
+                                        <span className="text-amber-600 font-mono">{calcConversionRate(test.conversionsB, test.impressionsB)}</span>
                                       </div>
                                       <div className="flex justify-between text-[11px] text-gray-500 mt-1">
                                         <span>Conversions / Impr:</span>
@@ -254,7 +254,7 @@ export default function ABTestAdminPage() {
                                       <p className="text-sm font-bold text-gray-900 font-mono">{calcSignificance(test)}</p>
                                     </div>
                                     {test.status === 'Running' && (
-                                      <span className="flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl">
+                                      <span className="flex items-center gap-1.5 bg-amber-50 border border-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl">
                                         <Play size={10} className="animate-pulse" /> Running Live
                                       </span>
                                     )}
@@ -296,7 +296,7 @@ export default function ABTestAdminPage() {
                   value={testName}
                   onChange={(e) => setTestName(e.target.value)}
                   placeholder="e.g. hero-cta-text"
-                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 
@@ -312,7 +312,7 @@ export default function ABTestAdminPage() {
                   value={variantADesc}
                   onChange={(e) => setVariantADesc(e.target.value)}
                   placeholder="e.g. Get Wealth Health Report"
-                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 
@@ -328,7 +328,7 @@ export default function ABTestAdminPage() {
                   value={variantBDesc}
                   onChange={(e) => setVariantBDesc(e.target.value)}
                   placeholder="e.g. Check If Underinsured"
-                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 

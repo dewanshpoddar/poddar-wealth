@@ -116,11 +116,11 @@ export default function AdminLeadsPage() {
   // Colors mapping for status tags
   const getStatusStyle = (status: Lead['status']) => {
     const colors = {
-      New: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-      Contacted: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-      Meeting: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-      Converted: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-      Lost: 'bg-gray-500/10 text-gray-400 border-gray-500/20'
+      New: 'bg-blue-50 text-blue-700 border-blue-100',
+      Contacted: 'bg-amber-50 text-amber-700 border-amber-100',
+      Meeting: 'bg-purple-50 text-purple-700 border-purple-100',
+      Converted: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+      Lost: 'bg-gray-100 text-gray-600 border-gray-200'
     }
     return colors[status]
   }
@@ -153,14 +153,14 @@ export default function AdminLeadsPage() {
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Total Queries</span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-bold text-gray-900 font-sans">{totalLeads}</span>
-            <span className="text-[10px] font-bold text-emerald-400 font-sans">+100%</span>
+            <span className="text-[10px] font-bold text-emerald-600 font-sans">+100%</span>
           </div>
         </div>
 
         <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">New Enquiries</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-blue-400 font-sans">{newLeadsCount}</span>
+            <span className="text-3xl font-black text-blue-600 font-sans">{newLeadsCount}</span>
             <span className="text-[10px] font-bold text-gray-500">Active</span>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function AdminLeadsPage() {
         <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Meetings Scheduled</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-purple-400 font-sans">{meetingCount}</span>
+            <span className="text-3xl font-black text-purple-600 font-sans">{meetingCount}</span>
             <span className="text-[10px] font-bold text-gray-500">Pending</span>
           </div>
         </div>
@@ -176,8 +176,8 @@ export default function AdminLeadsPage() {
         <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Conversion Rate</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-emerald-400 font-sans">{conversionRate}%</span>
-            <span className="text-[10px] font-bold text-emerald-400">Closed Won</span>
+            <span className="text-3xl font-black text-emerald-600 font-sans">{conversionRate}%</span>
+            <span className="text-[10px] font-bold text-emerald-600">Closed Won</span>
           </div>
         </div>
       </div>
@@ -261,11 +261,11 @@ export default function AdminLeadsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-200/50">
                   {filteredLeads.map((lead) => (
-                    <tr key={lead.id} className="hover:bg-gray-800/20 transition-all duration-150">
+                    <tr key={lead.id} className="hover:bg-gray-50 transition-all duration-150">
                       
                       {/* Name & Contact */}
                       <td className="px-6 py-4.5 whitespace-nowrap">
-                        <div className="text-xs font-bold text-white">{lead.name}</div>
+                        <div className="text-xs font-bold text-gray-900">{lead.name}</div>
                         <div className="text-[10px] text-gray-500 mt-1 font-sans flex items-center gap-1 font-semibold">
                           <Phone size={10} />
                           {lead.phone}
@@ -274,7 +274,7 @@ export default function AdminLeadsPage() {
                       </td>
 
                       {/* Source */}
-                      <td className="px-6 py-4.5 whitespace-nowrap text-xs font-bold text-gray-300">
+                      <td className="px-6 py-4.5 whitespace-nowrap text-xs font-bold text-gray-800">
                         {lead.source}
                       </td>
 
@@ -286,11 +286,11 @@ export default function AdminLeadsPage() {
                             onChange={(e) => handleUpdateLead(lead.id, { status: e.target.value as Lead['status'] })}
                             className={`text-[10px] font-bold px-2.5 py-1 rounded-full border outline-none bg-transparent cursor-pointer font-sans ${getStatusStyle(lead.status)}`}
                           >
-                            <option value="New" className="bg-white text-blue-400">New</option>
-                            <option value="Contacted" className="bg-white text-amber-400">Contacted</option>
-                            <option value="Meeting" className="bg-white text-purple-400">Meeting</option>
-                            <option value="Converted" className="bg-white text-emerald-400">Converted</option>
-                            <option value="Lost" className="bg-white text-gray-400">Lost</option>
+                            <option value="New" className="bg-white text-blue-600">New</option>
+                            <option value="Contacted" className="bg-white text-amber-600">Contacted</option>
+                            <option value="Meeting" className="bg-white text-purple-600">Meeting</option>
+                            <option value="Converted" className="bg-white text-emerald-600">Converted</option>
+                            <option value="Lost" className="bg-white text-gray-600">Lost</option>
                           </select>
                           {updatingId === lead.id && (
                             <span className="absolute -right-5 top-1.5 w-3.5 h-3.5 border border-amber-500 border-t-transparent rounded-full animate-spin" />
@@ -308,7 +308,7 @@ export default function AdminLeadsPage() {
                             }
                           }}
                           placeholder="Add comments or status updates..."
-                          className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500/40 rounded-lg p-2 text-xs outline-none text-gray-400 focus:text-white transition-all resize-y min-h-[48px] font-medium"
+                          className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500 rounded-lg p-2 text-xs outline-none text-gray-700 focus:text-gray-900 transition-all resize-y min-h-[48px] font-medium"
                         />
                       </td>
 
@@ -320,7 +320,7 @@ export default function AdminLeadsPage() {
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-gray-900 transition-all font-sans"
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all font-sans"
                           title="Message on WhatsApp"
                         >
                           <MessageCircle size={14} className="fill-current" />
@@ -342,7 +342,7 @@ export default function AdminLeadsPage() {
                 {/* Header detail */}
                 <div className="flex justify-between items-start border-b border-gray-200/60 pb-3">
                   <div>
-                    <h3 className="text-sm font-extrabold text-white">{lead.name}</h3>
+                    <h3 className="text-sm font-extrabold text-gray-900">{lead.name}</h3>
                     <div className="text-[10px] text-gray-500 mt-1 font-sans flex items-center gap-1 font-semibold">
                       <Phone size={10} />
                       {lead.phone}
@@ -355,7 +355,7 @@ export default function AdminLeadsPage() {
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Source</span>
-                    <span className="font-extrabold text-gray-300">{lead.source}</span>
+                    <span className="font-extrabold text-gray-850">{lead.source}</span>
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Status</span>
@@ -364,11 +364,11 @@ export default function AdminLeadsPage() {
                       onChange={(e) => handleUpdateLead(lead.id, { status: e.target.value as Lead['status'] })}
                       className={`text-[10px] font-bold px-2 py-1 rounded-full border outline-none bg-transparent cursor-pointer font-sans ${getStatusStyle(lead.status)}`}
                     >
-                      <option value="New" className="bg-white text-blue-400">New</option>
-                      <option value="Contacted" className="bg-white text-amber-400">Contacted</option>
-                      <option value="Meeting" className="bg-white text-purple-400">Meeting</option>
-                      <option value="Converted" className="bg-white text-emerald-400">Converted</option>
-                      <option value="Lost" className="bg-white text-gray-400">Lost</option>
+                      <option value="New" className="bg-white text-blue-600">New</option>
+                      <option value="Contacted" className="bg-white text-amber-600">Contacted</option>
+                      <option value="Meeting" className="bg-white text-purple-600">Meeting</option>
+                      <option value="Converted" className="bg-white text-emerald-600">Converted</option>
+                      <option value="Lost" className="bg-white text-gray-600">Lost</option>
                     </select>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ export default function AdminLeadsPage() {
                       }
                     }}
                     placeholder="Add comments or status updates..."
-                    className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500/40 rounded-xl p-2.5 text-xs outline-none text-gray-400 focus:text-white transition-all min-h-[48px] font-medium"
+                    className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500 rounded-xl p-2.5 text-xs outline-none text-gray-700 focus:text-gray-900 transition-all min-h-[48px] font-medium"
                   />
                 </div>
 

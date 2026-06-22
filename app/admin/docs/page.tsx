@@ -46,7 +46,7 @@ const commitConvention = [
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="text-gray-400 text-xs uppercase tracking-widest mb-3">{title}</h2>
+      <h2 className="text-gray-500 text-[10px] font-bold uppercase tracking-wider mb-2">{title}</h2>
       {children}
     </section>
   );
@@ -54,11 +54,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function FileSection({ title, content }: { title: string; content: string }) {
   return (
-    <details className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-      <summary className="px-5 py-3 text-sm font-semibold text-amber-400 cursor-pointer hover:bg-gray-800/40 transition-colors select-none">
+    <details className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <summary className="px-5 py-3 text-sm font-semibold text-amber-600 cursor-pointer hover:bg-gray-50 transition-colors select-none">
         {title}
       </summary>
-      <pre className="overflow-auto text-xs bg-gray-50 text-green-300 p-4 rounded-b-xl max-h-96 whitespace-pre-wrap break-all">
+      <pre className="overflow-auto text-xs bg-gray-50 text-gray-800 font-mono p-4 rounded-b-xl max-h-96 whitespace-pre-wrap break-all border-t border-gray-100">
         {content}
       </pre>
     </details>
@@ -90,14 +90,14 @@ export default function DocsPage() {
 
       {/* Env vars */}
       <Section title="Environment Variables">
-        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-100 shadow-sm">
           {envVars.map(v => (
             <div key={v.name} className="px-5 py-3">
               <div className="flex items-center gap-3 mb-1">
-                <code className="text-amber-400 text-xs font-mono">{v.name}</code>
-                {v.required && <span className="text-xs bg-red-900 text-red-400 px-2 py-0.5 rounded-full">Required</span>}
+                <code className="text-amber-700 text-xs font-mono font-semibold">{v.name}</code>
+                {v.required && <span className="text-[10px] font-bold bg-rose-50 border border-rose-100 text-rose-700 px-2 py-0.5 rounded-full">Required</span>}
               </div>
-              <p className="text-gray-400 text-sm">{v.description}</p>
+              <p className="text-gray-600 text-sm font-medium">{v.description}</p>
             </div>
           ))}
         </div>
@@ -105,11 +105,11 @@ export default function DocsPage() {
 
       {/* Code conventions */}
       <Section title="Code Conventions">
-        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-100 shadow-sm">
           {conventions.map(c => (
             <div key={c.rule} className="flex gap-4 px-5 py-3">
-              <span className="text-gray-900 text-sm font-medium shrink-0 w-44">{c.rule}</span>
-              <span className="text-gray-400 text-sm">{c.detail}</span>
+              <span className="text-gray-900 text-sm font-bold shrink-0 w-44">{c.rule}</span>
+              <span className="text-gray-600 text-sm font-medium">{c.detail}</span>
             </div>
           ))}
         </div>
@@ -117,11 +117,11 @@ export default function DocsPage() {
 
       {/* Git convention */}
       <Section title="Git Commit Convention">
-        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-100 shadow-sm">
           {commitConvention.map(c => (
             <div key={c.prefix} className="flex gap-4 px-5 py-3 items-center">
-              <code className="text-amber-400 text-xs font-mono w-20 shrink-0">{c.prefix}</code>
-              <code className="text-gray-600 text-xs font-mono">{c.example}</code>
+              <code className="text-amber-700 text-xs font-mono font-semibold w-20 shrink-0">{c.prefix}</code>
+              <code className="text-gray-600 text-xs font-mono font-semibold">{c.example}</code>
             </div>
           ))}
         </div>
@@ -129,7 +129,7 @@ export default function DocsPage() {
 
       {/* Quick troubleshooting */}
       <Section title="Quick Troubleshooting">
-        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-100 shadow-sm">
           {[
             { problem: "Dev server won't start", fix: "lsof -ti:3000 | xargs kill -9 && npm run dev" },
             { problem: 'TypeScript errors after pull', fix: 'rm -rf .next && npm run dev' },
@@ -139,8 +139,8 @@ export default function DocsPage() {
             { problem: 'Check build before pushing', fix: 'npm run build && npm run start' },
           ].map(t => (
             <div key={t.problem} className="flex gap-4 px-5 py-3">
-              <span className="text-gray-300 text-sm shrink-0 w-52">{t.problem}</span>
-              <code className="text-amber-400 text-xs font-mono">{t.fix}</code>
+              <span className="text-gray-900 text-sm font-bold shrink-0 w-52">{t.problem}</span>
+              <code className="text-amber-700 text-xs font-mono font-semibold">{t.fix}</code>
             </div>
           ))}
         </div>
@@ -149,7 +149,7 @@ export default function DocsPage() {
       {/* Live file viewer */}
       <Section title="Live Project Files">
         {loadingDocs ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-6 text-center text-gray-500 text-sm animate-pulse">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 text-center text-gray-500 text-sm animate-pulse shadow-sm">
             Loading files from /api/admin/docs…
           </div>
         ) : docs ? (
@@ -160,7 +160,7 @@ export default function DocsPage() {
             <FileSection title="vercel.json — Cron jobs & deploy config" content={docs.vercelJson} />
           </div>
         ) : (
-          <div className="bg-red-950/30 border border-red-900/40 rounded-xl p-5 text-red-400 text-sm">
+          <div className="bg-rose-50 border border-rose-100 rounded-xl p-5 text-rose-700 text-sm">
             Failed to load files from /api/admin/docs.
           </div>
         )}

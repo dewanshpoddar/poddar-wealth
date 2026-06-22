@@ -1,13 +1,31 @@
 'use client'
+
 import { Component, type ReactNode, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
 import AskPoddarJiWidget from '@/components/AskPoddarJiWidget'
-import LifeEventsNavigator from '@/components/LifeEventsNavigator'
-import TrustSection from '@/components/TrustSection'
-import ProtectionCheckSection from '@/components/ProtectionCheckSection'
-import QuickActions from '@/components/QuickActions'
 import LazySection from '@/components/LazySection'
+
+// Below-fold components imported dynamically
+const QuickActions = dynamic(
+  () => import('@/components/QuickActions'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-16 w-full" /> }
+)
+
+const ProtectionCheckSection = dynamic(
+  () => import('@/components/ProtectionCheckSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
+)
+
+const LifeEventsNavigator = dynamic(
+  () => import('@/components/LifeEventsNavigator'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
+)
+
+const TrustSection = dynamic(
+  () => import('@/components/TrustSection'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-16 w-full" /> }
+)
 
 const ServicesSection = dynamic(
   () => import('@/components/ServicesSection'),
@@ -17,6 +35,11 @@ const ServicesSection = dynamic(
 const PopularPlans = dynamic(
   () => import('@/components/PopularPlans'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
+)
+
+const WealthBlueprintCalculator = dynamic(
+  () => import('@/src/features/wealth-blueprint/components/WealthBlueprintCalculator'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
 )
 
 const TestimonialsSection = dynamic(
@@ -41,9 +64,10 @@ const AboutFounder = dynamic(
 
 const NewsletterSignup = dynamic(
   () => import('@/components/NewsletterSignup'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 rounded-xl h-48 w-full" /> }
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
 )
 
+// Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
     super(props)
@@ -67,17 +91,41 @@ export default function HomePage() {
       {/* 2 — Ask Poddar Ji widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Calculator quick actions (MOVE HERE right after Poddar Ji) */}
-      <QuickActions />
+      {/* 3 — Calculator quick actions */}
+      <SectionBoundary>
+        <LazySection height="h-16">
+          <Suspense fallback={null}>
+            <QuickActions />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 4 — Protection Check ("What happens if income stops?") */}
-      <ProtectionCheckSection />
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <ProtectionCheckSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 5 — Life Stages Navigator */}
-      <LifeEventsNavigator />
+      <SectionBoundary>
+        <LazySection height="h-48">
+          <Suspense fallback={null}>
+            <LifeEventsNavigator />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 6 — Trust stats bar */}
-      <TrustSection />
+      <SectionBoundary>
+        <LazySection height="h-16">
+          <Suspense fallback={null}>
+            <TrustSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
 
       {/* 7 — How We Help You (goal-oriented services) */}
       <SectionBoundary>
@@ -97,7 +145,16 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 9 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
+      {/* 9 — Wealth Blueprint Calculator (Calculators / tools section) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <WealthBlueprintCalculator />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 10 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -106,7 +163,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 10 — Blog preview carousel */}
+      {/* 11 — Blog preview carousel */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -115,7 +172,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 11 — Join as Insurance Advisor */}
+      {/* 12 — Join as Insurance Advisor */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
@@ -124,20 +181,20 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 12 — Newsletter signup */}
-      <SectionBoundary>
-        <LazySection height="h-48">
-          <Suspense fallback={null}>
-            <NewsletterSignup />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 13 — About the Founder (rendered after newsletter, only once) */}
+      {/* 13 — About the Founder */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
             <AboutFounder />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 14 — Newsletter signup */}
+      <SectionBoundary>
+        <LazySection height="h-48">
+          <Suspense fallback={null}>
+            <NewsletterSignup />
           </Suspense>
         </LazySection>
       </SectionBoundary>

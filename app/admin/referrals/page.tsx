@@ -54,9 +54,9 @@ export default async function ReferralsPage() {
           { label: 'Total Uses', value: totalUses },
           { label: 'Conversions', value: totalConversions },
         ].map(m => (
-          <div key={m.label} className="bg-white border border-gray-200 rounded-xl p-4">
-            <p className="text-2xl font-bold text-amber-400">{m.value}</p>
-            <p className="text-gray-400 text-xs mt-1">{m.label}</p>
+          <div key={m.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <p className="text-2xl font-bold text-amber-600">{m.value}</p>
+            <p className="text-gray-500 text-xs mt-1">{m.label}</p>
           </div>
         ))}
       </div>
@@ -76,11 +76,11 @@ export default async function ReferralsPage() {
           </div>
           {sorted.map(r => (
             <div key={r.code} className="grid grid-cols-5 px-5 py-3 items-center">
-              <code className="text-amber-400 text-xs font-mono">{r.code}</code>
-              <span className="text-gray-900 text-sm">{r.referrerName}</span>
-              <span className="text-gray-400 text-sm">{r.referrerPhone}</span>
+              <code className="text-amber-700 text-xs font-mono font-semibold">{r.code}</code>
+              <span className="text-gray-900 text-sm font-medium">{r.referrerName}</span>
+              <span className="text-gray-500 text-sm font-mono">{r.referrerPhone}</span>
               <span className="text-center">
-                <span className={`text-xs px-2 py-0.5 rounded-full ${r.uses > 0 ? 'bg-green-900 text-green-400' : 'bg-gray-800 text-gray-400'}`}>
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${r.uses > 0 ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : 'bg-gray-100 border-gray-200 text-gray-500'}`}>
                   {r.uses}
                 </span>
               </span>
