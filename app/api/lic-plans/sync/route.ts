@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
       diff 
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Sync API failed:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

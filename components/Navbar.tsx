@@ -190,23 +190,25 @@ export default function Navbar() {
               <Search size={16} />
             </button>
 
-            {/* EN / हिंदी toggle — desktop shows only 2 languages */}
-            <div className="flex bg-gray-800/50 rounded-full p-0.5 border border-white/5">
+            {/* EN / हिंदी toggle — pill slider */}
+            <div className={`flex rounded-full p-0.5 border ${
+              scrolled ? 'bg-gray-800/60 border-white/10' : 'bg-gray-100 border-gray-200'
+            }`}>
               <button
                 onClick={() => setLang('en')}
-                className={`w-7 h-7 text-[9px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-                  lang === 'en' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
+                  lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang('hi')}
-                className={`w-7 h-7 text-[9px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-                  lang === 'hi' ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
+                  lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
-                हि
+                हिंदी
               </button>
             </div>
 
@@ -241,25 +243,25 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Mobile: E / हि only */}
+          {/* Mobile lang toggle — pill */}
           <div className={`flex rounded-full p-0.5 flex-shrink-0 border ${
             scrolled ? 'bg-gray-800/50 border-white/5' : 'bg-gray-100 border-gray-200'
           }`}>
             <button
               onClick={() => setLang('en')}
-              className={`w-6 h-6 text-xs font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+              className={`px-2 py-0.5 text-[9px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer ${
                 lang === 'en'
-                  ? 'bg-amber-500 text-white'
+                  ? 'bg-amber-500 text-white shadow-sm'
                   : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
               }`}
             >
-              E
+              EN
             </button>
             <button
               onClick={() => setLang('hi')}
-              className={`w-6 h-6 text-[11px] font-bold rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+              className={`px-2 py-0.5 text-[9px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer ${
                 lang === 'hi'
-                  ? 'bg-amber-500 text-white'
+                  ? 'bg-amber-500 text-white shadow-sm'
                   : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
               }`}
             >

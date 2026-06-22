@@ -1,7 +1,21 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { ADVISOR_PHONE } from '@/lib/constants'
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  axes: ['SOFT', 'WONK', 'opsz'],
+})
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
 
 import ClientLayoutWrapper from '@/components/ClientLayoutWrapper'
 import { Analytics } from '@vercel/analytics/react'
@@ -85,13 +99,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
       </head>
-      <body className="font-sans text-13 text-gray-900 bg-white antialiased" suppressHydrationWarning>
+      <body className={`${fraunces.variable} ${plusJakartaSans.variable} font-sans text-13 text-gray-900 bg-white antialiased`} suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
