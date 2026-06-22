@@ -59,10 +59,10 @@ export default function LangToggle({ scrolled = false }: LangToggleProps) {
   const pill  = scrolled ? 'bg-gold'     : 'bg-navy'
   const enCls = scrolled
     ? lang === 'en' ? 'text-white' : 'text-white/40 hover:text-white/70'
-    : lang === 'en' ? 'text-white' : 'text-gray-400 hover:text-navy'
+    : lang === 'en' ? 'text-white' : 'text-gray-500 hover:text-navy'
   const hiCls = scrolled
     ? lang === 'hi' ? 'text-white' : 'text-white/40 hover:text-white/70'
-    : lang === 'hi' ? 'text-white' : 'text-gray-400 hover:text-navy'
+    : lang === 'hi' ? 'text-white' : 'text-gray-500 hover:text-navy'
 
   return (
     <div

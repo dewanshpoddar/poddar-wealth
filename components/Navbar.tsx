@@ -5,7 +5,9 @@ import { usePathname } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { ChevronDown, Menu, X, Search, Trophy, ShieldCheck, Sparkles } from 'lucide-react'
 import Image from 'next/image'
-import SearchModal from '@/components/SearchModal'
+import dynamic from 'next/dynamic'
+
+const SearchModal = dynamic(() => import('@/components/SearchModal'), { ssr: false })
 
 export default function Navbar() {
   const { lang, setLang, t } = useLang()

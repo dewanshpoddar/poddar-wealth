@@ -81,7 +81,7 @@ export default function LifeEventsNavigator() {
                 </div>
 
                 {/* Arrow indicator */}
-                <span className="text-gray-300 group-hover:text-gold group-hover:translate-x-0.5 transition-all text-14 font-semibold shrink-0 max-sm:hidden">
+                <span className="text-gray-400 group-hover:text-gold group-hover:translate-x-0.5 transition-all text-14 font-semibold shrink-0 max-sm:hidden">
                   →
                 </span>
               </Link>
