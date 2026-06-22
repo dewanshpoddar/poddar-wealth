@@ -43,7 +43,7 @@ export default async function ReferralsPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white mb-1">Referral Program</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Referral Program</h1>
         <p className="text-gray-500 text-sm">All referral codes and usage</p>
       </div>
 
@@ -54,7 +54,7 @@ export default async function ReferralsPage() {
           { label: 'Total Uses', value: totalUses },
           { label: 'Conversions', value: totalConversions },
         ].map(m => (
-          <div key={m.label} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+          <div key={m.label} className="bg-white border border-gray-200 rounded-xl p-4">
             <p className="text-2xl font-bold text-amber-400">{m.value}</p>
             <p className="text-gray-400 text-xs mt-1">{m.label}</p>
           </div>
@@ -62,11 +62,11 @@ export default async function ReferralsPage() {
       </div>
 
       {sorted.length === 0 ? (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center text-gray-500 text-sm">
+        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-500 text-sm">
           No referral codes generated yet. Codes appear here once users generate them via the site.
         </div>
       ) : (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
           <div className="grid grid-cols-5 px-5 py-2 text-[10px] uppercase tracking-widest text-gray-500 font-bold">
             <span>Code</span>
             <span>Referrer</span>
@@ -77,7 +77,7 @@ export default async function ReferralsPage() {
           {sorted.map(r => (
             <div key={r.code} className="grid grid-cols-5 px-5 py-3 items-center">
               <code className="text-amber-400 text-xs font-mono">{r.code}</code>
-              <span className="text-white text-sm">{r.referrerName}</span>
+              <span className="text-gray-900 text-sm">{r.referrerName}</span>
               <span className="text-gray-400 text-sm">{r.referrerPhone}</span>
               <span className="text-center">
                 <span className={`text-xs px-2 py-0.5 rounded-full ${r.uses > 0 ? 'bg-green-900 text-green-400' : 'bg-gray-800 text-gray-400'}`}>

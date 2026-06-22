@@ -54,11 +54,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function FileSection({ title, content }: { title: string; content: string }) {
   return (
-    <details className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+    <details className="bg-white border border-gray-200 rounded-xl overflow-hidden">
       <summary className="px-5 py-3 text-sm font-semibold text-amber-400 cursor-pointer hover:bg-gray-800/40 transition-colors select-none">
         {title}
       </summary>
-      <pre className="overflow-auto text-xs bg-gray-950 text-green-300 p-4 rounded-b-xl max-h-96 whitespace-pre-wrap break-all">
+      <pre className="overflow-auto text-xs bg-gray-50 text-green-300 p-4 rounded-b-xl max-h-96 whitespace-pre-wrap break-all">
         {content}
       </pre>
     </details>
@@ -84,13 +84,13 @@ export default function DocsPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white mb-1">Developer Docs</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Developer Docs</h1>
         <p className="text-gray-500 text-sm">Environment vars, conventions, agent rules, git format</p>
       </div>
 
       {/* Env vars */}
       <Section title="Environment Variables">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
           {envVars.map(v => (
             <div key={v.name} className="px-5 py-3">
               <div className="flex items-center gap-3 mb-1">
@@ -105,10 +105,10 @@ export default function DocsPage() {
 
       {/* Code conventions */}
       <Section title="Code Conventions">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
           {conventions.map(c => (
             <div key={c.rule} className="flex gap-4 px-5 py-3">
-              <span className="text-white text-sm font-medium shrink-0 w-44">{c.rule}</span>
+              <span className="text-gray-900 text-sm font-medium shrink-0 w-44">{c.rule}</span>
               <span className="text-gray-400 text-sm">{c.detail}</span>
             </div>
           ))}
@@ -117,7 +117,7 @@ export default function DocsPage() {
 
       {/* Git convention */}
       <Section title="Git Commit Convention">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
           {commitConvention.map(c => (
             <div key={c.prefix} className="flex gap-4 px-5 py-3 items-center">
               <code className="text-amber-400 text-xs font-mono w-20 shrink-0">{c.prefix}</code>
@@ -129,7 +129,7 @@ export default function DocsPage() {
 
       {/* Quick troubleshooting */}
       <Section title="Quick Troubleshooting">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+        <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
           {[
             { problem: "Dev server won't start", fix: "lsof -ti:3000 | xargs kill -9 && npm run dev" },
             { problem: 'TypeScript errors after pull', fix: 'rm -rf .next && npm run dev' },
@@ -149,7 +149,7 @@ export default function DocsPage() {
       {/* Live file viewer */}
       <Section title="Live Project Files">
         {loadingDocs ? (
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 text-center text-gray-500 text-sm animate-pulse">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 text-center text-gray-500 text-sm animate-pulse">
             Loading files from /api/admin/docs…
           </div>
         ) : docs ? (

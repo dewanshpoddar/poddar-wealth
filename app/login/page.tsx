@@ -1,8 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import Toast from '@/components/Toast'
+
+function LogoutToast({ onShow }: { onShow: (msg: string) => void }) {
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    if (searchParams.get('logged_out') === 'true') {
+      onShow("You've been logged out successfully")
+      window.history.replaceState({}, '', '/login')
+    }
+  }, [searchParams, onShow])
+  return null
+}
 import {
   Shield,
   User,
@@ -19,6 +31,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [toast, setToast] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -54,6 +67,9 @@ export default function LoginPage() {
   }
 
   return (
+    <>
+    <Suspense fallback={null}><LogoutToast onShow={setToast} /></Suspense>
+    {toast && <Toast message={toast} type="success" onClose={() => setToast(null)} />}
     <div className="min-h-screen flex font-sans">
 
       {/* LEFT — Brand panel (desktop only) */}
@@ -275,5 +291,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

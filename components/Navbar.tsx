@@ -212,13 +212,13 @@ export default function Navbar() {
 
             <Link
               href="/login"
-              className={`text-sm transition-colors ${
+              className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-all ${
                 scrolled
-                  ? 'text-gray-400 hover:text-white'
-                  : 'text-gray-700 hover:text-gray-900'
+                  ? 'border-gray-600 text-gray-300 hover:text-white hover:border-gray-400'
+                  : 'border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400'
               }`}
             >
-              {label('Login', 'लॉगिन')}
+              {label('Login / Sign Up', 'लॉगिन')}
             </Link>
 
             <Link

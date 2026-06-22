@@ -131,7 +131,7 @@ export default function AdminLeadsPage() {
       {/* Title Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1">CRM Leads & Pipeline</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">CRM Leads & Pipeline</h1>
           <p className="text-gray-500 text-sm">Track customer query capture, policy requests, and referrals in real time.</p>
         </div>
         
@@ -140,7 +140,7 @@ export default function AdminLeadsPage() {
             setLoading(true)
             setTimeout(() => setLoading(false), 600)
           }}
-          className="self-start inline-flex items-center gap-1.5 text-xs font-bold text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 px-4 py-2.5 rounded-xl transition-all cursor-pointer bg-gray-900"
+          className="self-start inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-4 py-2.5 rounded-xl transition-all cursor-pointer bg-white"
         >
           <RefreshCw size={14} className={loading ? 'animate-spin text-amber-500' : ''} />
           Refresh
@@ -149,15 +149,15 @@ export default function AdminLeadsPage() {
 
       {/* KPI METRICS CARD GRID */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4 flex flex-col justify-between">
+        <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Total Queries</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-sans">{totalLeads}</span>
+            <span className="text-3xl font-black text-gray-900 font-sans">{totalLeads}</span>
             <span className="text-[10px] font-bold text-emerald-400 font-sans">+100%</span>
           </div>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4 flex flex-col justify-between">
+        <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">New Enquiries</span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-blue-400 font-sans">{newLeadsCount}</span>
@@ -165,7 +165,7 @@ export default function AdminLeadsPage() {
           </div>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4 flex flex-col justify-between">
+        <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Meetings Scheduled</span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-purple-400 font-sans">{meetingCount}</span>
@@ -173,7 +173,7 @@ export default function AdminLeadsPage() {
           </div>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4 flex flex-col justify-between">
+        <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Conversion Rate</span>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-emerald-400 font-sans">{conversionRate}%</span>
@@ -183,17 +183,17 @@ export default function AdminLeadsPage() {
       </div>
 
       {/* FILTER BAR PANEL */}
-      <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-4">
+      <div className="bg-white border border-gray-200 rounded-3xl p-5 space-y-4">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Search bar */}
-          <div className="flex-1 bg-gray-950 border border-gray-800 hover:border-gray-700 rounded-xl px-3.5 py-2 flex items-center gap-2.5 focus-within:border-amber-500/30 transition-all">
+          <div className="flex-1 bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl px-3.5 py-2 flex items-center gap-2.5 focus-within:border-amber-500/30 transition-all">
             <Search size={16} className="text-gray-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search leads by name, phone, or notes..."
-              className="w-full bg-transparent text-xs outline-none placeholder-gray-600 text-white font-medium"
+              className="w-full bg-transparent text-xs outline-none placeholder-gray-600 text-gray-900 font-medium"
             />
           </div>
 
@@ -202,7 +202,7 @@ export default function AdminLeadsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-gray-950 border border-gray-800 hover:border-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Statuses</option>
               <option value="New">New</option>
@@ -216,7 +216,7 @@ export default function AdminLeadsPage() {
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
-              className="bg-gray-950 border border-gray-800 hover:border-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Sources</option>
               {uniqueSources.map(s => (
@@ -228,7 +228,7 @@ export default function AdminLeadsPage() {
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="bg-gray-950 border border-gray-800 hover:border-gray-700 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Time</option>
               <option value="Today">Today Only</option>
@@ -247,11 +247,11 @@ export default function AdminLeadsPage() {
       ) : filteredLeads.length > 0 ? (
         <>
           {/* Desktop Table View */}
-          <div className="hidden md:block bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
+          <div className="hidden md:block bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-gray-800/80 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-950/40">
+                  <tr className="border-b border-gray-200/80 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100/40">
                     <th className="px-6 py-4">Name / Contact</th>
                     <th className="px-6 py-4">Source</th>
                     <th className="px-6 py-4">Status</th>
@@ -259,7 +259,7 @@ export default function AdminLeadsPage() {
                     <th className="px-6 py-4 text-center">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800/50">
+                <tbody className="divide-y divide-gray-200/50">
                   {filteredLeads.map((lead) => (
                     <tr key={lead.id} className="hover:bg-gray-800/20 transition-all duration-150">
                       
@@ -286,11 +286,11 @@ export default function AdminLeadsPage() {
                             onChange={(e) => handleUpdateLead(lead.id, { status: e.target.value as Lead['status'] })}
                             className={`text-[10px] font-bold px-2.5 py-1 rounded-full border outline-none bg-transparent cursor-pointer font-sans ${getStatusStyle(lead.status)}`}
                           >
-                            <option value="New" className="bg-gray-900 text-blue-400">New</option>
-                            <option value="Contacted" className="bg-gray-900 text-amber-400">Contacted</option>
-                            <option value="Meeting" className="bg-gray-900 text-purple-400">Meeting</option>
-                            <option value="Converted" className="bg-gray-900 text-emerald-400">Converted</option>
-                            <option value="Lost" className="bg-gray-900 text-gray-400">Lost</option>
+                            <option value="New" className="bg-white text-blue-400">New</option>
+                            <option value="Contacted" className="bg-white text-amber-400">Contacted</option>
+                            <option value="Meeting" className="bg-white text-purple-400">Meeting</option>
+                            <option value="Converted" className="bg-white text-emerald-400">Converted</option>
+                            <option value="Lost" className="bg-white text-gray-400">Lost</option>
                           </select>
                           {updatingId === lead.id && (
                             <span className="absolute -right-5 top-1.5 w-3.5 h-3.5 border border-amber-500 border-t-transparent rounded-full animate-spin" />
@@ -308,7 +308,7 @@ export default function AdminLeadsPage() {
                             }
                           }}
                           placeholder="Add comments or status updates..."
-                          className="w-full bg-gray-950 border border-gray-800 focus:border-amber-500/40 rounded-lg p-2 text-xs outline-none text-gray-400 focus:text-white transition-all resize-y min-h-[48px] font-medium"
+                          className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500/40 rounded-lg p-2 text-xs outline-none text-gray-400 focus:text-white transition-all resize-y min-h-[48px] font-medium"
                         />
                       </td>
 
@@ -320,7 +320,7 @@ export default function AdminLeadsPage() {
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all font-sans"
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-gray-900 transition-all font-sans"
                           title="Message on WhatsApp"
                         >
                           <MessageCircle size={14} className="fill-current" />
@@ -337,10 +337,10 @@ export default function AdminLeadsPage() {
           {/* Mobile Card Layout View (collapses elegantly) */}
           <div className="md:hidden space-y-4">
             {filteredLeads.map((lead) => (
-              <div key={lead.id} className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-4 relative">
+              <div key={lead.id} className="bg-white border border-gray-200 rounded-3xl p-5 space-y-4 relative">
                 
                 {/* Header detail */}
-                <div className="flex justify-between items-start border-b border-gray-800/60 pb-3">
+                <div className="flex justify-between items-start border-b border-gray-200/60 pb-3">
                   <div>
                     <h3 className="text-sm font-extrabold text-white">{lead.name}</h3>
                     <div className="text-[10px] text-gray-500 mt-1 font-sans flex items-center gap-1 font-semibold">
@@ -364,11 +364,11 @@ export default function AdminLeadsPage() {
                       onChange={(e) => handleUpdateLead(lead.id, { status: e.target.value as Lead['status'] })}
                       className={`text-[10px] font-bold px-2 py-1 rounded-full border outline-none bg-transparent cursor-pointer font-sans ${getStatusStyle(lead.status)}`}
                     >
-                      <option value="New" className="bg-gray-900 text-blue-400">New</option>
-                      <option value="Contacted" className="bg-gray-900 text-amber-400">Contacted</option>
-                      <option value="Meeting" className="bg-gray-900 text-purple-400">Meeting</option>
-                      <option value="Converted" className="bg-gray-900 text-emerald-400">Converted</option>
-                      <option value="Lost" className="bg-gray-900 text-gray-400">Lost</option>
+                      <option value="New" className="bg-white text-blue-400">New</option>
+                      <option value="Contacted" className="bg-white text-amber-400">Contacted</option>
+                      <option value="Meeting" className="bg-white text-purple-400">Meeting</option>
+                      <option value="Converted" className="bg-white text-emerald-400">Converted</option>
+                      <option value="Lost" className="bg-white text-gray-400">Lost</option>
                     </select>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ export default function AdminLeadsPage() {
                       }
                     }}
                     placeholder="Add comments or status updates..."
-                    className="w-full bg-gray-950 border border-gray-800 focus:border-amber-500/40 rounded-xl p-2.5 text-xs outline-none text-gray-400 focus:text-white transition-all min-h-[48px] font-medium"
+                    className="w-full bg-gray-50 border border-gray-200 focus:border-amber-500/40 rounded-xl p-2.5 text-xs outline-none text-gray-400 focus:text-white transition-all min-h-[48px] font-medium"
                   />
                 </div>
 
@@ -406,7 +406,7 @@ export default function AdminLeadsPage() {
           </div>
         </>
       ) : (
-        <div className="bg-gray-900 border border-gray-800 rounded-3xl p-12 text-center">
+        <div className="bg-white border border-gray-200 rounded-3xl p-12 text-center">
           <p className="text-gray-500 text-sm font-semibold uppercase tracking-wider">No leads match your active filters</p>
         </div>
       )}

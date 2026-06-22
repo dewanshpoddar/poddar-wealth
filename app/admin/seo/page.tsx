@@ -64,38 +64,38 @@ export default function SeoStatsPage() {
         </h2>
         
         {loading ? (
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 text-center text-gray-500">
+          <div className="bg-white border border-gray-200 rounded-3xl p-8 text-center text-gray-500">
             Scanning app/sitemap.ts dynamic records...
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             <div className="bg-gradient-to-br from-amber-500/10 to-gray-900 rounded-2xl p-4 border border-amber-500/20">
               <p className="text-3xl font-black text-amber-400 font-sans">{SITEMAP_COUNTS.total}</p>
-              <p className="text-white text-[10px] uppercase font-bold tracking-wider mt-1">Total Indexed URLs</p>
+              <p className="text-gray-900 text-[10px] uppercase font-bold tracking-wider mt-1">Total Indexed URLs</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Inside sitemap.ts</p>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.blog}</p>
+            <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
+              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.blog}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Blog Article URLs</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Bilingual posts</p>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.area}</p>
+            <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
+              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.area}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Local Area Pages</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Purvanchal geography</p>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.service}</p>
+            <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
+              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.service}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Core Services</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Insurance products</p>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.calc}</p>
+            <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
+              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.calc}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Calculators</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Lead capture panels</p>
             </div>
-            <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800/80">
-              <p className="text-3xl font-black text-white font-sans">{SITEMAP_COUNTS.static}</p>
+            <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
+              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.static}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Static Routing</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Info & utility pages</p>
             </div>
@@ -114,7 +114,7 @@ export default function SeoStatsPage() {
             </h3>
             <div className="grid grid-cols-2 gap-3">
               {lighthouseMetrics.map((item) => (
-                <div key={item.name} className="bg-gray-900 border border-gray-800/80 rounded-2xl p-4 flex items-center justify-between">
+                <div key={item.name} className="bg-white border border-gray-200/80 rounded-2xl p-4 flex items-center justify-between">
                   <div>
                     <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">{item.name}</p>
                     <p className="text-white text-xs font-semibold mt-0.5">Mobile Audit Range</p>
@@ -133,7 +133,7 @@ export default function SeoStatsPage() {
               <Settings size={14} className="text-amber-500" />
               Crawling & Robot Filters (robots.ts)
             </h3>
-            <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-4">
+            <div className="bg-white border border-gray-200 rounded-3xl p-5 space-y-4">
               <div className="flex items-start gap-3">
                 <CheckCircle size={16} className="text-emerald-400 shrink-0 mt-0.5" />
                 <div>
@@ -171,7 +171,7 @@ export default function SeoStatsPage() {
             <ShieldCheck size={14} className="text-amber-500" />
             Structured Data & Schema Coverage
           </h3>
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl divide-y divide-gray-800/60 shadow-lg">
+          <div className="bg-white border border-gray-200 rounded-3xl divide-y divide-gray-200/60 shadow-lg">
             {schemaCoverages.map((item) => (
               <div key={item.type} className="flex items-start justify-between px-5 py-4 gap-4 hover:bg-gray-800/10 transition-colors">
                 <div>
@@ -181,7 +181,7 @@ export default function SeoStatsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2.5 shrink-0">
-                  <span className="text-amber-400 font-extrabold text-[11px] font-mono bg-gray-950 border border-gray-800/80 px-2 py-0.5 rounded-md">
+                  <span className="text-amber-400 font-extrabold text-[11px] font-mono bg-gray-50 border border-gray-200/80 px-2 py-0.5 rounded-md">
                     {item.count} page{item.count === 1 ? '' : 's'}
                   </span>
                   <span className="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest">
@@ -192,7 +192,7 @@ export default function SeoStatsPage() {
             ))}
           </div>
 
-          <div className="bg-gray-950/40 border border-gray-800/60 rounded-3xl p-4 flex gap-3 text-xs leading-relaxed text-gray-500 font-medium">
+          <div className="bg-gray-100/40 border border-gray-200/60 rounded-3xl p-4 flex gap-3 text-xs leading-relaxed text-gray-500 font-medium">
             <Info size={16} className="text-amber-500 shrink-0 mt-0.5" />
             <div>
               <p>

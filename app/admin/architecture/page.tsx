@@ -174,13 +174,13 @@ export default function ArchitecturePage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white mb-1">Site Architecture</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">Site Architecture</h1>
         <p className="text-gray-500 text-sm">Complete page inventory + user journey flows</p>
       </div>
 
       {/* Live stats banner */}
       {live && (
-        <div className="bg-gray-900 border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
+        <div className="bg-white border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
           <span className="text-gray-400">
             <span className="text-amber-400 font-bold text-base">{live.content.blogPosts}</span> blog posts
           </span>
@@ -200,7 +200,7 @@ export default function ArchitecturePage() {
       {siteSections.map(section => (
         <section key={section.category}>
           <h2 className="text-gray-400 text-xs uppercase tracking-widest mb-3">{section.category}</h2>
-          <div className="bg-gray-900 border border-gray-800 rounded-xl divide-y divide-gray-800">
+          <div className="bg-white border border-gray-200 rounded-xl divide-y divide-gray-200">
             {section.pages.map(page => (
               <div key={page.route} className="flex items-center justify-between px-5 py-3 gap-4">
                 <code className="text-amber-400 text-xs font-mono shrink-0">{page.route}</code>
@@ -219,8 +219,8 @@ export default function ArchitecturePage() {
         <h2 className="text-gray-400 text-xs uppercase tracking-widest mb-3">User Journeys</h2>
         <div className="space-y-4">
           {userJourneys.map(journey => (
-            <div key={journey.name} className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-              <p className="text-white font-medium text-sm mb-3">{journey.name}</p>
+            <div key={journey.name} className="bg-white border border-gray-200 rounded-xl p-5">
+              <p className="text-gray-900 font-medium text-sm mb-3">{journey.name}</p>
               <div className="flex flex-wrap items-center gap-2">
                 {journey.steps.map((step, i) => (
                   <div key={i} className="flex items-center gap-2">

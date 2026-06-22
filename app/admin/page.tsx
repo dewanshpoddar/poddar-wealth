@@ -53,7 +53,7 @@ function Skeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
       {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className="h-24 bg-[#13131A] border border-[#27272A] rounded-2xl animate-pulse" />
+        <div key={i} className="h-24 bg-gray-100 rounded-2xl animate-pulse" />
       ))}
     </div>
   )
@@ -71,18 +71,12 @@ function StatCard({
   sub?: string
 }) {
   return (
-    <div className={`bg-[#13131A] border border-[#27272A] rounded-2xl p-5 flex flex-col justify-between ${className}`}>
+    <div className={`bg-white border border-gray-200 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ${className}`}>
       <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-medium">
-          {label}
-        </p>
-        <p className="text-3xl font-medium text-white font-mono tracking-tight">
-          {value}
-        </p>
+        <p className="text-xs text-gray-400 uppercase tracking-wider mb-2 font-medium">{label}</p>
+        <p className="text-3xl font-medium text-gray-900 font-mono tracking-tight">{value}</p>
       </div>
-      {sub && (
-        <p className="text-xs text-gray-600 mt-2 font-medium">{sub}</p>
-      )}
+      {sub && <p className="text-xs text-gray-400 mt-2 font-medium">{sub}</p>}
     </div>
   )
 }
@@ -124,36 +118,40 @@ export default function AdminDashboard() {
     return () => clearInterval(t)
   }, [fetchMetrics])
 
+  const hour = new Date().getHours()
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
   return (
     <div className="max-w-6xl mx-auto space-y-8 font-sans">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+      {/* Header — personalized greeting */}
+      <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-4">
         <div>
-          <h1 className="text-2xl font-medium text-white mb-1">Poddar Wealth — System Metrics</h1>
+          <h1 className="text-2xl font-semibold text-gray-900 mb-1">{greeting}, Admin</h1>
           <p className="text-gray-500 text-sm">
-            Current Session Role: <span className="text-amber-500 font-medium uppercase font-mono">[{role}]</span> · Auto-refreshing every 60s
+            Here&apos;s how Poddar Wealth is performing ·{' '}
+            <span className="text-amber-600 font-semibold uppercase font-mono text-xs">[{role}]</span>
           </p>
         </div>
         <div className="flex items-center gap-3">
           {lastRefresh && (
-            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider font-mono">
-              Refreshed: {lastRefresh}
+            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider font-mono">
+              {lastRefresh}
             </span>
           )}
           <button
             onClick={fetchMetrics}
             disabled={loading}
-            className="inline-flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-white border border-[#27272A] hover:border-amber-500/30 px-4 py-2.5 rounded-xl transition-all cursor-pointer bg-[#13131A] disabled:opacity-50"
+            className="inline-flex items-center gap-2 text-xs font-medium text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-4 py-2.5 rounded-xl transition-all cursor-pointer bg-white shadow-sm disabled:opacity-50"
           >
             <RefreshCw size={14} className={loading ? 'animate-spin text-amber-500' : ''} />
-            Fetch Updates
+            Refresh
           </button>
         </div>
       </div>
 
       {loading && <Skeleton />}
       {!loading && !metrics && (
-        <div className="p-6 text-red-400 bg-red-950/20 border border-red-900/30 rounded-2xl font-medium text-sm">
+        <div className="p-6 text-red-600 bg-red-50 border border-red-200 rounded-2xl font-medium text-sm">
           Failed to load metrics. Check /api/admin/metrics.
         </div>
       )}
@@ -194,11 +192,11 @@ export default function AdminDashboard() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <StatCard label="Referral Codes" value={crm.referrals.total} sub={`${crm.referrals.active} active`} />
-                <Link href="/admin/leads" className="bg-[#13131A] border border-[#27272A] rounded-2xl p-5 flex items-center justify-between hover:border-amber-500/50 transition-colors group">
-                  <span className="text-sm font-medium text-amber-500 group-hover:text-amber-400">View Leads →</span>
+                <Link href="/admin/leads" className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between hover:border-amber-400 hover:shadow-sm transition-all group shadow-sm">
+                  <span className="text-sm font-semibold text-amber-600 group-hover:text-amber-700">View Leads →</span>
                 </Link>
-                <Link href="/admin/referrals" className="bg-[#13131A] border border-[#27272A] rounded-2xl p-5 flex items-center justify-between hover:border-amber-500/50 transition-colors group">
-                  <span className="text-sm font-medium text-amber-500 group-hover:text-amber-400">View Referrals →</span>
+                <Link href="/admin/referrals" className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center justify-between hover:border-amber-400 hover:shadow-sm transition-all group shadow-sm">
+                  <span className="text-sm font-semibold text-amber-600 group-hover:text-amber-700">View Referrals →</span>
                 </Link>
               </div>
             </section>
@@ -208,21 +206,21 @@ export default function AdminDashboard() {
               <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <CheckCircle size={14} className="text-amber-500" />
                 Environment Health —{' '}
-                <span className={infrastructure.envConfigured === infrastructure.envTotal ? 'text-emerald-400' : 'text-amber-400 font-mono'}>
+                <span className={infrastructure.envConfigured === infrastructure.envTotal ? 'text-emerald-600' : 'text-amber-600 font-mono'}>
                   {infrastructure.envConfigured}/{infrastructure.envTotal} configured
                 </span>
               </h2>
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="bg-white border border-gray-200 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 shadow-sm">
                 {Object.entries(infrastructure.envVars)
                   .filter(([key]) => key !== 'SENTRY_DSN' && key !== 'ADVISOR_PHONE')
                   .map(([key, val]) => {
                     const ok = val === true || (typeof val === 'string' && val !== 'not set')
                     let dotColor = ok ? 'bg-emerald-500' : 'bg-red-500'
-                    let textColor = ok ? 'text-gray-300 font-mono' : 'text-red-400 font-mono font-medium'
+                    let textColor = ok ? 'text-gray-600 font-mono' : 'text-red-500 font-mono font-medium'
 
                     if (key === 'WHATSAPP_ACCESS_TOKEN' && !ok) {
-                      dotColor = 'bg-amber-500'
-                      textColor = 'text-amber-500 font-mono font-medium'
+                      dotColor = 'bg-amber-400'
+                      textColor = 'text-amber-600 font-mono font-medium'
                     }
 
                     return (
@@ -230,7 +228,7 @@ export default function AdminDashboard() {
                         <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dotColor}`} />
                         <span className={`${textColor} truncate`}>{key}</span>
                         {typeof val === 'string' && val !== 'not set' && (
-                          <span className="text-gray-500 truncate font-mono">({val})</span>
+                          <span className="text-gray-400 truncate font-mono">({val})</span>
                         )}
                       </div>
                     )
@@ -245,17 +243,17 @@ export default function AdminDashboard() {
                 <StatCard label="NAV Funds Tracked" value={features.navTracker.funds} sub={`${features.navTracker.alerts} alerts active`} />
                 <StatCard label="A/B Test Events" value={features.abTests} />
                 <StatCard label="Cron Jobs" value={features.cronJobs} sub="scheduled" />
-                <Link href="/admin/ab" className="bg-[#13131A] border border-[#27272A] rounded-2xl p-5 hover:border-amber-500/50 transition-colors flex flex-col justify-between group">
-                  <div className="text-3xl font-medium text-white font-mono">{features.cronJobs}</div>
-                  <div className="text-xs font-medium text-amber-500 group-hover:text-amber-400 mt-2">A/B Tests →</div>
+                <Link href="/admin/ab" className="bg-white border border-gray-200 rounded-2xl p-5 hover:border-amber-400 hover:shadow-sm transition-all flex flex-col justify-between group shadow-sm">
+                  <div className="text-3xl font-medium text-gray-900 font-mono">{features.cronJobs}</div>
+                  <div className="text-xs font-semibold text-amber-600 group-hover:text-amber-700 mt-2">A/B Tests →</div>
                 </Link>
               </div>
               {features.cronList.length > 0 && (
-                <div className="mt-4 bg-[#13131A] border border-[#27272A] rounded-2xl divide-y divide-[#27272A] overflow-hidden">
+                <div className="mt-4 bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                   {features.cronList.map(c => (
                     <div key={c.path} className="flex justify-between px-5 py-3.5 text-xs font-mono">
-                      <span className="text-amber-500">{c.path}</span>
-                      <span className="text-gray-500">{c.schedule}</span>
+                      <span className="text-amber-600">{c.path}</span>
+                      <span className="text-gray-400">{c.schedule}</span>
                     </div>
                   ))}
                 </div>
@@ -268,32 +266,32 @@ export default function AdminDashboard() {
                 <Activity size={14} className="text-amber-500" />
                 System Activity Log
               </h2>
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl overflow-hidden divide-y divide-[#27272A]">
+              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden divide-y divide-gray-100 shadow-sm">
                 {MOCK_ACTIVITY.map((log, index) => {
                   const isSuccess = log.status >= 200 && log.status < 300
                   const statusColor = isSuccess
-                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                    : 'bg-red-500/10 border-red-500/20 text-red-400'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                    : 'bg-red-50 border-red-200 text-red-600'
                   return (
                     <div
                       key={index}
                       className={`flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3 text-xs ${
-                        index % 2 === 0 ? 'bg-[#0A0A0F]' : 'bg-[#13131A]'
+                        index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                       }`}
                     >
                       <div className="flex items-center gap-3 flex-wrap">
-                        <span className="font-mono text-zinc-500">
+                        <span className="font-mono text-gray-400">
                           {new Date(log.timestamp).toLocaleTimeString()}
                         </span>
-                        <span className="bg-[#1A1A24] border border-[#27272A] text-zinc-400 text-[10px] font-medium px-2 py-0.5 rounded font-mono">
+                        <span className="bg-gray-100 border border-gray-200 text-gray-500 text-[10px] font-medium px-2 py-0.5 rounded font-mono">
                           {log.method}
                         </span>
-                        <span className="font-mono text-white bg-[#0A0A0F] border border-[#1E1E26] px-2 py-1 rounded">
+                        <span className="font-mono text-gray-700 bg-gray-100 border border-gray-200 px-2 py-1 rounded">
                           {log.route}
                         </span>
                       </div>
                       <div className="flex items-center gap-3 justify-between sm:justify-end">
-                        <span className="text-zinc-500 font-mono text-[11px]">{log.ip}</span>
+                        <span className="text-gray-400 font-mono text-[11px]">{log.ip}</span>
                         <span className={`px-2.5 py-0.5 rounded-full border text-[10px] font-medium font-mono ${statusColor}`}>
                           {log.status}
                         </span>
@@ -307,7 +305,7 @@ export default function AdminDashboard() {
             {/* Content Details */}
             <section className="space-y-3">
               <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">Content</h2>
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl divide-y divide-[#27272A] overflow-hidden shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['Blog categories', content.blogCategoryList.join(', ') || 'none'],
                   ['Latest post', content.blogLatest ? `${content.blogLatest.title} · ${content.blogLatest.date}` : 'none'],
@@ -319,7 +317,7 @@ export default function AdminDashboard() {
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between px-5 py-3.5 text-sm">
                     <span className="text-gray-500">{label}</span>
-                    <span className="font-medium text-gray-300 truncate max-w-xs text-right">{value}</span>
+                    <span className="font-medium text-gray-700 truncate max-w-xs text-right">{value}</span>
                   </div>
                 ))}
               </div>
@@ -328,19 +326,19 @@ export default function AdminDashboard() {
             {/* i18n */}
             <section className="space-y-3">
               <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">i18n Status</h2>
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl divide-y divide-[#27272A] overflow-hidden shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['English keys', String(i18n.enKeys)],
                   ['Hindi keys', String(i18n.hiKeys)],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between px-5 py-3.5 text-sm">
                     <span className="text-gray-500">{label}</span>
-                    <span className="font-medium text-white">{value}</span>
+                    <span className="font-medium text-gray-900">{value}</span>
                   </div>
                 ))}
                 <div className="flex justify-between px-5 py-3.5 text-sm">
                   <span className="text-gray-500">Parity</span>
-                  <span className={`font-medium ${i18n.parity ? 'text-emerald-400' : 'text-amber-400'}`}>
+                  <span className={`font-medium ${i18n.parity ? 'text-emerald-600' : 'text-amber-600'}`}>
                     {i18n.parity ? '✓ Perfect' : `${i18n.gap} keys missing`}
                   </span>
                 </div>
@@ -350,7 +348,7 @@ export default function AdminDashboard() {
             {/* Infrastructure */}
             <section className="space-y-3">
               <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest">Infrastructure</h2>
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl divide-y divide-[#27272A] overflow-hidden shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-100 overflow-hidden shadow-sm">
                 {[
                   ['Next.js', infrastructure.nextVersion],
                   ['React', infrastructure.reactVersion],
@@ -359,13 +357,13 @@ export default function AdminDashboard() {
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between px-5 py-3.5 text-sm">
                     <span className="text-gray-500">{label}</span>
-                    <span className="font-medium text-white font-mono text-xs">{value}</span>
+                    <span className="font-medium text-gray-700 font-mono text-xs">{value}</span>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Monitoring links (role-gated) */}
+            {/* Monitoring links */}
             {role !== 'viewer' ? (
               <section className="space-y-3">
                 <h2 className="text-gray-400 text-xs font-medium uppercase tracking-widest flex items-center gap-1.5">
@@ -379,12 +377,12 @@ export default function AdminDashboard() {
                       href={l.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#13131A] border border-[#27272A] rounded-2xl p-5 hover:border-amber-500/40 transition-all group"
+                      className="bg-white border border-gray-200 rounded-2xl p-5 hover:border-amber-400 hover:shadow-md hover:-translate-y-0.5 transition-all group shadow-sm"
                     >
-                      <p className="text-white text-xs font-bold uppercase tracking-wider group-hover:text-amber-500 transition-colors">
+                      <p className="text-gray-900 text-xs font-bold uppercase tracking-wider group-hover:text-amber-600 transition-colors">
                         {l.label}
                       </p>
-                      <p className="text-gray-500 text-[10px] mt-1.5 truncate font-mono">
+                      <p className="text-gray-400 text-[10px] mt-1.5 truncate font-mono">
                         {l.url.replace('https://', '')}
                       </p>
                     </a>
@@ -392,18 +390,20 @@ export default function AdminDashboard() {
                 </div>
               </section>
             ) : (
-              <div className="bg-[#13131A] border border-[#27272A] rounded-2xl p-6 flex flex-col justify-center items-center text-center">
-                <AlertCircle size={24} className="text-gray-500 mb-3" />
-                <h3 className="text-white font-medium text-sm mb-1">External Console Access Restricted</h3>
-                <p className="text-gray-500 text-xs leading-relaxed max-w-xs font-medium">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col justify-center items-center text-center shadow-sm">
+                <AlertCircle size={24} className="text-gray-300 mb-3" />
+                <h3 className="text-gray-900 font-semibold text-sm mb-1">External Console Access Restricted</h3>
+                <p className="text-gray-400 text-xs leading-relaxed max-w-xs font-medium">
                   Vercel, GA4, Resend, and Search Console links are hidden for the viewer role.
                 </p>
               </div>
             )}
 
-            <p className="text-xs text-gray-600 text-right pb-4 font-mono">
-              Data as of {new Date(metrics.timestamp).toLocaleString()} · Auto-refreshes every 60s
-            </p>
+            {/* Live indicator */}
+            <div className="flex items-center gap-2 text-xs text-gray-400 pb-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Live · Last updated {new Date(metrics.timestamp).toLocaleString()} · Auto-refreshes every 60s</span>
+            </div>
           </>
         )
       })()}

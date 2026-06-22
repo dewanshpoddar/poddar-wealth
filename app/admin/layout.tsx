@@ -48,7 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] text-[#E4E4E7] font-sans flex flex-col">
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans flex flex-col">
       <AdminNav />
       
       {/* 
@@ -59,17 +59,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="pt-16 md:pt-0 md:ml-60 flex flex-col flex-1 min-h-screen">
         <main className="p-4 md:p-6 flex-1 flex flex-col">
           {hasAccess() ? (
-            children
+            <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
+              {children}
+            </div>
           ) : (
             <div className="flex-1 flex items-center justify-center py-12">
-              <div className="w-full max-w-md bg-[#13131A] border border-[#27272A] rounded-2xl p-8 text-center shadow-lg relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="w-14 h-14 bg-red-500/10 border border-red-500/20 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm relative overflow-hidden">
+                <div className="w-14 h-14 bg-red-50 border border-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <AlertCircle size={24} />
                 </div>
-                <h2 className="text-white text-lg font-medium mb-2">Access Denied</h2>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                  Your current session role <code className="text-amber-500 font-mono font-medium bg-[#0A0A0F] px-1.5 py-0.5 rounded">[{role}]</code> does not have permission to access <code className="text-gray-300 font-mono font-medium bg-[#0A0A0F] px-1.5 py-0.5 rounded">{pathname}</code>.
+                <h2 className="text-gray-900 text-lg font-semibold mb-2">Access Denied</h2>
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                  Your current session role <code className="text-amber-600 font-mono font-medium bg-amber-50 px-1.5 py-0.5 rounded">[{role}]</code> does not have permission to access <code className="text-gray-700 font-mono font-medium bg-gray-100 px-1.5 py-0.5 rounded">{pathname}</code>.
                 </p>
                 <Link
                   href="/admin"

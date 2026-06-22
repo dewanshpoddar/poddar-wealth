@@ -130,7 +130,7 @@ export default function SprintsTimeline() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Live stats banner */}
       {live && (
-        <div className="bg-gray-900 border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
+        <div className="bg-white border border-amber-500/20 rounded-2xl px-5 py-3 flex flex-wrap gap-6 text-xs">
           <span className="text-gray-400">
             <span className="text-amber-400 font-bold text-base">{live.estimatedPages}</span> est. pages
           </span>
@@ -161,11 +161,11 @@ export default function SprintsTimeline() {
       </div>
 
       {/* Timeline List */}
-      <div className="relative border-l border-gray-800 ml-3.5 pl-6 space-y-12 py-2">
+      <div className="relative border-l border-gray-200 ml-3.5 pl-6 space-y-12 py-2">
         {HISTORICAL_SPRINTS.map((sprint, index) => (
           <div key={sprint.id} className="relative group">
             {/* Timeline Bullet Dot */}
-            <span className={`absolute -left-[31px] top-1.5 flex items-center justify-center w-4 h-4 rounded-full border bg-gray-950 transition-all duration-300 ${
+            <span className={`absolute -left-[31px] top-1.5 flex items-center justify-center w-4 h-4 rounded-full border bg-gray-50 transition-all duration-300 ${
               sprint.status === 'active' 
                 ? 'border-amber-500 ring-4 ring-amber-500/10' 
                 : 'border-gray-700 group-hover:border-emerald-500'
@@ -176,20 +176,20 @@ export default function SprintsTimeline() {
             </span>
 
             {/* Sprint Card */}
-            <div className="bg-gray-900 border border-gray-800/80 rounded-3xl p-6 hover:border-gray-700/80 transition-all duration-300 shadow-xl relative overflow-hidden">
+            <div className="bg-white border border-gray-200/80 rounded-3xl p-6 hover:border-gray-300/80 transition-all duration-300 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
 
               {/* Title & Badge Row */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div>
-                  <h3 className="text-white text-base font-extrabold flex items-center gap-2 flex-wrap">
+                  <h3 className="text-gray-900 text-base font-extrabold flex items-center gap-2 flex-wrap">
                     {sprint.name}
                   </h3>
                   <div className="flex items-center gap-1.5 text-gray-500 text-xs font-semibold mt-1">
                     <Calendar size={12} />
                     {sprint.date}
                     <span className="text-gray-700">•</span>
-                    <span className="text-gray-400 font-mono text-[10px] uppercase tracking-wider bg-gray-950 border border-gray-800/80 px-1.5 py-0.5 rounded">
+                    <span className="text-gray-400 font-mono text-[10px] uppercase tracking-wider bg-gray-50 border border-gray-200/80 px-1.5 py-0.5 rounded">
                       {sprint.scope}
                     </span>
                   </div>
@@ -226,7 +226,7 @@ export default function SprintsTimeline() {
               </div>
 
               {/* Git Commit Hash Marker (Simulated) */}
-              <div className="mt-6 pt-4 border-t border-gray-800/40 flex items-center justify-between text-[10px] text-gray-500 font-mono">
+              <div className="mt-6 pt-4 border-t border-gray-200/40 flex items-center justify-between text-[10px] text-gray-500 font-mono">
                 <span className="flex items-center gap-1.5">
                   <GitCommit size={12} className="text-gray-600" />
                   SHA: {index === 0 ? '5a782b1-HEAD' : index === 1 ? 'cc7b29a' : index === 2 ? 'c711919' : 'ffd7a2e'}

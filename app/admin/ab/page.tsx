@@ -124,7 +124,7 @@ export default function ABTestAdminPage() {
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Page Title */}
       <div>
-        <h1 className="text-2xl font-bold text-white mb-1">A/B Testing Experiments</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-1">A/B Testing Experiments</h1>
         <p className="text-gray-500 text-sm">
           Run conversion optimization tests on client portal and landing page routes
         </p>
@@ -145,11 +145,11 @@ export default function ABTestAdminPage() {
             Active Experiments ({tests.length})
           </h2>
 
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
+          <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-gray-800/80 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-950/40">
+                  <tr className="border-b border-gray-200/80 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100/40">
                     <th className="w-8"></th>
                     <th className="px-6 py-4">Test Name</th>
                     <th className="px-6 py-4">Variant A</th>
@@ -159,7 +159,7 @@ export default function ABTestAdminPage() {
                     <th className="px-6 py-4">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800/40 text-xs font-medium">
+                <tbody className="divide-y divide-gray-200/40 text-xs font-medium">
                   {tests.map((test) => {
                     const isExpanded = expandedRow === test.id;
                     return (
@@ -190,7 +190,7 @@ export default function ABTestAdminPage() {
                             <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                               test.status === 'Running' 
                                 ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' 
-                                : 'bg-gray-950 text-gray-500 border-gray-800'
+                                : 'bg-gray-50 text-gray-500 border-gray-200'
                             }`}>
                               {test.status}
                             </span>
@@ -199,7 +199,7 @@ export default function ABTestAdminPage() {
 
                         {/* Expandable Details Row */}
                         {isExpanded && (
-                          <tr className="bg-gray-950/40 border-b border-gray-800/80">
+                          <tr className="bg-gray-100/40 border-b border-gray-200/80">
                             <td colSpan={7} className="p-6">
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Variant Metrics Card */}
@@ -207,10 +207,10 @@ export default function ABTestAdminPage() {
                                   <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Variant Conversion Breakdown</h4>
                                   
                                   <div className="grid grid-cols-2 gap-3">
-                                    <div className="bg-gray-900 border border-gray-800/60 p-4 rounded-2xl">
+                                    <div className="bg-white border border-gray-200/60 p-4 rounded-2xl">
                                       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Variant A (Control)</p>
                                       <p className="text-sm font-bold text-white mb-2 truncate" title={test.variantA}>{test.variantA}</p>
-                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-800/40">
+                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
                                         <span className="text-white font-mono">{calcConversionRate(test.conversionsA, test.impressionsA)}</span>
                                       </div>
@@ -220,11 +220,11 @@ export default function ABTestAdminPage() {
                                       </div>
                                     </div>
 
-                                    <div className="bg-gray-900 border border-gray-800/60 p-4 rounded-2xl relative overflow-hidden">
+                                    <div className="bg-white border border-gray-200/60 p-4 rounded-2xl relative overflow-hidden">
                                       <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none" />
                                       <p className="text-[10px] font-bold text-amber-500 uppercase tracking-wider mb-1">Variant B (Challenger)</p>
                                       <p className="text-sm font-bold text-white mb-2 truncate" title={test.variantB}>{test.variantB}</p>
-                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-800/40">
+                                      <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
                                         <span className="text-amber-400 font-mono">{calcConversionRate(test.conversionsB, test.impressionsB)}</span>
                                       </div>
@@ -237,7 +237,7 @@ export default function ABTestAdminPage() {
                                 </div>
 
                                 {/* Statistical Confidence Card */}
-                                <div className="bg-gray-900/60 border border-gray-800/60 rounded-2xl p-5 flex flex-col justify-between">
+                                <div className="bg-white/60 border border-gray-200/60 rounded-2xl p-5 flex flex-col justify-between">
                                   <div className="space-y-3">
                                     <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                                       <TrendingUp size={12} className="text-amber-500" />
@@ -248,7 +248,7 @@ export default function ABTestAdminPage() {
                                     </p>
                                   </div>
 
-                                  <div className="pt-4 border-t border-gray-800/60 flex items-center justify-between">
+                                  <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
                                     <div>
                                       <p className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Significance</p>
                                       <p className="text-sm font-bold text-white font-mono">{calcSignificance(test)}</p>
@@ -280,7 +280,7 @@ export default function ABTestAdminPage() {
             Create Experiment
           </h2>
 
-          <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+          <div className="bg-white border border-gray-200 rounded-3xl p-6 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
             
             <form onSubmit={handleCreateTest} className="space-y-4">
@@ -296,7 +296,7 @@ export default function ABTestAdminPage() {
                   value={testName}
                   onChange={(e) => setTestName(e.target.value)}
                   placeholder="e.g. hero-cta-text"
-                  className="w-full bg-gray-950 text-white px-4 py-3 rounded-xl border border-gray-800 hover:border-gray-700 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 
@@ -312,7 +312,7 @@ export default function ABTestAdminPage() {
                   value={variantADesc}
                   onChange={(e) => setVariantADesc(e.target.value)}
                   placeholder="e.g. Get Wealth Health Report"
-                  className="w-full bg-gray-950 text-white px-4 py-3 rounded-xl border border-gray-800 hover:border-gray-700 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 
@@ -328,12 +328,12 @@ export default function ABTestAdminPage() {
                   value={variantBDesc}
                   onChange={(e) => setVariantBDesc(e.target.value)}
                   placeholder="e.g. Check If Underinsured"
-                  className="w-full bg-gray-950 text-white px-4 py-3 rounded-xl border border-gray-800 hover:border-gray-700 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
+                  className="w-full bg-gray-50 text-white px-4 py-3 rounded-xl border border-gray-200 hover:border-gray-300 focus:border-amber-500 transition-colors outline-none text-xs font-semibold"
                 />
               </div>
 
               {/* Traffic Split Display */}
-              <div className="flex justify-between items-center bg-gray-950 border border-gray-800/60 rounded-xl px-4 py-3 text-xs font-semibold">
+              <div className="flex justify-between items-center bg-gray-50 border border-gray-200/60 rounded-xl px-4 py-3 text-xs font-semibold">
                 <span className="text-gray-500 uppercase text-[9px] tracking-wider font-bold">Traffic Split</span>
                 <span className="text-white font-mono">50% A / 50% B</span>
               </div>
