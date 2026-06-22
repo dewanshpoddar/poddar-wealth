@@ -205,10 +205,11 @@ export async function POST(req: NextRequest) {
     return new Response(readable, {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     })
-  } catch (error: any) {
-    console.error('Groq error:', error?.message || error)
-    console.error('Groq status:', error?.status)
-    console.error('Groq error body:', JSON.stringify(error?.error))
+  } catch (error: unknown) {
+    const e = error as { message?: string; status?: number; error?: unknown }
+    console.error('Groq error:', e?.message || error)
+    console.error('Groq status:', e?.status)
+    console.error('Groq error body:', JSON.stringify(e?.error))
     logger.error('/api/chat', 'Chat API error', { error: String(error) })
     return NextResponse.json({
       response: "Abhi Poddar Ji thoda busy hain. Aap directly Ajay sir se baat karein — 9415313434. WhatsApp par bhi message kar sakte hain.",

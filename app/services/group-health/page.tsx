@@ -1,5 +1,6 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import ServicePageWrapper from '@/components/ServicePageWrapper'
 import { CheckCircle2 } from 'lucide-react'
 
@@ -14,7 +15,7 @@ export default function GroupHealthPage() {
       title={g.heroTitle}
       subtitle={g.heroSubtitle}
       primaryCta={{ label: lang === 'en' ? 'Get Health Quote' : 'हेल्थ कोटेशन प्राप्त करें', href: '#lead-form' }}
-      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/919415313434` }}
+      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/91${ADVISOR_PHONE}` }}
       category="group-health"
       consultationIntent="Group Health Insurance Consultation"
     >

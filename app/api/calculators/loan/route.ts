@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import type { LoanResult } from '@/lib/types/calculator'
 
 const ROUTE = '/api/calculators/loan'
@@ -78,7 +79,7 @@ export async function POST(req: NextRequest) {
     estimatedInterestRate: INTEREST_RATE * 100,
     monthlyInterest,
     annualInterest,
-    note: 'Exact loan amount depends on policy status and current LIC guidelines. Contact Ajay sir at 9415313434.',
+    note: `Exact loan amount depends on policy status and current LIC guidelines. Contact Ajay sir at ${ADVISOR_PHONE}.`,
     disclaimer:
       'This is an estimate based on LIC general guidelines. Actual loan eligibility is determined by LIC branch after policy verification.',
   }

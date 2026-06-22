@@ -3,6 +3,8 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import Toast from '@/components/Toast'
 
 function LogoutToast({ onShow }: { onShow: (msg: string) => void }) {
@@ -78,14 +80,14 @@ export default function LoginPage() {
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100/40 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative z-10 max-w-sm text-center">
-          <a href="/" className="inline-block mb-6">
+          <Link href="/" className="inline-block mb-6">
             <Image
               src="/assets/pwm-logo.svg"
               alt="Poddar Wealth Management"
               width={72}
               height={72}
             />
-          </a>
+          </Link>
 
           <h1 className="text-2xl font-semibold text-gray-900 mb-2">
             Poddar Wealth Management
@@ -123,18 +125,18 @@ export default function LoginPage() {
 
       {/* RIGHT — Login form */}
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6 md:p-12 relative">
-        <a
+        <Link
           href="/"
           className="absolute top-6 left-6 flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors"
         >
           <ArrowLeft size={16} />
           <span>Back to website</span>
-        </a>
+        </Link>
 
         {/* Mobile logo — only visible when left panel is hidden */}
-        <a href="/" className="absolute top-6 right-6 md:hidden">
+        <Link href="/" className="absolute top-6 right-6 md:hidden">
           <Image src="/assets/pwm-logo.svg" alt="Home" width={36} height={36} />
-        </a>
+        </Link>
 
         <div className="w-full max-w-sm mt-12 md:mt-0">
           <h2 className="text-2xl font-semibold text-gray-900 mb-1">Welcome back</h2>
@@ -268,7 +270,7 @@ export default function LoginPage() {
                 </a>
 
                 <a
-                  href="https://wa.me/919415313434"
+                  href={`https://wa.me/91${ADVISOR_PHONE}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-green-200 hover:bg-green-50/40 transition-all"

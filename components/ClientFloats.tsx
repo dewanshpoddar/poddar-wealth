@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { MobileCTABar } from '@/src/features/ai-agent'
 import WhatsAppButton from '@/components/WhatsAppButton'
@@ -15,6 +16,14 @@ const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { 
 
 export default function ClientFloats() {
   const pathname = usePathname()
+  const [renderDeferred, setRenderDeferred] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRenderDeferred(true)
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [])
 
   if (pathname?.startsWith('/lp/')) return null
 
@@ -23,8 +32,12 @@ export default function ClientFloats() {
       <AIChatButton />
       <MobileCTABar />
       <WhatsAppButton />
-      <LeadPopup />
-      <ExitIntentPopup />
+      {renderDeferred && (
+        <>
+          <LeadPopup />
+          <ExitIntentPopup />
+        </>
+      )}
     </>
   )
 }

@@ -1,5 +1,6 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import ServicePageWrapper from '@/components/ServicePageWrapper'
 import { CheckCircle2 } from 'lucide-react'
 
@@ -14,7 +15,7 @@ export default function CancerCoverPage() {
       title={c.heroTitle}
       subtitle={c.heroSubtitle}
       primaryCta={{ label: lang === 'en' ? 'Get Cover Quote' : 'कोटेशन प्राप्त करें', href: '#lead-form' }}
-      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/919415313434` }}
+      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/91${ADVISOR_PHONE}` }}
       category="cancer-cover"
       consultationIntent="Cancer Cover Insurance Consultation"
     >

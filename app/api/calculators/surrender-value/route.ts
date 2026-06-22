@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import type { SurrenderValueResult } from '@/lib/types/calculator'
 
 const ROUTE = '/api/calculators/surrender-value'
@@ -83,7 +84,7 @@ export async function POST(req: NextRequest) {
     recommendation,
     disclaimer:
       'Special Surrender Value is usually higher than GSV. ' +
-      'Contact Ajay sir at 9415313434 for exact calculation. ' +
+      `Contact Ajay sir at ${ADVISOR_PHONE} for exact calculation. ` +
       'This estimate is based on LIC general guidelines and may vary by plan.',
   }
 

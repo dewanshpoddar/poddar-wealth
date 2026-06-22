@@ -20,7 +20,6 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
-  optimizeFonts: false,
   webpack: (config, { dev }) => {
     if (!dev) {
       config.cache = false;

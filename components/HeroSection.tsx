@@ -122,19 +122,24 @@ export default function HeroSection() {
 
           {/* Photos (Slideshow) */}
           <div className="absolute inset-0 overflow-hidden bg-navy">
-            {heroImages.map((src, idx) => (
-              <Image
-                key={idx}
-                src={src}
-                alt="Happy Indian family planning their future"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                quality={75}
-                className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
-                priority={idx === 0}
-                loading={idx === 0 ? undefined : 'lazy'}
-              />
-            ))}
+            {heroImages.map((src, idx) => {
+              const isFirst = idx === 0
+              return (
+                <Image
+                  key={idx}
+                  src={src}
+                  alt="Happy Indian family planning their future"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={70}
+                  className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                  priority={isFirst}
+                  loading={isFirst ? undefined : 'lazy'}
+                  placeholder={isFirst ? 'blur' : undefined}
+                  blurDataURL={isFirst ? 'data:image/jpeg;base64,/9j/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=' : undefined}
+                />
+              )
+            })}
             {/* Stronger gradient so images pop on mobile */}
             <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/10 to-navy/20 pointer-events-none" />
           </div>
@@ -167,7 +172,7 @@ export default function HeroSection() {
             </p>
             {t.hero.quickItems.map((item: any, i: number) => (
               <button key={i} onClick={() => setCurrentImageIndex(i)}
-                className={`w-full flex items-center gap-2 py-[7px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+                className={`w-full flex items-center gap-2 py-2.5 px-1.5 border-b border-[rgba(184,134,11,0.1)]
                            last:border-b-0 rounded-md transition-colors duration-300 group no-underline text-left
                            ${i === currentImageIndex ? 'bg-gold/10' : 'hover:bg-gold-pale'}`}>
                 <div className={`w-[26px] h-[26px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors duration-300
@@ -209,7 +214,7 @@ export default function HeroSection() {
         </p>
         {t.hero.quickItems.map((item: any, i: number) => (
           <button key={i} onClick={() => setCurrentImageIndex(i)}
-            className="w-full flex items-center text-left gap-2.5 py-[8px] px-1.5 border-b border-[rgba(184,134,11,0.1)]
+            className="w-full flex items-center text-left gap-2.5 py-3 px-1.5 border-b border-[rgba(184,134,11,0.1)]
                        last:border-b-0 rounded-md hover:bg-gold-pale transition-colors group no-underline">
             <div className={`w-[28px] h-[28px] rounded-lg flex items-center justify-center text-12 flex-shrink-0 transition-colors
                             ${i === currentImageIndex ? 'bg-gold/20' : 'bg-gold-pale'}`}>

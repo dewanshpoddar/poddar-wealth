@@ -1,5 +1,6 @@
 'use client'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 import ServicePageWrapper from '@/components/ServicePageWrapper'
 import { CheckCircle2 } from 'lucide-react'
 
@@ -14,7 +15,7 @@ export default function TermLifePage() {
       title={tm.heroTitle}
       subtitle={tm.heroSubtitle}
       primaryCta={{ label: lang === 'en' ? 'Get a Free Quote' : 'फ्री कोटेशन प्राप्त करें', href: '#lead-form' }}
-      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/919415313434` }}
+      secondaryCta={{ label: lang === 'en' ? 'Talk to Ajay Sir' : 'अजय सर से बात करें', href: `https://wa.me/91${ADVISOR_PHONE}` }}
       category="term-life"
       consultationIntent="Term Life Insurance Consultation"
     >

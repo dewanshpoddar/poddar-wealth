@@ -59,7 +59,6 @@ const LEAD_PROMPT: Message = {
 
 // ── localStorage helpers ───────────────────────────────────────────────────
 const LS_SID      = 'poddarji_sid'
-const LS_MSGS     = 'poddarji_msgs'
 const LS_LEADDONE = 'poddarji_lead_done'
 const MAX_MSGS    = 30
 
@@ -73,27 +72,6 @@ function getOrCreateSessionId(): string {
   return id
 }
 
-function loadCachedMessages(greeting: string): Message[] {
-  if (typeof window === 'undefined') return [{ from: 'bot', text: greeting }]
-  try {
-    const saved = localStorage.getItem(LS_MSGS)
-    if (saved) {
-      const parsed: Message[] = JSON.parse(saved)
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed
-    }
-  } catch { /* ignore */ }
-  return [{ from: 'bot', text: greeting }]
-}
-
-function saveMessages(messages: Message[]) {
-  if (typeof window === 'undefined') return
-  try {
-    const toStore = messages.length > MAX_MSGS
-      ? [messages[0], ...messages.slice(-(MAX_MSGS - 1))]
-      : messages
-    localStorage.setItem(LS_MSGS, JSON.stringify(toStore))
-  } catch { /* ignore */ }
-}
 
 function getLeadDone(): boolean {
   if (typeof window === 'undefined') return false
@@ -186,8 +164,7 @@ export function usePoddarJiChat(greeting: string) {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: text,
-            conversationHistory: updatedHistory.slice(-10)
+            messages: updatedHistory.slice(-10),
           }),
         }),
         new Promise<void>(r => setTimeout(r, 800)),

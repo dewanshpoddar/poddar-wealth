@@ -39,8 +39,8 @@ const sections = [
     body: `Information you submit through our contact forms — name, phone number, and insurance needs — is stored securely in a private Google Sheets spreadsheet. This data is not shared with third parties or used for automated marketing. We retain contact information for up to 2 years, after which it is deleted. You can request deletion at any time by contacting us directly.`,
   },
   {
-    title: 'Your Rights',
-    body: `You may request deletion of your personal data at any time by calling or WhatsApp messaging us at +91 94153 13434 or emailing poddarwealth@gmail.com. We will confirm deletion within 7 business days.`,
+    title: 'Your Rights (DPDPA 2023)',
+    body: `Under India's Digital Personal Data Protection Act 2023 (DPDPA), you have the right to: (1) access a summary of your personal data we hold; (2) correct inaccurate or incomplete data; (3) erase your data ("right to be forgotten"); and (4) withdraw consent you have previously given.\n\nTo exercise any of these rights, call or WhatsApp us at +91 94153 13434 or email poddarwealth@gmail.com. We will confirm action within 7 business days.`,
   },
   {
     title: 'Children',

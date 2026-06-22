@@ -4,8 +4,9 @@ import { usePathname } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ProblemSolutionSection from '@/components/ProblemSolutionSection'
-import ClientFloats from '@/components/ClientFloats'
+import dynamic from 'next/dynamic'
 import ClientOnlyBanner from '@/components/ClientOnlyBanner'
+const ClientFloats = dynamic(() => import('@/components/ClientFloats'), { ssr: false })
 import { LangProvider } from '@/lib/LangContext'
 
 export default function ClientLayoutWrapper({ children }: { children: React.ReactNode }) {

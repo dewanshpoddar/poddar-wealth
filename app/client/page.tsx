@@ -18,7 +18,7 @@ export default function ClientPortalPage() {
   const c = t.clientPortal || {
     heroTitle: 'Your Policy Hub',
     heroSubtitle: 'Quick access to all policy servicing tools',
-    needHelp: 'Need help? Call Ajay sir: 9415313434',
+    needHelp: `Need help? Call Ajay sir: ${ADVISOR_PHONE}`,
     cards: {
       mylic: {
         title: 'MyLIC Portal',

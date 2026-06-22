@@ -94,6 +94,7 @@ export default function VideoEmbed({
       {/* Thumbnail */}
       {thumbnail ? (
         <div className="absolute inset-0 w-full h-full">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={thumbnail}
             alt={title}
