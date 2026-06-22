@@ -29,12 +29,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Route protection logic
   const isLeadsOrReferralsRoute = pathname === '/admin/leads' || pathname === '/admin/referrals';
-  const isDevRoute = 
-    pathname === '/admin/architecture' || 
-    pathname === '/admin/docs' || 
-    pathname === '/admin/seo' || 
-    pathname === '/admin/ab' || 
-    pathname === '/admin/sprints';
+  const isDevRoute =
+    pathname === '/admin/architecture' ||
+    pathname === '/admin/docs' ||
+    pathname === '/admin/seo' ||
+    pathname === '/admin/ab';
 
   const hasAccess = () => {
     if (!authenticated) return false;

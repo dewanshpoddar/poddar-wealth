@@ -152,7 +152,7 @@ export default function AdminLeadsPage() {
         <div className="bg-white border border-gray-200/80 rounded-2xl p-4 flex flex-col justify-between">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Total Queries</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-gray-900 font-sans">{totalLeads}</span>
+            <span className="text-3xl font-bold text-gray-900 font-sans">{totalLeads}</span>
             <span className="text-[10px] font-bold text-emerald-400 font-sans">+100%</span>
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function AdminLeadsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Statuses</option>
               <option value="New">New</option>
@@ -216,7 +216,7 @@ export default function AdminLeadsPage() {
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
-              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Sources</option>
               {uniqueSources.map(s => (
@@ -228,7 +228,7 @@ export default function AdminLeadsPage() {
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-300 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
+              className="bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 text-xs px-3 py-2 rounded-xl outline-none focus:border-amber-500/30 transition-all cursor-pointer font-semibold"
             >
               <option value="All">All Time</option>
               <option value="Today">Today Only</option>

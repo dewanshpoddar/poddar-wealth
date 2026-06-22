@@ -121,7 +121,7 @@ export default function DocsPage() {
           {commitConvention.map(c => (
             <div key={c.prefix} className="flex gap-4 px-5 py-3 items-center">
               <code className="text-amber-400 text-xs font-mono w-20 shrink-0">{c.prefix}</code>
-              <code className="text-gray-300 text-xs font-mono">{c.example}</code>
+              <code className="text-gray-600 text-xs font-mono">{c.example}</code>
             </div>
           ))}
         </div>

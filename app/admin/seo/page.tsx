@@ -75,27 +75,27 @@ export default function SeoStatsPage() {
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Inside sitemap.ts</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
-              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.blog}</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">{SITEMAP_COUNTS.blog}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Blog Article URLs</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Bilingual posts</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
-              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.area}</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">{SITEMAP_COUNTS.area}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Local Area Pages</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Purvanchal geography</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
-              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.service}</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">{SITEMAP_COUNTS.service}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Core Services</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Insurance products</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
-              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.calc}</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">{SITEMAP_COUNTS.calc}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Calculators</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Lead capture panels</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-200/80">
-              <p className="text-3xl font-black text-gray-900 font-sans">{SITEMAP_COUNTS.static}</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">{SITEMAP_COUNTS.static}</p>
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mt-1">Static Routing</p>
               <p className="text-gray-500 text-[9px] mt-0.5 font-medium">Info & utility pages</p>
             </div>

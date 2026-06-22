@@ -11,7 +11,6 @@ import {
   Gift,
   Search,
   FlaskConical,
-  Rocket,
   ExternalLink,
   LogOut,
   Menu,
@@ -29,7 +28,6 @@ const navItems = [
   { href: '/admin/referrals', icon: Gift, label: 'Referrals' },
   { href: '/admin/seo', icon: Search, label: 'SEO' },
   { href: '/admin/ab', icon: FlaskConical, label: 'A/B Tests' },
-  { href: '/admin/sprints', icon: Rocket, label: 'Sprints' }
 ]
 
 type AdminRole = 'admin' | 'developer' | 'viewer'
@@ -57,8 +55,7 @@ export default function AdminNav() {
     href === '/admin/architecture' ||
     href === '/admin/docs' ||
     href === '/admin/seo' ||
-    href === '/admin/ab' ||
-    href === '/admin/sprints'
+    href === '/admin/ab'
 
   const filteredItems = navItems.filter(item => {
     if (isLeadsOrReferralsRoute(item.href) && role !== 'admin') return false

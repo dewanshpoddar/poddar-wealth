@@ -224,7 +224,7 @@ export default function ArchitecturePage() {
               <div className="flex flex-wrap items-center gap-2">
                 {journey.steps.map((step, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <span className="bg-gray-800 text-gray-300 text-xs px-3 py-1.5 rounded-lg">{step}</span>
+                    <span className="bg-gray-800 text-gray-600 text-xs px-3 py-1.5 rounded-lg">{step}</span>
                     {i < journey.steps.length - 1 && (
                       <span className="text-gray-600">→</span>
                     )}

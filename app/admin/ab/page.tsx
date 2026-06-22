@@ -168,15 +168,15 @@ export default function ABTestAdminPage() {
                         <tr 
                           key={test.id} 
                           onClick={() => toggleExpand(test.id)}
-                          className="hover:bg-gray-800/20 transition-all cursor-pointer"
+                          className="hover:bg-gray-50 transition-all cursor-pointer"
                         >
                           <td className="pl-4 py-4 text-center text-gray-500">
                             {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                           </td>
-                          <td className="px-6 py-4 font-bold text-white font-mono">{test.name}</td>
-                          <td className="px-6 py-4 text-gray-400 max-w-[150px] truncate">{test.variantA}</td>
-                          <td className="px-6 py-4 text-gray-400 max-w-[150px] truncate">{test.variantB}</td>
-                          <td className="px-6 py-4 text-center font-mono font-bold text-gray-400">{test.split}</td>
+                          <td className="px-6 py-4 font-bold text-gray-900 font-mono">{test.name}</td>
+                          <td className="px-6 py-4 text-gray-600 max-w-[150px] truncate">{test.variantA}</td>
+                          <td className="px-6 py-4 text-gray-600 max-w-[150px] truncate">{test.variantB}</td>
+                          <td className="px-6 py-4 text-center font-mono font-bold text-gray-600">{test.split}</td>
                           <td className="px-6 py-4 text-center">
                             {test.winner !== '—' ? (
                               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -209,10 +209,10 @@ export default function ABTestAdminPage() {
                                   <div className="grid grid-cols-2 gap-3">
                                     <div className="bg-white border border-gray-200/60 p-4 rounded-2xl">
                                       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Variant A (Control)</p>
-                                      <p className="text-sm font-bold text-white mb-2 truncate" title={test.variantA}>{test.variantA}</p>
+                                      <p className="text-sm font-bold text-gray-900 mb-2 truncate" title={test.variantA}>{test.variantA}</p>
                                       <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
-                                        <span className="text-white font-mono">{calcConversionRate(test.conversionsA, test.impressionsA)}</span>
+                                        <span className="text-gray-900 font-mono">{calcConversionRate(test.conversionsA, test.impressionsA)}</span>
                                       </div>
                                       <div className="flex justify-between text-[11px] text-gray-500 mt-1">
                                         <span>Conversions / Impr:</span>
@@ -223,7 +223,7 @@ export default function ABTestAdminPage() {
                                     <div className="bg-white border border-gray-200/60 p-4 rounded-2xl relative overflow-hidden">
                                       <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none" />
                                       <p className="text-[10px] font-bold text-amber-500 uppercase tracking-wider mb-1">Variant B (Challenger)</p>
-                                      <p className="text-sm font-bold text-white mb-2 truncate" title={test.variantB}>{test.variantB}</p>
+                                      <p className="text-sm font-bold text-gray-900 mb-2 truncate" title={test.variantB}>{test.variantB}</p>
                                       <div className="flex justify-between text-xs font-semibold text-gray-400 pt-2 border-t border-gray-200/40">
                                         <span>Conv Rate:</span>
                                         <span className="text-amber-400 font-mono">{calcConversionRate(test.conversionsB, test.impressionsB)}</span>
@@ -243,7 +243,7 @@ export default function ABTestAdminPage() {
                                       <TrendingUp size={12} className="text-amber-500" />
                                       Statistical Significance Analysis
                                     </h4>
-                                    <p className="text-gray-400 text-xs leading-relaxed font-medium">
+                                    <p className="text-gray-600 text-xs leading-relaxed font-medium">
                                       This test runs on a standard 50/50 traffic split logic using Vercel Middleware path overrides. Gaps are audited daily.
                                     </p>
                                   </div>
@@ -251,7 +251,7 @@ export default function ABTestAdminPage() {
                                   <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
                                     <div>
                                       <p className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Significance</p>
-                                      <p className="text-sm font-bold text-white font-mono">{calcSignificance(test)}</p>
+                                      <p className="text-sm font-bold text-gray-900 font-mono">{calcSignificance(test)}</p>
                                     </div>
                                     {test.status === 'Running' && (
                                       <span className="flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl">
@@ -335,7 +335,7 @@ export default function ABTestAdminPage() {
               {/* Traffic Split Display */}
               <div className="flex justify-between items-center bg-gray-50 border border-gray-200/60 rounded-xl px-4 py-3 text-xs font-semibold">
                 <span className="text-gray-500 uppercase text-[9px] tracking-wider font-bold">Traffic Split</span>
-                <span className="text-white font-mono">50% A / 50% B</span>
+                <span className="text-gray-700 font-mono">50% A / 50% B</span>
               </div>
 
               {/* Submit button */}
