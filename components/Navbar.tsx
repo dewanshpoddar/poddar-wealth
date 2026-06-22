@@ -212,9 +212,13 @@ export default function Navbar() {
 
             <Link
               href="/login"
-              className="text-sm text-gray-400 hover:text-white"
+              className={`text-sm transition-colors ${
+                scrolled
+                  ? 'text-gray-400 hover:text-white'
+                  : 'text-gray-700 hover:text-gray-900'
+              }`}
             >
-              {label('Client Login', 'क्लाइंट लॉगिन')}
+              {label('Login', 'लॉगिन')}
             </Link>
 
             <Link
@@ -392,7 +396,7 @@ export default function Navbar() {
             {[
               { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना' },
               { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग' },
-              { href: '/login',  en: 'Client Login',  hi: 'क्लाइंट लॉगिन' },
+              { href: '/login',  en: 'Login',          hi: 'लॉगिन' },
             ].map(({ href, en, hi }) => (
               <Link
                 key={href}

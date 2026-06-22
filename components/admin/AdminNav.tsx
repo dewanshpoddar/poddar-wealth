@@ -81,7 +81,7 @@ export default function AdminNav() {
     document.cookie = 'admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict'
     document.cookie = 'admin_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict'
     document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict'
-    window.location.href = '/login'
+    router.push('/login')
   }
 
   const getRoleIcon = () => {

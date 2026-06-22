@@ -3,7 +3,16 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Shield, User, ChevronRight, ArrowLeft, ExternalLink, TrendingUp, MessageCircle } from 'lucide-react'
+import {
+  Shield,
+  User,
+  ChevronRight,
+  ArrowLeft,
+  ExternalLink,
+  TrendingUp,
+  MessageCircle,
+  AlertCircle,
+} from 'lucide-react'
 
 export default function LoginPage() {
   const [role, setRole] = useState<'admin' | 'customer' | null>(null)
@@ -45,192 +54,225 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center p-4 relative overflow-hidden font-sans">
-      {/* Background accent — subtle gradient orb */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen flex font-sans">
 
-      <div className="relative w-full max-w-md">
-        {/* Logo + brand */}
-        <div className="text-center mb-8">
-          <Image
-            src="/assets/pwm-logo.svg"
-            alt="Poddar Wealth Management"
-            width={56}
-            height={56}
-            className="mx-auto mb-4 bg-white p-1 rounded-xl border border-[#27272A]"
-          />
-          <h1 className="text-xl font-medium text-white">Poddar Wealth Management</h1>
-          <p className="text-sm text-gray-500 mt-1">Secure access portal</p>
-        </div>
+      {/* LEFT — Brand panel (desktop only) */}
+      <div className="hidden md:flex w-1/2 bg-amber-50 relative flex-col items-center justify-center p-12 overflow-hidden border-r border-amber-100">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-200/30 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100/40 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Role selection — if no role selected yet */}
-        {!role && (
-          <div className="space-y-3">
-            <button
-              onClick={() => setRole('admin')}
-              className="w-full bg-[#13131A] border border-[#27272A] hover:border-amber-500/50 rounded-2xl p-5 text-left transition-all group cursor-pointer"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/20 transition-colors">
-                  <Shield className="w-6 h-6 text-amber-500" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white font-medium text-base">Admin Dashboard</p>
-                  <p className="text-sm text-gray-500 mt-0.5 truncate">
-                    Manage site, view analytics, leads
-                  </p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-600 ml-auto group-hover:text-amber-500 transition-colors shrink-0" />
-              </div>
-            </button>
-
-            <button
-              onClick={() => setRole('customer')}
-              className="w-full bg-[#13131A] border border-[#27272A] hover:border-blue-500/50 rounded-2xl p-5 text-left transition-all group cursor-pointer"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                  <User className="w-6 h-6 text-blue-500" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white font-medium text-base">Client Portal</p>
-                  <p className="text-sm text-gray-500 mt-0.5 truncate">
-                    View policies, pay premium, track NAV
-                  </p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-600 ml-auto group-hover:text-blue-500 transition-colors shrink-0" />
-              </div>
-            </button>
-          </div>
-        )}
-
-        {/* Admin password form — if admin role selected */}
-        {role === 'admin' && (
-          <div className="bg-[#13131A] border border-[#27272A] rounded-2xl p-6">
-            <button
-              onClick={() => {
-                setRole(null)
-                setPassword('')
-                setError('')
-              }}
-              className="text-sm text-gray-500 hover:text-white mb-4 flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <ArrowLeft size={14} /> Back
-            </button>
-
-            <h2 className="text-lg font-medium text-white mb-1">Admin Login</h2>
-            <p className="text-sm text-gray-500 mb-6">Enter your admin password</p>
-
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
-              placeholder="Password"
-              className="w-full bg-[#0A0A0F] border border-[#27272A] text-white px-4 py-3 rounded-xl text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500/50 transition-colors"
-              autoFocus
+        <div className="relative z-10 max-w-sm text-center">
+          <a href="/" className="inline-block mb-6">
+            <Image
+              src="/assets/pwm-logo.svg"
+              alt="Poddar Wealth Management"
+              width={72}
+              height={72}
             />
+          </a>
 
-            {error && <p className="text-sm text-red-400 mt-2 font-medium">{error}</p>}
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+            Poddar Wealth Management
+          </h1>
+          <p className="text-sm text-gray-500 mb-8">Excellence in Service Since 1994</p>
 
-            <button
-              onClick={handleAdminLogin}
-              disabled={loading || !password}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 rounded-xl mt-4 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm flex items-center justify-center gap-2 cursor-pointer"
-            >
-              {loading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Verifying...
-                </>
-              ) : (
-                'Login'
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Customer portal — coming soon */}
-        {role === 'customer' && (
-          <div className="bg-[#13131A] border border-[#27272A] rounded-2xl p-6">
-            <button
-              onClick={() => setRole(null)}
-              className="text-sm text-gray-500 hover:text-white mb-4 flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <ArrowLeft size={14} /> Back
-            </button>
-
-            <h2 className="text-lg font-medium text-white mb-1">Client Portal</h2>
-            <p className="text-sm text-gray-500 mb-6">Access your policies and services</p>
-
-            <div className="space-y-3">
-              <a
-                href="https://customer.onlineportal.licindia.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0F] border border-[#27272A] rounded-xl hover:border-blue-500/30 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
-                  <ExternalLink size={18} className="text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white group-hover:text-blue-400 transition-colors">MyLIC Portal</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Check policy status, pay premium</p>
-                </div>
-              </a>
-
-              <a
-                href="/calculators/policy-health"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0F] border border-[#27272A] rounded-xl hover:border-amber-500/30 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
-                  <Shield size={18} className="text-amber-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white group-hover:text-amber-400 transition-colors">Policy Health Score</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Check if your coverage is adequate</p>
-                </div>
-              </a>
-
-              <a
-                href="/nav-tracker"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0F] border border-[#27272A] rounded-xl hover:border-emerald-500/30 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                  <TrendingUp size={18} className="text-emerald-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white group-hover:text-emerald-400 transition-colors">NAV Tracker</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Track your ULIP fund performance</p>
-                </div>
-              </a>
-
-              <a
-                href="https://wa.me/919415313434"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-[#0A0A0F] border border-[#27272A] rounded-xl hover:border-green-500/30 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
-                  <MessageCircle size={18} className="text-green-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white group-hover:text-green-400 transition-colors">Talk to Ajay sir</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Direct WhatsApp or call</p>
-                </div>
-              </a>
+          <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+              <p className="text-xl font-bold text-amber-600">31+</p>
+              <p className="text-xs text-gray-500 mt-1 leading-tight">Years of<br />Service</p>
             </div>
-
-            <p className="text-xs text-gray-600 text-center mt-6">
-              OTP-based login coming soon via WhatsApp
-            </p>
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+              <p className="text-xl font-bold text-amber-600">5000+</p>
+              <p className="text-xs text-gray-500 mt-1 leading-tight">Families<br />Protected</p>
+            </div>
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-amber-100">
+              <p className="text-xl font-bold text-amber-600">4.9★</p>
+              <p className="text-xs text-gray-500 mt-1 leading-tight">Google<br />Rating</p>
+            </div>
           </div>
-        )}
 
-        {/* Footer */}
-        <p className="text-center text-xs text-gray-600 mt-8">
-          © 2026 Poddar Wealth Management
-        </p>
+          <div className="bg-white border border-amber-100 rounded-2xl p-5 shadow-sm text-left">
+            <p className="text-sm text-gray-700 italic leading-relaxed">
+              &ldquo;Ajay sir helped my family choose the right plan.
+              Very knowledgeable and patient.&rdquo;
+            </p>
+            <p className="text-xs text-gray-400 mt-3">— Google Review, Gorakhpur</p>
+          </div>
+
+          <p className="text-xs text-amber-700 font-medium mt-6 bg-amber-100 inline-block px-3 py-1 rounded-full">
+            MDRT Member · Chairman&apos;s Club Awardee
+          </p>
+        </div>
+      </div>
+
+      {/* RIGHT — Login form */}
+      <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6 md:p-12 relative">
+        <a
+          href="/"
+          className="absolute top-6 left-6 flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors"
+        >
+          <ArrowLeft size={16} />
+          <span>Back to website</span>
+        </a>
+
+        {/* Mobile logo — only visible when left panel is hidden */}
+        <a href="/" className="absolute top-6 right-6 md:hidden">
+          <Image src="/assets/pwm-logo.svg" alt="Home" width={36} height={36} />
+        </a>
+
+        <div className="w-full max-w-sm mt-12 md:mt-0">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Welcome back</h2>
+          <p className="text-sm text-gray-500 mb-8">Choose how you&apos;d like to continue</p>
+
+          {/* Role selection */}
+          {!role && (
+            <div className="space-y-3">
+              <button
+                onClick={() => setRole('admin')}
+                className="w-full border border-gray-200 hover:border-amber-400 hover:bg-amber-50/50 rounded-2xl p-5 text-left transition-all group bg-white shadow-sm cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition-colors border border-amber-100">
+                    <Shield className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-gray-900 font-semibold text-sm">Admin Dashboard</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Manage site, analytics, leads</p>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-amber-500 transition-colors" />
+                </div>
+              </button>
+
+              <button
+                onClick={() => setRole('customer')}
+                className="w-full border border-gray-200 hover:border-blue-400 hover:bg-blue-50/30 rounded-2xl p-5 text-left transition-all group bg-white shadow-sm cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors border border-blue-100">
+                    <User className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-gray-900 font-semibold text-sm">Client Services</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Policies, premium, NAV tracker</p>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                </div>
+              </button>
+            </div>
+          )}
+
+          {/* Admin login form */}
+          {role === 'admin' && (
+            <div>
+              <button
+                onClick={() => { setRole(null); setPassword(''); setError('') }}
+                className="text-sm text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <ArrowLeft size={14} /> Back
+              </button>
+
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">Admin Login</h3>
+              <p className="text-sm text-gray-500 mb-6">Enter your admin password to continue</p>
+
+              <div className="space-y-4">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleAdminLogin()}
+                  placeholder="Password"
+                  autoFocus
+                  className="w-full border border-gray-200 text-gray-900 px-4 py-3 rounded-xl text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all bg-gray-50"
+                />
+
+                {error && (
+                  <p className="text-sm text-red-500 flex items-center gap-1.5">
+                    <AlertCircle size={14} /> {error}
+                  </p>
+                )}
+
+                <button
+                  onClick={handleAdminLogin}
+                  disabled={loading || !password}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+                >
+                  {loading ? 'Verifying...' : 'Continue'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Customer services panel */}
+          {role === 'customer' && (
+            <div>
+              <button
+                onClick={() => setRole(null)}
+                className="text-sm text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <ArrowLeft size={14} /> Back
+              </button>
+
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">Client Services</h3>
+              <p className="text-sm text-gray-500 mb-6">Access your policies and services</p>
+
+              <div className="space-y-2.5">
+                <a
+                  href="https://customer.onlineportal.licindia.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-blue-200 hover:bg-blue-50/40 transition-all"
+                >
+                  <ExternalLink size={18} className="text-blue-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">MyLIC Portal</p>
+                    <p className="text-xs text-gray-500">Policy status, pay premium</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/calculators/policy-health"
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-amber-200 hover:bg-amber-50/40 transition-all"
+                >
+                  <Shield size={18} className="text-amber-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Policy Health Score</p>
+                    <p className="text-xs text-gray-500">Check your coverage</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/nav-tracker"
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-emerald-200 hover:bg-emerald-50/40 transition-all"
+                >
+                  <TrendingUp size={18} className="text-emerald-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">NAV Tracker</p>
+                    <p className="text-xs text-gray-500">ULIP fund performance</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://wa.me/919415313434"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl hover:border-green-200 hover:bg-green-50/40 transition-all"
+                >
+                  <MessageCircle size={18} className="text-green-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Talk to Ajay sir</p>
+                    <p className="text-xs text-gray-500">WhatsApp or call</p>
+                  </div>
+                </a>
+              </div>
+
+              <p className="text-xs text-gray-400 text-center mt-6">OTP login coming soon</p>
+            </div>
+          )}
+
+          <p className="text-xs text-gray-400 text-center mt-10">
+            © 2026 Poddar Wealth Management
+          </p>
+        </div>
       </div>
     </div>
   )
