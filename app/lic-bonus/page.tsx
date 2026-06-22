@@ -2,7 +2,7 @@
 
 import { useLang } from '@/lib/LangContext'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
-import { User, Phone, MessageSquare, Shield, HelpCircle, Info, Sparkles, MessageCircle, ArrowRight, Trophy, BarChart3 } from 'lucide-react'
+import { User, Phone, MessageSquare, Info, Sparkles, MessageCircle, ArrowRight, Trophy, BarChart3 } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
@@ -258,6 +258,27 @@ export default function LicBonusPage() {
               url="https://www.poddarwealth.com/lic-bonus"
               className="w-full justify-center"
             />
+          </div>
+
+          {/* Related plan link */}
+          <div className="mt-5 pt-5 border-t border-slate-100 text-center">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
+              {isHi ? 'संबंधित योजना' : 'Featured Plan'}
+            </p>
+            <Link
+              href="/plans/nav-jeevan-shree"
+              className="inline-flex items-center gap-2 bg-navy/5 border border-navy/10 hover:border-amber-400 rounded-xl px-4 py-3 transition-colors group"
+            >
+              <ArrowRight size={14} className="text-amber-500 flex-shrink-0" />
+              <div className="text-left">
+                <span className="text-xs font-bold text-navy block group-hover:text-amber-600 transition-colors">
+                  {isHi ? 'LIC न्यू जीवन श्री — सम्पूर्ण समीक्षा' : 'LIC Nav Jeevan Shree — Full Review'}
+                </span>
+                <span className="text-[10px] text-gray-500">
+                  {isHi ? 'सीमित प्रीमियम, जीवन भर कवर और बोनस' : 'Limited premium, whole life cover + bonus'}
+                </span>
+              </div>
+            </Link>
           </div>
         </section>
 

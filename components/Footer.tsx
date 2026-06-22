@@ -4,7 +4,7 @@ import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { ADVISOR_PHONE } from '@/lib/constants'
+import { ADVISOR_PHONE, SECONDARY_PHONE } from '@/lib/constants'
 import { MapPin, Phone, MessageCircle, Mail } from 'lucide-react'
 
 // Inline SVG components for trademarked social icons since they aren't in Lucide-react core
@@ -265,11 +265,11 @@ export default function Footer() {
                   >
                     +91 {ADVISOR_PHONE}
                   </a>
-                  <a 
-                    href="tel:+917007937104" 
+                  <a
+                    href={`tel:+91${SECONDARY_PHONE}`}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
-                    +91 7007937104
+                    +91 {SECONDARY_PHONE}
                   </a>
                 </div>
               </div>

@@ -304,6 +304,29 @@ export default function PayPremiumPage() {
           )}
         </div>
       </section>
+
+      {/* Related Services */}
+      <section className="py-10 px-6 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 text-center">
+            {isHi ? 'और क्या जानना चाहते हैं?' : 'Related Services'}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="/premium-reminder" className="flex flex-col gap-1 bg-white border border-gray-200 rounded-xl p-4 hover:border-amber-400 hover:shadow-sm transition-all">
+              <span className="text-xs font-bold text-gray-800">{isHi ? 'प्रीमियम रिमाइंडर' : 'Premium Reminder'}</span>
+              <span className="text-[11px] text-gray-500">{isHi ? 'भुगतान की तारीखें याद रखें' : 'Never miss a due date again'}</span>
+            </a>
+            <a href="/lic-help" className="flex flex-col gap-1 bg-white border border-gray-200 rounded-xl p-4 hover:border-amber-400 hover:shadow-sm transition-all">
+              <span className="text-xs font-bold text-gray-800">{isHi ? 'MyLIC सहायता' : 'MyLIC Help'}</span>
+              <span className="text-[11px] text-gray-500">{isHi ? 'ऐप से जुड़ी हर समस्या का हल' : 'Troubleshoot your MyLIC app'}</span>
+            </a>
+            <a href="/policy-revival" className="flex flex-col gap-1 bg-white border border-gray-200 rounded-xl p-4 hover:border-amber-400 hover:shadow-sm transition-all">
+              <span className="text-xs font-bold text-gray-800">{isHi ? 'पॉलिसी पुनरुद्धार' : 'Policy Revival'}</span>
+              <span className="text-[11px] text-gray-500">{isHi ? 'बंद पॉलिसी दोबारा शुरू करें' : 'Revive a lapsed policy'}</span>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

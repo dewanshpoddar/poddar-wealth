@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { LIFE_EVENTS } from '@/lib/data/life-events';
+import { ADVISOR_PHONE } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: "What's Your Situation? | Poddar Wealth Management",
@@ -79,11 +80,27 @@ export default function LifeEventsPage() {
         </div>
       </section>
 
+      {/* Best Plan finder CTA */}
+      <section className="max-w-4xl mx-auto px-4 mt-10 mb-2">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="font-bold text-gray-900 text-sm">Not sure of your age bracket?</p>
+            <p className="text-gray-600 text-xs mt-0.5">Use our age-based plan finder to see the best LIC plan for you.</p>
+          </div>
+          <Link
+            href="/best-plan/30"
+            className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-colors"
+          >
+            Find My Best Plan →
+          </Link>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
-      <section className="max-w-2xl mx-auto px-4 mt-14 text-center">
+      <section className="max-w-2xl mx-auto px-4 mt-10 text-center">
         <p className="text-gray-500 text-sm mb-4">Not sure which applies to you? Just ask Ajay sir.</p>
         <a
-          href="https://wa.me/919415313434?text=Hi%20Ajay%20sir,%20I%20need%20insurance%20advice%20based%20on%20my%20life%20situation."
+          href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20sir,%20I%20need%20insurance%20advice%20based%20on%20my%20life%20situation.`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl transition-colors"

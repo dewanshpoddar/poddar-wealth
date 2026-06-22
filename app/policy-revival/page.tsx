@@ -2,7 +2,7 @@
 
 import { useLang } from '@/lib/LangContext'
 import BaseLeadForm from '@/components/base/BaseLeadForm'
-import { User, Phone, MessageSquare, Shield, HelpCircle, Info, Sparkles, MessageCircle, FileText, CheckCircle2 } from 'lucide-react'
+import { User, Phone, MessageSquare, Shield, Info, Sparkles, MessageCircle, FileText } from 'lucide-react'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
@@ -263,6 +263,29 @@ export default function PolicyRevivalPage() {
               url="https://www.poddarwealth.com/policy-revival"
               className="w-full justify-center"
             />
+          </div>
+
+          {/* Related links */}
+          <div className="mt-6 pt-5 border-t border-slate-100">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 text-center">
+              {isHi ? 'संबंधित गाइड' : 'Related Guides'}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <a href="/bima-sugam" className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3 hover:border-amber-300 transition-colors">
+                <Shield size={14} className="text-amber-500 flex-shrink-0" />
+                <div>
+                  <span className="text-xs font-bold text-navy block">{isHi ? 'बीमा सुगम पोर्टल' : 'Bima Sugam Portal'}</span>
+                  <span className="text-[10px] text-gray-500">{isHi ? 'IRDAI का नया डिजिटल मंच' : 'IRDAI\'s new digital insurance marketplace'}</span>
+                </div>
+              </a>
+              <a href="/lic-bonus" className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-xl p-3 hover:border-amber-300 transition-colors">
+                <Info size={14} className="text-amber-500 flex-shrink-0" />
+                <div>
+                  <span className="text-xs font-bold text-navy block">{isHi ? 'LIC बोनस दरें 2026' : 'LIC Bonus Rates 2026'}</span>
+                  <span className="text-[10px] text-gray-500">{isHi ? 'पुनर्जीवित पॉलिसी पर बोनस जानें' : 'Check bonus on your revived policy'}</span>
+                </div>
+              </a>
+            </div>
           </div>
         </section>
 
