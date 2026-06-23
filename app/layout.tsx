@@ -100,6 +100,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
+        {/* Preload LCP hero image — tells browser to fetch before React renders */}
+        <link rel="preload" as="image" type="image/webp" href="/assets/hero-family.webp" fetchPriority="high" />
       </head>
       <body className={`${fraunces.variable} ${plusJakartaSans.variable} font-sans text-13 text-gray-900 bg-white antialiased`} suppressHydrationWarning>
         <script

@@ -3,8 +3,12 @@
 import { Component, type ReactNode, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import HeroSection from '@/components/HeroSection'
-import AskPoddarJiWidget from '@/components/AskPoddarJiWidget'
 import LazySection from '@/components/LazySection'
+
+const AskPoddarJiWidget = dynamic(
+  () => import('@/components/AskPoddarJiWidget'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-950 h-24 w-full" /> }
+)
 
 // Below-fold components imported dynamically
 const QuickActions = dynamic(

@@ -28,11 +28,11 @@ function getWhyUsIcon(emoji: string) {
 }
 
 const heroImages = [
-  '/assets/hero-family.png',
-  '/assets/hero-education.png',
-  '/assets/hero-retirement.png',
-  '/assets/hero-health.png',
-  '/assets/hero-marriage.png'
+  '/assets/hero-family.webp',
+  '/assets/hero-education.webp',
+  '/assets/hero-retirement.webp',
+  '/assets/hero-health.webp',
+  '/assets/hero-marriage.webp'
 ]
 
 export default function HeroSection() {
