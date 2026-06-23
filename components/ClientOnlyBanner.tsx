@@ -9,7 +9,13 @@ declare function gtag(...args: unknown[]): void
 
 export default function ClientOnlyBanner() {
   const [show, setShow] = useState(false)
+  const [ready, setReady] = useState(false)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 3000)
+    return () => clearTimeout(t)
+  }, [])
 
   useEffect(() => {
     const cookies = document.cookie.split(';').map(c => c.trim())
@@ -25,6 +31,6 @@ export default function ClientOnlyBanner() {
   }, [])
 
   if (pathname?.startsWith('/lp/')) return null
-  if (!show) return null
+  if (!show || !ready) return null
   return <CookieBanner />
 }

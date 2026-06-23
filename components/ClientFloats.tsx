@@ -31,9 +31,9 @@ export default function ClientFloats() {
     <>
       <AIChatButton />
       <MobileCTABar />
-      <WhatsAppButton />
       {renderDeferred && (
         <>
+          <WhatsAppButton />
           <LeadPopup />
           <ExitIntentPopup />
         </>

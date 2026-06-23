@@ -77,7 +77,7 @@ export default function AboutFounder() {
                     <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT Member badge" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
                   )}
                   {badge.text.includes('Chairman') || badge.text.includes('चेयरमैन') ? (
-                    <Image src="/assets/chairmanclub.png" alt="Chairman's Club award" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                    <Image src="/assets/chairmanclub.webp" alt="Chairman's Club award" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
                   ) : null}
                   {badge.text}
                 </span>

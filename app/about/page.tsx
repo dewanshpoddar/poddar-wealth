@@ -39,25 +39,25 @@ export default function AboutPage() {
 
 
   const filmStrip1 = [
-    { src: '/assets/legacy-award-1994.png', label: '1994 MDRT Success' },
-    { src: '/assets/team-mentorship.png', label: 'Mentoring 2024' },
-    { src: '/assets/gorakhpur-office-render.png', label: 'Institutional Trust' },
-    { src: '/assets/hero-family.png', label: 'Family Protection' },
-    { src: '/assets/hero-education.png', label: 'Child Future' },
-    { src: '/assets/hero-marriage.png', label: 'Goal Planning' },
-    { src: '/assets/legacy-award-1994.png', label: 'Founding Mission' },
-    { src: '/assets/team-mentorship.png', label: 'Team Excellence' },
+    { src: '/assets/legacy-award-1994.webp', label: '1994 MDRT Success' },
+    { src: '/assets/team-mentorship.webp', label: 'Mentoring 2024' },
+    { src: '/assets/gorakhpur-office-render.webp', label: 'Institutional Trust' },
+    { src: '/assets/hero-family.webp', label: 'Family Protection' },
+    { src: '/assets/hero-education.webp', label: 'Child Future' },
+    { src: '/assets/hero-marriage.webp', label: 'Goal Planning' },
+    { src: '/assets/legacy-award-1994.webp', label: 'Founding Mission' },
+    { src: '/assets/team-mentorship.webp', label: 'Team Excellence' },
   ]
 
   const filmStrip2 = [
-    { src: '/assets/gorakhpur-office-render.png', label: 'Vijay Chowk HQ' },
-    { src: '/assets/hero-retirement.png', label: 'Legacy Wealth' },
-    { src: '/assets/hero-health.png', label: 'Health Security' },
-    { src: '/assets/legacy-award-1994.png', label: '31yr Dedication' },
-    { src: '/assets/team-mentorship.png', label: 'Global MDRT' },
-    { src: '/assets/gorakhpur-office-render.png', label: 'Financial Fortress' },
-    { src: '/assets/hero-family.png', label: 'Core Values' },
-    { src: '/assets/team-mentorship.png', label: 'Chairman\'s Club' },
+    { src: '/assets/gorakhpur-office-render.webp', label: 'Vijay Chowk HQ' },
+    { src: '/assets/hero-retirement.webp', label: 'Legacy Wealth' },
+    { src: '/assets/hero-health.webp', label: 'Health Security' },
+    { src: '/assets/legacy-award-1994.webp', label: '31yr Dedication' },
+    { src: '/assets/team-mentorship.webp', label: 'Global MDRT' },
+    { src: '/assets/gorakhpur-office-render.webp', label: 'Financial Fortress' },
+    { src: '/assets/hero-family.webp', label: 'Core Values' },
+    { src: '/assets/team-mentorship.webp', label: 'Chairman\'s Club' },
   ]
 
   const valuesIcons = [
@@ -113,7 +113,7 @@ export default function AboutPage() {
             >
                <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 group">
                   <Image
-                    src="/assets/gorakhpur-office-render.png"
+                    src="/assets/gorakhpur-office-render.webp"
                     alt="Gorakhpur Office Render"
                     fill
                     className="object-cover"
@@ -188,7 +188,7 @@ export default function AboutPage() {
                      </span>
                    </div>
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
-                     <Image src="/assets/chairmanclub.png" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
+                     <Image src="/assets/chairmanclub.webp" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
                      <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
                        {isHi ? 'चेयरमैन क्लब' : "Chairman's Club"}
                      </span>
@@ -419,7 +419,7 @@ export default function AboutPage() {
               className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/chairmanclub.png" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
+                <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
               </div>
               <div>
                 <h4 className="text-[14px] font-bold text-navy mb-1">
