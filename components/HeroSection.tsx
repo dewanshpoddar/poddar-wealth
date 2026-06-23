@@ -140,8 +140,6 @@ export default function HeroSection() {
                   className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                   priority={isFirst}
                   fetchPriority={isFirst ? 'high' : undefined}
-                  placeholder={isFirst ? 'blur' : undefined}
-                  blurDataURL={isFirst ? 'data:image/jpeg;base64,/9j/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=' : undefined}
                 />
               )
             })}

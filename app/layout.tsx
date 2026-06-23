@@ -13,7 +13,7 @@ const fraunces = Fraunces({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
+  display: 'optional',
 })
 
 import ClientLayoutWrapper from '@/components/ClientLayoutWrapper'

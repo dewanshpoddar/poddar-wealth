@@ -5,6 +5,23 @@
 
 ---
 
+## ⚡ TOKEN BUDGET — MANDATORY ON EVERY PROMPT
+
+These rules apply before executing ANY task. No exceptions.
+
+1. No verbose explanations. State: action → result → next.
+2. No repeating the task back. Start executing immediately.
+3. No summarizing at the end unless asked.
+4. Use tables over paragraphs. Use lists over prose.
+5. If command output > 20 lines, show only relevant lines.
+6. If build passes, say "✅ build pass" — not a paragraph.
+7. Don't explore the repo for context already in CLAUDE.md.
+8. Don't ask clarifying questions if the prompt is specific enough.
+9. Combine related file edits into single operations where possible.
+10. Target: 60% fewer tokens than default behavior.
+
+---
+
 ## ⚠️ CRITICAL — CANONICAL LOCATION
 
 **The ONLY valid project folder is `/Users/dewanshpoddar/PW`.**
