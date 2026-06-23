@@ -372,7 +372,7 @@ export default function Footer() {
 
         {/* Disclaimer Row */}
         <div className="mt-6 text-[10px] text-gray-600 text-center leading-relaxed italic border-t border-gray-900/40 pt-4 w-full">
-          {t.footer.disclaimer || 'Insurance is the subject matter of solicitation. IRDAI Reg. No. XXXXXXXXXX'}
+          {t.footer.disclaimer || 'Insurance is the subject matter of solicitation. IRDAI Registration No. 512 (LIC of India).'}
         </div>
 
       </div>

@@ -38,12 +38,15 @@ const heroImages = [
 export default function HeroSection() {
   const { t } = useLang()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [carouselReady, setCarouselReady] = useState(false)
 
   useEffect(() => {
+    // Defer non-first images until after LCP window (~1s)
+    const readyTimer = setTimeout(() => setCarouselReady(true), 1000)
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
     }, 4500)
-    return () => clearInterval(interval)
+    return () => { clearTimeout(readyTimer); clearInterval(interval) }
   }, [])
 
   return (
@@ -124,6 +127,8 @@ export default function HeroSection() {
           <div className="absolute inset-0 overflow-hidden bg-navy">
             {heroImages.map((src, idx) => {
               const isFirst = idx === 0
+              // Don't mount non-first slides until after LCP window
+              if (!isFirst && !carouselReady) return null
               return (
                 <Image
                   key={idx}
@@ -134,7 +139,7 @@ export default function HeroSection() {
                   quality={70}
                   className={`object-cover object-top transition-opacity duration-[1500ms] ease-in-out ${idx === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                   priority={isFirst}
-                  loading={isFirst ? undefined : 'lazy'}
+                  fetchPriority={isFirst ? 'high' : undefined}
                   placeholder={isFirst ? 'blur' : undefined}
                   blurDataURL={isFirst ? 'data:image/jpeg;base64,/9j/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=' : undefined}
                 />
