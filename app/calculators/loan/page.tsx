@@ -189,7 +189,7 @@ Please help me apply for this loan or check if I have a higher loan value based 
                   {l.sumAssuredLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="sumAssured"
                     type="number"
@@ -229,7 +229,7 @@ Please help me apply for this loan or check if I have a higher loan value based 
                   {l.bonusAccruedLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="bonusInput"
                     type="number"
@@ -241,7 +241,7 @@ Please help me apply for this loan or check if I have a higher loan value based 
                     placeholder="e.g. 50000"
                   />
                 </div>
-                <div className="text-[10px] text-gray-400 mt-1 italic leading-relaxed">
+                <div className="text-[10px] text-gray-500 mt-1 italic leading-relaxed">
                   {l.bonusHelper}
                 </div>
               </div>
@@ -281,7 +281,7 @@ Please help me apply for this loan or check if I have a higher loan value based 
                 <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
                   {lang === 'en' ? 'Check Loan Limit' : 'लोन की सीमा चेक करें'}
                 </div>
-                <div className="text-[12px] text-gray-400 max-w-xs">
+                <div className="text-[12px] text-gray-500 max-w-xs">
                   {lang === 'en' 
                     ? 'Enter policy parameters to check the estimated loan amount you can avail against your LIC policy.'
                     : 'अपनी एलआईसी पॉलिसी के खिलाफ आप जो अनुमानित लोन राशि प्राप्त कर सकते हैं उसकी जांच करने के लिए पॉलिसी मापदंड दर्ज करें।'}
@@ -298,28 +298,28 @@ Please help me apply for this loan or check if I have a higher loan value based 
 
                   {/* Maximum Loan Amount */}
                   <div className="bg-slate-50 rounded-2xl p-6 text-center border border-gray-100">
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5">{l.maxLoanAmount}</div>
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{l.maxLoanAmount}</div>
                     <div className="text-3xl font-bold text-navy">{fmt(result.maxLoanAmount)}</div>
-                    <div className="text-[11px] text-gray-400 mt-1">({result.maxLoanAmount.toLocaleString('en-IN')})</div>
+                    <div className="text-[11px] text-gray-500 mt-1">({result.maxLoanAmount.toLocaleString('en-IN')})</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Estimated Interest Rate */}
                   <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{l.estimatedInterestRate}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.estimatedInterestRate}</div>
                     <div className="text-base font-bold text-navy">{result.estimatedInterestRate.toFixed(1)}% p.a.</div>
                   </div>
 
                   {/* Annual Interest */}
                   <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{l.annualInterest}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.annualInterest}</div>
                     <div className="text-base font-bold text-navy">{fmt(result.annualInterest)}</div>
                   </div>
 
                   {/* Monthly Interest */}
                   <div className="border border-gray-100 rounded-xl p-4 sm:col-span-2">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{l.monthlyInterest}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.monthlyInterest}</div>
                     <div className="text-base font-bold text-navy">{fmt(result.monthlyInterest)}</div>
                   </div>
                 </div>
@@ -343,12 +343,12 @@ Please help me apply for this loan or check if I have a higher loan value based 
 
                 {/* WhatsAppShare Result */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
                   <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
                 </div>
 
                 {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-400 border-t border-gray-50 pt-4">
+                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
                   <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                   <p className="text-[10px] leading-relaxed">{result.disclaimer || l.disclaimerText}</p>
                 </div>

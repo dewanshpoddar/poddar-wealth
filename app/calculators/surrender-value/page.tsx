@@ -210,7 +210,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                   {s.sumAssuredLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="sumAssured"
                     type="number"
@@ -233,7 +233,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                   {s.annualPremiumLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="annualPremium"
                     type="number"
@@ -256,7 +256,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                   {s.totalPremiumsPaidLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="premiumsPaid"
                     type="number"
@@ -325,7 +325,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                 <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
                   {lang === 'en' ? 'Ready to Calculate' : 'गणना के लिए तैयार'}
                 </div>
-                <div className="text-[12px] text-gray-400 max-w-xs">
+                <div className="text-[12px] text-gray-500 max-w-xs">
                   {lang === 'en' 
                     ? 'Enter your policy parameters and click calculate to estimate your policy\'s current value.'
                     : 'अपनी पॉलिसी के पैरामीटर दर्ज करें और अपनी पॉलिसी के वर्तमान मूल्य का अनुमान लगाने के लिए गणना करें पर क्लिक करें।'}
@@ -342,16 +342,16 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
 
                   {/* Guaranteed Surrender Value */}
                   <div className="bg-slate-50 rounded-2xl p-6 text-center border border-gray-100">
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5">{s.guaranteedSurrenderValue}</div>
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{s.guaranteedSurrenderValue}</div>
                     <div className="text-3xl font-bold text-navy">{fmt(result.guaranteedSurrenderValue)}</div>
-                    <div className="text-[11px] text-gray-400 mt-1">({result.guaranteedSurrenderValue.toLocaleString('en-IN')})</div>
+                    <div className="text-[11px] text-gray-500 mt-1">({result.guaranteedSurrenderValue.toLocaleString('en-IN')})</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Estimated Paid-up Value */}
                   <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{s.estimatedPaidUpValue}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.estimatedPaidUpValue}</div>
                     <div className="text-lg font-bold text-navy">{fmt(result.estimatedPaidUpValue)}</div>
                   </div>
 
@@ -367,7 +367,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                   <div className="flex gap-2">
                     <TrendingUp className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
                     <div>
-                      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{s.recommendation}</div>
+                      <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.recommendation}</div>
                       <p className="text-xs font-medium text-slate-700 leading-relaxed">{result.recommendation}</p>
                     </div>
                   </div>
@@ -392,12 +392,12 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
 
                 {/* WhatsAppShare Result */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
                   <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
                 </div>
 
                 {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-400 border-t border-gray-50 pt-4">
+                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
                   <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                   <p className="text-[10px] leading-relaxed">{result.disclaimer || s.disclaimerText}</p>
                 </div>

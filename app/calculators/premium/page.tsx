@@ -436,7 +436,7 @@ export default function PremiumCalculatorPage() {
               <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-64 flex flex-col items-center justify-center text-center p-8">
                 <Calculator className="w-12 h-12 text-gray-200 mb-3" />
                 <div className="font-display font-bold text-gray-500 text-[17px] mb-1">Select a plan to calculate</div>
-                <div className="text-[12px] text-gray-300">Choose any LIC plan from the list · or use Quick Selector above</div>
+                <div className="text-[12px] text-gray-500">Choose any LIC plan from the list · or use Quick Selector above</div>
               </div>
             )}
 
@@ -524,7 +524,7 @@ export default function PremiumCalculatorPage() {
                                 <span className="text-[10px] text-gray-500">NAV · {fundNav.date}</span>
                               </div>
                             ) : (
-                              <div className="text-[11px] text-gray-300">NAV loading…</div>
+                              <div className="text-[11px] text-gray-500">NAV loading…</div>
                             )}
                           </button>
                         )

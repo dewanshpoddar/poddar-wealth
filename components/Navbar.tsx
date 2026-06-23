@@ -43,8 +43,8 @@ export default function Navbar() {
   const linkCls = (path: string) => {
     const activeColor = scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
     const inactiveColor = scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
-    return `relative text-sm font-medium transition-colors duration-200 pb-0.5
-      after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
+    return `relative text-sm font-medium transition-colors duration-200 py-3 min-h-[44px] flex items-center
+      after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
       hover:after:w-full after:bg-gold after:transition-all after:duration-300
       ${isActive(path) ? `${activeColor} after:w-full` : inactiveColor}`
   }
@@ -107,7 +107,7 @@ export default function Navbar() {
 
             {/* Calculators dropdown */}
             <div className="relative group/calc">
-              <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+              <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer py-3.5 min-h-[44px] ${
                 scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
               }`}>
                 {t.nav.calculators}
@@ -143,7 +143,7 @@ export default function Navbar() {
 
             {/* Services dropdown */}
             <div className="relative group/services">
-              <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer ${
+              <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer py-3.5 min-h-[44px] ${
                 scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
               }`}>
                 {t.nav.services}
@@ -246,12 +246,12 @@ export default function Navbar() {
           </Link>
 
           {/* Mobile lang toggle — pill */}
-          <div className={`flex rounded-full p-0.5 flex-shrink-0 border ${
+          <div className={`flex rounded-full p-0.5 flex-shrink-0 border h-11 items-stretch ${
             scrolled ? 'bg-gray-800/50 border-white/5' : 'bg-gray-100 border-gray-200'
           }`}>
             <button
               onClick={() => setLang('en')}
-              className={`px-2 py-0.5 text-[9px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer ${
+              className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
                 lang === 'en'
                   ? 'bg-amber-500 text-white shadow-sm'
                   : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
@@ -261,7 +261,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => setLang('hi')}
-              className={`px-2 py-0.5 text-[9px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer ${
+              className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
                 lang === 'hi'
                   ? 'bg-amber-500 text-white shadow-sm'
                   : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
@@ -301,7 +301,7 @@ export default function Navbar() {
                 </span>
               </div>
             </Link>
-            <button onClick={() => setMobileOpen(false)} className="text-gray-400 hover:text-white p-1 cursor-pointer">
+            <button onClick={() => setMobileOpen(false)} className="text-gray-400 hover:text-white p-2.5 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
               <X size={22} />
             </button>
           </div>

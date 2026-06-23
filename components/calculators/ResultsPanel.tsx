@@ -533,7 +533,7 @@ export default function ResultsPanel({
                                 </div>
                                 <div className="text-[13px] font-bold text-green-700">Tax Free</div>
                               </div>
-                              <div className="text-[10px] text-gray-300">* Subject to conditions.</div>
+                              <div className="text-[10px] text-gray-500">* Subject to conditions.</div>
                             </div>
                           </div>
                           <div className="bg-white rounded-2xl p-5 border border-[rgba(184,134,11,0.08)] shadow-sm">

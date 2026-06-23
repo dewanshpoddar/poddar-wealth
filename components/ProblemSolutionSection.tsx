@@ -79,14 +79,14 @@ export default function ProblemSolutionSection() {
               <div className="flex gap-2">
                 {t.banner.plans.map((plan: string, i: number) => (
                   <Link key={i} href={PLAN_LINKS[i] ?? '/products'}
-                    className="text-[10px] bg-white/5 text-white/80 font-medium px-2.5 py-0.5 rounded-full border border-white/10 hover:border-gold/40 hover:bg-gold/10 transition-all duration-300 uppercase tracking-wider animate-fade-in">
+                    className="text-[11px] bg-white/5 text-white/80 font-medium px-3.5 py-2.5 rounded-full border border-white/10 hover:border-gold/40 hover:bg-gold/10 transition-all duration-300 uppercase tracking-wider animate-fade-in min-h-[44px] flex items-center">
                     {plan}
                   </Link>
                 ))}
               </div>
               
               {/* Know More CTA */}
-              <Link href="/products" className="flex items-center gap-1 group border-r border-white/10 pr-6 mr-2">
+              <Link href="/products" className="flex items-center gap-1 group border-r border-white/10 pr-6 mr-2 py-3 min-h-[44px]">
                 <span className="text-[11px] text-gold font-bold group-hover:text-white transition-colors">{t.banner.cta}</span>
                 <span className="text-[11px] text-gold group-hover:translate-x-1 transition-transform">→</span>
               </Link>

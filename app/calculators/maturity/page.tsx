@@ -231,7 +231,7 @@ Can you please suggest the best combination for maximizing my returns?`
                   {s.sumAssuredLabel}
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                   <input
                     id="sumAssured"
                     type="number"
@@ -314,7 +314,7 @@ Can you please suggest the best combination for maximizing my returns?`
                 <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
                   {lang === 'en' ? 'Estimate Growth' : 'ग्रोथ का अनुमान लगाएं'}
                 </div>
-                <div className="text-[12px] text-gray-400 max-w-xs">
+                <div className="text-[12px] text-gray-500 max-w-xs">
                   {lang === 'en' 
                     ? 'Fill the form and hit calculate to visualize your estimated premiums, accrued bonuses and projected maturity amount.'
                     : 'विवरण भरें और अपने अनुमानित प्रीमियम, अर्जित बोनस और अनुमानित परिपक्वता राशि की कल्पना करने के लिए गणना करें पर क्लिक करें।'}
@@ -331,7 +331,7 @@ Can you please suggest the best combination for maximizing my returns?`
 
                   {/* Estimated Maturity Amount */}
                   <div className="bg-amber-50/20 rounded-2xl p-6 text-center border border-amber-100/50">
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5">{s.estimatedMaturity}</div>
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{s.estimatedMaturity}</div>
                     <div className="text-3xl font-bold text-amber-600">{fmt(result.estimatedMaturity)}</div>
                     <div className="text-[11px] text-amber-700 mt-1">({result.estimatedMaturity.toLocaleString('en-IN')})</div>
                   </div>
@@ -340,7 +340,7 @@ Can you please suggest the best combination for maximizing my returns?`
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Total Premiums */}
                   <div className="border border-gray-100 rounded-xl p-4 bg-slate-50">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{s.totalPremiumsPaid}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.totalPremiumsPaid}</div>
                     <div className="text-base font-bold text-navy">{fmt(result.totalPremiumsPaid)}</div>
                   </div>
 
@@ -352,13 +352,13 @@ Can you please suggest the best combination for maximizing my returns?`
 
                   {/* Accrued Bonus */}
                   <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{s.accruedBonus}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.accruedBonus}</div>
                     <div className="text-base font-bold text-navy">{fmt(result.accruedBonus)}</div>
                   </div>
 
                   {/* FAB */}
                   <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{s.estimatedFAB}</div>
+                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.estimatedFAB}</div>
                     <div className="text-base font-bold text-navy">{fmt(result.estimatedFAB)}</div>
                   </div>
                 </div>
@@ -382,12 +382,12 @@ Can you please suggest the best combination for maximizing my returns?`
 
                 {/* WhatsAppShare Result */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
                   <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
                 </div>
 
                 {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-400 border-t border-gray-50 pt-4">
+                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
                   <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                   <p className="text-[10px] leading-relaxed">{result.disclaimer || s.disclaimerText}</p>
                 </div>

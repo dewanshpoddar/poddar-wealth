@@ -36,10 +36,10 @@ export default function AskPoddarJiWidget() {
             
             {/* Text details */}
             <div className="min-w-0">
-              <h3 className="text-[15px] font-bold text-white leading-tight flex items-center gap-2">
+              <h2 className="text-[15px] font-bold text-white leading-tight flex items-center gap-2">
                 {widgetTitle}
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              </h3>
+              </h2>
               <p className="text-[12px] text-gray-400 mt-1 font-medium">
                 {widgetSub}
               </p>

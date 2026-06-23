@@ -114,7 +114,7 @@ export default function LoginPage() {
               &ldquo;Ajay sir helped my family choose the right plan.
               Very knowledgeable and patient.&rdquo;
             </p>
-            <p className="text-xs text-gray-400 mt-3">— Google Review, Gorakhpur</p>
+            <p className="text-xs text-gray-500 mt-3">— Google Review, Gorakhpur</p>
           </div>
 
           <p className="text-xs text-amber-700 font-medium mt-6 bg-amber-100 inline-block px-3 py-1 rounded-full">
@@ -127,7 +127,7 @@ export default function LoginPage() {
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6 md:p-12 relative">
         <Link
           href="/"
-          className="absolute top-6 left-6 flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors"
+          className="absolute top-6 left-6 flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors"
         >
           <ArrowLeft size={16} />
           <span>Back to website</span>
@@ -184,7 +184,7 @@ export default function LoginPage() {
             <div>
               <button
                 onClick={() => { setRole(null); setPassword(''); setError('') }}
-                className="text-sm text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="text-sm text-gray-500 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <ArrowLeft size={14} /> Back
               </button>
@@ -225,7 +225,7 @@ export default function LoginPage() {
             <div>
               <button
                 onClick={() => setRole(null)}
-                className="text-sm text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="text-sm text-gray-500 hover:text-gray-700 mb-6 flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <ArrowLeft size={14} /> Back
               </button>
@@ -283,11 +283,11 @@ export default function LoginPage() {
                 </a>
               </div>
 
-              <p className="text-xs text-gray-400 text-center mt-6">OTP login coming soon</p>
+              <p className="text-xs text-gray-500 text-center mt-6">OTP login coming soon</p>
             </div>
           )}
 
-          <p className="text-xs text-gray-400 text-center mt-10">
+          <p className="text-xs text-gray-500 text-center mt-10">
             © 2026 Poddar Wealth Management
           </p>
         </div>

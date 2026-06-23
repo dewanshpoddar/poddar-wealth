@@ -433,7 +433,7 @@ Please help me review these gaps and suggest the right plans.`
                       {p.sumAssured}
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                       <input
                         id="sumAssured"
                         type="number"
@@ -456,7 +456,7 @@ Please help me review these gaps and suggest the right plans.`
                       {p.annualPremium}
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                       <input
                         id="annualPremium"
                         type="number"
@@ -537,7 +537,7 @@ Please help me review these gaps and suggest the right plans.`
                       {p.annualIncome}
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">₹</span>
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
                       <input
                         id="annualIncome"
                         type="number"
@@ -703,7 +703,7 @@ Please help me review these gaps and suggest the right plans.`
                 <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
                   {lang === 'en' ? 'Ready to Audit Portfolio' : 'ऑडिट के लिए तैयार'}
                 </div>
-                <div className="text-[12px] text-gray-400 max-w-xs leading-relaxed">
+                <div className="text-[12px] text-gray-500 max-w-xs leading-relaxed">
                   {lang === 'en' 
                     ? 'Enter your policy and profile inputs. Click Check My Score to run a security health audit.'
                     : 'अपनी पॉलिसी और प्रोफाइल इनपुट दर्ज करें। सुरक्षा ऑडिट चलाने के लिए मेरा स्कोर चेक करें पर क्लिक करें।'}
@@ -746,7 +746,7 @@ Please help me review these gaps and suggest the right plans.`
                     
                     <div className="absolute flex flex-col items-center">
                       <span className="text-4xl font-extrabold text-slate-900">{result.totalScore}</span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">/ 100</span>
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">/ 100</span>
                     </div>
                   </div>
 
@@ -867,7 +867,7 @@ Please help me review these gaps and suggest the right plans.`
 
                 {/* Share Section */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{p.shareWhatsApp}</span>
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{p.shareWhatsApp}</span>
                   <WhatsAppShare text={customShareText} className="shadow-none py-2 px-4" />
                 </div>
               </div>

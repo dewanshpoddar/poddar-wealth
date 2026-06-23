@@ -61,7 +61,7 @@ export default function InputsPanel({
                   {/* Name + Salutation */}
                   <div className="pb-4 border-b border-gray-50">
                     <label htmlFor="clientName" className="block text-[12px] font-semibold text-gray-600 mb-2">
-                      Client Name <span className="text-gray-300 font-normal">(personalises report)</span>
+                      Client Name <span className="text-gray-500 font-normal">(personalises report)</span>
                     </label>
                     <div className="flex gap-2">
                       <div className="flex gap-1">
@@ -92,7 +92,7 @@ export default function InputsPanel({
                           value={age} onChange={e => setAge(Math.min(selectedPlan.maxAge ?? 65, Math.max(selectedPlan.minAge ?? 0, +e.target.value)))}
                           className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                       </div>
-                      <div className="flex justify-between text-[10px] text-gray-300">
+                      <div className="flex justify-between text-[10px] text-gray-500">
                         <span>{selectedPlan.minAge ?? 0} yrs</span><span>{selectedPlan.maxAge ?? 65} yrs</span>
                       </div>
                     </div>
@@ -110,9 +110,9 @@ export default function InputsPanel({
                             className="w-16 px-2 py-1.5 text-[13px] font-bold text-center border border-gold/30 rounded-lg bg-gold/5 text-gold focus:outline-none focus:border-gold" />
                         </div>
                         <div className="flex justify-between text-[10px] mt-0.5">
-                          <span className="text-gray-300">{minTerm} yrs</span>
+                          <span className="text-gray-500">{minTerm} yrs</span>
                           <span className="text-amber-700 font-semibold">PPT: {ppt} yrs</span>
-                          <span className="text-gray-300">{maxTerm} yrs</span>
+                          <span className="text-gray-500">{maxTerm} yrs</span>
                         </div>
                       </div>
                     )}

@@ -83,7 +83,7 @@ export default function QuickActions() {
                     {sub}
                   </p>
                 </div>
-                <ArrowRight size={11} className="text-gray-300 group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ArrowRight size={11} className="text-gray-500 group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </div>
             )
 
