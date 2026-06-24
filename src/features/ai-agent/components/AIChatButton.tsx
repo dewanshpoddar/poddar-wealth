@@ -7,7 +7,7 @@ import { usePoddarJiChat } from '../hooks/usePoddarJiChat'
 import PoddarJiChatUI from '@/components/base/PoddarJiChatUI'
 
 export default function AIChatButton() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const [isOpen, setIsOpen] = useState(false)
   const [bubbleIndex, setBubbleIndex] = useState(0)
   const [showBubble, setShowBubble] = useState(false)
@@ -113,17 +113,17 @@ export default function AIChatButton() {
           
           {/* Desktop tooltip (show on hover) */}
           <div className="hidden sm:block absolute right-16 top-1/2 -translate-y-1/2 bg-navy text-white text-xs font-bold px-3 py-2 rounded-xl whitespace-nowrap opacity-0 pointer-events-none group-hover/trigger:opacity-100 transition-opacity shadow-lg border border-white/10">
-            {isOpen 
-              ? (useLang().lang === 'hi' ? 'बंद करें' : 'Close') 
-              : (useLang().lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
+            {isOpen
+              ? (lang === 'hi' ? 'बंद करें' : 'Close')
+              : (lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
           </div>
         </motion.button>
         
         {/* Mobile label: always show as small label below the circle */}
         <span className="sm:hidden bg-navy/90 backdrop-blur-sm text-[9px] font-bold text-white px-2 py-0.5 rounded-full shadow border border-white/5 whitespace-nowrap">
-          {isOpen 
-            ? (useLang().lang === 'hi' ? 'बंद करें' : 'Close') 
-            : (useLang().lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
+          {isOpen
+            ? (lang === 'hi' ? 'बंद करें' : 'Close')
+            : (lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
         </span>
       </div>
     </div>
