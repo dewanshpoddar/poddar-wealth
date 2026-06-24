@@ -33,6 +33,7 @@ function ChatWindow() {
       chipQueries={t.chatbot.chipQueries}
       placeholder={t.chatbot.placeholder}
       disclaimer={t.chatbot.disclaimer}
+      disclaimerNotice={t.chatbot.disclaimerNotice}
       badges={t.chatbot.badges}
       statusText={t.chatbot.statusText}
       onClearChat={chat.clearChat}

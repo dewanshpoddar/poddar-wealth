@@ -61,6 +61,7 @@ export default function AIChatButton() {
               chipQueries={t.chatbot.chipQueries}
               placeholder={t.chatbot.placeholder}
               disclaimer={t.chatbot.disclaimer}
+              disclaimerNotice={t.chatbot.disclaimerNotice}
               badges={t.chatbot.badges}
               statusText={t.chatbot.statusText}
               compact
@@ -88,32 +89,43 @@ export default function AIChatButton() {
       </AnimatePresence>
 
       {/* ── Floating trigger button ── */}
-      <motion.button
-        onClick={() => { setIsOpen(prev => !prev); setShowBubble(false) }}
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.96 }}
-        className="flex items-center gap-2.5 bg-navy text-white rounded-full pl-3 pr-4 py-3 shadow-2xl hover:bg-navy-light transition-colors"
-        aria-label={isOpen ? 'Close Poddar Ji' : 'Ask Poddar Ji'}
-      >
-        <div className="w-7 h-7 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
-          <AnimatePresence mode="wait" initial={false}>
-            {isOpen ? (
-              <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <ChevronDown size={14} className="text-navy" />
-              </motion.span>
-            ) : (
-              <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <Sparkles size={14} className="text-navy" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-        <div className="hidden sm:flex flex-col items-start leading-none">
-          <span className="text-[9px] text-white/55 uppercase tracking-wider mb-0.5">AI Advisor</span>
-          <span className="text-[12px] font-bold">{isOpen ? 'Close chat' : 'Ask Poddar Ji'}</span>
-        </div>
-        <span className="sm:hidden text-[12px] font-bold">PJ</span>
-      </motion.button>
+      <div className="flex flex-col items-center gap-1.5 group/trigger">
+        <motion.button
+          onClick={() => { setIsOpen(prev => !prev); setShowBubble(false) }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.94 }}
+          className="relative w-14 h-14 bg-navy text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-navy-light transition-colors"
+          aria-label={isOpen ? 'Close Poddar Ji' : 'Ask Poddar Ji'}
+        >
+          <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center">
+            <AnimatePresence mode="wait" initial={false}>
+              {isOpen ? (
+                <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <ChevronDown size={18} className="text-navy" />
+                </motion.span>
+              ) : (
+                <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <Sparkles size={18} className="text-navy" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+          
+          {/* Desktop tooltip (show on hover) */}
+          <div className="hidden sm:block absolute right-16 top-1/2 -translate-y-1/2 bg-navy text-white text-xs font-bold px-3 py-2 rounded-xl whitespace-nowrap opacity-0 pointer-events-none group-hover/trigger:opacity-100 transition-opacity shadow-lg border border-white/10">
+            {isOpen 
+              ? (useLang().lang === 'hi' ? 'बंद करें' : 'Close') 
+              : (useLang().lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
+          </div>
+        </motion.button>
+        
+        {/* Mobile label: always show as small label below the circle */}
+        <span className="sm:hidden bg-navy/90 backdrop-blur-sm text-[9px] font-bold text-white px-2 py-0.5 rounded-full shadow border border-white/5 whitespace-nowrap">
+          {isOpen 
+            ? (useLang().lang === 'hi' ? 'बंद करें' : 'Close') 
+            : (useLang().lang === 'hi' ? 'पोद्दार जी से पूछें' : 'Ask Poddar Ji')}
+        </span>
+      </div>
     </div>
   )
 }

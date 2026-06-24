@@ -21,10 +21,10 @@ export default function TrustSection() {
       }
     },
     {
-      num: 'MDRT',
+      num: 'MDRT Member',
       label: {
-        en: 'USA Member (Top 1%)',
-        hi: 'यूएसए सदस्य (शीर्ष 1%)'
+        en: 'Global Top 1%',
+        hi: 'ग्लोबल टॉप 1%'
       }
     },
     {

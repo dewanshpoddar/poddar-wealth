@@ -41,19 +41,14 @@ export default function AboutPage() {
     { src: '/assets/hero-family.webp', label: 'Family Protection' },
     { src: '/assets/hero-education.webp', label: 'Child Future' },
     { src: '/assets/hero-marriage.webp', label: 'Goal Planning' },
-    { src: '/assets/legacy-award-1994.webp', label: 'Founding Mission' },
-    { src: '/assets/team-mentorship.webp', label: 'Team Excellence' },
   ]
 
   const filmStrip2 = [
     { src: '/assets/gorakhpur-office-render.webp', label: 'Vijay Chowk HQ' },
     { src: '/assets/hero-retirement.webp', label: 'Legacy Wealth' },
     { src: '/assets/hero-health.webp', label: 'Health Security' },
-    { src: '/assets/legacy-award-1994.webp', label: '31yr Dedication' },
-    { src: '/assets/team-mentorship.webp', label: 'Global MDRT' },
-    { src: '/assets/gorakhpur-office-render.webp', label: 'Financial Fortress' },
+    { src: '/assets/legacy-award-1994.webp', label: '31-Year Dedication' },
     { src: '/assets/hero-family.webp', label: 'Core Values' },
-    { src: '/assets/team-mentorship.webp', label: 'Chairman\'s Club' },
   ]
 
   const valuesIcons = [
@@ -83,21 +78,21 @@ export default function AboutPage() {
               <h1 className="font-display text-[30px] md:text-[36px] lg:text-[44px] font-normal italic leading-[1.2] text-slate-900 mb-1">
                 {isHi ? (
                   <>
-                    <span className="font-bold text-gold not-italic">31 वर्षों</span> का <br />
-                    संस्थागत विश्वास
+                    गोरखपुर के परिवारों को <br />
+                    <span className="font-bold text-gold not-italic">31 वर्षों से सुरक्षित</span> कर रहे हैं
                   </>
                 ) : (
                   <>
-                    31 Years of <br />
-                    <span className="font-bold text-gold not-italic">Institutional Trust</span>
+                    Protecting Gorakhpur <br />
+                    <span className="font-bold text-gold not-italic">Families for 31 Years</span>
                   </>
                 )}
               </h1>
               
               <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-6 font-medium">
                 {isHi 
-                  ? '1994 से गोरखपुर के परिवारों के लिए वित्तीय सुरक्षा का निर्माण कर रहे हैं। हम तीन दशकों की ऑन-ग्राउंड उत्कृष्टता और मिलियन डॉलर राउंड टेबल (USA) क्रेडेंशियल्स के साथ आपके जीवन के सबसे अनमोल काम को सुरक्षित करते हैं।'
-                  : "Building financial fortresses for Gorakhpur families since 1994. We secure your life's most precious work with three decades of on-ground excellence and Million Dollar Round Table (USA) credentials."}
+                  ? 'गोरखपुर और पूर्वी यूपी के परिवारों को सुरक्षित करने के 31 वर्ष — उस पुरस्कार विजेता, व्यक्तिगत मार्गदर्शन के साथ जिस पर आप हमेशा भरोसा कर सकते हैं।'
+                  : "31 years of protecting families across Gorakhpur and Eastern UP — with award-winning, personal advisory you can always count on."}
               </p>
             </div>
 
@@ -188,7 +183,7 @@ export default function AboutPage() {
                   <div className="flex items-center gap-3 mb-4">
                     <span className="w-12 h-px bg-gold" />
                     <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">
-                      {isHi ? 'संस्थागत उपस्थिति' : 'Institutional Presence'}
+                      {isHi ? 'सलाहकार से मिलें' : 'Meet Your Advisor'}
                     </span>
                   </div>
                   
@@ -450,6 +445,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* TODO: Replace with real photos from Ajay sir */}
       {/* ═══ MEMORY LANE (35MM STRIPS) ═══ */}
       <section className="py-16 md:py-20 bg-slate-50 border-t border-slate-100 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />

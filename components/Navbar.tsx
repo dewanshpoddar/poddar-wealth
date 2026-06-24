@@ -505,7 +505,7 @@ export default function Navbar() {
             </div>
             <div className="grid grid-cols-1 gap-2.5">
               {[
-                { icon: <Trophy size={16} className="text-amber-500 flex-shrink-0" />, en: 'MDRT® Member (USA)', hi: 'MDRT® सदस्य (USA)' },
+                { icon: <Trophy size={16} className="text-amber-500 flex-shrink-0" />, en: 'MDRT® Member', hi: 'MDRT® सदस्य' },
                 { icon: <Sparkles size={16} className="text-amber-500 flex-shrink-0" />, en: '31+ Years Legacy', hi: '31+ साल का अटूट भरोसा' },
                 { icon: <ShieldCheck size={16} className="text-amber-500 flex-shrink-0" />, en: '5000+ Families Protected', hi: '5000+ सुरक्षित परिवार' },
               ].map(({ icon, en, hi }) => (

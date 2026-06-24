@@ -6,7 +6,7 @@ import { usePoddarJiChat } from '@/src/features/ai-agent'
 import { submitLead } from '@/lib/api'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
-const WHATSAPP_URL = `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent('Namaste Ajay sir, main Poddar Ji se baat kar raha tha aur aapse directly baat karna chahta hun.')}`
+const WHATSAPP_URL = `https://wa.me/91${ADVISOR_PHONE}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`
 const MAX_INPUT = 500
 
 // ── Typing dots ──────────────────────────────────────────────────────────────
@@ -120,6 +120,7 @@ interface PoddarJiChatUIProps {
   chipQueries: string[]
   placeholder: string
   disclaimer: string
+  disclaimerNotice?: string
   badges: string[]
   statusText: string
   compact?: boolean
@@ -127,7 +128,7 @@ interface PoddarJiChatUIProps {
 }
 
 export default function PoddarJiChatUI({
-  chat, chips, chipQueries, placeholder, disclaimer, badges, statusText, compact = false, onClearChat,
+  chat, chips, chipQueries, placeholder, disclaimer, disclaimerNotice, badges, statusText, compact = false, onClearChat,
 }: PoddarJiChatUIProps) {
   const inputRef   = useRef<HTMLInputElement>(null)
   const scrollRef  = useRef<HTMLDivElement>(null)
@@ -326,6 +327,9 @@ export default function PoddarJiChatUI({
             <Send size={16} className="text-white" />
           </button>
         </div>
+        {disclaimerNotice && (
+          <p className="text-xs text-gray-500 mt-1 px-1 text-center">{disclaimerNotice}</p>
+        )}
         {chat.input.length > 450 && (
           <p className="text-[9px] text-amber-700 mt-1 px-1">{MAX_INPUT - chat.input.length} characters left</p>
         )}

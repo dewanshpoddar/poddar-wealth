@@ -103,9 +103,7 @@ export default function Footer() {
               <a href="https://www.facebook.com/share/1FnAn7yFPS/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="Facebook">
                 <Facebook size={17} />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="YouTube">
-                <Youtube size={17} />
-              </a>
+
               <a href="https://www.linkedin.com/company/poddarwealthmanagement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="LinkedIn">
                 <Linkedin size={17} />
               </a>

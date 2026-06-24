@@ -87,7 +87,7 @@ export default function HeroSection() {
                          hover:bg-gold-hover transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta1}
             </Link>
-            <Link href="/services/life-insurance"
+            <Link href="/contact"
               className="bg-transparent text-gray-900 border border-gray-300 py-3 px-6 rounded-full text-[13px] min-h-[44px] inline-flex items-center justify-center
                          hover:border-gold hover:text-gold transition-all duration-200 hover:-translate-y-px">
               {t.hero.cta2}

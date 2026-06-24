@@ -17,7 +17,7 @@ export default function WhatsAppButton() {
 
   return (
     <a
-      href={`https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20sir`}
+      href={`https://wa.me/91${ADVISOR_PHONE}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

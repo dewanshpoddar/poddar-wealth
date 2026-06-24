@@ -55,7 +55,7 @@ export default function QuickActions() {
         en: 'WhatsApp or Call',
         hi: 'व्हाट्सएप या डायरेक्ट कॉल'
       },
-      href: `https://wa.me/91${ADVISOR_PHONE}?text=Hi%20Ajay%20ji,%20I%20need%20insurance%20advice.`,
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`,
       isExternal: true
     }
   ]

@@ -29,7 +29,7 @@
     "cta": "Know more →"
   },
   "hero": {
-    "eyebrow": "India's most trusted insurance advisor",
+    "eyebrow": "Gorakhpur's trusted insurance advisor — MDRT Member",
     "headline": "Your Family's Protection,",
     "headlineGold": "31 Years of Wealth Trust.",
     "subtitle": "Life insurance, health insurance, and wealth planning for Indian families. By Mr. Ajay Kumar Poddar, MDRT Member and Chairman's Club awardee.",
@@ -61,8 +61,8 @@
       },
       {
         "icon": "ring",
-        "title": "Child's wedding",
-        "sub": "Goal-based wedding corpus"
+        "title": "Child's Wedding",
+        "sub": "Plan your child's wedding fund"
       }
     ]
   },
@@ -89,7 +89,7 @@
     }
   ],
   "trust": {
-    "title": "Why Families Trust Ajay Poddar",
+    "title": "Why 5,000+ Families Trust Us",
     "subtitle": "Three decades of simplifying insurance for Indian families",
     "credentials": [
       {
@@ -123,8 +123,8 @@
         "label": "Families protected"
       },
       {
-        "num": "MDRT",
-        "label": "USA member"
+        "num": "MDRT Member",
+        "label": "Global Top 1%"
       },
       {
         "num": "Chairman's",
@@ -180,7 +180,7 @@
         "icon": "👧",
         "color": "green",
         "title": "Child plans",
-        "desc": "Education & marriage planning with guaranteed maturity",
+        "desc": "Education & wedding planning with guaranteed maturity",
         "tag": "Future",
         "href": "/services/child-planning",
         "badge": "For Parents"
@@ -237,8 +237,8 @@
       {
         "icon": "👰",
         "color": "orange",
-        "title": "Child's wedding",
-        "desc": "Goal-based wealth building for your child's wedding",
+        "title": "Child's Wedding",
+        "desc": "Plan your child's wedding fund",
         "tag": "Savings",
         "href": "/services/child-planning"
       },
@@ -495,7 +495,7 @@
       "Health cover for family of 4",
       "Tax saving through insurance",
       "Best LIC retirement plan",
-      "Child education & marriage plans"
+      "Child education & wedding plans"
     ],
     "curiosityQueries": [
       "₹50L term plan ka premium kitna hoga?",
@@ -505,7 +505,7 @@
       "Ajay sir ki top 3 policy kaunsi hai?",
       "Retirement ke liye ₹10,000/month kaafi hai?"
     ],
-    "headerName": "Poddar Ji",
+    "headerName": "Poddar Ji — AI Advisor",
     "statusText": "Online: replies in seconds",
     "badges": [
       "LIC expert",
@@ -528,7 +528,8 @@
       "LIC claim process kya hai? Documents kya chahiye?"
     ],
     "placeholder": "Ask Poddar Ji: Hindi ya English mein...",
-    "disclaimer": "AI responses are indicative. Exact premiums confirmed by Ajay sir: 9415313434"
+    "disclaimer": "AI responses are indicative. Exact premiums confirmed by Ajay sir: 9415313434",
+    "disclaimerNotice": "AI-generated responses for information only. For personal advice, speak with Ajay Kumar Poddar directly."
   },
   "agent": {
     "eyebrow": "Career opportunity",
@@ -561,7 +562,7 @@
     "name": "Ajay Kumar Poddar",
     "badges": [
       {
-        "text": "MDRT Member (USA)",
+        "text": "MDRT Member",
         "type": "gold"
       },
       {
@@ -767,9 +768,10 @@
     "formTitle": "Send Us a Message",
     "infoTitle": "Contact Information",
     "officeTitle": "Office Hours",
-    "officeHours": "Monday – Saturday: 9 AM to 7 PM\nSunday: 10 AM to 2 PM",
+    "officeHours": "Mon–Sat: 9:00 AM – 6:00 PM",
     "whatsappCta": "Chat on WhatsApp",
-    "callCta": "Call Now"
+    "callCta": "Call Now",
+    "whatsappPrivacy": "Your message goes directly to Ajay ji's personal WhatsApp — never to a call centre."
   },
   "lifeCalc": {
     "title": "Life Insurance Coverage Calculator",
