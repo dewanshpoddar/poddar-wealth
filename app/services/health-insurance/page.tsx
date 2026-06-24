@@ -2,7 +2,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import ConsultationSection from '@/components/ConsultationSection'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Activity } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 const features = [
@@ -22,7 +22,17 @@ const types = [
 ]
 
 export default function HealthInsurancePage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const hi = lang === 'hi'
+
+  const tools = [
+    {
+      name: hi ? 'पॉलिसी हेल्थ स्कोर' : 'Policy Health Score',
+      desc: hi ? 'अपने बीमा पोर्टफोलियो का मुफ्त सुरक्षा ऑडिट और स्कोर प्राप्त करें।' : 'Get a free insurance portfolio audit and security health score.',
+      icon: <Activity className="w-5 h-5 text-emerald-600" />,
+      link: '/calculators/policy-health'
+    }
+  ]
 
   return (
     <div className="pt-20">
@@ -84,6 +94,46 @@ export default function HealthInsurancePage() {
                 <h3 className="font-display font-bold text-lg text-slate-900 mt-2 mb-2">{type.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{type.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Helpful Tools */}
+      <section className="section-padding bg-white border-t border-gray-100">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h2 className="section-title">
+              {hi ? 'मददगार टूल्स और कैलकुलेटर' : 'Helpful Tools & Calculators'}
+            </h2>
+            <p className="text-slate-500 mt-2">
+              {hi 
+                ? 'अपनी योजना को आसान बनाने के लिए इन टूल्स का उपयोग करें' 
+                : 'Use these free tools to plan and make informed decisions'}
+            </p>
+          </div>
+          <div className="max-w-md mx-auto">
+            {tools.map((tool, i) => (
+              <Link 
+                key={i} 
+                href={tool.link}
+                className="bg-white border border-gray-100 hover:border-emerald-500/30 rounded-2xl p-6 hover:shadow-sm transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    {tool.icon}
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-emerald-600 transition-colors text-base mb-1">
+                    {tool.name}
+                  </h3>
+                  <p className="text-slate-500 text-xs leading-relaxed font-medium">
+                    {tool.desc}
+                  </p>
+                </div>
+                <div className="text-[11px] font-bold text-emerald-600 group-hover:translate-x-0.5 transition-transform mt-4 flex items-center gap-1">
+                  {hi ? 'कैलकुलेट करें' : 'Calculate Now'} →
+                </div>
+              </Link>
             ))}
           </div>
         </div>

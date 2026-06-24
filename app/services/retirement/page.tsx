@@ -1,8 +1,9 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import ConsultationSection from '@/components/ConsultationSection'
 import ServicePageWrapper from '@/components/ServicePageWrapper'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, TrendingUp, ArrowRight } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
 import { useLang } from '@/lib/LangContext'
 
@@ -72,6 +73,45 @@ export default function RetirementPage() {
             ))}
           </div>
           <p className="text-center text-slate-400 text-xs mt-4">*Assuming 12% annual returns. For illustration purposes only.</p>
+        </div>
+      </section>
+
+      {/* Helpful Tools */}
+      <section className="section-padding bg-white border-t border-gray-100">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h2 className="section-title">
+              {lang === 'hi' ? 'मददगार टूल्स और कैलकुलेटर' : 'Helpful Tools & Calculators'}
+            </h2>
+            <p className="text-slate-500 mt-2">
+              {lang === 'hi' 
+                ? 'अपनी योजना को आसान बनाने के लिए इन टूल्स का उपयोग करें' 
+                : 'Use these free tools to plan and make informed decisions'}
+            </p>
+          </div>
+          <div className="max-w-md mx-auto">
+            <Link 
+              href="/calculators/retirement"
+              className="bg-white border border-gray-100 hover:border-amber-500/30 rounded-2xl p-6 hover:shadow-sm transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <TrendingUp className="w-5 h-5 text-amber-500" />
+                </div>
+                <h3 className="font-bold text-slate-900 group-hover:text-amber-600 transition-colors text-base mb-1">
+                  {lang === 'hi' ? 'रिटायरमेंट कैलकुलेटर' : 'Retirement Calculator'}
+                </h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-medium">
+                  {lang === 'hi' 
+                    ? 'रिटायरमेंट के बाद एक सुरक्षित जीवन के लिए आवश्यक पेंशन फंड का अनुमान लगाएं।' 
+                    : 'Estimate the pension corpus you need for a secure retired life.'}
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-amber-600 group-hover:translate-x-0.5 transition-transform mt-4 flex items-center gap-1">
+                {lang === 'hi' ? 'कैलकुलेट करें' : 'Calculate Now'} →
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
     </ServicePageWrapper>

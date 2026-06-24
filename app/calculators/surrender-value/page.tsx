@@ -8,6 +8,7 @@ import { PLANS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA } from '@/lib/format'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import CalculatorCTA from '@/components/calculators/CalculatorCTA'
 import { SurrenderValueResult } from '@/lib/types/calculator'
 
 export default function SurrenderValueCalculatorPage() {
@@ -373,22 +374,15 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                   </div>
                 </div>
 
-                {/* WhatsApp Sir CTA */}
-                <div className="bg-amber-50 border border-amber-100 rounded-2xl p-5 text-center space-y-4">
-                  <div className="flex justify-center gap-2 text-amber-600">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                    <span className="text-xs font-bold">{s.exactQuery}</span>
-                  </div>
-                  <a
-                    href={getWhatsAppCTAUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex h-11 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md shadow-green-500/10 cursor-pointer"
-                  >
-                    <MessageCircle size={16} className="text-white" />
-                    {s.whatsappCTA}
-                  </a>
-                </div>
+                {/* Calculator CTA Card */}
+                <CalculatorCTA
+                  serviceLink="/services/life-insurance"
+                  serviceLabelEn="Explore Alternatives to Surrender"
+                  serviceLabelHi="सरेंडर करने के विकल्प देखें"
+                  secondaryLabelEn="Talk to Ajay sir before surrendering"
+                  secondaryLabelHi="सरेंडर करने से पहले अजय सर से बात करें"
+                  whatsappMessage="Hi Ajay sir, I calculated my LIC surrender value on poddarwealth.com and want to discuss alternatives before surrendering."
+                />
 
                 {/* WhatsAppShare Result */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">

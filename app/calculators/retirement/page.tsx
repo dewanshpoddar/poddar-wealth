@@ -7,6 +7,7 @@ import { PLANS, advisePlans } from '@/lib/lic-plans-data.js'
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import CalculatorCTA from '@/components/calculators/CalculatorCTA'
 import { LicPlan } from '@/lib/types/lic-plan'
 
 export default function RetirementCalcPage() {
@@ -202,6 +203,13 @@ export default function RetirementCalcPage() {
                   </div>
                 ))}
               </div>
+
+              <CalculatorCTA
+                serviceLink="/services/retirement"
+                serviceLabelEn="Plan Your Retirement"
+                serviceLabelHi="अपने रिटायरमेंट की प्लानिंग करें"
+                whatsappMessage={`Hi Ajay sir, I calculated my retirement corpus need as ${fmt(result.corpus)} on poddarwealth.com and want to plan my retirement.`}
+              />
             </div>
           </div>
         </section>

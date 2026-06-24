@@ -70,6 +70,11 @@ export default function Navbar() {
     { href: '/services/keyman-insurance', en: 'Keyman Insurance',  hi: 'कीमैन बीमा' },
   ]
 
+  const supportLinks = [
+    { href: '/claims', en: 'File a Claim', hi: 'दावा सहायता' },
+    { href: '/faq',    en: 'FAQs',          hi: 'FAQs' },
+  ]
+
   const label = (en: string, hi: string) => lang === 'hi' ? hi : en
 
   return (
@@ -166,6 +171,26 @@ export default function Navbar() {
                       {label(en, hi)}
                     </Link>
                   ))}
+                  
+                  {/* Support Subsection */}
+                  <div className={`my-1.5 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
+                  <div className={`px-4 py-1 text-[10px] font-bold uppercase tracking-wider ${scrolled ? 'text-gray-500' : 'text-gray-400'}`}>
+                    {label('Support', 'सहायता')}
+                  </div>
+                  {supportLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`block px-4 py-2 text-xs rounded-lg transition-colors ${
+                        isActive(href)
+                          ? scrolled ? 'text-amber-400 bg-white/5 font-semibold' : 'text-amber-600 bg-gray-50 font-semibold'
+                          : scrolled ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-[#12152a] hover:bg-gray-50'
+                      }`}
+                    >
+                      {label(en, hi)}
+                    </Link>
+                  ))}
+
                   <div className={`my-1 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
                   <Link
                     href="/become-advisor"
@@ -215,19 +240,26 @@ export default function Navbar() {
             </div>
 
             <Link
-              href="/login"
+              href="/client"
               className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-all ${
                 scrolled
                   ? 'border-gray-600 text-gray-300 hover:text-white hover:border-gray-400'
                   : 'border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400'
               }`}
             >
-              {label('Login', 'लॉगिन')}
+              {label('Client Portal', 'क्लाइंट पोर्टल')}
+            </Link>
+
+            <Link
+              href="/pay-premium"
+              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shadow-sm hover:shadow-md"
+            >
+              {label('Pay Premium', 'प्रीमियम भुगतान')}
             </Link>
 
             <Link
               href="/contact"
-              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shadow-sm hover:shadow-md"
+              className="border border-amber-500 hover:bg-amber-50 text-amber-500 font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shadow-sm hover:shadow-md"
             >
               {label('Get a free quote', 'फ्री कोट')}
             </Link>
@@ -271,6 +303,13 @@ export default function Navbar() {
             </button>
           </div>
 
+          <Link
+            href="/pay-premium"
+            className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-lg transition-colors shadow-sm"
+          >
+            {label('Pay Premium', 'भुगतान')}
+          </Link>
+
           <button
             onClick={() => setMobileOpen(true)}
             className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer ${
@@ -308,6 +347,16 @@ export default function Navbar() {
 
           {/* Drawer nav links */}
           <div className="flex-1 px-0 py-2">
+            <div className="px-6 py-4 border-b border-white/[0.04] bg-amber-500/10">
+              <Link
+                href="/pay-premium"
+                onClick={() => setMobileOpen(false)}
+                className="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm py-3 rounded-xl transition-colors shadow-sm"
+              >
+                {label('Pay Premium', 'प्रीमियम भुगतान')}
+              </Link>
+            </div>
+
             <Link
               href="/about"
               onClick={() => setMobileOpen(false)}
@@ -341,6 +390,25 @@ export default function Navbar() {
                       {label(en, hi)}
                     </Link>
                   ))}
+                  
+                  {/* Support Subsection in Mobile */}
+                  <div className="my-1.5 border-t border-white/[0.04]" />
+                  <div className="px-1 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                    {label('Support', 'सहायता')}
+                  </div>
+                  {supportLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center py-2.5 text-sm w-full ${
+                        isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      {label(en, hi)}
+                    </Link>
+                  ))}
+
                   <div className="my-1 border-t border-white/[0.04]" />
                   <Link
                     href="/services"
@@ -400,7 +468,7 @@ export default function Navbar() {
             {[
               { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना' },
               { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग' },
-              { href: '/login',  en: 'Login',          hi: 'लॉगिन' },
+              { href: '/client',  en: 'Client Portal',  hi: 'क्लाइंट पोर्टल' },
             ].map(({ href, en, hi }) => (
               <Link
                 key={href}

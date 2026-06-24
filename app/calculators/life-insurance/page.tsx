@@ -7,6 +7,7 @@ import { calculatePremium, generateBenefitTable, PLANS, getPPT } from '@/lib/lic
 import { fmt } from '@/lib/format'
 import { openLeadPopup } from '@/lib/events'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import CalculatorCTA from '@/components/calculators/CalculatorCTA'
 
 import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
 
@@ -336,6 +337,13 @@ export default function LifeInsuranceCalcPage() {
                   )}
                 </div>
               )}
+
+              <CalculatorCTA
+                serviceLink="/services/life-insurance"
+                serviceLabelEn="Compare Term Insurance Options"
+                serviceLabelHi="टर्म इंश्योरेंस विकल्पों की तुलना करें"
+                whatsappMessage={`Hi Ajay sir, I calculated my life insurance coverage need as ${fmt(need.recommended)} on poddarwealth.com and want to discuss term insurance plans.`}
+              />
             </div>
           </div>
         </section>

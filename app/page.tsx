@@ -71,6 +71,16 @@ const NewsletterSignup = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
 )
 
+const CalculatorsPreview = dynamic(
+  () => import('@/components/CalculatorsPreview'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
+)
+
+const FinalCTA = dynamic(
+  () => import('@/components/FinalCTA'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
+)
+
 // Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
@@ -95,34 +105,7 @@ export default function HomePage() {
       {/* 2 — Ask Poddar Ji widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Calculator quick actions */}
-      <SectionBoundary>
-        <LazySection height="h-16">
-          <Suspense fallback={null}>
-            <QuickActions />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 4 — Protection Check ("What happens if income stops?") */}
-      <SectionBoundary>
-        <LazySection height="h-64">
-          <Suspense fallback={null}>
-            <ProtectionCheckSection />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 5 — Life Stages Navigator */}
-      <SectionBoundary>
-        <LazySection height="h-48">
-          <Suspense fallback={null}>
-            <LifeEventsNavigator />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 6 — Trust stats bar */}
+      {/* 3 — Trust stats bar */}
       <SectionBoundary>
         <LazySection height="h-16">
           <Suspense fallback={null}>
@@ -131,61 +114,16 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 7 — How We Help You (goal-oriented services) */}
+      {/* 4 — Calculator quick actions */}
       <SectionBoundary>
-        <LazySection height="h-96">
+        <LazySection height="h-16">
           <Suspense fallback={null}>
-            <ServicesSection />
+            <QuickActions />
           </Suspense>
         </LazySection>
       </SectionBoundary>
 
-      {/* 8 — Popular Plans (curated premium dark grid) */}
-      <SectionBoundary>
-        <LazySection height="h-48">
-          <Suspense fallback={null}>
-            <PopularPlans />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 9 — Wealth Blueprint Calculator (Calculators / tools section) */}
-      <SectionBoundary>
-        <LazySection height="h-96">
-          <Suspense fallback={null}>
-            <WealthBlueprintCalculator />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 10 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
-      <SectionBoundary>
-        <LazySection height="h-96">
-          <Suspense fallback={null}>
-            <TestimonialsSection />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 11 — Blog preview carousel */}
-      <SectionBoundary>
-        <LazySection height="h-96">
-          <Suspense fallback={null}>
-            <BlogPreview />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 12 — Join as Insurance Advisor */}
-      <SectionBoundary>
-        <LazySection height="h-64">
-          <Suspense fallback={null}>
-            <JoinAdvisorSection />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 13 — About the Founder */}
+      {/* 5 — About the Founder */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
@@ -194,11 +132,84 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 14 — Newsletter signup */}
+      {/* 6 — Life Stages Navigator */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
+            <LifeEventsNavigator />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 7 — Protection Check ("What happens if income stops?") */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <ProtectionCheckSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 8 — How We Help You (goal-oriented services) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <ServicesSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 9 — Popular Plans (curated premium dark grid) */}
+      <SectionBoundary>
+        <LazySection height="h-48">
+          <Suspense fallback={null}>
+            <PopularPlans />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 10 — Calculators preview (NEW) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <CalculatorsPreview />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 11 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <TestimonialsSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 12 — Blog preview carousel */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
+            <BlogPreview />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 13 — Join as Insurance Advisor */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <JoinAdvisorSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 14 — Newsletter signup + Final CTA (merged) */}
+      <SectionBoundary>
+        <LazySection height="h-96">
+          <Suspense fallback={null}>
             <NewsletterSignup />
+            <FinalCTA />
           </Suspense>
         </LazySection>
       </SectionBoundary>

@@ -8,6 +8,7 @@ import { PLANS } from '@/lib/lic-plans-data.js'
 import { fmt, fmtSA } from '@/lib/format'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import WhatsAppShare from '@/components/WhatsAppShare'
+import CalculatorCTA from '@/components/calculators/CalculatorCTA'
 import { MaturityResult } from '@/lib/types/calculator'
 
 export default function MaturityCalculatorPage() {
@@ -363,22 +364,13 @@ Can you please suggest the best combination for maximizing my returns?`
                   </div>
                 </div>
 
-                {/* WhatsApp Sir CTA */}
-                <div className="bg-amber-50 border border-amber-100 rounded-2xl p-5 text-center space-y-4">
-                  <div className="flex justify-center gap-2 text-amber-600">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                    <span className="text-xs font-bold">{s.exactQuery}</span>
-                  </div>
-                  <a
-                    href={getWhatsAppCTAUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex h-11 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md shadow-green-500/10 cursor-pointer"
-                  >
-                    
-                    {s.whatsappCTA}
-                  </a>
-                </div>
+                {/* Calculator CTA Card */}
+                <CalculatorCTA
+                  serviceLink="/services/retirement"
+                  serviceLabelEn="Reinvest Your Maturity Amount"
+                  serviceLabelHi="अपनी मैच्योरिटी राशि को पुनर्निवेश करें"
+                  whatsappMessage={`Hi Ajay sir, I calculated my LIC maturity amount as ${fmt(result.estimatedMaturity)} on poddarwealth.com and want to discuss reinvestment and retirement options.`}
+                />
 
                 {/* WhatsAppShare Result */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">

@@ -2,7 +2,7 @@
 import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import ConsultationSection from '@/components/ConsultationSection'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Calculator, Coins, TrendingUp, Landmark } from 'lucide-react'
 import ServiceHeroImage from '@/components/ServiceHeroImage'
 
 const whyPoints = [
@@ -14,7 +14,35 @@ const whyPoints = [
 ]
 
 export default function LifeInsurancePage() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const hi = lang === 'hi'
+
+  const tools = [
+    {
+      name: hi ? 'प्रीमियम कैलकुलेटर' : 'Premium Calculator',
+      desc: hi ? 'अपने वास्तविक LIC प्रीमियम और मिलने वाले लाभों की तुरंत गणना करें।' : 'Calculate your exact LIC premiums and returns instantly.',
+      icon: <Calculator className="w-5 h-5 text-amber-500" />,
+      link: '/calculators/premium'
+    },
+    {
+      name: hi ? 'सरेंडर वैल्यू' : 'Surrender Value',
+      desc: hi ? 'पॉलिसी सरेंडर करने से पहले उसकी वर्तमान सरेंडर वैल्यू का आकलन करें।' : 'Estimate the current surrender value and payouts before surrendering.',
+      icon: <Coins className="w-5 h-5 text-amber-500" />,
+      link: '/calculators/surrender-value'
+    },
+    {
+      name: hi ? 'मैच्योरिटी कैलकुलेटर' : 'Maturity Calculator',
+      desc: hi ? 'अपनी LIC पॉलिसी के मैच्योरिटी रिटर्न और बोनस का अनुमान लगाएं।' : 'Estimate the maturity returns and bonus of your LIC policy.',
+      icon: <TrendingUp className="w-5 h-5 text-amber-500" />,
+      link: '/calculators/maturity'
+    },
+    {
+      name: hi ? 'पॉलिसी पर लोन' : 'Loan Against Policy',
+      desc: hi ? 'जानें कि आप अपनी LIC पॉलिसी पर कितना लोन ले सकते हैं।' : 'Find out how much loan you can get against your LIC policy.',
+      icon: <Landmark className="w-5 h-5 text-amber-500" />,
+      link: '/calculators/loan'
+    }
+  ]
 
   return (
     <div className="pt-20">
@@ -93,6 +121,46 @@ export default function LifeInsurancePage() {
                 <h3 className="font-display font-bold text-lg text-slate-900 mt-4 mb-2">{type.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{type.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Helpful Tools */}
+      <section className="section-padding bg-white border-t border-gray-100">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h2 className="section-title">
+              {hi ? 'मददगार टूल्स और कैलकुलेटर' : 'Helpful Tools & Calculators'}
+            </h2>
+            <p className="text-slate-500 mt-2">
+              {hi 
+                ? 'अपनी योजना को आसान बनाने के लिए इन टूल्स का उपयोग करें' 
+                : 'Use these free tools to plan and make informed decisions'}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {tools.map((tool, i) => (
+              <Link 
+                key={i} 
+                href={tool.link}
+                className="bg-white border border-gray-100 hover:border-amber-500/30 rounded-2xl p-5 hover:shadow-sm transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                    {tool.icon}
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-amber-600 transition-colors text-base mb-1">
+                    {tool.name}
+                  </h3>
+                  <p className="text-slate-500 text-xs leading-relaxed font-medium">
+                    {tool.desc}
+                  </p>
+                </div>
+                <div className="text-[11px] font-bold text-amber-600 group-hover:translate-x-0.5 transition-transform mt-4 flex items-center gap-1">
+                  {hi ? 'कैलकुलेट करें' : 'Calculate Now'} →
+                </div>
+              </Link>
             ))}
           </div>
         </div>

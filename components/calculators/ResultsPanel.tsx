@@ -11,6 +11,7 @@ import { RIDERS } from '@/lib/lic-plans-data.js'
 import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
 import { CAT_AVATAR_COLOR } from './calc-constants'
+import CalculatorCTA from './CalculatorCTA'
 
 import { LicPlan, PremiumResult, MaturityResult, BenefitRow } from '@/lib/types/lic-plan'
 
@@ -662,6 +663,13 @@ export default function ResultsPanel({
                             <Share2 className="w-4 h-4" /> Share
                           </button>
                         </div>
+
+                        <CalculatorCTA
+                          serviceLink="/services/life-insurance"
+                          serviceLabelEn="Explore Life Insurance Plans"
+                          serviceLabelHi="लाइफ इंश्योरेंस प्लान देखें"
+                          whatsappMessage={`Hi Ajay sir, I calculated my LIC premium for ${selectedPlan.name} (Plan ${selectedPlan.planNo}) on poddarwealth.com and want to discuss it.`}
+                        />
 
                       </div>{/* end blurred content */}
                     </div>{/* end locked section */}

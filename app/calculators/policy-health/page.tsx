@@ -9,6 +9,7 @@ import { fmt, fmtSA } from '@/lib/format'
 import { ADVISOR_PHONE } from '@/lib/constants'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import type { PolicyHealthResult } from '@/lib/types/calculator'
+import CalculatorCTA from '@/components/calculators/CalculatorCTA'
 
 function LpLeadForm({ campaign }: { campaign: string }) {
   const { lang } = useLang()
@@ -864,6 +865,13 @@ Please help me review these gaps and suggest the right plans.`
                     </>
                   )}
                 </button>
+
+                <CalculatorCTA
+                  serviceLink="/services/health-insurance"
+                  serviceLabelEn="Improve Your Coverage"
+                  serviceLabelHi="अपनी कवरेज को बेहतर बनाएं"
+                  whatsappMessage={`Hi Ajay sir, I checked my Insurance Health Score as ${result.totalScore}/100 (Grade ${result.grade}) on poddarwealth.com and want to discuss how to improve my health insurance coverage.`}
+                />
 
                 {/* Share Section */}
                 <div className="flex items-center justify-between border-t border-gray-100 pt-5">
