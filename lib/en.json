@@ -61,7 +61,7 @@
       },
       {
         "icon": "ring",
-        "title": "Child marriage",
+        "title": "Child's wedding",
         "sub": "Goal-based wedding corpus"
       }
     ]
@@ -237,7 +237,7 @@
       {
         "icon": "👰",
         "color": "orange",
-        "title": "Child marriage",
+        "title": "Child's wedding",
         "desc": "Goal-based wealth building for your child's wedding",
         "tag": "Savings",
         "href": "/services/child-planning"

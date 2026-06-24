@@ -203,7 +203,10 @@ export async function POST(req: NextRequest) {
     })
 
     return new Response(readable, {
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-AI-Disclaimer': 'AI-generated responses are for information only. For personalised advice, speak with Ajay Kumar Poddar directly on 9415313434.',
+      },
     })
   } catch (error: unknown) {
     const e = error as { message?: string; status?: number; error?: unknown }
