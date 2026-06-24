@@ -104,8 +104,11 @@ export async function GET(req: Request) {
     result = { [planFilter]: planData }
   }
 
+  const isStale = !scrapedAt || (Date.now() - new Date(scrapedAt).getTime()) > 7 * 24 * 60 * 60 * 1000
+  const staleMessage = isStale ? 'NAV data paused — showing last available rates' : null
+
   return NextResponse.json(
-    { success: true, nav: result, source, scrapedAt, note: 'NAV updates daily after market close (~6–7 PM IST)' },
+    { success: true, nav: result, source, scrapedAt, isStale, staleMessage, note: 'NAV updates daily after market close (~6–7 PM IST)' },
     { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=3600' } }
   )
 }

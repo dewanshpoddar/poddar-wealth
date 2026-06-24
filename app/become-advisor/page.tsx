@@ -71,7 +71,7 @@ export default function BecomeAdvisorPage() {
             {isHi ? 'पोद्दार एडवाइजरी नेटवर्क' : 'PODDAR ADVISORY NETWORK'}
           </span>
           <h2 className="text-3xl font-extrabold text-gray-900 leading-tight mb-4">
-            {isHi ? 'भारत की सबसे भरोसेमंद बीमा सलाहकार टीम का हिस्सा बनें' : "Join India's Most Trusted Insurance Advisory Team"}
+            {isHi ? 'गोरखपुर की सबसे विश्वसनीय बीमा सलाहकार टीम का हिस्सा बनें' : "Join Gorakhpur's Trusted Insurance Advisory Team"}
           </h2>
           <p className="text-base text-gray-600 max-w-2xl mx-auto mb-10 font-medium">
             {isHi 

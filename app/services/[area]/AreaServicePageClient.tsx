@@ -90,9 +90,9 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
               </div>
             </div>
             <div>
-              <div className="text-28 md:text-36 font-display font-bold text-gold">MDRT</div>
+              <div className="text-28 md:text-36 font-display font-bold text-gold">MDRT Member</div>
               <div className="text-10 md:text-11 tracking-wider text-slate-400 font-bold uppercase mt-1">
-                {lang === 'hi' ? 'यूएसए सदस्य' : 'USA Member'}
+                {lang === 'hi' ? 'ग्लोबल टॉप 1%' : 'Global Top 1%'}
               </div>
             </div>
             <div>

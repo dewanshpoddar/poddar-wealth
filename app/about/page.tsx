@@ -37,7 +37,7 @@ export default function AboutPage() {
   const filmStrip1 = [
     { src: '/assets/legacy-award-1994.webp', label: '1994 MDRT Success' },
     { src: '/assets/team-mentorship.webp', label: 'Mentoring 2024' },
-    { src: '/assets/gorakhpur-office-render.webp', label: 'Institutional Trust' },
+    { src: '/assets/gorakhpur-office-render.webp', label: 'Gorakhpur Office' },
     { src: '/assets/hero-family.webp', label: 'Family Protection' },
     { src: '/assets/hero-education.webp', label: 'Child Future' },
     { src: '/assets/hero-marriage.webp', label: 'Goal Planning' },
@@ -72,7 +72,7 @@ export default function AboutPage() {
               
               <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-gold font-bold uppercase mb-4">
                 <span className="w-7 h-px bg-gold inline-block" />
-                {isHi ? 'प्रमाणित संस्थागत विरासत' : 'Proven Institutional Legacy'}
+                {isHi ? 'प्रमाणित विश्वसनीय विरासत' : 'Proven Trusted Legacy'}
               </div>
               
               <h1 className="font-display text-[30px] md:text-[36px] lg:text-[44px] font-normal italic leading-[1.2] text-slate-900 mb-1">
