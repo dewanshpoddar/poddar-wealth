@@ -108,6 +108,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Poddar Wealth Management',
+            url: 'https://www.poddarwealth.com',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: { '@type': 'EntryPoint', urlTemplate: 'https://www.poddarwealth.com/search?q={search_term_string}' },
+              'query-input': 'required name=search_term_string',
+            },
+          }) }}
+        />
         {/* ── Google Analytics 4 — default-deny until consent given ── */}
         {GA_ID && (
           <>
