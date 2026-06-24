@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/LangContext'
 import { Phone, Mail, MapPin, Clock, CheckCircle2, Loader2, MessageCircle } from 'lucide-react'
-import { ADVISOR_PHONE } from '@/lib/constants'
+import { ADVISOR_PHONE, OFFICE_HOURS, WHATSAPP_PREFILL } from '@/lib/constants'
 
 export default function ContactPage() {
   const { t, lang } = useLang()
@@ -235,7 +235,7 @@ export default function ContactPage() {
                   <Clock className="w-5 h-5 text-gold" />
                   <h3 className="font-display font-bold text-lg text-slate-900">{t.contact.officeTitle}</h3>
                 </div>
-                <pre className="text-slate-600 text-sm whitespace-pre-wrap font-sans leading-relaxed">{t.contact.officeHours}</pre>
+                  <pre className="text-slate-600 text-sm whitespace-pre-wrap font-sans leading-relaxed">{isHi ? OFFICE_HOURS.hi : OFFICE_HOURS.en}</pre>
               </div>
 
               {/* Google Maps embed card */}
@@ -271,7 +271,7 @@ export default function ContactPage() {
                 <h3 className="font-bold text-green-800 mb-3 flex items-center gap-2"><MessageCircle size={18} /> {t.contactPage?.whatsappAlt || (isHi ? 'क्या आप व्हाट्सएप पसंद करते हैं?' : 'Prefer WhatsApp?')}</h3>
                 <p className="text-green-700 text-sm mb-4">Ajay responds to WhatsApp messages personally — usually within a few hours during business days.</p>
                 <a
-                  href={`https://wa.me/${t.whatsapp.number}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`}
+                  href={`https://wa.me/${t.whatsapp.number}?text=${encodeURIComponent(isHi ? WHATSAPP_PREFILL.hi : WHATSAPP_PREFILL.en)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors"

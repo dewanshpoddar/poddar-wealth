@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { ArrowRight, Calculator, ClipboardList, CreditCard, Phone } from 'lucide-react'
-import { ADVISOR_PHONE } from '@/lib/constants'
+import { ADVISOR_PHONE, WHATSAPP_PREFILL } from '@/lib/constants'
 
 export default function QuickActions() {
   const { lang } = useLang()
@@ -55,7 +55,7 @@ export default function QuickActions() {
         en: 'WhatsApp or Call',
         hi: 'व्हाट्सएप या डायरेक्ट कॉल'
       },
-      href: `https://wa.me/91${ADVISOR_PHONE}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`,
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(lang === 'hi' ? WHATSAPP_PREFILL.hi : WHATSAPP_PREFILL.en)}`,
       isExternal: true
     }
   ]

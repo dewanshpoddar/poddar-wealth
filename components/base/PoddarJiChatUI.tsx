@@ -4,9 +4,9 @@ import ReactMarkdown from 'react-markdown'
 import { Send, CheckCircle2, Phone, User, MessageCircle, Trash2 } from 'lucide-react'
 import { usePoddarJiChat } from '@/src/features/ai-agent'
 import { submitLead } from '@/lib/api'
-import { ADVISOR_PHONE } from '@/lib/constants'
+import { ADVISOR_PHONE, WHATSAPP_PREFILL } from '@/lib/constants'
+import { useLang } from '@/lib/LangContext'
 
-const WHATSAPP_URL = `https://wa.me/91${ADVISOR_PHONE}?text=Namaste%20Ajay%20ji%2C%20I%20visited%20poddarwealth.com%20and%20would%20like%20to%20discuss%20insurance%20plans.`
 const MAX_INPUT = 500
 
 // ── Typing dots ──────────────────────────────────────────────────────────────
@@ -130,8 +130,10 @@ interface PoddarJiChatUIProps {
 export default function PoddarJiChatUI({
   chat, chips, chipQueries, placeholder, disclaimer, disclaimerNotice, badges, statusText, compact = false, onClearChat,
 }: PoddarJiChatUIProps) {
+  const { lang } = useLang()
   const inputRef   = useRef<HTMLInputElement>(null)
   const scrollRef  = useRef<HTMLDivElement>(null)
+  const whatsappUrl = `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(lang === 'hi' ? WHATSAPP_PREFILL.hi : WHATSAPP_PREFILL.en)}`
   const [confirmClear, setConfirmClear] = useState(false)
 
   // Mobile keyboard fix: scroll to bottom when input is focused
@@ -195,7 +197,7 @@ export default function PoddarJiChatUI({
           )}
           {/* WhatsApp */}
           <a
-            href={WHATSAPP_URL}
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-full transition-colors flex-shrink-0"
@@ -278,7 +280,7 @@ export default function PoddarJiChatUI({
         {showWhatsAppCTA && (
           <div className="flex justify-center">
             <a
-              href={WHATSAPP_URL}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 text-[11px] font-semibold px-3.5 py-2 rounded-full hover:bg-green-100 transition-colors"
