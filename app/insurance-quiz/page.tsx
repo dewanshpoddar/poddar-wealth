@@ -113,8 +113,8 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
   },
   'parent-wealth': {
     planName: 'LIC Jeevan Labh (High Bonus Saving Plan)',
-    why: 'Build a massive financial corpus for major child marriage or business goals.',
-    whyHi: 'बच्चों की शादी या व्यावसायिक लक्ष्यों के लिए एक विशाल वित्तीय कोष का निर्माण करें।',
+    why: "Build a massive financial corpus for your child's wedding or business goals.",
+    whyHi: 'बच्चे की शादी या व्यावसायिक लक्ष्यों के लिए एक विशाल वित्तीय कोष का निर्माण करें।',
     startingPrice: '₹2,000/month',
     startingPriceHi: '₹2,000/माह',
     link: '/products'

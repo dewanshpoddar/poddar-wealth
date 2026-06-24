@@ -29,7 +29,7 @@ export default function AboutFounder() {
   }
 
   return (
-    <section className="bg-warm/10 py-16 md:py-20 border-t border-gray-100/60 text-slate-800">
+    <section className="bg-white py-16 md:py-20 border-t border-gray-100/60 text-slate-800">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         
         {/* Section Heading */}

@@ -45,7 +45,7 @@ export default function TrustSection() {
   ]
 
   return (
-    <section className="bg-slate-50 py-12 md:py-14 border-y border-slate-100 relative overflow-hidden">
+    <section className="bg-white py-12 md:py-14 border-y border-gray-100 relative overflow-hidden">
       {/* Top subtle gold line decorative bar */}
       <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-200/10 via-gold/30 to-amber-200/10" />
 

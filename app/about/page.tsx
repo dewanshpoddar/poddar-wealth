@@ -28,7 +28,7 @@ export default function AboutPage() {
   const stats = [
     { num: '31+', label: lang === 'en' ? 'Years Professional' : 'पेशेवर साल' },
     { num: '5000+', label: lang === 'en' ? 'Families Protected' : 'सुरक्षित परिवार' },
-    { num: 'MDRT', label: lang === 'en' ? 'USA Member' : 'यूएसए सदस्य' },
+    { num: 'MDRT Member', label: lang === 'en' ? 'Global Top 1%' : 'ग्लोबल टॉप 1%' },
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता' }
   ]
 
@@ -166,7 +166,7 @@ export default function AboutPage() {
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
                      <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain flex-shrink-0" />
                      <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
-                       {isHi ? 'MDRT यूएसए सदस्य' : 'MDRT USA Member'}
+                       {isHi ? 'MDRT सदस्य' : 'MDRT Member'}
                      </span>
                    </div>
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
@@ -375,11 +375,11 @@ export default function AboutPage() {
               className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA" width={110} height={56} className="object-contain" />
+                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT Member" width={110} height={56} className="object-contain" />
               </div>
               <div>
                 <h4 className="text-[14px] font-bold text-navy mb-1">
-                  {lang === 'en' ? 'MDRT USA Member' : 'MDRT यूएसए सदस्य'}
+                  {lang === 'en' ? 'MDRT Member' : 'MDRT सदस्य'}
                 </h4>
                 <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}

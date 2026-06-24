@@ -106,9 +106,45 @@ export default function Navbar() {
           {/* Primary nav links */}
           <div className="flex items-center gap-5 lg:gap-7">
             <Link href="/about" className={linkCls('/about')}>{t.nav.about}</Link>
-            <Link href="/products" className={linkCls('/products')}>{t.nav.products}</Link>
-            <Link href="/compare" className={linkCls('/compare')}>{t.nav.compare}</Link>
-            <Link href="/blog" className={linkCls('/blog')}>{t.nav.blog}</Link>
+
+            {/* Services dropdown */}
+            <div className="relative group/services">
+              <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer py-3.5 min-h-[44px] ${
+                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
+              }`}>
+                {t.nav.services}
+                <ChevronDown size={14} className={`${chevronCls} group-hover/services:rotate-180 transition-transform duration-200`} />
+              </button>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-200 z-50">
+                <div className={`border rounded-xl shadow-xl p-2 min-w-[220px] ${
+                  scrolled ? 'bg-[#0f1225] border-white/[0.08]' : 'bg-white border-gray-200'
+                }`}>
+                  {servicesLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`block px-4 py-2 text-xs rounded-lg transition-colors ${
+                        isActive(href)
+                          ? scrolled ? 'text-amber-400 bg-white/5 font-semibold' : 'text-amber-600 bg-gray-50 font-semibold'
+                          : scrolled ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-[#12152a] hover:bg-gray-50'
+                      }`}
+                    >
+                      {label(en, hi)}
+                    </Link>
+                  ))}
+                  
+                  <div className={`my-1 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
+                  <Link
+                    href="/become-advisor"
+                    className={`block px-4 py-2 text-xs rounded-lg transition-colors font-semibold text-amber-500 hover:text-amber-600 ${
+                      scrolled ? 'hover:bg-white/5' : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    {label('Join as Advisor →', 'सलाहकार बनें →')}
+                  </Link>
+                </div>
+              </div>
+            </div>
 
             {/* Calculators dropdown */}
             <div className="relative group/calc">
@@ -146,37 +182,20 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Services dropdown */}
-            <div className="relative group/services">
+            <Link href="/blog" className={linkCls('/blog')}>{t.nav.blog}</Link>
+
+            {/* Support dropdown */}
+            <div className="relative group/support">
               <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer py-3.5 min-h-[44px] ${
                 scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
               }`}>
-                {t.nav.services}
-                <ChevronDown size={14} className={`${chevronCls} group-hover/services:rotate-180 transition-transform duration-200`} />
+                {label('Support', 'सहायता')}
+                <ChevronDown size={14} className={`${chevronCls} group-hover/support:rotate-180 transition-transform duration-200`} />
               </button>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-200 z-50">
-                <div className={`border rounded-xl shadow-xl p-2 min-w-[220px] ${
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover/support:opacity-100 group-hover/support:visible transition-all duration-200 z-50">
+                <div className={`border rounded-xl shadow-xl p-2 min-w-[160px] ${
                   scrolled ? 'bg-[#0f1225] border-white/[0.08]' : 'bg-white border-gray-200'
                 }`}>
-                  {servicesLinks.map(({ href, en, hi }) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      className={`block px-4 py-2 text-xs rounded-lg transition-colors ${
-                        isActive(href)
-                          ? scrolled ? 'text-amber-400 bg-white/5 font-semibold' : 'text-amber-600 bg-gray-50 font-semibold'
-                          : scrolled ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-[#12152a] hover:bg-gray-50'
-                      }`}
-                    >
-                      {label(en, hi)}
-                    </Link>
-                  ))}
-                  
-                  {/* Support Subsection */}
-                  <div className={`my-1.5 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
-                  <div className={`px-4 py-1 text-[10px] font-bold uppercase tracking-wider ${scrolled ? 'text-gray-500' : 'text-gray-400'}`}>
-                    {label('Support', 'सहायता')}
-                  </div>
                   {supportLinks.map(({ href, en, hi }) => (
                     <Link
                       key={href}
@@ -190,16 +209,6 @@ export default function Navbar() {
                       {label(en, hi)}
                     </Link>
                   ))}
-
-                  <div className={`my-1 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
-                  <Link
-                    href="/become-advisor"
-                    className={`block px-4 py-2 text-xs rounded-lg transition-colors font-semibold text-amber-500 hover:text-amber-600 ${
-                      scrolled ? 'hover:bg-white/5' : 'hover:bg-gray-50'
-                    }`}
-                  >
-                    {label('Join as Advisor →', 'सलाहकार बनें →')}
-                  </Link>
                 </div>
               </div>
             </div>
@@ -248,6 +257,15 @@ export default function Navbar() {
               }`}
             >
               {label('Client Portal', 'क्लाइंट पोर्टल')}
+            </Link>
+
+            <Link
+              href="/login"
+              className={`text-sm font-medium transition-colors ${
+                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
+              }`}
+            >
+              {label('Login', 'लॉगिन')}
             </Link>
 
             <Link
@@ -421,13 +439,7 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link
-              href="/products"
-              onClick={() => setMobileOpen(false)}
-              className={`block py-4 px-6 text-base font-semibold border-b border-white/[0.04] ${isActive('/products') ? 'text-amber-400' : 'text-gray-300'}`}
-            >
-              {t.nav.products}
-            </Link>
+
 
             {/* Calculators accordion */}
             <div className="border-b border-white/[0.04]">
@@ -466,7 +478,7 @@ export default function Navbar() {
             </div>
 
             {[
-              { href: '/compare', en: 'Compare Plans', hi: 'प्लान तुलना' },
+              { href: '/login',   en: 'Login',         hi: 'लॉगिन' },
               { href: '/blog',    en: 'Blog',          hi: 'ब्लॉग' },
               { href: '/client',  en: 'Client Portal',  hi: 'क्लाइंट पोर्टल' },
             ].map(({ href, en, hi }) => (

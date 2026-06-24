@@ -32,7 +32,7 @@ export default function LifeEventsNavigator() {
     : "Choose your life stage. We'll guide you to the right protection."
 
   return (
-    <section className="bg-white py-16 border-b border-gray-100 relative overflow-hidden">
+    <section className="bg-gray-50 py-16 border-b border-gray-100 relative overflow-hidden">
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] pointer-events-none -z-10 -translate-y-1/2" />
 

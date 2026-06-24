@@ -6,11 +6,11 @@ export default function FinalCTA() {
   const { t } = useLang()
 
   return (
-    <section className="bg-warm/30 py-16 md:py-20 border-t border-gray-100/60 text-slate-800">
+    <section className="bg-gray-950 pb-16 md:pb-20 text-white">
       <div className="max-w-7xl mx-auto px-6 md:px-8 grid gap-8 md:gap-12 items-center" style={{ gridTemplateColumns: 'revert' }}>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start bg-white p-8 rounded-[32px] border border-gold/15 shadow-md text-slate-800">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start bg-white/[0.02] p-8 rounded-[32px] border border-gold/15 shadow-2xl text-white">
           {/* Photo container */}
-          <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-slate-50 border border-gray-200/50 shadow-inner relative overflow-hidden group/photo">
+          <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-white/5 border border-white/10 shadow-inner relative overflow-hidden group/photo">
             <Image 
               src="/assets/ajay-poddar.svg" 
               alt=""
@@ -23,7 +23,7 @@ export default function FinalCTA() {
           {/* About info */}
           <div className="flex-1 text-center md:text-left">
             <div className="pw-eyebrow text-gold font-bold tracking-[0.2em] mb-2">{t.aboutSection.eyebrow}</div>
-            <h2 className="font-display text-slate-900 text-2xl md:text-3xl font-bold mb-4">{t.aboutSection.name}</h2>
+            <h2 className="font-display text-white text-2xl md:text-3xl font-bold mb-4">{t.aboutSection.name}</h2>
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
               {(t.aboutSection?.badges ?? []).map((badge: any, i: number) => (
                 <span
@@ -31,7 +31,7 @@ export default function FinalCTA() {
                   className={`pw-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
                     badge.type === 'gold'
                       ? 'bg-gold/10 text-gold border border-gold/20'
-                      : 'bg-gray-100 text-gray-700 border border-gray-200'
+                      : 'bg-white/10 text-gray-300 border border-white/10'
                   }`}
                 >
                   {badge.text.includes('MDRT') && (
@@ -44,7 +44,7 @@ export default function FinalCTA() {
                 </span>
               ))}
             </div>
-            <p className="text-[14px] text-slate-600 leading-relaxed max-w-2xl font-medium">{t.aboutSection.bio}</p>
+            <p className="text-[14px] text-gray-300 leading-relaxed max-w-2xl font-medium">{t.aboutSection.bio}</p>
           </div>
         </div>
       </div>

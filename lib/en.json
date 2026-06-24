@@ -26,7 +26,7 @@
       "Star Arogya Sanjeevani",
       "LIC Dhan Vriddhi"
     ],
-    "cta": "Know more →"
+    "cta": "Know more"
   },
   "hero": {
     "eyebrow": "Gorakhpur's trusted insurance advisor — MDRT Member",
@@ -578,7 +578,7 @@
         "type": "blue"
       }
     ],
-    "bio": "Based at AD Mall Compound, Vijay Chowk, Gorakhpur, the heart of Eastern UP, Ajay Kumar Poddar has been helping families secure their future since 1994. With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognised by the Million Dollar Round Table (MDRT, USA)."
+    "bio": "Based at AD Mall Compound, Vijay Chowk, Gorakhpur, the heart of Eastern UP, Ajay Kumar Poddar has been helping families secure their future since 1994. With over three decades of experience, he is one of the most decorated LIC agents in Uttar Pradesh, recognised by the Million Dollar Round Table (MDRT)."
   },
   "footer": {
     "brand": "PODDAR WEALTH MANAGEMENT",
@@ -1053,7 +1053,7 @@
       "general": [
         {
           "q": "Who is Ajay Kumar Poddar?",
-          "a": "Ajay Kumar Poddar is a veteran financial advisor with over 31 years of experience. He is a prestigious Million Dollar Round Table (MDRT, USA) Member and a premier LIC Chairman's Club Member. Based in Gorakhpur, he and his team have protected over 5,000 families with ethical, on-ground insurance and retirement planning."
+          "a": "Ajay Kumar Poddar is a veteran financial advisor with over 31 years of experience. He is a prestigious Million Dollar Round Table (MDRT) Member and a premier LIC Chairman's Club Member. Based in Gorakhpur, he and his team have protected over 5,000 families with ethical, on-ground insurance and retirement planning."
         },
         {
           "q": "Is Poddar Wealth Management an insurance company?",
@@ -1172,8 +1172,8 @@
       },
       {
         "year": "2010",
-        "title": "MDRT USA Qualification",
-        "desc": "Inducted into the elite Million Dollar Round Table (MDRT), USA, marking global professional excellence."
+        "title": "MDRT Qualification",
+        "desc": "Inducted into the elite Million Dollar Round Table (MDRT), marking global professional excellence."
       },
       {
         "year": "2015",

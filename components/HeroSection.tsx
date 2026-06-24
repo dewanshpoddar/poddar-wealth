@@ -35,6 +35,14 @@ const heroImages = [
   '/assets/hero-marriage.webp'
 ]
 
+const heroAlts = [
+  "Indian family reviewing insurance documents with advisor",
+  "Parents planning child's education fund",
+  "Couple discussing retirement income options",
+  "Family protected by comprehensive health coverage",
+  "Parents planning child's wedding savings"
+]
+
 export default function HeroSection() {
   const { t } = useLang()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -133,7 +141,7 @@ export default function HeroSection() {
                 <Image
                   key={idx}
                   src={src}
-                  alt="Happy Indian family planning their future"
+                  alt={heroAlts[idx] ?? "Poddar Wealth Management"}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   quality={70}
