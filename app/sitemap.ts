@@ -9,7 +9,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Base static pages
   const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE_URL,                                   lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
+    { url: BASE_URL,                                   lastModified: now, changeFrequency: 'daily',   priority: 1.0 },
+    { url: `${BASE_URL}/about`,                        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/pay-premium`,                  lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/products`,                     lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
     { url: `${BASE_URL}/services`,                     lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/services/life-insurance`,      lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
@@ -72,7 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPages: MetadataRoute.Sitemap = blogIndex.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: post.date ? new Date(post.date) : now,
-    changeFrequency: 'monthly',
+    changeFrequency: 'weekly',
     priority: 0.7,
   }))
 
