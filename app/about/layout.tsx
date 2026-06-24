@@ -6,7 +6,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Ajay Kumar Poddar — MDRT Member, 31 Years Insurance Advisory',
     description: 'Meet Ajay Kumar Poddar — MDRT USA Member, LIC Chairman\'s Club awardee. Serving Gorakhpur families since 1994 with life insurance and wealth planning.',
+    url: 'https://www.poddarwealth.com/about',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Ajay Kumar Poddar — MDRT Member, 31 Years Insurance Advisory',
+    description: 'Meet Ajay Kumar Poddar — MDRT USA Member, LIC Chairman\'s Club awardee. Serving Gorakhpur families since 1994 with life insurance and wealth planning.',
+  }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

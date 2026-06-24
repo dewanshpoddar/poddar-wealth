@@ -6,7 +6,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LIC Surrender Value Calculator 2026 — Free Online | Poddar Wealth',
     description: 'Calculate your LIC policy surrender value instantly. Free calculator for Jeevan Anand, Jeevan Labh and all LIC plans.',
+    url: 'https://www.poddarwealth.com/calculators/surrender-value',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LIC Surrender Value Calculator 2026 — Free Online | Poddar Wealth',
+    description: 'Calculate your LIC policy surrender value instantly. Free calculator for Jeevan Anand, Jeevan Labh and all LIC plans.',
+  }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

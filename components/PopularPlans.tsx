@@ -34,7 +34,7 @@ export default function PopularPlans() {
           <h2 className="text-2xl md:text-3xl font-bold text-white text-center">
             {title}
           </h2>
-          <p className="text-gray-400 mt-2 text-center">
+          <p className="text-gray-300 mt-2 text-center">
             {subtitle}
           </p>
         </div>

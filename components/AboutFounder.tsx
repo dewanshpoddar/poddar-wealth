@@ -51,7 +51,7 @@ export default function AboutFounder() {
           <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-slate-50 border border-gray-200/50 shadow-inner relative overflow-hidden group/photo">
             <Image 
               src="/assets/ajay-poddar.svg" 
-              alt={aboutSection.name}
+              alt=""
               fill
               className="object-cover object-top scale-[1.25] origin-top transition-transform duration-500 group-hover/photo:scale-[1.3]"
               priority
@@ -61,7 +61,7 @@ export default function AboutFounder() {
           {/* About info */}
           <div className="flex-1 text-center md:text-left">
             <div className="pw-eyebrow text-gold font-bold tracking-[0.2em] mb-2">{aboutSection.eyebrow}</div>
-            <h2 className="font-display text-slate-900 text-2xl md:text-3xl font-bold mb-4">{aboutSection.name}</h2>
+            <h3 className="font-display text-slate-900 text-2xl md:text-3xl font-bold mb-4">{aboutSection.name}</h3>
             
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
               {(aboutSection.badges ?? []).map((badge: any, i: number) => (

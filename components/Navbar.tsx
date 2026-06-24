@@ -91,7 +91,7 @@ export default function Navbar() {
           {/* Logo + Brand */}
           <Link href="/" className="flex items-center gap-3.5 shrink-0 group">
             <div className="w-11 h-11 rounded-xl overflow-hidden flex items-center justify-center p-1.5 flex-shrink-0 bg-white border border-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Management" width={44} height={44} className="w-full h-full object-contain" priority />
+              <Image src="/assets/pwm-logo.svg" alt="" width={44} height={44} className="w-full h-full object-contain" priority />
             </div>
             <div className="flex flex-col min-w-0 justify-center">
               <span className={`text-[17px] lg:text-[20px] font-bold tracking-tight font-display transition-colors leading-tight ${brandNameCls}`}>
@@ -210,7 +210,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
-              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
                 scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
               }`}
             >
@@ -223,16 +223,16 @@ export default function Navbar() {
             }`}>
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                  lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                className={`px-3.5 py-2.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center ${
+                  lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang('hi')}
-                className={`px-2.5 py-1 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
-                  lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                className={`px-3.5 py-2.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center ${
+                  lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 हिंदी
@@ -269,7 +269,7 @@ export default function Navbar() {
         {/* Mobile header */}
         <div className="md:hidden flex items-center gap-2 px-4 h-16 w-full">
           <Link href="/" className="flex items-center gap-2 flex-1 min-w-0" onClick={() => setMobileOpen(false)}>
-            <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth" width={36} height={36} className="flex-shrink-0" />
+            <Image src="/assets/pwm-logo.svg" alt="" width={36} height={36} className="flex-shrink-0" />
             <span className={`flex-1 min-w-0 truncate text-sm font-bold uppercase tracking-wide transition-colors ${
               scrolled ? 'text-amber-400' : 'text-amber-600'
             }`}>
@@ -286,7 +286,7 @@ export default function Navbar() {
               className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
                 lang === 'en'
                   ? 'bg-amber-500 text-white shadow-sm'
-                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                  : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               EN
@@ -296,7 +296,7 @@ export default function Navbar() {
               className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
                 lang === 'hi'
                   ? 'bg-amber-500 text-white shadow-sm'
-                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                  : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               हि
@@ -305,14 +305,14 @@ export default function Navbar() {
 
           <Link
             href="/pay-premium"
-            className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2 rounded-lg transition-colors shadow-sm"
+            className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2.5 min-h-[44px] rounded-lg transition-colors shadow-sm flex items-center justify-center"
           >
             {label('Pay Premium', 'भुगतान')}
           </Link>
 
           <button
             onClick={() => setMobileOpen(true)}
-            className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer ${
+            className={`flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer ${
               scrolled ? 'text-white' : 'text-gray-800'
             }`}
             aria-label="Open menu"
@@ -329,18 +329,18 @@ export default function Navbar() {
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06] bg-[#0B0E1A]">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl overflow-hidden bg-white p-1 flex-shrink-0 border border-white/10">
-                <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Management" width={36} height={36} className="w-full h-full object-contain" />
+                <Image src="/assets/pwm-logo.svg" alt="" width={36} height={36} className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <span className="text-[15px] font-bold tracking-tight text-white font-display leading-tight">
                   Poddar Wealth Management
                 </span>
-                <span className="text-[8px] font-bold tracking-[0.15em] uppercase text-gray-400 mt-0.5">
+                <span className="text-[8px] font-bold tracking-[0.15em] uppercase text-gray-300 mt-0.5">
                   Excellence Since 1994
                 </span>
               </div>
             </Link>
-            <button onClick={() => setMobileOpen(false)} className="text-gray-400 hover:text-white p-2.5 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
+            <button onClick={() => setMobileOpen(false)} className="text-gray-300 hover:text-white p-2.5 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
               <X size={22} />
             </button>
           </div>
@@ -520,13 +520,13 @@ export default function Navbar() {
           {/* Drawer bottom: lang + CTA */}
           <div className="px-6 pb-10 pt-6 space-y-4 border-t border-white/[0.06] bg-[#0B0E1A]">
             {/* Mobile drawer shows EN + हिंदी + বাংলা for those who prefer Bengali */}
-            <div className="flex items-center gap-2.5 text-[11px] text-gray-400">
+            <div className="flex items-center gap-2.5 text-[11px] text-gray-300">
               {(['en', 'hi', 'bn'] as const).map((l, i) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`flex-1 py-2.5 rounded-xl border text-center transition-colors font-semibold cursor-pointer ${
-                    lang === l ? 'border-amber-500 text-amber-400 bg-amber-500/5' : 'border-white/[0.08] hover:border-white/[0.15] text-gray-400'
+                  className={`flex-1 py-3 rounded-xl border text-center transition-colors font-semibold cursor-pointer min-h-[44px] flex items-center justify-center ${
+                    lang === l ? 'border-amber-500 text-amber-400 bg-amber-500/5' : 'border-white/[0.08] hover:border-white/[0.15] text-gray-300'
                   }`}
                 >
                   {['English', 'हिंदी', 'বাংলা'][i]}

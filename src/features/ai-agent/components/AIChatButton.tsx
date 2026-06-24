@@ -48,10 +48,10 @@ export default function AIChatButton() {
             <div className="flex justify-end mb-1">
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-7 h-7 rounded-full flex items-center justify-center bg-white/80 text-slate-500 hover:text-slate-800 hover:bg-white shadow transition-all"
+                className="w-11 h-11 rounded-full flex items-center justify-center bg-white/80 text-slate-700 hover:text-slate-900 hover:bg-white shadow transition-all"
                 aria-label="Close chat"
               >
-                <X size={14} />
+                <X size={16} />
               </button>
             </div>
 

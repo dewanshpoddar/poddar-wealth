@@ -106,7 +106,7 @@ export default function BlogPreview() {
                       <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${CATEGORY_COLORS[post.category] ?? CATEGORY_COLORS_DEFAULT}`}>
                         {post.category}
                       </span>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-slate-600">
                         {readingTime} {previewT.mins}
                       </span>
                     </div>
@@ -125,7 +125,7 @@ export default function BlogPreview() {
                   {/* Footer section of Card */}
                   <div className="px-6 pb-6 pt-4 border-t border-slate-50 mt-auto">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                      <span className="text-[11px] text-slate-600 font-bold uppercase tracking-wider">
                         {post.author.split(' ')[0]}
                       </span>
                       <Link

@@ -105,7 +105,7 @@ export default function ConsultationSection({ intent = 'Service Consultation' }:
                 successMessage={c.successMessage}
               />
 
-              <p className="text-[11px] text-slate-400 text-center mt-4 leading-snug">
+              <p className="text-[11px] text-slate-600 text-center mt-4 leading-snug">
                 {c.privacy}
               </p>
             </div>

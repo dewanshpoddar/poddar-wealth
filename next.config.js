@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
@@ -63,4 +67,4 @@ const nextConfig = {
   serverExternalPackages: ['pdf-parse', '@react-pdf/renderer', 'sharp'],
 }
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

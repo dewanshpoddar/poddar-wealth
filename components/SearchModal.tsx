@@ -285,20 +285,20 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
       >
         {/* Search header */}
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-3 px-6 py-5 border-b border-gray-800 shrink-0">
-          <Search size={20} className="text-gray-400 flex-shrink-0" />
+          <Search size={20} className="text-gray-300 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder={s.modalPlaceholder || 'Search blog posts, calculators, services...'}
-            className="flex-1 bg-transparent text-white text-base outline-none placeholder-gray-500 py-1"
+            className="flex-1 bg-transparent text-white text-base outline-none placeholder-gray-400 py-1"
           />
           {query && (
             <button 
               type="button" 
               onClick={() => setQuery('')}
-              className="text-gray-500 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
+              className="text-gray-400 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors cursor-pointer"
             >
               <X size={16} />
             </button>
@@ -306,7 +306,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           <button 
             type="button" 
             onClick={onClose}
-            className="text-xs font-bold text-gray-400 hover:text-white border border-gray-800 hover:border-gray-700 px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+            className="text-xs font-bold text-gray-300 hover:text-white border border-gray-800 hover:border-gray-700 px-3.5 py-2 rounded-xl transition-all cursor-pointer min-h-[38px] flex items-center justify-center"
           >
             ESC
           </button>
@@ -315,7 +315,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
         {/* Recent Searches Panel (displayed only when input is empty or too short) */}
         {query.trim().length < 2 && recentSearches.length > 0 && (
           <div className="p-5 border-b border-gray-800/40 shrink-0 bg-gray-950/10">
-            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">
+            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">
               {isHi ? 'हालिया खोजें' : 'Recent Searches'}
             </div>
             <div className="flex flex-wrap gap-2 px-1">
@@ -327,7 +327,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
                     setQuery(term)
                     inputRef.current?.focus()
                   }}
-                  className="text-[11px] font-semibold text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700/80 px-3 py-1.5 rounded-xl transition-colors cursor-pointer"
+                  className="text-[11px] font-semibold text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700/80 px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px]"
                 >
                   {term}
                 </button>
@@ -341,7 +341,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           {loading ? (
             <div className="py-20 flex flex-col items-center justify-center gap-3">
               <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-              <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider">
+              <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider">
                 {isHi ? 'खोज की जा रही है...' : 'Searching...'}
               </p>
             </div>
@@ -358,14 +358,14 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
                   res.type === 'calculator' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 
                   res.type === 'service' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
                   'bg-purple-500/10 text-purple-400 border-purple-500/20'
-
+ 
                 const badgeLabel =
                   res.type === 'blog' ? (s.typeBlog || 'Blog') :
                   res.type === 'calculator' ? (s.typeCalculator || 'Calculator') :
                   res.type === 'service' ? (s.typeService || 'Service') : 'FAQ'
-
+ 
                 const isSelected = selectedIndex === i
-
+ 
                 return (
                   <div
                     key={i}
@@ -392,7 +392,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
                       }`}>
                         {res.title}
                       </h4>
-                      <p className="text-xs text-gray-400 line-clamp-1 mt-1 leading-normal font-medium">
+                      <p className="text-xs text-gray-300 line-clamp-1 mt-1 leading-normal font-medium">
                         {res.excerpt}
                       </p>
                     </div>
@@ -408,20 +408,20 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
             </div>
           ) : query.trim().length >= 2 ? (
             <div className="py-16 text-center">
-              <p className="text-gray-400 text-sm mb-5 font-semibold">
+              <p className="text-gray-300 text-sm mb-5 font-semibold">
                 {renderNoResults()}
               </p>
               <button
                 type="button"
                 onClick={() => handleResultClick('/ai-advisor')}
-                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer"
+                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer min-h-[44px]"
               >
                 <Sparkles size={14} />
                 {s.askPoddarJi || 'Ask Poddar Ji'}
               </button>
             </div>
           ) : (
-            <div className="py-16 text-center text-gray-500 text-xs font-bold uppercase tracking-wider">
+            <div className="py-16 text-center text-gray-400 text-xs font-bold uppercase tracking-wider">
               {isHi ? 'खोजना शुरू करने के लिए कम से कम 2 अक्षर टाइप करें...' : 'Type at least 2 characters to start searching...'}
             </div>
           )}

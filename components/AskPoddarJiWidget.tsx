@@ -40,7 +40,7 @@ export default function AskPoddarJiWidget() {
                 {widgetTitle}
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               </h2>
-              <p className="text-[12px] text-gray-400 mt-1 font-medium">
+              <p className="text-[12px] text-gray-300 mt-1 font-medium">
                 {widgetSub}
               </p>
             </div>
@@ -54,7 +54,7 @@ export default function AskPoddarJiWidget() {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder={placeholder}
-              className="flex-1 bg-transparent text-13 outline-none text-white placeholder-gray-500 px-3.5 py-2 font-medium"
+              className="flex-1 bg-transparent text-13 outline-none text-white placeholder-gray-400 px-3.5 py-2 font-medium"
             />
             <button
               type="submit"

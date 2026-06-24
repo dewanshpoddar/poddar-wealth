@@ -11,6 +11,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.4.0",
     "@react-pdf/renderer": "^4.5.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -29,6 +30,7 @@
     "sharp": "^0.34.5"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.2.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

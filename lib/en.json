@@ -621,6 +621,14 @@
     "contactOffice": "Contact & Office",
     "officeAddress": "Vijay Chowk, Gorakhpur, U.P. 273001"
   },
+  "servicesTaxonomy": {
+    "protectionTitle": "Protection Solutions",
+    "protectionDesc": "Secure your family's future with pure protection policies including term life insurance, personal accident cover, critical illness protection, and keyman business insurance.",
+    "savingsTitle": "Savings & Wealth Creation",
+    "savingsDesc": "Build wealth and guarantee cash flows for key life milestones. Plan for your child's education, secure your retirement, save on taxes, and grow capital through endowment solutions.",
+    "healthTitle": "Health Insurance Protection",
+    "healthDesc": "Protect your family from medical inflation with comprehensive health covers, cancer protection plans, and group health insurance policies."
+  },
   "whatsapp": {
     "tooltip": "WhatsApp: 9415313434",
     "number": "919415313434"

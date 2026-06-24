@@ -7,7 +7,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Life Insurance Plans — Term & Endowment | Poddar Wealth Management',
     description: 'Protect your family with LIC term and endowment plans. Expert guidance by MDRT Member Ajay Kumar Poddar. Income replacement, loan coverage, tax saving.',
+    url: 'https://www.poddarwealth.com/services/life-insurance',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Life Insurance Plans — Term & Endowment | Poddar Wealth Management',
+    description: 'Protect your family with LIC term and endowment plans. Expert guidance by MDRT Member Ajay Kumar Poddar. Income replacement, loan coverage, tax saving.',
+  }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

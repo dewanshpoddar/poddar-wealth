@@ -124,7 +124,7 @@ export default function GoogleReviewsBadge() {
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 font-bold tracking-wide uppercase mt-0.5">
+                <p className="text-xs text-slate-600 font-bold tracking-wide uppercase mt-0.5">
                   {count} Google Reviews
                 </p>
               </div>
@@ -173,7 +173,7 @@ export default function GoogleReviewsBadge() {
                         <Star key={i} size={10} className="fill-gold text-gold" />
                       ))}
                     </div>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    <span className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">
                       - {author}
                     </span>
                   </div>

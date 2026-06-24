@@ -42,7 +42,7 @@ export default function Footer() {
   const label = (en: string, hi: string) => lang === 'hi' ? hi : en
 
   return (
-    <footer className="bg-gray-950 pt-20 pb-10 border-t border-gray-900 text-gray-400">
+    <footer className="bg-gray-950 pt-20 pb-10 border-t border-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         
         {/* Brand Header Row */}
@@ -67,7 +67,7 @@ export default function Footer() {
             </div>
           </div>
           
-          <p className="text-gray-400 text-xs max-w-md leading-relaxed font-medium">
+          <p className="text-gray-300 text-xs max-w-md leading-relaxed font-medium">
             {label(
               'Securing the future of families across India for over 31 years with trust, absolute transparency, and personalized care.',
               '31 वर्षों से अधिक के अटूट विश्वास और व्यक्तिगत सेवा के साथ भारत के परिवारों के भविष्य को सुरक्षित कर रहे हैं।'
@@ -82,7 +82,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="inline-block group"
             >
-              <div className="flex items-center gap-1.5 mb-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 mb-1 text-[10px] font-bold text-gray-300 uppercase tracking-wider">
                 <span>Google Review Rating</span>
               </div>
               <div className="flex items-center gap-2">
@@ -92,24 +92,24 @@ export default function Footer() {
                 <span className="text-xs font-bold text-white group-hover:text-amber-500 transition-colors">
                   4.9 / 5.0
                 </span>
-                <span className="text-[10px] text-gray-500">
+                <span className="text-[10px] text-gray-400 font-medium">
                   (154 {label('reviews', 'समीक्षाएं')})
                 </span>
               </div>
             </a>
 
             {/* Social Media Icons */}
-            <div className="flex items-center gap-4">
-              <a href="https://www.facebook.com/share/1FnAn7yFPS/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="Facebook">
+            <div className="flex items-center gap-2.5">
+              <a href="https://www.facebook.com/share/1FnAn7yFPS/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="Facebook">
                 <Facebook size={17} />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="YouTube">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="YouTube">
                 <Youtube size={17} />
               </a>
-              <a href="https://www.linkedin.com/company/poddarwealthmanagement/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/poddarwealthmanagement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="LinkedIn">
                 <Linkedin size={17} />
               </a>
-              <a href={`https://wa.me/91${ADVISOR_PHONE}`} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors" aria-label="WhatsApp">
+              <a href={`https://wa.me/91${ADVISOR_PHONE}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="WhatsApp">
                 <MessageCircle size={17} />
               </a>
             </div>
@@ -126,16 +126,14 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               {[
-                { name: t.footer.lifeInsurance || 'Life Insurance', href: '/services/life-insurance' },
-                { name: t.footer.healthInsurance || 'Health Insurance', href: '/services/health-insurance' },
-                { name: t.footer.retirementPlanning || 'Retirement Planning', href: '/services/retirement' },
-                { name: t.footer.childPlanning || 'Child Planning', href: '/services/child-planning' },
-                { name: t.footer.taxPlanning || 'Tax Planning', href: '/services/tax-planning' },
+                { name: label('Protection Solutions', 'सुरक्षा समाधान'), href: '/services/protection' },
+                { name: label('Savings & Wealth Creation', 'बचत और वेल्थ क्रिएशन'), href: '/services/savings' },
+                { name: label('Health Insurance', 'स्वास्थ्य बीमा'), href: '/services/health' },
               ].map((link) => (
                 <li key={link.name}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
+                    className="text-gray-300 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
                   >
                     {link.name}
                   </Link>
@@ -161,7 +159,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
+                    className="text-gray-300 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
                   >
                     {link.name}
                   </Link>
@@ -187,7 +185,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
+                    className="text-gray-300 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
                   >
                     {link.name}
                   </Link>
@@ -212,7 +210,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
+                    className="text-gray-300 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
                   >
                     {link.name}
                   </Link>
@@ -235,7 +233,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link 
                       href={link.href} 
-                      className="text-gray-400 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
+                      className="text-gray-300 hover:text-white text-xs font-semibold tracking-wide transition-colors duration-200 block"
                     >
                       {link.name}
                     </Link>
@@ -248,7 +246,7 @@ export default function Footer() {
               <span className="text-white/60 text-[10px] uppercase tracking-wider block mb-2 font-bold">
                 {t.footer.disclaimerTitle || 'Disclaimer'}
               </span>
-              <p className="text-[10px] text-gray-500 leading-relaxed italic">
+              <p className="text-[10px] text-gray-400 leading-relaxed italic">
                 {t.footer.disclaimer || 'Insurance is the subject matter of solicitation. IRDAI Registration No. XXXXXXXXXX.'}
               </p>
             </div>
@@ -257,13 +255,13 @@ export default function Footer() {
               <span className="text-white/60 text-[10px] uppercase tracking-wider block font-bold">
                 {t.footer.contactOffice || 'Contact & Office'}
               </span>
-              <div className="flex items-start gap-2.5 text-gray-400">
+              <div className="flex items-start gap-2.5 text-gray-300">
                 <MapPin className="text-amber-500 w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span className="leading-relaxed font-semibold">
                   {t.footer.address || 'AD Mall Compound, Vijay Chowk, Gorakhpur, U.P. 273001'}
                 </span>
               </div>
-              <div className="flex items-start gap-2.5 text-gray-400">
+              <div className="flex items-start gap-2.5 text-gray-300">
                 <Phone className="text-amber-500 w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div className="flex flex-col gap-1 font-semibold">
                   <a href={`tel:+91${ADVISOR_PHONE}`} className="hover:text-white transition-colors">
@@ -283,7 +281,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-gray-900 flex flex-col lg:flex-row justify-between items-center gap-6 text-center lg:text-left">
           
           {/* Copyright & Award */}
-          <div className="text-gray-500 text-[11px] font-medium order-2 lg:order-1">
+          <div className="text-gray-400 text-[11px] font-medium order-2 lg:order-1">
             {t.footer.rights || `© 2026 PODDAR WEALTH MANAGEMENT`}
             <span className="mx-2 hidden lg:inline">|</span>
             <span className="text-amber-500/80 font-bold block lg:inline mt-1 lg:mt-0">
@@ -294,11 +292,11 @@ export default function Footer() {
           {/* Links & Language Toggle */}
           <div className="flex flex-wrap justify-center lg:justify-end items-center gap-4 lg:gap-6 order-1 lg:order-2">
             {/* 3-Language Selector */}
-            <div className="flex items-center gap-1.5 bg-gray-900/60 rounded-lg p-0.5 border border-gray-800">
+            <div className="flex items-center bg-gray-900/60 rounded-lg p-1 border border-gray-800 gap-1">
               <button
                 onClick={() => setLang('en')}
-                className={`text-[9px] font-bold px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                  lang === 'en' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-500 hover:text-white'
+                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
+                  lang === 'en' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
                 }`}
               >
                 EN
@@ -306,8 +304,8 @@ export default function Footer() {
               <span className="text-gray-800">|</span>
               <button
                 onClick={() => setLang('hi')}
-                className={`text-[9px] font-bold px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                  lang === 'hi' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-500 hover:text-white'
+                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
+                  lang === 'hi' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
                 }`}
               >
                 हिंदी
@@ -315,8 +313,8 @@ export default function Footer() {
               <span className="text-gray-800">|</span>
               <button
                 onClick={() => setLang('bn')}
-                className={`text-[9px] font-bold px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                  lang === 'bn' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-500 hover:text-white'
+                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
+                  lang === 'bn' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
                 }`}
               >
                 বাংলা

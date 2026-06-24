@@ -63,7 +63,7 @@ export default function NewsletterSignup() {
           <h2 className="font-display text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
             {newsletterT.title}
           </h2>
-          <p className="text-gray-400 text-xs md:text-sm leading-relaxed font-semibold">
+          <p className="text-gray-300 text-xs md:text-sm leading-relaxed font-semibold">
             {newsletterT.subtitle}
           </p>
         </div>

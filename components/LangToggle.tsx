@@ -80,8 +80,9 @@ export default function LangToggle({ scrolled = false }: LangToggleProps) {
       <div
         className={`absolute top-1 bottom-1 rounded-md shadow-md z-0 transition-all duration-300 ${pill}`}
         style={{
-          left:  lang === 'en' ? '4px' : 'calc(50% + 2px)',
+          left: '4px',
           width: 'calc(50% - 6px)',
+          transform: lang === 'en' ? 'translateX(0)' : 'translateX(calc(100% + 4px))',
         }}
       />
 

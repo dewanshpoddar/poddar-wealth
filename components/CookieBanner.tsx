@@ -28,16 +28,16 @@ export default function CookieBanner() {
         background: '#F59E0B',
         color: '#fff',
         borderRadius: '8px',
-        padding: '8px 20px',
+        padding: '12px 24px',
         fontSize: '13px',
         fontWeight: '600',
       }}
       declineButtonStyle={{
         background: 'transparent',
         border: '1px solid #4B5563',
-        color: '#9CA3AF',
+        color: '#D1D5DB',
         borderRadius: '8px',
-        padding: '8px 20px',
+        padding: '12px 24px',
         fontSize: '13px',
       }}
       onAccept={() => {

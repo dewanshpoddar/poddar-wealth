@@ -60,7 +60,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
           placeholder="आपका नाम"
           value={name}
           onChange={e => setName(e.target.value)}
-          className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-400"
+          className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-600"
         />
       </div>
       <div>
@@ -73,7 +73,7 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
             onChange={e => { setPhoneErr(''); setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)) }}
             inputMode="numeric"
             maxLength={10}
-            className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-400"
+            className="flex-1 bg-transparent text-[12px] outline-none text-slate-700 placeholder:text-slate-600"
           />
         </div>
         {phoneErr && <p className="text-red-500 text-[10px] mt-1 px-1">{phoneErr}</p>}
@@ -84,14 +84,14 @@ function LeadCard({ onCaptured, onSkip }: { onCaptured: () => void; onSkip: () =
       <button
         onClick={submit}
         disabled={status === 'loading' || !name.trim() || !phone}
-        className="w-full bg-gold text-navy text-[12px] font-bold py-2 rounded-xl hover:bg-gold/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
+        className="w-full bg-gold text-navy text-[12px] font-bold py-2 rounded-xl hover:bg-gold/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5 min-h-[44px]"
       >
         <Phone size={12} />
         {status === 'loading' ? 'भेज रहे हैं…' : 'Callback Request करें →'}
       </button>
       <button
         onClick={onSkip}
-        className="w-full text-[10px] text-slate-400 hover:text-slate-600 transition-colors text-center pt-0.5"
+        className="w-full text-[10px] text-slate-600 hover:text-slate-800 transition-colors text-center pt-1 min-h-[44px]"
       >
         अभी नहीं
       </button>
@@ -254,7 +254,7 @@ export default function PoddarJiChatUI({
                     <LeadCard onCaptured={chat.markLeadCaptured} onSkip={chat.dismissLeadCard} />
                   )}
                   {m.card === 'lead_skip' && (
-                    <p className="text-[10px] text-slate-400 mt-2">कोई बात नहीं! जब चाहें call करें: {ADVISOR_PHONE}</p>
+                    <p className="text-[10px] text-slate-600 mt-2">कोई बात नहीं! जब चाहें call करें: {ADVISOR_PHONE}</p>
                   )}
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function PoddarJiChatUI({
           <div className="flex gap-2 justify-start">
             <div className="w-6 h-6 rounded-full bg-navy flex items-center justify-center text-[8px] font-bold text-gold flex-shrink-0">PJ</div>
             <div className="bg-gray-100 dark:bg-gray-800 border-none rounded-2xl rounded-bl-sm px-3.5 py-3 shadow-sm flex items-center gap-2 max-w-[80%]">
-              <span className="text-[12px] text-slate-500 dark:text-slate-400">Poddar Ji is thinking</span>
+              <span className="text-[12px] text-slate-600 dark:text-slate-300">Poddar Ji is thinking</span>
               <TypingDots />
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function PoddarJiChatUI({
 
       {/* Input */}
       <div className="px-3 pb-3 pt-2 border-t border-slate-100 flex-shrink-0">
-        <div className="flex gap-2 bg-slate-50 rounded-xl border border-slate-200 p-1">
+        <div className="flex gap-2 bg-slate-50 rounded-xl border border-slate-200 p-1 items-center">
           <input
             ref={inputRef}
             type="text"
@@ -316,20 +316,20 @@ export default function PoddarJiChatUI({
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); chat.sendMessage() } }}
             placeholder={placeholder}
             maxLength={MAX_INPUT}
-            className="flex-1 bg-transparent text-[12px] px-2 outline-none text-slate-700 placeholder:text-slate-400"
+            className="flex-1 bg-transparent text-[12px] px-2 outline-none text-slate-700 placeholder:text-slate-600 py-2.5"
           />
           <button
             onClick={() => chat.sendMessage()}
             disabled={!chat.input.trim() || chat.typing || chat.streaming}
-            className="w-8 h-8 bg-navy rounded-lg flex items-center justify-center disabled:opacity-30 hover:bg-navy-light transition-colors flex-shrink-0"
+            className="w-11 h-11 bg-navy rounded-lg flex items-center justify-center disabled:opacity-30 hover:bg-navy-light transition-colors flex-shrink-0"
           >
-            <Send size={13} className="text-white" />
+            <Send size={16} className="text-white" />
           </button>
         </div>
         {chat.input.length > 450 && (
           <p className="text-[9px] text-amber-700 mt-1 px-1">{MAX_INPUT - chat.input.length} characters left</p>
         )}
-        <p className="text-[9px] text-slate-400 text-center mt-1.5 leading-snug">{disclaimer}</p>
+        <p className="text-[9px] text-slate-600 text-center mt-1.5 leading-snug">{disclaimer}</p>
       </div>
     </div>
   )

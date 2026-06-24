@@ -83,7 +83,7 @@ export default function ProtectionCheckSection() {
                 <h3 className="font-display text-lg md:text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                   {cardTitle}
                 </h3>
-                <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 font-medium">
+                <p className="text-gray-300 text-xs md:text-sm leading-relaxed mb-6 font-medium">
                   {cardSub}
                 </p>
                 

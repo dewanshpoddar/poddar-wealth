@@ -2,10 +2,6 @@
 
 import dynamic from 'next/dynamic'
 
-const MotionDiv = dynamic(
-  () => import('framer-motion').then(mod => ({ default: mod.motion.div })),
-  { ssr: false }
-)
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
@@ -106,11 +102,7 @@ export default function AboutPage() {
             </div>
 
             {/* Right: Institutional Visual Frame */}
-            <MotionDiv 
-               initial={{ opacity: 0, scale: 0.98 }}
-               animate={{ opacity: 1, scale: 1 }}
-               className="relative lg:block hidden"
-            >
+            <div className="relative lg:block hidden animate-fade-scale-in">
                <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 group">
                   <Image
                     src="/assets/gorakhpur-office-render.webp"
@@ -126,7 +118,7 @@ export default function AboutPage() {
                      </div>
                   </div>
                </div>
-            </MotionDiv>
+            </div>
 
           </div>
         </div>
@@ -165,12 +157,7 @@ export default function AboutPage() {
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
               <div className="lg:col-span-12 xl:col-span-5">
-                <MotionDiv 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden group"
-                >
+                <div className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden group animate-fade-up">
                   <Image
                     src="/assets/ajay-poddar.svg"
                     alt="Ajay Kumar Poddar"
@@ -178,7 +165,7 @@ export default function AboutPage() {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/5 via-transparent to-transparent opacity-60 pointer-events-none" />
-                </MotionDiv>
+                </div>
                 
                 <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
@@ -197,11 +184,7 @@ export default function AboutPage() {
               </div>
 
               <div className="lg:col-span-12 xl:col-span-7">
-                <MotionDiv 
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                >
+                <div className="animate-fade-in">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="w-12 h-px bg-gold" />
                     <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">
@@ -254,7 +237,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </div>
-                </MotionDiv>
+                </div>
               </div>
 
             </div>
@@ -361,20 +344,17 @@ export default function AboutPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {(coreValues.items || []).map((v: any, i: number) => (
-                  <MotionDiv
+                  <div
                     key={i}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl transition-all group"
+                    style={{ animationDelay: `${i * 100}ms` }}
+                    className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group animate-fade-up"
                   >
                     <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-gold/5 transition-all">
                       {valuesIcons[i]}
                     </div>
                     <h3 className="text-[18px] font-bold text-slate-900 mb-3 tracking-tight leading-snug">{v.title}</h3>
                     <p className="text-[13px] text-slate-500 leading-relaxed font-medium">{v.desc}</p>
-                  </MotionDiv>
+                  </div>
                 ))}
               </div>
             </div>
@@ -396,9 +376,8 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {/* MDRT */}
-            <MotionDiv 
-              whileHover={{ y: -5 }} 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            <div 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA" width={110} height={56} className="object-contain" />
@@ -411,12 +390,11 @@ export default function AboutPage() {
                   {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}
                 </p>
               </div>
-            </MotionDiv>
+            </div>
 
             {/* Chairman's Club */}
-            <MotionDiv 
-              whileHover={{ y: -5 }} 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            <div 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
@@ -429,12 +407,11 @@ export default function AboutPage() {
                   {lang === 'en' ? 'Member Since 2015' : '2015 से सदस्य'}
                 </p>
               </div>
-            </MotionDiv>
+            </div>
 
             {/* 31 Years */}
-            <MotionDiv 
-              whileHover={{ y: -5 }} 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            <div 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4">
                 <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-2xl group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
@@ -449,12 +426,11 @@ export default function AboutPage() {
                   {lang === 'en' ? 'Established 1994' : '1994 से स्थापित'}
                 </p>
               </div>
-            </MotionDiv>
+            </div>
 
             {/* 5000+ Families */}
-            <MotionDiv 
-              whileHover={{ y: -5 }} 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 transition-all duration-300"
+            <div 
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
             >
               <div className="h-16 flex items-center justify-center mb-4">
                 <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-lg group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
@@ -469,7 +445,7 @@ export default function AboutPage() {
                   {lang === 'en' ? 'Active Protection' : 'सक्रिय सुरक्षा'}
                 </p>
               </div>
-            </MotionDiv>
+            </div>
           </div>
         </div>
       </section>

@@ -13,7 +13,7 @@ export default function FinalCTA() {
           <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-slate-50 border border-gray-200/50 shadow-inner relative overflow-hidden group/photo">
             <Image 
               src="/assets/ajay-poddar.svg" 
-              alt={t.aboutSection.name}
+              alt=""
               fill
               className="object-cover object-top scale-[1.25] origin-top transition-transform duration-500 group-hover/photo:scale-[1.3]"
               priority

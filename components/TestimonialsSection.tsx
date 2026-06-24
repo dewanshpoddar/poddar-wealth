@@ -234,7 +234,7 @@ export default function TestimonialsSection() {
                       )}
                       <div>
                         <div className="pw-ts-name text-[13px] font-bold text-navy">{name}</div>
-                        <div className="pw-ts-meta text-[11px] text-slate-400 font-medium">{meta}</div>
+                        <div className="pw-ts-meta text-[11px] text-slate-600 font-medium">{meta}</div>
                       </div>
                     </div>
 

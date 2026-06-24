@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
-import { Home, Shield, Phone, BookOpen, Calculator, Sparkles, MessageCircle } from 'lucide-react'
+import { Home, Shield, Phone, BookOpen, Calculator, Sparkles, MessageCircle, Search } from 'lucide-react'
 import { ADVISOR_PHONE } from '@/lib/constants'
 
 export default function NotFound() {
@@ -100,13 +100,12 @@ export default function NotFound() {
             { label: c.contact, href: '/contact', icon: <Phone size={15} /> },
             { label: c.blog, href: '/blog', icon: <BookOpen size={15} /> },
             { label: c.calculator, href: '/calculators/life-insurance', icon: <Calculator size={15} /> },
+            { label: lang === 'hi' ? 'वेबसाइट खोजें' : 'Search Site', href: '/search', icon: <Search size={15} /> },
           ].map((link, idx) => (
             <Link
               key={idx}
               href={link.href}
-              className={`flex items-center gap-2.5 bg-white/[0.02] border border-white/5 hover:border-gold/25 rounded-xl py-3 px-4 text-xs font-semibold text-white/80 hover:text-white transition-all hover:bg-white/[0.04] cursor-pointer ${
-                idx === 4 ? 'col-span-2 md:col-span-1' : ''
-              }`}
+              className="flex items-center gap-2.5 bg-white/[0.02] border border-white/5 hover:border-gold/25 rounded-xl py-3 px-4 text-xs font-semibold text-white/80 hover:text-white transition-all hover:bg-white/[0.04] cursor-pointer"
             >
               <span className="text-gold">{link.icon}</span>
               <span className="truncate">{link.label}</span>
