@@ -41,10 +41,6 @@ const PopularPlans = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
 )
 
-const WealthBlueprintCalculator = dynamic(
-  () => import('@/src/features/wealth-blueprint/components/WealthBlueprintCalculator'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
-)
 
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
@@ -76,10 +72,6 @@ const CalculatorsPreview = dynamic(
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
 )
 
-const FinalCTA = dynamic(
-  () => import('@/components/FinalCTA'),
-  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-48 w-full" /> }
-)
 
 // Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
@@ -119,15 +111,6 @@ export default function HomePage() {
         <LazySection height="h-16">
           <Suspense fallback={null}>
             <QuickActions />
-          </Suspense>
-        </LazySection>
-      </SectionBoundary>
-
-      {/* 5 — About the Founder */}
-      <SectionBoundary>
-        <LazySection height="h-64">
-          <Suspense fallback={null}>
-            <AboutFounder />
           </Suspense>
         </LazySection>
       </SectionBoundary>
@@ -204,12 +187,20 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 14 — Newsletter signup + Final CTA (merged) */}
+      {/* 13b — About the Founder (before newsletter) */}
+      <SectionBoundary>
+        <LazySection height="h-64">
+          <Suspense fallback={null}>
+            <AboutFounder />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 14 — Newsletter signup */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
             <NewsletterSignup />
-            <FinalCTA />
           </Suspense>
         </LazySection>
       </SectionBoundary>
