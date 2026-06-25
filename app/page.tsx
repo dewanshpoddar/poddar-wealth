@@ -42,6 +42,11 @@ const PopularPlans = dynamic(
 )
 
 
+const WealthBlueprintCalculator = dynamic(
+  () => import('@/src/features/wealth-blueprint/components/WealthBlueprintCalculator'),
+  { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-96 w-full" /> }
+)
+
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
   { ssr: false, loading: () => <div className="animate-pulse bg-gray-50 rounded-xl h-64 w-full" /> }
@@ -138,6 +143,15 @@ export default function HomePage() {
         <LazySection height="h-96">
           <Suspense fallback={null}>
             <ServicesSection />
+          </Suspense>
+        </LazySection>
+      </SectionBoundary>
+
+      {/* 8b — Wealth Blueprint Calculator (star feature — warm cream bg, alternates with services light bg) */}
+      <SectionBoundary>
+        <LazySection height="h-[600px]">
+          <Suspense fallback={null}>
+            <WealthBlueprintCalculator />
           </Suspense>
         </LazySection>
       </SectionBoundary>

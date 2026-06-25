@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { ADVISOR_PHONE, SECONDARY_PHONE } from '@/lib/constants'
-import { MapPin, Phone, MessageCircle, Mail } from 'lucide-react'
+import { MapPin, Phone, MessageCircle } from 'lucide-react'
 
 // Inline SVG components for trademarked social icons since they aren't in Lucide-react core
 const Facebook = ({ size = 17 }: { size?: number }) => (
@@ -35,82 +35,65 @@ export default function Footer() {
   const label = (en: string, hi: string) => lang === 'hi' ? hi : en
 
   return (
-    <footer className="bg-gray-950 pt-20 pb-10 border-t border-gray-900 text-gray-300">
+    <footer className="bg-[#080b18] pt-16 pb-8 border-t border-white/[0.06] text-gray-400">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        
+
         {/* Brand Header Row */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-10 mb-10 border-b border-gray-900">
-          <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-md overflow-hidden flex-shrink-0">
-              <Image 
-                src="/assets/pwm-logo.svg" 
-                alt="Poddar Wealth Logo" 
-                width={56} 
-                height={56} 
-                className="w-full h-full object-contain scale-110" 
-                
-              />
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 pb-10 mb-10 border-b border-white/[0.06]">
+          {/* Logo + name — same style as navbar */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/90 flex items-center justify-center p-1.5 flex-shrink-0">
+              <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" width={40} height={40} className="w-full h-full object-contain" />
             </div>
             <div>
-              <span className="text-white font-bold text-base leading-snug block uppercase tracking-wider">
-                {t.footer.brand || 'PODDAR WEALTH MANAGEMENT'}
+              <span className="text-white font-bold text-[16px] tracking-tight font-display block leading-tight">
+                Poddar Wealth Management
               </span>
-              <span className="text-amber-500 text-[10px] uppercase tracking-widest font-semibold mt-0.5 block">
-                {label('Since 1994', 'स्थापना 1994')}
+              <span className="text-amber-500/60 text-[8px] uppercase tracking-[0.22em] font-normal mt-0.5 block">
+                Excellence in Service Since 1994
               </span>
             </div>
           </div>
-          
-          <p className="text-gray-300 text-xs max-w-md leading-relaxed font-medium">
+
+          {/* Tagline */}
+          <p className="text-gray-500 text-[12px] max-w-sm leading-relaxed lg:text-right">
             {label(
-              'Securing the future of families across India for over 31 years with trust, absolute transparency, and personalized care.',
-              '31 वर्षों से अधिक के अटूट विश्वास और व्यक्तिगत सेवा के साथ भारत के परिवारों के भविष्य को सुरक्षित कर रहे हैं।'
+              'Trusted by 5,000+ families across India for over 31 years.',
+              '31 वर्षों से 5,000+ परिवारों का भरोसा।'
             )}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            {/* Google Reviews Block */}
-            <a
-              href="https://www.google.com/maps/place/Poddar+Wealth+Management/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block group"
-            >
-              <div className="flex items-center gap-1.5 mb-1 text-[10px] font-bold text-gray-300 uppercase tracking-wider">
-                <span>Google Review Rating</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex text-amber-500 text-sm">
-                  ★ ★ ★ ★ ★
-                </div>
-                <span className="text-xs font-bold text-white group-hover:text-amber-500 transition-colors">
-                  4.9 / 5.0
-                </span>
-                <span className="text-[10px] text-gray-400 font-medium">
-                  (154 {label('reviews', 'समीक्षाएं')})
-                </span>
+          {/* Google rating + socials */}
+          <div className="flex items-center gap-5">
+            <a href="https://www.google.com/maps/place/Poddar+Wealth+Management/" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">Google Reviews</div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-amber-400 text-[11px] tracking-tight">★★★★★</span>
+                <span className="text-white text-[12px] font-semibold group-hover:text-amber-400 transition-colors">4.9</span>
+                <span className="text-gray-500 text-[11px]">(154)</span>
               </div>
             </a>
 
-            {/* Social Media Icons */}
-            <div className="flex items-center gap-2.5">
-              <a href="https://www.facebook.com/share/1FnAn7yFPS/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="Facebook">
-                <Facebook size={17} />
-              </a>
+            <div className="w-px h-8 bg-white/10" />
 
-              <a href="https://www.linkedin.com/company/poddarwealthmanagement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="LinkedIn">
-                <Linkedin size={17} />
-              </a>
-              <a href={`https://wa.me/91${ADVISOR_PHONE}`} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white hover:bg-white/5 transition-all p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl" aria-label="WhatsApp">
-                <MessageCircle size={17} />
-              </a>
+            <div className="flex items-center gap-1">
+              {[
+                { href: 'https://www.facebook.com/share/1FnAn7yFPS/', label: 'Facebook', icon: <Facebook size={15} /> },
+                { href: 'https://www.linkedin.com/company/poddarwealthmanagement/', label: 'LinkedIn', icon: <Linkedin size={15} /> },
+                { href: `https://wa.me/91${ADVISOR_PHONE}`, label: 'WhatsApp', icon: <MessageCircle size={15} /> },
+              ].map(({ href, label: ariaLabel, icon }) => (
+                <a key={ariaLabel} href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-all">
+                  {icon}
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Main Grid Layout (5 columns on desktop) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-14">
+
           {/* Column 1: Services */}
           <div>
             <h3 className="text-white font-bold text-[11px] uppercase tracking-[0.15em] mb-6 px-2 border-l border-amber-500/80 ml-[-2px]">
@@ -281,43 +264,22 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Links & Language Toggle */}
-          <div className="flex flex-wrap justify-center lg:justify-end items-center gap-4 lg:gap-6 order-1 lg:order-2">
-            {/* 3-Language Selector */}
-            <div className="flex items-center bg-gray-900/60 rounded-lg p-1 border border-gray-800 gap-1">
-              <button
-                onClick={() => setLang('en')}
-                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
-                  lang === 'en' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                EN
-              </button>
-              <span className="text-gray-800">|</span>
-              <button
-                onClick={() => setLang('hi')}
-                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
-                  lang === 'hi' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                हिंदी
-              </button>
-              <span className="text-gray-800">|</span>
-              <button
-                onClick={() => setLang('bn')}
-                className={`text-[10px] font-bold min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg cursor-pointer transition-all ${
-                  lang === 'bn' ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                বাংলা
-              </button>
+          {/* Language toggle — slim pill, matches navbar style */}
+          <div className="flex items-center order-1 lg:order-2">
+            <div className="flex rounded-full p-[3px] border border-white/10 bg-white/5">
+              {(['en', 'hi', 'bn'] as const).map((l, i) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`px-3 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                    lang === l ? 'bg-amber-500 text-white' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {['EN', 'हिं', 'বাং'][i]}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-
-        {/* Disclaimer Row */}
-        <div className="mt-6 text-[10px] text-gray-600 text-center leading-relaxed italic border-t border-gray-900/40 pt-4 w-full">
-          {t.footer.disclaimer || 'Insurance is the subject matter of solicitation. IRDAI Registration No. XXXXXXXXXX.'}
         </div>
 
       </div>
