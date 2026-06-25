@@ -24,7 +24,7 @@ export default function TestimonialsSection() {
           }
         }
       } catch (err) {
-        console.error('Failed to fetch reviews', err)
+        console.warn('Failed to fetch reviews', err)
       }
       // If endpoint fails, fallback to local static data
       const fallback = [

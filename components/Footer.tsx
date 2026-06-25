@@ -49,7 +49,7 @@ export default function Footer() {
               <span className="text-white font-bold text-[16px] tracking-tight font-display block leading-tight">
                 Poddar Wealth Management
               </span>
-              <span className="text-amber-500/60 text-[8px] uppercase tracking-[0.22em] font-normal mt-0.5 block">
+              <span className="text-amber-400 text-[8px] uppercase tracking-[0.22em] font-normal mt-0.5 block">
                 Excellence in Service Since 1994
               </span>
             </div>
@@ -83,7 +83,8 @@ export default function Footer() {
                 { href: `https://wa.me/91${ADVISOR_PHONE}`, label: 'WhatsApp', icon: <MessageCircle size={15} /> },
               ].map(({ href, label: ariaLabel, icon }) => (
                 <a key={ariaLabel} href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-all">
+                  className="relative w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors
+                    before:absolute before:inset-[-6px] before:content-['']">
                   {icon}
                 </a>
               ))}

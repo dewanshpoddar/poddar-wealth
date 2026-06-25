@@ -37,16 +37,16 @@ export default function Navbar() {
     path === '/' ? pathname === '/' : pathname.startsWith(path)
 
   const brandNameCls = scrolled ? 'text-white' : 'text-[#0f1225]'
-  const brandSubCls = scrolled ? 'text-amber-500/70 font-normal tracking-[0.22em]' : 'text-amber-700/60 font-normal tracking-[0.22em]'
+  const brandSubCls = scrolled ? 'text-amber-400 font-normal tracking-[0.22em]' : 'text-amber-700 font-normal tracking-[0.22em]'
   const chevronCls = scrolled ? 'text-gray-500' : 'text-gray-400'
 
   const linkCls = (path: string) => {
     const activeColor = scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
     const inactiveColor = scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
     return `relative text-sm font-medium transition-colors duration-200 py-3 min-h-[44px] flex items-center
-      after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:w-0
-      hover:after:w-full after:bg-gold after:transition-all after:duration-300
-      ${isActive(path) ? `${activeColor} after:w-full` : inactiveColor}`
+      after:absolute after:bottom-1.5 after:left-0 after:h-[2px] after:w-full after:bg-gold
+      after:transition-transform after:duration-300 after:origin-left
+      ${isActive(path) ? `${activeColor} after:scale-x-100` : `${inactiveColor} after:scale-x-0 hover:after:scale-x-100`}`
   }
 
   const calcLinks = [
@@ -292,7 +292,7 @@ export default function Navbar() {
                 Poddar Wealth Management
               </span>
               <span className={`text-[8px] uppercase tracking-[0.18em] transition-colors duration-300 ${
-                scrolled ? 'text-amber-500/60' : 'text-amber-700/50'
+                scrolled ? 'text-amber-400' : 'text-amber-700'
               }`}>
                 Since 1994
               </span>

@@ -69,7 +69,7 @@ export default function CalculatorsPreview() {
             <Link
               key={c.id}
               href={c.link}
-              className="group bg-white border border-gray-100/80 hover:border-amber-500/40 rounded-2xl p-6 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between"
+              className="group bg-white border border-gray-100/80 hover:border-amber-500/40 rounded-2xl p-6 transition-[transform,border-color,box-shadow] duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

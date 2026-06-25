@@ -53,7 +53,7 @@ export default function PopularPlans() {
               <Link
                 key={plan.id}
                 href={plan.link}
-                className="group bg-gray-900 border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/5 flex flex-col justify-between"
+                className="group bg-gray-900 border border-gray-800 hover:border-amber-500/50 rounded-2xl p-6 transition-[border-color,box-shadow] duration-300 hover:shadow-lg hover:shadow-amber-500/5 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

@@ -6,6 +6,7 @@ import { ADVISOR_PHONE } from '@/lib/constants'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
+  weight: ['400', '700'],
   variable: '--font-display',
   display: 'swap',
 })

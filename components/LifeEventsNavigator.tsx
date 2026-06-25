@@ -63,7 +63,7 @@ export default function LifeEventsNavigator() {
               <Link 
                 key={event.slug}
                 href={`/life-events/${event.slug}`}
-                className="group flex items-center gap-3.5 p-3.5 sm:p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:border-gold/30 hover:-translate-y-0.5 transition-all duration-300 h-[60px] sm:h-auto cursor-pointer"
+                className="group flex items-center gap-3.5 p-3.5 sm:p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:border-gold/30 hover:-translate-y-0.5 transition-[transform,border-color,box-shadow] duration-300 h-[60px] sm:h-auto cursor-pointer"
               >
                 {/* Left side: Icon Container */}
                 <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 ring-4 ${c.ring} ${c.bg} ${c.text} transition-transform duration-300 group-hover:scale-105`}>
