@@ -4,8 +4,8 @@ import { useLang } from '@/lib/LangContext'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { ADVISOR_PHONE, SECONDARY_PHONE } from '@/lib/constants'
-import { MapPin, Phone, MessageCircle } from 'lucide-react'
+import { ADVISOR_PHONE, SECONDARY_PHONE, OFFICE_HOURS } from '@/lib/constants'
+import { MapPin, Phone, MessageCircle, Clock } from 'lucide-react'
 
 // Inline SVG components for trademarked social icons since they aren't in Lucide-react core
 const Facebook = ({ size = 17 }: { size?: number }) => (
@@ -246,6 +246,12 @@ export default function Footer() {
                     +91 {SECONDARY_PHONE}
                   </a>
                 </div>
+              </div>
+              <div className="flex items-start gap-2.5 text-gray-300">
+                <Clock className="text-amber-500 w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span className="font-semibold leading-relaxed">
+                  {lang === 'hi' ? OFFICE_HOURS.hi : OFFICE_HOURS.en}
+                </span>
               </div>
             </div>
           </div>

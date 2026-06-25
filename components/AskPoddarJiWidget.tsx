@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { Send } from 'lucide-react'
+import { AI_DISCLAIMER } from '@/lib/constants'
 
 export default function AskPoddarJiWidget() {
   const { t, lang } = useLang()
@@ -66,6 +67,9 @@ export default function AskPoddarJiWidget() {
           </form>
 
         </div>
+        <p className="text-[10px] text-gray-600 text-center mt-3 leading-relaxed">
+          {AI_DISCLAIMER}
+        </p>
       </div>
     </section>
   )
