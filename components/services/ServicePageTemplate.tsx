@@ -20,6 +20,7 @@ const heroBgVariantMap: Record<string, 'light' | 'dark'> = {
   'health-insurance': 'dark',
   'term-life': 'light',
   'child-planning': 'dark',
+  'child-wedding': 'light',
   'retirement': 'light',
   'tax-planning': 'dark',
   'critical-illness': 'light',

@@ -240,7 +240,7 @@
         "title": "Child's Wedding",
         "desc": "Plan your child's wedding fund",
         "tag": "Savings",
-        "href": "/services/child-planning"
+        "href": "/services/child-wedding"
       },
       {
         "icon": "👥",
@@ -791,12 +791,140 @@
       },
       "crossSell": {
         "title": "Related Savings Solutions",
-        "links": ["life-insurance", "tax-planning", "retirement"]
+        "links": ["child-wedding", "tax-planning", "retirement"]
       },
       "finalCta": {
         "title": "Secure Your Child's Future Today",
         "sub": "31 years of trusted advisory. One conversation is all it takes.",
         "whatsappPrefill": "Namaste Ajay ji, I want to start a child education fund policy. Please recommend."
+      }
+    },
+    "child-wedding": {
+      "category": "SAVINGS",
+      "hero": {
+        "h1": "Fund your daughter's wedding without touching your retirement savings",
+        "sub": "Marriage expenses rise faster than inflation. Plan a guaranteed wedding fund early so you can focus on the celebrations when the time comes.",
+        "stats": [
+          "₹15L–50L guaranteed fund",
+          "Premium waiver on death",
+          "Tax-free maturity"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I want to start a daughter's wedding fund policy. Please recommend."
+      },
+      "problem": {
+        "title": "The cost of Indian weddings is rising by 12% every year",
+        "cards": [
+          {
+            "icon": "Heart",
+            "stat": "₹15–40 Lakh",
+            "desc": "estimated average cost of a wedding by 2035"
+          },
+          {
+            "icon": "AlertTriangle",
+            "stat": "45% Parents",
+            "desc": "dip into their retirement savings for marriages"
+          },
+          {
+            "icon": "TrendingUp",
+            "stat": "3x Cost",
+            "desc": "increase in wedding venue & gold prices over 10 years"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Wedding Savings Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We estimate the future wedding cost adjusted for inflation based on your target year."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We select guaranteed endowment and money-back plans with waiver benefits so the fund is secure."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "The policy matures exactly at the marriage milestone, giving you tax-free funds when needed."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Wedding Savings Plans",
+        "items": [
+          {
+            "name": "LIC Kanyadan (Jeevan Lakshya #933)",
+            "num": "#933",
+            "type": "Wedding Plan",
+            "benefit": "Guaranteed sum + regular income + premium waiver",
+            "premium": "From ₹15,000/year",
+            "coverage": "₹5L – ₹50L",
+            "term": "13 – 25 years",
+            "badge": "Best Seller",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Kanyadan policy (Jeevan Lakshya #933)."
+          },
+          {
+            "name": "LIC Jeevan Umang",
+            "num": "#945",
+            "type": "Savings",
+            "benefit": "8% lifetime regular payouts after maturity",
+            "premium": "From ₹20,000/year",
+            "coverage": "₹2L – ₹1Cr",
+            "term": "15 – 30 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Umang for wedding planning."
+          },
+          {
+            "name": "LIC New Bima Bachat",
+            "num": "#916",
+            "type": "Money Back",
+            "benefit": "Single premium plan with regular money-back payouts",
+            "premium": "From ₹50,000 single",
+            "coverage": "₹1L – ₹10L",
+            "term": "9 – 15 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Bima Bachat single premium policy."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Wedding Fund",
+        "desc": "Estimate the maturity returns and bonus of your wedding savings policy.",
+        "btnText": "Calculate Maturity",
+        "type": "maturity"
+      },
+      "testimonial": {
+        "quote": "I was worried about my daughter's wedding expenses, but Ajay sir helped me start a small monthly savings plan 15 years ago. The tax-free maturity helped me conduct a grand wedding without touching my EPF.",
+        "author": "Rajesh Tripathi",
+        "location": "Gorakhpur",
+        "policy": "LIC Kanyadan (#933)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Wedding Savings Policy FAQ",
+        "items": [
+          {
+            "q": "What is the LIC Kanyadan policy?",
+            "a": "It is a customized package of LIC Jeevan Lakshya. It pays a guaranteed maturity for your daughter's marriage and waives future premiums if the parent passes away."
+          },
+          {
+            "q": "Are the maturity returns from these plans tax-free?",
+            "a": "Yes, the maturity amount and bonus received under Section 10(10D) are fully tax-free for policies meeting the criteria."
+          },
+          {
+            "q": "What happens if the parent dies before the daughter's wedding?",
+            "a": "All future premiums are waived immediately. LIC pays an annual income of 10% of the sum assured to the family, and the full maturity amount is paid as scheduled at the wedding year."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Savings Solutions",
+        "links": ["child-planning", "life-insurance", "tax-planning"]
+      },
+      "finalCta": {
+        "title": "Start Planning for Her Big Day",
+        "sub": "Help your daughter achieve her dreams. Get a custom wedding savings plan today.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for a wedding savings plan."
       }
     },
     "retirement": {
@@ -1776,6 +1904,12 @@
           "desc": "Invest strategically to claim deductions under 80C, 80D and 10(10D).",
           "href": "/services/tax-planning",
           "tag": "Tax Save"
+        },
+        {
+          "title": "Child's Wedding",
+          "desc": "Plan for your daughter's wedding fund with guaranteed tax-free returns.",
+          "href": "/services/child-wedding",
+          "tag": "Marriage"
         }
       ],
       "faq": {

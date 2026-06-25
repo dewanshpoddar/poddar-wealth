@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/services/savings`,              lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/services/health`,               lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/services/child-planning`,      lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/services/child-wedding`,       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/services/retirement`,          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/services/tax-planning`,        lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/services/keyman-insurance`,    lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
