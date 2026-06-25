@@ -19,6 +19,7 @@ import {
   Star,
   Camera,
   Sparkles,
+  ArrowRight,
 } from 'lucide-react'
 
 export default function AboutPage() {
@@ -101,7 +102,7 @@ export default function AboutPage() {
                <div className="relative w-full aspect-[4/3] rounded-[48px] overflow-hidden shadow-2xl border border-white bg-gray-100 group">
                   <Image
                     src="/assets/gorakhpur-office-render.webp"
-                    alt="Gorakhpur Office Render"
+                    alt="Poddar Wealth Management office at Vijay Chowk, Gorakhpur"
                     fill
                     className="object-cover"
                   />
@@ -126,8 +127,15 @@ export default function AboutPage() {
                {stats.map((stat, i) => (
                   <div key={i} className="flex items-center group">
                     <div className="flex flex-col">
-                       <div className="font-display text-[18px] md:text-22 font-bold text-slate-900 leading-none group-hover:text-gold transition-colors">{stat.num}</div>
-                       <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-2">{stat.label}</div>
+                      {stat.num === 'MDRT USA Member' ? (
+                        <div className="flex items-center gap-2 mb-1">
+                          <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain" />
+                          <span className="text-[11px] font-bold text-gold uppercase tracking-wider">MDRT USA Member</span>
+                        </div>
+                      ) : (
+                        <div className="font-display text-[18px] md:text-22 font-bold text-slate-900 leading-none group-hover:text-gold transition-colors">{stat.num}</div>
+                      )}
+                       <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">{stat.label}</div>
                     </div>
                     {i < stats.length - 1 && (
                       <div className="h-8 w-px bg-gold/10 mx-8 lg:mx-16 hidden md:block" />
@@ -155,7 +163,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden group animate-fade-up">
                   <Image
                     src="/assets/ajay-poddar.svg"
-                    alt="Ajay Kumar Poddar"
+                    alt="Ajay Kumar Poddar - founder and managing director, Poddar Wealth Management, Gorakhpur"
                     fill
                     className="object-cover"
                   />
@@ -227,8 +235,12 @@ export default function AboutPage() {
                         <Trophy size={20} />
                       </div>
                       <div>
-                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">Experience</div>
-                        <div className="text-[14px] font-bold text-navy">31+ Years Excellence</div>
+                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
+                          {isHi ? 'अनुभव' : 'Experience'}
+                        </div>
+                        <div className="text-[14px] font-bold text-navy">
+                          {isHi ? '31+ वर्षों की उत्कृष्टता' : '31+ Years Excellence'}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -342,9 +354,9 @@ export default function AboutPage() {
                   <div
                     key={i}
                     style={{ animationDelay: `${i * 100}ms` }}
-                    className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group animate-fade-up"
+                    className="p-8 rounded-[36px] bg-white border border-slate-200 hover:border-gold/20 hover:shadow-xl hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300 group animate-fade-up"
                   >
-                    <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-gold/5 transition-all">
+                    <div className="w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-gold/5 transition-[transform,background-color]">
                       {valuesIcons[i]}
                     </div>
                     <h3 className="text-[18px] font-bold text-slate-900 mb-3 tracking-tight leading-snug">{v.title}</h3>
@@ -370,46 +382,40 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {/* MDRT */}
-            <div 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
-            >
-              <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT Member" width={110} height={56} className="object-contain" />
+            {/* MDRT - dark premium card so logo is legible */}
+            <div className="bg-[#0f1225] border border-white/10 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
+                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA Member logo" width={100} height={80} className="object-contain w-auto h-full" />
               </div>
               <div>
-                <h4 className="text-[14px] font-bold text-navy mb-1">
+                <h4 className="text-[14px] font-bold text-white mb-1">
                   {lang === 'en' ? 'MDRT USA Member' : 'MDRT सदस्य'}
                 </h4>
-                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                <p className="text-[11px] text-amber-400/70 font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}
                 </p>
               </div>
             </div>
 
-            {/* Chairman's Club */}
-            <div 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
-            >
-              <div className="h-16 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club" width={130} height={56} className="object-contain" />
+            {/* Chairman's Club - dark premium card */}
+            <div className="bg-[#0f1225] border border-white/10 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
+                <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club award logo" width={120} height={80} className="object-contain w-auto h-full" />
               </div>
               <div>
-                <h4 className="text-[14px] font-bold text-navy mb-1">
+                <h4 className="text-[14px] font-bold text-white mb-1">
                   {lang === 'en' ? "Chairman's Club" : 'चेयरमैन क्लब'}
                 </h4>
-                <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                <p className="text-[11px] text-amber-400/70 font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Member Since 2015' : '2015 से सदस्य'}
                 </p>
               </div>
             </div>
 
             {/* 31 Years */}
-            <div 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
-            >
-              <div className="h-16 flex items-center justify-center mb-4">
-                <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-2xl group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
+            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-2xl group-hover:bg-gold group-hover:text-white transition-[background-color,color] duration-300 shadow-sm">
                   31
                 </div>
               </div>
@@ -424,11 +430,9 @@ export default function AboutPage() {
             </div>
 
             {/* 5000+ Families */}
-            <div 
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-all duration-300"
-            >
-              <div className="h-16 flex items-center justify-center mb-4">
-                <div className="w-14 h-14 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-lg group-hover:bg-gold group-hover:text-white transition-all duration-300 shadow-sm">
+            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-lg hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center font-display font-bold text-gold text-lg group-hover:bg-gold group-hover:text-white transition-[background-color,color] duration-300 shadow-sm">
                   5K+
                 </div>
               </div>
@@ -448,7 +452,7 @@ export default function AboutPage() {
       {/* TODO: Replace with real photos from Ajay sir */}
       {/* ═══ MEMORY LANE (35MM STRIPS) ═══ */}
       <section className="py-16 md:py-20 bg-slate-50 border-t border-slate-100 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale contrast-[200%]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/film-grain.png")' }} />
+        <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%224%22 height=%224%22%3E%3Crect width=%221%22 height=%221%22 x=%220%22 y=%220%22 fill=%22%23000%22/%3E%3Crect width=%221%22 height=%221%22 x=%222%22 y=%222%22 fill=%22%23000%22/%3E%3C/svg%3E')]" />
         <div className="max-w-7xl mx-auto px-8 relative z-10 text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4 text-gold/60">
             <Camera size={18} />
@@ -533,8 +537,9 @@ export default function AboutPage() {
                 {isHi ? 'श्री अजय कुमार पोद्दार के साथ सीधे परामर्श बुक करें।' : 'Book a direct consultation with Mr. Ajay Poddar.'}
               </p>
            </div>
-           <Link href="/contact" className="h-12 md:h-14 px-8 md:px-10 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-3 hover:bg-navy-light transition-all shadow-xl hover:-translate-y-1 text-center">
-              {isHi ? 'अभी अपनी यात्रा शुरू करें →' : 'Start Your Journey Now →'}
+           <Link href="/contact" className="h-12 md:h-14 px-8 md:px-10 bg-navy text-white rounded-full flex items-center justify-center font-bold text-[14px] md:text-[15px] gap-3 hover:bg-navy-light transition-[background-color,transform] shadow-xl hover:-translate-y-1 text-center">
+              {isHi ? 'अभी अपनी यात्रा शुरू करें' : 'Start Your Journey Now'}
+              <ArrowRight size={16} className="flex-shrink-0" />
            </Link>
         </div>
       </section>
