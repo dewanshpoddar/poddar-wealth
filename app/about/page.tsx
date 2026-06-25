@@ -28,7 +28,7 @@ export default function AboutPage() {
   const stats = [
     { num: '31+', label: lang === 'en' ? 'Years Professional' : 'पेशेवर साल' },
     { num: '5000+', label: lang === 'en' ? 'Families Protected' : 'सुरक्षित परिवार' },
-    { num: 'MDRT Member', label: lang === 'en' ? 'Global Top 1%' : 'ग्लोबल टॉप 1%' },
+    { num: 'MDRT USA Member', label: lang === 'en' ? 'Global Top 1%' : 'ग्लोबल टॉप 1%' },
     { num: '₹500Cr+', label: lang === 'en' ? 'Claims Assisted' : 'दावे सहायता' }
   ]
 
@@ -166,7 +166,7 @@ export default function AboutPage() {
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
                      <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain flex-shrink-0" />
                      <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
-                       {isHi ? 'MDRT सदस्य' : 'MDRT Member'}
+                       {isHi ? 'MDRT सदस्य' : 'MDRT USA Member'}
                      </span>
                    </div>
                    <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
@@ -379,7 +379,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h4 className="text-[14px] font-bold text-navy mb-1">
-                  {lang === 'en' ? 'MDRT Member' : 'MDRT सदस्य'}
+                  {lang === 'en' ? 'MDRT USA Member' : 'MDRT सदस्य'}
                 </h4>
                 <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}

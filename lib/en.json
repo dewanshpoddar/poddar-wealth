@@ -29,10 +29,10 @@
     "cta": "Know more"
   },
   "hero": {
-    "eyebrow": "Gorakhpur's trusted insurance advisor — MDRT Member",
+    "eyebrow": "Gorakhpur's trusted insurance advisor — MDRT USA Member",
     "headline": "Your Family's Protection,",
     "headlineGold": "31 Years of Wealth Trust.",
-    "subtitle": "Life insurance, health insurance, and wealth planning for Indian families. By Mr. Ajay Kumar Poddar, MDRT Member and Chairman's Club awardee.",
+    "subtitle": "Life insurance, health insurance, and wealth planning for Indian families. By Mr. Ajay Kumar Poddar, MDRT USA Member and Chairman's Club awardee.",
     "cta1": "Get Wealth Health Report",
     "cta2": "Book Free Wealth Consultation",
     "cta3": "Get Free Wealth Quote",
@@ -85,7 +85,7 @@
     {
       "icon": "🏆",
       "title": "Award-winning trust",
-      "sub": "MDRT Member & Chairman's Club, since 1994."
+      "sub": "MDRT USA Member & Chairman's Club, since 1994."
     }
   ],
   "trust": {
@@ -94,7 +94,7 @@
     "credentials": [
       {
         "icon": "🏆",
-        "title": "MDRT Member",
+        "title": "MDRT USA Member",
         "desc": "Million Dollar Round Table, top 1% of advisors globally"
       },
       {
@@ -123,7 +123,7 @@
         "label": "Families protected"
       },
       {
-        "num": "MDRT Member",
+        "num": "MDRT USA Member",
         "label": "Global Top 1%"
       },
       {
@@ -562,7 +562,7 @@
     "name": "Ajay Kumar Poddar",
     "badges": [
       {
-        "text": "MDRT Member",
+        "text": "MDRT USA Member",
         "type": "gold"
       },
       {
@@ -892,7 +892,7 @@
     "headingGold": "with Ajay sir personally.",
     "body": "No scripts. No call centre. Ajay Kumar Poddar reviews your situation himself and recommends exactly what your family needs, nothing more.",
     "trust": [
-      "MDRT Member, top 1% of advisors globally",
+      "MDRT USA Member, top 1% of advisors globally",
       "31 years · Personal call, not a call centre",
       "5,000+ families protected across India"
     ],
@@ -1597,7 +1597,7 @@
   "founderStory": {
     "story": "For 31 years, I've sat across dining tables, hospital waiting rooms, and family discussions — helping people protect what matters most.\n\nI started in 1994 with one belief: every family deserves someone who understands their finances AND cares about their future. Not someone who pushes products. Someone who listens.\n\nToday, I've helped 5,000 families across Gorakhpur, Basti, Varanasi, and beyond. Some of them are into their third generation with me. Their parents trusted me. Now their children do too.\n\nMy approach is simple: I ask about your life, not your budget. The right plan follows naturally.",
     "signature": "Ajay Kumar Poddar",
-    "credentials": "MDRT Member · Chairman's Club Awardee · 31 Years of Service"
+    "credentials": "MDRT USA Member · Chairman's Club Awardee · 31 Years of Service"
   },
   "lifeEvents": {
     "title": "What's Your Situation?",
@@ -1638,7 +1638,7 @@
   },
   "referral": {
     "heroTitle": "Share the Trust",
-    "heroSubtitle": "Refer a friend and both of you get a free policy review from Ajay sir — MDRT Member with 31 years of experience",
+    "heroSubtitle": "Refer a friend and both of you get a free policy review from Ajay sir — MDRT USA Member with 31 years of experience",
     "howItWorks": "How it Works",
     "step1Title": "1. Generate Link",
     "step1Desc": "Enter your details below to generate your unique referral link",
@@ -1684,7 +1684,7 @@
   "joinAdvisor": {
     "eyebrow": "CAREER OPPORTUNITY",
     "title": "Build Your Career in Insurance",
-    "subtitle": "Join Ajay sir's team. Financial independence, flexible hours, mentorship from an MDRT Member.",
+    "subtitle": "Join Ajay sir's team. Financial independence, flexible hours, mentorship from an MDRT USA Member.",
     "benefits": [
       { "title": "₹50K-2L/month", "description": "Earning potential" },
       { "title": "Flexible Hours", "description": "Work on your terms" },

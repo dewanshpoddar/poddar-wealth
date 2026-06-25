@@ -21,7 +21,7 @@ export default function TrustSection() {
       }
     },
     {
-      num: 'MDRT Member',
+      num: "MDRT USA Member",
       label: {
         en: 'Global Top 1%',
         hi: 'ग्लोबल टॉप 1%'

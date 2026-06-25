@@ -35,7 +35,7 @@ export default async function Image() {
 
           {/* Top row: badges */}
           <div style={{ display: 'flex', gap: '12px' }}>
-            {['MDRT Member', "LIC Chairman's Club", '30+ Years'].map((badge) => (
+            {['MDRT USA Member', "LIC Chairman's Club", '30+ Years'].map((badge) => (
               <div key={badge} style={{
                 background: 'rgba(201,169,110,0.15)',
                 border: '1px solid rgba(201,169,110,0.4)',

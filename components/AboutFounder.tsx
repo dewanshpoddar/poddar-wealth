@@ -22,7 +22,7 @@ export default function AboutFounder() {
         }
 
   const aboutSection = t.aboutSection ?? {
-    eyebrow: lang === 'en' ? 'MDRT Member' : 'MDRT सदस्य',
+    eyebrow: lang === 'en' ? 'MDRT USA Member' : 'MDRT सदस्य',
     name: lang === 'en' ? 'Ajay Kumar Poddar' : 'अजय कुमार पोद्दार',
     bio: '',
     badges: []
