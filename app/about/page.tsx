@@ -118,134 +118,127 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══ NEW: FULL-WIDTH INSTITUTIONAL TRUST BAR ═══ */}
-      <section className="bg-white border-b border-gold/10 py-6 relative z-20">
-         <div className="max-w-7xl mx-auto px-8">
-            <div className="flex flex-row flex-wrap justify-between items-center gap-y-6">
-               {stats.map((stat, i) => (
-                  <div key={i} className="flex items-center group">
-                    <div className="flex flex-col">
-                      {stat.num === 'MDRT USA Member' ? (
-                        <div className="flex items-center gap-2 mb-1">
-                          <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain" />
-                          <span className="text-[11px] font-bold text-gold uppercase tracking-wider">MDRT USA Member</span>
-                        </div>
-                      ) : (
-                        <div className="font-display text-[18px] md:text-22 font-bold text-slate-900 leading-none group-hover:text-gold transition-colors">{stat.num}</div>
-                      )}
-                       <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">{stat.label}</div>
+      {/* ═══ TRUST BAR ═══ */}
+      <section className="bg-white border-b border-gold/10 relative z-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gold/10">
+            {stats.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center justify-center py-7 px-6 text-center group">
+                {stat.num === 'MDRT USA Member' ? (
+                  <>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={18} height={18} className="object-contain flex-shrink-0" />
+                      <span className="font-display text-[14px] md:text-[16px] font-bold text-slate-900 leading-none">MDRT</span>
                     </div>
-                    {i < stats.length - 1 && (
-                      <div className="h-8 w-px bg-gold/10 mx-8 lg:mx-16 hidden md:block" />
-                    )}
-                  </div>
-               ))}
-            </div>
-            <div className="mt-4 text-left">
-              <p className="text-[10px] text-slate-400 italic">
-                {isHi 
-                  ? '*दावा सहायता आंकड़े 1994 से सेवा की गई सभी पॉलिसियों के कुल संचयी हैं।'
-                  : '*Claims Assisted statistic is cumulative across all policies serviced since 1994.'}
-              </p>
-            </div>
-         </div>
+                    <div className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">{stat.label}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="font-display text-[22px] md:text-[28px] font-bold text-slate-900 leading-none mb-2 group-hover:text-gold transition-colors">{stat.num}</div>
+                    <div className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">{stat.label}</div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-gold/5 px-8 py-2">
+            <p className="text-[10px] text-slate-400 italic">
+              {isHi
+                ? '*दावा सहायता आंकड़े 1994 से सेवा की गई सभी पॉलिसियों के कुल संचयी हैं।'
+                : '*Claims Assisted figure is cumulative across all policies serviced since 1994.'}
+            </p>
+          </div>
+        </div>
       </section>
 
-      {/* ═══ LUXURY FOUNDER SPOTLIGHT (MINIMALIST) ═══ */}
-      <section className="py-16 bg-white relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-8 relative z-10">
-          <div className="bg-slate-50 border border-slate-100 rounded-[48px] p-8 lg:p-14 shadow-sm">
-            <div className="grid lg:grid-cols-12 gap-16 items-center">
-              
-              <div className="lg:col-span-12 xl:col-span-5">
-                <div className="relative aspect-[3/4] w-full max-w-[380px] mx-auto xl:mx-0 rounded-[40px] bg-gray-100 border border-slate-200 shadow-md overflow-hidden group animate-fade-up">
-                  <Image
-                    src="/assets/ajay-poddar.svg"
-                    alt="Ajay Kumar Poddar - founder and managing director, Poddar Wealth Management, Gorakhpur"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/5 via-transparent to-transparent opacity-60 pointer-events-none" />
-                </div>
-                
-                <div className="mt-8 flex flex-wrap justify-center xl:justify-start gap-3">
-                   <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
-                     <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={20} height={20} className="object-contain flex-shrink-0" />
-                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
-                       {isHi ? 'MDRT सदस्य' : 'MDRT USA Member'}
-                     </span>
-                   </div>
-                   <div className="px-4 py-2 border border-gold/20 rounded-full flex items-center gap-2">
-                     <Image src="/assets/chairmanclub.webp" alt="Chairman's Club" width={20} height={20} className="object-contain flex-shrink-0" />
-                     <span className="text-[10px] font-bold text-gold uppercase tracking-widest">
-                       {isHi ? 'चेयरमैन क्लब' : "Chairman's Club"}
-                     </span>
-                   </div>
-                </div>
+      {/* ═══ FOUNDER SPOTLIGHT ═══ */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 md:px-8">
+          <div className="flex flex-col md:flex-row gap-0 rounded-[32px] overflow-hidden border border-gray-200/70 shadow-xl">
+
+            {/* Left - dark photo panel */}
+            <div className="relative md:w-64 lg:w-80 shrink-0 bg-[#0f1225] flex flex-col items-center justify-end pt-10 pb-0 overflow-hidden">
+              <div className="absolute top-6 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full bg-amber-400/10 blur-[60px] pointer-events-none" />
+              <p className="relative z-10 text-amber-400/80 text-[9px] font-bold uppercase tracking-[0.22em] mb-4 text-center px-4">
+                {isHi ? 'संस्थापक एवं सलाहकार' : 'FOUNDER & ADVISOR'}
+              </p>
+              <div className="relative z-10 w-52 h-64 md:w-full md:h-80 overflow-hidden">
+                <Image
+                  src="/assets/ajay-poddar.svg"
+                  alt="Ajay Kumar Poddar - founder and managing director, Poddar Wealth Management, Gorakhpur"
+                  fill
+                  className="object-cover object-top scale-[1.15] origin-top"
+                  priority
+                />
               </div>
-
-              <div className="lg:col-span-12 xl:col-span-7">
-                <div className="animate-fade-in">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-12 h-px bg-gold" />
-                    <span className="text-[11px] font-bold text-gold uppercase tracking-[0.3em]">
-                      {isHi ? 'सलाहकार से मिलें' : 'Meet Your Advisor'}
-                    </span>
-                  </div>
-                  
-                  <h2 className="text-[28px] md:text-[32px] font-display font-bold text-navy mb-8 leading-tight">
-                    {t.founderStory?.signature || (isHi ? 'श्री अजय कुमार पोद्दार' : 'Mr. Ajay Kumar Poddar')}
-                  </h2>
-                  
-                  <div className="space-y-6 text-[15px] md:text-[16px] text-slate-600 leading-relaxed">
-                    {(t.founderStory?.story || '').split('\n\n').filter(Boolean).map((para: string, idx: number) => (
-                      <p 
-                        key={idx} 
-                        className={
-                          idx === 1 
-                            ? "border-l-4 border-gold pl-6 py-2 bg-gold/5 rounded-r-xl italic font-serif text-slate-700" 
-                            : idx === 0 
-                              ? "font-medium text-slate-800" 
-                              : "text-[14px] text-slate-500"
-                        }
-                      >
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-slate-200">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-gold/5 flex items-center justify-center text-gold">
-                        <MapPin size={20} />
-                      </div>
-                      <div>
-                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
-                          {isHi ? 'सेवा क्षेत्र' : 'Service Area'}
-                        </div>
-                        <div className="text-[14px] font-bold text-navy">
-                          {isHi ? 'गोरखपुर, पूर्वी यूपी' : 'Gorakhpur, Eastern UP'}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-gold/5 flex items-center justify-center text-gold">
-                        <Trophy size={20} />
-                      </div>
-                      <div>
-                        <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest">
-                          {isHi ? 'अनुभव' : 'Experience'}
-                        </div>
-                        <div className="text-[14px] font-bold text-navy">
-                          {isHi ? '31+ वर्षों की उत्कृष्टता' : '31+ Years Excellence'}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
+
+            {/* Right - content panel */}
+            <div className="flex-1 bg-white p-8 md:p-10 lg:p-12 flex flex-col justify-center">
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className="w-8 h-px bg-gold" />
+                <span className="text-[10px] font-bold text-gold uppercase tracking-[0.3em]">
+                  {isHi ? 'सलाहकार से मिलें' : 'Meet Your Advisor'}
+                </span>
+              </div>
+
+              {/* Name */}
+              <h2 className="font-display text-[28px] md:text-[34px] font-bold text-slate-900 leading-tight mb-1">
+                {t.founderStory?.signature || (isHi ? 'श्री अजय कुमार पोद्दार' : 'Mr. Ajay Kumar Poddar')}
+              </h2>
+              <p className="text-slate-500 text-[13px] mb-5">
+                {isHi ? 'प्रबंध निदेशक, पोद्दार वेल्थ मैनेजमेंट' : 'Managing Director, Poddar Wealth Management'}
+              </p>
+
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1.5">
+                  <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={13} height={13} className="object-contain flex-shrink-0" />
+                  {isHi ? 'MDRT सदस्य' : 'MDRT USA Member'}
+                </span>
+                <span className="px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1.5">
+                  <Image src="/assets/chairmanclub.webp" alt="Chairman's Club" width={13} height={13} className="object-contain flex-shrink-0" />
+                  {isHi ? 'चेयरमैन क्लब' : "Chairman's Club"}
+                </span>
+                <span className="px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 border border-gray-200">
+                  {isHi ? '31+ वर्ष अनुभव' : '31+ Years'}
+                </span>
+              </div>
+
+              {/* Bio */}
+              <div className="space-y-4 mb-8">
+                {(t.founderStory?.story || '').split('\n\n').filter(Boolean).slice(0, 3).map((para: string, idx: number) => (
+                  <p
+                    key={idx}
+                    className={
+                      idx === 1
+                        ? 'border-l-4 border-gold pl-5 py-1.5 bg-gold/5 rounded-r-xl italic text-[13px] text-slate-700 leading-relaxed'
+                        : idx === 0
+                          ? 'text-[14px] font-medium text-slate-800 leading-relaxed'
+                          : 'text-[13px] text-slate-500 leading-relaxed'
+                    }
+                  >
+                    {para}
+                  </p>
+                ))}
+              </div>
+
+              {/* Stat strip */}
+              <div className="flex flex-wrap gap-6 pt-6 border-t border-gray-100">
+                {[
+                  { num: '31+', label: isHi ? 'वर्षों की सेवा' : 'Years of service' },
+                  { num: '5,000+', label: isHi ? 'परिवारों की सुरक्षा' : 'Families protected' },
+                  { num: '4.9★', label: isHi ? 'Google रेटिंग' : 'Google rating' },
+                ].map(({ num, label }) => (
+                  <div key={label}>
+                    <p className="text-[18px] font-bold text-amber-600 leading-none">{num}</p>
+                    <p className="text-[11px] text-gray-500 mt-1 font-medium">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -272,9 +265,9 @@ export default function AboutPage() {
 
                 <div className="relative mt-12">
                   {/* Vertical Line */}
-                  <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gold/20 -translate-x-[1px]" />
+                  <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-[2px] bg-gold/20 md:-translate-x-px" />
 
-                  <div className="space-y-12">
+                  <div className="space-y-10">
                     {(timelineData.items || []).map((item: any, i: number) => {
                       const isEven = i % 2 === 0
                       return (
@@ -284,31 +277,25 @@ export default function AboutPage() {
                             isEven ? 'md:flex-row-reverse' : ''
                           }`}
                         >
-                          {/* Circle Dot with pulse */}
-                          <div className="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-white border-2 border-gold flex items-center justify-center -translate-x-3 z-20">
-                            <span className="w-2.5 h-2.5 rounded-full bg-gold animate-pulse" />
+                          {/* Circle Dot */}
+                          <div className="absolute left-5 md:left-1/2 w-5 h-5 rounded-full bg-white border-2 border-gold flex items-center justify-center -translate-x-[10px] z-20 mt-5 md:mt-0">
+                            <span className="w-2 h-2 rounded-full bg-gold" />
                           </div>
 
-                          {/* Card */}
-                          <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-8">
-                            <div className="bg-slate-50 border border-slate-200 p-6 rounded-[28px] shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300 group">
+                          {/* Card — extra inner padding to keep clear of center dot */}
+                          <div className={`w-full md:w-[calc(50%-28px)] pl-14 md:pl-0 ${isEven ? 'md:ml-7' : 'md:mr-7'}`}>
+                            <div className="bg-slate-50 border border-slate-200 p-5 rounded-[24px] shadow-sm hover:shadow-md hover:border-gold/30 transition-[transform,border-color,box-shadow] duration-300 group">
                               <div className="flex flex-wrap items-center gap-2 mb-2">
-                                <span className="text-gold font-bold text-xs tracking-wider uppercase">
-                                  {item.year}
-                                </span>
-                                <span className="w-1.5 h-1.5 rounded-full bg-gold/30 hidden sm:inline" />
-                                <h4 className="text-[14px] font-bold text-navy leading-snug group-hover:text-gold transition-colors">
-                                  {item.title}
-                                </h4>
+                                <span className="text-gold font-bold text-[11px] tracking-wider uppercase">{item.year}</span>
+                                <span className="w-1 h-1 rounded-full bg-gold/30 hidden sm:inline" />
+                                <h4 className="text-[13px] font-bold text-navy leading-snug group-hover:text-gold transition-colors">{item.title}</h4>
                               </div>
-                              <p className="text-[12px] text-slate-500 leading-relaxed font-medium">
-                                {item.desc}
-                              </p>
+                              <p className="text-[12px] text-slate-500 leading-relaxed font-medium">{item.desc}</p>
                             </div>
                           </div>
 
-                          {/* Empty spacer for desktop alignment */}
-                          <div className="hidden md:block w-1/2" />
+                          {/* Spacer for the other side — takes up remaining width */}
+                          <div className="hidden md:block flex-1" />
                         </div>
                       )
                     })}
