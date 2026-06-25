@@ -39,5 +39,5 @@ export const AREAS: Area[] = [
   { slug: 'siwan', name: 'Siwan', nameHi: 'सीवान', description: "Close to the UP-Bihar border near Gorakhpur, with many cross-border families and commuters seeking unified insurance coverage." },
   { slug: 'chapra', name: 'Chapra', nameHi: 'छपरा', description: "Headquarters of Saran district, a growing centre for rural insurance awareness where Poddar Wealth extends financial protection to families." },
   { slug: 'ranchi', name: 'Ranchi', nameHi: 'रांची', description: "Jharkhand's capital city with a rapidly urbanising population and expanding IT sector, creating fresh demand for comprehensive life and health cover." },
-  { slug: 'dhanbad', name: 'Dhanbad', nameHi: 'धनबाद', description: "The Coal Capital of India with high-income mining and industrial demographics — families here prioritise accident cover, critical illness, and retirement plans." },
+  { slug: 'dhanbad', name: 'Dhanbad', nameHi: 'धनबाद', description: "The Coal Capital of India with high-income mining and industrial demographics - families here prioritise accident cover, critical illness, and retirement plans." },
 ]

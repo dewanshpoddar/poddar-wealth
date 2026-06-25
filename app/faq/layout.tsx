@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions — Poddar Wealth Management',
+  title: 'FAQs - Poddar Wealth Management',
   description: 'Common questions about LIC plans, health insurance, claims process, and working with Poddar Wealth Management.',
   openGraph: {
-    title: 'Frequently Asked Questions — Poddar Wealth Management',
+    title: 'FAQs - Poddar Wealth Management',
     description: 'Clear and honest answers to frequently asked questions about LIC policies, Star Health, and claims.',
   },
 }

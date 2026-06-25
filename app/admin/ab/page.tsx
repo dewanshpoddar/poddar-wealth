@@ -36,7 +36,7 @@ const INITIAL_TESTS: TestItem[] = [
     conversionsB: 58,
     impressionsA: 1200,
     impressionsB: 1210,
-    winner: '—',
+    winner: ' - ',
     status: 'Running',
   },
   {
@@ -93,7 +93,7 @@ export default function ABTestAdminPage() {
       conversionsB: 0,
       impressionsA: 0,
       impressionsB: 0,
-      winner: '—',
+      winner: ' - ',
       status: 'Running',
     };
 
@@ -178,7 +178,7 @@ export default function ABTestAdminPage() {
                           <td className="px-6 py-4 text-gray-600 max-w-[150px] truncate">{test.variantB}</td>
                           <td className="px-6 py-4 text-center font-mono font-bold text-gray-600">{test.split}</td>
                           <td className="px-6 py-4 text-center">
-                            {test.winner !== '—' ? (
+                            {test.winner !== ' - ' ? (
                               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700">
                                 {test.winner}
                               </span>

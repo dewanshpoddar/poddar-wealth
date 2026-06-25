@@ -24,7 +24,7 @@ export default function PlanSearch({
   return (
             <div className="bg-white rounded-2xl shadow-sm border border-[rgba(184,134,11,0.1)] overflow-hidden lg:sticky lg:top-[86px]">
 
-              {/* Quick Selector — like the competitor app */}
+              {/* Quick Selector - like the competitor app */}
               <div className="bg-navy px-4 py-3">
                 <div className="text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2">Quick Selector</div>
                 <div className="flex gap-2">

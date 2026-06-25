@@ -35,7 +35,7 @@ function ShareBar({ title, slug, lang }: { title: string; slug: string; lang: st
         {lang === 'en' ? 'Share' : 'शेयर करें'}
       </span>
       <WhatsAppShare
-        text={`${title} — Read here:`}
+        text={`${title} - Read here:`}
         url={shareUrl}
         className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold px-3.5 py-2 rounded-full transition-colors"
       >
@@ -282,7 +282,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
               <p className="text-gold font-display font-bold text-lg mb-1">{t.blog.askPoddarJi}</p>
               <p className="text-white/55 text-sm mb-5">
                 {lang === 'en'
-                  ? 'Get a personalised answer about this topic from our AI advisor — available 24/7 in Hindi or English.'
+                  ? 'Get a personalised answer about this topic from our AI advisor - available 24/7 in Hindi or English.'
                   : '24/7 हिंदी या अंग्रेजी में हमारे AI सलाहकार से व्यक्तिगत जवाब पाएं।'}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

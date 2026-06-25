@@ -1,5 +1,5 @@
 /**
- * Admin Notifications — central utility
+ * Admin Notifications - central utility
  *
  * Sends structured alerts to a dedicated "Admin Notifications" tab
  * in Google Sheets via ADMIN_SHEETS_WEBHOOK_URL.
@@ -9,12 +9,12 @@
  *   await adminNotify({ type: 'API_ERROR', severity: 'error', route: '/api/leads', message: '...' })
  *
  * Types:
- *   PLAN_ALERT   — plan may be withdrawn (from fortnightly cron)
- *   API_ERROR    — unhandled error in an API route
- *   SCRAPE_FAIL  — LIC scraper / NAV fetch failed
- *   CRON_WARN    — cron ran but with partial failures
- *   LEAD_FAIL    — Google Sheets lead push failed (not the lead itself, just the sync)
- *   SYSTEM       — anything else worth logging
+ *   PLAN_ALERT   - plan may be withdrawn (from fortnightly cron)
+ *   API_ERROR    - unhandled error in an API route
+ *   SCRAPE_FAIL  - LIC scraper / NAV fetch failed
+ *   CRON_WARN    - cron ran but with partial failures
+ *   LEAD_FAIL    - Google Sheets lead push failed (not the lead itself, just the sync)
+ *   SYSTEM       - anything else worth logging
  *
  * Severities: 'info' | 'warn' | 'error'
  */

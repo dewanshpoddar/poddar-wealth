@@ -88,7 +88,7 @@ export default function PayPremiumPage() {
       <section className="py-10 px-6 bg-slate-50 border-b border-slate-100">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-display font-bold text-2xl text-navy mb-2 text-center">
-            {isHi ? 'LIC प्रीमियम ऑनलाइन कैसे भरें — स्टेप बाय स्टेप' : 'How to Pay LIC Premium Online — Step by Step'}
+            {isHi ? 'LIC प्रीमियम ऑनलाइन कैसे भरें - स्टेप बाय स्टेप' : 'How to Pay LIC Premium Online - Step by Step'}
           </h2>
           <p className="text-gray-500 text-sm text-center mb-8">
             {isHi ? 'इन 5 आसान स्टेप्स का पालन करें और भुगतान पूरा करें' : 'Follow these 5 simple steps to complete your payment'}

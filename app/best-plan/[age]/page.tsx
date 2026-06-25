@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ age: stri
   const { age } = await params
   const group = AGE_GROUPS.find((g) => g.slug === age) || AGE_GROUPS[1] // default to 30 if not found
   
-  const title = `Best Insurance Plan for Age ${group.label} — 2026 Guide | Poddar Wealth`
+  const title = `Best Insurance Plan for Age ${group.label} - 2026 Guide | Poddar Wealth`
   const description = `Find the best LIC and health insurance plans for age ${group.label}. Expert recommendations by MDRT advisor Ajay Kumar Poddar, Gorakhpur.`
   
   return {

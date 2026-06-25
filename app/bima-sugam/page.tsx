@@ -71,8 +71,8 @@ export default function BimaSugamPage() {
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
-              ? 'बीमा सुगम (Bima Sugam) — भारत का नया बीमा बाज़ार (2026 गाइड)' 
-              : 'Bima Sugam — India\'s New Insurance Marketplace (Complete Guide 2026)'}
+              ? 'बीमा सुगम (Bima Sugam) - भारत का नया बीमा बाज़ार (2026 गाइड)' 
+              : 'Bima Sugam - India\'s New Insurance Marketplace (Complete Guide 2026)'}
           </h1>
           <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             {isHi
@@ -90,7 +90,7 @@ export default function BimaSugamPage() {
           {isHi ? (
             <>IRDAI द्वारा वर्ष 2026 में क्रांतिकारी <strong>Bima Sugam</strong> मंच की शुरुआत की जा रही है। यह विस्तृत गाइड आपको बताएगी कि आधिकारिक <strong>Bima Sugam portal</strong> कैसे संचालित होगा और अपनी पॉलिसियों को आसानी से प्रबंधित करने के लिए आपको <strong>Bima Sugam registration</strong> के बारे में क्या जानना आवश्यक है। गोरखपुर के प्रतिष्ठित LIC और स्टार हेल्थ विशेषज्ञ अजय कुमार पोद्दार (MDRT, USA) द्वारा संकलित मार्गदर्शन।</>
           ) : (
-            <>IRDAI is launching the revolutionary <strong>Bima Sugam</strong> platform in 2026. This complete guide walks you through how the official <strong>Bima Sugam portal</strong> will operate and what you need to know about <strong>Bima Sugam registration</strong> for paperless life, health, and motor insurance management. Prepared by MDRT certified advisor Ajay Kumar Poddar of Gorakhpur.</>
+            <>IRDAI is launching the <strong>Bima Sugam</strong> platform in 2026. This complete guide walks you through how the official <strong>Bima Sugam portal</strong> will operate and what you need to know about <strong>Bima Sugam registration</strong> for paperless life, health, and motor insurance management. Prepared by MDRT certified advisor Ajay Kumar Poddar of Gorakhpur.</>
           )}
         </p>
 
@@ -104,7 +104,7 @@ export default function BimaSugamPage() {
               {isHi ? (
                 <><strong>बीमा सुगम (Bima Sugam)</strong> एक अत्यधिक महत्वाकांक्षी डिजिटल प्लेटफ़ॉर्म है जिसे भारत सरकार और IRDAI (भारतीय बीमा नियामक और विकास प्राधिकरण) द्वारा समर्थित किया गया है। यह एक वन-स्टॉप डेस्टिनेशन के रूप में कार्य करेगा जहाँ ग्राहक सभी प्रकार की जीवन बीमा, स्वास्थ्य बीमा और सामान्य (जैसे मोटर/कार) बीमा पॉलिसियों की तुलना कर सकते हैं, उन्हें खरीद सकते हैं और उनके क्लेम की प्रक्रिया पूरी कर सकते हैं।</>
               ) : (
-                <><strong>Bima Sugam</strong> is a revolutionary digital platform backed by the IRDAI (Insurance Regulatory and Development Authority of India). It acts as a single window or one-stop destination where customers can seamlessly compare, purchase, modify, and process claims for all types of life, health, and general (motor/home) insurance policies across all insurers in India.</>
+                <><strong>Bima Sugam</strong> is a digital marketplace backed by the IRDAI (Insurance Regulatory and Development Authority of India). It acts as a single window or one-stop destination where customers can compare, purchase, modify, and process claims for all types of life, health, and general (motor/home) insurance policies across all insurers in India.</>
               )}
             </p>
             <p>
@@ -181,7 +181,7 @@ export default function BimaSugamPage() {
           <div className="text-slate-600 text-sm md:text-base space-y-4 leading-relaxed">
             <p>
               {isHi ? (
-                <>बीमा सुगम ग्राहकों को पूर्ण पारदर्शिता प्रदान करेगा। हालांकि, यह याद रखना आवश्यक है कि बीमा केवल एक उत्पाद खरीदना नहीं है — यह आपके परिवार के संकट के समय एक वादा है। सही क्लेम सेटलमेंट, उचित फॉर्म विवरण भरने और यह सुनिश्चित करने के लिए कि आपका पैसा सही जगह सुरक्षित है, आपको आज भी एक विश्वसनीय भौतिक एडवाइज़र की आवश्यकता होती है।</>
+                <>बीमा सुगम ग्राहकों को पूर्ण पारदर्शिता प्रदान करेगा। हालांकि, यह याद रखना आवश्यक है कि बीमा केवल एक उत्पाद खरीदना नहीं है - यह आपके परिवार के संकट के समय एक वादा है। सही क्लेम सेटलमेंट, उचित फॉर्म विवरण भरने और यह सुनिश्चित करने के लिए कि आपका पैसा सही जगह सुरक्षित है, आपको आज भी एक विश्वसनीय भौतिक एडवाइज़र की आवश्यकता होती है।</>
               ) : (
                 <>While Bima Sugam provides pricing transparency and digital ease, it is vital to remember that insurance is not just a digital commodity; it is a promise of financial protection for your family during a crisis. To select the correct coverage values, input complex declarations properly, and guarantee that claims are settled in under 30 days, having an experienced on-ground advisor remains irreplaceable.</>
               )}

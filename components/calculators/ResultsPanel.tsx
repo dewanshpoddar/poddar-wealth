@@ -142,7 +142,7 @@ export default function ResultsPanel({
                       ) : null
                     })()}
 
-                    {/* You Pay / You Get — pension-specific vs standard */}
+                    {/* You Pay / You Get - pension-specific vs standard */}
                     {premResult.isPensionAnnuity ? (
                       /* ── PENSION ANNUITY: one-time purchase price → annual pension ── */
                       <div className="space-y-3">
@@ -213,7 +213,7 @@ export default function ResultsPanel({
                       </div>
                     )}
 
-                    {/* Premium per instalment — mode-reactive (hidden for pension annuity & single premium) */}
+                    {/* Premium per instalment - mode-reactive (hidden for pension annuity & single premium) */}
                     {!premResult.isPensionAnnuity && selectedPlan?.ppt !== 'single' && (() => {
                       const currentModePrem = allModesPrem?.find(r => r.mode === mode)?.prem ?? premResult
                       const isSinglePremPlan = ppt === 1 && selectedPlan?.ppt === 'single'
@@ -252,7 +252,7 @@ export default function ResultsPanel({
                               </button>
                             ))}
                           </div>
-                          {/* Per day — based on yearly equivalent */}
+                          {/* Per day - based on yearly equivalent */}
                           {allModesPrem && (
                             <div className="mt-3 text-center text-[11px] text-gray-500">
                               {MODE_LABEL[mode]} Mode · Avg. Premium/Day ≈{' '}
@@ -384,7 +384,7 @@ export default function ResultsPanel({
                             </div>
                             {/* Visual timeline */}
                             <div className="relative py-6 px-4">
-                              {/* Top arc — life cover label */}
+                              {/* Top arc - life cover label */}
                               <div className="flex justify-between items-start mb-1 px-2">
                                 <div />
                                 <div className="text-center text-[10px] text-blue-600 font-semibold">

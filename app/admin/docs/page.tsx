@@ -10,16 +10,16 @@ interface DocsData {
 }
 
 const envVars = [
-  { name: 'GROQ_API_KEY', description: 'Groq API key — https://console.groq.com (free, 14400 req/day)', required: true },
+  { name: 'GROQ_API_KEY', description: 'Groq API key - https://console.groq.com (free, 14400 req/day)', required: true },
   { name: 'GROQ_MODEL', description: 'Groq model ID (default: llama-3.3-70b-versatile)', required: false },
-  { name: 'GOOGLE_SHEETS_WEBHOOK_URL', description: 'Apps Script endpoint — lead capture + newsletter', required: true },
-  { name: 'ADMIN_SHEETS_WEBHOOK_URL', description: 'Apps Script endpoint — admin notifications to Ajay sir', required: true },
+  { name: 'GOOGLE_SHEETS_WEBHOOK_URL', description: 'Apps Script endpoint - lead capture + newsletter', required: true },
+  { name: 'ADMIN_SHEETS_WEBHOOK_URL', description: 'Apps Script endpoint - admin notifications to Ajay sir', required: true },
   { name: 'CRON_SECRET', description: 'Protects /api/cron/* routes (Vercel sends as Bearer token)', required: true },
   { name: 'SYNC_SECRET', description: 'Protects /api/lic-plans/sync (manual sync endpoint)', required: true },
   { name: 'ADMIN_SECRET', description: 'Protects /api/admin/* routes (x-admin-secret header)', required: true },
   { name: 'ADMIN_DASHBOARD_PASSWORD', description: 'Admin dashboard login password (/admin/auth)', required: true },
   { name: 'NEXT_PUBLIC_GA_ID', description: 'Google Analytics 4 Measurement ID (G-XXXXXXXXXX)', required: true },
-  { name: 'RESEND_API_KEY', description: 'Resend email API — https://resend.com (free: 3000/month). Verify poddarwealth.com domain first.', required: false },
+  { name: 'RESEND_API_KEY', description: 'Resend email API - https://resend.com (free: 3000/month). Verify poddarwealth.com domain first.', required: false },
 ];
 
 const conventions = [
@@ -27,7 +27,7 @@ const conventions = [
   { rule: 'Data in JSON', detail: 'Never hardcode lists/plans/prices in JSX. Use src/data/*.json or lib/data/*.json.' },
   { rule: 'Bilingual', detail: 'All user-facing strings go in lib/en.json AND lib/hi.json.' },
   { rule: 'Tailwind only', detail: 'No inline style={}, no CSS modules, no @import.' },
-  { rule: 'TypeScript strict', detail: 'No any — use unknown + type narrowing. All files .tsx or .ts.' },
+  { rule: 'TypeScript strict', detail: 'No any - use unknown + type narrowing. All files .tsx or .ts.' },
   { rule: 'Phone number constant', detail: "Ajay sir's number is ADVISOR_PHONE from lib/constants.ts. Never hardcode 9415313434." },
   { rule: 'Error handling', detail: 'Generic message to client in 500s. Detailed errors to adminNotify() only.' },
   { rule: 'Input sanitization', detail: 'Use clean(), csvSanitize() from lib/server-utils.ts. Never inline.' },
@@ -154,10 +154,10 @@ export default function DocsPage() {
           </div>
         ) : docs ? (
           <div className="space-y-3">
-            <FileSection title="CLAUDE.md — Project memory & conventions" content={docs.claudeMd} />
-            <FileSection title=".env.example — Required environment variables" content={docs.envExample} />
-            <FileSection title="package.json — Dependencies & scripts" content={docs.packageJson} />
-            <FileSection title="vercel.json — Cron jobs & deploy config" content={docs.vercelJson} />
+            <FileSection title="CLAUDE.md - Project memory & conventions" content={docs.claudeMd} />
+            <FileSection title=".env.example - Required environment variables" content={docs.envExample} />
+            <FileSection title="package.json - Dependencies & scripts" content={docs.packageJson} />
+            <FileSection title="vercel.json - Cron jobs & deploy config" content={docs.vercelJson} />
           </div>
         ) : (
           <div className="bg-rose-50 border border-rose-100 rounded-xl p-5 text-rose-700 text-sm">

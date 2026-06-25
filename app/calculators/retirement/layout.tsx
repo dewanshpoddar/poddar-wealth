@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Retirement Calculator — Plan Your Financial Freedom',
+  title: 'Retirement Calculator - Plan Your Financial Freedom',
   description: 'Calculate how much you need to retire comfortably. Factor in inflation, expenses, and pension income.',
   openGraph: {
-    title: 'Retirement Calculator — Plan Your Financial Freedom',
+    title: 'Retirement Calculator - Plan Your Financial Freedom',
     description: 'Calculate how much you need to retire comfortably. Factor in inflation, expenses, and pension income.',
   },
 }

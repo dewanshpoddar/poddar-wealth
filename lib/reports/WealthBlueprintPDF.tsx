@@ -57,7 +57,7 @@ export function WealthBlueprintPDF({ data }: { data: WealthBlueprintReportInput 
   const today = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <Document title={`Wealth Blueprint — ${name}`} author="Ajay Kumar Poddar" creator="Poddar Wealth Management">
+    <Document title={`Wealth Blueprint - ${name}`} author="Ajay Kumar Poddar" creator="Poddar Wealth Management">
       {/* Page 1: Cover */}
       <Page size="A4" style={styles.page}>
         <View style={styles.coverPage}>

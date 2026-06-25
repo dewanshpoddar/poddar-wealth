@@ -78,7 +78,7 @@ const CalculatorsPreview = dynamic(
 )
 
 
-// Silent error boundary — if any below-fold component crashes, show nothing rather than the global error screen
+// Silent error boundary - if any below-fold component crashes, show nothing rather than the global error screen
 class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
     super(props)
@@ -96,13 +96,13 @@ class SectionBoundary extends Component<{ children: ReactNode }, { hasError: boo
 export default function HomePage() {
   return (
     <>
-      {/* 1 — Hero */}
+      {/* 1 - Hero */}
       <HeroSection />
 
-      {/* 2 — Ask Poddar Ji widget */}
+      {/* 2 - Ask Poddar Ji widget */}
       <AskPoddarJiWidget />
 
-      {/* 3 — Trust stats bar */}
+      {/* 3 - Trust stats bar */}
       <SectionBoundary>
         <LazySection height="h-16">
           <Suspense fallback={null}>
@@ -111,7 +111,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 4 — Calculator quick actions */}
+      {/* 4 - Calculator quick actions */}
       <SectionBoundary>
         <LazySection height="h-16">
           <Suspense fallback={null}>
@@ -120,7 +120,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 6 — Life Stages Navigator */}
+      {/* 6 - Life Stages Navigator */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -129,7 +129,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 7 — Protection Check ("What happens if income stops?") */}
+      {/* 7 - Protection Check ("What happens if income stops?") */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
@@ -138,7 +138,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 8 — How We Help You (goal-oriented services) */}
+      {/* 8 - How We Help You (goal-oriented services) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -147,7 +147,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 8b — Wealth Blueprint Calculator (star feature — warm cream bg, alternates with services light bg) */}
+      {/* 8b - Wealth Blueprint Calculator (star feature - warm cream bg, alternates with services light bg) */}
       <SectionBoundary>
         <LazySection height="h-[600px]">
           <Suspense fallback={null}>
@@ -156,7 +156,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 9 — Popular Plans (curated premium dark grid) */}
+      {/* 9 - Popular Plans (curated premium dark grid) */}
       <SectionBoundary>
         <LazySection height="h-48">
           <Suspense fallback={null}>
@@ -165,7 +165,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 10 — Calculators preview (NEW) */}
+      {/* 10 - Calculators preview (NEW) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -174,7 +174,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 11 — Trusted by 5,000+ Families (testimonials & reviews merged) */}
+      {/* 11 - Trusted by 5,000+ Families (testimonials & reviews merged) */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -183,7 +183,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 12 — Blog preview carousel */}
+      {/* 12 - Blog preview carousel */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>
@@ -192,7 +192,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 13 — Join as Insurance Advisor */}
+      {/* 13 - Join as Insurance Advisor */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
@@ -201,7 +201,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 13b — About the Founder (before newsletter) */}
+      {/* 13b - About the Founder (before newsletter) */}
       <SectionBoundary>
         <LazySection height="h-64">
           <Suspense fallback={null}>
@@ -210,7 +210,7 @@ export default function HomePage() {
         </LazySection>
       </SectionBoundary>
 
-      {/* 14 — Newsletter signup */}
+      {/* 14 - Newsletter signup */}
       <SectionBoundary>
         <LazySection height="h-96">
           <Suspense fallback={null}>

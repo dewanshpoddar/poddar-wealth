@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { getServiceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Retirement Income Plans — LIC Pension & Annuity | Poddar Wealth',
+  title: 'Retirement Income Plans - LIC Pension & Annuity | Poddar Wealth',
   description: 'Secure a guaranteed lifetime pension with LIC Jeevan Shanti and New Jeevan Akshay. Expert retirement planning by MDRT Member Ajay Kumar Poddar.',
   openGraph: {
-    title: 'Retirement Income Plans — LIC Pension & Annuity | Poddar Wealth',
+    title: 'Retirement Income Plans - LIC Pension & Annuity | Poddar Wealth',
     description: 'Secure a guaranteed lifetime pension with LIC Jeevan Shanti and New Jeevan Akshay. Expert retirement planning by MDRT Member Ajay Kumar Poddar.',
   },
 }

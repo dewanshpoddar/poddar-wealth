@@ -112,7 +112,7 @@ export default function MaturityCalculatorPage() {
   }
 
   const shareText = result
-    ? `*LIC Maturity Calculator Quote — Poddar Wealth*
+    ? `*LIC Maturity Calculator Quote - Poddar Wealth*
 Plan: LIC Plan ${planNumber}
 Age: ${age} years | Term: ${term} years
 Sum Assured: ${fmtSA(sumAssured)}
@@ -182,7 +182,7 @@ Can you please suggest the best combination for maximizing my returns?`
                 >
                   {majorPlans.map((plan) => (
                     <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} — {plan.name}
+                      Plan {plan.planNo} - {plan.name}
                     </option>
                   ))}
                 </select>

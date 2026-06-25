@@ -24,7 +24,7 @@ export default function ClaimsPage() {
     heroEyebrow: 'CLAIM SUPPORT CENTRE',
     heroTitle: 'We stand with you',
     heroTitleGold: 'during claims.',
-    heroSubtitle: 'For over three decades, Ajay Kumar Poddar has personally hand-delivered claims to families when they needed it most. No call centres, no automation — just complete support when it matters.',
+    heroSubtitle: 'For over three decades, Ajay Kumar Poddar has personally hand-delivered claims to families when they needed it most. No call centres, no automation - just complete support when it matters.',
     processTitle: 'Simple 4-Step Claim Process',
     processSubtitle: 'We guide you and handle the paperwork at every single stage.',
     steps: [],

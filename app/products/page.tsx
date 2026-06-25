@@ -79,7 +79,7 @@ export default function ProductsPage() {
       {/* Gap between grey container and CTA */}
       <div className="h-8 md:h-12 bg-white" />
 
-      {/* CTA Footer — gold theme */}
+      {/* CTA Footer - gold theme */}
       <section
         className="py-12 md:py-14 px-6 text-center relative z-20 rounded-t-[48px] md:rounded-t-[72px] overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #c9a84c 0%, #e8c96a 40%, #b8941f 100%)' }}

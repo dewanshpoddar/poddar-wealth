@@ -44,7 +44,7 @@ export default function LifeEventsPage() {
           What&apos;s Your Situation?
         </h1>
         <p className="text-gray-600 text-lg max-w-xl mx-auto">
-          Choose what applies to you — we&apos;ll show you exactly what you need
+          Choose what applies to you - we&apos;ll show you exactly what you need
         </p>
       </section>
 

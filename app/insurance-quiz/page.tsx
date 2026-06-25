@@ -36,7 +36,7 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
     link: '/products'
   },
   'career-education': {
-    planName: 'LIC Jeevan Lakshya (Plan 933 — Child Goal)',
+    planName: 'LIC Jeevan Lakshya (Plan 933 - Child Goal)',
     why: 'Start securing future child education funds early to lock in high compounding bonuses.',
     whyHi: 'उच्च चक्रवृद्धि बोनस को लॉक करने के लिए बच्चे की भविष्य की शिक्षा निधि को जल्दी सुरक्षित करना शुरू करें।',
     startingPrice: '₹1,200/month',
@@ -52,7 +52,7 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
     link: '/services/health-insurance'
   },
   'career-tax': {
-    planName: 'LIC New Jeevan Anand (Plan 915 — 80C Combo)',
+    planName: 'LIC New Jeevan Anand (Plan 915 - 80C Combo)',
     why: 'Enjoy excellent tax-deductible wealth growth while retaining whole life protection.',
     whyHi: 'आजीवन सुरक्षा बनाए रखते हुए उत्कृष्ट कर-कटौती योग्य धन वृद्धि का आनंद लें।',
     startingPrice: '₹1,000/month',
@@ -70,7 +70,7 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
     link: '/services/life-insurance'
   },
   'married-wealth': {
-    planName: 'LIC Jeevan Utsav (Plan 871 — Guaranteed Payout)',
+    planName: 'LIC Jeevan Utsav (Plan 871 - Guaranteed Payout)',
     why: 'Get guaranteed 10% of Sum Assured every year after premium paying term for life.',
     whyHi: 'प्रीमियम भुगतान अवधि के बाद जीवन भर हर साल बीमा राशि का 10% गारंटीड भुगतान पाएं।',
     startingPrice: '₹2,500/month',
@@ -120,7 +120,7 @@ const RECOMMENDATIONS: Record<string, Recommendation> = {
     link: '/products'
   },
   'parent-education': {
-    planName: 'LIC Jeevan Lakshya (Plan 933 — Parent Premium Waiver)',
+    planName: 'LIC Jeevan Lakshya (Plan 933 - Parent Premium Waiver)',
     why: 'Provides a Premium Waiver Benefit. If anything happens to parent, all future premiums are waived and policy pays 10% SA every year for child education.',
     whyHi: 'प्रीमियम वेवर लाभ प्रदान करता है। यदि माता-पिता को कुछ होता है, तो भविष्य के सभी प्रीमियम माफ कर दिए जाते हैं और पॉलिसी हर साल 10% भुगतान करती है।',
     startingPrice: '₹1,800/month',

@@ -353,7 +353,7 @@ export default function LicPlans() {
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.16 }}
                 className="text-14 md:text-15 text-white/75 max-w-lg leading-relaxed">
                 {lang === 'en'
-                  ? "Explore India's most trusted insurance plans — for savings, protection, retirement, and growth."
+                  ? "Explore India's most trusted insurance plans - for savings, protection, retirement, and growth."
                   : 'बचत, सुरक्षा, सेवानिवृत्ति और वृद्धि के लिए भारत के सबसे भरोसेमंद बीमा प्लान।'}
               </motion.p>
             </div>
@@ -556,9 +556,9 @@ export default function LicPlans() {
 
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5">
                           {[
-                            { label: lang === 'en' ? 'Entry Age' : 'आयु', val: plan.entryAge || '—' },
-                            { label: lang === 'en' ? 'Cover'     : 'कवर', val: plan.sumAssured || '—' },
-                            { label: lang === 'en' ? 'Pay Mode'  : 'मोड', val: modeLabel || '—' },
+                            { label: lang === 'en' ? 'Entry Age' : 'आयु', val: plan.entryAge || ' - ' },
+                            { label: lang === 'en' ? 'Cover'     : 'कवर', val: plan.sumAssured || ' - ' },
+                            { label: lang === 'en' ? 'Pay Mode'  : 'मोड', val: modeLabel || ' - ' },
                           ].map(({ label, val }) => (
                             <div key={label} className="bg-gray-50 border border-gray-100 p-2 rounded-lg text-center">
                               <div className="text-9 text-gray-400 font-bold uppercase tracking-wide mb-0.5">{label}</div>

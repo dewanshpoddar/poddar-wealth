@@ -81,7 +81,7 @@ export default function ServicePageWrapper({
       {/* Page-specific content */}
       {children}
 
-      {/* Client consultation CTA — always at bottom, never agent recruitment */}
+      {/* Client consultation CTA - always at bottom, never agent recruitment */}
       <ConsultationSection intent={consultationIntent ?? `${label} Consultation`} />
     </div>
   )

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Free Insurance Calculators — Poddar Wealth Management',
+  title: 'Free Insurance Calculators - Poddar Wealth Management',
   description: 'Free LIC premium, maturity, surrender value, retirement, and policy health calculators. Powered by 31 years of advisory experience.',
   openGraph: {
-    title: 'Free Insurance Calculators — Poddar Wealth Management',
+    title: 'Free Insurance Calculators - Poddar Wealth Management',
     description: 'Free LIC premium, maturity, surrender value, retirement, and policy health calculators.',
     url: 'https://www.poddarwealth.com/calculators',
   },

@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const { area } = await params
   const areaData = AREAS.find((a) => a.slug === area) || AREAS[0]
 
-  const title = `Best LIC Agent in ${areaData.name} — Poddar Wealth Management`
+  const title = `Best LIC Agent in ${areaData.name} - Poddar Wealth Management`
   const description = areaData.description
     ? `${areaData.description} Trusted LIC advisor Ajay Kumar Poddar, MDRT member with 31 years experience. Call ${ADVISOR_PHONE}.`
     : `Looking for a trusted LIC insurance advisor in ${areaData.name}? Ajay Kumar Poddar, MDRT member, 31 years experience. Call ${ADVISOR_PHONE}.`

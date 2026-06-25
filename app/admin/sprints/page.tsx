@@ -65,7 +65,7 @@ const HISTORICAL_SPRINTS: SprintItem[] = [
   },
   {
     id: 'sprints-1-4',
-    name: 'Sprints 1–4: Core Foundation & Bilingual Release',
+    name: 'Sprints 1 - 4: Core Foundation & Bilingual Release',
     date: 'May 31, 2026',
     status: 'shipped',
     description: 'Created the primary bilingual site layout, set up interactive calculator engines, integrated conversational chatbot advisor, and established SEO schemas.',

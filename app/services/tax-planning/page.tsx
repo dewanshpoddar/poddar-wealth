@@ -20,7 +20,7 @@ const taxTools = [
     icon: <Shield className="w-8 h-8 text-gold" />,
     title: 'Section 80C',
     limit: '₹1.5 Lakh/year',
-    desc: 'Life insurance premiums, PPF, ELSS, NSC — all count toward this limit.',
+    desc: 'Life insurance premiums, PPF, ELSS, NSC - all count toward this limit.',
   },
   {
     icon: <Heart className="w-8 h-8 text-gold" />,
@@ -32,13 +32,13 @@ const taxTools = [
     icon: <Landmark className="w-8 h-8 text-gold" />,
     title: 'Section 80CCD(1B)',
     limit: '₹50,000/year',
-    desc: 'Additional NPS contribution — over and above the 80C limit.',
+    desc: 'Additional NPS contribution - over and above the 80C limit.',
   },
   {
     icon: <Coins className="w-8 h-8 text-gold" />,
     title: 'Section 10(10D)',
     limit: 'Unlimited',
-    desc: 'Life insurance maturity and death benefits — completely tax-free.',
+    desc: 'Life insurance maturity and death benefits - completely tax-free.',
   },
 ]
 
@@ -59,7 +59,7 @@ export default function TaxPlanningPage() {
                 Keep More of What You Earn
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
-                Pay zero tax on ₹2 lakh+ every year — legally, with the right insurance and investment mix designed for Indian families.
+                Pay zero tax on ₹2 lakh+ every year - legally, with the right insurance and investment mix designed for Indian families.
               </p>
               <div className="flex gap-4 flex-wrap">
                 <Link
@@ -106,7 +106,7 @@ export default function TaxPlanningPage() {
                   <Trophy className="w-5 h-5 text-gold" /> Ajay&apos;s Advice
                 </div>
                 <p className="text-navy/80 text-sm leading-relaxed">
-                  &quot;Most families overpay tax simply because their insurance and investments are not structured correctly. A single review session can save you ₹30,000–₹80,000 every year.&quot;
+                  &quot;Most families overpay tax simply because their insurance and investments are not structured correctly. A single review session can save you ₹30,000 - ₹80,000 every year.&quot;
                 </p>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function TaxPlanningPage() {
             <h2 className="font-display font-bold text-3xl md:text-4xl text-slate-900 leading-tight mb-3">
               {t.taxPlanningService.toolkitTitle}
             </h2>
-            <p className="text-slate-500 text-lg">Four government-approved deductions — maximise all of them</p>
+            <p className="text-slate-500 text-lg">Four government-approved deductions - maximise all of them</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {taxTools.map((tool, i) => (
@@ -155,7 +155,7 @@ export default function TaxPlanningPage() {
             {[
               { label: '80C (LIC + ELSS + PPF)', saving: '₹45,000', bracket: '30% slab on ₹1.5L', color: 'border-gold/40 bg-gold/5' },
               { label: '80D (Health insurance)', saving: '₹15,000', bracket: '30% slab on ₹50,000', color: 'border-green-300 bg-green-50' },
-              { label: '80CCD(1B) — NPS top-up', saving: '₹15,000', bracket: '30% slab on ₹50,000', color: 'border-blue-300 bg-blue-50' },
+              { label: '80CCD(1B) - NPS top-up', saving: '₹15,000', bracket: '30% slab on ₹50,000', color: 'border-blue-300 bg-blue-50' },
             ].map((row, i) => (
               <div key={i} className={`rounded-2xl border-2 ${row.color} p-6 text-center`}>
                 <div className="text-slate-600 text-sm mb-3 font-medium">{row.label}</div>

@@ -91,8 +91,8 @@ export default function AboutPage() {
               
               <p className="text-[13px] md:text-[14px] text-slate-500 leading-relaxed max-w-[420px] mt-6 font-medium">
                 {isHi 
-                  ? 'गोरखपुर और पूर्वी यूपी के परिवारों को सुरक्षित करने के 31 वर्ष — उस पुरस्कार विजेता, व्यक्तिगत मार्गदर्शन के साथ जिस पर आप हमेशा भरोसा कर सकते हैं।'
-                  : "31 years of protecting families across Gorakhpur and Eastern UP — with award-winning, personal advisory you can always count on."}
+                  ? 'गोरखपुर और पूर्वी यूपी के परिवारों को सुरक्षित करने के 31 वर्ष - उस पुरस्कार विजेता, व्यक्तिगत मार्गदर्शन के साथ जिस पर आप हमेशा भरोसा कर सकते हैं।'
+                  : "31 years of protecting families across Gorakhpur and Eastern UP - with award-winning, personal advisory you can always count on."}
               </p>
             </div>
 

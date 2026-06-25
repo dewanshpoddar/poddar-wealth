@@ -39,8 +39,8 @@ export default function LicBonusPage() {
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
-              ? 'एलआईसी बोनस दरें 2026 — सभी प्लान्स की सूची' 
-              : 'LIC Bonus Rates 2026 — All Plans'}
+              ? 'एलआईसी बोनस दरें 2026 - सभी प्लान्स की सूची' 
+              : 'LIC Bonus Rates 2026 - All Plans'}
           </h1>
           <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             {isHi
@@ -272,7 +272,7 @@ export default function LicBonusPage() {
               <ArrowRight size={14} className="text-amber-500 flex-shrink-0" />
               <div className="text-left">
                 <span className="text-xs font-bold text-navy block group-hover:text-amber-600 transition-colors">
-                  {isHi ? 'LIC न्यू जीवन श्री — सम्पूर्ण समीक्षा' : 'LIC Nav Jeevan Shree — Full Review'}
+                  {isHi ? 'LIC न्यू जीवन श्री - सम्पूर्ण समीक्षा' : 'LIC Nav Jeevan Shree - Full Review'}
                 </span>
                 <span className="text-[10px] text-gray-500">
                   {isHi ? 'सीमित प्रीमियम, जीवन भर कवर और बोनस' : 'Limited premium, whole life cover + bonus'}

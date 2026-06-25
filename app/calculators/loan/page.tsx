@@ -20,7 +20,7 @@ export default function LoanCalculatorPage() {
     sumAssuredLabel: 'Sum Assured (₹)',
     policyYearLabel: 'Policy Years Completed',
     bonusAccruedLabel: 'Bonus Accrued (₹, Optional)',
-    bonusHelper: 'Leave blank if unsure — we\'ll estimate without bonus',
+    bonusHelper: 'Leave blank if unsure - we\'ll estimate without bonus',
     calculateButton: 'Calculate Loan Amount',
     resultTitle: 'Loan Eligibility Details',
     maxLoanAmount: 'Maximum Loan Amount',
@@ -112,7 +112,7 @@ export default function LoanCalculatorPage() {
   }
 
   const shareText = result
-    ? `*LIC Loan Against Policy Quote — Poddar Wealth*
+    ? `*LIC Loan Against Policy Quote - Poddar Wealth*
 Plan: LIC Plan ${planNumber}
 Policy Years completed: ${policyYear}
 Sum Assured: ${fmtSA(sumAssured)}
@@ -178,7 +178,7 @@ Please help me apply for this loan or check if I have a higher loan value based 
                 >
                   {majorPlans.map((plan) => (
                     <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} — {plan.name}
+                      Plan {plan.planNo} - {plan.name}
                     </option>
                   ))}
                 </select>

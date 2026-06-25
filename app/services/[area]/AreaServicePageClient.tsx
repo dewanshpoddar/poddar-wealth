@@ -37,8 +37,8 @@ export default function AreaServicePageClient({ params }: { params: Promise<{ ar
               </div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
                 {lang === 'hi' 
-                  ? `भरोसेमंद LIC एजेंट ${areaData.nameHi} में — पोद्दार वेल्थ`
-                  : `Trusted LIC Agent in ${areaData.name} — Poddar Wealth`}
+                  ? `भरोसेमंद LIC एजेंट ${areaData.nameHi} में - पोद्दार वेल्थ`
+                  : `Trusted LIC Agent in ${areaData.name} - Poddar Wealth`}
               </h1>
               <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 font-medium">
                 {lang === 'hi'

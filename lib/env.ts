@@ -7,7 +7,7 @@ function requireEnv(key: string): string {
 function getGroqKey(): string {
   const val = process.env.GROQ_API_KEY || ''
   if (val && !val.startsWith('gsk_')) {
-    console.warn('[env] GROQ_API_KEY does not start with "gsk_" — verify it is a valid Groq key')
+    console.warn('[env] GROQ_API_KEY does not start with "gsk_" - verify it is a valid Groq key')
   }
   return val
 }

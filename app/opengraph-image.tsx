@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Poddar Wealth Management — Trusted Insurance Advisory Since 1994'
+export const alt = 'Poddar Wealth Management - Trusted Insurance Advisory Since 1994'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 

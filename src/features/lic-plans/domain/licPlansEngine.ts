@@ -10,7 +10,7 @@ export const CAT_ACCENT: Record<string, string> = {
   micro:      '#EA580C',
 }
 
-// ── Popularity badges — based on LIC sales & internet data ─────────────────
+// ── Popularity badges - based on LIC sales & internet data ─────────────────
 export const PLAN_BADGES: Record<string, { label: string; color: string; bg: string; icon: string }> = {
   '915': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
   '945': { label: 'Best Seller', color: '#15803d', bg: '#dcfce7', icon: '🏆' },
@@ -45,9 +45,9 @@ export const GOALS = [
 ]
 
 export const AGE_GROUPS = [
-  { key: 'child',  label: { en: 'For Minors (0–17)',   hi: '0–17 वर्ष' } },
-  { key: 'young',  label: { en: 'Young Adult (18–35)', hi: '18–35 वर्ष' } },
-  { key: 'prime',  label: { en: 'Prime Age (36–55)',   hi: '36–55 वर्ष' } },
+  { key: 'child',  label: { en: 'For Minors (0-17)',   hi: '0-17 वर्ष' } },
+  { key: 'young',  label: { en: 'Young Adult (18-35)', hi: '18-35 वर्ष' } },
+  { key: 'prime',  label: { en: 'Prime Age (36-55)',   hi: '36-55 वर्ष' } },
   { key: 'senior', label: { en: 'Senior (55+)',        hi: '55+ वर्ष' } },
 ]
 
@@ -66,7 +66,7 @@ export const PREMIUM_MODES = [
 
 export const COVER_TIERS = [
   { key: 'starter', label: { en: 'Upto ₹5 Lakh', hi: '₹5 लाख तक' } },
-  { key: 'mid',     label: { en: '₹5L – ₹25L',   hi: '₹5L–₹25L' } },
+  { key: 'mid',     label: { en: '₹5L - ₹25L',   hi: '₹5L-₹25L' } },
   { key: 'high',    label: { en: '₹25 Lakh+',     hi: '₹25 लाख+' } },
 ]
 
@@ -82,7 +82,7 @@ export function getPremiumModes(pp: string): string[] {
 
 export function getSumTier(sa: string): string {
   const cleaned = sa.replace(/[₹,+\s]/g, '')
-  const num = parseInt(cleaned.split(/[-–(]/)[0]) || 0
+  const num = parseInt(cleaned.split(/[-(]/)[0]) || 0
   if (num >= 2500000) return 'high'
   if (num >= 500000)  return 'mid'
   return 'starter'
@@ -90,7 +90,7 @@ export function getSumTier(sa: string): string {
 
 export function parseAgeRange(entryAge: string): { min: number; max: number } {
   const cleanedMin = entryAge.match(/^(\d+)(d|m)?/)
-  const cleanedMax = entryAge.match(/[-–]\s*(\d+)\s*(yr)?/)
+  const cleanedMax = entryAge.match(/[-]\s*(\d+)\s*(yr)?/)
   const min = cleanedMin ? (cleanedMin[2] === 'd' ? 0 : parseInt(cleanedMin[1])) : 0
   const max = cleanedMax ? parseInt(cleanedMax[1]) : 99
   return { min, max }

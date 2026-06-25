@@ -2,7 +2,7 @@
  * Formats a number as a currency string with Indian units (Lakh, Crore).
  */
 export function fmt(n: number) {
-  if (!n && n !== 0) return '—'
+  if (!n && n !== 0) return ' - '
   if (n >= 10000000) return `₹${(n / 10000000).toFixed(2)} Cr`
   if (n >= 100000)   return `₹${(n / 100000).toFixed(1)} L`
   return `₹${Math.round(n).toLocaleString('en-IN')}`

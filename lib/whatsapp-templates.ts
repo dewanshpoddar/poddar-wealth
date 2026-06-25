@@ -11,11 +11,11 @@ export function getAutoReply(message: string): string | null {
 I'm Poddar Ji, your AI insurance advisor.
 
 Here's what I can help you with:
-• *1* — Premium Calculator
-• *2* — LIC Plans & Products
-• *3* — File a Claim
-• *4* — Policy Renewal
-• *5* — Speak to Ajay sir
+• *1* - Premium Calculator
+• *2* - LIC Plans & Products
+• *3* - File a Claim
+• *4* - Policy Renewal
+• *5* - Speak to Ajay sir
 
 Reply with a number or ask your question in Hindi or English.`
   }
@@ -71,6 +71,6 @@ ${SITE}/?ref=YOUR_CODE
 To get your personal referral code, WhatsApp your name to *${ADVISOR_PHONE}*.`
   }
 
-  // No match — let AI handle it
+  // No match - let AI handle it
   return null
 }

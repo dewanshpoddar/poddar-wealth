@@ -40,8 +40,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "करियर की शुरुआत, शुरुआती बचत का निर्माण, और न्यूनतम वित्तीय देनदारियां/पारिवारिक जिम्मेदारियां।",
     plans: [
       {
-        name: "LIC Tech Term (Plan 854) — Term Insurance",
-        nameHi: "एलआईसी टेक टर्म (प्लान 854) — टर्म इंश्योरेंस",
+        name: "LIC Tech Term (Plan 854) - Term Insurance",
+        nameHi: "एलआईसी टेक टर्म (प्लान 854) - टर्म इंश्योरेंस",
         why: "Secure a massive life cover of ₹50 Lakhs to ₹1 Crore at absolute rock-bottom premiums early in your life.",
         whyHi: "अपने जीवन के शुरुआती वर्षों में सबसे कम प्रीमियम पर ₹50 लाख से ₹1 करोड़ का भारी जीवन कवर सुरक्षित करें।",
         premium: "Starting from ₹500/month",
@@ -49,8 +49,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/life-insurance"
       },
       {
-        name: "Star Health Assured — Individual Health Insurance",
-        nameHi: "स्टार हेल्थ एश्योर्ड — व्यक्तिगत स्वास्थ्य बीमा",
+        name: "Star Health Assured - Individual Health Insurance",
+        nameHi: "स्टार हेल्थ एश्योर्ड - व्यक्तिगत स्वास्थ्य बीमा",
         why: "Get comprehensive cashless hospitalisation cover before age-related premium loading triggers.",
         whyHi: "उम्र बढ़ने से पहले व्यापक कैशलेस अस्पताल में भर्ती होने का कवर प्राप्त करें, जिससे भविष्य के प्रीमियम महंगे न हों।",
         premium: "Starting from ₹400/month",
@@ -58,8 +58,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/health-insurance"
       },
       {
-        name: "LIC Jeevan Labh (Plan 936) — Savings Start",
-        nameHi: "एलआईसी जीवन लाभ (प्लान 936) — बचत की शुरुआत",
+        name: "LIC Jeevan Labh (Plan 936) - Savings Start",
+        nameHi: "एलआईसी जीवन लाभ (प्लान 936) - बचत की शुरुआत",
         why: "A limited-premium paying, high-bonus endowment plan to start your systematic saving habits.",
         whyHi: "एक सीमित-प्रीमियम भुगतान, उच्च-बोनस बंदोबस्ती योजना ताकि आप व्यवस्थित बचत की आदतें शुरू कर सकें।",
         premium: "Starting from ₹1,500/month",
@@ -76,8 +76,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "नवविवाहित जीवन, छोटे बच्चों का पालन-पोषण, घरेलू खर्च और बच्चों की उच्च शिक्षा की योजना।",
     plans: [
       {
-        name: "LIC Tech Term (Plan 854) — High Term Cover",
-        nameHi: "एलआईसी टेक टर्म (प्लान 854) — उच्च टर्म कवर",
+        name: "LIC Tech Term (Plan 854) - High Term Cover",
+        nameHi: "एलआईसी टेक टर्म (प्लान 854) - उच्च टर्म कवर",
         why: "Crucial for primary breadwinners to protect family lifestyle and active home loans in case of emergencies.",
         whyHi: "घर के मुख्य कमाने वाले के लिए आवश्यक है ताकि किसी भी आपातकालीन स्थिति में परिवार और गृह ऋण सुरक्षित रहें।",
         premium: "Starting from ₹800/month",
@@ -85,8 +85,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/life-insurance"
       },
       {
-        name: "LIC New Jeevan Anand (Plan 915) — Dual Protection",
-        nameHi: "एलआईसी न्यू जीवन आनंद (प्लान 915) — दोहरा लाभ",
+        name: "LIC New Jeevan Anand (Plan 915) - Dual Protection",
+        nameHi: "एलआईसी न्यू जीवन आनंद (प्लान 915) - दोहरा लाभ",
         why: "Provides savings plus double-risk life cover that continues even after maturity throughout your life.",
         whyHi: "बचत के साथ-साथ दोहरा जोखिम जीवन कवर प्रदान करता है जो मैच्योरिटी के बाद भी आपके पूरे जीवन भर जारी रहता है।",
         premium: "Starting from ₹2,000/month",
@@ -94,8 +94,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/products"
       },
       {
-        name: "LIC Jeevan Lakshya (Plan 933) — Child Education Plan",
-        nameHi: "एलआईसी जीवन लक्ष्य (प्लान 933) — बाल शिक्षा योजना",
+        name: "LIC Jeevan Lakshya (Plan 933) - Child Education Plan",
+        nameHi: "एलआईसी जीवन लक्ष्य (प्लान 933) - बाल शिक्षा योजना",
         why: "Guarantees educational funds with built-in premium waiver benefit in case of parent's unfortunate demise.",
         whyHi: "माता-पिता के साथ अनहोनी होने पर भी इन-बिल्ट प्रीमियम वेवर लाभ के साथ बच्चों की शिक्षा निधि की गारंटी देता है।",
         premium: "Starting from ₹1,800/month",
@@ -112,8 +112,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "सक्रिय आय के मुख्य वर्ष, स्कूल जाते बच्चे, और धारा 80C के तहत उचित टैक्स बचत के लक्ष्य।",
     plans: [
       {
-        name: "LIC New Jeevan Anand (Plan 915) — Wealth Protection",
-        nameHi: "एलआईसी न्यू जीवन आनंद (प्लान 915) — सुरक्षा कवच",
+        name: "LIC New Jeevan Anand (Plan 915) - Wealth Protection",
+        nameHi: "एलआईसी न्यू जीवन आनंद (प्लान 915) - सुरक्षा कवच",
         why: "Perfect balance of tax savings under 80C, capital safety, and lifetime wealth inheritance protection.",
         whyHi: "80C के तहत कर बचत, पूंजी सुरक्षा, और आजीवन विरासत सुरक्षा का एक आदर्श संतुलन।",
         premium: "Starting from ₹2,500/month",
@@ -121,8 +121,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/products"
       },
       {
-        name: "Star Health Family Health Optima — Floater Upgrade",
-        nameHi: "स्टार हेल्थ फैमिली हेल्थ ऑप्टिमा — फ्लोटर अपग्रेड",
+        name: "Star Health Family Health Optima - Floater Upgrade",
+        nameHi: "स्टार हेल्थ फैमिली हेल्थ ऑप्टिमा - फ्लोटर अपग्रेड",
         why: "Covers husband, wife, and up to 3 children under a single comprehensive cashless medical protection.",
         whyHi: "एकल व्यापक कैशलेस चिकित्सा सुरक्षा के तहत पति, पत्नी और 3 बच्चों तक को कवर करता है।",
         premium: "Starting from ₹1,000/month",
@@ -130,8 +130,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/health-insurance"
       },
       {
-        name: "LIC Jeevan Labh (Plan 936) — Guaranteed Milestones",
-        nameHi: "एलआईसी जीवन लाभ (प्लान 936) — गारंटीड मील का पत्थर",
+        name: "LIC Jeevan Labh (Plan 936) - Guaranteed Milestones",
+        nameHi: "एलआईसी जीवन लाभ (प्लान 936) - गारंटीड मील का पत्थर",
         why: "High compounding bonus rates guarantee a major lumpsum for college admission funding down the line.",
         whyHi: "उच्च चक्रवृद्धि बोनस दरें भविष्य में कॉलेज प्रवेश के लिए एक बड़े एकमुश्त कोष की गारंटी देती हैं।",
         premium: "Starting from ₹2,500/month",
@@ -148,8 +148,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "संपत्ति का विस्तार, समय से पहले सेवानिवृत्ति की योजना, और स्वास्थ्य संबंधी आवश्यक सुरक्षा लक्ष्य।",
     plans: [
       {
-        name: "LIC Jeevan Umang (Plan 745) — Lifelong Guaranteed Income",
-        nameHi: "एलआईसी जीवन उमंग (प्लान 745) — आजीवन गारंटीड आय",
+        name: "LIC Jeevan Umang (Plan 745) - Lifelong Guaranteed Income",
+        nameHi: "एलआईसी जीवन उमंग (प्लान 745) - आजीवन गारंटीड आय",
         why: "Guarantees 8% of Sum Assured every year after premium paying term for whole life along with lifetime protection.",
         whyHi: "प्रीमियम भुगतान अवधि के बाद पूरे जीवन भर के लिए हर साल बीमा राशि का 8% गारंटीड भुगतान और आजीवन सुरक्षा प्रदान करता है।",
         premium: "Starting from ₹3,500/month",
@@ -157,8 +157,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/products"
       },
       {
-        name: "LIC New Jeevan Shanti (Plan 858) — Deferred Pension",
-        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) — आस्थगित पेंशन",
+        name: "LIC New Jeevan Shanti (Plan 858) - Deferred Pension",
+        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) - आस्थगित पेंशन",
         why: "Secure fixed, guaranteed high pension rates to lock in early self-retirement funds.",
         whyHi: "समय से पहले सेवानिवृत्ति कोष को सुरक्षित करने के लिए निश्चित, गारंटीड उच्च पेंशन दरों को लॉक करें।",
         premium: "Starting from ₹4,000/month",
@@ -166,8 +166,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/retirement"
       },
       {
-        name: "LIC Critical Illness Rider Add-on — Health Shield",
-        nameHi: "एलआईसी क्रिटिकल इलनेस राइडर — हेल्थ शील्ड",
+        name: "LIC Critical Illness Rider Add-on - Health Shield",
+        nameHi: "एलआईसी क्रिटिकल इलनेस राइडर - हेल्थ शील्ड",
         why: "Crucial medical protection covering cancer, heart attack, and major surgeries as you cross age 40.",
         whyHi: "40 की उम्र पार करते ही कैंसर, दिल का दौरा और प्रमुख सर्जरी को कवर करने वाला बेहद आवश्यक चिकित्सा सुरक्षा चक्र।",
         premium: "Starting from ₹800/month",
@@ -184,8 +184,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "सेवानिवृत्ति के अंतिम वर्षों की तैयारी, सक्रिय ऋणों की सुरक्षा, और बढ़ती चिकित्सा लागतों से बचाव।",
     plans: [
       {
-        name: "LIC New Jeevan Shanti (Plan 858) — Deferred Pension Basket",
-        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) — पेंशन बास्केट",
+        name: "LIC New Jeevan Shanti (Plan 858) - Deferred Pension Basket",
+        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) - पेंशन बास्केट",
         why: "Lock in premium high annuity payouts to establish guaranteed pension incomes before actual retirement.",
         whyHi: "वास्तविक सेवानिवृत्ति से पहले गारंटीड पेंशन आय स्थापित करने के लिए प्रीमियम उच्च वार्षिकी भुगतान को लॉक करें।",
         premium: "Starting from ₹5,000/month",
@@ -193,8 +193,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/retirement"
       },
       {
-        name: "Star Health Assured Premium — Comprehensive Cover",
-        nameHi: "स्टार हेल्थ एश्योर्ड प्रीमियम — संपूर्ण चिकित्सा सुरक्षा",
+        name: "Star Health Assured Premium - Comprehensive Cover",
+        nameHi: "स्टार हेल्थ एश्योर्ड प्रीमियम - संपूर्ण चिकित्सा सुरक्षा",
         why: "Secure high medical sum assured before age loadings or medical tests become compulsory.",
         whyHi: "आयु-लोडिंग या कठिन चिकित्सा परीक्षण अनिवार्य होने से पहले उच्च चिकित्सा बीमा राशि सुरक्षित करें।",
         premium: "Starting from ₹1,500/month",
@@ -202,8 +202,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/health-insurance"
       },
       {
-        name: "LIC Tech Term (Plan 854) — Debt Protection",
-        nameHi: "एलआईसी टेक टर्म (प्लान 854) — कर्ज से सुरक्षा",
+        name: "LIC Tech Term (Plan 854) - Debt Protection",
+        nameHi: "एलआईसी टेक टर्म (प्लान 854) - कर्ज से सुरक्षा",
         why: "An affordable term plan to secure outstanding home loans and business liabilities safely.",
         whyHi: "एक किफायती टर्म प्लान जो आपके बकाया गृह ऋण और व्यावसायिक देनदारियों को सुरक्षित करता है।",
         premium: "Starting from ₹2,000/month",
@@ -220,8 +220,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
     lifeStageHi: "आजीवन पेंशन सुरक्षा, बच्चों के लिए विरासत का निर्माण, और वरिष्ठ आयु स्वास्थ्य सुरक्षा का चयन।",
     plans: [
       {
-        name: "LIC New Jeevan Shanti (Plan 858) — Immediate Annuity",
-        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) — तत्काल पेंशन",
+        name: "LIC New Jeevan Shanti (Plan 858) - Immediate Annuity",
+        nameHi: "एलआईसी न्यू जीवन शांति (प्लान 858) - तत्काल पेंशन",
         why: "Perfect to convert asset sales or retirement savings into guaranteed immediate lifelong cash flow.",
         whyHi: "सेवानिवृत्ति की बचत या संपत्ति की बिक्री को गारंटीड तत्काल आजीवन नकदी प्रवाह में बदलने के लिए सर्वोत्तम।",
         premium: "Starting from ₹8,000/month",
@@ -229,8 +229,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/retirement"
       },
       {
-        name: "Star Health Senior Citizen Red Carpet — Specialized Senior Cover",
-        nameHi: "स्टार हेल्थ सीनियर सिटीजन रेड कारपेट — वरिष्ठ नागरिक कवर",
+        name: "Star Health Senior Citizen Red Carpet - Specialized Senior Cover",
+        nameHi: "स्टार हेल्थ सीनियर सिटीजन रेड कारपेट - वरिष्ठ नागरिक कवर",
         why: "Designed specifically for older adults with pre-existing conditions under relaxed pre-screening.",
         whyHi: "बिना किसी कठिन मेडिकल चेकअप के पहले से मौजूद बीमारियों वाले वरिष्ठ नागरिकों के लिए विशेष रूप से डिज़ाइन किया गया।",
         premium: "Starting from ₹2,000/month",
@@ -238,8 +238,8 @@ const AGE_RECOMMENDATIONS: Record<string, AgeData> = {
         link: "/services/health-insurance"
       },
       {
-        name: "LIC Jeevan Utsav (Plan 871) — Lifetime Guaranteed Return",
-        nameHi: "एलआईसी जीवन उत्सव (प्लान 871) — आजीवन निश्चित लाभ",
+        name: "LIC Jeevan Utsav (Plan 871) - Lifetime Guaranteed Return",
+        nameHi: "एलआईसी जीवन उत्सव (प्लान 871) - आजीवन निश्चित लाभ",
         why: "Guaranteed lifetime tax-free income of 10% of Sum Assured annually after premium term, perfect legacy plan.",
         whyHi: "प्रीमियम भुगतान के बाद सालाना बीमा राशि का 10% गारंटीड आजीवन कर-मुक्त आय, एक उत्कृष्ट विरासत योजना।",
         premium: "Starting from ₹5,000/month",

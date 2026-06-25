@@ -1,10 +1,10 @@
 /**
- * Analytics helper — wraps gtag() calls with type safety.
+ * Analytics helper - wraps gtag() calls with type safety.
  * GA4 Measurement ID is set via NEXT_PUBLIC_GA_ID in .env.local
  */
 
 export type AnalyticsEvent =
-  // Primary funnel — Blueprint Calculator
+  // Primary funnel - Blueprint Calculator
   | 'hero_cta_clicked'
   | 'blueprint_started'
   | 'blueprint_step_completed'
@@ -12,7 +12,7 @@ export type AnalyticsEvent =
   | 'blueprint_completed'
   | 'blueprint_lead_submitted'
   | 'blueprint_lead_failed'
-  // Secondary funnel — Calculators
+  // Secondary funnel - Calculators
   | 'calculator_opened'
   | 'calculator_result_shown'
   | 'calculator_lead_clicked'

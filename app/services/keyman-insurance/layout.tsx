@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getServiceSchema } from '@/lib/schema'
 
-const title = "Keyman Insurance — Protect Your Business | Poddar Wealth"
+const title = "Keyman Insurance - Protect Your Business | Poddar Wealth"
 const description = "Protect your business from loss of key employees with keyman insurance. Expert guidance by Ajay Kumar Poddar, Gorakhpur."
 
 export const metadata: Metadata = {

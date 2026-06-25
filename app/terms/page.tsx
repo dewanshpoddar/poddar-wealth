@@ -7,8 +7,8 @@ const sections = [
     body: `Poddar Wealth Management provides general insurance advisory and financial planning information through this website. Ajay Kumar Poddar is a licensed IRDAI agent authorised to sell LIC of India and Star Health Insurance products. Any recommendation made through this website or a personal consultation is advisory in nature and does not constitute a binding contract. Final policy terms are governed by the respective insurer's policy document.`,
   },
   {
-    title: 'Website Content — For Information Only',
-    body: `All content on this website — including calculator outputs, plan comparisons, premium estimates, and wealth projections — is for illustrative and educational purposes only. It does not constitute investment advice, tax advice, or a recommendation to purchase any specific product. Actual premiums, returns, and benefits depend on age, health, insurer underwriting, and applicable IRDAI regulations at the time of purchase.`,
+    title: 'Website Content - For Information Only',
+    body: `All content on this website - including calculator outputs, plan comparisons, premium estimates, and wealth projections - is for illustrative and educational purposes only. It does not constitute investment advice, tax advice, or a recommendation to purchase any specific product. Actual premiums, returns, and benefits depend on age, health, insurer underwriting, and applicable IRDAI regulations at the time of purchase.`,
   },
   {
     title: 'Calculator Accuracy',
@@ -32,7 +32,7 @@ const sections = [
   },
   {
     title: 'Intellectual Property',
-    body: `All content on this website — including text, images, logo, design, and calculator logic — is the property of Poddar Wealth Management. You may not reproduce, distribute, or commercialise any content without written permission.`,
+    body: `All content on this website - including text, images, logo, design, and calculator logic - is the property of Poddar Wealth Management. You may not reproduce, distribute, or commercialise any content without written permission.`,
   },
   {
     title: 'Limitation of Liability',

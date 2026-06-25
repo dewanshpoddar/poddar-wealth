@@ -217,7 +217,7 @@ export default function Navbar() {
 
           {/* Right controls */}
           <div className="flex items-center gap-5 shrink-0">
-            {/* Search — icon only, no box */}
+            {/* Search - icon only, no box */}
             <button
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
@@ -228,7 +228,7 @@ export default function Navbar() {
               <Search size={15} />
             </button>
 
-            {/* EN · हिं — slim pill, no min-h forcing */}
+            {/* EN · हिं - slim pill, no min-h forcing */}
             <div className={`flex rounded-full p-[3px] border ${
               scrolled ? 'bg-white/5 border-white/10' : 'bg-gray-100 border-gray-200'
             }`}>
@@ -254,7 +254,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Login — outline pill, matches Get a Quote shape as secondary action */}
+            {/* Login - outline pill, matches Get a Quote shape as secondary action */}
             <Link
               href="/login"
               className={`text-sm font-medium px-4 py-2 rounded-full border transition-all duration-150 active:scale-90 ${
@@ -266,7 +266,7 @@ export default function Navbar() {
               {label('Login', 'लॉगिन')}
             </Link>
 
-            {/* Primary CTA — sleek rounded pill */}
+            {/* Primary CTA - sleek rounded pill */}
             <Link
               href="/contact"
               className={`text-[13px] font-semibold px-4 py-2 rounded-full transition-all duration-200 ${

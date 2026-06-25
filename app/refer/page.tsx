@@ -92,7 +92,7 @@ export default function ReferralPage() {
               {ref.heroTitle || 'Share the Trust'}
             </h1>
             <p className="text-amber-50/90 text-sm sm:text-lg font-medium leading-relaxed max-w-2xl">
-              {ref.heroSubtitle || 'Refer a friend and both of you get a free policy review from Ajay sir — MDRT Member with 31 years of experience.'}
+              {ref.heroSubtitle || 'Refer a friend and both of you get a free policy review from Ajay sir - MDRT Member with 31 years of experience.'}
             </p>
           </div>
         </div>

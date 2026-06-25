@@ -1,6 +1,6 @@
 /**
  * Shared server-side utilities for API routes.
- * Import from here — do NOT duplicate these in individual route files.
+ * Import from here - do NOT duplicate these in individual route files.
  */
 
 import fs from 'fs'
@@ -49,9 +49,9 @@ export interface SheetsPayload {
  * POST a row to the Google Sheets Apps Script webhook.
  *
  * Non-fatal: on network failure the error is logged and forwarded to adminNotify,
- * but never thrown — the caller's CSV write is the source-of-truth backup.
+ * but never thrown - the caller's CSV write is the source-of-truth backup.
  *
- * Uses AbortSignal.timeout(5000) — equivalent to the manual AbortController + setTimeout
+ * Uses AbortSignal.timeout(5000) - equivalent to the manual AbortController + setTimeout
  * pattern it replaces; already used in admin-notify.ts.
  */
 export async function pushToSheets(

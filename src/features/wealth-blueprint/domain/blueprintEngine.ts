@@ -123,15 +123,15 @@ export function buildNarrative(p: WealthProfile, bp: ReturnType<typeof calcBluep
   let headline = ''
   if (bp.score >= 70) headline = 'Your foundation is strong. Here is how to make it institutional-grade.'
   else if (bp.score >= 45) headline = 'You have made a start. These specific gaps, left unaddressed, will compound into a crisis.'
-  else headline = 'This is your honest financial position. The window to fix it is open — but not forever.'
+  else headline = 'This is your honest financial position. The window to fix it is open - but not forever.'
 
   const paras: string[] = []
 
   paras.push(
-    `You are a ${p.age}-year-old ${empLabel} in a ${cityLabel}, earning ${annualCrStr} per year — ${familyStr}. ` +
+    `You are a ${p.age}-year-old ${empLabel} in a ${cityLabel}, earning ${annualCrStr} per year - ${familyStr}. ` +
     `You have built ₹${fmt(bp.netWorthL)} Lakhs in net worth (liquid + real estate, after liabilities). ` +
     (bp.netWorthL >= 100
-      ? `That places you in the top 8% of Indian households by net worth. The challenge now is not building — it is structuring what you have, and protecting what you will earn.`
+      ? `That places you in the top 8% of Indian households by net worth. The challenge now is not building - it is structuring what you have, and protecting what you will earn.`
       : bp.netWorthL >= 20
       ? `That is real progress. Most Indians have near-zero financial assets at your age. The next phase is building the architecture that protects and multiplies this.`
       : `Every financial empire starts from zero. Yours begins today.`)
@@ -140,26 +140,26 @@ export function buildNarrative(p: WealthProfile, bp: ReturnType<typeof calcBluep
   if (bp.gapL > 0) {
     const runway = bp.incYears < 1 ? 'less than one year' : `${bp.incYears} year${bp.incYears !== 1 ? 's' : ''}`
     paras.push(
-      `Here is the arithmetic your family needs to know: your Human Life Value — the present value of your future earnings stream to your dependents, calculated using IRDAI's 6.5% discount method — is ₹${fmt(bp.hlvL)} Lakhs. ` +
+      `Here is the arithmetic your family needs to know: your Human Life Value - the present value of your future earnings stream to your dependents, calculated using IRDAI's 6.5% discount method - is ₹${fmt(bp.hlvL)} Lakhs. ` +
       `Against this, your current cover (insurance + liquid assets) is ₹${fmt(bp.totalProtL)} Lakhs. ` +
       `The ₹${fmt(bp.gapL)} Lakh gap means if you were gone today, your family's financial runway is ${runway} at current expenses. ` +
       `${isHNI ? 'At your income level, this gap carries serious consequences for your dependants and any business you run.' : 'A pure term plan at ₹' + fmt(bp.termMo) + '/month closes this entirely.'}`
     )
   } else {
     paras.push(
-      `Your life protection is fully adequate. Your Human Life Value of ₹${fmt(bp.hlvL)} Lakhs is covered by your combination of insurance and liquid assets — a position only ~13% of Indians achieve.`
+      `Your life protection is fully adequate. Your Human Life Value of ₹${fmt(bp.hlvL)} Lakhs is covered by your combination of insurance and liquid assets - a position only ~13% of Indians achieve.`
     )
   }
 
   if (bp.retDiffCrore < 0) {
     paras.push(
-      `Your retirement is the second urgent priority. To retire at ${p.retirementAge} with your current lifestyle — adjusted for 6.5% annual inflation (India's CPI average) — you need ₹${bp.retCorpusCrore.toFixed(1)} Crore, calculated using the Trinity Study's India-adjusted 3.5% safe withdrawal rate. ` +
+      `Your retirement is the second urgent priority. To retire at ${p.retirementAge} with your current lifestyle - adjusted for 6.5% annual inflation (India's CPI average) - you need ₹${bp.retCorpusCrore.toFixed(1)} Crore, calculated using the Trinity Study's India-adjusted 3.5% safe withdrawal rate. ` +
       `Your existing assets, compounding at market rates to age ${p.retirementAge}, will produce ₹${bp.projectedCrore.toFixed(1)} Crore. ` +
       `The ₹${Math.abs(bp.retDiffCrore).toFixed(1)} Crore gap is bridgeable with an additional ₹${fmt(bp.addlSIP)}/month SIP starting today.`
     )
   } else {
     paras.push(
-      `Your retirement trajectory is in a ₹${bp.retDiffCrore.toFixed(1)} Crore surplus — on current savings rates you will exceed your retirement corpus target of ₹${bp.retCorpusCrore.toFixed(1)} Crore by ${Math.round(bp.retDiffCrore * 10) / 10} Crore. ` +
+      `Your retirement trajectory is in a ₹${bp.retDiffCrore.toFixed(1)} Crore surplus - on current savings rates you will exceed your retirement corpus target of ₹${bp.retCorpusCrore.toFixed(1)} Crore by ${Math.round(bp.retDiffCrore * 10) / 10} Crore. ` +
       `The priority now shifts to allocation quality: reducing drift between your intended and actual asset mix, and maximising after-tax returns.`
     )
   }
@@ -188,7 +188,7 @@ export function getProtectionPlan(p: WealthProfile, bp: ReturnType<typeof calcBl
       no: '01', category: 'Pure Term Life Insurance', planName: plan, planDetail: detail,
       cover: `₹${bp.termNeedL} Lakhs sum assured`,
       monthly: bp.termMo, annual: bp.termMo * 12,
-      why: `Closes your ₹${fmt(bp.gapL)}L protection gap. A pure term plan is the most efficient financial product that exists: ₹${fmt(bp.termMo)}/month buys ₹${fmt(bp.termNeedL)}L of coverage. LIC's claim settlement ratio: 98.6% (FY2024). Premium locked at today's age — any delay increases premium permanently.`,
+      why: `Closes your ₹${fmt(bp.gapL)}L protection gap. A pure term plan is the most efficient financial product that exists: ₹${fmt(bp.termMo)}/month buys ₹${fmt(bp.termNeedL)}L of coverage. LIC's claim settlement ratio: 98.6% (FY2024). Premium locked at today's age - any delay increases premium permanently.`,
       priority: 'critical',
     })
   }
@@ -213,10 +213,10 @@ export function getProtectionPlan(p: WealthProfile, bp: ReturnType<typeof calcBl
   if (p.goals.includes('retire') || p.goals.includes('wealth')) {
     recs.push({
       no: `0${n + 1}`, category: 'Pension / Annuity', planName: 'LIC Jeevan Shanti (Plan 850)',
-      planDetail: 'Guaranteed pension for life — GoI-backed annuity',
+      planDetail: 'Guaranteed pension for life - GoI-backed annuity',
       cover: 'Guaranteed monthly pension from chosen age',
       monthly: Math.round(bp.licMo * 0.55), annual: Math.round(bp.licMo * 0.55 * 12),
-      why: `LIC Jeevan Shanti offers a guaranteed pension rate locked at policy inception — immune to market volatility. Single or regular premium. Since LIC is 65% Government of India-owned, this is the closest equivalent to a government pension for a private-sector individual. Ideal for ${p.retirementAge <= 55 ? 'early retirement planning' : 'building a pension alongside mutual fund SIPs'}.`,
+      why: `LIC Jeevan Shanti offers a guaranteed pension rate locked at policy inception - immune to market volatility. Single or regular premium. Since LIC is 65% Government of India-owned, this is the closest equivalent to a government pension for a private-sector individual. Ideal for ${p.retirementAge <= 55 ? 'early retirement planning' : 'building a pension alongside mutual fund SIPs'}.`,
       priority: 'medium',
     })
   }
@@ -226,7 +226,7 @@ export function getProtectionPlan(p: WealthProfile, bp: ReturnType<typeof calcBl
       planDetail: 'Survival benefits timed to child education milestones',
       cover: `Target: ₹${bp.totalEduL}L education corpus`,
       monthly: Math.round(bp.licMo * 0.45), annual: Math.round(bp.licMo * 0.45 * 12),
-      why: `Unlike a mutual fund, LIC Jeevan Tarun includes a premium waiver — if the parent passes away, the policy continues fully paid-up, guaranteeing the education corpus for your child. Survival benefits are structured to pay out at ages 20, 22, 24, and 26 — matching college years precisely.`,
+      why: `Unlike a mutual fund, LIC Jeevan Tarun includes a premium waiver - if the parent passes away, the policy continues fully paid-up, guaranteeing the education corpus for your child. Survival benefits are structured to pay out at ages 20, 22, 24, and 26 - matching college years precisely.`,
       priority: 'medium',
     })
   }
@@ -242,12 +242,12 @@ export function getSIPAllocations(eqSIP: number, debtSIP: number, eqPct: number,
   const adjusted = isHNI ? eqSIP - intl : eqSIP
 
   const items: Array<{ name: string; amc: string; amount: number; type: string; why: string }> = [
-    { name: 'Nifty 50 Index Fund', amc: 'Nippon India / Mirae Asset', amount: isHNI ? Math.round(adjusted * 0.5) : core, type: 'Equity – Large Cap', why: "Core holding. 0.1-0.2% TER. Tracks India's 50 largest companies. Lowest-cost path to market returns." },
-    { name: 'Parag Parikh Flexi Cap', amc: 'PPFAS Mutual Fund', amount: isHNI ? Math.round(adjusted * 0.3) : flexi, type: 'Equity – Multi Cap', why: 'Consistent 15%+ 5-year CAGR. Unique: up to 35% overseas equity allocation (Google, Meta, etc.) gives rupee-depreciation hedge.' },
-    { name: 'HDFC Mid Cap Opportunities', amc: 'HDFC AMC', amount: isHNI ? Math.round(adjusted * 0.2) : mid, type: 'Equity – Mid Cap', why: 'Long-term growth kicker. Higher volatility but stronger 10-year compounding. Only for 7yr+ horizon.' },
+    { name: 'Nifty 50 Index Fund', amc: 'Nippon India / Mirae Asset', amount: isHNI ? Math.round(adjusted * 0.5) : core, type: 'Equity - Large Cap', why: "Core holding. 0.1-0.2% TER. Tracks India's 50 largest companies. Lowest-cost path to market returns." },
+    { name: 'Parag Parikh Flexi Cap', amc: 'PPFAS Mutual Fund', amount: isHNI ? Math.round(adjusted * 0.3) : flexi, type: 'Equity - Multi Cap', why: 'Consistent 15%+ 5-year CAGR. Unique: up to 35% overseas equity allocation (Google, Meta, etc.) gives rupee-depreciation hedge.' },
+    { name: 'HDFC Mid Cap Opportunities', amc: 'HDFC AMC', amount: isHNI ? Math.round(adjusted * 0.2) : mid, type: 'Equity - Mid Cap', why: 'Long-term growth kicker. Higher volatility but stronger 10-year compounding. Only for 7yr+ horizon.' },
   ]
-  if (isHNI && intl > 0) items.push({ name: 'Motilal Oswal NASDAQ 100 / Mirae Asset S&P 500', amc: 'Overseas Index', amount: intl, type: 'Equity – International', why: 'USD-denominated growth. Hedges INR depreciation (~3-4%/year historical). LRS-compliant for up to $250,000/year.' })
-  items.push({ name: 'HDFC Short Duration Fund', amc: 'HDFC AMC', amount: debtSIP, type: 'Debt – Short Duration', why: '7-8% expected return. 1-3yr duration. Stability ballast that prevents panic-selling your equity SIPs during market corrections.' })
+  if (isHNI && intl > 0) items.push({ name: 'Motilal Oswal NASDAQ 100 / Mirae Asset S&P 500', amc: 'Overseas Index', amount: intl, type: 'Equity - International', why: 'USD-denominated growth. Hedges INR depreciation (~3-4%/year historical). LRS-compliant for up to $250,000/year.' })
+  items.push({ name: 'HDFC Short Duration Fund', amc: 'HDFC AMC', amount: debtSIP, type: 'Debt - Short Duration', why: '7-8% expected return. 1-3yr duration. Stability ballast that prevents panic-selling your equity SIPs during market corrections.' })
   return items
 }
 
@@ -255,40 +255,40 @@ export function get90DayPlan(p: WealthProfile, bp: ReturnType<typeof calcBluepri
   const isHNI = p.monthlyIncome >= 300000
   return [
     {
-      label: 'Days 1–15',
+      label: 'Days 1-15',
       title: 'Protection First',
       color: '#ef4444',
       steps: [
         bp.gapL > 0
-          ? `Apply for ${bp.gapL >= 100 ? 'LIC Tech Term (Plan 954)' : 'LIC Jeevan Amar (Plan 827)'} at licindia.in — ₹${fmt(bp.termNeedL)}L cover, takes 20 minutes online. Premium: ₹${fmt(bp.termMo)}/month. Do this before anything else.`
-          : 'Consolidate all existing life insurance policies — confirm nominations are updated and all policies are active.',
+          ? `Apply for ${bp.gapL >= 100 ? 'LIC Tech Term (Plan 954)' : 'LIC Jeevan Amar (Plan 827)'} at licindia.in - ₹${fmt(bp.termNeedL)}L cover, takes 20 minutes online. Premium: ₹${fmt(bp.termMo)}/month. Do this before anything else.`
+          : 'Consolidate all existing life insurance policies - confirm nominations are updated and all policies are active.',
         p.existingHealthL < bp.rHL
-          ? `Purchase health floater: ${p.cityTier === 'metro' ? 'Niva Bupa ReAssure 2.0 or Star Health Family Optima' : 'Star Health Family Health Optima'} — ₹${bp.rHL}L cover at ₹${fmt(bp.hMo)}/month. Process is fully online.`
+          ? `Purchase health floater: ${p.cityTier === 'metro' ? 'Niva Bupa ReAssure 2.0 or Star Health Family Optima' : 'Star Health Family Health Optima'} - ₹${bp.rHL}L cover at ₹${fmt(bp.hMo)}/month. Process is fully online.`
           : 'Add a ₹25L super top-up rider to your existing health policy (₹200-400/month) to inflation-proof your medical cover.',
       ],
     },
     {
-      label: 'Days 16–45',
+      label: 'Days 16-45',
       title: 'Build the Wealth Engine',
       color: '#3b82f6',
       steps: [
-        `Open a direct mutual fund account (Zerodha Coin / Groww / Kuvera — no commission). Set up SIP mandate on salary credit date: ₹${fmt(Math.round(bp.eqSIP * 0.5))}/month in Nippon Nifty 50 Index Fund + ₹${fmt(Math.round(bp.eqSIP * 0.3))}/month in Parag Parikh Flexi Cap + ₹${fmt(bp.eqSIP - Math.round(bp.eqSIP * 0.5) - Math.round(bp.eqSIP * 0.3))}/month in HDFC Mid Cap.`,
-        `Start emergency fund: Transfer ₹${fmt(bp.eMo)}/month to a liquid mutual fund (Parag Parikh Liquid Fund). Target: ₹${fmt(bp.eTgtL)}L in 18 months. This is your financial immune system — do not invest until this exists.`,
-        isHNI ? `Open NPS Tier 1 account at enps.nsdl.com. Contribute ₹50,000/year to claim additional ₹15,000-17,500 tax saved under Section 80CCD(1B) — instant 30-35% return on this ₹50K.` : `Start ELSS SIP of ₹${Math.min(12500, Math.round(p.monthlyIncome * 0.04))}/month for Section 80C tax benefit (₹1.5L/year deduction = ₹${Math.round(Math.min(45000, p.monthlyIncome * 0.04 * 12 * 0.3))} tax saved).`,
+        `Open a direct mutual fund account (Zerodha Coin / Groww / Kuvera - no commission). Set up SIP mandate on salary credit date: ₹${fmt(Math.round(bp.eqSIP * 0.5))}/month in Nippon Nifty 50 Index Fund + ₹${fmt(Math.round(bp.eqSIP * 0.3))}/month in Parag Parikh Flexi Cap + ₹${fmt(bp.eqSIP - Math.round(bp.eqSIP * 0.5) - Math.round(bp.eqSIP * 0.3))}/month in HDFC Mid Cap.`,
+        `Start emergency fund: Transfer ₹${fmt(bp.eMo)}/month to a liquid mutual fund (Parag Parikh Liquid Fund). Target: ₹${fmt(bp.eTgtL)}L in 18 months. This is your financial immune system - do not invest until this exists.`,
+        isHNI ? `Open NPS Tier 1 account at enps.nsdl.com. Contribute ₹50,000/year to claim additional ₹15,000-17,500 tax saved under Section 80CCD(1B) - instant 30-35% return on this ₹50K.` : `Start ELSS SIP of ₹${Math.min(12500, Math.round(p.monthlyIncome * 0.04))}/month for Section 80C tax benefit (₹1.5L/year deduction = ₹${Math.round(Math.min(45000, p.monthlyIncome * 0.04 * 12 * 0.3))} tax saved).`,
       ],
     },
     {
-      label: 'Days 46–90',
+      label: 'Days 46-90',
       title: 'Structure the Future',
       color: '#c9a84c',
       steps: [
-        `Meet with Ajay sir to structure your LIC goal plan (₹${fmt(bp.licMo)}/month) — specifically ${p.goals.includes('education') && p.children > 0 ? `LIC Jeevan Tarun for your child's education corpus (₹${bp.totalEduL}L target) + ` : ''}${p.goals.includes('retire') ? `LIC Jeevan Shanti for guaranteed pension starting age ${p.retirementAge}` : 'endowment plan for your primary goal'}.`,
+        `Meet with Ajay sir to structure your LIC goal plan (₹${fmt(bp.licMo)}/month) - specifically ${p.goals.includes('education') && p.children > 0 ? `LIC Jeevan Tarun for your child's education corpus (₹${bp.totalEduL}L target) + ` : ''}${p.goals.includes('retire') ? `LIC Jeevan Shanti for guaranteed pension starting age ${p.retirementAge}` : 'endowment plan for your primary goal'}.`,
         bp.retDiffCrore < -0.5
-          ? `Increase monthly SIP by ₹${fmt(bp.addlSIP)}/month to close your ₹${Math.abs(bp.retDiffCrore).toFixed(1)}Cr retirement gap. Even a ₹${fmt(Math.round(bp.addlSIP / 2))}/month partial increase today is worth more than the full ₹${fmt(bp.addlSIP)}/month in 3 years — compounding is that asymmetric.`
-          : `Review your asset allocation annually — target rebalancing to ${bp.eqPct}% equity / ${100 - bp.eqPct}% debt as your portfolio grows. Rebalance in January each year using the debt SIP proceeds.`,
+          ? `Increase monthly SIP by ₹${fmt(bp.addlSIP)}/month to close your ₹${Math.abs(bp.retDiffCrore).toFixed(1)}Cr retirement gap. Even a ₹${fmt(Math.round(bp.addlSIP / 2))}/month partial increase today is worth more than the full ₹${fmt(bp.addlSIP)}/month in 3 years - compounding is that asymmetric.`
+          : `Review your asset allocation annually - target rebalancing to ${bp.eqPct}% equity / ${100 - bp.eqPct}% debt as your portfolio grows. Rebalance in January each year using the debt SIP proceeds.`,
         isHNI
           ? `With your income level, consider a Will and nominee-update review. Ensure your spouse, children, and parents are nominated correctly across all policies, EPF, and bank accounts. Intestate disputes in India take 7-10 years in courts.`
-          : `Update nominees on all insurance policies, bank FDs, and EPF. Takes 30 minutes. Without this, your family may need court orders to access funds — a 2-3 year process during the worst possible time.`,
+          : `Update nominees on all insurance policies, bank FDs, and EPF. Takes 30 minutes. Without this, your family may need court orders to access funds - a 2-3 year process during the worst possible time.`,
       ],
     },
   ]

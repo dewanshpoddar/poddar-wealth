@@ -29,8 +29,8 @@ export default function PolicyRevivalPage() {
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
-              ? 'बंद एलआईसी पॉलिसी को कैसे शुरू करें — सम्पूर्ण गाइड 2026' 
-              : 'How to Revive a Lapsed LIC Policy — Complete Guide 2026'}
+              ? 'बंद एलआईसी पॉलिसी को कैसे शुरू करें - सम्पूर्ण गाइड 2026' 
+              : 'How to Revive a Lapsed LIC Policy - Complete Guide 2026'}
           </h1>
           <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             {isHi

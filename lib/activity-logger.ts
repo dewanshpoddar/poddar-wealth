@@ -35,6 +35,6 @@ export function logActivity(
     const trimmed = entries.slice(0, MAX_ENTRIES)
     fs.writeFileSync(LOG_PATH, JSON.stringify(trimmed, null, 2))
   } catch {
-    // Non-fatal — never crash a route because of logging
+    // Non-fatal - never crash a route because of logging
   }
 }

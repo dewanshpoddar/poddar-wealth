@@ -23,8 +23,8 @@ function priorityBg(p: string) { return p === 'critical' ? '#fef2f2' : p === 'hi
 function priorityLabel(p: string) { return p === 'critical' ? 'Act Now' : p === 'high' ? 'High Priority' : 'Recommended' }
 const LIFE_COVER_OPTS: BucketOpt[] = [
   { label: 'None', value: 0 }, { label: '≤ ₹25L', value: 12 },
-  { label: '₹25–50L', value: 37 }, { label: '₹50L–1Cr', value: 75 },
-  { label: '₹1–2Cr', value: 150 }, { label: '₹2Cr+', value: 250 },
+  { label: '₹25 - 50L', value: 37 }, { label: '₹50L - 1Cr', value: 75 },
+  { label: '₹1 - 2Cr', value: 150 }, { label: '₹2Cr+', value: 250 },
 ]
 const HEALTH_OPTS: BucketOpt[] = [
   { label: 'None', value: 0 }, { label: '₹5L', value: 5 },
@@ -33,19 +33,19 @@ const HEALTH_OPTS: BucketOpt[] = [
 ]
 const LOAN_OPTS: BucketOpt[] = [
   { label: 'None', value: 0 }, { label: '< ₹10L', value: 5 },
-  { label: '₹10–25L', value: 17 }, { label: '₹25–50L', value: 37 },
-  { label: '₹50L–1Cr', value: 75 }, { label: '₹1Cr+', value: 125 },
+  { label: '₹10 - 25L', value: 17 }, { label: '₹25 - 50L', value: 37 },
+  { label: '₹50L - 1Cr', value: 75 }, { label: '₹1Cr+', value: 125 },
 ]
 const EQUITY_OPTS: BucketOpt[] = [
   { label: 'None', value: 0 }, { label: '< ₹5L', value: 2 },
-  { label: '₹5–25L', value: 15 }, { label: '₹25–50L', value: 37 },
-  { label: '₹50L–1Cr', value: 75 }, { label: '₹1–3Cr', value: 200 },
+  { label: '₹5 - 25L', value: 15 }, { label: '₹25 - 50L', value: 37 },
+  { label: '₹50L - 1Cr', value: 75 }, { label: '₹1 - 3Cr', value: 200 },
   { label: '₹3Cr+', value: 400 },
 ]
 const RE_OPTS: BucketOpt[] = [
   { label: 'None', value: 0 }, { label: '< ₹50L', value: 25 },
-  { label: '₹50L–1Cr', value: 75 }, { label: '₹1–2Cr', value: 150 },
-  { label: '₹2–5Cr', value: 350 }, { label: '₹5Cr+', value: 600 },
+  { label: '₹50L - 1Cr', value: 75 }, { label: '₹1 - 2Cr', value: 150 },
+  { label: '₹2 - 5Cr', value: 350 }, { label: '₹5Cr+', value: 600 },
 ]
 const GOAL_DEFS: { key: Goal; label: string; sub: string }[] = [
   { key: 'home',      label: 'Own a Home',         sub: 'Down payment corpus' },
@@ -156,7 +156,7 @@ export default function WealthBlueprintCalculator() {
     <div className="flex items-center gap-2.5 bg-navy/[0.04] rounded-xl px-3.5 py-2.5 mb-5 border border-navy/[0.07]">
       <Lock size={11} className="text-navy/40 flex-shrink-0"/>
       <p className="text-[11px] text-navy/55 leading-snug">
-        <strong className="text-navy/70">100% Confidential.</strong> Your data powers your blueprint only — never stored or shared until you save.
+        <strong className="text-navy/70">100% Confidential.</strong> Your data powers your blueprint only - never stored or shared until you save.
       </p>
     </div>
   )
@@ -182,7 +182,7 @@ export default function WealthBlueprintCalculator() {
           <p className="text-lg text-gray-500 max-w-2xl mx-auto mt-4 leading-relaxed font-medium">
             {isHi 
               ? 'सिर्फ 4 सवालों में। एक अनुभवी प्राइवेट वेल्थ एडवाइजर के स्तर पर तैयार की गई आपकी सुरक्षा, रिटायरमेंट और सटीक निवेश योजना।'
-              : '4 questions. A financial brief at the level of a private wealth advisor — covering your protection gap, retirement reality, and a specific product-level action plan.'}
+              : '4 questions. A financial brief at the level of a private wealth advisor - covering your protection gap, retirement reality, and a specific product-level action plan.'}
           </p>
         </div>
 
@@ -358,7 +358,7 @@ export default function WealthBlueprintCalculator() {
               <motion.div key="s2" {...slide} transition={{ duration: 0.22 }}
                 className="bg-[#f8f7f4] rounded-3xl p-7 md:p-9 border border-[rgba(184,134,11,0.1)]">
                 <h3 className="text-16 font-bold text-navy mb-1">{t.blueprint.step2Title}</h3>
-                <p className="text-11 text-gray-400 mb-5">Approximate ranges are fine — this powers your gap analysis.</p>
+                <p className="text-11 text-gray-400 mb-5">Approximate ranges are fine - this powers your gap analysis.</p>
                 {ConfidentialBanner}
                 <div className="space-y-5">
                   <BucketSelect label="Life Insurance Cover (total sum assured)" note="all policies combined" value={existingLifeCoverL} onChange={setLifeCover} opts={LIFE_COVER_OPTS}/>
@@ -432,7 +432,7 @@ export default function WealthBlueprintCalculator() {
                 <div className="bg-navy rounded-2xl p-5 text-white">
                   <div className="text-[9px] font-bold tracking-[0.18em] uppercase text-gold/70 mb-4">Your Live Snapshot</div>
 
-                  {/* Profile summary — rows fade in as user completes each step */}
+                  {/* Profile summary - rows fade in as user completes each step */}
                   <div className="space-y-2.5 mb-5">
                     <div className="flex justify-between items-center">
                       <span className="text-10 text-white/50">Age</span>
@@ -446,7 +446,7 @@ export default function WealthBlueprintCalculator() {
                       <span className="text-10 text-white/50">City</span>
                       <span className="text-12 font-bold text-white">{cityTier === 'metro' ? 'Metro' : cityTier === 'tier2' ? 'Tier-2' : 'Tier-3'}</span>
                     </div>
-                    {/* Family + Retire by — only shown after step 1 (Family step) */}
+                    {/* Family + Retire by - only shown after step 1 (Family step) */}
                     {step >= 1 ? (
                       <>
                         <motion.div key="fam" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}
@@ -468,7 +468,7 @@ export default function WealthBlueprintCalculator() {
                     )}
                   </div>
 
-                  {/* Metric tile — only appears once user has entered protection data (step 2+) */}
+                  {/* Metric tile - only appears once user has entered protection data (step 2+) */}
                   {step >= 2 && (
                     <motion.div
                       key="metric-tile"
@@ -512,7 +512,7 @@ export default function WealthBlueprintCalculator() {
                 <div className="mt-3 flex items-start gap-2 px-1">
                   <Lock size={10} className="text-gray-400 mt-0.5 flex-shrink-0"/>
                   <p className="text-10 text-gray-400 leading-snug">
-                    100% confidential. Your data powers your blueprint only — never stored or shared until you explicitly save.
+                    100% confidential. Your data powers your blueprint only - never stored or shared until you explicitly save.
                   </p>
                 </div>
               </div>
@@ -679,7 +679,7 @@ export default function WealthBlueprintCalculator() {
                             <span className="text-11 font-bold text-navy">{label}</span>
                           </div>
                           <span className="text-[9px] font-bold px-2 py-0.5 rounded-full" style={{ background: color + '15', color }}>
-                            {status === 'covered' ? t.blueprint.riskStatus.covered : status === 'exposed' ? t.blueprint.riskStatus.exposed : status === 'planning' ? t.blueprint.riskStatus.planning : '—'}
+                            {status === 'covered' ? t.blueprint.riskStatus.covered : status === 'exposed' ? t.blueprint.riskStatus.exposed : status === 'planning' ? t.blueprint.riskStatus.planning : ' - '}
                           </span>
                         </div>
                         <div className="text-15 font-bold text-navy mb-0.5" style={{ color }}>{line1}</div>
@@ -728,7 +728,7 @@ export default function WealthBlueprintCalculator() {
 
                 {/* ── 04 WEALTH ENGINE ── */}
                 <div className="mb-5">
-                  <SectionLabel n="04" title="The Wealth Engine — SIP Allocation with Fund Names"/>
+                  <SectionLabel n="04" title="The Wealth Engine - SIP Allocation with Fund Names"/>
                   <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
                     <div className="px-5 py-4 border-b border-gray-50 bg-[#f8f7f4]">
                       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -763,7 +763,7 @@ export default function WealthBlueprintCalculator() {
                       <div className="px-5 py-3.5 bg-amber-50 border-t border-amber-100 flex items-start gap-2">
                         <TriangleAlert size={13} className="text-amber-500 flex-shrink-0 mt-0.5"/>
                         <p className="text-11 text-amber-800">
-                          <strong>Cost of waiting 3 years to start this SIP: ₹{fmt(bp.delay3L)} Lakhs</strong> in lost retirement corpus. Compounding is back-heavy — the first decade contributes more than the last two combined.
+                          <strong>Cost of waiting 3 years to start this SIP: ₹{fmt(bp.delay3L)} Lakhs</strong> in lost retirement corpus. Compounding is back-heavy - the first decade contributes more than the last two combined.
                         </p>
                       </div>
                     )}
@@ -782,9 +782,9 @@ export default function WealthBlueprintCalculator() {
                       </div>
                       <div className="grid md:grid-cols-2 gap-3">
                         {[
-                          { title: 'NPS Tier 1 — ₹50,000 extra deduction', body: 'Section 80CCD(1B) gives ₹50,000 tax deduction over and above 80C — saving ₹15,000-17,500 in tax annually at 30% bracket. Returns 10-11% long-term. Register at enps.nsdl.com.', color: '#c9a84c' },
+                          { title: 'NPS Tier 1 - ₹50,000 extra deduction', body: 'Section 80CCD(1B) gives ₹50,000 tax deduction over and above 80C - saving ₹15,000-17,500 in tax annually at 30% bracket. Returns 10-11% long-term. Register at enps.nsdl.com.', color: '#c9a84c' },
                           { title: 'International Equity (LRS Scheme)', body: 'Allocate 15-20% of equity SIP to US/global index funds (Motilal Oswal NASDAQ 100, Mirae Asset S&P 500). Hedges rupee depreciation (historical ~3.5%/year). LRS limit: $250,000/year.', color: '#3b82f6' },
-                          { title: 'ELSS — Tax-Smart Equity', body: 'Up to ₹1.5L/year in ELSS qualifies for 80C deduction (₹45,000-52,500 tax saved at 30%). Best options: Mirae Asset Tax Saver or Axis Long Term Equity. 3-year lock-in only.', color: '#22c55e' },
+                          { title: 'ELSS - Tax-Smart Equity', body: 'Up to ₹1.5L/year in ELSS qualifies for 80C deduction (₹45,000-52,500 tax saved at 30%). Best options: Mirae Asset Tax Saver or Axis Long Term Equity. 3-year lock-in only.', color: '#22c55e' },
                           { title: 'Nominee & Will Audit', body: 'At ₹' + fmt(monthlyIncome) + '/month earning level, estates frequently get tied up in probate without proper nomination. Ensure nominees are updated across all policies, EPF, and bank accounts. Consider a registered Will.', color: '#8b5cf6' },
                         ].map(({ title, body, color }) => (
                           <div key={title} className="bg-white/6 rounded-xl p-4 border border-white/8">
@@ -809,7 +809,7 @@ export default function WealthBlueprintCalculator() {
                         <div className="flex items-center gap-3 px-5 py-3 border-b border-gray-50" style={{ background: color + '08' }}>
                           <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }}/>
                           <span className="text-10 font-bold uppercase tracking-widest" style={{ color }}>{label}</span>
-                          <span className="text-12 font-bold text-navy ml-1">— {title}</span>
+                          <span className="text-12 font-bold text-navy ml-1"> -  {title}</span>
                         </div>
                         <div className="px-5 py-4 space-y-3">
                           {steps.map((s, i) => (
@@ -834,8 +834,8 @@ export default function WealthBlueprintCalculator() {
                       {[
                         { yr: `Age ${age + 1}`,  label: 'Emergency fund complete. Insurance active.' },
                         { yr: `Age ${Math.min(age + 4, retirementAge - 8)}`, label: `₹${Math.round(bp.projectedCrore * 0.15 * 10) / 10}Cr first corpus milestone.` },
-                        { yr: `Age ${Math.min(age + 12, retirementAge - 2)}`, label: `₹${Math.round(bp.projectedCrore * 0.5 * 10) / 10}Cr — halfway to retirement goal.` },
-                        { yr: `Age ${retirementAge}`, label: `₹${crore(bp.projectedCrore)} projected — retire on your terms.` },
+                        { yr: `Age ${Math.min(age + 12, retirementAge - 2)}`, label: `₹${Math.round(bp.projectedCrore * 0.5 * 10) / 10}Cr - halfway to retirement goal.` },
+                        { yr: `Age ${retirementAge}`, label: `₹${crore(bp.projectedCrore)} projected - retire on your terms.` },
                       ].map((m, i, arr) => (
                         <div key={i} className="flex sm:flex-col items-start gap-3 sm:gap-0">
                           {/* Line & Dot */}

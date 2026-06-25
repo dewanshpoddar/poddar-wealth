@@ -234,7 +234,7 @@ function ComparePageContent() {
                   {c.cta ?? 'Need help choosing? Ask Ajay sir →'}
                 </p>
                 <p className="text-gray-500 text-xs mt-1">
-                  {isHi ? 'व्यक्तिगत सलाह के लिए कॉल या WhatsApp करें।' : 'Personal advice — call or WhatsApp for a free consultation.'}
+                  {isHi ? 'व्यक्तिगत सलाह के लिए कॉल या WhatsApp करें।' : 'Personal advice - call or WhatsApp for a free consultation.'}
                 </p>
               </div>
               <div className="flex gap-3">

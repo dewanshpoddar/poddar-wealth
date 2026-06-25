@@ -130,7 +130,7 @@ export default function SurrenderValueCalculatorPage() {
   }
 
   const shareText = result
-    ? `*LIC Surrender Value Quote — Poddar Wealth*
+    ? `*LIC Surrender Value Quote - Poddar Wealth*
 Plan Number: ${planNumber}
 Sum Assured: ${fmtSA(sumAssured)}
 Annual Premium: ${fmt(annualPremium)}
@@ -199,7 +199,7 @@ Please help me verify if this is accurate or if I have a higher Special Surrende
                 >
                   {majorPlans.map((plan) => (
                     <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} — {plan.name}
+                      Plan {plan.planNo} - {plan.name}
                     </option>
                   ))}
                 </select>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Login — Poddar Wealth Management',
+  title: 'Login - Poddar Wealth Management',
   robots: 'noindex, nofollow',
 }
 

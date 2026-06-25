@@ -29,7 +29,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Poddar Wealth Management — Insurance Insights</title>
+    <title>Poddar Wealth Management - Insurance Insights</title>
     <link>https://www.poddarwealth.com/blog</link>
     <description>Expert insurance and wealth planning insights by Ajay Kumar Poddar, MDRT Member</description>
     <language>en-IN</language>

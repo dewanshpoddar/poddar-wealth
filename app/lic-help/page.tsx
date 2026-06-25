@@ -29,8 +29,8 @@ export default function LicHelpPage() {
           </span>
           <h1 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight">
             {isHi 
-              ? 'MyLIC ऐप गाइड — डाउनलोड, पंजीकरण, प्रीमियम भुगतान (2026)' 
-              : 'MyLIC App Help — Download, Register, Pay Premium (Complete Guide 2026)'}
+              ? 'MyLIC ऐप गाइड - डाउनलोड, पंजीकरण, प्रीमियम भुगतान (2026)' 
+              : 'MyLIC App Help - Download, Register, Pay Premium (Complete Guide 2026)'}
           </h1>
           <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             {isHi

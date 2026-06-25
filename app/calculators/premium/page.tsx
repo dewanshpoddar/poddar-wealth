@@ -276,7 +276,7 @@ export default function PremiumCalculatorPage() {
         clientName, salutation,
         premResult: prem, matResult: mat, benefitTable: table,
       }))
-    } catch { /* quota exceeded — ignore */ }
+    } catch { /* quota exceeded - ignore */ }
 
     // Track calculation to Google Sheets
     fetch('/api/track', {
@@ -347,7 +347,7 @@ export default function PremiumCalculatorPage() {
     const name = clientName ? `${salutation} ${clientName}` : 'Customer'
     const matLine = matResult?.maturity ? `Maturity Value: ${fmt(matResult.maturity)}` : 'Pure Term Plan'
     const msg = [
-      `*LIC Premium Illustration — Poddar Wealth*`,
+      `*LIC Premium Illustration - Poddar Wealth*`,
       ``,
       `For: ${name} | Age: ${age} yrs`,
       `Plan: LIC's ${selectedPlan.name} (Plan ${selectedPlan.planNo})`,
@@ -419,7 +419,7 @@ export default function PremiumCalculatorPage() {
         <div className="flex flex-col lg:flex-row gap-6">
 
 
-          {/* ══ LEFT — Plan Browser ═══════════════ */}
+          {/* ══ LEFT - Plan Browser ═══════════════ */}
           <div className="lg:w-[360px] lg:flex-shrink-0">
             <PlanSearch 
               quickPlanNo={quickPlanNo} setQuickPlanNo={setQuickPlanNo}
@@ -429,7 +429,7 @@ export default function PremiumCalculatorPage() {
             />
           </div>
 
-          {/* ══ RIGHT — Calculator ════════════════ */}
+          {/* ══ RIGHT - Calculator ════════════════ */}
           <div className="flex-1 min-w-0 space-y-4">
             {/* No plan selected */}
             {!selectedPlan && (
@@ -457,13 +457,13 @@ export default function PremiumCalculatorPage() {
                         <span className="text-white/40 font-sans text-[11px] ml-2 font-normal">Plan {selectedPlan.planNo}</span>
                       </div>
                       <div className="text-white/50 text-[11px] mt-0.5">
-                        Entry Age: {selectedPlan.minAge}–{selectedPlan.maxAge} yrs · Min SA: {fmtSA(selectedPlan.minSA ?? 0)}
+                        Entry Age: {selectedPlan.minAge} - {selectedPlan.maxAge} yrs · Min SA: {fmtSA(selectedPlan.minSA ?? 0)}
                       </div>
                     </div>
                   </div>
                   {selectedPlan.status === 'withdrawn' ? (
                     <div className="bg-slate-500/20 border border-slate-400/30 text-slate-200 text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      Discontinued — Calc only
+                      Discontinued - Calc only
                     </div>
                   ) : selectedPlan.xirr && (
                     <div className="bg-gold/10 border border-gold/20 text-gold text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">
@@ -531,7 +531,7 @@ export default function PremiumCalculatorPage() {
                       })}
                     </div>
                     <p className="text-[10px] text-gray-500 mt-3">
-                      NAV updates daily after market close (~6–7 PM IST). Returns are market-linked and not guaranteed.
+                      NAV updates daily after market close (~6 - 7 PM IST). Returns are market-linked and not guaranteed.
                       ULIP charges (allocation, mortality, fund management) apply.
                     </p>
                   </div>
@@ -600,7 +600,7 @@ export default function PremiumCalculatorPage() {
                     />
                   </div>{/* end inputs panel */}
 
-                  {/* Results panel — slides in from right */}
+                  {/* Results panel - slides in from right */}
                   <div className={`transition-all duration-300 ease-in-out ${showResults ? 'block' : 'hidden'} space-y-4`}>
                     <ResultsPanel
                       selectedPlan={selectedPlan} clientName={clientName} salutation={salutation}

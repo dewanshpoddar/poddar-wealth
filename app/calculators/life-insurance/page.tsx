@@ -18,11 +18,11 @@ export default function LifeInsuranceCalcPage() {
   const hideHero = false
   const { t } = useLang()
 
-  // Step 1 — coverage need
+  // Step 1 - coverage need
   const [form, setForm]     = useState({ age: 30, income: 600000, dependents: 2, existing: 0 })
   const [need, setNeed]     = useState<null | { recommended: number; breakdown: { label: string; amount: number }[] }>(null)
 
-  // Step 2 — plan quote
+  // Step 2 - plan quote
   const [planNo, setPlanNo] = useState<number | null>(null)
   const [sa, setSa]         = useState(0)
   const [term, setTerm]     = useState(20)
@@ -95,7 +95,7 @@ export default function LifeInsuranceCalcPage() {
               {/* Inputs */}
               <div className="bg-white rounded-3xl shadow-card p-8">
                 <h2 className="font-display font-bold text-2xl text-slate-900 mb-6">
-                  Step 1 — How much cover do you need?
+                  Step 1 - How much cover do you need?
                 </h2>
                 <div className="space-y-5">
                   <div>
@@ -177,7 +177,7 @@ export default function LifeInsuranceCalcPage() {
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-10">
                 <div className="inline-flex items-center gap-2 bg-gold/5 text-gold px-4 py-1.5 rounded-full text-sm font-semibold mb-3">
-                  <Shield className="w-4 h-4" /> Step 2 — Get a Real LIC Premium Quote
+                  <Shield className="w-4 h-4" /> Step 2 - Get a Real LIC Premium Quote
                 </div>
                 <h2 className="font-display font-bold text-2xl text-slate-900">
                   Your coverage need is <span className="text-amber-700">{fmt(need.recommended)}</span>.
@@ -304,7 +304,7 @@ export default function LifeInsuranceCalcPage() {
                   <button
                     onClick={() => setShowTable(v => !v)}
                     className="w-full flex items-center justify-between px-6 py-4 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
-                    <span>Year-by-Year Benefit Table — {selectedPlan?.name}</span>
+                    <span>Year-by-Year Benefit Table - {selectedPlan?.name}</span>
                     {showTable ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                   {showTable && (
@@ -322,13 +322,13 @@ export default function LifeInsuranceCalcPage() {
                             <tr key={row.year} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                               <td className="px-3 py-2 font-semibold text-gold">{row.year}</td>
                               <td className="px-3 py-2">{row.age}</td>
-                              <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : '—'}</td>
+                              <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : ' - '}</td>
                               <td className="px-3 py-2">{fmt(row.cumPremiumPaid)}</td>
-                              <td className="px-3 py-2">{row.annualBonus ? fmt(row.annualBonus) : '—'}</td>
-                              <td className="px-3 py-2">{row.cumBonus ? fmt(row.cumBonus) : '—'}</td>
+                              <td className="px-3 py-2">{row.annualBonus ? fmt(row.annualBonus) : ' - '}</td>
+                              <td className="px-3 py-2">{row.cumBonus ? fmt(row.cumBonus) : ' - '}</td>
                               <td className="px-3 py-2 font-semibold text-red-600">{fmt(row.deathBenefit)}</td>
-                              <td className="px-3 py-2 text-gold">{row.gsv ? fmt(row.gsv) : '—'}</td>
-                              <td className="px-3 py-2 font-bold text-green-700">{row.maturityPayout ? fmt(row.maturityPayout) : '—'}</td>
+                              <td className="px-3 py-2 text-gold">{row.gsv ? fmt(row.gsv) : ' - '}</td>
+                              <td className="px-3 py-2 font-bold text-green-700">{row.maturityPayout ? fmt(row.maturityPayout) : ' - '}</td>
                             </tr>
                           ))}
                         </tbody>

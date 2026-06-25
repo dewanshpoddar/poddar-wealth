@@ -181,7 +181,7 @@ export default function RetirementCalcPage() {
                     <div className="grid grid-cols-2 gap-2 mb-4">
                       <div className="bg-white rounded-lg p-2 border border-slate-100">
                         <div className="text-xs text-slate-400">Entry Age</div>
-                        <div className="text-xs font-bold text-slate-700">{plan.minAge}–{plan.maxAge} yrs</div>
+                        <div className="text-xs font-bold text-slate-700">{plan.minAge} - {plan.maxAge} yrs</div>
                       </div>
                       <div className="bg-white rounded-lg p-2 border border-slate-100">
                         <div className="text-xs text-slate-400">Min SA</div>

@@ -188,7 +188,7 @@ export default function BecomeAdvisorPage() {
               <BaseLeadForm 
                 fields={fields}
                 intent="Advisor Recruitment"
-                submitText={lang === 'en' ? "Apply Now — It's Free →" : "अभी आवेदन करें — यह मुफ़्त है →"}
+                submitText={lang === 'en' ? "Apply Now - It's Free →" : "अभी आवेदन करें - यह मुफ़्त है →"}
                 successTitle={lang === 'en' ? 'Application Received!' : 'आवेदन प्राप्त हुआ!'}
                 successMessage={lang === 'en' 
                   ? 'Ajay will personally review your application and call you within 24 hours. Welcome to the journey!' 

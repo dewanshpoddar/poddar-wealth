@@ -24,7 +24,7 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.poddarwealth.com'),
-  title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+  title: 'Poddar Wealth Management - Life Insurance & Wealth Planning Since 1994',
   description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   keywords: ['LIC agent Gorakhpur', 'life insurance Gorakhpur', 'LIC advisor UP', 'Ajay Kumar Poddar', 'wealth management Gorakhpur', 'health insurance UP'],
   authors: [{ name: 'Ajay Kumar Poddar' }],
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://www.poddarwealth.com',
     siteName: 'Poddar Wealth Management',
-    title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+    title: 'Poddar Wealth Management - Life Insurance & Wealth Planning Since 1994',
     description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Poddar Wealth Management — Life Insurance & Wealth Planning Since 1994',
+    title: 'Poddar Wealth Management - Life Insurance & Wealth Planning Since 1994',
     description: 'Trusted insurance advisor in Gorakhpur. LIC, Star Health, wealth planning by MDRT Member Ajay Kumar Poddar. 31+ years, 5000+ families protected.',
   },
   icons: {
@@ -100,7 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://api.groq.com" />
-        {/* Preload LCP hero image — tells browser to fetch before React renders */}
+        {/* Preload LCP hero image - tells browser to fetch before React renders */}
         <link rel="preload" as="image" type="image/webp" href="/assets/hero-family.webp" fetchPriority="high" />
       </head>
       <body className={`${fraunces.variable} ${plusJakartaSans.variable} font-sans text-13 text-gray-900 bg-white antialiased`} suppressHydrationWarning>
@@ -122,7 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             },
           }) }}
         />
-        {/* ── Google Analytics 4 — default-deny until consent given ── */}
+        {/* ── Google Analytics 4 - default-deny until consent given ── */}
         {GA_ID && (
           <>
             <Script id="ga4-consent-default" strategy="afterInteractive">

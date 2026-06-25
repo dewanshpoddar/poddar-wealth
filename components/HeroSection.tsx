@@ -59,7 +59,7 @@ export default function HeroSection() {
 
   return (
     <>
-      {/* ═══ HERO GRID — fits viewport, capped so centering doesn't gap ═══ */}
+      {/* ═══ HERO GRID - fits viewport, capped so centering doesn't gap ═══ */}
       <div className="grid lg:grid-cols-2 lg:h-[clamp(580px,calc(100vh-200px),700px)]">
 
 
@@ -128,7 +128,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── RIGHT — image carousel ── */}
+        {/* ── RIGHT - image carousel ── */}
         <div className="relative bg-navy h-[60vw] max-h-[420px] lg:h-full lg:max-h-none">
 
           {/* Photos (Slideshow) */}
@@ -155,7 +155,7 @@ export default function HeroSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/10 to-navy/20 pointer-events-none" />
           </div>
 
-          {/* Dot Navigation — visible on all sizes */}
+          {/* Dot Navigation - visible on all sizes */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
             {heroImages.map((_, idx) => (
               <button
@@ -167,7 +167,7 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* Mobile badge — bottom left corner (replaces the broken chip) */}
+          {/* Mobile badge - bottom left corner (replaces the broken chip) */}
           <div className="absolute bottom-8 left-4 lg:hidden z-10">
             <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"/>
@@ -175,7 +175,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Plan card — desktop only, overlapping into left column */}
+          {/* Plan card - desktop only, overlapping into left column */}
           <div className="hidden lg:block absolute bottom-6 -left-16 w-[230px] bg-white rounded-2xl p-4
                           border border-[rgba(184,134,11,0.12)] z-20 shadow-2xl animate-slide-in">
             <p className="text-[9px] tracking-[0.14em] text-muted font-medium mb-3 uppercase">
@@ -204,7 +204,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* "Why families trust us" chip — desktop only */}
+          {/* "Why families trust us" chip - desktop only */}
           <div className="hidden lg:block absolute bottom-10 right-6 bg-white/[0.07] border border-white/[0.12]
                           rounded-xl px-4 py-3 max-w-[170px] z-10 animate-fade-up"
                style={{ animationDelay: '0.55s' }}>

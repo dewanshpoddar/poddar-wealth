@@ -72,7 +72,7 @@ export default function RenewPage() {
           <p className="text-white/55 text-sm leading-relaxed max-w-lg mx-auto">
             {r.heroSub ?? (isHi
               ? 'हम आपकी रिन्यूअल तारीखें ट्रैक करेंगे और समय पर याद दिलाएंगे।'
-              : 'We track your renewal dates and remind you before they lapse — no policy lapses on our watch.')}
+              : 'We track your renewal dates and remind you before they lapse - no policy lapses on our watch.')}
           </p>
         </div>
       </section>
@@ -104,8 +104,8 @@ export default function RenewPage() {
                 <Shield size={20} className="text-amber-500 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {r.trustNote ?? (isHi
-                    ? 'हम आपकी रिन्यूअल तारीखें ट्रैक करते हैं — हमारे साथ कोई पॉलिसी लैप्स नहीं होती।'
-                    : 'We track your renewal dates — no policy lapses on our watch.')}
+                    ? 'हम आपकी रिन्यूअल तारीखें ट्रैक करते हैं - हमारे साथ कोई पॉलिसी लैप्स नहीं होती।'
+                    : 'We track your renewal dates - no policy lapses on our watch.')}
                 </p>
               </div>
 

@@ -38,8 +38,8 @@ export default function BlogPage() {
           </h1>
           <p className="text-white/55 text-base max-w-xl mx-auto leading-relaxed">
             {lang === 'en'
-              ? 'Practical guides on insurance, tax planning, and wealth protection — written by Ajay Kumar Poddar.'
-              : 'बीमा, टैक्स प्लानिंग और संपत्ति सुरक्षा पर व्यावहारिक गाइड — अजय कुमार पोद्दार द्वारा।'}
+              ? 'Practical guides on insurance, tax planning, and wealth protection - written by Ajay Kumar Poddar.'
+              : 'बीमा, टैक्स प्लानिंग और संपत्ति सुरक्षा पर व्यावहारिक गाइड - अजय कुमार पोद्दार द्वारा।'}
           </p>
         </div>
       </section>
@@ -130,8 +130,8 @@ export default function BlogPage() {
           </p>
           <p className="text-gray-500 text-sm mb-5">
             {lang === 'en'
-              ? 'Ask Poddar Ji — our AI advisor answers instantly in Hindi or English.'
-              : 'पोद्दार जी से पूछें — हमारे AI सलाहकार हिंदी या अंग्रेजी में तुरंत जवाब देते हैं।'}
+              ? 'Ask Poddar Ji - our AI advisor answers instantly in Hindi or English.'
+              : 'पोद्दार जी से पूछें - हमारे AI सलाहकार हिंदी या अंग्रेजी में तुरंत जवाब देते हैं।'}
           </p>
           <Link
             href="/ai-advisor"

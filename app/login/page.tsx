@@ -74,7 +74,7 @@ export default function LoginPage() {
     {toast && <Toast message={toast} type="success" onClose={() => setToast(null)} />}
     <div className="min-h-screen flex font-sans">
 
-      {/* LEFT — Brand panel (desktop only) */}
+      {/* LEFT - Brand panel (desktop only) */}
       <div className="hidden md:flex w-1/2 bg-amber-50 relative flex-col items-center justify-center p-12 overflow-hidden border-r border-amber-100">
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-200/30 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100/40 rounded-full blur-[100px] pointer-events-none" />
@@ -114,7 +114,7 @@ export default function LoginPage() {
               &ldquo;Ajay sir helped my family choose the right plan.
               Very knowledgeable and patient.&rdquo;
             </p>
-            <p className="text-xs text-gray-500 mt-3">— Google Review, Gorakhpur</p>
+            <p className="text-xs text-gray-500 mt-3"> -  Google Review, Gorakhpur</p>
           </div>
 
           <p className="text-xs text-amber-700 font-medium mt-6 bg-amber-100 inline-block px-3 py-1 rounded-full">
@@ -123,7 +123,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* RIGHT — Login form */}
+      {/* RIGHT - Login form */}
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6 md:p-12 relative">
         <Link
           href="/"
@@ -133,7 +133,7 @@ export default function LoginPage() {
           <span>Back to website</span>
         </Link>
 
-        {/* Mobile logo — only visible when left panel is hidden */}
+        {/* Mobile logo - only visible when left panel is hidden */}
         <Link href="/" className="absolute top-6 right-6 md:hidden">
           <Image src="/assets/pwm-logo.svg" alt="Home" width={36} height={36} />
         </Link>

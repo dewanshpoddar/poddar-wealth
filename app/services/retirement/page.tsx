@@ -10,7 +10,7 @@ import { useLang } from '@/lib/LangContext'
 const benefits = [
   'Build a retirement corpus through disciplined monthly investments',
   'Pension plans provide guaranteed monthly income after retirement',
-  'Annuity plans ensure income for lifetime — even if you live to 100',
+  'Annuity plans ensure income for lifetime - even if you live to 100',
   'NPS (National Pension System) with tax benefits up to ₹2 lakh',
   'Inflation-beating returns to maintain your lifestyle',
   'Joint life options to protect your spouse too',
@@ -22,7 +22,7 @@ export default function RetirementPage() {
     <ServicePageWrapper
       icon="🌅"
       label={lang === 'en' ? 'Retirement Planning' : 'रिटायरमेंट प्लानिंग'}
-      title={lang === 'en' ? 'Retire with Dignity — On Your Own Terms' : 'सम्मान के साथ रिटायर हों — अपनी शर्तों पर'}
+      title={lang === 'en' ? 'Retire with Dignity - On Your Own Terms' : 'सम्मान के साथ रिटायर हों - अपनी शर्तों पर'}
       subtitle={lang === 'en' ? "Don't depend on your children in old age. Start planning today and enjoy financial freedom in your golden years." : 'बुढ़ापे में बच्चों पर निर्भर न रहें। आज ही प्लानिंग शुरू करें और अपने सुनहरे वर्षों में वित्तीय स्वतंत्रता का आनंद लें।'}
       primaryCta={{ label: lang === 'en' ? 'Plan My Retirement' : 'रिटायरमेंट प्लान करें', href: '#lead-form' }}
       secondaryCta={{ label: lang === 'en' ? 'Calculate Corpus' : 'कॉर्पस कैलकुलेट करें', href: '/calculators/retirement' }}

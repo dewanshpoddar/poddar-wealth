@@ -123,7 +123,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 font-sans">
-      {/* Header — personalized greeting */}
+      {/* Header - personalized greeting */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 mb-1">{greeting}, Admin</h1>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
             <section className="space-y-3">
               <h2 className="text-gray-500 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
                 <CheckCircle size={14} className="text-amber-500" />
-                Environment Health —{' '}
+                Environment Health  - {' '}
                 <span className={infrastructure.envConfigured === infrastructure.envTotal ? 'text-emerald-600' : 'text-amber-600 font-mono'}>
                   {infrastructure.envConfigured}/{infrastructure.envTotal} configured
                 </span>

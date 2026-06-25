@@ -40,7 +40,7 @@ export default function Footer() {
 
         {/* Brand Header Row */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 pb-10 mb-10 border-b border-white/[0.06]">
-          {/* Logo + name — same style as navbar */}
+          {/* Logo + name - same style as navbar */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/90 flex items-center justify-center p-1.5 flex-shrink-0">
               <Image src="/assets/pwm-logo.svg" alt="Poddar Wealth Logo" width={40} height={40} className="w-full h-full object-contain" />
@@ -270,7 +270,7 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Language toggle — slim pill, matches navbar style */}
+          {/* Language toggle - slim pill, matches navbar style */}
           <div className="flex items-center order-1 lg:order-2">
             <div className="flex rounded-full p-[3px] border border-white/10 bg-white/5">
               {(['en', 'hi', 'bn'] as const).map((l, i) => (

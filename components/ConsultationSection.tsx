@@ -43,7 +43,7 @@ export default function ConsultationSection({ intent = 'Service Consultation' }:
       <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-          {/* Left — copy */}
+          {/* Left - copy */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <span className="w-7 h-px bg-gold" />
@@ -85,7 +85,7 @@ export default function ConsultationSection({ intent = 'Service Consultation' }:
             </div>
           </div>
 
-          {/* Right — form card */}
+          {/* Right - form card */}
           <div>
             <div className="bg-white rounded-3xl p-8 shadow-2xl shadow-black/30">
               <div className="mb-6">

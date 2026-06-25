@@ -8,7 +8,7 @@ import { useLang } from '@/lib/LangContext'
 
 const features = [
   'Funds auto-continue even if parent passes away',
-  'Premium waiver benefit — no more payments, policy continues',
+  'Premium waiver benefit - no more payments, policy continues',
   'Corpus available exactly when your child needs it',
   'Covers education, higher studies, and marriage goals',
   'Market-linked options for higher growth potential',
@@ -42,10 +42,10 @@ export default function ChildPlanningPage() {
             <div>
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-6">🎓 Child Planning</div>
               <h1 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">
-                Secure Your Child&apos;s Dreams — No Matter What
+                Secure Your Child&apos;s Dreams - No Matter What
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
-                Education costs are doubling every 7 years. Start a child plan today so your child&apos;s future is fully funded — even if you&apos;re not there.
+                Education costs are doubling every 7 years. Start a child plan today so your child&apos;s future is fully funded - even if you&apos;re not there.
               </p>
               <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-violet-800 font-bold px-6 py-3.5 rounded-xl hover:bg-violet-50 transition-colors">
                 Plan My Child&apos;s Future <ArrowRight className="w-4 h-4" />
@@ -89,10 +89,10 @@ export default function ChildPlanningPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { goal: 'Engineering (IIT)', now: '₹15–20 Lakh', in15yrs: '₹45–60 Lakh', icon: '⚙️' },
-              { goal: 'Medical (MBBS)', now: '₹20–50 Lakh', in15yrs: '₹60–150 Lakh', icon: '🏥' },
-              { goal: 'MBA (IIM)', now: '₹20–25 Lakh', in15yrs: '₹60–75 Lakh', icon: '💼' },
-              { goal: 'Study Abroad', now: '₹50–80 Lakh', in15yrs: '₹1.5–2.5 Cr', icon: '✈️' },
+              { goal: 'Engineering (IIT)', now: '₹15 - 20 Lakh', in15yrs: '₹45 - 60 Lakh', icon: '⚙️' },
+              { goal: 'Medical (MBBS)', now: '₹20 - 50 Lakh', in15yrs: '₹60 - 150 Lakh', icon: '🏥' },
+              { goal: 'MBA (IIM)', now: '₹20 - 25 Lakh', in15yrs: '₹60 - 75 Lakh', icon: '💼' },
+              { goal: 'Study Abroad', now: '₹50 - 80 Lakh', in15yrs: '₹1.5 - 2.5 Cr', icon: '✈️' },
             ].map((edu, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-card p-5">
                 

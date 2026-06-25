@@ -21,7 +21,7 @@ export default function ClientOnlyBanner() {
     const cookies = document.cookie.split(';').map(c => c.trim())
     const consent = cookies.find(c => c.startsWith('poddar-wealth-consent='))
     if (consent) {
-      // Returning visitor — restore GA4 consent without loading the library
+      // Returning visitor - restore GA4 consent without loading the library
       if (consent.includes('=true') && typeof gtag !== 'undefined') {
         gtag('consent', 'update', { analytics_storage: 'granted' })
       }

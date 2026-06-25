@@ -90,8 +90,8 @@
               "hi": "Life cover continues even after maturity"
             },
             {
-              "en": "Participating — bonus every year",
-              "hi": "Participating — bonus every year"
+              "en": "Participating - bonus every year",
+              "hi": "Participating - bonus every year"
             },
             {
               "en": "Death benefit = max(125% SA, 7x premium)",
@@ -282,8 +282,8 @@
           "premiumPayment": "single",
           "highlights": [
             {
-              "en": "Single premium — pay once",
-              "hi": "Single premium — pay once"
+              "en": "Single premium - pay once",
+              "hi": "Single premium - pay once"
             },
             {
               "en": "Guaranteed additions accumulate throughout term",
@@ -330,8 +330,8 @@
               "hi": "Guaranteed additions throughout policy term"
             },
             {
-              "en": "Non-participating — no market risk",
-              "hi": "Non-participating — no market risk"
+              "en": "Non-participating - no market risk",
+              "hi": "Non-participating - no market risk"
             },
             {
               "en": "Coverage = 7× annualised premium",
@@ -374,8 +374,8 @@
               "hi": "Coverage = 7× annualised premium"
             },
             {
-              "en": "Flexible term 15–25 years",
-              "hi": "Flexible term 15–25 years"
+              "en": "Flexible term 15 - 25 years",
+              "hi": "Flexible term 15 - 25 years"
             }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-jan-suraksha",
@@ -755,8 +755,8 @@
           "premiumPayment": "Regular",
           "highlights": [
             {
-              "en": "Joint life — husband & wife",
-              "hi": "Joint life — husband & wife"
+              "en": "Joint life - husband & wife",
+              "hi": "Joint life - husband & wife"
             },
             {
               "en": "Double cover on accidental death",
@@ -1696,12 +1696,12 @@
           },
           "planNo": "833",
           "tagline": {
-            "en": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity.",
-            "hi": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity."
+            "en": "Predecessor to Plan 733. Family income plan - 10% SA annually on death till maturity.",
+            "hi": "Predecessor to Plan 733. Family income plan - 10% SA annually on death till maturity."
           },
           "keyBenefit": {
-            "en": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity.",
-            "hi": "Predecessor to Plan 733. Family income plan — 10% SA annually on death till maturity."
+            "en": "Predecessor to Plan 733. Family income plan - 10% SA annually on death till maturity.",
+            "hi": "Predecessor to Plan 733. Family income plan - 10% SA annually on death till maturity."
           },
           "category": "endowment",
           "entryAge": "18 - 50yr",
@@ -1857,8 +1857,8 @@
           "premiumPayment": "Regular",
           "highlights": [
             {
-              "en": "For women — Aadhaar linked",
-              "hi": "For women — Aadhaar linked"
+              "en": "For women - Aadhaar linked",
+              "hi": "For women - Aadhaar linked"
             },
             {
               "en": "Max SA ₹3 lakh",
@@ -2000,7 +2000,7 @@
         {
           "id": "lic-720",
           "name": {
-            "en": "LIC's New Money Back Plan — 20 Years",
+            "en": "LIC's New Money Back Plan - 20 Years",
             "hi": "एलआईसी Money Back 20yr"
           },
           "planNo": "720",
@@ -2040,7 +2040,7 @@
         {
           "id": "lic-721",
           "name": {
-            "en": "LIC's New Money Back Plan — 25 Years",
+            "en": "LIC's New Money Back Plan - 25 Years",
             "hi": "एलआईसी Money Back 25yr"
           },
           "planNo": "721",
@@ -2094,8 +2094,8 @@
           "premiumPayment": "limited",
           "highlights": [
             {
-              "en": "Min SA ₹10 lakh — HNI plan",
-              "hi": "Min SA ₹10 lakh — HNI plan"
+              "en": "Min SA ₹10 lakh - HNI plan",
+              "hi": "Min SA ₹10 lakh - HNI plan"
             },
             {
               "en": "Limited pay 12/14/16 yrs",
@@ -2568,7 +2568,7 @@
         {
           "id": "lic-820",
           "name": {
-            "en": "LIC's New Money Back Plan – 20 Year",
+            "en": "LIC's New Money Back Plan - 20 Year",
             "hi": "एलआईसी Money Back 20yr (820)"
           },
           "planNo": "820",
@@ -2605,7 +2605,7 @@
         {
           "id": "lic-821",
           "name": {
-            "en": "LIC's New Money Back Plan – 25 Year",
+            "en": "LIC's New Money Back Plan - 25 Year",
             "hi": "एलआईसी Money Back 25yr (821)"
           },
           "planNo": "821",
@@ -2697,8 +2697,8 @@
           "premiumPayment": "limited",
           "highlights": [
             {
-              "en": "Min SA ₹1 crore — super HNI",
-              "hi": "Min SA ₹1 crore — super HNI"
+              "en": "Min SA ₹1 crore - super HNI",
+              "hi": "Min SA ₹1 crore - super HNI"
             },
             {
               "en": "Critical illness cover",
@@ -2825,8 +2825,8 @@
           "premiumPayment": "limited",
           "highlights": [
             {
-              "en": "8% SA as annual income after PPT — for life",
-              "hi": "8% SA as annual income after PPT — for life"
+              "en": "8% SA as annual income after PPT - for life",
+              "hi": "8% SA as annual income after PPT - for life"
             },
             {
               "en": "Highest bonus rate in LIC portfolio (₹55/1000)",
@@ -2873,8 +2873,8 @@
               "hi": "10% SA annual income for life after PPT"
             },
             {
-              "en": "Select maturity age (75–100)",
-              "hi": "Select maturity age (75–100)"
+              "en": "Select maturity age (75 - 100)",
+              "hi": "Select maturity age (75 - 100)"
             },
             {
               "en": "Min SA ₹5 lakh",
@@ -2905,16 +2905,16 @@
           "premiumPayment": "single",
           "highlights": [
             {
-              "en": "Pay once — income starts immediately",
-              "hi": "Pay once — income starts immediately"
+              "en": "Pay once - income starts immediately",
+              "hi": "Pay once - income starts immediately"
             },
             {
               "en": "10% SA annual income for lifetime",
               "hi": "10% SA annual income for lifetime"
             },
             {
-              "en": "Select maturity age (75–100)",
-              "hi": "Select maturity age (75–100)"
+              "en": "Select maturity age (75 - 100)",
+              "hi": "Select maturity age (75 - 100)"
             },
             {
               "en": "Min SA ₹5 lakh",
@@ -2945,8 +2945,8 @@
           "premiumPayment": "Regular",
           "highlights": [
             {
-              "en": "Without profit — no bonus",
-              "hi": "Without profit — no bonus"
+              "en": "Without profit - no bonus",
+              "hi": "Without profit - no bonus"
             },
             {
               "en": "Whole life cover",
@@ -3130,12 +3130,12 @@
           },
           "planNo": "859",
           "tagline": {
-            "en": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all.",
-            "hi": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all."
+            "en": "Standardized simple term plan. SA ₹5L - ₹25L. Minimal paperwork. Available to all.",
+            "hi": "Standardized simple term plan. SA ₹5L - ₹25L. Minimal paperwork. Available to all."
           },
           "keyBenefit": {
-            "en": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all.",
-            "hi": "Standardized simple term plan. SA ₹5L–₹25L. Minimal paperwork. Available to all."
+            "en": "Standardized simple term plan. SA ₹5L - ₹25L. Minimal paperwork. Available to all.",
+            "hi": "Standardized simple term plan. SA ₹5L - ₹25L. Minimal paperwork. Available to all."
           },
           "category": "term",
           "entryAge": "18 - 65yr",
@@ -3147,8 +3147,8 @@
               "hi": "Standardized IRDAI-mandated plan"
             },
             {
-              "en": "Simple eligibility — minimal documentation",
-              "hi": "Simple eligibility — minimal documentation"
+              "en": "Simple eligibility - minimal documentation",
+              "hi": "Simple eligibility - minimal documentation"
             },
             {
               "en": "SA capped at ₹25 lakh",
@@ -3170,12 +3170,12 @@
           },
           "planNo": "875",
           "tagline": {
-            "en": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
-            "hi": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
+            "en": "Term plan for youth (18 - 45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
+            "hi": "Term plan for youth (18 - 45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
           },
           "keyBenefit": {
-            "en": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
-            "hi": "Term plan for youth (18–45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
+            "en": "Term plan for youth (18 - 45). Min SA ₹50 lakh. Cheapest premiums for young buyers.",
+            "hi": "Term plan for youth (18 - 45). Min SA ₹50 lakh. Cheapest premiums for young buyers."
           },
           "category": "term",
           "entryAge": "18 - 45yr",
@@ -3235,8 +3235,8 @@
               "hi": "Min SA ₹20 lakh"
             },
             {
-              "en": "Age 18–45 only",
-              "hi": "Age 18–45 only"
+              "en": "Age 18 - 45 only",
+              "hi": "Age 18 - 45 only"
             }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-yuva-credit-life",
@@ -3250,12 +3250,12 @@
           },
           "planNo": "887",
           "tagline": {
-            "en": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups.",
-            "hi": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups."
+            "en": "Micro-size term plan. SA ₹37,500 - ₹2.5L. Single premium. Short term 1 - 5 years. For all income groups.",
+            "hi": "Micro-size term plan. SA ₹37,500 - ₹2.5L. Single premium. Short term 1 - 5 years. For all income groups."
           },
           "keyBenefit": {
-            "en": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups.",
-            "hi": "Micro-size term plan. SA ₹37,500–₹2.5L. Single premium. Short term 1–5 years. For all income groups."
+            "en": "Micro-size term plan. SA ₹37,500 - ₹2.5L. Single premium. Short term 1 - 5 years. For all income groups.",
+            "hi": "Micro-size term plan. SA ₹37,500 - ₹2.5L. Single premium. Short term 1 - 5 years. For all income groups."
           },
           "category": "term",
           "entryAge": "18 - 65yr",
@@ -3263,20 +3263,20 @@
           "premiumPayment": "single",
           "highlights": [
             {
-              "en": "Single premium — pay once",
-              "hi": "Single premium — pay once"
+              "en": "Single premium - pay once",
+              "hi": "Single premium - pay once"
             },
             {
               "en": "Non-smoker discount available",
               "hi": "Non-smoker discount available"
             },
             {
-              "en": "Short 1–5 year terms",
-              "hi": "Short 1–5 year terms"
+              "en": "Short 1 - 5 year terms",
+              "hi": "Short 1 - 5 year terms"
             },
             {
-              "en": "SA ₹37,500–₹2.5 lakh",
-              "hi": "SA ₹37,500–₹2.5 lakh"
+              "en": "SA ₹37,500 - ₹2.5 lakh",
+              "hi": "SA ₹37,500 - ₹2.5 lakh"
             }
           ],
           "officialUrl": "https://licindia.in/web/guest/lic-s-bima-kavach",
@@ -3564,12 +3564,12 @@
           },
           "planNo": "734",
           "tagline": {
-            "en": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits.",
-            "hi": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits."
+            "en": "Flexible child plan. 4 options for survival benefits from age 20 - 24. Choose % payout that suits.",
+            "hi": "Flexible child plan. 4 options for survival benefits from age 20 - 24. Choose % payout that suits."
           },
           "keyBenefit": {
-            "en": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits.",
-            "hi": "Flexible child plan. 4 options for survival benefits from age 20–24. Choose % payout that suits."
+            "en": "Flexible child plan. 4 options for survival benefits from age 20 - 24. Choose % payout that suits.",
+            "hi": "Flexible child plan. 4 options for survival benefits from age 20 - 24. Choose % payout that suits."
           },
           "category": "child",
           "entryAge": "0 - 12yr",
@@ -3585,8 +3585,8 @@
               "hi": "Risk commences at age 7"
             },
             {
-              "en": "Annual survival payments age 20–24",
-              "hi": "Annual survival payments age 20–24"
+              "en": "Annual survival payments age 20 - 24",
+              "hi": "Annual survival payments age 20 - 24"
             },
             {
               "en": "Premium Waiver Benefit available",
@@ -3829,12 +3829,12 @@
           },
           "planNo": "184",
           "tagline": {
-            "en": "Children's plan focused on career funding. Payouts at ages 17–21.",
-            "hi": "Children's plan focused on career funding. Payouts at ages 17–21."
+            "en": "Children's plan focused on career funding. Payouts at ages 17 - 21.",
+            "hi": "Children's plan focused on career funding. Payouts at ages 17 - 21."
           },
           "keyBenefit": {
-            "en": "Children's plan focused on career funding. Payouts at ages 17–21.",
-            "hi": "Children's plan focused on career funding. Payouts at ages 17–21."
+            "en": "Children's plan focused on career funding. Payouts at ages 17 - 21.",
+            "hi": "Children's plan focused on career funding. Payouts at ages 17 - 21."
           },
           "category": "child",
           "entryAge": "0 - 12yr",
@@ -3846,8 +3846,8 @@
               "hi": "Career funding payouts"
             },
             {
-              "en": "Ages 17–21",
-              "hi": "Ages 17–21"
+              "en": "Ages 17 - 21",
+              "hi": "Ages 17 - 21"
             },
             {
               "en": "With profit",
@@ -3992,7 +3992,7 @@
         {
           "id": "lic-857",
           "name": {
-            "en": "LIC's Jeevan Akshay — VII",
+            "en": "LIC's Jeevan Akshay - VII",
             "hi": "एलआईसी Jeevan Akshay VII"
           },
           "planNo": "857",
@@ -4077,12 +4077,12 @@
           },
           "planNo": "879",
           "tagline": {
-            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100.",
-            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100."
+            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18 - 100.",
+            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18 - 100."
           },
           "keyBenefit": {
-            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100.",
-            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18–100."
+            "en": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18 - 100.",
+            "hi": "Single premium immediate annuity. Multiple annuity options including Option F (Life with ROPP). Age 18 - 100."
           },
           "category": "pension",
           "entryAge": "18 - 100yr",
@@ -4090,16 +4090,16 @@
           "premiumPayment": "single",
           "highlights": [
             {
-              "en": "Immediate annuity — pension starts next month",
-              "hi": "Immediate annuity — pension starts next month"
+              "en": "Immediate annuity - pension starts next month",
+              "hi": "Immediate annuity - pension starts next month"
             },
             {
               "en": "Option F: Life with Return of Purchase Price",
               "hi": "Option F: Life with Return of Purchase Price"
             },
             {
-              "en": "Age 18–100 eligible",
-              "hi": "Age 18–100 eligible"
+              "en": "Age 18 - 100 eligible",
+              "hi": "Age 18 - 100 eligible"
             },
             {
               "en": "Flexible annuity options",
@@ -4228,12 +4228,12 @@
           },
           "planNo": "122",
           "tagline": {
-            "en": "Pension plan — endowment type. Build corpus then convert to annuity.",
-            "hi": "Pension plan — endowment type. Build corpus then convert to annuity."
+            "en": "Pension plan - endowment type. Build corpus then convert to annuity.",
+            "hi": "Pension plan - endowment type. Build corpus then convert to annuity."
           },
           "keyBenefit": {
-            "en": "Pension plan — endowment type. Build corpus then convert to annuity.",
-            "hi": "Pension plan — endowment type. Build corpus then convert to annuity."
+            "en": "Pension plan - endowment type. Build corpus then convert to annuity.",
+            "hi": "Pension plan - endowment type. Build corpus then convert to annuity."
           },
           "category": "pension",
           "entryAge": "18 - 60yr",
@@ -4566,8 +4566,8 @@
               "hi": "PPT fixed at 5 years only"
             },
             {
-              "en": "6 fund options — most in LIC ULIP range",
-              "hi": "6 fund options — most in LIC ULIP range"
+              "en": "6 fund options - most in LIC ULIP range",
+              "hi": "6 fund options - most in LIC ULIP range"
             },
             {
               "en": "Includes NIFTY 100 and NIFTY 50 index funds",
@@ -4722,8 +4722,8 @@
           "premiumPayment": "Regular",
           "highlights": [
             {
-              "en": "Max SA ₹2 lakh — micro insurance",
-              "hi": "Max SA ₹2 lakh — micro insurance"
+              "en": "Max SA ₹2 lakh - micro insurance",
+              "hi": "Max SA ₹2 lakh - micro insurance"
             },
             {
               "en": "Simple documentation",

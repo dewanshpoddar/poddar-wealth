@@ -10,7 +10,7 @@ export async function sendWelcomeEmail(email: string, name?: string): Promise<bo
       to: email,
       subject: name
         ? `Welcome, ${name}! Your insurance insights start now`
-        : 'Welcome to Poddar Wealth — Insurance insights weekly',
+        : 'Welcome to Poddar Wealth - Insurance insights weekly',
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
           <div style="background: #111827; padding: 28px 24px; text-align: center;">
@@ -38,7 +38,7 @@ export async function sendWelcomeEmail(email: string, name?: string): Promise<bo
               <a href="https://www.poddarwealth.com/calculators/policy-health"
                  style="display: inline-block; background: #F59E0B; color: #111827; padding: 14px 28px;
                         border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 14px;">
-                Check Your Policy Health Score — Free
+                Check Your Policy Health Score - Free
               </a>
             </div>
             <div style="background: #F9FAFB; border-radius: 8px; padding: 16px; margin-bottom: 24px;">

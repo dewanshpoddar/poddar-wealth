@@ -201,7 +201,7 @@ export default function InputsPanel({
                       <div className="sm:col-span-2">
                         <label className="block text-[12px] font-semibold text-gray-600 mb-1.5">
                           Survival Benefit Option
-                          <span className="text-gray-500 font-normal ml-1">(paid each year age 20–24)</span>
+                          <span className="text-gray-500 font-normal ml-1">(paid each year age 20 - 24)</span>
                         </label>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                           {([5,10,15,20] as const).map(pct => (

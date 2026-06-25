@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Client Portal — Policy Servicing | Poddar Wealth',
+  title: 'Client Portal - Policy Servicing | Poddar Wealth',
   robots: { index: false, follow: false },
 };
 

@@ -247,7 +247,7 @@ export default function PoddarJiChatUI({
                   {isUser ? (
                     m.text
                   ) : m.text === '' ? (
-                    // Empty bot bubble — show typing dots instead of blank bubble
+                    // Empty bot bubble - show typing dots instead of blank bubble
                     <TypingDots />
                   ) : (
                     <BotText text={m.text} showCursor={isStreamingThis} />

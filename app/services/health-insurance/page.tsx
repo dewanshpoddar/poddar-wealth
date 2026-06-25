@@ -45,7 +45,7 @@ export default function HealthInsurancePage() {
                 Medical Bills Shouldn&apos;t Wipe Out Your Savings
               </h1>
               <p className="text-white/80 text-xl leading-relaxed mb-8">
-                One hospitalization can cost ₹2–10 lakhs. Health insurance ensures your family gets the best care without financial stress.
+                One hospitalization can cost ₹2 - 10 lakhs. Health insurance ensures your family gets the best care without financial stress.
               </p>
               <Link href="#lead-form" className="inline-flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3.5 rounded-xl hover:bg-emerald-50 transition-colors">
                 Get Health Coverage <ArrowRight className="w-4 h-4" />
