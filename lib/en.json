@@ -250,7 +250,1606 @@
         "tag": "Team",
         "href": "/services/group-health"
       }
-    ]
+    ],
+    "life-insurance": {
+      "category": "PROTECTION",
+      "hero": {
+        "h1": "Your family's income doesn't have to stop when you do",
+        "sub": "Life insurance replaces your income when your family needs it most, ensuring their dreams continue even in your absence.",
+        "stats": [
+          "₹5L–2Cr cover",
+          "Starts at ₹45/day",
+          "Tax-free maturity"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to know about life insurance plans for my family. Please suggest the best option."
+      },
+      "problem": {
+        "title": "What happens if the sole earner is suddenly gone?",
+        "cards": [
+          {
+            "icon": "TrendingDown",
+            "stat": "₹0 monthly income",
+            "desc": "overnight"
+          },
+          {
+            "icon": "Home",
+            "stat": "Home loan EMIs",
+            "desc": "don't stop"
+          },
+          {
+            "icon": "GraduationCap",
+            "stat": "Children's education",
+            "desc": "at risk"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Life Insurance Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We understand your family's needs and financial goals."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We recommend the right plan, term, and coverage amount."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your family is secured with the right policy from day one."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Plans for Income Replacement",
+        "items": [
+          {
+            "name": "LIC Jeevan Anand",
+            "num": "#915",
+            "type": "Endowment",
+            "benefit": "Life cover + maturity benefit",
+            "premium": "From ₹5,000/year",
+            "coverage": "₹5L – ₹2Cr",
+            "term": "15 – 35 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC Jeevan Anand (#915)."
+          },
+          {
+            "name": "LIC Jeevan Umang",
+            "num": "#945",
+            "type": "Whole Life",
+            "benefit": "Guaranteed 8% payouts for life",
+            "premium": "From ₹15,000/year",
+            "coverage": "₹2L – ₹1Cr",
+            "term": "15 – 30 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC Jeevan Umang (#945)."
+          },
+          {
+            "name": "LIC Jeevan Labh",
+            "num": "#936",
+            "type": "Endowment",
+            "benefit": "Limited premium paying term",
+            "premium": "From ₹10,000/year",
+            "coverage": "₹2L – ₹2Cr",
+            "term": "16 – 25 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC Jeevan Labh (#936)."
+          },
+          {
+            "name": "New Endowment",
+            "num": "#914",
+            "type": "Endowment",
+            "benefit": "Guaranteed savings with life cover",
+            "premium": "From ₹3,000/year",
+            "coverage": "₹1L – ₹1Cr",
+            "term": "12 – 35 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC New Endowment (#914)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Premium in 30 Seconds",
+        "desc": "Find out the exact cover amount and premium for your age and goal.",
+        "btnText": "Calculate Premium",
+        "type": "premium"
+      },
+      "testimonial": {
+        "quote": "Buying LIC Jeevan Anand through Ajay ji was the best decision. He explained everything in simple terms and helped me choose the right term.",
+        "author": "Rajesh Kumar",
+        "location": "Gorakhpur",
+        "policy": "LIC Jeevan Anand (#915)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Life Insurance",
+        "items": [
+          {
+            "q": "What is the minimum sum assured for LIC life insurance?",
+            "a": "The minimum sum assured depends on the plan you choose. For basic endowment plans like New Endowment, it starts at ₹1 lakh. For term plans, it starts at ₹25 lakhs."
+          },
+          {
+            "q": "Can I have multiple life insurance policies?",
+            "a": "Yes, you can have multiple policies with LIC or other insurers. You must disclose all existing policies when applying for a new one."
+          },
+          {
+            "q": "What is the difference between endowment and term insurance?",
+            "a": "Term insurance is pure protection that pays only on death. Endowment plans combine protection with savings, paying you at maturity if you survive."
+          },
+          {
+            "q": "How are LIC bonuses calculated?",
+            "a": "LIC declares reversionary and terminal bonuses annually. These are calculated as a rate per ₹1,000 of the sum assured and added to your policy value."
+          },
+          {
+            "q": "What documents are needed to buy a policy?",
+            "a": "You need identity proof (Aadhaar, PAN), address proof, age proof, bank details, and recent photographs. Income proof is required for high cover plans."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Protection Solutions",
+        "links": ["term-life", "child-planning", "retirement"]
+      },
+      "crossSell": {
+        "title": "Related Protection Solutions",
+        "links": ["term-life", "child-planning", "retirement"]
+      },
+      "finalCta": {
+        "title": "Protect Your Family Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to schedule a free life insurance review for my family."
+      }
+    },
+    "health-insurance": {
+      "category": "HEALTH",
+      "hero": {
+        "h1": "One medical bill shouldn't erase years of savings",
+        "sub": "Health insurance covers hospitalization, surgery, and treatment costs so your family's finances stay protected during illness.",
+        "stats": [
+          "₹3L–1Cr cover",
+          "Cashless at 500+ hospitals",
+          "No medical tests up to age 45"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to discuss health insurance plans for my family."
+      },
+      "problem": {
+        "title": "What happens when a ₹8 lakh hospital bill arrives?",
+        "cards": [
+          {
+            "icon": "Heart",
+            "stat": "₹3.5–8 Lakh",
+            "desc": "average heart surgery cost"
+          },
+          {
+            "icon": "Wallet",
+            "stat": "60% Indians",
+            "desc": "pay medical bills from savings"
+          },
+          {
+            "icon": "TrendingUp",
+            "stat": "14% Per Year",
+            "desc": "medical inflation rate in India"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Health Insurance Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We evaluate your family's healthcare requirements and dependencies."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We select policies with cashless benefits and low waiting periods."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your family receives active medical network coverage from day one."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Health Protection Plans",
+        "items": [
+          {
+            "name": "LIC Arogya Rakshak",
+            "num": "#906",
+            "type": "Health",
+            "benefit": "Hospital cash and surgical benefits",
+            "premium": "From ₹6,000/year",
+            "coverage": "₹2.5L – ₹10L",
+            "term": "15 – 25 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Arogya Rakshak (#906)."
+          },
+          {
+            "name": "LIC Cancer Cover",
+            "num": "#905",
+            "type": "Health",
+            "benefit": "Cancer stage sum assured payout",
+            "premium": "From ₹2,000/year",
+            "coverage": "₹10L – ₹50L",
+            "term": "10 – 30 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Cancer Cover (#905)."
+          },
+          {
+            "name": "LIC Jeevan Arogya",
+            "num": "#903",
+            "type": "Health",
+            "benefit": "Family hospitalization benefit cover",
+            "premium": "From ₹5,000/year",
+            "coverage": "₹1L – ₹4L",
+            "term": "15 – 25 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Arogya (#903)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Premium in 30 Seconds",
+        "desc": "Find out the exact cover amount and premium for your age and goal.",
+        "btnText": "Calculate Premium",
+        "type": "policy-health"
+      },
+      "testimonial": {
+        "quote": "Ajay sir's guidance on family health floater plan was a savior. The claim was settled cashless at the hospital within hours.",
+        "author": "Vikram Pratap",
+        "location": "Gorakhpur",
+        "policy": "Star Family Health Optima",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Health Insurance",
+        "items": [
+          {
+            "q": "Does LIC health insurance cover pre-existing conditions?",
+            "a": "Yes, but there is a standard waiting period. Typically, pre-existing conditions are covered after 2 to 4 years of continuous policy renewal."
+          },
+          {
+            "q": "What is the waiting period for health insurance claims?",
+            "a": "There is an initial 30-day waiting period for general illnesses, except for accidents. Specific treatments have a 2-year waiting period, and pre-existing conditions require up to 4 years."
+          },
+          {
+            "q": "Can I use health insurance at any hospital?",
+            "a": "You can get cashless treatment at network hospitals. For non-network hospitals, you must pay first and apply for reimbursement later."
+          },
+          {
+            "q": "Is health insurance premium tax-deductible?",
+            "a": "Yes, premiums paid for health insurance are tax-deductible under Section 80D up to ₹25,000 for self/family and an additional ₹50,000 for senior citizen parents."
+          },
+          {
+            "q": "What is the difference between cashless and reimbursement?",
+            "a": "Cashless means the insurer pays the network hospital directly. Reimbursement means you pay the bill and claim the amount back from the insurer with bills."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Health Solutions",
+        "links": ["critical-illness", "cancer-cover", "group-health"]
+      },
+      "finalCta": {
+        "title": "Secure Your Health Coverage Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to discuss health insurance plans for my family."
+      }
+    },
+    "term-life": {
+      "category": "PROTECTION",
+      "hero": {
+        "h1": "Pure protection. No complications. Just security.",
+        "sub": "Term insurance gives your family the highest coverage at the lowest premium, pure life protection without savings components.",
+        "stats": [
+          "₹25L–2Cr cover",
+          "From ₹12/day",
+          "Cover till age 75"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for a term life insurance policy."
+      },
+      "problem": {
+        "title": "What if you could protect your family for just ₹12 a day?",
+        "cards": [
+          {
+            "icon": "Shield",
+            "stat": "10x Coverage",
+            "desc": "vs endowment plans at same premium rate"
+          },
+          {
+            "icon": "IndianRupee",
+            "stat": "₹1 Crore Cover",
+            "desc": "starts from only ₹15,000/year"
+          },
+          {
+            "icon": "Clock",
+            "stat": "Instant",
+            "desc": "support for settlement and verification"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Term Insurance Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We calculate your human life value based on your current income and debts."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We select a term policy with adequate cover to shield your home loans."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your family's income replacement cover becomes active instantly."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Term Protection Plans",
+        "items": [
+          {
+            "name": "LIC Jeevan Amar",
+            "num": "#855",
+            "type": "Term",
+            "benefit": "High life cover at minimal rates",
+            "premium": "From ₹9,000/year",
+            "coverage": "₹25L – ₹2Cr",
+            "term": "10 – 40 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Amar (#855)."
+          },
+          {
+            "name": "LIC Tech Term",
+            "num": "#954",
+            "type": "Term",
+            "benefit": "Online term assurance with lower rates",
+            "premium": "From ₹8,000/year",
+            "coverage": "₹50L – ₹2Cr",
+            "term": "10 – 40 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Tech Term (#954)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Premium in 30 Seconds",
+        "desc": "Find out the exact cover amount and premium for your age and goal.",
+        "btnText": "Calculate Premium",
+        "type": "life-insurance"
+      },
+      "testimonial": {
+        "quote": "Purchased a ₹1 Crore term plan through Ajay sir. The process was direct and transparent, giving me peace of mind.",
+        "author": "Amit Pandey",
+        "location": "Deoria",
+        "policy": "LIC Jeevan Amar (#855)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Term Insurance",
+        "items": [
+          {
+            "q": "What happens if I outlive my term insurance?",
+            "a": "Standard term insurance has no maturity benefit. If you survive, the policy ends. However, return of premium plans refund your premiums at the end."
+          },
+          {
+            "q": "Is term insurance better than endowment?",
+            "a": "If you want high coverage to replace your income at low premiums, term insurance is best. Endowment plans are better if you want savings with cover."
+          },
+          {
+            "q": "Can I convert term insurance to endowment later?",
+            "a": "LIC offers conversion options on specific policies, allowing you to convert term assurance into endowment plans within specified policy years."
+          },
+          {
+            "q": "What is return of premium term insurance?",
+            "a": "It is a term plan that refunds all basic premiums paid at the end of the policy term, provided the life assured survives."
+          },
+          {
+            "q": "At what age should I buy term insurance?",
+            "a": "You should buy it as early as possible. Premiums are locked at your entry age, so buying in your 20s or 30s secures the lowest rates."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Protection Solutions",
+        "links": ["life-insurance", "critical-illness", "personal-accident"]
+      },
+      "finalCta": {
+        "title": "Protect Your Family Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for a term life insurance policy."
+      }
+    },
+    "child-planning": {
+      "category": "SAVINGS",
+      "hero": {
+        "h1": "Their dreams shouldn't depend on whether you're around",
+        "sub": "Child planning insurance creates a guaranteed education and wedding fund, even if something happens to you before they grow up.",
+        "stats": [
+          "₹10L–1Cr corpus",
+          "Premium waiver on death",
+          "Guaranteed milestones"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I want to start a child education fund policy. Please recommend."
+      },
+      "problem": {
+        "title": "What if you can't be there for their biggest milestones?",
+        "cards": [
+          {
+            "icon": "GraduationCap",
+            "stat": "₹8–25 Lakh",
+            "desc": "estimated engineering cost by 2030"
+          },
+          {
+            "icon": "Heart",
+            "stat": "12% Yearly",
+            "desc": "average rise in marriage costs"
+          },
+          {
+            "icon": "AlertTriangle",
+            "stat": "68% Parents",
+            "desc": "have no structured child education fund"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Child Planning Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We estimate future college and wedding costs adjusted for inflation."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We recommend plans with premium waiver benefits to ensure the goal is met."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your child's milestone payouts are guaranteed, securing their future."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Children's Future Plans",
+        "items": [
+          {
+            "name": "LIC Jeevan Tarun",
+            "num": "#934",
+            "type": "Child Plan",
+            "benefit": "Education and milestone payouts",
+            "premium": "From ₹12,000/year",
+            "coverage": "₹7.5L – ₹50L",
+            "term": "20 – 25 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Tarun (#934)."
+          },
+          {
+            "name": "New Children's Money Back",
+            "num": "#932",
+            "type": "Money Back",
+            "benefit": "Survival benefits at age 18, 20, 22",
+            "premium": "From ₹10,000/year",
+            "coverage": "₹1L – ₹20L",
+            "term": "13 – 25 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Children's Money Back (#932)."
+          },
+          {
+            "name": "LIC Jeevan Shiromani",
+            "num": "#947",
+            "type": "Savings",
+            "benefit": "High cover and guaranteed returns",
+            "premium": "From ₹50,000/year",
+            "coverage": "₹1Cr – ₹5Cr",
+            "term": "14 – 20 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Shiromani (#947)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Child's Future Fund",
+        "desc": "Estimate the maturity returns and bonus of your child plan policy.",
+        "btnText": "Calculate Returns",
+        "type": "maturity"
+      },
+      "testimonial": {
+        "quote": "I planned my son's higher education through Ajay Kumar Poddar's child plan recommendation. The premium waiver feature is a true relief.",
+        "author": "Dr. Sandeep Shukla",
+        "location": "Gorakhpur",
+        "policy": "LIC Jeevan Tarun (#934)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Child Plans",
+        "items": [
+          {
+            "q": "When should I start a child plan?",
+            "a": "You should start as early as possible, ideally when your child is a toddler. This gives you 15 to 20 years to build a large fund."
+          },
+          {
+            "q": "What happens to the plan if the parent dies?",
+            "a": "Under the premium waiver benefit, all future premiums are waived. LIC pays the maturity amount as planned at milestones."
+          },
+          {
+            "q": "Can grandparents buy a child plan?",
+            "a": "Yes, grandparents can buy a plan as proposers, with the grandchild named as the beneficiary."
+          },
+          {
+            "q": "Is child plan better than mutual fund SIP?",
+            "a": "Mutual funds have market risks and lack life cover. LIC child plans offer guaranteed returns combined with life cover and premium waiver security."
+          },
+          {
+            "q": "What is premium waiver benefit?",
+            "a": "It is a rider that ensures all future premiums are written off if the parent (proposer) dies, keeping the policy active."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Savings Solutions",
+        "links": ["life-insurance", "tax-planning", "retirement"]
+      },
+      "finalCta": {
+        "title": "Secure Your Child's Future Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I want to start a child education fund policy. Please recommend."
+      }
+    },
+    "retirement": {
+      "category": "SAVINGS",
+      "hero": {
+        "h1": "Retire with dignity. Not with dependency.",
+        "sub": "Retirement planning builds a guaranteed pension so you never have to depend on your children for daily expenses.",
+        "stats": [
+          "₹10K–5L pension",
+          "Tax benefits u/s 80CCC",
+          "Lifelong income"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check retirement pension plan options."
+      },
+      "problem": {
+        "title": "What if your pension isn't enough after 60?",
+        "cards": [
+          {
+            "icon": "TrendingUp",
+            "stat": "₹2L/Month",
+            "desc": "needed in 20 years due to inflation"
+          },
+          {
+            "icon": "Users",
+            "stat": "Only 10%",
+            "desc": "of Indian workers have retirement savings"
+          },
+          {
+            "icon": "Heart",
+            "stat": "Double",
+            "desc": "average medical treatment costs after age 60"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Retirement Planning Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We calculate your post-retirement monthly expenses adjusted for inflation."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We select annuity options that secure fixed lifelong monthly payouts."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your guaranteed pension begins, ensuring financial freedom after 60."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Retirement & Pension Plans",
+        "items": [
+          {
+            "name": "LIC Jeevan Shanti",
+            "num": "#850",
+            "type": "Annuity",
+            "benefit": "Single premium deferred annuity",
+            "premium": "From ₹1.5L lump sum",
+            "coverage": "Annuity based",
+            "term": "1 – 12 yrs deferment",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Shanti (#850)."
+          },
+          {
+            "name": "LIC Saral Pension",
+            "num": "#862",
+            "type": "Annuity",
+            "benefit": "Immediate annuity with return of premium",
+            "premium": "From ₹1L lump sum",
+            "coverage": "Annuity based",
+            "term": "Immediate",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Saral Pension (#862)."
+          },
+          {
+            "name": "LIC Jeevan Akshay VII",
+            "num": "#857",
+            "type": "Annuity",
+            "benefit": "Immediate annuity with multiple options",
+            "premium": "From ₹1L lump sum",
+            "coverage": "Annuity based",
+            "term": "Immediate",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Akshay VII (#857)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Pension in 30 Seconds",
+        "desc": "Find out the exact pension and maturity value for your retirement.",
+        "btnText": "Calculate Pension",
+        "type": "retirement"
+      },
+      "testimonial": {
+        "quote": "I secured a lifetime pension via Ajay ji. The regular payout arrives on time, ensuring my independence.",
+        "author": "S. K. Srivastava",
+        "location": "Gorakhpur",
+        "policy": "LIC Jeevan Akshay VII (#857)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Retirement Plans",
+        "items": [
+          {
+            "q": "What is the best age to start retirement planning?",
+            "a": "You should start as early as possible, ideally in your 30s. The longer the accumulation period, the larger your pension corpus."
+          },
+          {
+            "q": "How much pension will I get from LIC?",
+            "a": "The pension depends on your purchase price and annuity option. Usually, annuity rates range from 5% to 7% per year."
+          },
+          {
+            "q": "Can I withdraw from a pension plan before retirement?",
+            "a": "Most pension plans restrict early withdrawals to ensure the pension fund remains intact. Payouts can be taken in emergencies."
+          },
+          {
+            "q": "What is the difference between annuity and pension?",
+            "a": "Annuity is the financial product you buy with a lump sum to generate a pension. Pension is the regular income you receive."
+          },
+          {
+            "q": "Is NPS better than LIC pension plans?",
+            "a": "NPS depends on market returns and has equity risks. LIC pension plans offer guaranteed, lifelong payouts that never change."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Savings Solutions",
+        "links": ["tax-planning", "life-insurance", "health-insurance"]
+      },
+      "finalCta": {
+        "title": "Plan Your Retirement Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check retirement pension plan options."
+      }
+    },
+    "tax-planning": {
+      "category": "SAVINGS",
+      "hero": {
+        "h1": "Pay less tax. Build more wealth. Legally.",
+        "sub": "Strategic insurance investments reduce your tax liability under Section 80C, 80D, and 10(10D) while building long-term wealth.",
+        "stats": [
+          "Save up to ₹46,800/yr",
+          "Section 80C + 80D",
+          "Tax-free maturity"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check tax-saving insurance plans for this year."
+      },
+      "problem": {
+        "title": "How much tax are you overpaying every year?",
+        "cards": [
+          {
+            "icon": "Receipt",
+            "stat": "₹1.5 Lakh Limit",
+            "desc": "allowed for tax deduction under Section 80C"
+          },
+          {
+            "icon": "FileText",
+            "stat": "₹25K–1L Deduction",
+            "desc": "available for health premiums under Section 80D"
+          },
+          {
+            "icon": "Gift",
+            "stat": "Tax-Free Maturity",
+            "desc": "under Section 10(10D) for eligible life policies"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Tax Planning Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We calculate your current tax slab and identify unused limits."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We select insurance plans that yield maximum tax exemptions."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "You reduce tax liability while building a tax-free wealth fund."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Tax Saving Plans",
+        "items": [
+          {
+            "name": "LIC Jeevan Labh",
+            "num": "#936",
+            "type": "Endowment",
+            "benefit": "High bonus rate with maximum tax benefit",
+            "premium": "From ₹10,000/year",
+            "coverage": "₹2L – ₹2Cr",
+            "term": "16 – 25 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Labh (#936)."
+          },
+          {
+            "name": "LIC New Endowment",
+            "num": "#914",
+            "type": "Endowment",
+            "benefit": "Savings + life cover with tax exemptions",
+            "premium": "From ₹3,000/year",
+            "coverage": "₹1L – ₹1Cr",
+            "term": "12 – 35 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Endowment (#914)."
+          },
+          {
+            "name": "LIC New Jeevan Anand",
+            "num": "#915",
+            "type": "Endowment",
+            "benefit": "Whole life cover with maturity returns",
+            "premium": "From ₹5,000/year",
+            "coverage": "₹5L – ₹2Cr",
+            "term": "15 – 35 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Jeevan Anand (#915)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Your Premium & Tax Benefit",
+        "desc": "Find out the tax savings and coverage benefits for your financial profile.",
+        "btnText": "Calculate Now",
+        "type": "premium"
+      },
+      "testimonial": {
+        "quote": "Ajay ji helped me restructure my policy portfolio. I saved maximum tax and created a solid maturity fund.",
+        "author": "Rajeev Dwivedi",
+        "location": "Gorakhpur",
+        "policy": "LIC Jeevan Labh (#936)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Tax Saving",
+        "items": [
+          {
+            "q": "Which insurance plans give tax benefits under 80C?",
+            "a": "All LIC life insurance policies (endowment, money-back, term plans) are eligible for tax deductions under Section 80C."
+          },
+          {
+            "q": "Is LIC maturity amount taxable?",
+            "a": "Maturity proceeds of life insurance are completely tax-free under Section 10(10D), provided the annual premium is under 10% of sum assured."
+          },
+          {
+            "q": "Can I claim tax benefit on health insurance premium?",
+            "a": "Yes, premiums paid for self, family, and parents are deductible under Section 80D up to ₹25,000 (and up to ₹50,000 for senior citizen parents)."
+          },
+          {
+            "q": "What is Section 10(10D) tax exemption?",
+            "a": "It is the income tax clause that makes sum assured plus accrued bonus received on maturity or death completely exempt from tax."
+          },
+          {
+            "q": "How much can I save in taxes through insurance?",
+            "a": "You can save up to ₹46,800/year in taxes under Section 80C and up to ₹23,400/year under Section 80D depending on your tax slab."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Savings Solutions",
+        "links": ["life-insurance", "retirement", "child-planning"]
+      },
+      "finalCta": {
+        "title": "Start Saving Taxes Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check tax-saving insurance plans for this year."
+      }
+    },
+    "critical-illness": {
+      "category": "HEALTH",
+      "hero": {
+        "h1": "A diagnosis should be a medical problem, not a financial one",
+        "sub": "Critical illness cover pays a lump sum on diagnosis of major illnesses, giving you money for treatment without touching your savings.",
+        "stats": [
+          "₹5L–50L lump sum",
+          "15+ illnesses covered",
+          "No bills needed — just diagnosis"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to know more about critical illness coverage."
+      },
+      "problem": {
+        "title": "What if cancer, stroke, or heart disease strikes?",
+        "cards": [
+          {
+            "icon": "AlertTriangle",
+            "stat": "₹10–30 Lakh",
+            "desc": "average cancer treatment cost in private hospitals"
+          },
+          {
+            "icon": "Home",
+            "stat": "60% Patients",
+            "desc": "have to borrow money or sell family assets for treatment"
+          },
+          {
+            "icon": "Clock",
+            "stat": "6–18 Months",
+            "desc": "average recovery period with zero monthly income"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Critical Illness Protection Works",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We evaluate critical illness riders and stand-alone cover options."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We configure lump-sum payout benefits triggered on primary diagnosis."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your recovery fund is secured, preserving your family savings."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Critical Illness Plans",
+        "items": [
+          {
+            "name": "LIC Jeevan Arogya",
+            "num": "#903",
+            "type": "Health",
+            "benefit": "Critical illness rider benefit coverage",
+            "premium": "From ₹5,000/year",
+            "coverage": "₹5L – ₹50L",
+            "term": "15 – 25 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Jeevan Arogya (#903)."
+          },
+          {
+            "name": "LIC Dhan Rekha (Rider)",
+            "num": "#863",
+            "type": "Rider",
+            "benefit": "Lump sum rider benefit on critical diagnosis",
+            "premium": "From ₹2,000/year",
+            "coverage": "Rider sum assured",
+            "term": "Policy term",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Dhan Rekha (#863) with rider."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Check Your Health Plan Premium",
+        "desc": "Find out the exact premium for critical illness and health plans.",
+        "btnText": "Calculate Premium",
+        "type": "policy-health"
+      },
+      "testimonial": {
+        "quote": "I purchased a critical illness rider with my LIC policy. It paid the lump sum on my cardiac procedure, keeping my family stable.",
+        "author": "Kailash Nath",
+        "location": "Basti",
+        "policy": "LIC Critical Illness Rider",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Critical Illness",
+        "items": [
+          {
+            "q": "What is critical illness cover?",
+            "a": "It is an insurance plan that pays a fixed lump sum on diagnosis of serious illnesses like cancer, heart attack, or stroke."
+          },
+          {
+            "q": "Does health insurance cover critical illness?",
+            "a": "Health insurance pays actual hospital bills. Critical illness cover pays a fixed lump sum directly to you, regardless of hospital bills."
+          },
+          {
+            "q": "How does a critical illness claim work?",
+            "a": "Once diagnosed with a covered illness, you submit the doctor's report. LIC pays the entire sum assured as a lump sum."
+          },
+          {
+            "q": "What illnesses are covered under this policy?",
+            "a": "It covers major illnesses like cancer, heart attack, stroke, kidney failure, major organ transplant, and paralysis."
+          },
+          {
+            "q": "Is there a survival period for claims?",
+            "a": "Yes, standard critical illness plans have a survival period of 28 to 30 days after diagnosis before the claim is paid."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Health Solutions",
+        "links": ["health-insurance", "cancer-cover", "life-insurance"]
+      },
+      "finalCta": {
+        "title": "Secure Your Health Defense Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to know more about critical illness coverage."
+      }
+    },
+    "cancer-cover": {
+      "category": "HEALTH",
+      "hero": {
+        "h1": "Cancer shouldn't bankrupt your family",
+        "sub": "Dedicated cancer coverage pays at diagnosis and during treatment, providing financial support when you need it most.",
+        "stats": [
+          "₹10L–50L cover",
+          "Pays at all stages",
+          "Income replacement included"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC Cancer Cover plan."
+      },
+      "problem": {
+        "title": "India sees 14 lakh new cancer cases every year",
+        "cards": [
+          {
+            "icon": "AlertTriangle",
+            "stat": "1 in 9 Indians",
+            "desc": "will develop cancer in their lifetime"
+          },
+          {
+            "icon": "IndianRupee",
+            "stat": "₹5–50 Lakh",
+            "desc": "average treatment cost depending on stage"
+          },
+          {
+            "icon": "TrendingUp",
+            "stat": "90% Survival",
+            "desc": "increase with timely treatment and early diagnosis"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Cancer Cover Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We select the appropriate cancer cover option based on age and family history."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We activate benefits like early-stage payouts and premium waivers."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "You are secured with cancer-only cover that pays at all stages."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Cancer Protection Plan",
+        "items": [
+          {
+            "name": "LIC Cancer Cover",
+            "num": "#905",
+            "type": "Health",
+            "benefit": "Cancer stage payout and premium waiver",
+            "premium": "From ₹2,000/year",
+            "coverage": "₹10L – ₹50L",
+            "term": "10 – 30 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC Cancer Cover (#905)."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Cancer Cover Premium",
+        "desc": "Find out the premium for cancer-only protection for your age.",
+        "btnText": "Calculate Premium",
+        "type": "policy-health"
+      },
+      "testimonial": {
+        "quote": "Cancer Cover policy through Ajay ji has premium waiver features. On early detection, my premium ceased and payouts started.",
+        "author": "Sunita Devi",
+        "location": "Gorakhpur",
+        "policy": "LIC Cancer Cover (#905)",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Cancer Cover",
+        "items": [
+          {
+            "q": "What is covered under LIC Cancer Cover plan?",
+            "a": "It covers both early stage and major stage cancer, paying a lump sum and providing monthly income benefits on major stage."
+          },
+          {
+            "q": "Does the plan pay at early stages of cancer?",
+            "a": "Yes, it pays 25% of the sum assured on early stage cancer and waives premiums for the next 3 years."
+          },
+          {
+            "q": "What is the premium waiver benefit?",
+            "a": "On early stage diagnosis, premiums are waived for 3 years. On major stage diagnosis, all future premiums are waived."
+          },
+          {
+            "q": "Is there a medical test required to buy?",
+            "a": "No, LIC Cancer Cover is usually issued based on a declaration of good health, without medical check-ups."
+          },
+          {
+            "q": "Can I get tax benefit on this premium?",
+            "a": "Yes, premiums are tax-deductible under Section 80D as health insurance premium up to ₹25,000."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Health Solutions",
+        "links": ["critical-illness", "health-insurance", "life-insurance"]
+      },
+      "finalCta": {
+        "title": "Secure Cancer Cover Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to get a quote for LIC Cancer Cover plan."
+      }
+    },
+    "keyman-insurance": {
+      "category": "PROTECTION",
+      "hero": {
+        "h1": "If your business depends on one person, it needs a backup plan",
+        "sub": "Keyman insurance protects your business from financial loss if a key employee, partner, or founder is suddenly unavailable.",
+        "stats": [
+          "₹25L–5Cr cover",
+          "Business expense deductible",
+          "Protects revenue continuity"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to discuss Keyman insurance for my business partner/employee."
+      },
+      "problem": {
+        "title": "What if the person your business can't run without is suddenly gone?",
+        "cards": [
+          {
+            "icon": "TrendingDown",
+            "stat": "30-60% Drop",
+            "desc": "in business revenue without the key person"
+          },
+          {
+            "icon": "Users",
+            "stat": "Critical Links",
+            "desc": "client relationships are often non-transferable"
+          },
+          {
+            "icon": "AlertTriangle",
+            "stat": "Loan Liability",
+            "desc": "bank loan guarantees may be called in immediately"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Keyman Insurance Works",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We evaluate keyman value based on profit contribution and employee salary."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We structure the policy with the business entity as proposer and beneficiary."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your business liabilities and revenue flows are secured on death."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Keyman Protection Plans",
+        "items": [
+          {
+            "name": "LIC New Jeevan Anand",
+            "num": "#915",
+            "type": "Keyman",
+            "benefit": "Protects key employee and covers liability",
+            "premium": "From ₹20,000/year",
+            "coverage": "₹25L – ₹5Cr",
+            "term": "15 – 35 years",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Jeevan Anand (#915) for keyman."
+          },
+          {
+            "name": "LIC New Endowment",
+            "num": "#914",
+            "type": "Keyman",
+            "benefit": "Maturity proceeds go to corporate entity",
+            "premium": "From ₹15,000/year",
+            "coverage": "₹25L – ₹5Cr",
+            "term": "12 – 35 years",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for LIC New Endowment (#914) for keyman."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Corporate Premium",
+        "desc": "Find out the exact keyman premium and tax saving for your business.",
+        "btnText": "Calculate Now",
+        "type": "premium"
+      },
+      "testimonial": {
+        "quote": "Keyman insurance secured our partnership. Ajay sir made the corporate documentation very clean.",
+        "author": "Ganesh Jaiswal (Partner)",
+        "location": "Gorakhpur",
+        "policy": "Corporate LIC Keyman Policy",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Keyman Insurance",
+        "items": [
+          {
+            "q": "Who is a Keyman in a business?",
+            "a": "A keyman is an employee or director whose exit or demise would cause significant financial loss to the business."
+          },
+          {
+            "q": "Can partnership firms buy Keyman insurance?",
+            "a": "Yes, partnership firms can buy Keyman insurance to protect partners who hold critical client relations."
+          },
+          {
+            "q": "Is Keyman insurance premium tax deductible?",
+            "a": "Yes, premiums paid by the business are treated as business expenses and are tax-deductible under Section 37(1)."
+          },
+          {
+            "q": "Who receives the claim amount on death?",
+            "a": "The company (proposer) receives the claim amount to compensate for financial losses and key recruitment costs."
+          },
+          {
+            "q": "What happens if the key employee leaves?",
+            "a": "The company can either stop paying premiums, surrender the policy, or transfer it to the employee."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Corporate Solutions",
+        "links": ["life-insurance", "term-life", "group-health"]
+      },
+      "finalCta": {
+        "title": "Protect Your Business Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to discuss Keyman insurance for my business partner/employee."
+      }
+    },
+    "group-health": {
+      "category": "HEALTH",
+      "hero": {
+        "h1": "Healthy employees. Loyal employees.",
+        "sub": "Group health insurance covers your entire team at lower per-person costs, boosting retention and showing employees you care.",
+        "stats": [
+          "20-40% cheaper",
+          "₹2L–10L per employee",
+          "No medical tests required"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I would like to get a quote for group health insurance for my team."
+      },
+      "problem": {
+        "title": "What happens when your best employee can't afford treatment?",
+        "cards": [
+          {
+            "icon": "Users",
+            "stat": "Top Attrition",
+            "desc": "lack of health benefits is a primary reason for employee turnover"
+          },
+          {
+            "icon": "AlertTriangle",
+            "stat": "Team Morale",
+            "desc": "one employee's health crisis affects productivity and team output"
+          },
+          {
+            "icon": "IndianRupee",
+            "stat": "30% Cheaper",
+            "desc": "group plans are significantly cheaper than individual health plans"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Group Health Benefits Your Business",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We evaluate employee age profiles and compile dependent records."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We package floater benefits with cashless medical networks."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "Your employees and their families are secured under corporate cover."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Group Cover Plans",
+        "items": [
+          {
+            "name": "Star Group Medical Insurance",
+            "num": "Star",
+            "type": "Group Health",
+            "benefit": "Cashless cover for employee + family",
+            "premium": "Based on team size",
+            "coverage": "₹2L – ₹10L",
+            "term": "1 year renewal",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a group health insurance quote for my team."
+          },
+          {
+            "name": "LIC Group Term Life",
+            "num": "LIC",
+            "type": "Group Term",
+            "benefit": "Low-cost life protection for employees",
+            "premium": "Based on team size",
+            "coverage": "₹5L – ₹20L",
+            "term": "1 year renewal",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a group term life quote for my employees."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Estimate Group Health Score",
+        "desc": "Find out the adequacy of health benefits for your team.",
+        "btnText": "Check Group Health",
+        "type": "policy-health"
+      },
+      "testimonial": {
+        "quote": "Our firm provided Star Group Health through Ajay ji. Employee morale and retention improved dramatically.",
+        "author": "Manoj Mishra (HR Director)",
+        "location": "Gorakhpur",
+        "policy": "Star Group Health Plan",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Group Health",
+        "items": [
+          {
+            "q": "What is the minimum team size for group health?",
+            "a": "Usually, a minimum of 7 to 10 employees is required to start a group health insurance plan."
+          },
+          {
+            "q": "Are pre-existing diseases covered from day one?",
+            "a": "Yes, most group health plans cover all pre-existing diseases from day one, without any waiting period."
+          },
+          {
+            "q": "Can employee family members be included?",
+            "a": "Yes, policies can cover employees, spouses, children, and dependent parents."
+          },
+          {
+            "q": "Is group health premium tax deductible for business?",
+            "a": "Yes, premiums paid by employers are fully deductible as business expenses under Section 37(1)."
+          },
+          {
+            "q": "What happens when an employee leaves the company?",
+            "a": "The cover stops for that employee. However, they can convert it into an individual policy with the same insurer."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Business Solutions",
+        "links": ["keyman-insurance", "health-insurance", "critical-illness"]
+      },
+      "finalCta": {
+        "title": "Protect Your Employees Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I would like to get a quote for group health insurance for my team."
+      }
+    },
+    "personal-accident": {
+      "category": "PROTECTION",
+      "hero": {
+        "h1": "Accidents don't send warnings. Your coverage should already be there.",
+        "sub": "Personal accident cover pays for accidental death, disability, and hospitalization, regardless of your health insurance.",
+        "stats": [
+          "₹5L–1Cr cover",
+          "From ₹1,000/year",
+          "Covers permanent disability"
+        ],
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check accident insurance policies."
+      },
+      "problem": {
+        "title": "India records 4.5 lakh road accidents every year",
+        "cards": [
+          {
+            "icon": "AlertTriangle",
+            "stat": "1 Death",
+            "desc": "in road accidents every 4 minutes in India"
+          },
+          {
+            "icon": "TrendingDown",
+            "stat": "Income Loss",
+            "desc": "temporary or permanent disability leads to severe income loss"
+          },
+          {
+            "icon": "Shield",
+            "stat": "No Cover",
+            "desc": "disability and income loss are not covered in basic health insurance"
+          }
+        ]
+      },
+      "howItWorks": {
+        "title": "How Personal Accident Cover Protects You",
+        "steps": [
+          {
+            "num": "1",
+            "title": "Assess",
+            "desc": "We evaluate road safety risks and calculate standard cover parameters."
+          },
+          {
+            "num": "2",
+            "title": "Design",
+            "desc": "We structure policies covering accidental death and disability benefits."
+          },
+          {
+            "num": "3",
+            "title": "Protect",
+            "desc": "You are secured with an active personal accident shield globally."
+          }
+        ]
+      },
+      "plans": {
+        "title": "Recommended Accident Cover Plans",
+        "items": [
+          {
+            "name": "Star Saral Suraksha Bima",
+            "num": "Star",
+            "type": "Accident",
+            "benefit": "Lump sum payout for death or disability",
+            "premium": "From ₹1,000/year",
+            "coverage": "₹5L – ₹1Cr",
+            "term": "1 year renewal",
+            "badge": "Popular",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like a quote for Star Saral Suraksha Bima."
+          },
+          {
+            "name": "LIC Accident Benefit Rider",
+            "num": "LIC",
+            "type": "Rider",
+            "benefit": "Double sum assured payout on accidental death",
+            "premium": "From ₹500/year",
+            "coverage": "Rider sum assured",
+            "term": "Policy term",
+            "whatsappPrefill": "Namaste Ajay ji, I'd like to add Accident Benefit Rider to my LIC policy."
+          }
+        ]
+      },
+      "calculator": {
+        "title": "Calculate Accident Rider Premium",
+        "desc": "Estimate the rider premium additions for your life policy.",
+        "btnText": "Calculate Premium",
+        "type": "life-insurance"
+      },
+      "testimonial": {
+        "quote": "A minor premium addition for accident cover secured my path. Ajay ji helped settle the minor injury claim efficiently.",
+        "author": "Vijay Nishad",
+        "location": "Gorakhpur",
+        "policy": "Saral Suraksha Bima",
+        "rating": 5
+      },
+      "faq": {
+        "title": "Common Questions About Accident Insurance",
+        "items": [
+          {
+            "q": "What does personal accident insurance cover?",
+            "a": "It covers accidental death, permanent total disability, permanent partial disability, and temporary total disability."
+          },
+          {
+            "q": "Is accidental disability covered in health insurance?",
+            "a": "No, health insurance only pays for hospitalization bills. It does not pay for income loss due to disability."
+          },
+          {
+            "q": "What is the difference between partial and permanent disability?",
+            "a": "Permanent total disability means loss of both eyes or limbs, stopping work forever. Partial means loss of one finger or hand."
+          },
+          {
+            "q": "Can I add accident benefit to my current LIC policy?",
+            "a": "Yes, you can add the Accidental Death and Disability Benefit Rider on your policy anniversary."
+          },
+          {
+            "q": "Is accidental death benefit double the sum assured?",
+            "a": "Yes, under the double accident benefit rider, LIC pays an additional sum assured equal to the basic sum assured on accidental death."
+          }
+        ]
+      },
+      "crossSell": {
+        "title": "Related Protection Solutions",
+        "links": ["life-insurance", "term-life", "health-insurance"]
+      },
+      "finalCta": {
+        "title": "Get Accident Coverage Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check accident insurance policies."
+      }
+    },
+    "protection": {
+      "category": "Protection Category Hub",
+      "hero": {
+        "h1": "Protection that outlasts you",
+        "sub": "From life cover to accident protection, stable insurance solutions that keep your family financially secure no matter what.",
+        "stats": []
+      },
+      "plansTitle": "Explore Protection Solutions",
+      "childPages": [
+        {
+          "title": "Life Insurance",
+          "desc": "Protect your family's future with endowment and savings plans.",
+          "href": "/services/life-insurance",
+          "tag": "LIC Plans"
+        },
+        {
+          "title": "Term Life",
+          "desc": "Pure protection at the lowest premiums to replace your income.",
+          "href": "/services/term-life",
+          "tag": "Pure Protection"
+        },
+        {
+          "title": "Critical Illness",
+          "desc": "Lump sum payouts to support you through major health recovery.",
+          "href": "/services/critical-illness",
+          "tag": "Health Support"
+        },
+        {
+          "title": "Personal Accident",
+          "desc": "Secure income stability against accidental injuries and disabilities.",
+          "href": "/services/personal-accident",
+          "tag": "Road Safety"
+        },
+        {
+          "title": "Keyman Insurance",
+          "desc": "Protect business continuity against losing key partners or directors.",
+          "href": "/services/keyman-insurance",
+          "tag": "Business Cover"
+        }
+      ],
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "What is protection planning?",
+            "a": "Protection planning is securing your family against financial ruin from unexpected death, disability, or critical illness."
+          },
+          {
+            "q": "How much life insurance cover do I need?",
+            "a": "You should aim for at least 10 to 15 times your annual income. This covers household needs, child education, and debts."
+          }
+        ]
+      },
+      "finalCta": {
+        "title": "Find the Right Protection Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I want to discuss family protection insurance plans."
+      }
+    },
+    "savings": {
+      "category": "Savings Category Hub",
+      "hero": {
+        "h1": "Grow wealth while staying protected",
+        "sub": "Insurance-linked savings plans that build long-term wealth with guaranteed returns, tax benefits, and life cover.",
+        "stats": []
+      },
+      "plansTitle": "Explore Wealth & Savings Solutions",
+      "childPages": [
+        {
+          "title": "Child Planning",
+          "desc": "Secure education and wedding funds with guaranteed milestone payouts.",
+          "href": "/services/child-planning",
+          "tag": "Future"
+        },
+        {
+          "title": "Retirement Planning",
+          "desc": "Create a lifetime guaranteed pension to retire with independence.",
+          "href": "/services/retirement",
+          "tag": "Pension"
+        },
+        {
+          "title": "Tax Planning",
+          "desc": "Invest strategically to claim deductions under 80C, 80D and 10(10D).",
+          "href": "/services/tax-planning",
+          "tag": "Tax Save"
+        }
+      ],
+      "faq": {
+        "title": "Common Questions About Savings Plans",
+        "items": [
+          {
+            "q": "Why choose insurance-linked savings plans?",
+            "a": "They provide a safe combination of guaranteed returns, sovereign backing (with LIC), life cover, and tax deductions."
+          },
+          {
+            "q": "Are savings plans tax-exempt on maturity?",
+            "a": "Yes, maturity payouts from LIC plans are tax-free under Section 10(10D), subject to standard premium limits."
+          }
+        ]
+      },
+      "finalCta": {
+        "title": "Start Wealth Planning Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I'd like to check savings and tax-saving plans."
+      }
+    },
+    "health": {
+      "category": "Health Category Hub",
+      "hero": {
+        "h1": "Healthcare costs shouldn't cost you everything",
+        "sub": "Health insurance solutions for individuals, families, and businesses, from basic hospitalization to critical illness.",
+        "stats": []
+      },
+      "plansTitle": "Explore Health Insurance Solutions",
+      "childPages": [
+        {
+          "title": "Health Insurance",
+          "desc": "Cashless medical treatment cover for your whole family.",
+          "href": "/services/health-insurance",
+          "tag": "Cashless"
+        },
+        {
+          "title": "Critical Illness",
+          "desc": "Lump-sum payouts on critical diagnoses to safeguard savings.",
+          "href": "/services/critical-illness",
+          "tag": "Support"
+        },
+        {
+          "title": "Cancer Cover",
+          "desc": "Dedicated cancer plan supporting you across all treatment stages.",
+          "href": "/services/cancer-cover",
+          "tag": "Cancer Cover"
+        },
+        {
+          "title": "Group Health",
+          "desc": "Secure medical benefits for your company's employees.",
+          "href": "/services/group-health",
+          "tag": "Team Cover"
+        }
+      ],
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "q": "Does basic health insurance cover everything?",
+            "a": "Basic health insurance covers hospitalization and surgeries. Riders or special plans are needed for critical illness and cancer benefits."
+          },
+          {
+            "q": "Can I have multiple health policies?",
+            "a": "Yes, you can have a corporate policy and a personal policy. You can claim cashless from one and residual amount from another."
+          }
+        ]
+      },
+      "finalCta": {
+        "title": "Get Health Insurance Advice Today",
+        "sub": "31 years of trusted advisory. One conversation is all it takes.",
+        "whatsappPrefill": "Namaste Ajay ji, I want to discuss health insurance plans for my family."
+      }
+    }
   },
   "calculator": {
     "shareWhatsApp": "Share results with Ajay sir on WhatsApp",
