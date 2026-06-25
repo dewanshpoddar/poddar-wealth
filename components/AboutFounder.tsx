@@ -29,64 +29,86 @@ export default function AboutFounder() {
   }
 
   return (
-    <section className="bg-white py-16 md:py-20 border-t border-gray-100/60 text-slate-800">
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
-        
-        {/* Section Heading */}
-        <div className="text-center mb-10">
-          <p className="text-amber-500 text-sm font-semibold uppercase tracking-wider mb-2 text-center">
-            {f.eyebrow}
-          </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center">
-            {f.title}
-          </h2>
-          <p className="text-gray-500 mt-2 text-center">
-            {f.subtitle}
-          </p>
-        </div>
+    <section className="bg-white py-16 md:py-20 border-t border-gray-100/60">
+      <div className="max-w-5xl mx-auto px-6 md:px-8">
 
-        {/* Bio Card */}
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start bg-white p-8 rounded-[32px] border border-gold/15 shadow-md text-slate-800 max-w-5xl mx-auto">
-          {/* Photo container */}
-          <div className="shrink-0 w-48 h-64 sm:w-64 sm:h-80 rounded-2xl bg-slate-50 border border-gray-200/50 shadow-inner relative overflow-hidden group/photo">
-            <Image 
-              src="/assets/ajay-poddar.svg" 
-              alt=""
-              fill
-              className="object-cover object-top scale-[1.25] origin-top transition-transform duration-500 group-hover/photo:scale-[1.3]"
-              priority
-            />
+        {/* Single unified card - no duplicate heading */}
+        <div className="flex flex-col md:flex-row gap-0 rounded-[32px] overflow-hidden border border-gray-200/70 shadow-lg">
+
+          {/* Left - photo panel with dark bg */}
+          <div className="relative md:w-64 lg:w-72 shrink-0 bg-[#0f1225] flex flex-col items-center justify-end pt-10 pb-0 overflow-hidden">
+            {/* Subtle glow */}
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full bg-amber-400/10 blur-[40px] pointer-events-none" />
+            {/* Eyebrow label */}
+            <p className="relative z-10 text-amber-400/80 text-[9px] font-bold uppercase tracking-[0.22em] mb-3 text-center px-4">
+              {f.eyebrow}
+            </p>
+            {/* Photo flush to bottom */}
+            <div className="relative z-10 w-48 h-60 md:w-full md:h-72 overflow-hidden">
+              <Image
+                src="/assets/ajay-poddar.svg"
+                alt="Ajay Kumar Poddar - Founder, Poddar Wealth Management"
+                fill
+                className="object-cover object-top scale-[1.2] origin-top"
+                priority
+              />
+            </div>
           </div>
 
-          {/* About info */}
-          <div className="flex-1 text-center md:text-left">
-            <div className="pw-eyebrow text-gold font-bold tracking-[0.2em] mb-2">{aboutSection.eyebrow}</div>
-            <h3 className="font-display text-slate-900 text-2xl md:text-3xl font-bold mb-4">{aboutSection.name}</h3>
-            
+          {/* Right - content panel */}
+          <div className="flex-1 bg-white p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
+
+            {/* Name + title */}
+            <h2 className="font-display text-slate-900 text-2xl md:text-3xl font-bold leading-tight mb-1">
+              {aboutSection.name}
+            </h2>
+            <p className="text-gray-500 text-sm mb-5">
+              {f.subtitle}
+            </p>
+
+            {/* Badges */}
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
               {(aboutSection.badges ?? []).map((badge: any, i: number) => (
                 <span
                   key={i}
-                  className={`pw-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
+                  className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
                     badge.type === 'gold'
-                      ? 'bg-gold/10 text-gold border border-gold/20'
+                      ? 'bg-amber-50 text-amber-700 border border-amber-200'
                       : 'bg-gray-100 text-gray-700 border border-gray-200'
                   }`}
                 >
                   {badge.text.includes('MDRT') && (
-                    <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT Member badge" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                    <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
                   )}
-                  {badge.text.includes('Chairman') || badge.text.includes('चेयरमैन') ? (
-                    <Image src="/assets/chairmanclub.webp" alt="Chairman's Club award" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
-                  ) : null}
+                  {(badge.text.includes('Chairman') || badge.text.includes('चेयरमैन')) && (
+                    <Image src="/assets/chairmanclub.webp" alt="Chairman's Club" width={14} height={14} className="w-3.5 h-3.5 object-contain flex-shrink-0" />
+                  )}
                   {badge.text}
                 </span>
               ))}
             </div>
-            <p className="text-[14px] text-slate-600 leading-relaxed max-w-2xl font-medium">{aboutSection.bio}</p>
-          </div>
-        </div>
 
+            {/* Bio */}
+            <p className="text-[14px] text-slate-600 leading-relaxed max-w-xl font-medium mb-8">
+              {aboutSection.bio}
+            </p>
+
+            {/* Stat strip */}
+            <div className="flex flex-wrap justify-center md:justify-start gap-6 pt-6 border-t border-gray-100">
+              {[
+                { num: '31+', label: lang === 'hi' ? 'वर्षों का अनुभव' : 'Years of service' },
+                { num: '5,000+', label: lang === 'hi' ? 'परिवारों की सुरक्षा' : 'Families protected' },
+                { num: '4.9★', label: lang === 'hi' ? 'Google रेटिंग' : 'Google rating' },
+              ].map(({ num, label }) => (
+                <div key={label} className="text-center md:text-left">
+                  <p className="text-xl font-bold text-amber-600 leading-none">{num}</p>
+                  <p className="text-[11px] text-gray-500 mt-1 font-medium">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )
