@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import WhatsAppShare from '@/components/WhatsAppShare'
 import { trackEvent } from '@/lib/analytics'
 import { useLang } from '@/lib/LangContext'
 import {
-  Shield, Heart, TrendingUp, Landmark, PiggyBank, Lock, CheckCircle2,
-  ArrowRight, ChevronRight, AlertTriangle, TriangleAlert, Star,
+  Shield, Heart, TrendingUp, Landmark, Lock, CheckCircle2,
+  ArrowRight, ChevronRight, TriangleAlert, Star,
 } from 'lucide-react'
 
 import { useBlueprintEngine } from '../hooks/useBlueprintEngine'
@@ -78,15 +78,17 @@ function BucketSelect({ label, note, value, onChange, opts }: {
 }) {
   return (
     <div>
-      <div className="flex items-baseline gap-2 mb-1.5">
+      <div className="flex items-baseline gap-2 mb-2">
         <span className="text-12 font-semibold text-navy/80">{label}</span>
-        {note && <span className="text-10 text-gray-400">{note}</span>}
+        {note && <span className="text-[10px] text-gray-400">{note}</span>}
       </div>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {opts.map(o => (
           <button key={o.value} onClick={() => onChange(o.value)}
-            className={`px-3 py-1.5 rounded-xl border text-11 font-semibold transition-all duration-150 ${
-              value === o.value ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy/60 hover:border-navy/30'
+            className={`px-3 py-1.5 rounded-xl border text-[11px] font-semibold whitespace-nowrap cursor-pointer transition-all duration-150 active:scale-95 ${
+              value === o.value
+                ? 'border-navy bg-navy text-white shadow-sm'
+                : 'border-gray-200 bg-white text-navy/60 hover:border-navy/40 hover:bg-navy/5'
             }`}>{o.label}</button>
         ))}
       </div>
@@ -97,9 +99,9 @@ function BucketSelect({ label, note, value, onChange, opts }: {
 function SectionLabel({ n, title }: { n: string; title: string }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <span className="text-10 font-bold text-gold/80 tracking-[0.2em]">{n}</span>
+      <span className="text-[11px] font-bold text-gold/80 tracking-[0.2em]">{n}</span>
       <div className="h-px flex-1 bg-navy/10"/>
-      <span className="text-10 font-bold tracking-[0.16em] uppercase text-navy/40">{title}</span>
+      <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-navy/40">{title}</span>
     </div>
   )
 }
@@ -151,10 +153,10 @@ export default function WealthBlueprintCalculator() {
   const slide = { initial: { opacity: 0, x: 20 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -20 } }
 
   const ConfidentialBanner = (
-    <div className="flex items-center gap-2 bg-navy/4 rounded-xl px-3 py-2 mb-5 border border-navy/8">
+    <div className="flex items-center gap-2.5 bg-navy/[0.04] rounded-xl px-3.5 py-2.5 mb-5 border border-navy/[0.07]">
       <Lock size={11} className="text-navy/40 flex-shrink-0"/>
-      <p className="text-10 text-navy/55 leading-snug">
-        <strong className="text-navy/70">100% Confidential.</strong> Your financial data is never stored, sold, or shared before you explicitly save your blueprint.
+      <p className="text-[11px] text-navy/55 leading-snug">
+        <strong className="text-navy/70">100% Confidential.</strong> Your data powers your blueprint only — never stored or shared until you save.
       </p>
     </div>
   )
@@ -232,7 +234,7 @@ export default function WealthBlueprintCalculator() {
                     <div className="px-4 w-full">
                       <input type="range" min={20} max={58} value={age} onChange={e => setAge(+e.target.value)} className="pw-gold-range w-full"/>
                     </div>
-                    <div className="flex justify-between text-9 text-gray-400 mt-0.5 px-4"><span>20</span><span>58</span></div>
+                    <div className="flex justify-between text-[9px] text-gray-400 mt-0.5 px-4"><span>20</span><span>58</span></div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
@@ -243,30 +245,30 @@ export default function WealthBlueprintCalculator() {
                       <input type="range" min={15000} max={700000} step={5000} value={monthlyIncome}
                         onChange={e => setMI(+e.target.value)} className="pw-gold-range w-full"/>
                     </div>
-                    <div className="flex justify-between text-9 text-gray-400 mt-0.5 px-4"><span>₹15K</span><span>₹7L+</span></div>
+                    <div className="flex justify-between text-[9px] text-gray-400 mt-0.5 px-4"><span>₹15K</span><span>₹7L+</span></div>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
                     <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldEarning}</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {([['salaried', t.blueprint.employOptions[0], 'Paycheck'],['freelance', t.blueprint.employOptions[1], 'Variable'],['business', t.blueprint.employOptions[2], 'Self-employed']] as [Employment, string, string][]).map(([k,l,s]) => (
+                    <div className="grid grid-cols-3 gap-2">
+                      {([['salaried', t.blueprint.employOptions[0], 'Paycheck'],['freelance', t.blueprint.employOptions[1], 'Variable'],['business', t.blueprint.employOptions[2], 'Business']] as [Employment, string, string][]).map(([k,l,s]) => (
                         <button key={k} onClick={() => setEmploy(k)}
-                          className={`px-2 py-2.5 rounded-xl border-2 text-left transition-all ${employment === k ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
-                          <div className="text-11 font-bold">{l}</div>
-                          <div className={`text-9 mt-0.5 ${employment === k ? 'text-white/50' : 'text-gray-400'}`}>{s}</div>
+                          className={`px-2.5 py-3 rounded-xl border-2 text-left transition-all duration-150 cursor-pointer active:scale-95 ${employment === k ? 'border-navy bg-navy text-white shadow-sm' : 'border-gray-200 bg-white text-navy hover:border-navy/40 hover:bg-navy/5'}`}>
+                          <div className="text-[12px] font-bold leading-tight">{l}</div>
+                          <div className={`text-[10px] mt-1 ${employment === k ? 'text-white/55' : 'text-gray-400'}`}>{s}</div>
                         </button>
                       ))}
                     </div>
                   </div>
                   <div>
                     <label className="text-11 font-semibold text-navy/75 block mb-2">{t.blueprint.fieldCity}</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {([['metro', t.blueprint.cityOptions[0], 'Delhi/Mum/Blr'],['tier2', t.blueprint.cityOptions[1], 'Pune/Hyd/Lko'],['tier3', t.blueprint.cityOptions[2], 'Smaller city']] as [CityTier, string, string][]).map(([k,l,s]) => (
+                    <div className="grid grid-cols-3 gap-2">
+                      {([['metro', t.blueprint.cityOptions[0], 'Delhi · Mum · Blr'],['tier2', t.blueprint.cityOptions[1], 'Pune · Hyd · Lko'],['tier3', t.blueprint.cityOptions[2], 'Smaller city']] as [CityTier, string, string][]).map(([k,l,s]) => (
                         <button key={k} onClick={() => setCity(k)}
-                          className={`px-2 py-2.5 rounded-xl border-2 text-left transition-all ${cityTier === k ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
-                          <div className="text-11 font-bold">{l}</div>
-                          <div className={`text-9 mt-0.5 ${cityTier === k ? 'text-white/50' : 'text-gray-400'}`}>{s}</div>
+                          className={`px-2.5 py-3 rounded-xl border-2 text-left transition-all duration-150 cursor-pointer active:scale-95 ${cityTier === k ? 'border-navy bg-navy text-white shadow-sm' : 'border-gray-200 bg-white text-navy hover:border-navy/40 hover:bg-navy/5'}`}>
+                          <div className="text-[12px] font-bold leading-tight">{l}</div>
+                          <div className={`text-[10px] mt-1 leading-tight ${cityTier === k ? 'text-white/55' : 'text-gray-400'}`}>{s}</div>
                         </button>
                       ))}
                     </div>
@@ -292,7 +294,7 @@ export default function WealthBlueprintCalculator() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {([['true', t.blueprint.marriedSingle[0]],['false', t.blueprint.marriedSingle[1]]] as [string, string][]).map(([v,l]) => (
                         <button key={v} onClick={() => setMarried(v === 'true')}
-                          className={`py-3 rounded-xl border-2 text-12 font-bold transition-all ${isMarried === (v === 'true') ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
+                          className={`py-3 rounded-xl border-2 text-12 font-bold transition-all duration-150 cursor-pointer active:scale-95 ${isMarried === (v === 'true') ? 'border-navy bg-navy text-white shadow-sm' : 'border-gray-200 bg-white text-navy hover:border-navy/40 hover:bg-navy/5'}`}>
                           {l}
                         </button>
                       ))}
@@ -303,7 +305,7 @@ export default function WealthBlueprintCalculator() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {([['true', t.blueprint.yesNo[0]],['false', t.blueprint.yesNo[1]]] as [string, string][]).map(([v,l]) => (
                         <button key={v} onClick={() => setParents(v === 'true')}
-                          className={`py-3 rounded-xl border-2 text-12 font-bold transition-all ${hasAgedParents === (v === 'true') ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
+                          className={`py-3 rounded-xl border-2 text-12 font-bold transition-all duration-150 cursor-pointer active:scale-95 ${hasAgedParents === (v === 'true') ? 'border-navy bg-navy text-white shadow-sm' : 'border-gray-200 bg-white text-navy hover:border-navy/40 hover:bg-navy/5'}`}>
                           {l}
                         </button>
                       ))}
@@ -315,7 +317,7 @@ export default function WealthBlueprintCalculator() {
                   <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 max-w-sm">
                     {[0,1,2,3,4].map(n => (
                       <button key={n} onClick={() => setChildren(n)}
-                        className={`h-11 rounded-xl border-2 text-13 font-bold transition-all ${children === n ? 'border-navy bg-navy text-white' : 'border-gray-200 bg-white text-navy hover:border-navy/30'}`}>
+                        className={`h-11 rounded-xl border-2 text-13 font-bold transition-all duration-150 cursor-pointer active:scale-95 ${children === n ? 'border-navy bg-navy text-white shadow-sm' : 'border-gray-200 bg-white text-navy hover:border-navy/40 hover:bg-navy/5'}`}>
                         {n}
                       </button>
                     ))}
@@ -327,7 +329,7 @@ export default function WealthBlueprintCalculator() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                       {Array.from({ length: children }).map((_, i) => (
                         <div key={i}>
-                          <label className="text-9 text-gray-400 mb-1 block">Child {i + 1}</label>
+                          <label className="text-[9px] text-gray-400 mb-1 block">Child {i + 1}</label>
                           <div className="flex items-center gap-2">
                             <div className="px-4 flex-1">
                               <input type="range" min={0} max={17} value={childAges[i] ?? 5}
@@ -391,7 +393,7 @@ export default function WealthBlueprintCalculator() {
                   <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 max-w-md">
                     {[45,50,55,60,65].map(n => (
                       <button key={n} onClick={() => setRetAge(n)}
-                        className={`py-2 rounded-xl border-2 text-12 font-bold transition-all ${retirementAge === n ? 'border-gold bg-gold/10 text-navy' : 'border-gray-200 bg-white text-navy/60 hover:border-gold/40'}`}>
+                        className={`py-2.5 rounded-xl border-2 text-12 font-bold transition-all duration-150 cursor-pointer active:scale-95 ${retirementAge === n ? 'border-gold bg-gold/10 text-navy shadow-sm' : 'border-gray-200 bg-white text-navy/60 hover:border-gold/40 hover:bg-gold/5'}`}>
                         {n}
                       </button>
                     ))}
@@ -404,9 +406,9 @@ export default function WealthBlueprintCalculator() {
                       const on = goals.includes(key)
                       return (
                         <button key={key} onClick={() => toggleGoal(key)}
-                          className={`text-left px-3 py-2.5 rounded-xl border-2 transition-all ${on ? 'border-gold bg-gold/8 text-navy' : 'border-gray-200 bg-white text-navy/50 hover:border-gold/30'}`}>
+                          className={`text-left px-3 py-2.5 rounded-xl border-2 transition-all duration-150 cursor-pointer active:scale-[0.97] ${on ? 'border-gold bg-gold/10 text-navy shadow-sm' : 'border-gray-200 bg-white text-navy/50 hover:border-gold/30 hover:bg-gold/5'}`}>
                           <div className="text-11 font-bold">{label}</div>
-                          <div className="text-9 text-gray-400 mt-0.5">{sub}</div>
+                          <div className="text-[9px] text-gray-400 mt-0.5">{sub}</div>
                         </button>
                       )
                     })}
@@ -428,7 +430,7 @@ export default function WealthBlueprintCalculator() {
               {/* Right column: live preview sidebar */}
               <div className="hidden lg:block sticky top-[90px]">
                 <div className="bg-navy rounded-2xl p-5 text-white">
-                  <div className="text-9 font-bold tracking-[0.18em] uppercase text-gold/70 mb-4">Your Live Snapshot</div>
+                  <div className="text-[9px] font-bold tracking-[0.18em] uppercase text-gold/70 mb-4">Your Live Snapshot</div>
 
                   {/* Profile summary — rows fade in as user completes each step */}
                   <div className="space-y-2.5 mb-5">
@@ -475,20 +477,20 @@ export default function WealthBlueprintCalculator() {
                       transition={{ duration: 0.3 }}
                       className="border-t border-white/10 pt-4 mb-5"
                     >
-                      <div className="text-9 font-bold tracking-[0.14em] uppercase text-white/30 mb-2">Live Calculations</div>
+                      <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-white/30 mb-2">Live Calculations</div>
                       <div className="bg-white/6 rounded-xl px-3 py-3 flex items-center justify-between gap-3">
                         <div>
-                          <div className="text-9 text-white/40 mb-0.5">Human Life Value</div>
+                          <div className="text-[9px] text-white/40 mb-0.5">Human Life Value</div>
                           <div className="text-18 font-bold text-gold leading-none">₹{fmt(bp.hlvL)}L</div>
-                          <div className="text-9 text-white/30 mt-0.5">Economic worth to family</div>
+                          <div className="text-[9px] text-white/30 mt-0.5">Economic worth to family</div>
                         </div>
                         <div className="w-px h-10 bg-white/10 self-center flex-shrink-0"/>
                         <div className="text-right">
-                          <div className="text-9 text-white/40 mb-0.5">Protection Gap</div>
+                          <div className="text-[9px] text-white/40 mb-0.5">Protection Gap</div>
                           <div className={`text-18 font-bold leading-none ${bp.gapL > 0 ? 'text-red-400' : 'text-green-400'}`}>
                             {bp.gapL > 0 ? `₹${fmt(bp.gapL)}L` : '✓ Nil'}
                           </div>
-                          <div className="text-9 text-white/30 mt-0.5">{bp.gapL > 0 ? `${bp.gapPct}% uncovered` : 'Fully covered'}</div>
+                          <div className="text-[9px] text-white/30 mt-0.5">{bp.gapL > 0 ? `${bp.gapPct}% uncovered` : 'Fully covered'}</div>
                         </div>
                       </div>
                     </motion.div>
@@ -496,7 +498,7 @@ export default function WealthBlueprintCalculator() {
 
                   {/* Progress indicator */}
                   <div className="mt-5 pt-4 border-t border-white/10">
-                    <div className="flex justify-between text-9 text-white/30 mb-2">
+                    <div className="flex justify-between text-[9px] text-white/30 mb-2">
                       <span>Blueprint completion</span>
                       <span>{Math.round((step / 4) * 100)}%</span>
                     </div>
@@ -599,7 +601,7 @@ export default function WealthBlueprintCalculator() {
                     <div className="flex items-center gap-5">
                       <ScoreRing score={bp.score}/>
                       <div>
-                        <div className="text-9 tracking-[0.2em] font-bold text-gold/70 uppercase mb-1">Wealth Blueprint Score</div>
+                        <div className="text-[9px] tracking-[0.2em] font-bold text-gold/70 uppercase mb-1">Wealth Blueprint Score</div>
                         <div className={`text-14 font-bold mb-0.5 ${bp.score >= 65 ? 'text-green-400' : bp.score >= 40 ? 'text-amber-400' : 'text-red-400'}`}>
                           {bp.score >= 65 ? 'Well Protected' : bp.score >= 40 ? 'Needs Attention' : 'Critical Gaps Found'}
                         </div>
@@ -616,7 +618,7 @@ export default function WealthBlueprintCalculator() {
                         <div key={label} className="bg-white/6 rounded-xl px-3 py-2.5 border border-white/8">
                           <div className="text-16 font-bold leading-none mb-0.5" style={{ color: c }}>{val}</div>
                           <div className="text-10 font-semibold text-white/70">{label}</div>
-                          <div className="text-9 text-white/30 mt-0.5">{sub}</div>
+                          <div className="text-[9px] text-white/30 mt-0.5">{sub}</div>
                         </div>
                       ))}
                     </div>
@@ -676,7 +678,7 @@ export default function WealthBlueprintCalculator() {
                             </div>
                             <span className="text-11 font-bold text-navy">{label}</span>
                           </div>
-                          <span className="text-9 font-bold px-2 py-0.5 rounded-full" style={{ background: color + '15', color }}>
+                          <span className="text-[9px] font-bold px-2 py-0.5 rounded-full" style={{ background: color + '15', color }}>
                             {status === 'covered' ? t.blueprint.riskStatus.covered : status === 'exposed' ? t.blueprint.riskStatus.exposed : status === 'planning' ? t.blueprint.riskStatus.planning : '—'}
                           </span>
                         </div>
@@ -696,11 +698,11 @@ export default function WealthBlueprintCalculator() {
                         <div key={rec.no} className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: priorityColor(rec.priority) + '30' }}>
                           <div className="flex items-center justify-between px-5 py-3 border-b" style={{ background: priorityBg(rec.priority), borderColor: priorityColor(rec.priority) + '20' }}>
                             <div className="flex items-center gap-3">
-                              <span className="text-9 font-bold tracking-wider text-gray-400">{rec.no}</span>
+                              <span className="text-[9px] font-bold tracking-wider text-gray-400">{rec.no}</span>
                               <span className="text-12 font-bold text-navy">{rec.planName}</span>
                               <span className="text-10 text-gray-400 hidden sm:inline">· {rec.planDetail}</span>
                             </div>
-                            <span className="text-9 font-bold px-2.5 py-1 rounded-full text-white" style={{ background: priorityColor(rec.priority) }}>
+                            <span className="text-[9px] font-bold px-2.5 py-1 rounded-full text-white" style={{ background: priorityColor(rec.priority) }}>
                               {priorityLabel(rec.priority)}
                             </span>
                           </div>
@@ -712,7 +714,7 @@ export default function WealthBlueprintCalculator() {
                             </div>
                             <div className="flex flex-col gap-2 md:items-end justify-center">
                               <div className="bg-[#f8f7f4] rounded-xl px-4 py-3 text-center md:text-right">
-                                <div className="text-9 text-gray-400 uppercase tracking-wider">Monthly Premium</div>
+                                <div className="text-[9px] text-gray-400 uppercase tracking-wider">Monthly Premium</div>
                                 <div className="text-22 font-bold text-navy">₹{fmt(rec.monthly)}</div>
                                 <div className="text-10 text-gray-400">₹{fmt(rec.annual)}/year</div>
                               </div>
@@ -745,14 +747,14 @@ export default function WealthBlueprintCalculator() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
                               <span className="text-12 font-bold text-navy">{name}</span>
-                              <span className="text-9 text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{type}</span>
+                              <span className="text-[9px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{type}</span>
                             </div>
                             <div className="text-10 text-gray-400 mb-1">{amc}</div>
                             <div className="text-10 text-gray-500 leading-snug">{why}</div>
                           </div>
                           <div className="text-right flex-shrink-0">
                             <div className="text-16 font-bold text-navy">₹{fmt(amount)}</div>
-                            <div className="text-9 text-gray-400">/month</div>
+                            <div className="text-[9px] text-gray-400">/month</div>
                           </div>
                         </div>
                       ))}
@@ -812,7 +814,7 @@ export default function WealthBlueprintCalculator() {
                         <div className="px-5 py-4 space-y-3">
                           {steps.map((s, i) => (
                             <div key={i} className="flex gap-3 items-start">
-                              <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 text-9 font-bold" style={{ borderColor: color, color }}>
+                              <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 text-[9px] font-bold" style={{ borderColor: color, color }}>
                                 {i + 1}
                               </div>
                               <p className="text-12 text-gray-600 leading-relaxed">{s}</p>
@@ -848,8 +850,8 @@ export default function WealthBlueprintCalculator() {
                           </div>
                           {/* Text content */}
                           <div className="sm:mt-2 sm:pr-3">
-                            <div className="text-10 sm:text-9 font-bold text-gold">{m.yr}</div>
-                            <div className="text-11 sm:text-9 text-navy/55 leading-snug mt-0.5">{m.label}</div>
+                            <div className="text-10 sm:text-[9px] font-bold text-gold">{m.yr}</div>
+                            <div className="text-11 sm:text-[9px] text-navy/55 leading-snug mt-0.5">{m.label}</div>
                           </div>
                         </div>
                       ))}
@@ -865,7 +867,7 @@ export default function WealthBlueprintCalculator() {
                       <>
                         <div className="flex items-center gap-2 mb-2">
                           <Lock size={12} className="text-gold"/>
-                          <span className="text-9 font-bold tracking-[0.18em] text-gold/70 uppercase">{t.blueprint.saveBadge}</span>
+                          <span className="text-[9px] font-bold tracking-[0.18em] text-gold/70 uppercase">{t.blueprint.saveBadge}</span>
                         </div>
                         <h4 className="text-17 font-bold text-white mb-1">{t.blueprint.saveTitle}</h4>
                         <p className="text-12 text-white/45 mb-5 leading-relaxed max-w-lg">
@@ -905,7 +907,7 @@ export default function WealthBlueprintCalculator() {
                   />
                 </div>
 
-                <p className="text-9 text-gray-400 text-center mt-4 leading-relaxed max-w-xl mx-auto">
+                <p className="text-[9px] text-gray-400 text-center mt-4 leading-relaxed max-w-xl mx-auto">
                   Methodology: IRDAI HLV (6.5% discount rate) · Trinity Study India-adjusted SWR (3.5%) · Swiss Re protection gap · Morningstar 120−age equity allocation · 11% education inflation · 14% medical inflation (IRDAI data) · 6.5% CPI · Vanguard emergency fund framework. This is a planning tool, not financial advice. Actual premiums and returns will vary.
                 </p>
 
