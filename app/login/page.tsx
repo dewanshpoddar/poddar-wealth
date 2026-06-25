@@ -147,7 +147,7 @@ export default function LoginPage() {
             <div className="space-y-3">
               <button
                 onClick={() => setRole('admin')}
-                className="w-full border border-gray-200 hover:border-amber-400 hover:bg-amber-50/50 rounded-2xl p-5 text-left transition-all group bg-white shadow-sm cursor-pointer"
+                className="w-full border border-gray-200 hover:border-amber-400 hover:bg-amber-50/50 rounded-2xl p-5 text-left transition-all duration-150 group bg-white shadow-sm cursor-pointer active:scale-[0.97]"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition-colors border border-amber-100">
@@ -163,7 +163,7 @@ export default function LoginPage() {
 
               <button
                 onClick={() => setRole('customer')}
-                className="w-full border border-gray-200 hover:border-blue-400 hover:bg-blue-50/30 rounded-2xl p-5 text-left transition-all group bg-white shadow-sm cursor-pointer"
+                className="w-full border border-gray-200 hover:border-blue-400 hover:bg-blue-50/30 rounded-2xl p-5 text-left transition-all duration-150 group bg-white shadow-sm cursor-pointer active:scale-[0.97]"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors border border-blue-100">

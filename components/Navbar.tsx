@@ -257,7 +257,7 @@ export default function Navbar() {
             {/* Login — outline pill, matches Get a Quote shape as secondary action */}
             <Link
               href="/login"
-              className={`text-[13px] font-semibold px-4 py-2 rounded-full border transition-all duration-200 active:scale-95 ${
+              className={`text-sm font-medium px-4 py-2 rounded-full border transition-all duration-150 active:scale-90 ${
                 scrolled
                   ? 'border-white/20 text-gray-300 hover:border-white/40 hover:text-white'
                   : 'border-gray-300 text-gray-600 hover:border-gray-500 hover:text-[#0f1225]'
