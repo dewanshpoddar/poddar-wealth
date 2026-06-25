@@ -61,13 +61,25 @@ export default function Navbar() {
     { href: '/nav-tracker',                 en: 'LIC ULIP NAV Tracker',      hi: 'LIC ULIP NAV ट्रैकर', isNew: true },
   ]
 
-  const servicesLinks = [
+  const protectionLinks = [
     { href: '/services/life-insurance',   en: 'Life Protection',   hi: 'जीवन सुरक्षा' },
-    { href: '/services/health-insurance', en: 'Health Insurance',  hi: 'स्वास्थ्य बीमा' },
-    { href: '/services/retirement',       en: 'Retirement Income', hi: 'सेवानिवृत्ति आय' },
-    { href: '/services/child-planning',   en: 'Child Plans',       hi: 'बाल नियोजन' },
-    { href: '/services/tax-planning',     en: 'Tax Planning',      hi: 'कर नियोजन' },
+    { href: '/services/term-life',        en: 'Term Life Cover',   hi: 'टर्म लाइफ कवर' },
+    { href: '/services/personal-accident', en: 'Personal Accident', hi: 'व्यक्तिगत दुर्घटना' },
     { href: '/services/keyman-insurance', en: 'Keyman Insurance',  hi: 'कीमैन बीमा' },
+  ]
+
+  const savingsLinks = [
+    { href: '/services/child-planning',   en: 'Child Plans',       hi: 'बाल नियोजन' },
+    { href: '/services/child-wedding',    en: 'Child\'s Wedding',  hi: 'बच्चे की शादी' },
+    { href: '/services/retirement',       en: 'Retirement Income', hi: 'सेवानिवृत्ति आय' },
+    { href: '/services/tax-planning',     en: 'Tax Planning',      hi: 'कर नियोजन' },
+  ]
+
+  const healthLinks = [
+    { href: '/services/health-insurance', en: 'Health Insurance',  hi: 'स्वास्थ्य बीमा' },
+    { href: '/services/critical-illness', en: 'Critical Illness',  hi: 'गंभीर बीमारी' },
+    { href: '/services/cancer-cover',     en: 'Cancer Cover',      hi: 'कैंसर कवर' },
+    { href: '/services/group-health',     en: 'Group Health',      hi: 'ग्रुप हेल्थ' },
   ]
 
   const supportLinks = [
@@ -117,32 +129,118 @@ export default function Navbar() {
                 <ChevronDown size={14} className={`${chevronCls} group-hover/services:rotate-180 transition-transform duration-200`} />
               </button>
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-200 z-50">
-                <div className={`border rounded-xl shadow-xl p-2 min-w-[220px] ${
+                <div className={`border rounded-2xl shadow-2xl p-6 w-[760px] flex flex-col gap-5 ${
                   scrolled ? 'bg-[#0f1225] border-white/[0.08]' : 'bg-white border-gray-200'
                 }`}>
-                  {servicesLinks.map(({ href, en, hi }) => (
+                  <div className="grid grid-cols-3 gap-8">
+                    {/* Protection */}
+                    <div>
+                      <Link
+                        href="/services/protection"
+                        className={`block font-bold text-xs uppercase tracking-[0.1em] mb-3.5 pb-2 border-b transition-colors duration-250 ${
+                          scrolled
+                            ? 'text-amber-400 border-white/[0.06] hover:text-amber-300'
+                            : 'text-navy border-gray-100 hover:text-gold'
+                        }`}
+                      >
+                        {label('Protection Solutions', 'सुरक्षा समाधान')}
+                      </Link>
+                      <ul className="space-y-2">
+                        {protectionLinks.map(({ href, en, hi }) => (
+                          <li key={href}>
+                            <Link
+                              href={href}
+                              className={`block py-0.5 text-xs transition-colors rounded ${
+                                isActive(href)
+                                  ? scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
+                                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-slate-600 hover:text-navy'
+                              }`}
+                            >
+                              {label(en, hi)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Savings */}
+                    <div>
+                      <Link
+                        href="/services/savings"
+                        className={`block font-bold text-xs uppercase tracking-[0.1em] mb-3.5 pb-2 border-b transition-colors duration-250 ${
+                          scrolled
+                            ? 'text-amber-400 border-white/[0.06] hover:text-amber-300'
+                            : 'text-navy border-gray-100 hover:text-gold'
+                        }`}
+                      >
+                        {label('Savings & Wealth', 'बचत और वेल्थ')}
+                      </Link>
+                      <ul className="space-y-2">
+                        {savingsLinks.map(({ href, en, hi }) => (
+                          <li key={href}>
+                            <Link
+                              href={href}
+                              className={`block py-0.5 text-xs transition-colors rounded ${
+                                isActive(href)
+                                  ? scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
+                                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-slate-600 hover:text-navy'
+                              }`}
+                            >
+                              {label(en, hi)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Health */}
+                    <div>
+                      <Link
+                        href="/services/health"
+                        className={`block font-bold text-xs uppercase tracking-[0.1em] mb-3.5 pb-2 border-b transition-colors duration-250 ${
+                          scrolled
+                            ? 'text-amber-400 border-white/[0.06] hover:text-amber-300'
+                            : 'text-navy border-gray-100 hover:text-gold'
+                        }`}
+                      >
+                        {label('Health Solutions', 'स्वास्थ्य समाधान')}
+                      </Link>
+                      <ul className="space-y-2">
+                        {healthLinks.map(({ href, en, hi }) => (
+                          <li key={href}>
+                            <Link
+                              href={href}
+                              className={`block py-0.5 text-xs transition-colors rounded ${
+                                isActive(href)
+                                  ? scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
+                                  : scrolled ? 'text-gray-400 hover:text-white' : 'text-slate-600 hover:text-navy'
+                              }`}
+                            >
+                              {label(en, hi)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className={`border-t pt-4 flex items-center justify-between ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`}>
                     <Link
-                      key={href}
-                      href={href}
-                      className={`block px-4 py-2 text-xs rounded-lg transition-colors ${
-                        isActive(href)
-                          ? scrolled ? 'text-amber-400 bg-white/5 font-semibold' : 'text-amber-600 bg-gray-50 font-semibold'
-                          : scrolled ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-[#12152a] hover:bg-gray-50'
+                      href="/services"
+                      className={`text-11 font-bold tracking-wide uppercase transition-colors ${
+                        scrolled ? 'text-gray-400 hover:text-white' : 'text-slate-500 hover:text-[#12152a]'
                       }`}
                     >
-                      {label(en, hi)}
+                      {label('View All Services →', 'सभी सेवाएं देखें →')}
                     </Link>
-                  ))}
-                  
-                  <div className={`my-1 border-t ${scrolled ? 'border-white/[0.06]' : 'border-gray-100'}`} />
-                  <Link
-                    href="/become-advisor"
-                    className={`block px-4 py-2 text-xs rounded-lg transition-colors font-semibold text-amber-500 hover:text-amber-600 ${
-                      scrolled ? 'hover:bg-white/5' : 'hover:bg-gray-50'
-                    }`}
-                  >
-                    {label('Join as Advisor →', 'सलाहकार बनें →')}
-                  </Link>
+
+                    <Link
+                      href="/become-advisor"
+                      className="text-11 font-bold tracking-wide uppercase text-amber-500 hover:text-amber-600"
+                    >
+                      {label('Join as Advisor →', 'सलाहकार बनें →')}
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -390,12 +488,56 @@ export default function Navbar() {
               </button>
               {servicesMobileOpen && (
                 <div className="pb-3 px-6 bg-white/[0.01] flex flex-col gap-0.5">
-                  {servicesLinks.map(({ href, en, hi }) => (
+                  {/* Category: Protection */}
+                  <div className="px-1 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-500">
+                    <Link href="/services/protection" onClick={() => setMobileOpen(false)}>
+                      {label('Protection Solutions', 'सुरक्षा समाधान')}
+                    </Link>
+                  </div>
+                  {protectionLinks.map(({ href, en, hi }) => (
                     <Link
                       key={href}
                       href={href}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center py-2.5 text-sm w-full ${
+                      className={`flex items-center pl-3 py-2.5 text-sm w-full ${
+                        isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      {label(en, hi)}
+                    </Link>
+                  ))}
+
+                  {/* Category: Savings */}
+                  <div className="px-1 pt-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-500">
+                    <Link href="/services/savings" onClick={() => setMobileOpen(false)}>
+                      {label('Savings & Wealth', 'बचत और वेल्थ')}
+                    </Link>
+                  </div>
+                  {savingsLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center pl-3 py-2.5 text-sm w-full ${
+                        isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      {label(en, hi)}
+                    </Link>
+                  ))}
+
+                  {/* Category: Health */}
+                  <div className="px-1 pt-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-500">
+                    <Link href="/services/health" onClick={() => setMobileOpen(false)}>
+                      {label('Health Solutions', 'स्वास्थ्य समाधान')}
+                    </Link>
+                  </div>
+                  {healthLinks.map(({ href, en, hi }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center pl-3 py-2.5 text-sm w-full ${
                         isActive(href) ? 'text-amber-400 font-semibold' : 'text-gray-400 hover:text-white'
                       }`}
                     >
