@@ -36,9 +36,9 @@ export default function Navbar() {
   const isActive = (path: string) =>
     path === '/' ? pathname === '/' : pathname.startsWith(path)
 
-  const brandNameCls = scrolled ? 'text-amber-400' : 'text-[#7a5400]'
-  const brandSubCls = scrolled ? 'text-orange-400 font-bold' : 'text-orange-600 font-bold'
-  const chevronCls = scrolled ? 'text-gray-400' : 'text-gray-500'
+  const brandNameCls = scrolled ? 'text-white' : 'text-[#0f1225]'
+  const brandSubCls = scrolled ? 'text-amber-500/70 font-normal tracking-[0.22em]' : 'text-amber-700/60 font-normal tracking-[0.22em]'
+  const chevronCls = scrolled ? 'text-gray-500' : 'text-gray-400'
 
   const linkCls = (path: string) => {
     const activeColor = scrolled ? 'text-amber-400 font-semibold' : 'text-amber-600 font-semibold'
@@ -71,8 +71,9 @@ export default function Navbar() {
   ]
 
   const supportLinks = [
-    { href: '/claims', en: 'File a Claim', hi: 'दावा सहायता' },
-    { href: '/faq',    en: 'FAQs',          hi: 'FAQs' },
+    { href: '/pay-premium', en: 'Pay Premium',  hi: 'प्रीमियम भुगतान' },
+    { href: '/claims',      en: 'File a Claim', hi: 'दावा सहायता' },
+    { href: '/faq',         en: 'FAQs',         hi: 'FAQs' },
   ]
 
   const label = (en: string, hi: string) => lang === 'hi' ? hi : en
@@ -94,10 +95,10 @@ export default function Navbar() {
               <Image src="/assets/pwm-logo.svg" alt="" width={44} height={44} className="w-full h-full object-contain" priority />
             </div>
             <div className="flex flex-col min-w-0 justify-center">
-              <span className={`text-[17px] lg:text-[20px] font-bold tracking-tight font-display transition-colors leading-tight ${brandNameCls}`}>
+              <span className={`text-[16px] lg:text-[18px] font-bold tracking-tight font-display transition-colors duration-300 leading-tight ${brandNameCls}`}>
                 Poddar Wealth Management
               </span>
-              <span className={`text-[8px] lg:text-[9px] font-bold tracking-[0.18em] uppercase mt-0.5 transition-colors ${brandSubCls}`}>
+              <span className={`text-[8px] uppercase mt-0.5 transition-colors duration-300 ${brandSubCls}`}>
                 Excellence in Service Since 1994
               </span>
             </div>
@@ -215,71 +216,64 @@ export default function Navbar() {
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-4 shrink-0">
+          <div className="flex items-center gap-5 shrink-0">
+            {/* Search — icon only, no box */}
             <button
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
-              className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
-                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
+              className={`flex items-center justify-center w-8 h-8 transition-colors duration-200 cursor-pointer ${
+                scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-400 hover:text-[#0f1225]'
               }`}
             >
-              <Search size={16} />
+              <Search size={15} />
             </button>
 
-            {/* EN / हिंदी toggle — pill slider */}
-            <div className={`flex rounded-full p-0.5 border ${
-              scrolled ? 'bg-gray-800/60 border-white/10' : 'bg-gray-100 border-gray-200'
+            {/* EN · हिं — slim pill, no min-h forcing */}
+            <div className={`flex rounded-full p-[3px] border ${
+              scrolled ? 'bg-white/5 border-white/10' : 'bg-gray-100 border-gray-200'
             }`}>
               <button
                 onClick={() => setLang('en')}
-                className={`px-3.5 py-2.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                  lang === 'en' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+                className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                  lang === 'en'
+                    ? 'bg-amber-500 text-white'
+                    : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang('hi')}
-                className={`px-3.5 py-2.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                  lang === 'hi' ? 'bg-amber-500 text-white shadow-sm' : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+                className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                  lang === 'hi'
+                    ? 'bg-amber-500 text-white'
+                    : scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
-                हिंदी
+                हिं
               </button>
             </div>
 
-            <Link
-              href="/client"
-              className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-all ${
-                scrolled
-                  ? 'border-gray-600 text-gray-300 hover:text-white hover:border-gray-400'
-                  : 'border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400'
-              }`}
-            >
-              {label('Client Portal', 'क्लाइंट पोर्टल')}
-            </Link>
-
+            {/* Login — single entry point, role-based routing after auth */}
             <Link
               href="/login"
-              className={`text-sm font-medium transition-colors ${
-                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#12152a]'
+              className={`text-[13px] font-medium transition-colors duration-200 ${
+                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#0f1225]'
               }`}
             >
               {label('Login', 'लॉगिन')}
             </Link>
 
-            <Link
-              href="/pay-premium"
-              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shadow-sm hover:shadow-md"
-            >
-              {label('Pay Premium', 'प्रीमियम भुगतान')}
-            </Link>
-
+            {/* Primary CTA — sleek rounded pill */}
             <Link
               href="/contact"
-              className="border border-amber-500 hover:bg-amber-50 text-amber-500 font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shadow-sm hover:shadow-md"
+              className={`text-[13px] font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
+                scrolled
+                  ? 'bg-amber-500 text-white hover:bg-amber-400'
+                  : 'bg-[#0f1225] text-amber-400 hover:bg-[#1a1f3c]'
+              }`}
             >
-              {label('Get a free quote', 'फ्री कोट')}
+              {label('Get a Quote', 'फ्री कोट')}
             </Link>
           </div>
         </div>
