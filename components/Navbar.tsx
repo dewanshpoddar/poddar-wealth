@@ -254,11 +254,13 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Login — single entry point, role-based routing after auth */}
+            {/* Login — outline pill, matches Get a Quote shape as secondary action */}
             <Link
               href="/login"
-              className={`text-[13px] font-medium transition-colors duration-200 ${
-                scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-[#0f1225]'
+              className={`text-[13px] font-semibold px-4 py-2 rounded-full border transition-all duration-200 active:scale-95 ${
+                scrolled
+                  ? 'border-white/20 text-gray-300 hover:border-white/40 hover:text-white'
+                  : 'border-gray-300 text-gray-600 hover:border-gray-500 hover:text-[#0f1225]'
               }`}
             >
               {label('Login', 'लॉगिन')}
