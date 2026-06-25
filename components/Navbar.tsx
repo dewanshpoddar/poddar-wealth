@@ -279,57 +279,55 @@ export default function Navbar() {
         </div>
 
         {/* Mobile header */}
-        <div className="md:hidden flex items-center gap-2 px-4 h-16 w-full">
-          <Link href="/" className="flex items-center gap-2 flex-1 min-w-0" onClick={() => setMobileOpen(false)}>
-            <Image src="/assets/pwm-logo.svg" alt="" width={36} height={36} className="flex-shrink-0" />
-            <span className={`flex-1 min-w-0 truncate text-sm font-bold uppercase tracking-wide transition-colors ${
-              scrolled ? 'text-amber-400' : 'text-amber-600'
-            }`}>
-              Poddar Wealth
-            </span>
+        <div className="md:hidden flex items-center gap-3 px-4 h-16 w-full">
+          {/* Logo + full brand name */}
+          <Link href="/" className="flex items-center gap-2.5 flex-1 min-w-0" onClick={() => setMobileOpen(false)}>
+            <Image src="/assets/pwm-logo.svg" alt="" width={32} height={32} className="flex-shrink-0" />
+            <div className="flex flex-col min-w-0">
+              <span className={`text-[12px] font-bold tracking-tight leading-tight transition-colors duration-300 ${
+                scrolled ? 'text-white' : 'text-[#0f1225]'
+              }`}>
+                Poddar Wealth Management
+              </span>
+              <span className={`text-[8px] uppercase tracking-[0.18em] transition-colors duration-300 ${
+                scrolled ? 'text-amber-500/60' : 'text-amber-700/50'
+              }`}>
+                Since 1994
+              </span>
+            </div>
           </Link>
 
-          {/* Mobile lang toggle — pill */}
-          <div className={`flex rounded-full p-0.5 flex-shrink-0 border h-11 items-stretch ${
-            scrolled ? 'bg-gray-800/50 border-white/5' : 'bg-gray-100 border-gray-200'
+          {/* Slim lang pill */}
+          <div className={`flex rounded-full p-[3px] flex-shrink-0 border ${
+            scrolled ? 'bg-white/5 border-white/10' : 'bg-gray-100 border-gray-200'
           }`}>
             <button
               onClick={() => setLang('en')}
-              className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
-                lang === 'en'
-                  ? 'bg-amber-500 text-white shadow-sm'
-                  : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+              className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                lang === 'en' ? 'bg-amber-500 text-white' : scrolled ? 'text-gray-400' : 'text-gray-500'
               }`}
             >
               EN
             </button>
             <button
               onClick={() => setLang('hi')}
-              className={`px-3 text-[10px] font-bold rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer min-w-[44px] ${
-                lang === 'hi'
-                  ? 'bg-amber-500 text-white shadow-sm'
-                  : scrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+              className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-all duration-200 cursor-pointer ${
+                lang === 'hi' ? 'bg-amber-500 text-white' : scrolled ? 'text-gray-400' : 'text-gray-500'
               }`}
             >
-              हि
+              हिं
             </button>
           </div>
 
-          <Link
-            href="/pay-premium"
-            className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs px-3 py-2.5 min-h-[44px] rounded-lg transition-colors shadow-sm flex items-center justify-center"
-          >
-            {label('Pay Premium', 'भुगतान')}
-          </Link>
-
+          {/* Hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            className={`flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer ${
-              scrolled ? 'text-white' : 'text-gray-800'
+            className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
+              scrolled ? 'text-white hover:bg-white/10' : 'text-gray-700 hover:bg-gray-100'
             }`}
             aria-label="Open menu"
           >
-            <Menu size={22} />
+            <Menu size={20} />
           </button>
         </div>
       </nav>
