@@ -12,8 +12,6 @@ import { useLang } from '@/lib/LangContext'
 import {
   ShieldCheck,
   Eye,
-  Heart,
-  PhoneCall,
   MapPin,
   Trophy,
   Star,
@@ -382,31 +380,31 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {/* MDRT - dark premium card so logo is legible */}
-            <div className="bg-[#0f1225] border border-white/10 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
-              <div className="h-24 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA Member logo" width={100} height={80} className="object-contain w-auto h-full" />
+            {/* MDRT */}
+            <div className="bg-gradient-to-b from-amber-50/60 to-white border border-gold/25 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_8px_30px_rgba(212,175,55,0.18)] hover:border-gold/50 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 w-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 relative">
+                <Image src="/assets/mdrt-seeklogo.svg" alt="MDRT USA Member logo" fill className="object-contain p-2" />
               </div>
               <div>
-                <h4 className="text-[14px] font-bold text-white mb-1">
+                <h4 className="text-[14px] font-bold text-navy mb-1">
                   {lang === 'en' ? 'MDRT USA Member' : 'MDRT सदस्य'}
                 </h4>
-                <p className="text-[11px] text-amber-400/70 font-bold uppercase tracking-wider">
+                <p className="text-[11px] text-gold font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Qualified Since 2010' : '2010 से अर्हता प्राप्त'}
                 </p>
               </div>
             </div>
 
-            {/* Chairman's Club - dark premium card */}
-            <div className="bg-[#0f1225] border border-white/10 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] hover:border-gold/30 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
-              <div className="h-24 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105">
-                <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club award logo" width={120} height={80} className="object-contain w-auto h-full" />
+            {/* Chairman's Club */}
+            <div className="bg-gradient-to-b from-amber-50/60 to-white border border-gold/25 rounded-3xl p-6 flex flex-col items-center text-center justify-between group hover:shadow-[0_8px_30px_rgba(212,175,55,0.18)] hover:border-gold/50 hover:-translate-y-1.5 transition-[transform,border-color,box-shadow] duration-300">
+              <div className="h-24 w-full flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 relative">
+                <Image src="/assets/chairmanclub.webp" alt="LIC Chairman's Club award logo" fill className="object-contain p-2" />
               </div>
               <div>
-                <h4 className="text-[14px] font-bold text-white mb-1">
+                <h4 className="text-[14px] font-bold text-navy mb-1">
                   {lang === 'en' ? "Chairman's Club" : 'चेयरमैन क्लब'}
                 </h4>
-                <p className="text-[11px] text-amber-400/70 font-bold uppercase tracking-wider">
+                <p className="text-[11px] text-gold font-bold uppercase tracking-wider">
                   {lang === 'en' ? 'Member Since 2015' : '2015 से सदस्य'}
                 </p>
               </div>
