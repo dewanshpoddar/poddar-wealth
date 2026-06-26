@@ -19,6 +19,7 @@ PROTECT_HUB="/Users/dewanshpoddar/.gemini/antigravity-ide/brain/2dc1d3d3-c62f-4d
 SAVINGS_HUB="/Users/dewanshpoddar/.gemini/antigravity-ide/brain/2dc1d3d3-c62f-4de7-85f3-1cdf64af9b3c/savings_hero_1782417220797.png"
 HEALTH_HUB="/Users/dewanshpoddar/.gemini/antigravity-ide/brain/2dc1d3d3-c62f-4de7-85f3-1cdf64af9b3c/health_hero_1782417239639.png"
 WEDDING="/Users/dewanshpoddar/.gemini/antigravity-ide/brain/2dc1d3d3-c62f-4de7-85f3-1cdf64af9b3c/child_wedding_hero_1782420393424.png"
+SERVICES_JOURNEY="/Users/dewanshpoddar/.gemini/antigravity-ide/brain/2dc1d3d3-c62f-4de7-85f3-1cdf64af9b3c/services_hub_journey_1782445003034.png"
 
 node scripts/optimize-image.js "$LIFE" "life-insurance"
 node scripts/optimize-image.js "$HEALTH_INS" "health-insurance"
@@ -35,5 +36,6 @@ node scripts/optimize-image.js "$PROTECT_HUB" "protection"
 node scripts/optimize-image.js "$SAVINGS_HUB" "savings"
 node scripts/optimize-image.js "$HEALTH_HUB" "health"
 node scripts/optimize-image.js "$WEDDING" "child-wedding"
+node scripts/optimize-image.js "$SERVICES_JOURNEY" "services_hub_journey"
 
 echo "All images optimized and copied!"

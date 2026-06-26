@@ -129,63 +129,108 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-[#fafbfc] text-navy">
       
       {/* 1. HERO SECTION WITH IMAGE COLLAGE & GLOW */}
-      <section className="pt-24 pb-20 md:py-32 bg-navy relative overflow-hidden text-white">
-        {/* Glow backgrounds */}
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[60%] rounded-full bg-gold/10 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[50%] rounded-full bg-amber-500/5 blur-[100px] pointer-events-none" />
+      <section className="pt-24 pb-20 md:py-32 bg-[#090a12] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#12162a] via-[#090a12] to-[#040509] relative overflow-hidden text-white border-b border-white/[0.05]">
+        {/* Modern decorative grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_70%)] pointer-events-none" />
 
-        <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center relative z-10">
+        {/* Dynamic Glow Orbs */}
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[60%] rounded-full bg-gold/10 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[50%] rounded-full bg-amber-500/5 blur-[110px] pointer-events-none" />
+
+        <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
           {/* Left Text column */}
           <div className="lg:col-span-7 flex flex-col justify-center text-left">
-            <span className="text-xs md:text-sm font-bold text-gold uppercase tracking-[0.18em] mb-4">
-              {t.services.eyebrow}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-display font-bold leading-[1.1] mb-6 tracking-tight">
-              One Lifetime. <span className="text-gold italic">Complete Protection.</span>
+            {/* Premium tag capsule */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md mb-6 self-start">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span className="text-[10px] md:text-11 font-bold text-gold uppercase tracking-[0.2em] leading-none">
+                {t.services.eyebrow}
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-6.5xl font-display font-light leading-[1.15] mb-6 tracking-tight text-white">
+              One Lifetime. <br className="hidden sm:inline" />
+              <span className="font-semibold text-gold italic">Complete Protection.</span>
             </h1>
-            <p className="text-gray-300 text-16 md:text-18 max-w-xl leading-relaxed mb-8">
+            
+            <p className="text-slate-300 text-[15px] md:text-17 max-w-lg leading-relaxed mb-10 font-normal">
               {t.services.subtitle}
             </p>
 
-            {/* Legacy highlights */}
-            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-white/10">
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-gold" />
-                <span className="text-13 font-bold tracking-wider uppercase text-gray-300">31+ Years Legacy</span>
+            {/* Premium CTA Buttons */}
+            <div className="flex flex-wrap items-center gap-4 mb-10">
+              <Link 
+                href="/contact" 
+                className="pw-btn pw-btn--gold shadow-lg shadow-gold-sm min-h-[48px] px-8 flex items-center justify-center font-bold text-13 uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 hover:shadow-gold-md"
+              >
+                {isHi ? "मुफ्त समीक्षा बुक करें" : "Book Free Review"}
+              </Link>
+              <a 
+                href="#catalog-section" 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/20 text-white font-bold text-12 uppercase tracking-wider transition-all duration-300"
+              >
+                <span>{isHi ? "सभी प्लान देखें" : "Explore Solutions"}</span>
+                <ArrowRight className="w-4 h-4 text-gold" />
+              </a>
+            </div>
+
+            {/* Premium Credentials block */}
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-8 border-t border-white/[0.08] w-full">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Award className="w-4.5 h-4.5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-white text-13 font-bold leading-none">31+ Years Legacy</p>
+                  <p className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-wider font-semibold">Gorakhpur & Beyond</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-gold" />
-                <span className="text-13 font-bold tracking-wider uppercase text-gray-300">5,000+ Happy Families</span>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-gold/10 flex items-center justify-center">
+                  <Users className="w-4.5 h-4.5 text-gold" />
+                </div>
+                <div>
+                  <p className="text-white text-13 font-bold leading-none">5,000+ Happy Families</p>
+                  <p className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-wider font-semibold">Guaranteed Security</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Right Image Frame (Family Journey representation) */}
-          <div className="lg:col-span-5 relative w-full h-[320px] md:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
-            {/* Master Generational Image placeholder */}
-            <Image
-              src="/images/services/services_hub_journey.webp"
-              alt="Three-Generation Indian Family Journey"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 40vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-103"
-              // Fallback to savings hub image if this is not generated yet
-              onError={(e) => {
-                const img = e.target as HTMLImageElement
-                img.src = '/images/services/savings.webp'
-              }}
-            />
-            {/* Premium overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/10 to-transparent pointer-events-none" />
+          <div className="lg:col-span-5 relative group">
+            {/* Premium outer ambient glow */}
+            <div className="absolute -inset-4 bg-gradient-to-tr from-gold/15 to-amber-500/5 rounded-[36px] blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
             
-            {/* Visual floating badge */}
-            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-navy-light/80 backdrop-blur-md border border-white/10 flex items-center justify-between">
-              <div>
-                <p className="text-11 font-bold text-gold uppercase tracking-wider">Inter-generational</p>
-                <p className="text-14 font-bold text-white mt-0.5">Absolute Peace of Mind</p>
+            <div className="relative w-full h-[340px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 bg-[#0b0d19]">
+              {/* Master Generational Image */}
+              <Image
+                src="/images/services/services_hub_journey.webp"
+                alt="Three-Generation Indian Family Journey"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                // Fallback to savings hub image if this is not generated yet
+                onError={(e) => {
+                  const img = e.target as HTMLImageElement
+                  img.src = '/images/services/savings.webp'
+                }}
+              />
+              {/* Premium gradients to blend */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090a12] via-transparent to-transparent pointer-events-none opacity-90" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#090a12]/30 via-transparent to-[#090a12]/30 pointer-events-none" />
+              
+              {/* Visual floating badge */}
+              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-[#0b0d19]/80 backdrop-blur-xl border border-white/[0.08] flex items-center justify-between shadow-2xl transition-all duration-300 hover:border-gold/30">
+                <div>
+                  <p className="text-[10px] font-bold text-gold uppercase tracking-[0.15em] leading-none">Inter-generational Journey</p>
+                  <p className="text-14 font-bold text-white mt-1.5 tracking-tight">Absolute Peace of Mind</p>
+                </div>
+                <div className="w-9 h-9 rounded-xl bg-gold/10 flex items-center justify-center border border-gold/20">
+                  <Sparkles className="w-4 h-4 text-gold animate-pulse" />
+                </div>
               </div>
-              <Sparkles className="w-5 h-5 text-gold animate-pulse" />
             </div>
           </div>
         </div>
