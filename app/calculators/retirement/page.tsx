@@ -8,6 +8,9 @@ import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
 
 const expenseOptions = [
   { label: '₹15K', value: 15000 },
@@ -62,6 +65,7 @@ function RetirementCalcContent() {
   const [yearsToRetire, setYearsToRetire] = useState<number>(30)
 
   // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
@@ -72,6 +76,12 @@ function RetirementCalcContent() {
       const guessedExpense = Math.ceil((Number(qSa) / 240) / 5000) * 5000
       setMonthlyExpense(Math.max(15000, Math.min(guessedExpense, 60000)))
     }
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
+    if (!qSa && sessionInputs.monthlyExpenses) setMonthlyExpense(sessionInputs.monthlyExpenses)
+    if (sessionInputs.policyTerm) setRetirementAge(Math.min(65, Math.max(50, (sessionInputs.age || 30) + sessionInputs.policyTerm)))
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -119,6 +129,10 @@ function RetirementCalcContent() {
     const requiredSip = netCorpusNeeded / sipFactor
     setMonthlySip(Math.max(requiredSip, 0))
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ age, policyTerm: years, monthlyExpenses: monthlyExpense })
+    addResult('retirement', { corpus: baseCorpusNeeded, monthlySip: requiredSip })
   }
 
   const handleReset = () => {
@@ -275,6 +289,18 @@ Can we discuss pension plans?` : ''
               inlineLinkHref="/services/retirement"
               insightText={`Today's ₹${Math.round(monthlyExpense).toLocaleString('en-IN')}/month becomes ₹${Math.round(futureExpense).toLocaleString('en-IN')}/month in ${yearsToRetire} years. Start with ₹${Math.round(monthlySip).toLocaleString('en-IN')}/month today — the earlier, the less you need.`}
               InsightIcon={Sun}
+              rawValue={monthlySip}
+              valueSuffix="/month"
+              shareText={`I calculated my retirement SIP on Poddar Wealth: target corpus ₹${Math.round(requiredCorpus).toLocaleString('en-IN')}, requires SIP ₹${Math.round(monthlySip).toLocaleString('en-IN')}/month. Try it: poddarwealth.com/calculators/retirement`}
+            />
+
+            <LeadCapture
+              calculatorId="retirement"
+              inputs={{ age, monthlyExpense, retirementAge, inflation, returnRate, existingSavings, epfContribution, lifeExpectancy }}
+              result={{ corpus: requiredCorpus, monthlySip }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={msg}
+              onReset={handleReset}
             />
 
             <ResultBreakdown rows={breakdownRows} bars={bars} />

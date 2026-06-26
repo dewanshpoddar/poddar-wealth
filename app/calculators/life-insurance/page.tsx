@@ -8,6 +8,9 @@ import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
 
 const incomeOptions = [
   { label: '₹15K', value: 15000 },
@@ -48,6 +51,7 @@ const COVERAGE_FAQ = [
 
 function CoverageCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   const [monthlyIncome, setMonthlyIncome] = useState<number>(40000)
@@ -71,7 +75,7 @@ function CoverageCalcContent() {
   const [emergencyFund, setEmergencyFund] = useState<number>(0)
   const [monthlyPremiumEstimate, setMonthlyPremiumEstimate] = useState<number>(0)
 
-  // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
@@ -81,6 +85,12 @@ function CoverageCalcContent() {
       // Set existing cover as the URL SA to see if there is any remaining gap
       setExistingCover(String(qSa))
     }
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
+    if (!qSa && sessionInputs.sumAssured) setExistingCover(String(sessionInputs.sumAssured))
+    if (sessionInputs.annualIncome) setMonthlyIncome(Math.round(sessionInputs.annualIncome / 12))
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -122,6 +132,10 @@ function CoverageCalcContent() {
     setEmergencyFund(emergency)
     setMonthlyPremiumEstimate(estMonthlyPrem)
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ age, sumAssured: gap > 0 ? gap : recommended, annualIncome: annualIncome })
+    addResult('coverage', { need: recommended, gap: gap, existing: existing })
   }
 
   const handleReset = () => {
@@ -293,6 +307,20 @@ Can you suggest a term policy to cover this?` : ''
                   : `Your family gets 12× annual income in coverage — within the recommended 15× range. You are well protected!`
               }
               InsightIcon={isGap ? AlertTriangle : Shield}
+              rawValue={recommendedCover}
+              shareText={`I calculated my life insurance coverage need on Poddar Wealth: need ₹${recommendedCover.toLocaleString('en-IN')}, gap ₹${gapVal.toLocaleString('en-IN')}. Try it: poddarwealth.com/calculators/life-insurance`}
+              celebrationText={!isGap ? (lang === 'hi' ? '🛡️ आपका परिवार पूरी तरह से सुरक्षित है!' : '🛡️ Your family is well protected') : undefined}
+              CelebrationIcon={!isGap ? Shield : undefined}
+              pulseIcon={!isGap}
+            />
+
+            <LeadCapture
+              calculatorId="life-insurance"
+              inputs={{ monthlyIncome, age, dependents, method, existingCover, outstandingLoans, educationFund, spouseWorking }}
+              result={{ coverageNeed: recommendedCover, gap: gapVal, existing: existingCover ? Number(existingCover) : 0 }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={whatsappUrl.split('text=')[1] ? decodeURIComponent(whatsappUrl.split('text=')[1]) : msg}
+              onReset={handleReset}
             />
 
             <ResultBreakdown rows={breakdownRows} />

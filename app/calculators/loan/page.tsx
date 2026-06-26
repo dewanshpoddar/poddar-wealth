@@ -9,6 +9,9 @@ import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -82,13 +85,18 @@ function LoanCalcContent() {
   const [interest3yr, setInterest3yr] = useState<number>(0)
   const [interest5yr, setInterest5yr] = useState<number>(0)
 
-  // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qSa = searchParams.get('sa')
     const qTerm = searchParams.get('term')
 
     if (qSa) setSa(Number(qSa))
     if (qTerm) setTerm(Number(qTerm))
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
+    if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -141,6 +149,10 @@ function LoanCalcContent() {
     setInterest3yr(getCompoundInterest(3))
     setInterest5yr(getCompoundInterest(5))
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ sumAssured: sa, policyTerm: term })
+    addResult('loan', { maxLoan: loanLimit, surrenderValue: finalSurrender })
   }
 
   const handleReset = () => {
@@ -265,6 +277,8 @@ How can I apply for this policy loan?` : ''
               inlineLinkHref={`/calculators/surrender-value?age=${searchParams.get('age') || 30}&sa=${sa}&term=${term}`}
               insightText={`Get ₹${maxLoan.toLocaleString('en-IN')} today. Your policy, cover, and maturity all stay intact. Repay interest/principal anytime before maturity.`}
               InsightIcon={Landmark}
+              rawValue={maxLoan}
+              shareText={`I calculated my LIC policy loan limit on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${yearsPaid}/${term}yr paid → loan capacity ₹${maxLoan.toLocaleString('en-IN')}. Try it: poddarwealth.com/calculators/loan`}
             >
               <div className="mt-4 p-4 rounded-xl bg-white/70 border border-emerald-200/50 text-xs text-gray-800 space-y-2">
                 <div className="font-semibold text-gray-900 border-b border-emerald-200/40 pb-1 text-sm">
@@ -288,6 +302,15 @@ How can I apply for this policy loan?` : ''
                 </div>
               </div>
             </ResultCard>
+
+            <LeadCapture
+              calculatorId="loan"
+              inputs={{ planNo, sa, term, yearsPaid, bonusRate }}
+              result={{ maxLoan, surrenderValue }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={msg}
+              onReset={handleReset}
+            />
 
             <ResultBreakdown rows={breakdownRows} />
 

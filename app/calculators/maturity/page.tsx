@@ -9,6 +9,8 @@ import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -67,6 +69,7 @@ function MaturityCalcContent() {
   const [effectiveReturn, setEffectiveReturn] = useState<number>(0)
 
   // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
@@ -75,6 +78,12 @@ function MaturityCalcContent() {
     if (qAge) setAge(Number(qAge))
     if (qSa) setSa(Number(qSa))
     if (qTerm) setTerm(Number(qTerm))
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
+    if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
+    if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
   }, [searchParams])
 
   const selectedPlan = PLANS.find(p => p.planNo === planNo)
@@ -126,6 +135,10 @@ function MaturityCalcContent() {
     setFabVal(fab)
     setEffectiveReturn(Number(cagr.toFixed(2)))
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ age, sumAssured: sa, policyTerm: term })
+    addResult('maturity', { value: mat, totalPaid: totalPremPaid, netGain: mat - totalPremPaid })
   }
 
   const handleReset = () => {
@@ -268,6 +281,17 @@ Can you suggest how to maximize returns?` : ''
               inlineLinkHref={`/calculators/life-insurance?age=${age}&sa=${sa}&term=${term}`}
               insightText={`Your ₹${Math.round(sa).toLocaleString('en-IN')} policy grows to ₹${Math.round(maturityVal).toLocaleString('en-IN')} — that's ~${effectiveReturn}% CAGR returns PLUS you had life cover the entire ${term} years.`}
               InsightIcon={TrendingUp}
+              rawValue={maturityVal}
+              shareText={`I calculated my LIC policy maturity on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name}, ${term}yr → maturity ₹${Math.round(maturityVal).toLocaleString('en-IN')} (~${effectiveReturn}% CAGR). Try it: poddarwealth.com/calculators/maturity`}
+            />
+
+            <LeadCapture
+              calculatorId="maturity"
+              inputs={{ planNo, sa, age, term, bonusRate, includeFAB, customPremium }}
+              result={{ maturityValue: maturityVal, totalPaid, netGain: maturityVal - totalPaid }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={msg}
+              onReset={handleReset}
             />
 
             <ResultBreakdown rows={breakdownRows} bars={bars} />

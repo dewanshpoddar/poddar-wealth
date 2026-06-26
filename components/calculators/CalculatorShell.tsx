@@ -1,19 +1,34 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Info, Calculator } from 'lucide-react'
+import { 
+  Info, 
+  Calculator, 
+  Users, 
+  Shield, 
+  TrendingUp, 
+  Umbrella, 
+  Sunset, 
+  Scale, 
+  HandCoins, 
+  HeartPulse 
+} from 'lucide-react'
 
 import { useLang } from '@/lib/LangContext'
+import { SOCIAL_PROOF } from '@/lib/data/calculator-insights'
+import { getSession } from '@/lib/calculator-session'
+import { ADVISOR_PHONE } from '@/lib/constants'
+import SessionSummary from '@/components/calculators/SessionSummary'
 
 // Tab definitions
 const TABS = [
-  { id: 'premium', label: 'Premium', path: '/calculators/premium' },
-  { id: 'maturity', label: 'Maturity', path: '/calculators/maturity' },
-  { id: 'coverage', label: 'Coverage', path: '/calculators/life-insurance' },
-  { id: 'retirement', label: 'Retirement', path: '/calculators/retirement' },
-  { id: 'surrender', label: 'Surrender', path: '/calculators/surrender-value' },
-  { id: 'loan', label: 'Loan', path: '/calculators/loan' },
-  { id: 'health', label: 'Health Score', path: '/calculators/policy-health' },
+  { id: 'premium', label: 'Premium', path: '/calculators/premium', icon: Shield },
+  { id: 'maturity', label: 'Maturity', path: '/calculators/maturity', icon: TrendingUp },
+  { id: 'coverage', label: 'Coverage', path: '/calculators/life-insurance', icon: Umbrella },
+  { id: 'retirement', label: 'Retirement', path: '/calculators/retirement', icon: Sunset },
+  { id: 'surrender', label: 'Surrender', path: '/calculators/surrender-value', icon: Scale },
+  { id: 'loan', label: 'Loan', path: '/calculators/loan', icon: HandCoins },
+  { id: 'health', label: 'Health Score', path: '/calculators/policy-health', icon: HeartPulse },
 ]
 
 // Related calculators database
@@ -128,6 +143,21 @@ export default function CalculatorShell({
 }: CalculatorShellProps) {
   const { lang } = useLang()
   const [showInfo, setShowInfo] = useState(false)
+  const [socialProofText, setSocialProofText] = useState('')
+  const [showCompletionBadge, setShowCompletionBadge] = useState(false)
+
+  useEffect(() => {
+    // Pick random social proof index
+    const idx = Math.floor(Math.random() * SOCIAL_PROOF.length)
+    setSocialProofText(SOCIAL_PROOF[idx])
+
+    // Check completion badge state
+    const s = getSession()
+    const dismissed = sessionStorage.getItem('pw-calc-completion-badge-dismissed')
+    if (s.calculatorsUsed.length >= 3 && !dismissed) {
+      setShowCompletionBadge(true)
+    }
+  }, [])
 
   // Tab translations
   const getTabLabel = (id: string, l: string) => {
@@ -208,6 +238,39 @@ export default function CalculatorShell({
 
       <div className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto space-y-6">
+
+          {/* ── COMPLETION BADGE ── */}
+          {showCompletionBadge && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm flex justify-between items-center text-amber-900 animate-fadeIn">
+              <div className="flex items-center gap-2">
+                <span className="text-base">🎯</span>
+                <span>
+                  {lang === 'hi' 
+                    ? "आपने 3 कैलकुलेटरों का उपयोग किया है — बेहतरीन शोध! पूर्ण बीमा समीक्षा चाहते हैं? अजय जी से बात करें" 
+                    : "You've used 3 calculators — great research! Want a complete insurance review? Talk to Ajay ji"}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <a 
+                  href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent("Namaste Ajay ji, I have completed 3+ calculations on your website and would like a complete insurance review.")}`}
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer"
+                >
+                  {lang === 'hi' ? 'बात करें →' : 'Talk to Ajay ji →'}
+                </a>
+                <button 
+                  onClick={() => {
+                    setShowCompletionBadge(false)
+                    sessionStorage.setItem('pw-calc-completion-badge-dismissed', '1')
+                  }}
+                  className="text-amber-500 hover:text-amber-700 font-bold text-sm cursor-pointer px-1"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
           
           {/* ── CALCULATOR TABS ── */}
           <div>
@@ -216,16 +279,18 @@ export default function CalculatorShell({
               <nav className="flex space-x-2 -mb-px">
                 {TABS.map((tab) => {
                   const isActive = tab.id === activeTabId
+                  const TabIcon = tab.icon
                   return (
                     <Link
                       key={tab.id}
                       href={`${tab.path}${queryString}`}
-                      className={`px-4 py-3 text-sm font-medium border-b-2 transition-all duration-200 ${
+                      className={`px-4 py-3 text-sm font-medium border-b-2 transition-all duration-200 flex items-center gap-1.5 ${
                         isActive
                           ? 'text-blue-600 border-blue-600'
                           : 'text-gray-500 hover:text-gray-700 border-transparent hover:border-gray-300'
                       }`}
                     >
+                      <TabIcon className="w-4 h-4 flex-shrink-0" />
                       {getTabLabel(tab.id, lang)}
                     </Link>
                   )
@@ -237,22 +302,35 @@ export default function CalculatorShell({
             <div className="md:hidden flex gap-2 overflow-x-auto py-2 -mx-4 px-4 scrollbar-none">
               {TABS.map((tab) => {
                 const isActive = tab.id === activeTabId
+                const TabIcon = tab.icon
                 return (
                   <Link
                     key={tab.id}
                     href={`${tab.path}${queryString}`}
-                    className={`flex-shrink-0 px-3.5 py-2 text-sm rounded-full transition-all duration-200 ${
+                    className={`flex-shrink-0 px-3.5 py-2 text-sm rounded-full transition-all duration-200 flex items-center gap-1.5 ${
                       isActive
                         ? 'bg-[#0f1225] text-white font-medium'
                         : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-400'
                     }`}
                   >
+                    <TabIcon className="w-3.5 h-3.5 flex-shrink-0" />
                     {getTabLabel(tab.id, lang)}
                   </Link>
                 )
               })}
             </div>
+
+            {/* Social Proof Line */}
+            {socialProofText && (
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-400 mt-2.5 animate-fadeIn">
+                <Users className="w-3.5 h-3.5 text-gray-400" />
+                <span>{socialProofText}</span>
+              </div>
+            )}
           </div>
+
+          {/* ── SESSION SUMMARY (Dashboard) ── */}
+          <SessionSummary />
 
           {/* ── CALCULATOR CARD ── */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-8">

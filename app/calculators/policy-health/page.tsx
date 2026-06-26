@@ -1,13 +1,16 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ShieldAlert, ShieldCheck, Download } from 'lucide-react'
+import { ShieldAlert, ShieldCheck, Download, Award, TrendingUp } from 'lucide-react'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
 
 const incomeOptions = [
   { label: '₹1.8L', value: 180000 },
@@ -63,6 +66,7 @@ function getGradeColor(grade: string): string {
 
 function PolicyHealthCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   const [annualIncome, setAnnualIncome] = useState<number>(300000)
@@ -97,13 +101,19 @@ function PolicyHealthCalcContent() {
   const [dependentComment, setDependentComment] = useState<string>('')
   const [topImprovement, setTopImprovement] = useState<string>('')
 
-  // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
     
     if (qAge) setAge(Number(qAge))
     if (qSa) setTotalCover(String(qSa))
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
+    if (!qSa && sessionInputs.sumAssured) setTotalCover(String(sessionInputs.sumAssured))
+    if (sessionInputs.annualIncome) setAnnualIncome(sessionInputs.annualIncome)
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -219,6 +229,10 @@ function PolicyHealthCalcContent() {
     }
     setTopImprovement(suggestion)
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ age, sumAssured: coverVal, annualIncome })
+    addResult('healthScore', { score: finalScore, grade: gr })
   }
 
   const handleDownload = async () => {
@@ -414,6 +428,12 @@ Can you suggest how I can improve my portfolio?` : ''
               inlineLinkHref="/services/term-life"
               insightText={`Your biggest improvement area: ${topImprovement}`}
               InsightIcon={totalScore >= 80 ? ShieldCheck : ShieldAlert}
+              rawValue={totalScore}
+              isCurrency={false}
+              valueSuffix="/100"
+              shareText={`I checked my insurance policy health score on Poddar Wealth: Score ${totalScore}/100 (${grade}). Try it: poddarwealth.com/calculators/policy-health`}
+              celebrationText={totalScore >= 80 ? (lang === 'hi' ? '🏆 शीर्ष 20% — आप अधिकांश से बेहतर कर रहे हैं!' : "🏆 Top 20% — you're doing better than most!") : totalScore < 50 ? (lang === 'hi' ? '📈 अच्छी शुरुआत — छोटे बदलाव बड़ा अंतर लाते हैं' : "📈 Good start — small improvements make a big difference") : undefined}
+              CelebrationIcon={totalScore >= 80 ? Award : TrendingUp}
             >
               {/* Progress bars inside the result card */}
               <div className="mt-4 space-y-3 p-4 rounded-xl bg-white/70 border border-gray-200/50">
@@ -498,6 +518,15 @@ Can you suggest how I can improve my portfolio?` : ''
                 </button>
               </div>
             </ResultCard>
+
+            <LeadCapture
+              calculatorId="policy-health"
+              inputs={{ annualIncome, totalCover, hasHealth, hasTerm, policiesCount, premiumAmount, age, dependents, policyYear }}
+              result={{ score: totalScore, grade }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={msg}
+              onReset={handleReset}
+            />
 
             <ResultBreakdown rows={breakdownRows} />
 

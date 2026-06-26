@@ -9,6 +9,9 @@ import CalculatorShell from '@/components/calculators/CalculatorShell'
 import ResultCard from '@/components/calculators/ResultCard'
 import ResultBreakdown from '@/components/calculators/ResultBreakdown'
 import ActionBar from '@/components/calculators/ActionBar'
+import LeadCapture from '@/components/calculators/LeadCapture'
+import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -85,7 +88,7 @@ function SurrenderCalcContent() {
   const [reducedSA, setReducedSA] = useState<number>(0)
   const [reducedMaturity, setReducedMaturity] = useState<number>(0)
 
-  // Parse URL query params
+  // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
@@ -93,6 +96,11 @@ function SurrenderCalcContent() {
 
     if (qSa) setSa(Number(qSa))
     if (qTerm) setTerm(Number(qTerm))
+
+    // Session pre-fill fallback
+    const sessionInputs = getSharedInputs()
+    if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
+    if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
   }, [searchParams])
 
   const selectedPlan = PLANS.find(p => p.planNo === planNo)
@@ -146,6 +154,10 @@ function SurrenderCalcContent() {
     setReducedSA(paidUpSA)
     setReducedMaturity(paidUpSA + accruedBonus)
     setHasCalculated(true)
+
+    // Save to session
+    updateSession({ sumAssured: sa, policyTerm: term })
+    addResult('surrender', { value: finalSurrender, loss, loanAlternative: Math.round(finalSurrender * 0.90) })
   }
 
   const handleReset = () => {
@@ -283,6 +295,8 @@ Should I surrender or take a policy loan?` : ''
               type="caution"
               insightText={`Surrendering costs ₹${lossAmount.toLocaleString('en-IN')}. A policy loan gives ₹${loanAmount.toLocaleString('en-IN')} NOW while keeping your full ₹${sa.toLocaleString('en-IN')} cover. Better deal.`}
               InsightIcon={AlertTriangle}
+              rawValue={surrenderValue}
+              shareText={`I calculated my LIC policy surrender value on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name}, ${yearsPaid}/${term}yr paid → surrender cash value ₹${surrenderValue.toLocaleString('en-IN')} (loss: ₹${lossAmount.toLocaleString('en-IN')}). Try it: poddarwealth.com/calculators/surrender-value`}
             >
               {/* Calculated alternatives display panel */}
               <div className="mt-4 p-4 rounded-xl bg-white/70 border border-amber-200/50 text-xs text-gray-800 space-y-3">
@@ -309,6 +323,15 @@ Should I surrender or take a policy loan?` : ''
                 </div>
               </div>
             </ResultCard>
+
+            <LeadCapture
+              calculatorId="surrender-value"
+              inputs={{ planNo, sa, term, yearsPaid, annualPremiumInput, bonusRate }}
+              result={{ surrenderValue, loss: lossAmount, loanAlternative: loanAmount }}
+              hasCalculated={hasCalculated}
+              whatsappMessage={msg}
+              onReset={handleReset}
+            />
 
             <ResultBreakdown rows={breakdownRows} bars={bars} />
 
