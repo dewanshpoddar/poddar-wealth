@@ -69,6 +69,7 @@ const categoryMap: Record<string, 'protection' | 'savings' | 'health'> = {
 export default function ServicesPage() {
   const { t, lang } = useLang()
   const [activeTab, setActiveTab] = useState<'all' | 'protection' | 'savings' | 'health'>('all')
+  const [journeyImgSrc, setJourneyImgSrc] = useState('/images/services/services_hub_journey.webp')
 
   const isHi = lang === 'hi'
 
@@ -205,16 +206,14 @@ export default function ServicesPage() {
             <div className="relative w-full h-[340px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 bg-[#0b0d19]">
               {/* Master Generational Image */}
               <Image
-                src="/images/services/services_hub_journey.webp"
+                src={journeyImgSrc}
                 alt="Three-Generation Indian Family Journey"
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
+                unoptimized
                 className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                // Fallback to savings hub image if this is not generated yet
-                onError={(e) => {
-                  const img = e.target as HTMLImageElement
-                  img.src = '/images/services/savings.webp'
+                onError={() => {
+                  setJourneyImgSrc('/images/services/savings.webp')
                 }}
               />
               {/* Premium gradients to blend */}
