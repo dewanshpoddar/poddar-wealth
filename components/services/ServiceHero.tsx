@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ADVISOR_PHONE } from '@/lib/constants'
@@ -29,6 +30,13 @@ export default function ServiceHero({
   bgVariant = 'light',
   lang,
 }: ServiceHeroProps) {
+  const [heroImgSrc, setHeroImgSrc] = useState(`/images/services/${slug}.webp`)
+  const [prevSlug, setPrevSlug] = useState(slug)
+  if (slug !== prevSlug) {
+    setPrevSlug(slug)
+    setHeroImgSrc(`/images/services/${slug}.webp`)
+  }
+
   const isDark = bgVariant === 'dark'
   const isHi = lang === 'hi'
 
@@ -139,13 +147,16 @@ export default function ServiceHero({
         {/* Right Image Column */}
         <div className="lg:col-span-5 relative w-full h-[40vh] lg:h-full min-h-[300px] lg:min-h-[550px] rounded-3xl overflow-hidden shadow-hero">
           <Image
-            src={`/images/services/${slug}.webp`}
+            src={heroImgSrc}
             alt={h1}
             fill
-            sizes="(max-width: 1024px) 100vw, 45vw"
             priority={true}
             fetchPriority="high"
+            unoptimized
             className="object-cover"
+            onError={() => {
+              setHeroImgSrc('/images/services/savings.webp')
+            }}
           />
           {/* Subtle gradient overlay to blend left edge on desktop */}
           <div
