@@ -66,38 +66,6 @@ const categoryMap: Record<string, 'protection' | 'savings' | 'health'> = {
   'group-health': 'health',
 }
 
-// Features list helper for wide cards
-function getServiceFeatures(slug: string, isHi: boolean) {
-  switch (slug) {
-    case 'term-life':
-      return isHi 
-        ? ["₹1 करोड़ तक का उच्च कवर", "कम प्रीमियम दरें", "पॉलिसी अवधि में निश्चित सुरक्षा"] 
-        : ["High cover up to ₹1 Crore", "Low premium rates", "Fixed cover terms"]
-    case 'life-insurance':
-      return isHi
-        ? ["गारंटीड मैच्योरिटी रिटर्न", "टैक्स-फ्री बचत (80C)", "आजीवन वित्तीय सुरक्षा"]
-        : ["Guaranteed maturity returns", "Tax-free savings (80C)", "Lifetime family security"]
-    case 'child-planning':
-      return isHi
-        ? ["उच्च शिक्षा के लिए फंड", "प्रीमियम वेवर बेनिफिट", "सुरक्षित परिपक्वता लाभ"]
-        : ["Education milestone funding", "Premium waiver benefit", "Guaranteed maturity return"]
-    case 'retirement':
-      return isHi
-        ? ["गारंटीड मासिक पेंशन", "आजीवन नियमित आय", "पति-पत्नी पेंशन विकल्प"]
-        : ["Guaranteed monthly pension", "Lifetime regular income", "Spouse pension option"]
-    case 'health-insurance':
-      return isHi
-        ? ["कैशलेस अस्पताल नेटवर्क", "कोई रूम रेंट लिमिट नहीं", "मैच्योरिटी बोनस लाभ"]
-        : ["Cashless network hospitals", "No room rent limits", "Maturity bonus benefits"]
-    case 'group-health':
-      return isHi
-        ? ["कर्मचारियों की सुरक्षा", "पहले दिन से बीमारी कवर", "सस्ता कॉर्पोरेट प्रीमियम"]
-        : ["Employee health coverage", "Pre-existing covers from Day 1", "Affordable corporate rates"]
-    default:
-      return []
-  }
-}
-
 export default function ServicesPage() {
   const { t, lang } = useLang()
   const [activeTab, setActiveTab] = useState<'all' | 'protection' | 'savings' | 'health'>('all')
@@ -269,7 +237,7 @@ export default function ServicesPage() {
 
       {/* 2. INTERACTIVE MILESTONE MATRIX (Bento Guide) */}
       <section className="px-6 max-w-[1400px] mx-auto -mt-20 md:-mt-28 mb-16 relative z-20">
-        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-[0_30px_70px_-10px_rgba(0,0,0,0.15)] border border-gray-100">
+        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-[0_30px_70px_-10px_rgba(0,0,0,0.15)] border border-gray-150/80">
           <div className="flex items-center gap-2 text-gold text-12 font-bold tracking-wider uppercase mb-4">
             <HelpCircle className="w-4 h-4" />
             <span>{isHi ? "त्वरित चयन गाइड" : "Milestone-Based Guide"}</span>
@@ -323,265 +291,172 @@ export default function ServicesPage() {
       </section>
 
       {/* 4. GROUPED CATEGORIES LIST */}
-      <section className="pb-24 px-6 max-w-[1400px] mx-auto flex flex-col gap-24">
+      <section className="pb-24 px-6 max-w-[1400px] mx-auto flex flex-col gap-16">
         
         {/* CATEGORY 1: PROTECTION */}
         {(activeTab === 'all' || activeTab === 'protection') && protectionItems.length > 0 && (
-          <div className="bg-gradient-to-br from-[#0b0c16] via-[#10142b] to-[#080910] rounded-3xl p-8 md:p-10 border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden text-white">
-            {/* Subtle grid texture overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-            
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 relative z-10">
+          <div className="bg-white rounded-3xl p-8 border border-gray-150/60 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-2 h-full bg-navy" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div>
-                <span className="text-[10px] font-bold text-gold tracking-widest uppercase bg-gold/15 px-3 py-1.5 rounded-full border border-gold/20">
-                  🛡️ Category Hub
+                <span className="text-[10px] font-bold text-gold tracking-widest uppercase bg-gold/10 px-2.5 py-1 rounded-full">
+                  Category Hub
                 </span>
-                <h3 className="text-2.5xl font-display font-bold text-white mt-4 tracking-tight">
+                <h3 className="text-2xl font-bold text-navy mt-3 tracking-tight">
                   {isHi ? 'सुरक्षा समाधान' : 'Protection Solutions'}
                 </h3>
               </div>
               <Link
                 href="/services/protection"
-                className="inline-flex items-center gap-1.5 text-12 font-bold text-gold hover:text-white transition-colors uppercase tracking-wider bg-white/[0.03] border border-white/[0.08] px-5 py-2.5 rounded-full hover:bg-white/[0.08]"
+                className="inline-flex items-center gap-1.5 text-12 font-bold text-navy hover:text-gold transition-colors uppercase tracking-wider"
               >
                 {isHi ? 'सुरक्षा हब देखें' : 'Explore Protection Hub'} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
-              {protectionItems.map((svc: any, idx: number) => {
-                const slug = svc.href.replace('/services/', '')
-                // Wide cards: term-life (idx 3) & life-insurance (idx 0)
-                // Narrow cards: keyman-insurance (idx 1) & personal-accident (idx 2)
-                const isWide = slug === 'term-life' || slug === 'life-insurance'
-                const features = getServiceFeatures(slug, isHi)
-                return (
-                  <div
-                    key={idx}
-                    className={`${
-                      isWide ? 'lg:col-span-7 bg-white/[0.02]' : 'lg:col-span-5 bg-white/[0.01]'
-                    } border border-white/[0.08] rounded-2xl p-6 md:p-8 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:border-gold/40 hover:bg-white/[0.04] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group`}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center group-hover:bg-gold/10 group-hover:border-gold/20 transition-colors">
-                          {getServiceIcon(svc.icon)}
-                        </div>
-                        {svc.badge && (
-                          <span className="px-2.5 py-1 rounded-full bg-gold/15 border border-gold/30 text-[9px] font-bold text-gold uppercase tracking-wider">
-                            {svc.badge}
-                          </span>
-                        )}
-                      </div>
-
-                      <h4 className="text-17 font-bold text-white group-hover:text-gold transition-colors duration-250 mb-3">
-                        {svc.title}
-                      </h4>
-                      <p className="text-12.5 text-slate-400 font-medium leading-relaxed mb-6">
-                        {svc.desc}
-                      </p>
-
-                      {/* Custom Features List */}
-                      {isWide && features.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-white/[0.06] flex flex-col gap-2">
-                          {features.map((feat: string, fidx: number) => (
-                            <div key={fidx} className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                              <span className="text-11.5 text-slate-300 font-normal">{feat}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {protectionItems.map((svc: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="bg-[#fafbfc] border border-gray-150/60 rounded-2xl p-6 hover:shadow-lg hover:border-gold/25 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center mb-5 group-hover:bg-gold/10 transition-colors">
+                      {getServiceIcon(svc.icon)}
                     </div>
-
-                    <div className="flex items-center justify-between pt-6 mt-6 border-t border-white/[0.06]">
-                      <span className="px-2.5 py-1 rounded bg-white/[0.04] border border-white/[0.06] text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                        {svc.tag}
-                      </span>
-                      <Link
-                        href={svc.href}
-                        className="text-12 font-bold text-gold hover:text-white flex items-center gap-1 transition-colors"
-                      >
-                        {isHi ? 'विवरण' : 'Details'} →
-                      </Link>
-                    </div>
+                    <h4 className="text-16 font-bold text-navy group-hover:text-gold transition-colors duration-250 mb-2.5">
+                      {svc.title}
+                    </h4>
+                    <p className="text-12 text-slate-500 font-medium leading-relaxed mb-6">
+                      {svc.desc}
+                    </p>
                   </div>
-                )
-              })}
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="px-2 py-0.5 rounded bg-navy/5 text-[9px] font-bold text-navy uppercase tracking-wider">
+                      {svc.tag}
+                    </span>
+                    <Link
+                      href={svc.href}
+                      className="text-12 font-bold text-navy hover:text-gold flex items-center gap-1"
+                    >
+                      {isHi ? 'विवरण' : 'Details'} →
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
 
         {/* CATEGORY 2: SAVINGS & WEALTH */}
         {(activeTab === 'all' || activeTab === 'savings') && savingsItems.length > 0 && (
-          <div className="bg-gradient-to-br from-white via-[#fffdf9] to-[#fffcf5] rounded-3xl p-8 md:p-10 border border-amber-100/70 shadow-sm relative overflow-hidden">
-            {/* Subtle grid background */}
-            <div className="absolute inset-0 bg-[radial-gradient(#c9a84c05_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-            
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 relative z-10">
+          <div className="bg-white rounded-3xl p-8 border border-gray-150/60 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-2 h-full bg-gold" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div>
-                <span className="text-[10px] font-bold text-gold tracking-widest uppercase bg-gold/10 px-3 py-1.5 rounded-full border border-gold/25">
-                  💰 Category Hub
+                <span className="text-[10px] font-bold text-gold tracking-widest uppercase bg-gold/10 px-2.5 py-1 rounded-full">
+                  Category Hub
                 </span>
-                <h3 className="text-2.5xl font-display font-bold text-navy mt-4 tracking-tight">
+                <h3 className="text-2xl font-bold text-navy mt-3 tracking-tight">
                   {isHi ? 'बचत और धन वृद्धि' : 'Savings & Wealth Creation'}
                 </h3>
               </div>
               <Link
                 href="/services/savings"
-                className="inline-flex items-center gap-1.5 text-12 font-bold text-navy hover:text-gold transition-colors uppercase tracking-wider bg-white/80 border border-gray-150 px-5 py-2.5 rounded-full hover:bg-white"
+                className="inline-flex items-center gap-1.5 text-12 font-bold text-navy hover:text-gold transition-colors uppercase tracking-wider"
               >
                 {isHi ? 'बचत हब देखें' : 'Explore Savings Hub'} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
-              {savingsItems.map((svc: any, idx: number) => {
-                const slug = svc.href.replace('/services/', '')
-                // Wide cards: child-planning (idx 1) & retirement (idx 2)
-                // Narrow cards: tax-planning (idx 0) & child-wedding (idx 3)
-                const isWide = slug === 'child-planning' || slug === 'retirement'
-                const features = getServiceFeatures(slug, isHi)
-                return (
-                  <div
-                    key={idx}
-                    className={`${
-                      isWide ? 'lg:col-span-7 bg-gradient-to-br from-amber-500/[0.01] to-amber-500/[0.04]' : 'lg:col-span-5 bg-white'
-                    } border border-gray-150/70 rounded-2xl p-6 md:p-8 hover:shadow-[0_15px_45px_-5px_rgba(201,168,76,0.12)] hover:border-gold/45 hover:bg-white hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group`}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center group-hover:bg-gold/10 group-hover:border-gold/20 transition-colors">
-                          {getServiceIcon(svc.icon)}
-                        </div>
-                        {svc.badge && (
-                          <span className="px-2.5 py-1 rounded-full bg-gold/10 border border-gold/25 text-[9px] font-bold text-gold uppercase tracking-wider">
-                            {svc.badge}
-                          </span>
-                        )}
-                      </div>
-
-                      <h4 className="text-17 font-bold text-navy group-hover:text-gold transition-colors duration-250 mb-3">
-                        {svc.title}
-                      </h4>
-                      <p className="text-12.5 text-slate-500 font-medium leading-relaxed mb-6">
-                        {svc.desc}
-                      </p>
-
-                      {/* Custom Features List */}
-                      {isWide && features.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-2">
-                          {features.map((feat: string, fidx: number) => (
-                            <div key={fidx} className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                              <span className="text-11.5 text-slate-600 font-normal">{feat}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {savingsItems.map((svc: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="bg-[#fafbfc] border border-gray-150/60 rounded-2xl p-6 hover:shadow-lg hover:border-gold/25 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center mb-5 group-hover:bg-gold/10 transition-colors">
+                      {getServiceIcon(svc.icon)}
                     </div>
-
-                    <div className="flex items-center justify-between pt-6 mt-6 border-t border-gray-100">
-                      <span className="px-2.5 py-1 rounded bg-slate-50 border border-gray-100 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
-                        {svc.tag}
-                      </span>
-                      <Link
-                        href={svc.href}
-                        className="text-12 font-bold text-navy hover:text-gold flex items-center gap-1 transition-colors"
-                      >
-                        {isHi ? 'विवरण' : 'Details'} →
-                      </Link>
-                    </div>
+                    <h4 className="text-16 font-bold text-navy group-hover:text-gold transition-colors duration-250 mb-2.5">
+                      {svc.title}
+                    </h4>
+                    <p className="text-12 text-slate-500 font-medium leading-relaxed mb-6">
+                      {svc.desc}
+                    </p>
                   </div>
-                )
-              })}
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="px-2 py-0.5 rounded bg-navy/5 text-[9px] font-bold text-navy uppercase tracking-wider">
+                      {svc.tag}
+                    </span>
+                    <Link
+                      href={svc.href}
+                      className="text-12 font-bold text-navy hover:text-gold flex items-center gap-1"
+                    >
+                      {isHi ? 'विवरण' : 'Details'} →
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
 
         {/* CATEGORY 3: HEALTH SOLUTIONS */}
         {(activeTab === 'all' || activeTab === 'health') && healthItems.length > 0 && (
-          <div className="bg-gradient-to-br from-white via-[#fafdfc] to-[#f4fbf8] rounded-3xl p-8 md:p-10 border border-emerald-100/60 shadow-sm relative overflow-hidden">
-            {/* Subtle grid background */}
-            <div className="absolute inset-0 bg-[radial-gradient(#10b98104_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-            
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 relative z-10">
+          <div className="bg-white rounded-3xl p-8 border border-gray-150/60 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div>
-                <span className="text-[10px] font-bold text-emerald-600 tracking-widest uppercase bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/50">
-                  🩺 Category Hub
+                <span className="text-[10px] font-bold text-gold tracking-widest uppercase bg-gold/10 px-2.5 py-1 rounded-full">
+                  Category Hub
                 </span>
-                <h3 className="text-2.5xl font-display font-bold text-navy mt-4 tracking-tight">
+                <h3 className="text-2xl font-bold text-navy mt-3 tracking-tight">
                   {isHi ? 'स्वास्थ्य देखभाल' : 'Health Solutions'}
                 </h3>
               </div>
               <Link
                 href="/services/health"
-                className="inline-flex items-center gap-1.5 text-12 font-bold text-navy hover:text-emerald-600 transition-colors uppercase tracking-wider bg-white/80 border border-gray-150 px-5 py-2.5 rounded-full hover:bg-white"
+                className="inline-flex items-center gap-1.5 text-12 font-bold text-navy hover:text-gold transition-colors uppercase tracking-wider"
               >
                 {isHi ? 'स्वास्थ्य हब देखें' : 'Explore Health Hub'} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
-              {healthItems.map((svc: any, idx: number) => {
-                const slug = svc.href.replace('/services/', '')
-                // Wide cards: health-insurance (idx 0) & group-health (idx 3)
-                // Narrow cards: critical-illness (idx 1) & cancer-cover (idx 2)
-                const isWide = slug === 'health-insurance' || slug === 'group-health'
-                const features = getServiceFeatures(slug, isHi)
-                return (
-                  <div
-                    key={idx}
-                    className={`${
-                      isWide ? 'lg:col-span-7 bg-gradient-to-br from-emerald-500/[0.01] to-emerald-500/[0.04]' : 'lg:col-span-5 bg-white'
-                    } border border-gray-150/70 rounded-2xl p-6 md:p-8 hover:shadow-[0_15px_45px_-5px_rgba(16,185,129,0.1)] hover:border-emerald-500/50 hover:bg-white hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group`}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center group-hover:bg-emerald-500/10 group-hover:border-emerald-500/20 transition-colors">
-                          {getServiceIcon(svc.icon)}
-                        </div>
-                        {svc.badge && (
-                          <span className="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/55 text-[9px] font-bold text-emerald-700 uppercase tracking-wider">
-                            {svc.badge}
-                          </span>
-                        )}
-                      </div>
-
-                      <h4 className="text-17 font-bold text-navy group-hover:text-emerald-600 transition-colors duration-250 mb-3">
-                        {svc.title}
-                      </h4>
-                      <p className="text-12.5 text-slate-500 font-medium leading-relaxed mb-6">
-                        {svc.desc}
-                      </p>
-
-                      {/* Custom Features List */}
-                      {isWide && features.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-2">
-                          {features.map((feat: string, fidx: number) => (
-                            <div key={fidx} className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                              <span className="text-11.5 text-slate-600 font-normal">{feat}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {healthItems.map((svc: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="bg-[#fafbfc] border border-gray-150/60 rounded-2xl p-6 hover:shadow-lg hover:border-gold/25 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center mb-5 group-hover:bg-gold/10 transition-colors">
+                      {getServiceIcon(svc.icon)}
                     </div>
-
-                    <div className="flex items-center justify-between pt-6 mt-6 border-t border-gray-100">
-                      <span className="px-2.5 py-1 rounded bg-slate-50 border border-gray-100 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
-                        {svc.tag}
-                      </span>
-                      <Link
-                        href={svc.href}
-                        className="text-12 font-bold text-navy hover:text-emerald-600 flex items-center gap-1 transition-colors"
-                      >
-                        {isHi ? 'विवरण' : 'Details'} →
-                      </Link>
-                    </div>
+                    <h4 className="text-16 font-bold text-navy group-hover:text-gold transition-colors duration-250 mb-2.5">
+                      {svc.title}
+                    </h4>
+                    <p className="text-12 text-slate-500 font-medium leading-relaxed mb-6">
+                      {svc.desc}
+                    </p>
                   </div>
-                )
-              })}
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="px-2 py-0.5 rounded bg-navy/5 text-[9px] font-bold text-navy uppercase tracking-wider">
+                      {svc.tag}
+                    </span>
+                    <Link
+                      href={svc.href}
+                      className="text-12 font-bold text-navy hover:text-gold flex items-center gap-1"
+                    >
+                      {isHi ? 'विवरण' : 'Details'} →
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
