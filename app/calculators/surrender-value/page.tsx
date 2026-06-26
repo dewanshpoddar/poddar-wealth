@@ -1,406 +1,338 @@
 'use client'
+import React, { Suspense, useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { AlertTriangle, ShieldCheck } from 'lucide-react'
+import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import QuickPick from '@/components/ui/QuickPick'
+import SliderField from '@/components/ui/SliderField'
+import CalculatorShell from '@/components/calculators/CalculatorShell'
+import ResultCard from '@/components/calculators/ResultCard'
+import ResultBreakdown from '@/components/calculators/ResultBreakdown'
+import ActionBar from '@/components/calculators/ActionBar'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useLang } from '@/lib/LangContext'
-import { Calculator, Info, Phone, RefreshCw, AlertCircle, TrendingUp, CheckCircle, Share2, HelpCircle, MessageCircle } from 'lucide-react'
-import { PLANS } from '@/lib/lic-plans-data.js'
-import { fmt, fmtSA } from '@/lib/format'
-import { ADVISOR_PHONE } from '@/lib/constants'
-import WhatsAppShare from '@/components/WhatsAppShare'
-import CalculatorCTA from '@/components/calculators/CalculatorCTA'
-import { SurrenderValueResult } from '@/lib/types/calculator'
+const saOptions = [
+  { label: '₹3L', value: 300000 },
+  { label: '₹5L', value: 500000 },
+  { label: '₹10L', value: 1000000 },
+  { label: '₹25L', value: 2500000 },
+  { label: '₹50L', value: 5000000 },
+]
 
-export default function SurrenderValueCalculatorPage() {
-  const { t, lang } = useLang()
-  const s = t.surrenderCalculator || {
-    title: 'LIC Surrender Value Calculator 2026',
-    subtitle: 'Calculate your LIC policy surrender value instantly. Free online tool.',
-    planLabel: 'Select LIC Plan',
-    sumAssuredLabel: 'Sum Assured (₹)',
-    annualPremiumLabel: 'Annual Premium (₹)',
-    totalPremiumsPaidLabel: 'Total Premiums Paid (₹)',
-    policyYearLabel: 'Policy Year (Completed)',
-    calculateButton: 'Calculate Surrender Value',
-    resultTitle: 'Surrender Value Estimate',
-    guaranteedSurrenderValue: 'Guaranteed Surrender Value',
-    estimatedPaidUpValue: 'Estimated Paid-up Value',
-    surrenderRatio: 'Surrender Ratio',
-    recommendation: 'Recommendation',
-    disclaimer: 'Disclaimer',
-    exactQuery: 'Want exact calculation? Talk to Ajay sir',
-    whatsappCTA: 'Discuss with Ajay Sir on WhatsApp',
-    disclaimerText: 'Special Surrender Value (SSV) is usually higher than Guaranteed Surrender Value (GSV). Talk to Ajay sir for exact values.',
-    errorCompletedYears: 'LIC policies require at least 3 completed policy years of premium payments to acquire a surrender value.',
-    loading: 'Calculating...'
+const termOptions = [
+  { label: '15 Years', value: 15 },
+  { label: '20 Years', value: 20 },
+  { label: '25 Years', value: 25 },
+  { label: '30 Years', value: 30 },
+]
+
+const SURRENDER_FAQ = [
+  {
+    question: 'Why does surrendering a policy result in a loss?',
+    answer: 'LIC policies are long-term contracts. Early surrender forces the insurer to pay out ahead of schedule, recovering administrative and mortality costs from your accumulated premiums, leading to a financial loss.'
+  },
+  {
+    question: 'What is the difference between GSV and SSV?',
+    answer: 'Guaranteed Surrender Value (GSV) is the minimum cash value guaranteed by contract. Special Surrender Value (SSV) is calculated based on paid-up sum assured plus bonuses multiplied by a factor determined by LIC, usually higher than GSV.'
+  },
+  {
+    question: 'Can I avoid surrendering my policy?',
+    answer: 'Yes, you can make the policy paid-up (stop paying premiums but keep a reduced sum assured cover till maturity) or take a policy loan of up to 90% of the surrender value to meet short-term liquidity needs without losing cover.'
   }
+]
 
-  // Filter plans to display active ones or major ones
+function getGsvFactor(yearsPaid: number): number {
+  if (yearsPaid < 2) return 0
+  if (yearsPaid === 2) return 0.30
+  if (yearsPaid === 3) return 0.30
+  if (yearsPaid <= 6) return 0.50
+  if (yearsPaid === 7 || yearsPaid === 8) return 0.55
+  if (yearsPaid === 9) return 0.60
+  if (yearsPaid === 10) return 0.65
+  if (yearsPaid === 11) return 0.70
+  if (yearsPaid === 12) return 0.75
+  if (yearsPaid === 13) return 0.80
+  if (yearsPaid === 14) return 0.85
+  return 0.90
+}
+
+function SurrenderCalcContent() {
+  const searchParams = useSearchParams()
+  const resultRef = useRef<HTMLDivElement | null>(null)
+
   const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
 
-  const [planNumber, setPlanNumber] = useState(majorPlans[0]?.planNo?.toString() || '915')
-  const [sumAssured, setSumAssured] = useState<number>(500000)
-  const [annualPremium, setAnnualPremium] = useState<number>(250000 / 10) // default estimate
-  const [premiumsPaid, setPremiumsPaid] = useState<number>(75000)
-  const [policyYear, setPolicyYear] = useState<number>(4)
+  const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
+  const [sa, setSa] = useState<number>(1000000)
+  const [term, setTerm] = useState<number>(20)
+  const [yearsPaid, setYearsPaid] = useState<number>(5)
+  const [annualPremiumInput, setAnnualPremiumInput] = useState<string>('')
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<SurrenderValueResult | null>(null)
+  // Advanced Options
+  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [bonusRate, setBonusRate] = useState<number>(48)
 
-  const handleCalculate = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setResult(null)
+  // Calculation Results
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [totalPaid, setTotalPaid] = useState<number>(0)
+  const [gsvVal, setGsvVal] = useState<number>(0)
+  const [ssvVal, setSsvVal] = useState<number>(0)
+  const [surrenderValue, setSurrenderValue] = useState<number>(0)
+  const [lossAmount, setLossAmount] = useState<number>(0)
+  const [lossPercent, setLossPercent] = useState<number>(0)
+  
+  // Alternatives inline calculations
+  const [loanAmount, setLoanAmount] = useState<number>(0)
+  const [reducedSA, setReducedSA] = useState<number>(0)
+  const [reducedMaturity, setReducedMaturity] = useState<number>(0)
 
-    if (policyYear < 3) {
-      setError(s.errorCompletedYears)
-      return
-    }
+  // Parse URL query params
+  useEffect(() => {
+    const qAge = searchParams.get('age')
+    const qSa = searchParams.get('sa')
+    const qTerm = searchParams.get('term')
 
-    if (premiumsPaid < annualPremium * policyYear) {
-      setError(lang === 'en' 
-        ? 'Total premiums paid cannot be less than Annual Premium multiplied by completed years.'
-        : 'कुल भुगतान किया गया प्रीमियम, वार्षिक प्रीमियम और पूरे किए गए वर्षों के गुणनफल से कम नहीं हो सकता।'
-      )
-      return
-    }
+    if (qSa) setSa(Number(qSa))
+    if (qTerm) setTerm(Number(qTerm))
+  }, [searchParams])
 
-    setLoading(true)
+  const selectedPlan = PLANS.find(p => p.planNo === planNo)
 
-    try {
-      const res = await fetch('/api/calculators/surrender-value', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          planNumber,
-          sumAssured,
-          premiumsPaid,
-          policyYear,
-          annualPremium
-        })
-      })
-
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || 'Failed to calculate')
+  const handleCalculate = () => {
+    // 1. Determine annual premium
+    let annualPremium = 0
+    if (annualPremiumInput && !isNaN(Number(annualPremiumInput)) && Number(annualPremiumInput) > 0) {
+      annualPremium = Number(annualPremiumInput)
+    } else {
+      if (selectedPlan) {
+        // Assume age 30 for baseline rate lookup if not in query
+        const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
+        const ppt = getPPT(selectedPlan, term, baselineAge)
+        const premRes = calculatePremium({ planNo, sa, age: baselineAge, term, ppt, mode: 'yearly' })
+        annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
+      } else {
+        annualPremium = sa * 0.05
       }
-
-      const data: SurrenderValueResult = await res.json()
-      setResult(data)
-
-      // Track calculation event
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'calc_run',
-          sheetName: 'Surrender Calculator',
-          data: {
-            planNo: planNumber,
-            sa: sumAssured,
-            annualPremium,
-            premiumsPaid,
-            policyYear,
-            gsv: data.guaranteedSurrenderValue,
-            paidUp: data.estimatedPaidUpValue,
-            ratio: data.surrenderRatio,
-            session: typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
-          }
-        })
-      }).catch(() => {})
-
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during calculation.')
-    } finally {
-      setLoading(false)
     }
+
+    const totalPaidSum = annualPremium * yearsPaid
+    setTotalPaid(totalPaidSum)
+
+    // 2. GSV calculation: GSV = total_premiums_paid * GSV_factor
+    const gsvFactor = getGsvFactor(yearsPaid)
+    // GSV excludes first year premium in traditional calculations
+    const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
+    const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
+    setGsvVal(gsv)
+
+    // 3. SSV calculation: SSV = (Paid-up SA + Accrued Bonus) * SSV_factor
+    const paidUpSA = Math.round(sa * (yearsPaid / term))
+    const accruedBonus = Math.round((bonusRate * sa / 1000) * yearsPaid)
+    
+    const remainingTerm = term - yearsPaid
+    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035)) // LIC SSV factor proxy
+    const ssv = Math.round((paidUpSA + accruedBonus) * ssvFactor)
+    setSsvVal(ssv)
+
+    // 4. Max Surrender Value
+    const finalSurrender = Math.max(gsv, ssv)
+    setSurrenderValue(finalSurrender)
+
+    const loss = totalPaidSum - finalSurrender
+    setLossAmount(loss)
+    setLossPercent(Math.round((loss / totalPaidSum) * 100))
+
+    // Alternatives Calculated Inline
+    setLoanAmount(Math.round(finalSurrender * 0.90))
+    setReducedSA(paidUpSA)
+    setReducedMaturity(paidUpSA + accruedBonus)
+    setHasCalculated(true)
   }
 
-  const getRatioBadgeColor = (ratio: number) => {
-    if (ratio < 0.7) return 'bg-red-50 text-red-700 border-red-200'
-    if (ratio <= 0.85) return 'bg-amber-50 text-amber-700 border-amber-200'
-    return 'bg-green-50 text-green-700 border-green-200'
+  const handleReset = () => {
+    setPlanNo(majorPlans[0]?.planNo || 715)
+    setSa(1000000)
+    setTerm(20)
+    setYearsPaid(5)
+    setAnnualPremiumInput('')
+    setBonusRate(48)
+    setSurrenderValue(0)
+    setTotalPaid(0)
+    setLossAmount(0)
+    setLossPercent(0)
+    setLoanAmount(0)
+    setReducedSA(0)
+    setReducedMaturity(0)
+    setHasCalculated(false)
   }
 
-  const getRatioColor = (ratio: number) => {
-    if (ratio < 0.7) return 'text-red-600'
-    if (ratio <= 0.85) return 'text-amber-600'
-    return 'text-green-600'
-  }
+  const breakdownRows = hasCalculated ? [
+    { label: 'Total Premiums Paid', value: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Guaranteed Surrender Value (GSV)', value: `₹${gsvVal.toLocaleString('en-IN')}` },
+    { label: 'Special Surrender Value (SSV)', value: `₹${ssvVal.toLocaleString('en-IN')}` },
+    { label: 'Final Cash Surrender Value', value: `₹${surrenderValue.toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Net Loss on Surrender', value: `₹${lossAmount.toLocaleString('en-IN')} (${lossPercent}%)`, isTotal: true }
+  ] : []
 
-  const shareText = result
-    ? `*LIC Surrender Value Quote - Poddar Wealth*
-Plan Number: ${planNumber}
-Sum Assured: ${fmtSA(sumAssured)}
-Annual Premium: ${fmt(annualPremium)}
-Total Premiums Paid: ${fmt(premiumsPaid)}
-Policy Year: ${policyYear}
+  const bars = hasCalculated ? [
+    { label: 'Total premiums paid', value: totalPaid, max: totalPaid, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Surrender value cash payout', value: surrenderValue, max: totalPaid, colorClass: 'bg-amber-400', displayValue: `₹${Math.round(surrenderValue).toLocaleString('en-IN')}` }
+  ] : []
 
-*Guaranteed Surrender Value:* ${fmt(result.guaranteedSurrenderValue)}
-*Estimated Paid-up Value:* ${fmt(result.estimatedPaidUpValue)}
-*Surrender Ratio:* ${(result.surrenderRatio * 100).toFixed(0)}%
-
-Calculate yours online: `
-    : ''
-
-  const getWhatsAppCTAUrl = () => {
-    if (!result) return ''
-    const msg = `Hi Ajay sir, I calculated my LIC Surrender Value on poddarwealth.com:
-Plan Number: ${planNumber}
-Sum Assured: ₹${sumAssured.toLocaleString('en-IN')}
-Annual Premium: ₹${annualPremium.toLocaleString('en-IN')}
-Total Premiums Paid: ₹${premiumsPaid.toLocaleString('en-IN')}
-Policy Year: ${policyYear}
-Guaranteed Surrender Value: ₹${result.guaranteedSurrenderValue.toLocaleString('en-IN')}
-Please help me verify if this is accurate or if I have a higher Special Surrender Value.`
-    return `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`
-  }
+  const plan = PLANS.find(p => p.planNo === planNo)
+  const msg = hasCalculated ? `Namaste Ajay ji, I checked the surrender value of my LIC policy.
+₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), paid for ${yearsPaid}/${term}yr. Total paid ₹${Math.round(totalPaid).toLocaleString('en-IN')} → surrender cash ₹${Math.round(surrenderValue).toLocaleString('en-IN')}.
+Should I surrender or take a policy loan?` : ''
+  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
 
   return (
-    <div className="min-h-screen bg-warm pt-[78px]">
-      {/* Hero Header */}
-      <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-            <Calculator className="w-3.5 h-3.5" /> {lang === 'en' ? 'LIC Surrender Value Calculator' : 'LIC सरेंडर वैल्यू कैलकुलेटर'}
+    <CalculatorShell
+      activeTabId="surrender"
+      title="Surrender Value Calculator"
+      infoTooltip="Calculate the cash surrender value of your LIC policy. Traditional policies require at least 2 completed years of premium payments to acquire a surrender value. Special Surrender Value (SSV) is usually higher than GSV."
+      faq={SURRENDER_FAQ}
+      sa={sa}
+      term={term}
+      hasCalculated={hasCalculated}
+      onCalculate={handleCalculate}
+      calculateButtonText="Calculate Surrender Value"
+      formFields={
+        <>
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <select
+              value={planNo}
+              onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+            >
+              {majorPlans.map(plan => (
+                <option key={plan.planNo} value={plan.planNo}>
+                  Plan {plan.planNo} - {plan.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-            {s.title}
-          </h1>
-          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            {s.subtitle}
-          </p>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Form Side */}
-          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
-            <h2 className="font-display font-bold text-xl text-navy mb-6">
-              {lang === 'en' ? 'Enter Policy Details' : 'पॉलिसी विवरण दर्ज करें'}
-            </h2>
+          <QuickPick
+            label="Sum Assured"
+            value={sa}
+            onChange={(val) => { setSa(val); setHasCalculated(false) }}
+            options={saOptions}
+            showCustom
+            customPlaceholder="Enter custom sum assured"
+            customSuffix="SA"
+          />
 
-            <form onSubmit={handleCalculate} className="space-y-5">
-              {/* Plan Selector */}
-              <div>
-                <label htmlFor="planNumber" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.planLabel}
-                </label>
-                <select
-                  id="planNumber"
-                  value={planNumber}
-                  onChange={(e) => setPlanNumber(e.target.value)}
-                  className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                >
-                  {majorPlans.map((plan) => (
-                    <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} - {plan.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <QuickPick
+            label="Policy Term"
+            value={term}
+            onChange={(val) => { setTerm(val); setHasCalculated(false) }}
+            options={termOptions}
+          />
 
-              {/* Sum Assured */}
-              <div>
-                <label htmlFor="sumAssured" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.sumAssuredLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                  <input
-                    id="sumAssured"
-                    type="number"
-                    min={10000}
-                    step={10000}
-                    required
-                    value={sumAssured}
-                    onChange={(e) => setSumAssured(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                  />
-                </div>
-                <div className="text-right text-[10px] font-bold text-gold mt-1">
-                  {fmtSA(sumAssured)}
-                </div>
-              </div>
+          <SliderField
+            label="Policy Years Paid"
+            value={yearsPaid}
+            onChange={(val) => { setYearsPaid(val); setHasCalculated(false) }}
+            min={2}
+            max={term}
+            unit=" yrs"
+          />
 
-              {/* Annual Premium */}
-              <div>
-                <label htmlFor="annualPremium" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.annualPremiumLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                  <input
-                    id="annualPremium"
-                    type="number"
-                    min={1000}
-                    step={500}
-                    required
-                    value={annualPremium}
-                    onChange={(e) => setAnnualPremium(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                  />
-                </div>
-                <div className="text-right text-[10px] font-bold text-gold mt-1">
-                  {fmt(annualPremium)}
-                </div>
-              </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Annual Premium Paid (Optional)</label>
+            <input
+              type="number"
+              value={annualPremiumInput}
+              onChange={(e) => { setAnnualPremiumInput(e.target.value); setHasCalculated(false) }}
+              placeholder="Will auto-estimate if left blank"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+            />
+          </div>
 
-              {/* Total Premiums Paid */}
-              <div>
-                <label htmlFor="premiumsPaid" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.totalPremiumsPaidLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                  <input
-                    id="premiumsPaid"
-                    type="number"
-                    min={3000}
-                    step={1000}
-                    required
-                    value={premiumsPaid}
-                    onChange={(e) => setPremiumsPaid(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                  />
-                </div>
-                <div className="text-right text-[10px] font-bold text-gold mt-1">
-                  {fmt(premiumsPaid)}
-                </div>
-              </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="text-sm text-blue-600 font-semibold cursor-pointer"
+            >
+              {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
+            </button>
 
-              {/* Policy Year */}
-              <div>
-                <label htmlFor="policyYear" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.policyYearLabel}
-                </label>
-                <input
-                  id="policyYear"
-                  type="number"
-                  min={1}
-                  max={40}
-                  required
-                  value={policyYear}
-                  onChange={(e) => setPolicyYear(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
+            {showAdvanced && (
+              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                <SliderField
+                  label="Average Annual Bonus Rate"
+                  value={bonusRate}
+                  onChange={(val) => { setBonusRate(val); setHasCalculated(false) }}
+                  min={30}
+                  max={60}
+                  unit=" ₹"
                 />
               </div>
-
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-[11px] font-medium text-red-700">{error}</span>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>{s.loading}</span>
-                  </>
-                ) : (
-                  <>
-                    <Calculator className="w-4 h-4" />
-                    <span>{s.calculateButton}</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Results Side */}
-          <div className="lg:col-span-6 space-y-6">
-            {!result && !loading && (
-              <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-96 flex flex-col items-center justify-center text-center p-8">
-                <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
-                  {lang === 'en' ? 'Ready to Calculate' : 'गणना के लिए तैयार'}
-                </div>
-                <div className="text-[12px] text-gray-500 max-w-xs">
-                  {lang === 'en' 
-                    ? 'Enter your policy parameters and click calculate to estimate your policy\'s current value.'
-                    : 'अपनी पॉलिसी के पैरामीटर दर्ज करें और अपनी पॉलिसी के वर्तमान मूल्य का अनुमान लगाने के लिए गणना करें पर क्लिक करें।'}
-                </div>
-              </div>
             )}
-
-            {result && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
+          </div>
+        </>
+      }
+      resultPanel={
+        hasCalculated && (
+          <div className="space-y-4">
+            <ResultCard
+              value={`₹${surrenderValue.toLocaleString('en-IN')}`}
+              label="Estimated Cash Surrender Value"
+              subtext={`You paid ₹${Math.round(totalPaid).toLocaleString('en-IN')}. Net loss of ₹${lossAmount.toLocaleString('en-IN')} (${lossPercent}%)`}
+              type="caution"
+              insightText={`Surrendering costs ₹${lossAmount.toLocaleString('en-IN')}. A policy loan gives ₹${loanAmount.toLocaleString('en-IN')} NOW while keeping your full ₹${sa.toLocaleString('en-IN')} cover. Better deal.`}
+              InsightIcon={AlertTriangle}
+            >
+              {/* Calculated alternatives display panel */}
+              <div className="mt-4 p-4 rounded-xl bg-white/70 border border-amber-200/50 text-xs text-gray-800 space-y-3">
+                <div className="font-semibold text-gray-900 border-b border-amber-200/40 pb-1 text-sm">
+                  Before you surrender, compare:
+                </div>
                 <div>
-                  <h3 className="font-display font-bold text-lg text-navy mb-4 border-b border-gray-50 pb-2">
-                    {s.resultTitle}
-                  </h3>
-
-                  {/* Guaranteed Surrender Value */}
-                  <div className="bg-slate-50 rounded-2xl p-6 text-center border border-gray-100">
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{s.guaranteedSurrenderValue}</div>
-                    <div className="text-3xl font-bold text-navy">{fmt(result.guaranteedSurrenderValue)}</div>
-                    <div className="text-[11px] text-gray-500 mt-1">({result.guaranteedSurrenderValue.toLocaleString('en-IN')})</div>
+                  <div className="font-bold flex items-center gap-1">
+                    <span>💰 Policy Loan:</span>
+                    <span className="text-emerald-700">Get ₹{loanAmount.toLocaleString('en-IN')} now</span>
                   </div>
+                  <div className="text-gray-500 mt-0.5">Keep your ₹{sa.toLocaleString('en-IN')} cover + full maturity benefits.</div>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Estimated Paid-up Value */}
-                  <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.estimatedPaidUpValue}</div>
-                    <div className="text-lg font-bold text-navy">{fmt(result.estimatedPaidUpValue)}</div>
+                <div>
+                  <div className="font-bold flex items-center gap-1">
+                    <span>📋 Reduced Paid-up:</span>
+                    <span className="text-blue-700">Stop premiums, keep ₹{reducedSA.toLocaleString('en-IN')} cover</span>
                   </div>
-
-                  {/* Surrender Ratio */}
-                  <div className={`border rounded-xl p-4 ${getRatioBadgeColor(result.surrenderRatio)}`}>
-                    <div className="text-[10px] font-bold uppercase tracking-wider mb-1 opacity-70">{s.surrenderRatio}</div>
-                    <div className="text-lg font-bold">{(result.surrenderRatio * 100).toFixed(0)}%</div>
-                  </div>
+                  <div className="text-gray-500 mt-0.5">Maturity value is preserved at a reduced ₹{reducedMaturity.toLocaleString('en-IN')}.</div>
                 </div>
-
-                {/* Recommendation */}
-                <div className="border border-gray-100 rounded-xl p-4 bg-amber-50/20">
-                  <div className="flex gap-2">
-                    <TrendingUp className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.recommendation}</div>
-                      <p className="text-xs font-medium text-slate-700 leading-relaxed">{result.recommendation}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Calculator CTA Card */}
-                <CalculatorCTA
-                  serviceLink="/services/life-insurance"
-                  serviceLabelEn="Explore Alternatives to Surrender"
-                  serviceLabelHi="सरेंडर करने के विकल्प देखें"
-                  secondaryLabelEn="Talk to Ajay sir before surrendering"
-                  secondaryLabelHi="सरेंडर करने से पहले अजय सर से बात करें"
-                  whatsappMessage="Hi Ajay sir, I calculated my LIC surrender value on poddarwealth.com and want to discuss alternatives before surrendering."
-                />
-
-                {/* WhatsAppShare Result */}
-                <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
-                  <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
-                </div>
-
-                {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
-                  <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                  <p className="text-[10px] leading-relaxed">{result.disclaimer || s.disclaimerText}</p>
+                <div className="pt-1.5 border-t border-amber-200/40 text-[10px] text-gray-500 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <span>Talk to Ajay ji before making any decision.</span>
                 </div>
               </div>
-            )}
-          </div>
+            </ResultCard>
 
-        </div>
+            <ResultBreakdown rows={breakdownRows} bars={bars} />
+
+            <ActionBar
+              whatsappUrl={whatsappUrl}
+              onReset={handleReset}
+              resultRef={resultRef}
+            />
+          </div>
+        )
+      }
+      resultRef={resultRef}
+    />
+  )
+}
+
+export default function SurrenderValueCalculatorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
-    </div>
+    }>
+      <SurrenderCalcContent />
+    </Suspense>
   )
 }

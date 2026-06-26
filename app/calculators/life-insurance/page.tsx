@@ -1,368 +1,323 @@
 'use client'
-import { useState, useMemo } from 'react'
-import { useLang } from '@/lib/LangContext'
-import Link from 'next/link'
-import { Calculator, ArrowRight, Info, ChevronDown, ChevronUp, Shield } from 'lucide-react'
-import { calculatePremium, generateBenefitTable, PLANS, getPPT } from '@/lib/lic-plans-data.js'
-import { fmt } from '@/lib/format'
-import { openLeadPopup } from '@/lib/events'
-import WhatsAppShare from '@/components/WhatsAppShare'
-import CalculatorCTA from '@/components/calculators/CalculatorCTA'
+import React, { Suspense, useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Shield, AlertTriangle } from 'lucide-react'
+import QuickPick from '@/components/ui/QuickPick'
+import SliderField from '@/components/ui/SliderField'
+import CalculatorShell from '@/components/calculators/CalculatorShell'
+import ResultCard from '@/components/calculators/ResultCard'
+import ResultBreakdown from '@/components/calculators/ResultBreakdown'
+import ActionBar from '@/components/calculators/ActionBar'
 
-import { LicPlan, PremiumResult, BenefitRow } from '@/lib/types/lic-plan'
+const incomeOptions = [
+  { label: '₹15K', value: 15000 },
+  { label: '₹25K', value: 25000 },
+  { label: '₹40K', value: 40000 },
+  { label: '₹60K', value: 60000 },
+  { label: '₹1L', value: 100000 },
+]
 
-const TERM_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => p.category === 'term')
-const ENDOWMENT_PLANS = (PLANS as LicPlan[]).filter((p: LicPlan) => ['endowment', 'wholelife'].includes(p.category))
+const depOptions = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6', value: 6 },
+]
 
-export default function LifeInsuranceCalcPage() {
-  const hideHero = false
-  const { t } = useLang()
+const methodOptions = [
+  { label: 'Simple (15x Income)', value: 'simple' },
+  { label: 'Detailed HLV Method', value: 'hlv' },
+]
 
-  // Step 1 - coverage need
-  const [form, setForm]     = useState({ age: 30, income: 600000, dependents: 2, existing: 0 })
-  const [need, setNeed]     = useState<null | { recommended: number; breakdown: { label: string; amount: number }[] }>(null)
+const COVERAGE_FAQ = [
+  {
+    question: 'What is the Human Life Value (HLV) method?',
+    answer: 'The HLV method calculates the financial value of a human life based on future earnings potential, dependents, outstanding debts, and upcoming capital requirements (like child education), minus existing assets.'
+  },
+  {
+    question: 'How much life insurance cover is recommended?',
+    answer: 'As a rule of thumb, you should have life insurance coverage equal to at least 10 to 15 times your annual income. This ensures your family can maintain their lifestyle in your absence.'
+  },
+  {
+    question: 'How does a coverage gap affect my family?',
+    answer: 'A coverage gap means your family is under-insured. In your absence, they may struggle to clear loans or maintain daily expenses. A term policy can close this gap affordably.'
+  }
+]
 
-  // Step 2 - plan quote
-  const [planNo, setPlanNo] = useState<number | null>(null)
-  const [sa, setSa]         = useState(0)
-  const [term, setTerm]     = useState(20)
-  const [mode, setMode]     = useState<'yearly'|'halfyearly'|'quarterly'|'monthly'>('yearly')
-  const [showTable, setShowTable] = useState(false)
+function CoverageCalcContent() {
+  const searchParams = useSearchParams()
+  const resultRef = useRef<HTMLDivElement | null>(null)
 
-  const calculateNeed = () => {
-    const yearsToRetirement  = Math.max(60 - form.age, 5)
-    const incomeReplacement  = form.income * yearsToRetirement * 0.7
-    const dependentBonus     = form.dependents * form.income * 3
-    const totalNeeded        = incomeReplacement + dependentBonus
-    const recommended        = Math.max(totalNeeded - form.existing, 0)
-    setNeed({
-      recommended,
-      breakdown: [
-        { label: 'Income Replacement (till retirement)', amount: incomeReplacement },
-        { label: 'Dependent Support Buffer',             amount: dependentBonus },
-        { label: 'Less: Existing Coverage',              amount: -form.existing },
-        { label: 'Recommended Coverage',                 amount: recommended },
-      ]
-    })
-    // Pre-fill SA with recommended rounded to nearest 5L
-    const roundedSA = Math.ceil(recommended / 500000) * 500000
-    setSa(roundedSA)
-    setPlanNo(TERM_PLANS[0]?.planNo ?? null)
+  const [monthlyIncome, setMonthlyIncome] = useState<number>(40000)
+  const [age, setAge] = useState<number>(30)
+  const [dependents, setDependents] = useState<number>(2)
+  
+  // Advanced & Detailed inputs
+  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [method, setMethod] = useState<'simple' | 'hlv'>('simple')
+  const [existingCover, setExistingCover] = useState<string>('')
+  const [outstandingLoans, setOutstandingLoans] = useState<string>('')
+  const [educationFund, setEducationFund] = useState<string>('')
+  const [spouseWorking, setSpouseWorking] = useState<boolean>(false)
+
+  // Calculations state
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [recommendedCover, setRecommendedCover] = useState<number>(0)
+  const [gapVal, setGapVal] = useState<number>(0)
+  const [incomeReplacement, setIncomeReplacement] = useState<number>(0)
+  const [dependentSupport, setDependentSupport] = useState<number>(0)
+  const [emergencyFund, setEmergencyFund] = useState<number>(0)
+  const [monthlyPremiumEstimate, setMonthlyPremiumEstimate] = useState<number>(0)
+
+  // Parse URL query params
+  useEffect(() => {
+    const qAge = searchParams.get('age')
+    const qSa = searchParams.get('sa')
+    
+    if (qAge) setAge(Number(qAge))
+    if (qSa) {
+      // Set existing cover as the URL SA to see if there is any remaining gap
+      setExistingCover(String(qSa))
+    }
+  }, [searchParams])
+
+  const handleCalculate = () => {
+    const annualIncome = monthlyIncome * 12
+    const loans = outstandingLoans ? Number(outstandingLoans) : 0
+    const education = educationFund ? Number(educationFund) : 0
+    const existing = existingCover ? Number(existingCover) : 0
+    const emergency = Math.round(annualIncome * 0.5) // 6 months of income
+
+    let totalNeeded = 0
+    let incReplace = 0
+    let depSupport = 0
+
+    if (method === 'simple') {
+      totalNeeded = annualIncome * 15
+      incReplace = annualIncome * 15
+    } else {
+      // HLV Method
+      const yearsTo60 = Math.max(60 - age, 5)
+      incReplace = Math.round(annualIncome * yearsTo60 * 0.7)
+      
+      // Dependent support: 3x annual income per dependent (reduced by 30% if spouse is working)
+      const spouseFactor = spouseWorking ? 0.7 : 1.0
+      depSupport = Math.round(dependents * annualIncome * 2 * spouseFactor)
+      
+      totalNeeded = incReplace + depSupport + loans + education + emergency
+    }
+
+    const recommended = Math.max(totalNeeded, 0)
+    const gap = Math.max(recommended - existing, 0)
+    
+    // Estimate term premium for the gap (approx ₹1.5 per ₹1000 SA per year, or ₹0.125 per ₹1000 SA per month)
+    const estMonthlyPrem = gap > 0 ? Math.round(gap * 0.000125) : 0
+
+    setRecommendedCover(recommended)
+    setGapVal(gap)
+    setIncomeReplacement(incReplace)
+    setDependentSupport(depSupport)
+    setEmergencyFund(emergency)
+    setMonthlyPremiumEstimate(estMonthlyPrem)
+    setHasCalculated(true)
   }
 
-  const selectedPlan = useMemo(() => (PLANS as LicPlan[]).find((p: LicPlan) => p.planNo === planNo), [planNo])
-  const ppt = useMemo(() => {
-    if (!selectedPlan) return term
-    return getPPT(selectedPlan, term, form.age)
-  }, [selectedPlan, term, form.age])
+  const handleReset = () => {
+    setMonthlyIncome(40000)
+    setAge(30)
+    setDependents(2)
+    setMethod('simple')
+    setExistingCover('')
+    setOutstandingLoans('')
+    setEducationFund('')
+    setSpouseWorking(false)
+    setRecommendedCover(0)
+    setGapVal(0)
+    setIncomeReplacement(0)
+    setDependentSupport(0)
+    setEmergencyFund(0)
+    setMonthlyPremiumEstimate(0)
+    setHasCalculated(false)
+  }
 
-  const premResult = useMemo(() => {
-    if (!planNo || !sa || sa < 100000) return null
-    return calculatePremium({ planNo, sa, age: form.age, term, ppt, mode })
-  }, [planNo, sa, form.age, term, ppt, mode])
+  const isGap = gapVal > 0
 
-  const benefitTable = useMemo(() => {
-    if (!premResult || !planNo) return []
-    return generateBenefitTable({ planNo, sa, age: form.age, term, ppt, premResult: premResult as PremiumResult })
-  }, [premResult, planNo, sa, form.age, term, ppt])
+  const breakdownRows = hasCalculated ? (
+    method === 'simple' ? [
+      { label: 'Annual Income', value: `₹${(monthlyIncome * 12).toLocaleString('en-IN')}` },
+      { label: 'Coverage Multiple (15x)', value: '15.0' },
+      { label: 'Recommended Life Cover', value: `₹${recommendedCover.toLocaleString('en-IN')}`, isTotal: true },
+      { label: 'Existing Coverage Deducted', value: `₹${(existingCover ? Number(existingCover) : 0).toLocaleString('en-IN')}` },
+      { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true }
+    ] : [
+      { label: 'Income Replacement (to 60)', value: `₹${incomeReplacement.toLocaleString('en-IN')}` },
+      { label: 'Dependent Support Buffer', value: `₹${dependentSupport.toLocaleString('en-IN')}` },
+      { label: 'Outstanding Loans', value: `₹${(outstandingLoans ? Number(outstandingLoans) : 0).toLocaleString('en-IN')}` },
+      { label: 'Education Target Fund', value: `₹${(educationFund ? Number(educationFund) : 0).toLocaleString('en-IN')}` },
+      { label: 'Emergency Fund (6mo income)', value: `₹${emergencyFund.toLocaleString('en-IN')}` },
+      { label: 'Total Recommended Cover', value: `₹${recommendedCover.toLocaleString('en-IN')}`, isTotal: true },
+      { label: 'Less: Existing Cover', value: `₹${(existingCover ? Number(existingCover) : 0).toLocaleString('en-IN')}` },
+      { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true }
+    ]
+  ) : []
 
-  const xirr = useMemo(() => {
-    if (!premResult || !benefitTable.length) return null
-    const lastRow = benefitTable[benefitTable.length - 1]
-    if (!lastRow.maturityPayout) return null
-    return ((Math.pow(lastRow.maturityPayout / premResult.totalPaid, 1 / term) - 1) * 100).toFixed(1)
-  }, [premResult, benefitTable, term])
+  const msg = hasCalculated ? `Namaste Ajay ji, I calculated my life insurance coverage need.
+Income ₹${(monthlyIncome).toLocaleString('en-IN')}/mo, age ${age}, HLV recommended cover is ₹${recommendedCover.toLocaleString('en-IN')}. My insurance gap is ₹${gapVal.toLocaleString('en-IN')}.
+Can you suggest a term policy to cover this?` : ''
+  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
 
   return (
-    <div className={hideHero ? "" : "pt-20"}>
-      {!hideHero && (
-        <section className="bg-hero-gradient hero-pattern py-14">
-          <div className="section-container text-center text-white">
-            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-2 text-sm font-medium mb-5">
-              <Calculator className="w-4 h-4" /> Life Insurance Calculator
-            </div>
-            <h1 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">{t.lifeCalc.title}</h1>
-            <p className="text-white/75 text-lg max-w-xl mx-auto">{t.lifeCalc.subtitle}</p>
-          </div>
-        </section>
-      )}
+    <CalculatorShell
+      activeTabId="coverage"
+      title="Coverage Calculator"
+      infoTooltip="Calculate how much life insurance coverage you need to secure your family's financial future. Compares your requirements against existing policies to calculate your protection gap."
+      faq={COVERAGE_FAQ}
+      age={age}
+      sa={recommendedCover}
+      term={20}
+      hasCalculated={hasCalculated}
+      onCalculate={handleCalculate}
+      calculateButtonText="Calculate Coverage Needs"
+      formFields={
+        <>
+          <QuickPick
+            label="Monthly Income"
+            value={monthlyIncome}
+            onChange={(val) => { setMonthlyIncome(val); setHasCalculated(false) }}
+            options={incomeOptions}
+            showCustom
+            customPlaceholder="Enter custom monthly income"
+            customSuffix="/mo"
+          />
 
-      {/* ── STEP 1: Coverage Need ── */}
-      <section className="section-padding bg-slate-50">
-        <div className="section-container">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Inputs */}
-              <div className="bg-white rounded-3xl shadow-card p-8">
-                <h2 className="font-display font-bold text-2xl text-slate-900 mb-6">
-                  Step 1 - How much cover do you need?
-                </h2>
-                <div className="space-y-5">
-                  <div>
-                    <label htmlFor="age" className="block text-sm font-semibold text-slate-700 mb-2">
-                      {t.lifeCalc.age}: <span className="text-amber-700">{form.age} years</span>
-                    </label>
-                    <input id="age" type="range" min="18" max="60" value={form.age}
-                      onChange={e => setForm({ ...form, age: +e.target.value })}
-                      className="w-full accent-gold h-2 rounded-full" />
-                    <div className="flex justify-between text-xs text-slate-400 mt-1"><span>18</span><span>60</span></div>
-                  </div>
-                  <div>
-                    <label htmlFor="income" className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.income}</label>
-                    <input id="income" type="number" value={form.income}
-                      onChange={e => setForm({ ...form, income: +e.target.value })}
-                      className="input-field" placeholder="600000" />
-                    <div className="text-xs text-slate-400 mt-1">= {fmt(form.income)} per year</div>
-                  </div>
-                  <div>
-                    <label htmlFor="dependents" className="block text-sm font-semibold text-slate-700 mb-2">
-                      {t.lifeCalc.dependents}: <span className="text-amber-700">{form.dependents}</span>
-                    </label>
-                    <input id="dependents" type="range" min="0" max="6" value={form.dependents}
-                      onChange={e => setForm({ ...form, dependents: +e.target.value })}
-                      className="w-full accent-gold h-2 rounded-full" />
-                    <div className="flex justify-between text-xs text-slate-400 mt-1"><span>0</span><span>6</span></div>
-                  </div>
-                  <div>
-                    <label htmlFor="existing" className="block text-sm font-semibold text-slate-700 mb-2">{t.lifeCalc.existing}</label>
-                    <input id="existing" type="number" value={form.existing}
-                      onChange={e => setForm({ ...form, existing: +e.target.value })}
-                      className="input-field" placeholder="0" />
-                  </div>
-                  <button onClick={calculateNeed} className="btn-primary w-full justify-center text-base py-4 mt-2">
-                    {t.lifeCalc.calculate}
-                  </button>
+          <SliderField
+            label="Current Age"
+            value={age}
+            onChange={(val) => { setAge(val); setHasCalculated(false) }}
+            min={18}
+            max={65}
+            unit=" yrs"
+          />
+
+          <QuickPick
+            label="Number of Dependents"
+            value={dependents}
+            onChange={(val) => { setDependents(val); setHasCalculated(false) }}
+            options={depOptions}
+          />
+
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="text-sm text-blue-600 font-semibold cursor-pointer"
+            >
+              {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
+            </button>
+
+            {showAdvanced && (
+              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                <QuickPick
+                  label="Calculation Method"
+                  value={method}
+                  onChange={(val) => { setMethod(val as any); setHasCalculated(false) }}
+                  options={methodOptions}
+                />
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Existing Life Coverage (₹)</label>
+                  <input
+                    type="number"
+                    value={existingCover}
+                    onChange={(e) => { setExistingCover(e.target.value); setHasCalculated(false) }}
+                    placeholder="Enter total SA of current policies"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                  />
                 </div>
-              </div>
 
-              {/* Coverage result */}
-              <div>
-                {need ? (
-                  <div className="bg-navy-light rounded-3xl p-8 text-white h-full flex flex-col justify-between">
+                {method === 'hlv' && (
+                  <>
                     <div>
-                      <div className="text-white/70 text-sm mb-2">{t.lifeCalc.resultSubtitle}</div>
-                      <div className="font-display font-bold text-5xl text-white mb-1">{fmt(need.recommended)}</div>
-                      <div className="text-white/70 text-sm mb-8">Recommended Life Cover</div>
-                      <h3 className="font-semibold text-white mb-4 text-sm">{t.lifeCalc.breakdown}</h3>
-                      <div className="space-y-3">
-                        {need.breakdown.map((row, i) => (
-                          <div key={i} className={`flex justify-between text-sm ${i === need.breakdown.length - 1 ? 'border-t border-white/30 pt-3 font-bold' : 'text-white/80'}`}>
-                            <span>{row.label}</span>
-                            <span className={row.amount < 0 ? 'text-red-300' : ''}>
-                              {row.amount < 0 ? '-' : ''}{fmt(Math.abs(row.amount))}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">Outstanding Loans / Debts (₹)</label>
+                      <input
+                        type="number"
+                        value={outstandingLoans}
+                        onChange={(e) => { setOutstandingLoans(e.target.value); setHasCalculated(false) }}
+                        placeholder="Enter total mortgage, personal, or car loans"
+                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                      />
                     </div>
-                    <p className="text-white/50 text-xs mt-6">Scroll down to get an actual LIC premium quote for this cover ↓</p>
-                  </div>
-                ) : (
-                  <div className="bg-white rounded-3xl shadow-card p-8 h-full flex flex-col items-center justify-center text-center min-h-80">
-                    <Calculator className="w-16 h-16 text-navy-light/30 mb-4" />
-                    <h3 className="font-display font-bold text-xl text-slate-900 mb-2">Enter Your Details</h3>
-                    <p className="text-slate-400 text-sm">Fill in your information and click Calculate.</p>
-                  </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">Future Education Fund Goal (₹)</label>
+                      <input
+                        type="number"
+                        value={educationFund}
+                        onChange={(e) => { setEducationFund(e.target.value); setHasCalculated(false) }}
+                        placeholder="Enter total target educational corpus"
+                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700">Is your spouse earning?</span>
+                      <input
+                        type="checkbox"
+                        checked={spouseWorking}
+                        onChange={(e) => { setSpouseWorking(e.target.checked); setHasCalculated(false) }}
+                        className="w-5 h-5 accent-blue-500 rounded border-gray-300"
+                      />
+                    </div>
+                  </>
                 )}
               </div>
-            </div>
+            )}
           </div>
-        </div>
-      </section>
+        </>
+      }
+      resultPanel={
+        hasCalculated && (
+          <div className="space-y-4">
+            <ResultCard
+              value={`₹${recommendedCover.toLocaleString('en-IN')}`}
+              label="Recommended Total Coverage"
+              subtext={isGap ? `You have a coverage gap of ₹${gapVal.toLocaleString('en-IN')}` : 'Your existing cover is adequate!'}
+              type={isGap ? 'caution' : 'positive'}
+              inlineLinkText="Find plans at this coverage → Premium Calculator"
+              inlineLinkHref={`/calculators/premium?age=${age}&sa=${gapVal > 0 ? gapVal : recommendedCover}&term=20`}
+              insightText={
+                isGap
+                  ? `Your family needs ₹${recommendedCover.toLocaleString('en-IN')} to maintain their lifestyle. Adding ₹${gapVal.toLocaleString('en-IN')} term cover costs just ~₹${monthlyPremiumEstimate}/month. To close the gap, explore term plans →`
+                  : `Your family gets 12× annual income in coverage — within the recommended 15× range. You are well protected!`
+              }
+              InsightIcon={isGap ? AlertTriangle : Shield}
+            />
 
-      {/* ── STEP 2: LIC Plan Quote (shown after step 1) ── */}
-      {need && (
-        <section className="section-padding bg-white border-t border-slate-100">
-          <div className="section-container">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 bg-gold/5 text-gold px-4 py-1.5 rounded-full text-sm font-semibold mb-3">
-                  <Shield className="w-4 h-4" /> Step 2 - Get a Real LIC Premium Quote
-                </div>
-                <h2 className="font-display font-bold text-2xl text-slate-900">
-                  Your coverage need is <span className="text-amber-700">{fmt(need.recommended)}</span>.
-                  Here&apos;s what LIC charges.
-                </h2>
-              </div>
+            <ResultBreakdown rows={breakdownRows} />
 
-              {/* Plan selection + config */}
-              <div className="grid lg:grid-cols-3 gap-6 mb-8">
-                {/* Plan picker */}
-                <div className="bg-slate-50 rounded-2xl p-5">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Choose Plan</div>
-                  <div className="space-y-2">
-                    {[...TERM_PLANS, ...ENDOWMENT_PLANS].map((p: LicPlan) => (
-                      <button key={p.planNo}
-                        onClick={() => setPlanNo(p.planNo)}
-                        className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-all border
-                          ${planNo === p.planNo
-                            ? 'bg-navy-light text-white border-navy-light font-semibold'
-                            : 'bg-white text-slate-700 border-slate-100 hover:border-navy-light/40'}`}>
-                        <div className="font-medium leading-tight">{p.name}</div>
-                        <div className={`text-xs mt-0.5 ${planNo === p.planNo ? 'text-white/70' : 'text-slate-400'}`}>
-                          Plan {p.planNo} · {p.category} · {p.xirr} XIRR
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Sliders */}
-                <div className="bg-slate-50 rounded-2xl p-5 space-y-5">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Adjust Parameters</div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Sum Assured: <span className="text-amber-700">{fmt(sa)}</span>
-                    </label>
-                    <input type="range" min="500000" max="10000000" step="500000" value={sa}
-                      onChange={e => setSa(+e.target.value)}
-                      className="w-full accent-gold h-2 rounded-full" />
-                    <div className="flex justify-between text-xs text-slate-400 mt-1"><span>₹5L</span><span>₹1Cr</span></div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1">
-                      Policy Term: <span className="text-amber-700">{term} years</span>
-                    </label>
-                    <input type="range" min="10" max="35" step="1" value={term}
-                      onChange={e => setTerm(+e.target.value)}
-                      className="w-full accent-gold h-2 rounded-full" />
-                    <div className="flex justify-between text-xs text-slate-400 mt-1"><span>10 yrs</span><span>35 yrs</span></div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Payment Mode</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {(['yearly','halfyearly','quarterly','monthly'] as const).map(m => (
-                        <button key={m} onClick={() => setMode(m)}
-                          className={`py-1.5 rounded-lg text-xs font-semibold transition-all border
-                            ${mode === m ? 'bg-navy-light text-white border-navy-light' : 'bg-white text-slate-600 border-slate-200 hover:border-navy-light/60'}`}>
-                          {m.charAt(0).toUpperCase() + m.slice(1)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Premium output */}
-                <div className="bg-navy-light rounded-2xl p-5 text-white flex flex-col justify-between">
-                  <div className="text-xs font-bold text-white/60 uppercase tracking-wider mb-3">Premium Breakdown</div>
-                  {premResult ? (
-                    <>
-                      <div>
-                        <div className="text-white/70 text-xs mb-1">Year 1 Premium ({mode})</div>
-                        <div className="font-display font-bold text-3xl mb-4">
-                          {fmt(premResult.instalment1)}
-                        </div>
-                        <div className="space-y-2 text-sm">
-                          {([
-                            ['Base Premium',    premResult.basePremium],
-                            ['Mode Rebate',    -premResult.modeRebate],
-                            ['SA Rebate',      -premResult.saRebate],
-                            ['Net Premium',     premResult.netPremium],
-                            [`GST (${premResult.gstPctYear1}%)`, premResult.gstYear1],
-                          ] as [string, number][]).map(([l,v]) => (
-                            <div key={l} className="flex justify-between text-white/80">
-                              <span>{l}</span>
-                              <span className={v < 0 ? 'text-green-300' : ''}>{v < 0 ? '-' : ''}{fmt(Math.abs(v))}</span>
-                            </div>
-                          ))}
-                          <div className="flex justify-between border-t border-white/20 pt-2 font-semibold">
-                            <span>Year 2+ ({mode})</span>
-                            <span>{fmt(premResult.instalment2)}</span>
-                          </div>
-                          <div className="flex justify-between text-white/70">
-                            <span>Total over {ppt} yrs</span>
-                            <span>{fmt(premResult.totalPaid)}</span>
-                          </div>
-                          {xirr && (
-                            <div className="flex justify-between text-green-300 font-semibold pt-1">
-                              <span>Approx. XIRR</span>
-                              <span>{xirr}%</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => openLeadPopup(`Premium quote: ${selectedPlan?.name} Plan ${planNo}, ${fmt(sa)} cover`)}
-                        className="mt-4 w-full bg-white text-gold font-bold py-2.5 rounded-xl text-sm hover:bg-gold/5 transition-colors flex items-center justify-center gap-2">
-                        Get Official Quote <ArrowRight className="w-4 h-4" />
-                      </button>
-                      <WhatsAppShare
-                        text={`I calculated my LIC Life Insurance premium: ${selectedPlan?.name} (Plan ${planNo}) with ${fmt(sa)} cover is just ${fmt(premResult.instalment1)}/${mode}! Check your needs and premium in 1 min:`}
-                        url="https://www.poddarwealth.com/calculators/life-insurance"
-                        className="mt-2.5 w-full justify-center bg-green-600 hover:bg-green-700"
-                      />
-                    </>
-                  ) : (
-                    <div className="text-white/50 text-sm">Select a plan and set parameters above.</div>
-                  )}
-                </div>
-              </div>
-
-              {/* Benefit table toggle */}
-              {benefitTable.length > 0 && (
-                <div className="bg-slate-50 rounded-2xl overflow-hidden">
-                  <button
-                    onClick={() => setShowTable(v => !v)}
-                    className="w-full flex items-center justify-between px-6 py-4 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
-                    <span>Year-by-Year Benefit Table - {selectedPlan?.name}</span>
-                    {showTable ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                  </button>
-                  {showTable && (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead className="bg-navy-light text-white">
-                          <tr>
-                            {['Year','Age','Premium Paid','Cum. Paid','Annual Bonus','Cum. Bonus','Death Benefit','Surrender Value','Maturity'].map(h => (
-                              <th key={h} className="px-3 py-2.5 text-left font-semibold whitespace-nowrap">{h}</th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {benefitTable.map((row: BenefitRow, i: number) => (
-                            <tr key={row.year} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                              <td className="px-3 py-2 font-semibold text-gold">{row.year}</td>
-                              <td className="px-3 py-2">{row.age}</td>
-                              <td className="px-3 py-2">{row.premiumPaid ? fmt(row.premiumPaid) : ' - '}</td>
-                              <td className="px-3 py-2">{fmt(row.cumPremiumPaid)}</td>
-                              <td className="px-3 py-2">{row.annualBonus ? fmt(row.annualBonus) : ' - '}</td>
-                              <td className="px-3 py-2">{row.cumBonus ? fmt(row.cumBonus) : ' - '}</td>
-                              <td className="px-3 py-2 font-semibold text-red-600">{fmt(row.deathBenefit)}</td>
-                              <td className="px-3 py-2 text-gold">{row.gsv ? fmt(row.gsv) : ' - '}</td>
-                              <td className="px-3 py-2 font-bold text-green-700">{row.maturityPayout ? fmt(row.maturityPayout) : ' - '}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <CalculatorCTA
-                serviceLink="/services/life-insurance"
-                serviceLabelEn="Compare Term Insurance Options"
-                serviceLabelHi="टर्म इंश्योरेंस विकल्पों की तुलना करें"
-                whatsappMessage={`Hi Ajay sir, I calculated my life insurance coverage need as ${fmt(need.recommended)} on poddarwealth.com and want to discuss term insurance plans.`}
-              />
-            </div>
+            <ActionBar
+              whatsappUrl={whatsappUrl}
+              onReset={handleReset}
+              resultRef={resultRef}
+            />
           </div>
-        </section>
-      )}
+        )
+      }
+      resultRef={resultRef}
+    />
+  )
+}
 
-      {/* Disclaimer */}
-      <section className="pb-12 bg-white">
-        <div className="section-container">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gold/5 border border-gold/20 rounded-2xl p-4 flex items-start gap-3">
-              <Info className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-              <p className="text-navy text-sm">
-                Premium figures are illustrative based on LIC tabular rates (2026). Actual premiums depend on underwriting, medical tests, and current LIC circulars. Bonus rates are historical and not guaranteed.
-                {' '}<Link href="/contact" className="underline font-semibold">Get a precise quote from Ajay.</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+export default function CoverageCalculatorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <CoverageCalcContent />
+    </Suspense>
   )
 }

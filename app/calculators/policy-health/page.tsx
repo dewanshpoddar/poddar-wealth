@@ -1,889 +1,527 @@
 'use client'
+import React, { Suspense, useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { ShieldAlert, ShieldCheck, Download } from 'lucide-react'
+import QuickPick from '@/components/ui/QuickPick'
+import SliderField from '@/components/ui/SliderField'
+import CalculatorShell from '@/components/calculators/CalculatorShell'
+import ResultCard from '@/components/calculators/ResultCard'
+import ResultBreakdown from '@/components/calculators/ResultBreakdown'
+import ActionBar from '@/components/calculators/ActionBar'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useLang } from '@/lib/LangContext'
-import { usePathname } from 'next/navigation'
-import { Calculator, Info, Phone, RefreshCw, AlertCircle, ArrowRight, ArrowLeft, CheckCircle2, MessageCircle, Download } from 'lucide-react'
-import { fmt, fmtSA } from '@/lib/format'
-import { ADVISOR_PHONE } from '@/lib/constants'
-import WhatsAppShare from '@/components/WhatsAppShare'
-import type { PolicyHealthResult } from '@/lib/types/calculator'
-import CalculatorCTA from '@/components/calculators/CalculatorCTA'
+const incomeOptions = [
+  { label: '₹1.8L', value: 180000 },
+  { label: '₹3L', value: 300000 },
+  { label: '₹5L', value: 500000 },
+  { label: '₹8L', value: 800000 },
+  { label: '₹12L', value: 1200000 },
+]
 
-function LpLeadForm({ campaign }: { campaign: string }) {
-  const { lang } = useLang()
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+const policyOptions = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6+', value: 6 },
+]
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name || !phone) return
-    setLoading(true)
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          mobile: phone,
-          intent: `Landing Page Results Form: ${campaign}`
-        })
-      })
-      if (res.ok) setSuccess(true)
-    } catch {}
-    setLoading(false)
+const yesNoOptions = [
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
+]
+
+const HEALTH_FAQ = [
+  {
+    question: 'What is a Policy Health Score?',
+    answer: 'Your Policy Health Score measures the overall health of your insurance portfolio based on coverage adequacy, premium affordability, protection mix (term + health), maturity progress, and dependent protection.'
+  },
+  {
+    question: 'Why is a term plan plus health plan important?',
+    answer: 'Term insurance replaces your income if you pass away. Health insurance covers medical bills during your life. Both are the foundational pillars of financial security.'
+  },
+  {
+    question: 'How can I improve my Policy Health Score?',
+    answer: 'You can improve your score by closing coverage gaps (adding term cover to reach 10x-15x income), purchasing a family health floater, or reviewing high-premium low-cover policies.'
   }
+]
 
-  if (success) {
-    return (
-      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center text-xs font-bold text-emerald-800">
-        {lang === 'en' ? 'Consultation request sent! Ajay sir will call you shortly.' : 'पরামর্শ अनुरोध भेजा गया! अजय सर जल्द ही आपको कॉल करेंगे।'}
-      </div>
-    )
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-2 mt-2">
-      <input
-        type="text"
-        required
-        value={name}
-        onChange={e => setName(e.target.value)}
-        placeholder={lang === 'en' ? 'Your Name' : 'आपका नाम'}
-        className="w-full h-10 px-3 border border-gray-200 rounded-xl bg-gray-50 text-xs font-semibold focus:outline-none focus:border-gold focus:bg-white text-navy"
-      />
-      <input
-        type="tel"
-        required
-        pattern="[0-9]{10}"
-        maxLength={10}
-        value={phone}
-        onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-        placeholder={lang === 'en' ? 'WhatsApp Number' : 'व्हाट्सएप नंबर'}
-        className="w-full h-10 px-3 border border-gray-200 rounded-xl bg-gray-50 text-xs font-semibold focus:outline-none focus:border-gold focus:bg-white text-navy font-sans"
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full h-10 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl flex items-center justify-center cursor-pointer transition-all shadow-sm"
-      >
-        {loading ? 'Submitting...' : (lang === 'en' ? 'Get Detailed Review' : 'विस्तृत समीक्षा प्राप्त करें')}
-      </button>
-    </form>
-  )
+function getGrade(score: number): string {
+  if (score >= 90) return 'A+'
+  if (score >= 80) return 'A'
+  if (score >= 65) return 'B+'
+  if (score >= 50) return 'C'
+  return 'D'
 }
 
-type PlanType = 'endowment' | 'term' | 'ulip' | 'money-back' | 'whole-life'
+function getGradeColor(grade: string): string {
+  if (grade === 'A+' || grade === 'A') return 'text-emerald-600'
+  if (grade === 'B+') return 'text-blue-600'
+  if (grade === 'C') return 'text-amber-600'
+  return 'text-red-500'
+}
 
-export default function PolicyHealthCalculatorPage() {
-  const hideHero = false
-  const { t, lang } = useLang()
-  const pathname = usePathname()
-  const isLP = pathname?.startsWith('/lp/')
-  const p = t.policyHealth || {
-    title: 'Policy Health Score',
-    subtitle: "Get a free health score for your insurance portfolio. Find out if you're underinsured, overinsured, or just right.",
-    step1: 'Your Policy',
-    step2: 'About You',
-    step3: 'Your Protection',
-    planType: 'Plan Type',
-    sumAssured: 'Sum Assured (₹)',
-    annualPremium: 'Annual Premium (₹)',
-    policyYear: 'Policy Year',
-    age: 'Current Age',
-    annualIncome: 'Annual Income (₹)',
-    dependents: 'Number of Dependents',
-    hasTerm: 'Do you have term insurance?',
-    hasHealth: 'Do you have health insurance?',
-    checkScore: 'Check My Score',
-    newBadge: 'New',
-    scoreTitle: 'Your Insurance Health Score',
-    grade: 'Grade',
-    recommendationsTitle: 'Recommended Next Steps',
-    detailedReview: 'Want a detailed review? Talk to Ajay sir.',
-    shareWhatsApp: 'Share your score',
-    shareText: 'My insurance health score is {score}/100 ({grade}). Check yours free at poddarwealth.com/calculators/policy-health',
-    yes: 'Yes',
-    no: 'No',
-    downloadReport: 'Download Your Wealth Blueprint (PDF)',
-    generatingReport: 'Generating your report...',
-    nameLabel: 'Your Name (for the report)',
-    namePlaceholder: 'e.g. Rahul Kumar',
-    planTypes: {
-      endowment: 'Endowment Plan',
-      term: 'Term Insurance',
-      ulip: 'ULIP Plan',
-      'money-back': 'Money-Back Plan',
-      'whole-life': 'Whole Life Insurance'
-    },
-    breakdown: {
-      coverageAdequacy: 'Coverage Adequacy',
-      premiumAffordability: 'Premium Affordability',
-      maturityProgress: 'Policy Progress',
-      protectionMix: 'Protection Mix',
-      dependentCoverage: 'Dependent Coverage'
-    }
-  }
+function PolicyHealthCalcContent() {
+  const searchParams = useSearchParams()
+  const resultRef = useRef<HTMLDivElement | null>(null)
 
-  // Wizard State
-  const [step, setStep] = useState(1)
+  const [annualIncome, setAnnualIncome] = useState<number>(300000)
+  const [totalCover, setTotalCover] = useState<string>('')
+  const [hasHealth, setHasHealth] = useState<boolean>(false)
+  const [hasTerm, setHasTerm] = useState<boolean>(false)
+  const [policiesCount, setPoliciesCount] = useState<number>(1)
 
-  // Step 1: Your Policy
-  const [planType, setPlanType] = useState<PlanType>('endowment')
-  const [sumAssured, setSumAssured] = useState<number>(500000)
-  const [annualPremium, setAnnualPremium] = useState<number>(30000)
+  // Advanced inputs
+  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [premiumAmount, setPremiumAmount] = useState<string>('')
+  const [age, setAge] = useState<number>(30)
+  const [dependents, setDependents] = useState<number>(2)
   const [policyYear, setPolicyYear] = useState<number>(3)
 
-  // Step 2: About You
-  const [currentAge, setCurrentAge] = useState<number>(35)
-  const [annualIncome, setAnnualIncome] = useState<number>(600000)
-  const [dependents, setDependents] = useState<number>(2)
-  const [userName, setUserName] = useState<string>('')
+  // Calculations state
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [totalScore, setTotalScore] = useState<number>(0)
+  const [grade, setGrade] = useState<string>('B+')
+  const [downloading, setDownloading] = useState<boolean>(false)
 
-  // Step 3: Your Protection
-  const [hasTermInsurance, setHasTermInsurance] = useState<boolean>(false)
-  const [hasHealthInsurance, setHasHealthInsurance] = useState<boolean>(true)
+  const [coverageScore, setCoverageScore] = useState<number>(0)
+  const [affordabilityScore, setAffordabilityScore] = useState<number>(0)
+  const [maturityScore, setMaturityScore] = useState<number>(0)
+  const [protectionScore, setProtectionScore] = useState<number>(0)
+  const [dependentScore, setDependentScore] = useState<number>(0)
 
-  const [loading, setLoading] = useState(false)
-  const [downloading, setDownloading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<PolicyHealthResult | null>(null)
+  const [coverageComment, setCoverageComment] = useState<string>('')
+  const [affordabilityComment, setAffordabilityComment] = useState<string>('')
+  const [maturityComment, setMaturityComment] = useState<string>('')
+  const [protectionComment, setProtectionComment] = useState<string>('')
+  const [dependentComment, setDependentComment] = useState<string>('')
+  const [topImprovement, setTopImprovement] = useState<string>('')
 
-  async function downloadReport() {
-    if (!result) return
+  // Parse URL query params
+  useEffect(() => {
+    const qAge = searchParams.get('age')
+    const qSa = searchParams.get('sa')
+    
+    if (qAge) setAge(Number(qAge))
+    if (qSa) setTotalCover(String(qSa))
+  }, [searchParams])
+
+  const handleCalculate = () => {
+    const coverVal = totalCover ? Number(totalCover) : 0
+    const annualPremium = premiumAmount ? Number(premiumAmount) : coverVal * 0.05
+
+    // 1. Coverage Adequacy (35 pts)
+    const idealCover = annualIncome * 10
+    const coverageRatio = idealCover > 0 ? (coverVal / idealCover) : 0
+    const covScore = Math.min(35, Math.round(coverageRatio * 35))
+    setCoverageScore(covScore)
+    const covPct = Math.round(coverageRatio * 100)
+    setCoverageComment(coverageRatio >= 1
+      ? `Your cover is ${covPct}% of the recommended sum. Well protected.`
+      : `Your cover is only ${covPct}% of the recommended ₹${(idealCover/100000).toFixed(1)}L. Consider top-up term plan.`
+    )
+
+    // 2. Premium Affordability (20 pts)
+    const premiumRatio = annualIncome > 0 ? (annualPremium / annualIncome) : 0
+    let affScore = 20
+    let affComment = ''
+    if (premiumRatio <= 0.05) {
+      affScore = 20
+      affComment = `You spend ${(premiumRatio * 100).toFixed(1)}% of income on premiums. Very affordable.`
+    } else if (premiumRatio <= 0.10) {
+      affScore = 15
+      affComment = `You spend ${(premiumRatio * 100).toFixed(1)}% of income on premiums. Moderate and manageable.`
+    } else if (premiumRatio <= 0.15) {
+      affScore = 10
+      affComment = `You spend ${(premiumRatio * 100).toFixed(1)}% of income. High. Consider reviewing multiple policies.`
+    } else {
+      affScore = 5
+      affComment = `You spend ${(premiumRatio * 100).toFixed(1)}% of income on premiums. High stress. Review portfolio.`
+    }
+    setAffordabilityScore(affScore)
+    setAffordabilityComment(affComment)
+
+    // 3. Policy Maturity Progress (15 pts)
+    let matScore = 3
+    let matComment = ''
+    if (policyYear >= 10) {
+      matScore = 15
+      matComment = `${policyYear} years paid. Strong surrender value and loan eligibility.`
+    } else if (policyYear >= 5) {
+      matScore = 10
+      matComment = `${policyYear} years paid. Good progress. Keep going.`
+    } else if (policyYear >= 3) {
+      matScore = 7
+      matComment = `${policyYear} years paid. Past the early lock-in period.`
+    } else {
+      matScore = 3
+      matComment = `Only ${policyYear} years paid. Policy requires at least 3 years to build cash value.`
+    }
+    setMaturityScore(matScore)
+    setMaturityComment(matComment)
+
+    // 4. Protection Mix (20 pts)
+    const protScore = (hasTerm ? 10 : 0) + (hasHealth ? 10 : 0)
+    setProtectionScore(protScore)
+    setProtectionComment(
+      protScore === 20
+        ? 'You have both term and health insurance. Good protection foundation.'
+        : hasTerm
+          ? 'You have term cover but no health insurance. Add family health floater.'
+          : hasHealth
+            ? 'You have health cover but no term plan. Term cover is recommended.'
+            : 'No term or health plans detected. Critical coverage gap.'
+    )
+
+    // 5. Dependent Coverage (10 pts)
+    let depScore = 10
+    let depComment = ''
+    if (dependents === 0) {
+      depScore = 10
+      depComment = 'No dependents. No coverage gap.'
+    } else {
+      const coverPerDependent = coverVal / dependents
+      if (coverPerDependent >= 2000000) {
+        depScore = 10
+        depComment = `₹${(coverPerDependent/100000).toFixed(1)}L per dependent. Adequate cover.`
+      } else if (coverPerDependent >= 1000000) {
+        depScore = 7
+        depComment = `₹${(coverPerDependent/100000).toFixed(1)}L per dependent. Consider increasing sum assured.`
+      } else if (coverPerDependent >= 500000) {
+        depScore = 4
+        depComment = `₹${(coverPerDependent/100000).toFixed(1)}L per dependent. Under-insured for family.`
+      } else {
+        depScore = 2
+        depComment = `₹${(coverPerDependent/100000).toFixed(1)}L per dependent. Critical cover gap.`
+      }
+    }
+    setDependentScore(depScore)
+    setDependentComment(depComment)
+
+    // Calculate final score & grade
+    const finalScore = covScore + affScore + matScore + protScore + depScore
+    setTotalScore(finalScore)
+    const gr = getGrade(finalScore)
+    setGrade(gr)
+
+    // Find top improvement suggestion
+    let suggestion = ''
+    if (!hasHealth) {
+      suggestion = 'Adding a ₹5L family health floater will protect you from hospital bills and lift your score to A!'
+    } else if (!hasTerm) {
+      suggestion = 'Adding a pure term plan of ₹50L will close your primary income cover gap and lift your score to A!'
+    } else if (coverageRatio < 0.5) {
+      suggestion = 'Topping up your life coverage to reach 10x annual income will lift your score from B to A!'
+    } else if (premiumRatio > 0.15) {
+      suggestion = 'Your premiums are high. Restructuring multiple low-cover endowment policies will lower cost and improve score.'
+    } else {
+      suggestion = 'Your portfolio is in good shape. Consider adding critical illness rider to reach A+ score!'
+    }
+    setTopImprovement(suggestion)
+    setHasCalculated(true)
+  }
+
+  const handleDownload = async () => {
     setDownloading(true)
     try {
       const res = await fetch('/api/reports/wealth-blueprint', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: userName || 'Valued Client',
-          sumAssured,
-          annualPremium,
+          name: 'Valued Client',
+          sumAssured: totalCover ? Number(totalCover) : 0,
+          annualPremium: premiumAmount ? Number(premiumAmount) : 0,
           policyYear,
-          currentAge,
+          currentAge: age,
           annualIncome,
           dependents,
-          hasHealthInsurance,
-          hasTermInsurance,
-          planType,
-          ...result
+          hasHealthInsurance: hasHealth,
+          hasTermInsurance: hasTerm,
+          planType: 'endowment',
+          totalScore,
+          grade,
+          breakdown: {
+            coverageAdequacy: { score: coverageScore, max: 35, comment: coverageComment },
+            premiumAffordability: { score: affordabilityScore, max: 20, comment: affordabilityComment },
+            maturityProgress: { score: maturityScore, max: 15, comment: maturityComment },
+            protectionMix: { score: protectionScore, max: 20, comment: protectionComment },
+            dependentCoverage: { score: dependentScore, max: 10, comment: dependentComment },
+          },
+          summary: `Your Policy Health Score is ${grade} (${totalScore}/100). ${topImprovement}`
         })
       })
-      if (!res.ok) {
-        throw new Error('Failed to generate report')
-      }
+      if (!res.ok) throw new Error('Failed to generate report')
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `wealth-blueprint.pdf`
+      a.download = `policy-health-report.pdf`
       a.click()
       URL.revokeObjectURL(url)
-    } catch (err: any) {
-      alert(lang === 'en' ? 'Failed to download report. Please try again.' : 'रिपोर्ट डाउनलोड करने में विफल। कृपया पुनः प्रयास करें।')
+    } catch (err) {
+      alert('Failed to download report. Please try again.')
     } finally {
       setDownloading(false)
     }
   }
 
-  const handleNext = () => {
-    setError(null)
-    if (step === 1) {
-      if (sumAssured <= 0) {
-        setError(lang === 'en' ? 'Sum Assured must be greater than 0' : 'बीमा राशि 0 से अधिक होनी चाहिए')
-        return
-      }
-      if (annualPremium <= 0) {
-        setError(lang === 'en' ? 'Annual Premium must be greater than 0' : 'वार्षिक प्रीमियम 0 से अधिक होना चाहिए')
-        return
-      }
-      if (policyYear < 0) {
-        setError(lang === 'en' ? 'Policy Year cannot be negative' : 'पॉलिसी वर्ष ऋणात्मक नहीं हो सकता')
-        return
-      }
-      setStep(2)
-    } else if (step === 2) {
-      if (currentAge < 18 || currentAge > 80) {
-        setError(lang === 'en' ? 'Age must be between 18 and 80' : 'उम्र 18 से 80 के बीच होनी चाहिए')
-        return
-      }
-      if (annualIncome <= 0) {
-        setError(lang === 'en' ? 'Annual Income must be greater than 0' : 'वार्षिक आय 0 से अधिक होनी चाहिए')
-        return
-      }
-      if (dependents < 0) {
-        setError(lang === 'en' ? 'Number of dependents cannot be negative' : 'आश्रितों की संख्या ऋणात्मक नहीं हो सकती')
-        return
-      }
-      setStep(3)
-    }
+  const handleReset = () => {
+    setAnnualIncome(300000)
+    setTotalCover('')
+    setHasHealth(false)
+    setHasTerm(false)
+    setPoliciesCount(1)
+    setPremiumAmount('')
+    setAge(30)
+    setDependents(2)
+    setPolicyYear(3)
+    setTotalScore(0)
+    setHasCalculated(false)
   }
 
-  const handleBack = () => {
-    setError(null)
-    if (step > 1) {
-      setStep(step - 1)
-    }
-  }
+  const breakdownRows = hasCalculated ? [
+    { label: 'Coverage Adequacy (max 35)', value: `${coverageScore}/35` },
+    { label: 'Premium Affordability (max 20)', value: `${affordabilityScore}/20` },
+    { label: 'Maturity Progress (max 15)', value: `${maturityScore}/15` },
+    { label: 'Protection Mix (max 20)', value: `${protectionScore}/20` },
+    { label: 'Dependent Coverage (max 10)', value: `${dependentScore}/10` },
+    { label: 'Total Portfolio Health Score', value: `${totalScore}/100`, isTotal: true },
+  ] : []
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setResult(null)
-    setLoading(true)
-
-    try {
-      const res = await fetch('/api/calculators/policy-health', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sumAssured,
-          annualPremium,
-          policyYear,
-          currentAge,
-          annualIncome,
-          dependents,
-          hasHealthInsurance,
-          hasTermInsurance,
-          planType
-        })
-      })
-
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || 'Failed to calculate score')
-      }
-
-      const data: PolicyHealthResult = await res.json()
-      setResult(data)
-
-      // Track calculator completion
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'calc_run',
-          sheetName: 'Policy Health Calculator',
-          data: {
-            planType,
-            sa: sumAssured,
-            annualPremium,
-            policyYear,
-            age: currentAge,
-            income: annualIncome,
-            dependents,
-            hasTerm: hasTermInsurance,
-            hasHealth: hasHealthInsurance,
-            score: data.totalScore,
-            grade: data.grade,
-            session: typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
-          }
-        })
-      }).catch(() => {})
-
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during calculation.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Score circular gauge configuration
-  const radius = 65
-  const circ = 2 * Math.PI * radius // ~408.4
-
-  const getScoreColor = (score: number) => {
-    if (score < 50) return 'text-red-500 stroke-red-500'
-    if (score < 65) return 'text-amber-700 stroke-amber-700'
-    if (score < 80) return 'text-yellow-500 stroke-yellow-500'
-    if (score < 90) return 'text-green-500 stroke-green-500'
-    return 'text-emerald-500 stroke-emerald-500'
-  }
-
-  const getScoreBgColor = (score: number) => {
-    if (score < 50) return 'bg-red-50 border-red-200 text-red-700'
-    if (score < 65) return 'bg-amber-50 border-amber-200 text-amber-700'
-    if (score < 80) return 'bg-yellow-50 border-yellow-200 text-yellow-700'
-    if (score < 90) return 'bg-green-50 border-green-200 text-green-700'
-    return 'bg-emerald-50 border-emerald-200 text-emerald-700'
-  }
-
-  const getWhatsAppCTAUrl = (score: number, grade: string) => {
-    const msg = `Hi Ajay sir, I checked my Insurance Health Score on poddarwealth.com and got a score of ${score}/100 (Grade ${grade}). Here are my inputs:
-- Plan Type: ${planType}
-- Sum Assured: ₹${sumAssured.toLocaleString('en-IN')}
-- Annual Premium: ₹${annualPremium.toLocaleString('en-IN')}
-- Policy Year: ${policyYear}
-- Age: ${currentAge}
-- Annual Income: ₹${annualIncome.toLocaleString('en-IN')}
-- Dependents: ${dependents}
-- Has Term: ${hasTermInsurance ? 'Yes' : 'No'}
-- Has Health: ${hasHealthInsurance ? 'Yes' : 'No'}
-
-Please help me review these gaps and suggest the right plans.`
-    return `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`
-  }
-
-  const planTypesList = [
-    { value: 'endowment' as const, label: p.planTypes.endowment },
-    { value: 'term' as const, label: p.planTypes.term },
-    { value: 'ulip' as const, label: p.planTypes.ulip },
-    { value: 'money-back' as const, label: p.planTypes['money-back'] },
-    { value: 'whole-life' as const, label: p.planTypes['whole-life'] },
-  ]
-
-  const customShareText = result
-    ? p.shareText.replace('{score}', result.totalScore.toString()).replace('{grade}', result.grade)
-    : ''
+  const msg = hasCalculated ? `Namaste Ajay ji, I checked my Policy Health Score.
+My score is ${grade} (${totalScore}/100). Gaps: ${topImprovement}.
+Can you suggest how I can improve my portfolio?` : ''
+  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
 
   return (
-    <div className={hideHero ? "bg-white" : "min-h-screen bg-warm pt-[78px]"}>
-      {/* Hero Header */}
-      {!hideHero && (
-        <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
-          <div 
-            className="absolute inset-0 opacity-[0.04] pointer-events-none"
-            style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} 
+    <CalculatorShell
+      activeTabId="health"
+      title="Policy Health Score"
+      infoTooltip="Check the financial health of your insurance policies. Portfolio health is evaluated across 5 key dimensions: coverage adequacy, affordability, plan progress, term/health protection mix, and dependent cover."
+      faq={HEALTH_FAQ}
+      age={age}
+      sa={totalCover ? Number(totalCover) : 0}
+      term={15}
+      hasCalculated={hasCalculated}
+      onCalculate={handleCalculate}
+      calculateButtonText="Check Portfolio Health"
+      formFields={
+        <>
+          <QuickPick
+            label="Annual Income"
+            value={annualIncome}
+            onChange={(val) => { setAnnualIncome(val); setHasCalculated(false) }}
+            options={incomeOptions}
+            showCustom
+            customPlaceholder="Enter custom annual income"
+            customSuffix="/yr"
           />
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-              <Calculator className="w-3.5 h-3.5" /> {p.title}
-            </div>
-            <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-              {p.title}
-            </h1>
-            <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-              {p.subtitle}
-            </p>
-          </div>
-        </div>
-      )}
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Wizard Form Side (Steps 1-3) */}
-          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-8">
-            {/* Step Indicators */}
-            <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
-              {[
-                { stepNum: 1, label: p.step1 },
-                { stepNum: 2, label: p.step2 },
-                { stepNum: 3, label: p.step3 }
-              ].map(({ stepNum, label }) => (
-                <div key={stepNum} className="flex flex-col items-center flex-1 relative">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-                    step === stepNum 
-                      ? 'bg-amber-500 text-white' 
-                      : step > stepNum 
-                        ? 'bg-green-500 text-white' 
-                        : 'bg-gray-100 text-gray-500'
-                  }`}>
-                    {stepNum}
-                  </div>
-                  <span className="text-[10px] md:text-[11px] font-bold mt-2 text-gray-500 text-center">{label}</span>
-                </div>
-              ))}
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              
-              {/* STEP 1: Your Policy */}
-              {step === 1 && (
-                <div className="space-y-5">
-                  <h2 className="font-display font-bold text-lg text-navy mb-4">
-                    {lang === 'en' ? 'Enter Policy Details' : 'पॉलिसी विवरण दर्ज करें'}
-                  </h2>
-
-                  {/* Plan Type Grid */}
-                  <div>
-                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">
-                      {p.planType}
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {planTypesList.map((plan) => (
-                        <label 
-                          key={plan.value}
-                          className={`flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
-                            planType === plan.value 
-                              ? 'border-amber-500 bg-amber-50/20' 
-                              : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
-                          }`}
-                        >
-                          <input 
-                            type="radio" 
-                            name="planType"
-                            value={plan.value}
-                            checked={planType === plan.value}
-                            onChange={() => setPlanType(plan.value)}
-                            className="text-amber-500 focus:ring-amber-500 border-gray-300"
-                          />
-                          <span className="text-13 font-semibold text-slate-800">{plan.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Sum Assured */}
-                  <div>
-                    <label htmlFor="sumAssured" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.sumAssured}
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                      <input
-                        id="sumAssured"
-                        type="number"
-                        min={10000}
-                        step={10000}
-                        required
-                        value={sumAssured}
-                        onChange={(e) => setSumAssured(Math.max(0, parseInt(e.target.value) || 0))}
-                        className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                      />
-                    </div>
-                    <div className="text-right text-[10px] font-bold text-gold mt-1">
-                      {fmtSA(sumAssured)}
-                    </div>
-                  </div>
-
-                  {/* Annual Premium */}
-                  <div>
-                    <label htmlFor="annualPremium" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.annualPremium}
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                      <input
-                        id="annualPremium"
-                        type="number"
-                        min={1000}
-                        step={500}
-                        required
-                        value={annualPremium}
-                        onChange={(e) => setAnnualPremium(Math.max(0, parseInt(e.target.value) || 0))}
-                        className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                      />
-                    </div>
-                    <div className="text-right text-[10px] font-bold text-gold mt-1">
-                      {fmt(annualPremium)}
-                    </div>
-                  </div>
-
-                  {/* Policy Year */}
-                  <div>
-                    <label htmlFor="policyYear" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.policyYear}
-                    </label>
-                    <input
-                      id="policyYear"
-                      type="number"
-                      min={0}
-                      max={40}
-                      required
-                      value={policyYear}
-                      onChange={(e) => setPolicyYear(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* STEP 2: About You */}
-              {step === 2 && (
-                <div className="space-y-5">
-                  <h2 className="font-display font-bold text-lg text-navy mb-4">
-                    {lang === 'en' ? 'Tell Us About You' : 'अपने बारे में बताएं'}
-                  </h2>
-
-                  {/* Name */}
-                  <div>
-                    <label htmlFor="userName" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.nameLabel}
-                    </label>
-                    <input
-                      id="userName"
-                      type="text"
-                      placeholder={p.namePlaceholder}
-                      value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
-                      className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                    />
-                  </div>
-
-                  {/* Age */}
-                  <div>
-                    <label htmlFor="currentAge" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.age}
-                    </label>
-                    <input
-                      id="currentAge"
-                      type="number"
-                      min={18}
-                      max={80}
-                      required
-                      value={currentAge}
-                      onChange={(e) => setCurrentAge(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                    />
-                  </div>
-
-                  {/* Income */}
-                  <div>
-                    <label htmlFor="annualIncome" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.annualIncome}
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                      <input
-                        id="annualIncome"
-                        type="number"
-                        min={50000}
-                        step={50000}
-                        required
-                        value={annualIncome}
-                        onChange={(e) => setAnnualIncome(Math.max(0, parseInt(e.target.value) || 0))}
-                        className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                      />
-                    </div>
-                    <div className="text-right text-[10px] font-bold text-gold mt-1">
-                      {fmt(annualIncome)}
-                    </div>
-                  </div>
-
-                  {/* Dependents */}
-                  <div>
-                    <label htmlFor="dependents" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {p.dependents}
-                    </label>
-                    <input
-                      id="dependents"
-                      type="number"
-                      min={0}
-                      max={15}
-                      required
-                      value={dependents}
-                      onChange={(e) => setDependents(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* STEP 3: Your Protection */}
-              {step === 3 && (
-                <div className="space-y-6">
-                  <h2 className="font-display font-bold text-lg text-navy mb-4">
-                    {lang === 'en' ? 'Existing Protection Covers' : 'मौजूदा सुरक्षा कवर'}
-                  </h2>
-
-                  {/* Has Term Insurance */}
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-3">
-                      {p.hasTerm}
-                    </label>
-                    <div className="flex gap-4">
-                      <button
-                        type="button"
-                        onClick={() => setHasTermInsurance(true)}
-                        className={`flex-1 h-11 font-bold text-sm rounded-xl border transition-all ${
-                          hasTermInsurance 
-                            ? 'bg-amber-500 border-amber-500 text-white' 
-                            : 'bg-white border-gray-200 text-slate-600 hover:border-gray-300'
-                        }`}
-                      >
-                        {p.yes}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setHasTermInsurance(false)}
-                        className={`flex-1 h-11 font-bold text-sm rounded-xl border transition-all ${
-                          !hasTermInsurance 
-                            ? 'bg-amber-500 border-amber-500 text-white' 
-                            : 'bg-white border-gray-200 text-slate-600 hover:border-gray-300'
-                        }`}
-                      >
-                        {p.no}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Has Health Insurance */}
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-800 mb-3">
-                      {p.hasHealth}
-                    </label>
-                    <div className="flex gap-4">
-                      <button
-                        type="button"
-                        onClick={() => setHasHealthInsurance(true)}
-                        className={`flex-1 h-11 font-bold text-sm rounded-xl border transition-all ${
-                          hasHealthInsurance 
-                            ? 'bg-amber-500 border-amber-500 text-white' 
-                            : 'bg-white border-gray-200 text-slate-600 hover:border-gray-300'
-                        }`}
-                      >
-                        {p.yes}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setHasHealthInsurance(false)}
-                        className={`flex-1 h-11 font-bold text-sm rounded-xl border transition-all ${
-                          !hasHealthInsurance 
-                            ? 'bg-amber-500 border-amber-500 text-white' 
-                            : 'bg-white border-gray-200 text-slate-600 hover:border-gray-300'
-                        }`}
-                      >
-                        {p.no}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Local validations errors */}
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-[11px] font-medium text-red-700">{error}</span>
-                </div>
-              )}
-
-              {/* Navigation Actions */}
-              <div className="flex gap-4 pt-4 border-t border-gray-50">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={handleBack}
-                    className="inline-flex h-12 px-6 border border-gray-200 rounded-xl font-bold text-sm items-center justify-center gap-2 text-slate-600 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer"
-                  >
-                    <ArrowLeft size={16} /> {lang === 'en' ? 'Back' : 'पीछे'}
-                  </button>
-                )}
-
-                {step < 3 ? (
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="flex-1 h-12 bg-navy hover:bg-navy/90 text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    {lang === 'en' ? 'Continue' : 'आगे बढ़ें'} <ArrowRight size={16} />
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
-                  >
-                    {loading ? (
-                      <>
-                        <RefreshCw className="w-4 h-4 animate-spin" />
-                        <span>{lang === 'en' ? 'Checking...' : 'जांच की जा रही है...'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Calculator className="w-4 h-4" />
-                        <span>{p.checkScore}</span>
-                      </>
-                    )}
-                  </button>
-                )}
-              </div>
-            </form>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Total Life Coverage (Sum Assured) (₹)</label>
+            <input
+              type="number"
+              value={totalCover}
+              onChange={(e) => { setTotalCover(e.target.value); setHasCalculated(false) }}
+              placeholder="Enter total sum assured of all current policies"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+            />
           </div>
 
-          {/* Results Side */}
-          <div className="lg:col-span-6 space-y-6">
-            {!result && !loading && (
-              <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-96 flex flex-col items-center justify-center text-center p-8">
-                <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
-                  {lang === 'en' ? 'Ready to Audit Portfolio' : 'ऑडिट के लिए तैयार'}
-                </div>
-                <div className="text-[12px] text-gray-500 max-w-xs leading-relaxed">
-                  {lang === 'en' 
-                    ? 'Enter your policy and profile inputs. Click Check My Score to run a security health audit.'
-                    : 'अपनी पॉलिसी और प्रोफाइल इनपुट दर्ज करें। सुरक्षा ऑडिट चलाने के लिए मेरा स्कोर चेक करें पर क्लिक करें।'}
-                </div>
-              </div>
-            )}
+          <QuickPick
+            label="Do you have health insurance?"
+            value={hasHealth}
+            onChange={(val) => { setHasHealth(val as boolean); setHasCalculated(false) }}
+            options={yesNoOptions}
+          />
 
-            {result && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-8 space-y-6">
-                
-                {/* Score Section */}
-                <div className="flex flex-col items-center text-center">
-                  <h3 className="font-display font-bold text-lg text-navy mb-4 border-b border-gray-50 pb-2 w-full">
-                    {p.scoreTitle}
-                  </h3>
+          <QuickPick
+            label="Do you have a pure term life plan?"
+            value={hasTerm}
+            onChange={(val) => { setHasTerm(val as boolean); setHasCalculated(false) }}
+            options={yesNoOptions}
+          />
 
-                  {/* Circular SVG Gauge */}
-                  <div className="relative w-[150px] h-[150px] flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90">
-                      <circle 
-                        cx="75" 
-                        cy="75" 
-                        r={radius} 
-                        className="stroke-gray-100" 
-                        strokeWidth="10" 
-                        fill="transparent" 
-                      />
-                      <circle 
-                        cx="75" 
-                        cy="75" 
-                        r={radius} 
-                        className={`transition-all duration-1000 ${getScoreColor(result.totalScore)}`} 
-                        strokeWidth="10" 
-                        fill="transparent" 
-                        strokeDasharray={circ}
-                        strokeDashoffset={circ - (circ * result.totalScore) / 100}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    
-                    <div className="absolute flex flex-col items-center">
-                      <span className="text-4xl font-extrabold text-slate-900">{result.totalScore}</span>
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">/ 100</span>
-                    </div>
-                  </div>
+          <QuickPick
+            label="Number of Insurance Policies"
+            value={policiesCount}
+            onChange={(val) => { setPoliciesCount(val); setHasCalculated(false) }}
+            options={policyOptions}
+          />
 
-                  {/* Grade Badge */}
-                  <div className={`mt-4 px-5 py-1.5 rounded-full border text-sm font-bold flex items-center gap-1.5 uppercase ${getScoreBgColor(result.totalScore)}`}>
-                    <span>{p.grade}:</span>
-                    <span className="text-base font-extrabold">{result.grade}</span>
-                  </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="text-sm text-blue-600 font-semibold cursor-pointer"
+            >
+              {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
+            </button>
 
-                  <p className="mt-4 text-sm font-medium text-slate-600 leading-relaxed max-w-sm">
-                    {result.summary}
-                  </p>
+            {showAdvanced && (
+              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Total Annual Premiums Paid (₹)</label>
+                  <input
+                    type="number"
+                    value={premiumAmount}
+                    onChange={(e) => { setPremiumAmount(e.target.value); setHasCalculated(false) }}
+                    placeholder="Enter total annual premium paid across policies"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                  />
                 </div>
 
-                {/* Breakdown Cards Grid */}
-                <div className="grid grid-cols-1 gap-4 pt-4 border-t border-gray-50">
-                  {[
-                    { key: 'coverageAdequacy', title: p.breakdown.coverageAdequacy, val: result.breakdown.coverageAdequacy },
-                    { key: 'premiumAffordability', title: p.breakdown.premiumAffordability, val: result.breakdown.premiumAffordability },
-                    { key: 'maturityProgress', title: p.breakdown.maturityProgress, val: result.breakdown.maturityProgress },
-                    { key: 'protectionMix', title: p.breakdown.protectionMix, val: result.breakdown.protectionMix },
-                    { key: 'dependentCoverage', title: p.breakdown.dependentCoverage, val: result.breakdown.dependentCoverage }
-                  ].map((card) => {
-                    const colorMap = getScoreColor((card.val.score / card.val.max) * 100)
-                    const fillPct = (card.val.score / card.val.max) * 100
-
-                    return (
-                      <div key={card.key} className="border border-gray-100 rounded-xl p-4 bg-gray-50/50">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-13 font-bold text-slate-800">{card.title}</span>
-                          <span className="text-xs font-bold text-slate-500">
-                            {card.val.score} / {card.val.max}
-                          </span>
-                        </div>
-                        {/* Progress Bar */}
-                        <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden mb-2">
-                          <div 
-                            className={`h-full rounded-full transition-all duration-500 ${
-                              fillPct < 50 ? 'bg-red-500' : fillPct < 70 ? 'bg-amber-500' : 'bg-green-500'
-                            }`}
-                            style={{ width: `${fillPct}%` }}
-                          />
-                        </div>
-                        <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                          {card.val.comment}
-                        </p>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Recommendations Section */}
-                <div className="bg-amber-50/80 border border-amber-100 rounded-2xl p-6 space-y-4">
-                  <h4 className="font-display font-bold text-[16px] text-amber-900">
-                    {p.recommendationsTitle}
-                  </h4>
-                  <div className="space-y-3">
-                    {result.recommendations.map((rec, i) => (
-                      <p key={i} className="text-[13px] text-slate-700 leading-relaxed font-medium">
-                        {rec}
-                      </p>
-                    ))}
-                  </div>
-                  
-                  <div className="border-t border-amber-200/50 pt-4 mt-2">
-                    {isLP ? (
-                      <>
-                        <p className="text-xs font-bold text-slate-800 mb-2">
-                          {lang === 'en' ? `Your score is ${result.totalScore}/100. Get a free detailed review.` : `आपका स्कोर ${result.totalScore}/100 है। मुफ्त विस्तृत समीक्षा प्राप्त करें।`}
-                        </p>
-                        <LpLeadForm campaign="health-check" />
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-xs font-bold text-slate-800 mb-3">{p.detailedReview}</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <a
-                            href={getWhatsAppCTAUrl(result.totalScore, result.grade)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex h-11 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
-                          >
-                            <MessageCircle size={16} />
-                            {lang === 'en' ? 'Discuss on WhatsApp' : 'व्हाट्सएप पर चर्चा करें'}
-                          </a>
-                          <a
-                            href={`tel:${ADVISOR_PHONE}`}
-                            className="inline-flex h-11 bg-navy hover:bg-navy/95 text-white font-bold text-xs rounded-xl items-center justify-center gap-2 transition-all shadow-md"
-                          >
-                            <Phone size={14} />
-                            {lang === 'en' ? 'Call Ajay Sir' : 'अजय सर को कॉल करें'}
-                          </a>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Download PDF Report */}
-                <button
-                  type="button"
-                  onClick={downloadReport}
-                  disabled={downloading}
-                  className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors w-full justify-center mt-6 disabled:opacity-75 cursor-pointer"
-                >
-                  {downloading ? (
-                    <>
-                      <RefreshCw className="w-4 h-4 animate-spin" />
-                      <span>{p.generatingReport}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download size={18} />
-                      <span>{p.downloadReport}</span>
-                    </>
-                  )}
-                </button>
-
-                <CalculatorCTA
-                  serviceLink="/services/health-insurance"
-                  serviceLabelEn="Improve Your Coverage"
-                  serviceLabelHi="अपनी कवरेज को बेहतर बनाएं"
-                  whatsappMessage={`Hi Ajay sir, I checked my Insurance Health Score as ${result.totalScore}/100 (Grade ${result.grade}) on poddarwealth.com and want to discuss how to improve my health insurance coverage.`}
+                <SliderField
+                  label="Your Age"
+                  value={age}
+                  onChange={(val) => { setAge(val); setHasCalculated(false) }}
+                  min={18}
+                  max={75}
+                  unit=" yrs"
                 />
 
-                {/* Share Section */}
-                <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{p.shareWhatsApp}</span>
-                  <WhatsAppShare text={customShareText} className="shadow-none py-2 px-4" />
-                </div>
+                <SliderField
+                  label="Number of Dependents"
+                  value={dependents}
+                  onChange={(val) => { setDependents(val); setHasCalculated(false) }}
+                  min={0}
+                  max={8}
+                  unit=" members"
+                />
+
+                <SliderField
+                  label="Average Years Paid (Progress)"
+                  value={policyYear}
+                  onChange={(val) => { setPolicyYear(val); setHasCalculated(false) }}
+                  min={0}
+                  max={25}
+                  unit=" yrs"
+                />
               </div>
             )}
           </div>
+        </>
+      }
+      resultPanel={
+        hasCalculated && (
+          <div className="space-y-4">
+            <ResultCard
+              value={`${grade} (${totalScore}/100)`}
+              label="Portfolio Health Score"
+              subtext={totalScore >= 80 ? 'Good coverage foundation!' : 'Portfolio needs improvement!'}
+              type={totalScore >= 80 ? 'positive' : totalScore >= 65 ? 'neutral' : 'caution'}
+              inlineLinkText="Get term insurance → /services/term-life"
+              inlineLinkHref="/services/term-life"
+              insightText={`Your biggest improvement area: ${topImprovement}`}
+              InsightIcon={totalScore >= 80 ? ShieldCheck : ShieldAlert}
+            >
+              {/* Progress bars inside the result card */}
+              <div className="mt-4 space-y-3 p-4 rounded-xl bg-white/70 border border-gray-200/50">
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                    <span>Coverage Adequacy</span>
+                    <span>{coverageScore}/35</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${coverageScore >= 25 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      style={{ width: `${(coverageScore / 35) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{coverageComment}</div>
+                </div>
 
-        </div>
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                    <span>Premium Affordability</span>
+                    <span>{affordabilityScore}/20</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${affordabilityScore >= 15 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      style={{ width: `${(affordabilityScore / 20) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{affordabilityComment}</div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                    <span>Policy Maturity Progress</span>
+                    <span>{maturityScore}/15</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${maturityScore >= 10 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      style={{ width: `${(maturityScore / 15) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{maturityComment}</div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                    <span>Protection Mix</span>
+                    <span>{protectionScore}/20</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${protectionScore === 20 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      style={{ width: `${(protectionScore / 20) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{protectionComment}</div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                    <span>Dependent Coverage</span>
+                    <span>{dependentScore}/10</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${dependentScore >= 7 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      style={{ width: `${(dependentScore / 10) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{dependentComment}</div>
+                </div>
+
+                {/* PDF Download Action Button */}
+                <button
+                  onClick={handleDownload}
+                  disabled={downloading}
+                  className="w-full flex items-center justify-center gap-1.5 h-10 border border-blue-200 hover:border-blue-300 text-blue-600 bg-blue-50/50 hover:bg-blue-50 text-xs font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50 mt-3"
+                >
+                  <Download className="w-4 h-4" />
+                  {downloading ? 'Downloading...' : 'Download Full Report (PDF)'}
+                </button>
+              </div>
+            </ResultCard>
+
+            <ResultBreakdown rows={breakdownRows} />
+
+            <ActionBar
+              whatsappUrl={whatsappUrl}
+              onReset={handleReset}
+              resultRef={resultRef}
+            />
+          </div>
+        )
+      }
+      resultRef={resultRef}
+    />
+  )
+}
+
+export default function PolicyHealthCalculatorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
-    </div>
+    }>
+      <PolicyHealthCalcContent />
+    </Suspense>
   )
 }

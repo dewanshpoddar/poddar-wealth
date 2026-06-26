@@ -1,394 +1,298 @@
 'use client'
+import React, { Suspense, useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { TrendingUp } from 'lucide-react'
+import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import QuickPick from '@/components/ui/QuickPick'
+import SliderField from '@/components/ui/SliderField'
+import CalculatorShell from '@/components/calculators/CalculatorShell'
+import ResultCard from '@/components/calculators/ResultCard'
+import ResultBreakdown from '@/components/calculators/ResultBreakdown'
+import ActionBar from '@/components/calculators/ActionBar'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useLang } from '@/lib/LangContext'
-import { Calculator, Info, Phone, RefreshCw, AlertCircle, TrendingUp, CheckCircle, Share2 } from 'lucide-react'
-import { PLANS } from '@/lib/lic-plans-data.js'
-import { fmt, fmtSA } from '@/lib/format'
-import { ADVISOR_PHONE } from '@/lib/constants'
-import WhatsAppShare from '@/components/WhatsAppShare'
-import CalculatorCTA from '@/components/calculators/CalculatorCTA'
-import { MaturityResult } from '@/lib/types/calculator'
+const saOptions = [
+  { label: '₹3L', value: 300000 },
+  { label: '₹5L', value: 500000 },
+  { label: '₹10L', value: 1000000 },
+  { label: '₹25L', value: 2500000 },
+  { label: '₹50L', value: 5000000 },
+]
 
-export default function MaturityCalculatorPage() {
-  const { t, lang } = useLang()
-  const s = t.maturityCalculator || {
-    title: 'LIC Maturity Calculator 2026',
-    subtitle: 'Estimate the maturity returns for your LIC policies. Free online tool.',
-    planLabel: 'Select LIC Plan',
-    ageLabel: 'Age (18-60)',
-    sumAssuredLabel: 'Sum Assured (₹)',
-    termLabel: 'Policy Term (Years)',
-    premiumModeLabel: 'Premium Payment Mode',
-    calculateButton: 'Calculate Maturity Amount',
-    resultTitle: 'Estimated Maturity Returns',
-    totalPremiumsPaid: 'Total Premiums You\'ll Pay',
-    estimatedMaturity: 'Estimated Maturity Amount',
-    accruedBonus: 'Accrued Bonus',
-    estimatedFAB: 'Estimated FAB (Final Additional Bonus)',
-    effectiveReturn: 'Effective Return',
-    disclaimer: 'Disclaimer',
-    exactQuery: 'Get exact projection? Talk to Ajay sir',
-    whatsappCTA: 'Discuss Projections on WhatsApp',
-    disclaimerText: 'This is an indicative calculation. Actual maturity depends on LIC\'s declared bonus rates which vary annually. Contact Ajay sir for exact projections.',
-    loading: 'Calculating...'
+const termOptions = [
+  { label: '15 Years', value: 15 },
+  { label: '20 Years', value: 20 },
+  { label: '25 Years', value: 25 },
+  { label: '30 Years', value: 30 },
+]
+
+const MATURITY_FAQ = [
+  {
+    question: 'What is the LIC maturity amount?',
+    answer: 'The maturity amount is the total sum paid to the policyholder at the end of the policy term, consisting of the basic Sum Assured plus accrued Simple Reversionary Bonuses and any Final Additional Bonus (FAB).'
+  },
+  {
+    question: 'How is the rate of return (CAGR) calculated?',
+    answer: 'The effective annual return is calculated based on the total premiums paid versus the final maturity amount received, compounded over the policy term.'
+  },
+  {
+    question: 'Are maturity proceeds taxable?',
+    answer: 'Maturity proceeds from traditional LIC policies are generally tax-free under Section 10(10D), provided the Sum Assured is at least 10 times the annual premium.'
   }
+]
 
-  // Filter for plans that are eligible (typically Endowment, Money Back, Child, Whole Life plans)
-  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'wholelife', 'child'].includes(p.category || ''))
+function MaturityCalcContent() {
+  const searchParams = useSearchParams()
+  const resultRef = useRef<HTMLDivElement | null>(null)
 
-  const [planNumber, setPlanNumber] = useState(majorPlans[0]?.planNo?.toString() || '915')
+  // Endowment and Money-back plans eligible for maturity calculations
+  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
+
+  const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
+  const [sa, setSa] = useState<number>(1000000)
   const [age, setAge] = useState<number>(30)
-  const [sumAssured, setSumAssured] = useState<number>(500000)
   const [term, setTerm] = useState<number>(20)
-  const [premiumMode, setPremiumMode] = useState<'yearly' | 'half-yearly' | 'quarterly' | 'monthly'>('yearly')
+  const [bonusRate, setBonusRate] = useState<number>(48)
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<MaturityResult | null>(null)
+  // Advanced Options
+  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [includeFAB, setIncludeFAB] = useState<boolean>(true)
+  const [customPremium, setCustomPremium] = useState<string>('')
 
-  const handleCalculate = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setResult(null)
+  // Result state
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [maturityVal, setMaturityVal] = useState<number>(0)
+  const [totalPaid, setTotalPaid] = useState<number>(0)
+  const [accruedBonus, setAccruedBonus] = useState<number>(0)
+  const [fabVal, setFabVal] = useState<number>(0)
+  const [effectiveReturn, setEffectiveReturn] = useState<number>(0)
 
-    if (age < 18 || age > 60) {
-      setError(lang === 'en' ? 'Age must be between 18 and 60 years.' : 'आयु 18 से 60 वर्ष के बीच होनी चाहिए।')
-      return
+  // Parse URL query params
+  useEffect(() => {
+    const qAge = searchParams.get('age')
+    const qSa = searchParams.get('sa')
+    const qTerm = searchParams.get('term')
+
+    if (qAge) setAge(Number(qAge))
+    if (qSa) setSa(Number(qSa))
+    if (qTerm) setTerm(Number(qTerm))
+  }, [searchParams])
+
+  const selectedPlan = PLANS.find(p => p.planNo === planNo)
+
+  const handlePlanChange = (num: number) => {
+    setPlanNo(num)
+    setHasCalculated(false)
+    const newPlan = PLANS.find(p => p.planNo === num)
+    if (newPlan) {
+      if (newPlan.minSA && sa < newPlan.minSA) setSa(newPlan.minSA)
+      if (newPlan.minAge && age < newPlan.minAge) setAge(newPlan.minAge)
+      if (newPlan.maxAge && age > newPlan.maxAge) setAge(newPlan.maxAge)
+      if (newPlan.minTerm && term < newPlan.minTerm) setTerm(newPlan.minTerm)
+      if (newPlan.maxTerm && term > newPlan.maxTerm) setTerm(newPlan.maxTerm)
     }
+  }
 
-    setLoading(true)
+  const handleCalculate = () => {
+    // 1. Calculate accrued bonus
+    const bonus = Math.round(bonusRate * (sa / 1000) * term)
+    
+    // 2. Calculate FAB (if included)
+    const fab = includeFAB
+      ? (term >= 15 ? Math.round(sa * 0.05) : term >= 10 ? Math.round(sa * 0.03) : 0)
+      : 0
+    
+    const mat = sa + bonus + fab
 
-    try {
-      const res = await fetch('/api/calculators/maturity', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          planNumber,
-          age,
-          sumAssured,
-          term,
-          premiumMode
-        })
-      })
-
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || 'Failed to calculate')
+    // 3. Estimate annual premium
+    let annualPremium = 0
+    if (customPremium && !isNaN(Number(customPremium)) && Number(customPremium) > 0) {
+      annualPremium = Number(customPremium)
+    } else {
+      if (selectedPlan) {
+        const ppt = getPPT(selectedPlan, term, age)
+        const premRes = calculatePremium({ planNo, sa, age, term, ppt, mode: 'yearly' })
+        annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
+      } else {
+        annualPremium = sa * 0.05
       }
-
-      const data: MaturityResult = await res.json()
-      setResult(data)
-
-      // Track calculation event
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'calc_run',
-          sheetName: 'Maturity Calculator',
-          data: {
-            planNo: planNumber,
-            age,
-            sa: sumAssured,
-            term,
-            mode: premiumMode,
-            totalPaid: data.totalPremiumsPaid,
-            maturity: data.estimatedMaturity,
-            bonus: data.accruedBonus,
-            fab: data.estimatedFAB,
-            returnRate: data.effectiveReturn,
-            session: typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
-          }
-        })
-      }).catch(() => {})
-
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during calculation.')
-    } finally {
-      setLoading(false)
     }
+
+    const totalPremPaid = annualPremium * term
+    const cagr = totalPremPaid > 0 ? ((Math.pow(mat / totalPremPaid, 1 / term) - 1) * 100) : 0
+
+    setMaturityVal(mat)
+    setTotalPaid(totalPremPaid)
+    setAccruedBonus(bonus)
+    setFabVal(fab)
+    setEffectiveReturn(Number(cagr.toFixed(2)))
+    setHasCalculated(true)
   }
 
-  const shareText = result
-    ? `*LIC Maturity Calculator Quote - Poddar Wealth*
-Plan: LIC Plan ${planNumber}
-Age: ${age} years | Term: ${term} years
-Sum Assured: ${fmtSA(sumAssured)}
-Payment Mode: ${premiumMode.toUpperCase()}
-
-*Total Premiums:* ${fmt(result.totalPremiumsPaid)}
-*Maturity Value:* ${fmt(result.estimatedMaturity)}
-*Bonus + FAB:* ${fmt(result.accruedBonus + result.estimatedFAB)}
-*Effective Return:* ${result.effectiveReturn}% p.a.
-
-Estimate yours here: `
-    : ''
-
-  const getWhatsAppCTAUrl = () => {
-    if (!result) return ''
-    const msg = `Hi Ajay sir, I calculated my LIC Maturity Returns on poddarwealth.com:
-Plan: LIC Plan ${planNumber}
-Age: ${age} yrs | Term: ${term} yrs
-Sum Assured: ₹${sumAssured.toLocaleString('en-IN')}
-Mode: ${premiumMode.toUpperCase()}
-Total Premiums: ₹${result.totalPremiumsPaid.toLocaleString('en-IN')}
-Estimated Maturity: ₹${result.estimatedMaturity.toLocaleString('en-IN')}
-Effective Return: ${result.effectiveReturn}% p.a.
-Can you please suggest the best combination for maximizing my returns?`
-    return `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`
+  const handleReset = () => {
+    setPlanNo(majorPlans[0]?.planNo || 715)
+    setSa(1000000)
+    setAge(30)
+    setTerm(20)
+    setBonusRate(48)
+    setIncludeFAB(true)
+    setCustomPremium('')
+    setMaturityVal(0)
+    setTotalPaid(0)
+    setAccruedBonus(0)
+    setFabVal(0)
+    setEffectiveReturn(0)
+    setHasCalculated(false)
   }
+
+  const breakdownRows = hasCalculated ? [
+    { label: 'Basic Sum Assured', value: `₹${Math.round(sa).toLocaleString('en-IN')}` },
+    { label: 'Accrued Bonus (SRB)', value: `₹${Math.round(accruedBonus).toLocaleString('en-IN')}` },
+    { label: 'Final Additional Bonus (FAB)', value: `₹${Math.round(fabVal).toLocaleString('en-IN')}` },
+    { label: 'Total Maturity Return', value: `₹${Math.round(maturityVal).toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Total Premiums Paid', value: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Net Gain', value: `₹${Math.round(maturityVal - totalPaid).toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Effective Compound Return', value: `${effectiveReturn}% p.a.` }
+  ] : []
+
+  const bars = hasCalculated ? [
+    { label: 'Total premiums paid', value: totalPaid, max: maturityVal, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Maturity value', value: maturityVal, max: maturityVal, colorClass: 'bg-emerald-500', displayValue: `₹${Math.round(maturityVal).toLocaleString('en-IN')}` }
+  ] : []
+
+  const plan = PLANS.find(p => p.planNo === planNo)
+  const msg = hasCalculated ? `Namaste Ajay ji, I used your maturity calculator.
+₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), age ${age}, term ${term}yr → maturity ₹${Math.round(maturityVal).toLocaleString('en-IN')} (approx returns ${effectiveReturn}%).
+Can you suggest how to maximize returns?` : ''
+  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
 
   return (
-    <div className="min-h-screen bg-warm pt-[78px]">
-      {/* Hero Header */}
-      <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-            <Calculator className="w-3.5 h-3.5" /> {lang === 'en' ? 'LIC Maturity Calculator' : 'LIC मैच्योरिटी कैलकुलेटर'}
+    <CalculatorShell
+      activeTabId="maturity"
+      title="Maturity Calculator"
+      infoTooltip="Estimate the maturity value of your endowment policy. Maturity is calculated as basic Sum Assured + simple reversionary bonus + final additional bonus (FAB) if applicable."
+      faq={MATURITY_FAQ}
+      age={age}
+      sa={sa}
+      term={term}
+      hasCalculated={hasCalculated}
+      onCalculate={handleCalculate}
+      calculateButtonText="Calculate Maturity Amount"
+      formFields={
+        <>
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <select
+              value={planNo}
+              onChange={(e) => handlePlanChange(Number(e.target.value))}
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+            >
+              {majorPlans.map(plan => (
+                <option key={plan.planNo} value={plan.planNo}>
+                  Plan {plan.planNo} - {plan.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-            {s.title}
-          </h1>
-          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            {s.subtitle}
-          </p>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Form Side */}
-          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
-            <h2 className="font-display font-bold text-xl text-navy mb-6">
-              {lang === 'en' ? 'Enter Growth Parameters' : 'ग्रोथ पैरामीटर दर्ज करें'}
-            </h2>
+          <QuickPick
+            label="Sum Assured"
+            value={sa}
+            onChange={(val) => { setSa(val); setHasCalculated(false) }}
+            options={saOptions}
+            showCustom
+            customPlaceholder="Enter custom sum assured"
+            customSuffix="SA"
+          />
 
-            <form onSubmit={handleCalculate} className="space-y-5">
-              {/* Plan Selector */}
-              <div>
-                <label htmlFor="planNumber" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.planLabel}
-                </label>
-                <select
-                  id="planNumber"
-                  value={planNumber}
-                  onChange={(e) => setPlanNumber(e.target.value)}
-                  className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                >
-                  {majorPlans.map((plan) => (
-                    <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} - {plan.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <SliderField
+            label="Bonus Rate (per ₹1000 SA / yr)"
+            value={bonusRate}
+            onChange={(val) => { setBonusRate(val); setHasCalculated(false) }}
+            min={30}
+            max={60}
+            unit=" ₹"
+          />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {/* Age */}
-                <div>
-                  <label htmlFor="age" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                    {s.ageLabel}
-                  </label>
+          <QuickPick
+            label="Policy Term"
+            value={term}
+            onChange={(val) => { setTerm(val); setHasCalculated(false) }}
+            options={termOptions}
+          />
+
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="text-sm text-blue-600 font-semibold cursor-pointer"
+            >
+              {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
+            </button>
+
+            {showAdvanced && (
+              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">Include Final Additional Bonus (FAB)</span>
                   <input
-                    id="age"
-                    type="number"
-                    min={18}
-                    max={60}
-                    required
-                    value={age}
-                    onChange={(e) => setAge(Math.max(1, parseInt(e.target.value) || 18))}
-                    className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
+                    type="checkbox"
+                    checked={includeFAB}
+                    onChange={(e) => { setIncludeFAB(e.target.checked); setHasCalculated(false) }}
+                    className="w-5 h-5 accent-blue-500 rounded border-gray-300"
                   />
                 </div>
 
-                {/* Term */}
                 <div>
-                  <label htmlFor="term" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                    {s.termLabel}
-                  </label>
-                  <select
-                    id="term"
-                    value={term}
-                    onChange={(e) => setTerm(parseInt(e.target.value))}
-                    className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                  >
-                    <option value={10}>10 Years</option>
-                    <option value={15}>15 Years</option>
-                    <option value={20}>20 Years</option>
-                    <option value={25}>25 Years</option>
-                    <option value={30}>30 Years</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Sum Assured */}
-              <div>
-                <label htmlFor="sumAssured" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.sumAssuredLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Custom Annual Premium (Optional)</label>
                   <input
-                    id="sumAssured"
                     type="number"
-                    min={50000}
-                    step={50000}
-                    required
-                    value={sumAssured}
-                    onChange={(e) => setSumAssured(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
+                    value={customPremium}
+                    onChange={(e) => { setCustomPremium(e.target.value); setHasCalculated(false) }}
+                    placeholder="Enter custom annual premium amount"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
                   />
-                </div>
-                <div className="text-right text-[10px] font-bold text-gold mt-1">
-                  {fmtSA(sumAssured)}
-                </div>
-              </div>
-
-              {/* Premium Mode Radio */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {s.premiumModeLabel}
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {(['yearly', 'half-yearly', 'quarterly', 'monthly'] as const).map((mode) => (
-                    <label
-                      key={mode}
-                      className={`flex flex-col items-center justify-center border rounded-xl py-2 px-1 cursor-pointer transition-all ${
-                        premiumMode === mode
-                          ? 'border-navy bg-navy/5 text-navy font-bold'
-                          : 'border-gray-100 bg-gray-50 hover:bg-gray-100/50 text-gray-600'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="premiumMode"
-                        value={mode}
-                        checked={premiumMode === mode}
-                        onChange={() => setPremiumMode(mode)}
-                        className="sr-only"
-                      />
-                      <span className="text-xs capitalize">
-                        {mode.replace('-', ' ')}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-[11px] font-medium text-red-700">{error}</span>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>{s.loading}</span>
-                  </>
-                ) : (
-                  <>
-                    <Calculator className="w-4 h-4" />
-                    <span>{s.calculateButton}</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-
-          {/* Results Side */}
-          <div className="lg:col-span-6 space-y-6">
-            {!result && !loading && (
-              <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-96 flex flex-col items-center justify-center text-center p-8">
-                <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
-                  {lang === 'en' ? 'Estimate Growth' : 'ग्रोथ का अनुमान लगाएं'}
-                </div>
-                <div className="text-[12px] text-gray-500 max-w-xs">
-                  {lang === 'en' 
-                    ? 'Fill the form and hit calculate to visualize your estimated premiums, accrued bonuses and projected maturity amount.'
-                    : 'विवरण भरें और अपने अनुमानित प्रीमियम, अर्जित बोनस और अनुमानित परिपक्वता राशि की कल्पना करने के लिए गणना करें पर क्लिक करें।'}
-                </div>
-              </div>
-            )}
-
-            {result && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
-                <div>
-                  <h3 className="font-display font-bold text-lg text-navy mb-4 border-b border-gray-50 pb-2">
-                    {s.resultTitle}
-                  </h3>
-
-                  {/* Estimated Maturity Amount */}
-                  <div className="bg-amber-50/20 rounded-2xl p-6 text-center border border-amber-100/50">
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{s.estimatedMaturity}</div>
-                    <div className="text-3xl font-bold text-amber-600">{fmt(result.estimatedMaturity)}</div>
-                    <div className="text-[11px] text-amber-700 mt-1">({result.estimatedMaturity.toLocaleString('en-IN')})</div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Total Premiums */}
-                  <div className="border border-gray-100 rounded-xl p-4 bg-slate-50">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.totalPremiumsPaid}</div>
-                    <div className="text-base font-bold text-navy">{fmt(result.totalPremiumsPaid)}</div>
-                  </div>
-
-                  {/* Effective Return */}
-                  <div className="border border-gray-100 rounded-xl p-4 bg-emerald-50/10 border-emerald-100/50">
-                    <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mb-1">{s.effectiveReturn}</div>
-                    <div className="text-base font-bold text-emerald-700">{result.effectiveReturn}% p.a.</div>
-                  </div>
-
-                  {/* Accrued Bonus */}
-                  <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.accruedBonus}</div>
-                    <div className="text-base font-bold text-navy">{fmt(result.accruedBonus)}</div>
-                  </div>
-
-                  {/* FAB */}
-                  <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{s.estimatedFAB}</div>
-                    <div className="text-base font-bold text-navy">{fmt(result.estimatedFAB)}</div>
-                  </div>
-                </div>
-
-                {/* Calculator CTA Card */}
-                <CalculatorCTA
-                  serviceLink="/services/retirement"
-                  serviceLabelEn="Reinvest Your Maturity Amount"
-                  serviceLabelHi="अपनी मैच्योरिटी राशि को पुनर्निवेश करें"
-                  whatsappMessage={`Hi Ajay sir, I calculated my LIC maturity amount as ${fmt(result.estimatedMaturity)} on poddarwealth.com and want to discuss reinvestment and retirement options.`}
-                />
-
-                {/* WhatsAppShare Result */}
-                <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
-                  <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
-                </div>
-
-                {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
-                  <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                  <p className="text-[10px] leading-relaxed">{result.disclaimer || s.disclaimerText}</p>
                 </div>
               </div>
             )}
           </div>
+        </>
+      }
+      resultPanel={
+        hasCalculated && (
+          <div className="space-y-4">
+            <ResultCard
+              value={`₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
+              label="Estimated Maturity Amount"
+              subtext={`You pay ₹${Math.round(totalPaid).toLocaleString('en-IN')} → You get ₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
+              type="positive"
+              inlineLinkText="Need this much coverage? → Coverage Calculator"
+              inlineLinkHref={`/calculators/life-insurance?age=${age}&sa=${sa}&term=${term}`}
+              insightText={`Your ₹${Math.round(sa).toLocaleString('en-IN')} policy grows to ₹${Math.round(maturityVal).toLocaleString('en-IN')} — that's ~${effectiveReturn}% CAGR returns PLUS you had life cover the entire ${term} years.`}
+              InsightIcon={TrendingUp}
+            />
 
-        </div>
+            <ResultBreakdown rows={breakdownRows} bars={bars} />
+
+            <ActionBar
+              whatsappUrl={whatsappUrl}
+              onReset={handleReset}
+              resultRef={resultRef}
+            />
+          </div>
+        )
+      }
+      resultRef={resultRef}
+    />
+  )
+}
+
+export default function MaturityCalculatorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
-    </div>
+    }>
+      <MaturityCalcContent />
+    </Suspense>
   )
 }

@@ -1,355 +1,317 @@
 'use client'
+import React, { Suspense, useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Landmark, ShieldCheck } from 'lucide-react'
+import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import QuickPick from '@/components/ui/QuickPick'
+import SliderField from '@/components/ui/SliderField'
+import CalculatorShell from '@/components/calculators/CalculatorShell'
+import ResultCard from '@/components/calculators/ResultCard'
+import ResultBreakdown from '@/components/calculators/ResultBreakdown'
+import ActionBar from '@/components/calculators/ActionBar'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useLang } from '@/lib/LangContext'
-import { Calculator, Info, Phone, RefreshCw, AlertCircle, TrendingUp, CheckCircle, Share2, HelpCircle, MessageCircle } from 'lucide-react'
-import { PLANS } from '@/lib/lic-plans-data.js'
-import { fmt, fmtSA } from '@/lib/format'
-import { ADVISOR_PHONE } from '@/lib/constants'
-import WhatsAppShare from '@/components/WhatsAppShare'
-import CalculatorCTA from '@/components/calculators/CalculatorCTA'
-import { LoanResult } from '@/lib/types/calculator'
+const saOptions = [
+  { label: '₹3L', value: 300000 },
+  { label: '₹5L', value: 500000 },
+  { label: '₹10L', value: 1000000 },
+  { label: '₹25L', value: 2500000 },
+  { label: '₹50L', value: 5000000 },
+]
 
-export default function LoanCalculatorPage() {
-  const { t, lang } = useLang()
-  const l = t.loanCalculator || {
-    title: 'LIC Loan Against Policy Calculator',
-    subtitle: 'Calculate the maximum loan amount available against your LIC policy. Free online tool.',
-    planLabel: 'Select LIC Plan',
-    sumAssuredLabel: 'Sum Assured (₹)',
-    policyYearLabel: 'Policy Years Completed',
-    bonusAccruedLabel: 'Bonus Accrued (₹, Optional)',
-    bonusHelper: 'Leave blank if unsure - we\'ll estimate without bonus',
-    calculateButton: 'Calculate Loan Amount',
-    resultTitle: 'Loan Eligibility Details',
-    maxLoanAmount: 'Maximum Loan Amount',
-    estimatedInterestRate: 'Estimated Interest Rate',
-    monthlyInterest: 'Monthly Interest Obligation',
-    annualInterest: 'Annual Interest Obligation',
-    disclaimer: 'Disclaimer',
-    applyQuery: 'Apply for loan through Ajay sir',
-    whatsappCTA: 'Apply via Ajay Sir on WhatsApp',
-    disclaimerText: 'This is an estimate based on LIC general guidelines. Actual loan eligibility is determined by LIC branch after policy verification.',
-    errorCompletedYears: 'Loan against policy is only available after completing at least 3 policy years.',
-    loading: 'Calculating...'
+const termOptions = [
+  { label: '15 Years', value: 15 },
+  { label: '20 Years', value: 20 },
+  { label: '25 Years', value: 25 },
+  { label: '30 Years', value: 30 },
+]
+
+const LOAN_FAQ = [
+  {
+    question: 'How much loan can I get against my LIC policy?',
+    answer: 'You can get a loan of up to 90% of the policy\'s accrued Cash Surrender Value. The policy must have run for at least 3 completed years (or 2 years for limited payment plans).'
+  },
+  {
+    question: 'What is the interest rate on LIC policy loans?',
+    answer: 'The interest rate on policy loans is determined by LIC, currently averaging 9.5% per annum, compounded half-yearly. It is usually much lower than personal bank loans.'
+  },
+  {
+    question: 'Do I have to repay the policy loan immediately?',
+    answer: 'No. You can pay back only the interest, or repay the principal in parts. If unpaid, the outstanding loan + interest is deducted from your maturity or death claim payout.'
+  }
+]
+
+function getGsvFactor(yearsPaid: number): number {
+  if (yearsPaid < 2) return 0
+  if (yearsPaid === 2) return 0.30
+  if (yearsPaid === 3) return 0.30
+  if (yearsPaid <= 6) return 0.50
+  if (yearsPaid === 7 || yearsPaid === 8) return 0.55
+  if (yearsPaid === 9) return 0.60
+  if (yearsPaid === 10) return 0.65
+  if (yearsPaid === 11) return 0.70
+  if (yearsPaid === 12) return 0.75
+  if (yearsPaid === 13) return 0.80
+  if (yearsPaid === 14) return 0.85
+  return 0.90
+}
+
+function LoanCalcContent() {
+  const searchParams = useSearchParams()
+  const resultRef = useRef<HTMLDivElement | null>(null)
+
+  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
+
+  const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
+  const [sa, setSa] = useState<number>(1000000)
+  const [term, setTerm] = useState<number>(20)
+  const [yearsPaid, setYearsPaid] = useState<number>(5)
+
+  // Advanced Options
+  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [bonusRate, setBonusRate] = useState<number>(48)
+
+  // Calculation Results
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [surrenderValue, setSurrenderValue] = useState<number>(0)
+  const [maxLoan, setMaxLoan] = useState<number>(0)
+  const [annualInterest, setAnnualInterest] = useState<number>(0)
+  const [monthlyInterest, setMonthlyInterest] = useState<number>(0)
+  
+  // Repayment projection
+  const [interest1yr, setInterest1yr] = useState<number>(0)
+  const [interest3yr, setInterest3yr] = useState<number>(0)
+  const [interest5yr, setInterest5yr] = useState<number>(0)
+
+  // Parse URL query params
+  useEffect(() => {
+    const qSa = searchParams.get('sa')
+    const qTerm = searchParams.get('term')
+
+    if (qSa) setSa(Number(qSa))
+    if (qTerm) setTerm(Number(qTerm))
+  }, [searchParams])
+
+  const handleCalculate = () => {
+    // 1. Estimate annual premium
+    const selectedPlan = PLANS.find(p => p.planNo === planNo)
+    let annualPremium = 0
+    if (selectedPlan) {
+      const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
+      const ppt = getPPT(selectedPlan, term, baselineAge)
+      const premRes = calculatePremium({ planNo, sa, age: baselineAge, term, ppt, mode: 'yearly' })
+      annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
+    } else {
+      annualPremium = sa * 0.05
+    }
+
+    const totalPaidSum = annualPremium * yearsPaid
+
+    // 2. Surrender value (needed as base for loan)
+    const gsvFactor = getGsvFactor(yearsPaid)
+    const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
+    const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
+
+    const paidUpSA = Math.round(sa * (yearsPaid / term))
+    const accruedBonus = Math.round((bonusRate * sa / 1000) * yearsPaid)
+    const remainingTerm = term - yearsPaid
+    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035))
+    const ssv = Math.round((paidUpSA + accruedBonus) * ssvFactor)
+
+    const finalSurrender = Math.max(gsv, ssv)
+    setSurrenderValue(finalSurrender)
+
+    // 3. Max loan = 90% of surrender value
+    const loanLimit = Math.round(finalSurrender * 0.90)
+    setMaxLoan(loanLimit)
+
+    // 4. Interest rates (LIC policy loan rate is ~9.5% p.a. compounded half-yearly)
+    const rate = 0.095
+    const annInterest = Math.round(loanLimit * rate)
+    setAnnualInterest(annInterest)
+    setMonthlyInterest(Math.round(annInterest / 12))
+
+    // Compound interest projections (compounded half-yearly)
+    // Formula: A = P(1 + r/2)^(2t), Interest = A - P
+    const getCompoundInterest = (years: number) => {
+      const totalAmount = loanLimit * Math.pow(1 + rate / 2, 2 * years)
+      return Math.round(totalAmount - loanLimit)
+    }
+
+    setInterest1yr(getCompoundInterest(1))
+    setInterest3yr(getCompoundInterest(3))
+    setInterest5yr(getCompoundInterest(5))
+    setHasCalculated(true)
   }
 
-  // Filter plans to display active ones or major ones
-  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'wholelife', 'child', 'saving'].includes(p.category || ''))
-
-  const [planNumber, setPlanNumber] = useState(majorPlans[0]?.planNo?.toString() || '915')
-  const [sumAssured, setSumAssured] = useState<number>(500000)
-  const [policyYear, setPolicyYear] = useState<number>(5)
-  const [bonusInput, setBonusInput] = useState<string>('')
-
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<LoanResult | null>(null)
-
-  const handleCalculate = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setResult(null)
-
-    if (policyYear < 3) {
-      setError(l.errorCompletedYears)
-      return
-    }
-
-    setLoading(true)
-
-    const payload: Record<string, any> = {
-      planNumber,
-      sumAssured,
-      policyYear,
-    }
-
-    const parsedBonus = parseFloat(bonusInput)
-    if (!isNaN(parsedBonus) && parsedBonus > 0) {
-      payload.bonusAccrued = parsedBonus
-    }
-
-    try {
-      const res = await fetch('/api/calculators/loan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.error || 'Failed to calculate')
-      }
-
-      const data: LoanResult = await res.json()
-      setResult(data)
-
-      // Track calculation event
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'calc_run',
-          sheetName: 'Loan Calculator',
-          data: {
-            planNo: planNumber,
-            sa: sumAssured,
-            policyYear,
-            bonus: parsedBonus || 0,
-            loanEligible: data.maxLoanAmount,
-            interestRate: data.estimatedInterestRate,
-            session: typeof window !== 'undefined' ? (sessionStorage.getItem('sid') ?? '') : '',
-          }
-        })
-      }).catch(() => {})
-
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during calculation.')
-    } finally {
-      setLoading(false)
-    }
+  const handleReset = () => {
+    setPlanNo(majorPlans[0]?.planNo || 715)
+    setSa(1000000)
+    setTerm(20)
+    setYearsPaid(5)
+    setBonusRate(48)
+    setMaxLoan(0)
+    setSurrenderValue(0)
+    setAnnualInterest(0)
+    setMonthlyInterest(0)
+    setInterest1yr(0)
+    setInterest3yr(0)
+    setInterest5yr(0)
+    setHasCalculated(false)
   }
 
-  const shareText = result
-    ? `*LIC Loan Against Policy Quote - Poddar Wealth*
-Plan: LIC Plan ${planNumber}
-Policy Years completed: ${policyYear}
-Sum Assured: ${fmtSA(sumAssured)}
+  const breakdownRows = hasCalculated ? [
+    { label: 'Estimated Cash Surrender Value', value: `₹${surrenderValue.toLocaleString('en-IN')}` },
+    { label: 'Loan Limit (% of Surrender Value)', value: '90.0%' },
+    { label: 'Maximum Loan Eligible', value: `₹${maxLoan.toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Annual Interest Rate', value: '9.5% p.a.' },
+    { label: 'Year 1 Interest Paid', value: `₹${interest1yr.toLocaleString('en-IN')}` },
+    { label: 'Year 3 Compound Interest Accrued', value: `₹${interest3yr.toLocaleString('en-IN')}` },
+    { label: 'Year 5 Compound Interest Accrued', value: `₹${interest5yr.toLocaleString('en-IN')}` },
+  ] : []
 
-*Maximum Loan Eligible:* ${fmt(result.maxLoanAmount)}
-*Interest Rate:* ${result.estimatedInterestRate}% p.a.
-*Monthly Interest Payment:* ${fmt(result.monthlyInterest)}
-*Annual Interest Payment:* ${fmt(result.annualInterest)}
-
-Estimate your borrowing capacity here: `
-    : ''
-
-  const getWhatsAppCTAUrl = () => {
-    if (!result) return ''
-    const msg = `Hi Ajay sir, I checked my LIC Loan eligibility on poddarwealth.com:
-Plan: LIC Plan ${planNumber}
-Years Completed: ${policyYear}
-Sum Assured: ₹${sumAssured.toLocaleString('en-IN')}
-Maximum Loan: ₹${result.maxLoanAmount.toLocaleString('en-IN')}
-Please help me apply for this loan or check if I have a higher loan value based on my actual bonus.`
-    return `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`
-  }
+  const plan = PLANS.find(p => p.planNo === planNo)
+  const msg = hasCalculated ? `Namaste Ajay ji, I checked policy loan eligibility.
+₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), paid for ${yearsPaid}/${term}yr. Surrender value ₹${Math.round(surrenderValue).toLocaleString('en-IN')} → eligible loan ₹${Math.round(maxLoan).toLocaleString('en-IN')}.
+How can I apply for this policy loan?` : ''
+  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
 
   return (
-    <div className="min-h-screen bg-warm pt-[78px]">
-      {/* Hero Header */}
-      <div className="bg-navy py-12 px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #f5c842 0%, transparent 60%), radial-gradient(circle at 80% 50%, #f5c842 0%, transparent 60%)' }} />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 text-gold px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase mb-4">
-            <Calculator className="w-3.5 h-3.5" /> {lang === 'en' ? 'LIC Loan Against Policy Calculator' : 'LIC पॉलिसी पर लोन कैलकुलेटर'}
-          </div>
-          <h1 className="font-display text-[28px] md:text-[40px] font-bold text-white leading-tight mb-3">
-            {l.title}
-          </h1>
-          <p className="text-white/60 text-[14px] max-w-xl mx-auto">
-            {l.subtitle}
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Form Side */}
-          <div className="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
-            <h2 className="font-display font-bold text-xl text-navy mb-6">
-              {lang === 'en' ? 'Check Borrowing Limit' : 'लोन की सीमा जांचें'}
-            </h2>
-
-            <form onSubmit={handleCalculate} className="space-y-5">
-              {/* Plan Selector */}
-              <div>
-                <label htmlFor="planNumber" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {l.planLabel}
-                </label>
-                <select
-                  id="planNumber"
-                  value={planNumber}
-                  onChange={(e) => setPlanNumber(e.target.value)}
-                  className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                >
-                  {majorPlans.map((plan) => (
-                    <option key={plan.planNo} value={plan.planNo}>
-                      Plan {plan.planNo} - {plan.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Sum Assured */}
-              <div>
-                <label htmlFor="sumAssured" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {l.sumAssuredLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                  <input
-                    id="sumAssured"
-                    type="number"
-                    min={10000}
-                    step={10000}
-                    required
-                    value={sumAssured}
-                    onChange={(e) => setSumAssured(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                  />
-                </div>
-                <div className="text-right text-[10px] font-bold text-gold mt-1">
-                  {fmtSA(sumAssured)}
-                </div>
-              </div>
-
-              {/* Policy Year */}
-              <div>
-                <label htmlFor="policyYear" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  {l.policyYearLabel}
-                </label>
-                <input
-                  id="policyYear"
-                  type="number"
-                  min={1}
-                  max={45}
-                  required
-                  value={policyYear}
-                  onChange={(e) => setPolicyYear(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full h-11 px-3 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                />
-              </div>
-
-              {/* Bonus Accrued */}
-              <div>
-                <label htmlFor="bonusInput" className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
-                  {l.bonusAccruedLabel}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
-                  <input
-                    id="bonusInput"
-                    type="number"
-                    min={0}
-                    step={5000}
-                    value={bonusInput}
-                    onChange={(e) => setBonusInput(e.target.value)}
-                    className="w-full h-11 pl-8 pr-4 border border-gray-200 rounded-xl bg-gray-50 text-sm font-semibold focus:outline-none focus:border-gold focus:bg-white transition-all text-navy"
-                    placeholder="e.g. 50000"
-                  />
-                </div>
-                <div className="text-[10px] text-gray-500 mt-1 italic leading-relaxed">
-                  {l.bonusHelper}
-                </div>
-              </div>
-
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-[11px] font-medium text-red-700">{error}</span>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>{l.loading}</span>
-                  </>
-                ) : (
-                  <>
-                    <Calculator className="w-4 h-4" />
-                    <span>{l.calculateButton}</span>
-                  </>
-                )}
-              </button>
-            </form>
+    <CalculatorShell
+      activeTabId="loan"
+      title="Loan Against Policy"
+      infoTooltip="Calculate the maximum loan amount you can claim against your LIC policy. Loans are offered up to 90% of the surrender value for in-force plans. The policy must have run for at least 3 completed years."
+      faq={LOAN_FAQ}
+      sa={sa}
+      term={term}
+      hasCalculated={hasCalculated}
+      onCalculate={handleCalculate}
+      calculateButtonText="Calculate Loan Limit"
+      formFields={
+        <>
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <select
+              value={planNo}
+              onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+            >
+              {majorPlans.map(plan => (
+                <option key={plan.planNo} value={plan.planNo}>
+                  Plan {plan.planNo} - {plan.name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* Results Side */}
-          <div className="lg:col-span-6 space-y-6">
-            {!result && !loading && (
-              <div className="bg-white rounded-2xl border border-dashed border-gray-200 h-96 flex flex-col items-center justify-center text-center p-8">
-                <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                <div className="font-display font-bold text-gray-500 text-[17px] mb-1">
-                  {lang === 'en' ? 'Check Loan Limit' : 'लोन की सीमा चेक करें'}
-                </div>
-                <div className="text-[12px] text-gray-500 max-w-xs">
-                  {lang === 'en' 
-                    ? 'Enter policy parameters to check the estimated loan amount you can avail against your LIC policy.'
-                    : 'अपनी एलआईसी पॉलिसी के खिलाफ आप जो अनुमानित लोन राशि प्राप्त कर सकते हैं उसकी जांच करने के लिए पॉलिसी मापदंड दर्ज करें।'}
-                </div>
-              </div>
-            )}
+          <QuickPick
+            label="Sum Assured"
+            value={sa}
+            onChange={(val) => { setSa(val); setHasCalculated(false) }}
+            options={saOptions}
+            showCustom
+            customPlaceholder="Enter custom sum assured"
+            customSuffix="SA"
+          />
 
-            {result && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
-                <div>
-                  <h3 className="font-display font-bold text-lg text-navy mb-4 border-b border-gray-50 pb-2">
-                    {l.resultTitle}
-                  </h3>
+          <QuickPick
+            label="Policy Term"
+            value={term}
+            onChange={(val) => { setTerm(val); setHasCalculated(false) }}
+            options={termOptions}
+          />
 
-                  {/* Maximum Loan Amount */}
-                  <div className="bg-slate-50 rounded-2xl p-6 text-center border border-gray-100">
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{l.maxLoanAmount}</div>
-                    <div className="text-3xl font-bold text-navy">{fmt(result.maxLoanAmount)}</div>
-                    <div className="text-[11px] text-gray-500 mt-1">({result.maxLoanAmount.toLocaleString('en-IN')})</div>
-                  </div>
-                </div>
+          <SliderField
+            label="Policy Years Paid"
+            value={yearsPaid}
+            onChange={(val) => { setYearsPaid(val); setHasCalculated(false) }}
+            min={3}
+            max={term}
+            unit=" yrs"
+          />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Estimated Interest Rate */}
-                  <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.estimatedInterestRate}</div>
-                    <div className="text-base font-bold text-navy">{result.estimatedInterestRate.toFixed(1)}% p.a.</div>
-                  </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="text-sm text-blue-600 font-semibold cursor-pointer"
+            >
+              {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
+            </button>
 
-                  {/* Annual Interest */}
-                  <div className="border border-gray-100 rounded-xl p-4">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.annualInterest}</div>
-                    <div className="text-base font-bold text-navy">{fmt(result.annualInterest)}</div>
-                  </div>
-
-                  {/* Monthly Interest */}
-                  <div className="border border-gray-100 rounded-xl p-4 sm:col-span-2">
-                    <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{l.monthlyInterest}</div>
-                    <div className="text-base font-bold text-navy">{fmt(result.monthlyInterest)}</div>
-                  </div>
-                </div>
-
-                {/* Calculator CTA Card */}
-                <CalculatorCTA
-                  serviceLink="/services/life-insurance"
-                  serviceLabelEn="Understand Your Policy Benefits"
-                  serviceLabelHi="अपनी पॉलिसी के लाभों को समझें"
-                  whatsappMessage={`Hi Ajay sir, I calculated my LIC loan eligibility as ${fmt(result.maxLoanAmount)} on poddarwealth.com and want to discuss my policy options.`}
+            {showAdvanced && (
+              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+                <SliderField
+                  label="Average Annual Bonus Rate"
+                  value={bonusRate}
+                  onChange={(val) => { setBonusRate(val); setHasCalculated(false) }}
+                  min={30}
+                  max={60}
+                  unit=" ₹"
                 />
-
-                {/* WhatsAppShare Result */}
-                <div className="flex items-center justify-between border-t border-gray-100 pt-5">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{lang === 'en' ? 'Share Results' : 'परिणाम साझा करें'}</span>
-                  <WhatsAppShare text={shareText} className="shadow-none py-2 px-4" />
-                </div>
-
-                {/* Disclaimer */}
-                <div className="flex gap-2 text-gray-500 border-t border-gray-50 pt-4">
-                  <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                  <p className="text-[10px] leading-relaxed">{result.disclaimer || l.disclaimerText}</p>
-                </div>
               </div>
             )}
           </div>
+        </>
+      }
+      resultPanel={
+        hasCalculated && (
+          <div className="space-y-4">
+            <ResultCard
+              value={`₹${maxLoan.toLocaleString('en-IN')}`}
+              label="Maximum Loan Eligible"
+              subtext={`Interest starts at ~₹${monthlyInterest}/month (9.5% p.a.)`}
+              type="positive"
+              inlineLinkText="Compare: surrendering gives ₹ more but you lose cover →"
+              inlineLinkHref={`/calculators/surrender-value?age=${searchParams.get('age') || 30}&sa=${sa}&term=${term}`}
+              insightText={`Get ₹${maxLoan.toLocaleString('en-IN')} today. Your policy, cover, and maturity all stay intact. Repay interest/principal anytime before maturity.`}
+              InsightIcon={Landmark}
+            >
+              <div className="mt-4 p-4 rounded-xl bg-white/70 border border-emerald-200/50 text-xs text-gray-800 space-y-2">
+                <div className="font-semibold text-gray-900 border-b border-emerald-200/40 pb-1 text-sm">
+                  Interest Accrual Projection:
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span>Interest after 1 Year:</span>
+                  <span className="font-bold">₹{interest1yr.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span>Interest after 3 Years:</span>
+                  <span className="font-bold">₹{interest3yr.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span>Interest after 5 Years:</span>
+                  <span className="font-bold">₹{interest5yr.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="pt-1.5 border-t border-emerald-200/40 text-[10px] text-gray-500 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <span>Borrowing keeps your ₹{sa.toLocaleString('en-IN')} life cover active.</span>
+                </div>
+              </div>
+            </ResultCard>
 
-        </div>
+            <ResultBreakdown rows={breakdownRows} />
+
+            <ActionBar
+              whatsappUrl={whatsappUrl}
+              onReset={handleReset}
+              resultRef={resultRef}
+            />
+          </div>
+        )
+      }
+      resultRef={resultRef}
+    />
+  )
+}
+
+export default function LoanCalculatorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
-    </div>
+    }>
+      <LoanCalcContent />
+    </Suspense>
   )
 }
