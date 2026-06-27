@@ -137,6 +137,9 @@ export default function CalculatorShell({
   const [notifEmail, setNotifEmail] = useState('')
   const [notifSubmitted, setNotifSubmitted] = useState(false)
 
+  // Mouse position for parallax movement
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
   // Align activeCategory on mount based on activeTabId
   useEffect(() => {
     if (['premium', 'maturity', 'coverage', 'surrender', 'loan'].includes(activeTabId)) {
@@ -200,6 +203,19 @@ export default function CalculatorShell({
     }, 1500)
   }
 
+  // Mouse move handler for premium parallax shifts
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { currentTarget, clientX, clientY } = e
+    const { left, top, width, height } = currentTarget.getBoundingClientRect()
+    const x = (clientX - left) / width - 0.5
+    const y = (clientY - top) / height - 0.5
+    setMousePos({ x: x * 18, y: y * 12 }) // Smooth boundary range of mouse movement
+  }
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 })
+  }
+
   // Get active category label translation helper
   const getCategoryLabel = (id: string) => {
     const labels = {
@@ -221,16 +237,28 @@ export default function CalculatorShell({
 
   const TabIcon = ICON_MAP[activeTabId as keyof typeof ICON_MAP] || Shield
 
+  const GLOW_COLORS = {
+    insurance: 'bg-emerald-500/10',
+    planning: 'bg-amber-500/10',
+    analysis: 'bg-blue-500/10'
+  }
+  const activeGlow = GLOW_COLORS[activeCategory as keyof typeof GLOW_COLORS] || 'bg-amber-500/10'
+
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* ── DYNAMIC FULL-WIDTH DARK HEADER SECTION ── */}
       <header 
-        className="relative text-white overflow-hidden pb-1 transition-all duration-500 bg-cover bg-no-repeat animate-bgZoom"
+        className="relative text-white overflow-hidden pb-1 transition-all duration-500 bg-cover bg-no-repeat"
         style={{
           backgroundImage: `linear-gradient(to right, #0f1225 15%, rgba(15, 18, 37, 0.4) 55%, rgba(15, 18, 37, 0.05) 85%, transparent 100%), url(${bgImage})`,
-          backgroundPosition: '85% 35%' // Shifts focus point of background image for maximum visibility and sharpness
+          backgroundPosition: `calc(85% + ${mousePos.x}px) calc(35% + ${mousePos.y}px)` // Dynamic parallax shift
         }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
+        {/* Ambient color backdrop blur glow that shifts with activeCategory */}
+        <div className={`absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full blur-[110px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out pointer-events-none ${activeGlow}`} />
+
         {/* Style injection for animations and custom golden scrollbars */}
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes bgZoom {
@@ -401,16 +429,23 @@ export default function CalculatorShell({
         </div>
       </header>
 
-      {/* SVG Wave separator with slim gold crescent line and subpixel fixes */}
+      {/* SVG Wave separator with glowing gold crescent line and subpixel fixes */}
       <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-1.5 select-none pointer-events-none">
-        <svg className="relative block w-full h-[26px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
-          {/* Gold Crescent Curve Line */}
+        <svg className="relative block w-full h-[28px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
+          <defs>
+            <filter id="gold-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          {/* Gold Crescent Curve Line with glow */}
           <path 
             d="M0,0 C300,105 900,105 1200,0" 
             fill="none" 
             stroke="#fbbf24" 
             strokeWidth="3.5"
             opacity="0.8"
+            filter="url(#gold-glow)"
           />
           {/* Symmetrical Wave Fill matching the light gray body */}
           <path 
