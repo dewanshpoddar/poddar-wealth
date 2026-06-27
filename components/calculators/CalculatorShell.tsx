@@ -248,9 +248,9 @@ export default function CalculatorShell({
     <div className="bg-gray-50 min-h-screen">
       {/* ── DYNAMIC FULL-WIDTH DARK HEADER SECTION ── */}
       <header 
-        className="relative text-white overflow-hidden pb-1 transition-all duration-500 bg-cover bg-no-repeat"
+        className="relative text-white overflow-hidden pb-10 md:pb-14 transition-all duration-500 bg-cover bg-no-repeat rounded-b-[36px] md:rounded-b-[48px] shadow-lg border-b border-white/[0.08]"
         style={{
-          backgroundImage: `linear-gradient(to right, #0f1225 15%, rgba(15, 18, 37, 0.4) 55%, rgba(15, 18, 37, 0.05) 85%, transparent 100%), url(${bgImage})`,
+          backgroundImage: `linear-gradient(to right, #0f1225 15%, rgba(15, 18, 37, 0.45) 55%, rgba(15, 18, 37, 0.05) 85%, transparent 100%), url(${bgImage})`,
           backgroundPosition: `calc(85% + ${mousePos.x}px) calc(35% + ${mousePos.y}px)` // Dynamic parallax shift
         }}
         onMouseMove={handleMouseMove}
@@ -259,7 +259,7 @@ export default function CalculatorShell({
         {/* Ambient color backdrop blur glow that shifts with activeCategory */}
         <div className={`absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full blur-[110px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out pointer-events-none ${activeGlow}`} />
 
-        {/* Style injection for animations and custom golden scrollbars */}
+        {/* Style injection for animations, scrollbars, and dynamic page-specific navbar overrides */}
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes bgZoom {
             from {
@@ -291,6 +291,37 @@ export default function CalculatorShell({
           .tab-glow {
             box-shadow: 0 0 15px rgba(217, 119, 6, 0.15);
           }
+
+          /* Dynamic Transparent Navbar Overrides on Calculator page when not scrolled */
+          nav.sticky {
+            transition: all 0.3s ease-in-out !important;
+          }
+          nav.sticky.bg-white {
+            background-color: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+          }
+          nav.sticky.bg-white span.text-\\[\\#0f1225\\] {
+            color: #ffffff !important;
+          }
+          nav.sticky.bg-white span.text-amber-700 {
+            color: #fbbf24 !important;
+            opacity: 0.8 !important;
+          }
+          nav.sticky.bg-white a.text-gray-600, nav.sticky.bg-white button.text-gray-600 {
+            color: rgba(255, 255, 255, 0.75) !important;
+          }
+          nav.sticky.bg-white a.text-gray-600:hover, nav.sticky.bg-white button.text-gray-600:hover {
+            color: #ffffff !important;
+          }
+          nav.sticky.bg-white .text-gray-400, nav.sticky.bg-white svg {
+            color: rgba(255, 255, 255, 0.6) !important;
+          }
+          nav.sticky.bg-white button.border-gray-200 {
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+          }
         ` }} />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 pt-3">
@@ -312,17 +343,10 @@ export default function CalculatorShell({
             </div>
           </div>
 
-          {/* Hero Row: Split into Title & Glass Badges on Desktop */}
+          {/* Hero Row: Split into Title & Action pills */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 py-2">
             {/* Left side: title and word swapper */}
             <div className="flex-1">
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                </span>
-                <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
-              </div>
               <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
                 Know your numbers. Then{' '}
                 <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
@@ -330,33 +354,6 @@ export default function CalculatorShell({
                 </span>
                 .
               </h2>
-              {/* Utilizing empty space with a warm, subtle, premium trust tagline */}
-              <p className="text-[11px] text-white/35 italic font-medium max-w-xs sm:max-w-sm mt-1.5 select-none leading-relaxed">
-                &ldquo;31 years of showing up, not just selling.&rdquo; &mdash; Mr. Ajay Kumar Poddar (MDRT USA Member)
-              </p>
-            </div>
-
-            {/* Right side: Glassmorphic stats badges (stacked vertically to prevent wrap-breaking) */}
-            <div className="hidden lg:flex flex-col gap-2.5 shrink-0 w-72">
-              <div className="bg-white/[0.06] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.1] transition-all duration-300 hover:scale-[1.02]">
-                <div className="p-2 rounded-lg bg-amber-500/15 text-amber-400">
-                  <ShieldCheck size={18} />
-                </div>
-                <div>
-                  <div className="text-[13px] font-bold text-white tracking-tight">15+ Free Tools</div>
-                  <div className="text-[10px] text-white/40">Secure & Government backed</div>
-                </div>
-              </div>
-
-              <div className="bg-white/[0.06] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.1] transition-all duration-300 hover:scale-[1.02]">
-                <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400">
-                  <Trophy size={18} />
-                </div>
-                <div>
-                  <div className="text-[13px] font-bold text-white tracking-tight">31+ Yrs Trust</div>
-                  <div className="text-[10px] text-white/40">Million Dollar Round Table</div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -427,37 +424,57 @@ export default function CalculatorShell({
             })}
           </div>
         </div>
+
+        {/* Golden Crescent Edge highlight at the bottom curve */}
+        <div className="absolute bottom-0 left-0 right-0 h-[4.5px] bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-85 shadow-[0_-2px_15px_#fbbf24] pointer-events-none" />
       </header>
 
-      {/* SVG Wave separator with glowing gold crescent line and subpixel fixes */}
-      <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-1.5 select-none pointer-events-none">
-        <svg className="relative block w-full h-[28px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
-          <defs>
-            <filter id="gold-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-          {/* Gold Crescent Curve Line with glow */}
-          <path 
-            d="M0,0 C300,105 900,105 1200,0" 
-            fill="none" 
-            stroke="#fbbf24" 
-            strokeWidth="3.5"
-            opacity="0.8"
-            filter="url(#gold-glow)"
-          />
-          {/* Symmetrical Wave Fill matching the light gray body */}
-          <path 
-            d="M0,3 C300,108 900,108 1200,3 L1200,120 L0,120 Z" 
-            fill="#f9fafb" 
-          />
-        </svg>
-      </div>
-
       {/* ── LIGHT BODY CONTAINER (bg-gray-50) ── */}
-      <main className="bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <main className="bg-gray-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-7">
+          {/* Real Trust Metrics Bar (Grid cards below header crop) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 -mt-4 mb-3">
+            <div className="bg-white border border-gray-100/80 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
+              <div className="p-3 rounded-xl bg-amber-500/10 text-amber-600 shrink-0">
+                <ShieldCheck size={22} />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-gray-900 tracking-tight">15+ Free Financial Tools</div>
+                <div className="text-[10px] text-gray-500 mt-0.5 leading-relaxed">Secure, independent & government-backed rate calculators</div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-100/80 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
+              <div className="p-3 rounded-xl bg-blue-500/10 text-blue-600 shrink-0">
+                <Trophy size={22} />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-gray-900 tracking-tight">31+ Years Legacy & Trust</div>
+                <div className="text-[10px] text-gray-500 mt-0.5 leading-relaxed">MDRT USA Member advising over 5,000+ happy families</div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-100/80 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01] md:col-span-2 lg:col-span-1">
+              <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 shrink-0">
+                <Users size={22} />
+              </div>
+              <div>
+                <div className="text-[13px] font-bold text-gray-900 tracking-tight">1-on-1 Personal Consulting</div>
+                <div className="text-[10px] text-gray-500 mt-0.5 leading-relaxed">Get direct, personalized policy reviews from Ajay Ji</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Sub-header Brand Quote (Utilizing white space with high contrast & humanized trust) */}
+          <div className="max-w-xl mx-auto text-center px-4 pt-1 pb-3 select-none pointer-events-none">
+            <p className="text-[15px] text-gray-600 italic font-semibold leading-relaxed">
+              &ldquo;31 years of showing up, not just selling.&rdquo;
+            </p>
+            <p className="text-[9px] text-[#d97706] font-bold uppercase tracking-[0.15em] mt-1">
+              &mdash; Mr. Ajay Kumar Poddar (MDRT USA Member)
+            </p>
+          </div>
+
           {/* Social Proof centered line */}
           {socialProofText && (
             <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400 select-none animate-fadeIn">

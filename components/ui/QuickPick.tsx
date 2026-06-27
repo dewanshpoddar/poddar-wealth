@@ -77,8 +77,8 @@ export default function QuickPick<T extends string | number | boolean>({
               onClick={() => handlePillClick(opt.value)}
               className={
                 isSelected
-                  ? 'bg-[#0f1225] text-white rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-200'
-                  : 'bg-white text-gray-700 rounded-full px-4 py-2.5 text-sm border border-gray-200 hover:border-gray-400 transition-all duration-200'
+                  ? 'bg-[#0c0f20] text-amber-500 rounded-full px-4 py-2.5 text-sm font-bold border-2 border-amber-500 shadow-md shadow-amber-500/10 scale-[1.02] transition-all duration-200'
+                  : 'bg-white text-gray-600 rounded-full px-4 py-2.5 text-sm border border-gray-200 hover:border-amber-500 hover:text-amber-500 transition-all duration-200'
               }
             >
               {opt.label}
@@ -91,8 +91,8 @@ export default function QuickPick<T extends string | number | boolean>({
             onClick={handleCustomPillClick}
             className={
               isCustom
-                ? 'bg-[#0f1225] text-white rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-200'
-                : 'bg-white text-gray-700 rounded-full px-4 py-2.5 text-sm border border-gray-200 hover:border-gray-400 transition-all duration-200'
+                ? 'bg-[#0c0f20] text-amber-500 rounded-full px-4 py-2.5 text-sm font-bold border-2 border-amber-500 shadow-md shadow-amber-500/10 scale-[1.02] transition-all duration-200'
+                : 'bg-white text-gray-600 rounded-full px-4 py-2.5 text-sm border border-gray-200 hover:border-amber-500 hover:text-amber-500 transition-all duration-200'
             }
           >
             {customLabel}
@@ -107,7 +107,7 @@ export default function QuickPick<T extends string | number | boolean>({
             value={customVal}
             onChange={handleCustomInputChange}
             placeholder={customPlaceholder}
-            className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 pr-12"
+            className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-base text-gray-900 pr-12 transition-all duration-200"
           />
           {customSuffix && (
             <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 font-medium text-sm pointer-events-none">

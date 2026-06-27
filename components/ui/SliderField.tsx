@@ -32,21 +32,21 @@ export default function SliderField({
       </div>
 
       <div className="relative pt-6 pb-2">
-        {/* Value badge positioned absolute above the thumb */}
+        {/* Value badge positioned absolute above the thumb (premium glass tag with gold tail) */}
         <div
-          className="absolute top-0 bg-[#0f1225] text-white text-xs font-semibold rounded px-2 py-0.5 -translate-x-1/2 pointer-events-none"
+          className="absolute top-0 bg-[#0c0f20] text-amber-400 border border-amber-500/30 text-xs font-bold rounded-lg px-2.5 py-1 -translate-x-1/2 pointer-events-none shadow-md shadow-amber-500/10"
           style={{ left: `${percentage}%` }}
         >
           {displayVal}
           {/* Small tail/caret for badge */}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0f1225]" />
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0c0f20]" />
         </div>
 
         <div className="relative h-5 flex items-center">
-          {/* Custom track & fill */}
+          {/* Custom track & fill (glowing gold gradient) */}
           <div className="absolute left-0 right-0 h-1.5 rounded-full bg-gray-200 pointer-events-none">
             <div
-              className="h-full rounded-full bg-[#0f1225]"
+              className="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-600 shadow-[0_0_8px_rgba(245,158,11,0.45)]"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -62,11 +62,13 @@ export default function SliderField({
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
           />
 
-          {/* Visual thumb overlaying the real input position */}
+          {/* Visual thumb overlaying the real input position (custom dual-ring gold core dot) */}
           <div
-            className="absolute w-5 h-5 rounded-full bg-white border-2 border-[#0f1225] shadow-sm -translate-x-1/2 pointer-events-none"
+            className="absolute w-5 h-5 rounded-full bg-white border-2 border-amber-500 shadow-md shadow-amber-500/20 -translate-x-1/2 pointer-events-none flex items-center justify-center"
             style={{ left: `${percentage}%` }}
-          />
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+          </div>
         </div>
 
         {/* Min/Max indicators */}
