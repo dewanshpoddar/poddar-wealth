@@ -332,7 +332,7 @@ export default function CalculatorShell({
               </h2>
               {/* Utilizing empty space with a warm, subtle, premium trust tagline */}
               <p className="text-[11px] text-white/35 italic font-medium max-w-xs sm:max-w-sm mt-1.5 select-none leading-relaxed">
-                "31 years of showing up, not just selling." — Mr. Ajay Kumar Poddar (MDRT USA Member)
+                &ldquo;31 years of showing up, not just selling.&rdquo; &mdash; Mr. Ajay Kumar Poddar (MDRT USA Member)
               </p>
             </div>
 
