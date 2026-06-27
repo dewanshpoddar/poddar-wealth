@@ -176,9 +176,15 @@ export default function LeadGate({
         </form>
       )}
 
+      {/* Signature Trust note */}
+      <p className="mt-2.5 text-[9px] text-gray-500 italic max-w-[240px] leading-relaxed border-t border-gray-100 pt-2.5 select-none">
+        &ldquo;We analyze policies with the same precision we&apos;ve used for 5,000+ families over 31 years.&rdquo;
+        <span className="block text-[8px] not-italic font-bold text-amber-600 uppercase tracking-wider mt-0.5">&mdash; Ajay Kumar Poddar (MDRT USA)</span>
+      </p>
+ 
       {/* Privacy Line */}
-      <div className="mt-3 text-[9px] text-gray-400 flex items-center gap-1 font-medium">
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+      <div className="mt-3.5 text-[9px] text-gray-400 flex items-center gap-1 font-medium">
+        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
         <span>Direct to Ajay ji. No spam.</span>
       </div>
     </div>
