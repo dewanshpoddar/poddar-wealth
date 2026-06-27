@@ -245,6 +245,8 @@ export default function Navbar() {
               </div>
             </div>
 
+            <Link href="/products" className={linkCls('/products')}>{t.nav.products}</Link>
+
             {/* Calculators dropdown */}
             <div className="relative group/calc">
               <button className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer py-3.5 min-h-[44px] ${
@@ -575,7 +577,13 @@ export default function Navbar() {
               )}
             </div>
 
-
+            <Link
+              href="/products"
+              onClick={() => setMobileOpen(false)}
+              className={`block py-4 px-6 text-base font-semibold border-b border-white/[0.04] ${isActive('/products') ? 'text-amber-400' : 'text-gray-300'}`}
+            >
+              {t.nav.products}
+            </Link>
 
             {/* Calculators accordion */}
             <div className="border-b border-white/[0.04]">

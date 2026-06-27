@@ -109,6 +109,19 @@ export default function CalculatorShell({
 }: CalculatorShellProps) {
   const { lang } = useLang()
 
+  // Map of calculator background images
+  const BG_IMAGE_MAP: Record<string, string> = {
+    premium: '/assets/hero-family.webp',
+    maturity: '/assets/hero-marriage.webp',
+    coverage: '/assets/hero-family.webp',
+    retirement: '/assets/hero-retirement.webp',
+    surrender: '/assets/hero-family.webp',
+    loan: '/assets/hero-education.webp',
+    health: '/assets/hero-health.webp',
+  }
+
+  const bgImage = BG_IMAGE_MAP[activeTabId] || '/assets/hero-family.webp'
+
   // State
   const [activeCategory, setActiveCategory] = useState<'insurance' | 'planning' | 'analysis'>('insurance')
   const [counter, setCounter] = useState(4521)
@@ -209,14 +222,12 @@ export default function CalculatorShell({
   return (
     <>
       {/* ── DARK HEADER SECTION ── */}
-      <header className="relative bg-gradient-to-br from-[#0f1225] via-[#141c38] to-[#0d1225] text-white overflow-hidden pb-6">
-        {/* Ambient background glows */}
-        <div className="absolute top-[-50px] left-[10%] w-[120px] h-[120px] rounded-full bg-amber-500/10 blur-[50px] animate-pulse pointer-events-none" />
-        <div className="absolute bottom-[20px] right-[10%] w-[150px] h-[150px] rounded-full bg-blue-500/10 blur-[60px] pointer-events-none" />
-
-        {/* Mesh grid overlay proxy */}
-        <div className="absolute inset-0 bg-white/[0.015] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-
+      <header 
+        className="relative text-white overflow-hidden pb-6 transition-all duration-500 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(135deg, #0f1225 25%, rgba(15, 18, 37, 0.7) 70%, rgba(15, 18, 37, 0.3) 100%), url(${bgImage})`
+        }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5">
           {/* Brand Bar */}
           <div className="flex justify-between items-center py-3.5 border-b border-white/5">
