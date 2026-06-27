@@ -1,16 +1,15 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { TrendingUp } from 'lucide-react'
+import { TrendingUp, Coffee, MessageCircle, Share2 } from 'lucide-react'
 import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
+import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -44,12 +43,13 @@ const MATURITY_FAQ = [
 
 function MaturityCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   // Endowment and Money-back plans eligible for maturity calculations
   const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
 
-  const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
+  const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 915)
   const [sa, setSa] = useState<number>(1000000)
   const [age, setAge] = useState<number>(30)
   const [term, setTerm] = useState<number>(20)
@@ -67,8 +67,8 @@ function MaturityCalcContent() {
   const [accruedBonus, setAccruedBonus] = useState<number>(0)
   const [fabVal, setFabVal] = useState<number>(0)
   const [effectiveReturn, setEffectiveReturn] = useState<number>(0)
+  const [isUnlocked, setIsUnlocked] = useState(false)
 
-  // Parse URL query params
   // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
@@ -84,6 +84,12 @@ function MaturityCalcContent() {
     if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
     if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
     if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
+
+    // Check if session has phone to auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const selectedPlan = PLANS.find(p => p.planNo === planNo)
@@ -142,7 +148,7 @@ function MaturityCalcContent() {
   }
 
   const handleReset = () => {
-    setPlanNo(majorPlans[0]?.planNo || 715)
+    setPlanNo(majorPlans[0]?.planNo || 915)
     setSa(1000000)
     setAge(30)
     setTerm(20)
@@ -157,32 +163,73 @@ function MaturityCalcContent() {
     setHasCalculated(false)
   }
 
-  const breakdownRows = hasCalculated ? [
+  const visibleRows = [
     { label: 'Basic Sum Assured', value: `₹${Math.round(sa).toLocaleString('en-IN')}` },
+    { label: 'Policy Term', value: `${term} Years` },
+    { label: 'Total Premiums Paid', value: `₹${Math.round(totalPaid).toLocaleString('en-IN')}`, isTotal: true },
+  ]
+
+  const gatedRows = [
     { label: 'Accrued Bonus (SRB)', value: `₹${Math.round(accruedBonus).toLocaleString('en-IN')}` },
     { label: 'Final Additional Bonus (FAB)', value: `₹${Math.round(fabVal).toLocaleString('en-IN')}` },
-    { label: 'Total Maturity Return', value: `₹${Math.round(maturityVal).toLocaleString('en-IN')}`, isTotal: true },
-    { label: 'Total Premiums Paid', value: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
     { label: 'Net Gain', value: `₹${Math.round(maturityVal - totalPaid).toLocaleString('en-IN')}`, isTotal: true },
-    { label: 'Effective Compound Return', value: `${effectiveReturn}% p.a.` }
-  ] : []
-
-  const bars = hasCalculated ? [
-    { label: 'Total premiums paid', value: totalPaid, max: maturityVal, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
-    { label: 'Maturity value', value: maturityVal, max: maturityVal, colorClass: 'bg-emerald-500', displayValue: `₹${Math.round(maturityVal).toLocaleString('en-IN')}` }
-  ] : []
+    { label: 'Effective Compound Return', value: `${effectiveReturn}% p.a.` },
+    { label: 'Equivalent FD rate (taxable)', value: `${(effectiveReturn * 1.3).toFixed(1)}% p.a.` },
+  ]
 
   const plan = PLANS.find(p => p.planNo === planNo)
-  const msg = hasCalculated ? `Namaste Ajay ji, I used your maturity calculator.
-₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), age ${age}, term ${term}yr → maturity ₹${Math.round(maturityVal).toLocaleString('en-IN')} (approx returns ${effectiveReturn}%).
-Can you suggest how to maximize returns?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+  const msg = hasCalculated ? `Namaste Ajay ji, I calculated my LIC policy maturity.
+Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
+Plan: ${plan?.name} (Plan ${planNo})
+Age: ${age}
+Term: ${term} Years
+Maturity Amount: ₹${Math.round(maturityVal).toLocaleString('en-IN')}
+Total Premiums Paid: ₹${Math.round(totalPaid).toLocaleString('en-IN')}
+Effective returns: ${effectiveReturn}% p.a.
+Can you suggest how to optimize my returns?` : ''
+
+  const crossLinks = [
+    {
+      label: 'Check matching coverage needs →',
+      href: `/calculators/life-insurance?age=${age}&sa=${sa}&term=${term}`,
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss options with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this result →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Maturity Calculator Result',
+            text: `Estimated my LIC maturity value: ₹${Math.round(maturityVal).toLocaleString('en-IN')} on ₹${Math.round(sa).toLocaleString('en-IN')} sum assured.`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Estimated my LIC maturity value: ₹${Math.round(maturityVal).toLocaleString('en-IN')} on ₹${Math.round(sa).toLocaleString('en-IN')} sum assured. Try here: ${window.location.href}`)
+          alert('Link copied!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
+
+  const bars = [
+    { label: 'Total premiums paid', value: totalPaid, max: maturityVal, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Maturity value', value: maturityVal, max: maturityVal, colorClass: 'bg-emerald-500', displayValue: `₹${Math.round(maturityVal).toLocaleString('en-IN')}` }
+  ]
 
   return (
     <CalculatorShell
       activeTabId="maturity"
       title="Maturity Calculator"
-      infoTooltip="Estimate the maturity value of your endowment policy. Maturity is calculated as basic Sum Assured + simple reversionary bonus + final additional bonus (FAB) if applicable."
+      infoTooltip="Estimate the maturity value of your traditional endowment policy. Maturity is calculated as Sum Assured + simple reversionary bonus + final additional bonus (FAB) if applicable."
       faq={MATURITY_FAQ}
       age={age}
       sa={sa}
@@ -193,11 +240,11 @@ Can you suggest how to maximize returns?` : ''
       formFields={
         <>
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Select LIC Plan</label>
             <select
               value={planNo}
               onChange={(e) => handlePlanChange(Number(e.target.value))}
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
               {majorPlans.map(plan => (
                 <option key={plan.planNo} value={plan.planNo}>
@@ -237,31 +284,31 @@ Can you suggest how to maximize returns?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">Include Final Additional Bonus (FAB)</span>
+                  <span className="text-xs font-medium text-gray-700">Include Final Additional Bonus (FAB)</span>
                   <input
                     type="checkbox"
                     checked={includeFAB}
                     onChange={(e) => { setIncludeFAB(e.target.checked); setHasCalculated(false) }}
-                    className="w-5 h-5 accent-blue-500 rounded border-gray-300"
+                    className="w-4 h-4 text-[#0f1225] accent-[#0f1225] rounded border-gray-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Custom Annual Premium (Optional)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">Custom Annual Premium (Optional)</label>
                   <input
                     type="number"
                     value={customPremium}
                     onChange={(e) => { setCustomPremium(e.target.value); setHasCalculated(false) }}
-                    placeholder="Enter custom annual premium amount"
-                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                    placeholder="Enter custom annual premium"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                   />
                 </div>
               </div>
@@ -271,37 +318,48 @@ Can you suggest how to maximize returns?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
-              label="Estimated Maturity Amount"
-              subtext={`You pay ₹${Math.round(totalPaid).toLocaleString('en-IN')} → You get ₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
-              type="positive"
-              inlineLinkText="Need this much coverage? → Coverage Calculator"
-              inlineLinkHref={`/calculators/life-insurance?age=${age}&sa=${sa}&term=${term}`}
-              insightText={`Your ₹${Math.round(sa).toLocaleString('en-IN')} policy grows to ₹${Math.round(maturityVal).toLocaleString('en-IN')} — that's ~${effectiveReturn}% CAGR returns PLUS you had life cover the entire ${term} years.`}
-              InsightIcon={TrendingUp}
-              rawValue={maturityVal}
-              shareText={`I calculated my LIC policy maturity on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name}, ${term}yr → maturity ₹${Math.round(maturityVal).toLocaleString('en-IN')} (~${effectiveReturn}% CAGR). Try it: poddarwealth.com/calculators/maturity`}
-            />
-
-            <LeadCapture
-              calculatorId="maturity"
-              inputs={{ planNo, sa, age, term, bonusRate, includeFAB, customPremium }}
-              result={{ maturityValue: maturityVal, totalPaid, netGain: maturityVal - totalPaid }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} bars={bars} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+          <ResultPanel
+            value={`₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
+            rawValue={maturityVal}
+            label="Estimated Maturity Amount"
+            contextText={`${plan?.name} · ₹${(sa / 100000).toFixed(0)}L SA · ${term}yr term`}
+            humanLineText={`You pay ₹${Math.round(totalPaid).toLocaleString('en-IN')} → You get ₹${Math.round(maturityVal).toLocaleString('en-IN')}`}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`Your ₹${Math.round(sa).toLocaleString('en-IN')} policy grows to ₹${Math.round(maturityVal).toLocaleString('en-IN')} — that's ~${effectiveReturn}% p.a. tax-free returns. Equivalent to ~${(effectiveReturn * 1.3).toFixed(1)}% p.a. taxable FD return for individuals in the 30% tax slab.`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="maturity"
+            inputs={{ planNo, sa, age, term, bonusRate, includeFAB, customPremium }}
+            whatsappMessage={msg}
+          >
+            {/* CSS-based bars rendered inside ResultPanel children */}
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
+              <h4 className="text-[10px] uppercase tracking-wider text-gray-400 font-bold select-none">
+                Payment vs Return Comparison
+              </h4>
+              {bars.map((bar, idx) => {
+                const pct = Math.max(5, (bar.value / bar.max) * 100)
+                return (
+                  <div key={idx} className="space-y-1 animate-fadeIn">
+                    <div className="flex justify-between items-center text-[10px] text-gray-500">
+                      <span>{bar.label}</span>
+                      <span className="font-semibold text-gray-950">{bar.displayValue}</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${
+                          bar.colorClass === 'bg-blue-500' ? 'bg-[#0f1225]' : 'bg-emerald-600'
+                        }`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </ResultPanel>
         )
       }
       resultRef={resultRef}
@@ -313,7 +371,7 @@ export default function MaturityCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <MaturityCalcContent />

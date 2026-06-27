@@ -1,16 +1,14 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Shield, AlertTriangle } from 'lucide-react'
+import { Shield, MessageCircle, Share2, TrendingUp } from 'lucide-react'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const incomeOptions = [
   { label: '₹15K', value: 15000 },
@@ -74,6 +72,7 @@ function CoverageCalcContent() {
   const [dependentSupport, setDependentSupport] = useState<number>(0)
   const [emergencyFund, setEmergencyFund] = useState<number>(0)
   const [monthlyPremiumEstimate, setMonthlyPremiumEstimate] = useState<number>(0)
+  const [isUnlocked, setIsUnlocked] = useState(false)
 
   // Parse URL query params & session storage pre-fill
   useEffect(() => {
@@ -82,7 +81,6 @@ function CoverageCalcContent() {
     
     if (qAge) setAge(Number(qAge))
     if (qSa) {
-      // Set existing cover as the URL SA to see if there is any remaining gap
       setExistingCover(String(qSa))
     }
 
@@ -91,6 +89,12 @@ function CoverageCalcContent() {
     if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
     if (!qSa && sessionInputs.sumAssured) setExistingCover(String(sessionInputs.sumAssured))
     if (sessionInputs.annualIncome) setMonthlyIncome(Math.round(sessionInputs.annualIncome / 12))
+
+    // Check session for phone auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -102,21 +106,19 @@ function CoverageCalcContent() {
 
     let totalNeeded = 0
     let incReplace = 0
-    let depSupport = 0
+    let depSupportVal = 0
 
     if (method === 'simple') {
       totalNeeded = annualIncome * 15
       incReplace = annualIncome * 15
     } else {
-      // HLV Method
       const yearsTo60 = Math.max(60 - age, 5)
       incReplace = Math.round(annualIncome * yearsTo60 * 0.7)
       
-      // Dependent support: 3x annual income per dependent (reduced by 30% if spouse is working)
       const spouseFactor = spouseWorking ? 0.7 : 1.0
-      depSupport = Math.round(dependents * annualIncome * 2 * spouseFactor)
+      depSupportVal = Math.round(dependents * annualIncome * 2 * spouseFactor)
       
-      totalNeeded = incReplace + depSupport + loans + education + emergency
+      totalNeeded = incReplace + depSupportVal + loans + education + emergency
     }
 
     const recommended = Math.max(totalNeeded, 0)
@@ -128,7 +130,7 @@ function CoverageCalcContent() {
     setRecommendedCover(recommended)
     setGapVal(gap)
     setIncomeReplacement(incReplace)
-    setDependentSupport(depSupport)
+    setDependentSupport(depSupportVal)
     setEmergencyFund(emergency)
     setMonthlyPremiumEstimate(estMonthlyPrem)
     setHasCalculated(true)
@@ -158,29 +160,64 @@ function CoverageCalcContent() {
 
   const isGap = gapVal > 0
 
-  const breakdownRows = hasCalculated ? (
-    method === 'simple' ? [
-      { label: 'Annual Income', value: `₹${(monthlyIncome * 12).toLocaleString('en-IN')}` },
-      { label: 'Coverage Multiple (15x)', value: '15.0' },
-      { label: 'Recommended Life Cover', value: `₹${recommendedCover.toLocaleString('en-IN')}`, isTotal: true },
-      { label: 'Existing Coverage Deducted', value: `₹${(existingCover ? Number(existingCover) : 0).toLocaleString('en-IN')}` },
-      { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true }
-    ] : [
-      { label: 'Income Replacement (to 60)', value: `₹${incomeReplacement.toLocaleString('en-IN')}` },
-      { label: 'Dependent Support Buffer', value: `₹${dependentSupport.toLocaleString('en-IN')}` },
-      { label: 'Outstanding Loans', value: `₹${(outstandingLoans ? Number(outstandingLoans) : 0).toLocaleString('en-IN')}` },
-      { label: 'Education Target Fund', value: `₹${(educationFund ? Number(educationFund) : 0).toLocaleString('en-IN')}` },
-      { label: 'Emergency Fund (6mo income)', value: `₹${emergencyFund.toLocaleString('en-IN')}` },
-      { label: 'Total Recommended Cover', value: `₹${recommendedCover.toLocaleString('en-IN')}`, isTotal: true },
-      { label: 'Less: Existing Cover', value: `₹${(existingCover ? Number(existingCover) : 0).toLocaleString('en-IN')}` },
-      { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true }
-    ]
-  ) : []
+  const visibleRows = [
+    { label: 'Monthly Income', value: `₹${monthlyIncome.toLocaleString('en-IN')}` },
+    { label: 'Dependents', value: String(dependents) },
+    { label: 'Existing Coverage', value: `₹${(existingCover ? Number(existingCover) : 0).toLocaleString('en-IN')}` },
+    { label: 'Total Recommended Cover', value: `₹${recommendedCover.toLocaleString('en-IN')}`, isTotal: true },
+  ]
 
-  const msg = hasCalculated ? `Namaste Ajay ji, I calculated my life insurance coverage need.
-Income ₹${(monthlyIncome).toLocaleString('en-IN')}/mo, age ${age}, HLV recommended cover is ₹${recommendedCover.toLocaleString('en-IN')}. My insurance gap is ₹${gapVal.toLocaleString('en-IN')}.
-Can you suggest a term policy to cover this?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+  const gatedRows = method === 'simple' ? [
+    { label: 'Coverage Multiple', value: '15.0' },
+    { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Estimated Term Cost (Monthly)', value: `₹${monthlyPremiumEstimate}/mo` },
+  ] : [
+    { label: 'Income Replacement (to age 60)', value: `₹${incomeReplacement.toLocaleString('en-IN')}` },
+    { label: 'Dependent Support Buffer', value: `₹${dependentSupport.toLocaleString('en-IN')}` },
+    { label: 'Outstanding Loans', value: `₹${(outstandingLoans ? Number(outstandingLoans) : 0).toLocaleString('en-IN')}` },
+    { label: 'Net Insurance Gap', value: `₹${gapVal.toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Estimated Term Cost (Monthly)', value: `₹${monthlyPremiumEstimate}/mo` },
+  ]
+
+  const msg = hasCalculated ? `Namaste Ajay ji, I calculated my life insurance coverage gap.
+Income: ₹${(monthlyIncome).toLocaleString('en-IN')}/mo
+Age: ${age}
+Dependents: ${dependents}
+Recommended cover: ₹${recommendedCover.toLocaleString('en-IN')}
+Insurance gap: ₹${gapVal.toLocaleString('en-IN')}
+Can you suggest a term policy to cover this gap?` : ''
+
+  const crossLinks = [
+    {
+      label: 'See premium calculator for this gap →',
+      href: `/calculators/premium?age=${age}&sa=${gapVal > 0 ? gapVal : recommendedCover}&term=20`,
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss gap options with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this coverage gap result →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Coverage Calculator Result',
+            text: `Calculated my coverage gap on Poddar Wealth. Recommended: ₹${recommendedCover.toLocaleString('en-IN')}, Gap: ₹${gapVal.toLocaleString('en-IN')}.`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Calculated my coverage gap on Poddar Wealth. Recommended: ₹${recommendedCover.toLocaleString('en-IN')}, Gap: ₹${gapVal.toLocaleString('en-IN')}. Try it: ${window.location.href}`)
+          alert('Link copied to clipboard!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
 
   return (
     <CalculatorShell
@@ -226,13 +263,13 @@ Can you suggest a term policy to cover this?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <QuickPick
                   label="Calculation Method"
                   value={method}
@@ -241,47 +278,47 @@ Can you suggest a term policy to cover this?` : ''
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Existing Life Coverage (₹)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">Existing Life Coverage (₹)</label>
                   <input
                     type="number"
                     value={existingCover}
                     onChange={(e) => { setExistingCover(e.target.value); setHasCalculated(false) }}
-                    placeholder="Enter total SA of current policies"
-                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                    placeholder="Enter total sum assured of current policies"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                   />
                 </div>
 
                 {method === 'hlv' && (
                   <>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">Outstanding Loans / Debts (₹)</label>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">Outstanding Loans / Debts (₹)</label>
                       <input
                         type="number"
                         value={outstandingLoans}
                         onChange={(e) => { setOutstandingLoans(e.target.value); setHasCalculated(false) }}
                         placeholder="Enter total mortgage, personal, or car loans"
-                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">Future Education Fund Goal (₹)</label>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1.5">Future Education Fund Goal (₹)</label>
                       <input
                         type="number"
                         value={educationFund}
                         onChange={(e) => { setEducationFund(e.target.value); setHasCalculated(false) }}
                         placeholder="Enter total target educational corpus"
-                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                        className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                       />
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">Is your spouse earning?</span>
+                      <span className="text-xs font-semibold text-gray-700">Is your spouse earning?</span>
                       <input
                         type="checkbox"
                         checked={spouseWorking}
                         onChange={(e) => { setSpouseWorking(e.target.checked); setHasCalculated(false) }}
-                        className="w-5 h-5 accent-blue-500 rounded border-gray-300"
+                        className="w-4 h-4 text-[#0f1225] accent-[#0f1225] rounded border-gray-300"
                       />
                     </div>
                   </>
@@ -293,44 +330,27 @@ Can you suggest a term policy to cover this?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${recommendedCover.toLocaleString('en-IN')}`}
-              label="Recommended Total Coverage"
-              subtext={isGap ? `You have a coverage gap of ₹${gapVal.toLocaleString('en-IN')}` : 'Your existing cover is adequate!'}
-              type={isGap ? 'caution' : 'positive'}
-              inlineLinkText="Find plans at this coverage → Premium Calculator"
-              inlineLinkHref={`/calculators/premium?age=${age}&sa=${gapVal > 0 ? gapVal : recommendedCover}&term=20`}
-              insightText={
-                isGap
-                  ? `Your family needs ₹${recommendedCover.toLocaleString('en-IN')} to maintain their lifestyle. Adding ₹${gapVal.toLocaleString('en-IN')} term cover costs just ~₹${monthlyPremiumEstimate}/month. To close the gap, explore term plans →`
-                  : `Your family gets 12× annual income in coverage — within the recommended 15× range. You are well protected!`
-              }
-              InsightIcon={isGap ? AlertTriangle : Shield}
-              rawValue={recommendedCover}
-              shareText={`I calculated my life insurance coverage need on Poddar Wealth: need ₹${recommendedCover.toLocaleString('en-IN')}, gap ₹${gapVal.toLocaleString('en-IN')}. Try it: poddarwealth.com/calculators/life-insurance`}
-              celebrationText={!isGap ? (lang === 'hi' ? '🛡️ आपका परिवार पूरी तरह से सुरक्षित है!' : '🛡️ Your family is well protected') : undefined}
-              CelebrationIcon={!isGap ? Shield : undefined}
-              pulseIcon={!isGap}
-            />
-
-            <LeadCapture
-              calculatorId="life-insurance"
-              inputs={{ monthlyIncome, age, dependents, method, existingCover, outstandingLoans, educationFund, spouseWorking }}
-              result={{ coverageNeed: recommendedCover, gap: gapVal, existing: existingCover ? Number(existingCover) : 0 }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={whatsappUrl.split('text=')[1] ? decodeURIComponent(whatsappUrl.split('text=')[1]) : msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+          <ResultPanel
+            value={`₹${recommendedCover.toLocaleString('en-IN')}`}
+            rawValue={recommendedCover}
+            label="Recommended Total Coverage"
+            contextText={`Monthly Income: ₹${monthlyIncome.toLocaleString('en-IN')} · Age: ${age} · Dependents: ${dependents}`}
+            humanLineText={isGap ? `Gap: ₹${gapVal.toLocaleString('en-IN')} (~₹${monthlyPremiumEstimate}/mo term cost)` : 'Your existing cover is adequate!'}
+            HumanLineIcon={Shield}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={
+              isGap
+                ? `Your family needs ₹${recommendedCover.toLocaleString('en-IN')} to maintain their lifestyle. Adding a ₹${gapVal.toLocaleString('en-IN')} term cover costs just ~₹${monthlyPremiumEstimate}/month.`
+                : `Your family gets more than 15× annual income in coverage — within the recommended range. You are well protected!`
+            }
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="coverage"
+            inputs={{ monthlyIncome, age, dependents, method, existingCover, outstandingLoans, educationFund, spouseWorking }}
+            whatsappMessage={msg}
+          />
         )
       }
       resultRef={resultRef}
@@ -342,7 +362,7 @@ export default function CoverageCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <CoverageCalcContent />

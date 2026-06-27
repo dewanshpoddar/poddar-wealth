@@ -2,108 +2,74 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { 
-  Info, 
-  Calculator, 
-  Users, 
   Shield, 
   TrendingUp, 
   Umbrella, 
   Sunset, 
   Scale, 
   HandCoins, 
-  HeartPulse 
+  HeartPulse,
+  Info,
+  Users,
+  Compass,
+  CheckCircle,
+  FileText
 } from 'lucide-react'
 
 import { useLang } from '@/lib/LangContext'
 import { SOCIAL_PROOF } from '@/lib/data/calculator-insights'
-import { getSession } from '@/lib/calculator-session'
 import { ADVISOR_PHONE } from '@/lib/constants'
-import SessionSummary from '@/components/calculators/SessionSummary'
+import CalculatorForm from './CalculatorForm'
+import CalculatorFAQ from './CalculatorFAQ'
+import RelatedCalculators from './RelatedCalculators'
 
-// Tab definitions
-const TABS = [
-  { id: 'premium', label: 'Premium', path: '/calculators/premium', icon: Shield },
-  { id: 'maturity', label: 'Maturity', path: '/calculators/maturity', icon: TrendingUp },
-  { id: 'coverage', label: 'Coverage', path: '/calculators/life-insurance', icon: Umbrella },
-  { id: 'retirement', label: 'Retirement', path: '/calculators/retirement', icon: Sunset },
-  { id: 'surrender', label: 'Surrender', path: '/calculators/surrender-value', icon: Scale },
-  { id: 'loan', label: 'Loan', path: '/calculators/loan', icon: HandCoins },
-  { id: 'health', label: 'Health Score', path: '/calculators/policy-health', icon: HeartPulse },
+// Tab/Icon mapping
+const ICON_MAP = {
+  premium: Shield,
+  maturity: TrendingUp,
+  coverage: Umbrella,
+  retirement: Sunset,
+  surrender: Scale,
+  loan: HandCoins,
+  health: HeartPulse,
+}
+
+const CATEGORIES = [
+  { id: 'insurance', label: 'INSURANCE' },
+  { id: 'planning', label: 'PLANNING' },
+  { id: 'analysis', label: 'ANALYSIS' },
 ]
 
-// Related calculators database
-const RELATED_CALCS = [
-  {
-    id: 'premium',
-    name: 'Premium Calculator',
-    nameHi: 'प्रीमियम कैलकुलेटर',
-    desc: 'How much will I pay?',
-    descHi: 'मुझे कितना भुगतान करना होगा?',
-    example: '₹10L cover, age 30 → ₹14,940/year',
-    exampleHi: '₹10L कवर, उम्र 30 → ₹14,940/वर्ष',
-    path: '/calculators/premium'
-  },
-  {
-    id: 'maturity',
-    name: 'Maturity Calculator',
-    nameHi: 'मैच्योरिटी कैलकुलेटर',
-    desc: 'What will my policy be worth?',
-    descHi: 'मैच्योरिटी पर मेरी पॉलिसी का क्या मूल्य होगा?',
-    example: '₹5L SA, 20yr → ₹12.4L at maturity',
-    exampleHi: '₹5L SA, 20yr → ₹12.4L मैच्योरिटी पर',
-    path: '/calculators/maturity'
-  },
-  {
-    id: 'coverage',
-    name: 'Coverage Calculator',
-    nameHi: 'कवरेज कैलकुलेटर',
-    desc: 'How much life cover do I need?',
-    descHi: 'मुझे कितने जीवन कवर की आवश्यकता है?',
-    example: '₹50K/month income → ₹90L recommended cover',
-    exampleHi: '₹50K/माह आय → ₹90L अनुशंसित कवर',
-    path: '/calculators/life-insurance'
-  },
-  {
-    id: 'retirement',
-    name: 'Retirement Planner',
-    nameHi: 'रिटायरमेंट प्लानर',
-    desc: 'How much do I need to save?',
-    descHi: 'मुझे कितनी बचत करने की आवश्यकता है?',
-    example: 'Retire at 60, ₹40K expenses → ₹18,500/month SIP',
-    exampleHi: 'उम्र 60 पर सेवानिवृत्ति, ₹40K खर्च → ₹18,500/माह SIP',
-    path: '/calculators/retirement'
-  },
-  {
-    id: 'surrender',
-    name: 'Surrender Value',
-    nameHi: 'सरेंडर वैल्यू',
-    desc: 'How much will I get if I stop?',
-    descHi: 'यदि मैं पॉलिसी बंद कर दूं तो मुझे कितना मिलेगा?',
-    example: '₹5L SA, 12yr paid → ₹1,92,000 back',
-    exampleHi: '₹5L SA, 12 वर्ष भुगतान → ₹1,92,000 वापस',
-    path: '/calculators/surrender-value'
-  },
-  {
-    id: 'loan',
-    name: 'Loan Against Policy',
-    nameHi: 'पॉलिसी पर लोन',
-    desc: 'How much can I borrow?',
-    descHi: 'मैं कितना उधार ले सकता हूँ?',
-    example: '₹5L SA, 10yr paid → ₹1,55,000 loan',
-    exampleHi: '₹5L SA, 10 वर्ष भुगतान → ₹1,55,000 लोन',
-    path: '/calculators/loan'
-  },
-  {
-    id: 'health',
-    name: 'Policy Health Score',
-    nameHi: 'पॉलिसी हेल्थ स्कोर',
-    desc: 'Is my portfolio healthy?',
-    descHi: 'क्या मेरा बीमा पोर्टफोलियो स्वस्थ है?',
-    example: 'Average Indian scores 58/100 — check yours',
-    exampleHi: 'औसत भारतीय का स्कोर 58/100 — अपना चेक करें',
-    path: '/calculators/policy-health'
-  }
-]
+interface ToolItem {
+  id: string
+  label: string
+  path: string
+  isHot?: boolean
+  isPlaceholder?: boolean
+}
+
+const TOOLS_BY_CATEGORY: Record<'insurance' | 'planning' | 'analysis', ToolItem[]> = {
+  insurance: [
+    { id: 'premium', label: 'Premium', path: '/calculators/premium', isHot: true },
+    { id: 'maturity', label: 'Maturity', path: '/calculators/maturity' },
+    { id: 'coverage', label: 'Coverage', path: '/calculators/life-insurance' },
+    { id: 'surrender', label: 'Surrender', path: '/calculators/surrender-value' },
+    { id: 'loan', label: 'Loan', path: '/calculators/loan' },
+  ],
+  planning: [
+    { id: 'retirement', label: 'Retirement', path: '/calculators/retirement', isHot: true },
+    { id: 'education', label: 'Education', path: '#coming-soon', isPlaceholder: true },
+    { id: 'sip', label: 'SIP', path: '#coming-soon', isPlaceholder: true },
+    { id: 'tax-saver', label: 'Tax saver', path: '#coming-soon', isPlaceholder: true },
+    { id: 'inflation', label: 'Inflation', path: '#coming-soon', isPlaceholder: true },
+  ],
+  analysis: [
+    { id: 'health', label: 'Health score', path: '/calculators/policy-health', isHot: true },
+    { id: 'policy-analyzer', label: 'Policy analyzer', path: '#coming-soon', isPlaceholder: true },
+    { id: 'plan-compare', label: 'Plan compare', path: '#coming-soon', isPlaceholder: true },
+    { id: 'nav-tracker', label: 'NAV tracker', path: '#coming-soon', isPlaceholder: true },
+  ],
+}
 
 interface FAQItem {
   question: string
@@ -142,60 +108,94 @@ export default function CalculatorShell({
   resultRef
 }: CalculatorShellProps) {
   const { lang } = useLang()
-  const [showInfo, setShowInfo] = useState(false)
+
+  // State
+  const [activeCategory, setActiveCategory] = useState<'insurance' | 'planning' | 'analysis'>('insurance')
+  const [counter, setCounter] = useState(4521)
+  const [wordIdx, setWordIdx] = useState(0)
+  const [fade, setFade] = useState(true)
   const [socialProofText, setSocialProofText] = useState('')
-  const [showCompletionBadge, setShowCompletionBadge] = useState(false)
 
+  // Coming Soon Modal State
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [comingSoonToolName, setComingSoonToolName] = useState('')
+  const [notifEmail, setNotifEmail] = useState('')
+  const [notifSubmitted, setNotifSubmitted] = useState(false)
+
+  // Align activeCategory on mount based on activeTabId
   useEffect(() => {
-    // Pick random social proof index
-    const idx = Math.floor(Math.random() * SOCIAL_PROOF.length)
-    setSocialProofText(SOCIAL_PROOF[idx])
-
-    // Check completion badge state
-    const s = getSession()
-    const dismissed = sessionStorage.getItem('pw-calc-completion-badge-dismissed')
-    if (s.calculatorsUsed.length >= 3 && !dismissed) {
-      setShowCompletionBadge(true)
+    if (['premium', 'maturity', 'coverage', 'surrender', 'loan'].includes(activeTabId)) {
+      setActiveCategory('insurance')
+    } else if (['retirement'].includes(activeTabId)) {
+      setActiveCategory('planning')
+    } else if (['health'].includes(activeTabId)) {
+      setActiveCategory('analysis')
     }
+  }, [activeTabId])
+
+  // Counter ticks up by 1-3 every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter(prev => prev + Math.floor(Math.random() * 3) + 1)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [])
 
-  // Tab translations
-  const getTabLabel = (id: string, l: string) => {
-    const labels: Record<string, Record<string, string>> = {
-      premium: { en: 'Premium', hi: 'प्रीमियम' },
-      maturity: { en: 'Maturity', hi: 'मैच्योरिटी' },
-      coverage: { en: 'Coverage', hi: 'कवरेज' },
-      retirement: { en: 'Retirement', hi: 'रिटायरमेंट' },
-      surrender: { en: 'Surrender', hi: 'सरेंडर' },
-      loan: { en: 'Loan', hi: 'लोन' },
-      health: { en: 'Health Score', hi: 'हेल्थ स्कोर' },
+  // Words swapper every 2.5s
+  const WORDS = ['decide', 'invest', 'protect', 'retire', 'plan']
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false)
+      setTimeout(() => {
+        setWordIdx(prev => (prev + 1) % WORDS.length)
+        setFade(true)
+      }, 300)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Social proof random selection
+  useEffect(() => {
+    const idx = Math.floor(Math.random() * SOCIAL_PROOF.length)
+    setSocialProofText(SOCIAL_PROOF[idx])
+  }, [])
+
+  // Scroll to result on mobile
+  useEffect(() => {
+    if (hasCalculated && resultRef.current && window.innerWidth < 1024) {
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 200)
     }
-    return labels[id]?.[l] || labels[id]?.en || id
+  }, [hasCalculated, resultRef])
+
+  const handlePlaceholderClick = (toolName: string) => {
+    setComingSoonToolName(toolName)
+    setNotifEmail('')
+    setNotifSubmitted(false)
+    setShowComingSoon(true)
   }
 
-  // Header Title translations
-  const translatedTitle = lang === 'hi' ? (
-    title === 'Premium Calculator' ? 'प्रीमियम कैलकुलेटर' :
-    title === 'Maturity Calculator' ? 'मैच्योरिटी कैलकुलेटर' :
-    title === 'Coverage Calculator' ? 'कवरेज कैलकुलेटर' :
-    title === 'Retirement Planner' ? 'रिटायरमेंट प्लानर' :
-    title === 'Surrender Value Calculator' ? 'सरेंडर वैल्यू कैलकुलेटर' :
-    title === 'Loan Against Policy' ? 'पॉलिसी पर लोन' :
-    title === 'Policy Health Score' ? 'पॉलिसी हेल्थ स्कोर' : title
-  ) : title
+  const handleComingSoonSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Simulated subscription
+    setNotifSubmitted(true)
+    setTimeout(() => {
+      setShowComingSoon(false)
+    }, 1500)
+  }
 
-  // Button translations
-  const translatedCalcBtn = lang === 'hi' ? (
-    calculateButtonText === 'Calculate Premium' ? 'प्रीमियम की गणना करें' :
-    calculateButtonText === 'Calculate Maturity Amount' ? 'मैच्योरिटी राशि की गणना करें' :
-    calculateButtonText === 'Calculate Coverage Needs' ? 'कवरेज आवश्यकताओं की गणना करें' :
-    calculateButtonText === 'Calculate SIP Needed' ? 'आवश्यक SIP की गणना करें' :
-    calculateButtonText === 'Calculate Surrender Value' ? 'सरेंडर वैल्यू की गणना करें' :
-    calculateButtonText === 'Calculate Loan Limit' ? 'लोन सीमा की गणना करें' :
-    calculateButtonText === 'Check Portfolio Health' ? 'पोर्टफोलियो स्वास्थ्य की जांच करें' : calculateButtonText
-  ) : calculateButtonText
+  // Get active category label translation helper
+  const getCategoryLabel = (id: string) => {
+    const labels = {
+      insurance: { en: 'INSURANCE', hi: 'बीमा', bn: 'बीमा' },
+      planning: { en: 'PLANNING', hi: 'नियोजन', bn: 'नियोजन' },
+      analysis: { en: 'ANALYSIS', hi: 'विश्लेषण', bn: 'विश्लेषण' }
+    }
+    return labels[id as keyof typeof labels]?.[lang] || id.toUpperCase()
+  }
 
-  // Build the state propagation query string
+  // State propagation query string
   const queryString = (age || sa || term)
     ? '?' + [
         age ? `age=${age}` : '',
@@ -204,255 +204,238 @@ export default function CalculatorShell({
       ].filter(Boolean).join('&')
     : ''
 
-  // Scroll to results on mobile after calculation
-  useEffect(() => {
-    if (hasCalculated && resultRef.current) {
-      if (window.innerWidth < 1024) {
-        resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }
-  }, [hasCalculated, resultRef])
-
-  // JSON-LD FAQ Schema
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faq.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  }
-
-  const relatedCalcs = RELATED_CALCS.filter(item => item.id !== activeTabId).slice(0, 3)
+  const TabIcon = ICON_MAP[activeTabId as keyof typeof ICON_MAP] || Shield
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      {/* ── DARK HEADER SECTION ── */}
+      <header className="relative bg-gradient-to-br from-[#0f1225] via-[#141c38] to-[#0d1225] text-white overflow-hidden pb-6">
+        {/* Ambient background glows */}
+        <div className="absolute top-[-50px] left-[10%] w-[120px] h-[120px] rounded-full bg-amber-500/10 blur-[50px] animate-pulse pointer-events-none" />
+        <div className="absolute bottom-[20px] right-[10%] w-[150px] h-[150px] rounded-full bg-blue-500/10 blur-[60px] pointer-events-none" />
 
-      <div className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-6">
+        {/* Mesh grid overlay proxy */}
+        <div className="absolute inset-0 bg-white/[0.015] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
 
-          {/* ── COMPLETION BADGE ── */}
-          {showCompletionBadge && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm flex justify-between items-center text-amber-900 animate-fadeIn">
-              <div className="flex items-center gap-2">
-                <span className="text-base">🎯</span>
-                <span>
-                  {lang === 'hi' 
-                    ? "आपने 3 कैलकुलेटरों का उपयोग किया है — बेहतरीन शोध! पूर्ण बीमा समीक्षा चाहते हैं? अजय जी से बात करें" 
-                    : "You've used 3 calculators — great research! Want a complete insurance review? Talk to Ajay ji"}
-                </span>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5">
+          {/* Brand Bar */}
+          <div className="flex justify-between items-center py-3.5 border-b border-white/5">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 bg-[#d97706] rounded-lg flex items-center justify-center font-bold text-sm tracking-tight text-white select-none">
+                PW
               </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <a 
-                  href={`https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent("Namaste Ajay ji, I have completed 3+ calculations on your website and would like a complete insurance review.")}`}
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer"
-                >
-                  {lang === 'hi' ? 'बात करें →' : 'Talk to Ajay ji →'}
-                </a>
-                <button 
-                  onClick={() => {
-                    setShowCompletionBadge(false)
-                    sessionStorage.setItem('pw-calc-completion-badge-dismissed', '1')
-                  }}
-                  className="text-amber-500 hover:text-amber-700 font-bold text-sm cursor-pointer px-1"
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-          )}
-          
-          {/* ── CALCULATOR TABS ── */}
-          <div>
-            {/* Desktop Tabs */}
-            <div className="hidden md:flex border-b border-gray-200">
-              <nav className="flex space-x-2 -mb-px">
-                {TABS.map((tab) => {
-                  const isActive = tab.id === activeTabId
-                  const TabIcon = tab.icon
-                  return (
-                    <Link
-                      key={tab.id}
-                      href={`${tab.path}${queryString}`}
-                      className={`px-4 py-3 text-sm font-medium border-b-2 transition-all duration-200 flex items-center gap-1.5 ${
-                        isActive
-                          ? 'text-blue-600 border-blue-600'
-                          : 'text-gray-500 hover:text-gray-700 border-transparent hover:border-gray-300'
-                      }`}
-                    >
-                      <TabIcon className="w-4 h-4 flex-shrink-0" />
-                      {getTabLabel(tab.id, lang)}
-                    </Link>
-                  )
-                })}
-              </nav>
+              <span className="text-[10px] tracking-[0.1em] text-white/30 font-semibold uppercase">
+                Tools & Calculators
+              </span>
             </div>
 
-            {/* Mobile Scrollable Tabs */}
-            <div className="md:hidden flex gap-2 overflow-x-auto py-2 -mx-4 px-4 scrollbar-none">
-              {TABS.map((tab) => {
-                const isActive = tab.id === activeTabId
-                const TabIcon = tab.icon
+            {/* Avatar stack + counter */}
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-1.5 select-none">
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-purple-500 to-purple-300" />
+              </div>
+              <span className="text-xs text-white/50 font-medium">
+                {counter.toLocaleString('en-IN')} used this month
+              </span>
+            </div>
+          </div>
+
+          {/* Hero Line */}
+          <div className="py-2">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              </span>
+              <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
+              Know your numbers. Then{' '}
+              <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                {WORDS[wordIdx]}
+              </span>
+              .
+            </h2>
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex border-b border-white/10 select-none overflow-x-auto scrollbar-none">
+            <nav className="flex space-x-6 -mb-px flex-shrink-0">
+              {CATEGORIES.map((cat) => {
+                const isActive = cat.id === activeCategory
                 return (
-                  <Link
-                    key={tab.id}
-                    href={`${tab.path}${queryString}`}
-                    className={`flex-shrink-0 px-3.5 py-2 text-sm rounded-full transition-all duration-200 flex items-center gap-1.5 ${
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id as any)}
+                    className={`pb-3 text-[10px] tracking-wider font-semibold border-b transition-colors cursor-pointer uppercase ${
                       isActive
-                        ? 'bg-[#0f1225] text-white font-medium'
-                        : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-400'
+                        ? 'text-amber-400 border-amber-400/80 font-bold'
+                        : 'text-white/25 border-transparent hover:text-white/50'
                     }`}
                   >
-                    <TabIcon className="w-3.5 h-3.5 flex-shrink-0" />
-                    {getTabLabel(tab.id, lang)}
-                  </Link>
+                    {getCategoryLabel(cat.id)}
+                  </button>
                 )
               })}
-            </div>
-
-            {/* Social Proof Line */}
-            {socialProofText && (
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-400 mt-2.5 animate-fadeIn">
-                <Users className="w-3.5 h-3.5 text-gray-400" />
-                <span>{socialProofText}</span>
-              </div>
-            )}
+            </nav>
           </div>
 
-          {/* ── SESSION SUMMARY (Dashboard) ── */}
-          <SessionSummary />
+          {/* Tool Tabs */}
+          <div className="flex gap-2 overflow-x-auto py-1 scrollbar-none snap-x select-none">
+            {TOOLS_BY_CATEGORY[activeCategory].map((tool) => {
+              const isActive = tool.id === activeTabId
+              const isPlaceholder = tool.isPlaceholder
 
-          {/* ── CALCULATOR CARD ── */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-8">
-            
-            {/* Compact Header */}
-            <div className="flex justify-between items-center pb-4 border-b border-gray-100 mb-6 h-12">
-              <h1 className="text-lg font-semibold text-gray-900">{translatedTitle}</h1>
-              <button
-                type="button"
-                onClick={() => setShowInfo(!showInfo)}
-                className="text-gray-400 hover:text-blue-600 transition-colors p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer"
-                aria-label="Toggle information details"
-              >
-                <Info className="w-5 h-5" />
-              </button>
-            </div>
+              const content = (
+                <span className="flex items-center gap-1.5">
+                  <span>{tool.label}</span>
+                  {tool.isHot && <span className="w-1 h-1 rounded-full bg-orange-500 animate-pulse" />}
+                </span>
+              )
 
-            {/* Expandable Info Panel */}
-            {showInfo && (
-              <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-blue-800 animate-fadeIn">
-                {infoTooltip}
-              </div>
-            )}
-
-            {/* Two Column Form/Result Layout */}
-            <div className="flex flex-col lg:flex-row gap-8 items-stretch">
-              
-              {/* Left Column: Form */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  onCalculate(e)
-                }}
-                className="w-full lg:w-[55%] flex flex-col justify-between space-y-6"
-              >
-                <div className="space-y-6">
-                  {formFields}
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full h-12 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base active:scale-[0.98] transition-transform shadow-sm cursor-pointer mt-6"
-                >
-                  {translatedCalcBtn}
-                </button>
-              </form>
-
-              {/* Right Column: Result Panel */}
-              <div className="w-full lg:w-[45%] flex flex-col" ref={resultRef}>
-                {hasCalculated ? (
-                  <div className="animate-fadeIn h-full flex flex-col justify-between">
-                    {resultPanel}
-                  </div>
-                ) : (
-                  <div className="flex-1 flex flex-col items-center justify-center border border-dashed border-gray-200 rounded-2xl min-h-[300px] p-8 text-center bg-gray-50/50">
-                    <Calculator className="w-12 h-12 text-gray-200 mb-3" />
-                    <span className="text-gray-400 font-medium text-sm">
-                      {lang === 'hi' ? 'आपका परिणाम यहां दिखाई देगा' : 'Your result will appear here'}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-            </div>
-          </div>
-
-          {/* ── FAQ SECTION ── */}
-          {faq && faq.length > 0 && (
-            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6">
-              <h2 className="text-base font-semibold text-gray-900 mb-4">
-                {lang === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions'}
-              </h2>
-              <div className="space-y-3">
-                {faq.map((item, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-gray-200 bg-white rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden"
+              if (isPlaceholder) {
+                return (
+                  <button
+                    key={tool.id}
+                    onClick={() => handlePlaceholderClick(tool.label)}
+                    className="flex-shrink-0 px-3.5 py-1.5 rounded-xl border border-white/5 text-[11px] text-white/30 hover:text-white/50 cursor-pointer snap-start transition-colors"
                   >
-                    <summary className="flex justify-between items-center px-4 py-3.5 text-sm font-medium text-gray-900 cursor-pointer select-none">
-                      <span>{item.question}</span>
-                      <span className="text-gray-400 group-open:rotate-180 transition-transform duration-200">
-                        ▾
-                      </span>
-                    </summary>
-                    <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-gray-100 bg-gray-50/30">
-                      {item.answer}
-                    </div>
-                  </details>
-                ))}
-              </div>
+                    {content}
+                  </button>
+                )
+              }
+
+              return (
+                <Link
+                  key={tool.id}
+                  href={`${tool.path}${queryString}`}
+                  className={`flex-shrink-0 px-3.5 py-1.5 rounded-xl text-[11px] font-medium border snap-start transition-all duration-200 ${
+                    isActive
+                      ? 'bg-amber-500/10 border-amber-500/20 text-amber-400 font-semibold'
+                      : 'border-transparent text-white/40 hover:text-white/70'
+                  }`}
+                >
+                  {content}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      </header>
+
+      {/* SVG Wave separator */}
+      <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-px select-none">
+        <svg className="relative block w-full h-[18px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C150,90 350,120 600,100 C850,80 1050,90 1200,120 L1200,120 L0,120 Z" fill="#f9fafb"></path>
+        </svg>
+      </div>
+
+      {/* ── LIGHT BODY CONTAINER (bg-gray-50) ── */}
+      <main className="bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Social Proof centered line */}
+          {socialProofText && (
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400 select-none animate-fadeIn">
+              <Users className="w-3.5 h-3.5 text-gray-400" />
+              <span>{socialProofText}</span>
             </div>
           )}
 
-          {/* ── RELATED CALCULATORS ── */}
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-gray-900">
-              {lang === 'hi' ? 'लोग यह भी गणना करते हैं:' : 'People also calculate:'}
-            </h3>
-            
-            {/* Horizontal Scroll on Mobile, 3 columns on desktop */}
-            <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-3 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none pb-2">
-              {relatedCalcs.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`${item.path}${queryString}`}
-                  className="flex-shrink-0 w-[280px] md:w-auto bg-white rounded-xl p-5 border border-gray-100 hover:shadow-md transition-all duration-200 group"
-                >
-                  <div className="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
-                    <span>{lang === 'hi' ? item.nameHi : item.name}</span>
-                    <span className="text-blue-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">{lang === 'hi' ? item.descHi : item.desc}</div>
-                  <div className="text-xs text-emerald-600 font-medium mt-3 bg-emerald-50 rounded-lg px-2.5 py-1.5 inline-block">
-                    {lang === 'hi' ? item.exampleHi : item.example}
-                  </div>
-                </Link>
-              ))}
+          {/* Form / Result columns wrapper */}
+          <div className="flex flex-col lg:flex-row gap-6 items-start justify-center">
+            {/* Form Left Side */}
+            <div className={`w-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+              hasCalculated ? 'lg:w-[42%] flex-shrink-0' : 'max-w-md'
+            }`}>
+              <CalculatorForm
+                title={title}
+                icon={TabIcon}
+                infoTooltip={infoTooltip}
+                onCalculate={onCalculate}
+                calculateButtonText={calculateButtonText}
+              >
+                {formFields}
+              </CalculatorForm>
+
+              {/* Trust footer line */}
+              <div className="mt-4 flex items-center justify-center gap-4 text-[10px] text-gray-400 select-none font-medium text-center">
+                <span>✓ Official LIC rates</span>
+                <span>• No pre sign-up</span>
+                <span>• 30s answers</span>
+              </div>
             </div>
+
+            {/* Result Right Side */}
+            {hasCalculated && (
+              <div className="w-full lg:w-[58%] flex-1" ref={resultRef}>
+                {resultPanel}
+              </div>
+            )}
           </div>
 
+          {/* FAQ Accordion Section */}
+          <CalculatorFAQ faqs={faq} />
+
+          {/* Related Tools Section */}
+          <RelatedCalculators currentTabId={activeTabId} queryString={queryString} />
         </div>
-      </div>
+      </main>
+
+      {/* ── COMING SOON OVERLAY MODAL ── */}
+      {showComingSoon && (
+        <div className="fixed inset-0 bg-[#0f1225]/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-center relative border border-gray-100 animate-fadeIn">
+            {/* Success state check or rocket logo */}
+            {notifSubmitted ? (
+              <div className="space-y-3 animate-fadeIn">
+                <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mx-auto">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold text-gray-900">Subscription Confirmed!</h4>
+                <p className="text-[11px] text-gray-500">We&apos;ll alert you as soon as this tool goes live.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-[#d97706] mx-auto">
+                  <Compass className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-gray-900">Building New Tools</h4>
+                  <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
+                    We are currently building the <strong>{comingSoonToolName}</strong> analyzer. Enter your email to be notified when it releases.
+                  </p>
+                </div>
+                <form onSubmit={handleComingSoonSubmit} className="space-y-2">
+                  <input
+                    type="email"
+                    value={notifEmail}
+                    onChange={(e) => setNotifEmail(e.target.value)}
+                    placeholder="yourname@example.com"
+                    className="w-full h-10 px-3 text-xs rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-900"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="w-full h-10 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold text-xs rounded-lg shadow cursor-pointer active:scale-[0.98] transition-transform"
+                  >
+                    Notify me when it&apos;s ready
+                  </button>
+                </form>
+              </div>
+            )}
+            <button
+              onClick={() => setShowComingSoon(false)}
+              className="absolute top-3.5 right-3.5 text-gray-400 hover:text-gray-600 font-semibold cursor-pointer text-sm"
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }

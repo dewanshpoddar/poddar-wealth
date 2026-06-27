@@ -1,16 +1,14 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Sun } from 'lucide-react'
+import { Sun, MessageCircle, Share2, TrendingUp } from 'lucide-react'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const expenseOptions = [
   { label: '₹15K', value: 15000 },
@@ -43,6 +41,7 @@ const RETIREMENT_FAQ = [
 
 function RetirementCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   const [age, setAge] = useState<number>(30)
@@ -63,8 +62,8 @@ function RetirementCalcContent() {
   const [requiredCorpus, setRequiredCorpus] = useState<number>(0)
   const [monthlySip, setMonthlySip] = useState<number>(0)
   const [yearsToRetire, setYearsToRetire] = useState<number>(30)
+  const [isUnlocked, setIsUnlocked] = useState(false)
 
-  // Parse URL query params
   // Parse URL query params & session storage pre-fill
   useEffect(() => {
     const qAge = searchParams.get('age')
@@ -72,7 +71,6 @@ function RetirementCalcContent() {
     
     if (qAge) setAge(Number(qAge))
     if (qSa) {
-      // Use sum assured to guess current monthly expenses (e.g. SA / 240)
       const guessedExpense = Math.ceil((Number(qSa) / 240) / 5000) * 5000
       setMonthlyExpense(Math.max(15000, Math.min(guessedExpense, 60000)))
     }
@@ -82,6 +80,12 @@ function RetirementCalcContent() {
     if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
     if (!qSa && sessionInputs.monthlyExpenses) setMonthlyExpense(sessionInputs.monthlyExpenses)
     if (sessionInputs.policyTerm) setRetirementAge(Math.min(65, Math.max(50, (sessionInputs.age || 30) + sessionInputs.policyTerm)))
+
+    // Check if session has phone auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -89,36 +93,29 @@ function RetirementCalcContent() {
     const retirementYears = lifeExpectancy - retirementAge
     setYearsToRetire(years)
 
-    // Compounded future monthly expense
     const futExpense = monthlyExpense * Math.pow(1 + inflation / 100, years)
     setFutureExpense(futExpense)
 
-    // Calculate required corpus with inflation-adjusted (real) return during retirement
-    // Real Return = (Nominal Return - Inflation)
     const realReturn = (returnRate - inflation) / 100
     let annuityFactor = retirementYears
     if (realReturn !== 0) {
       annuityFactor = (1 - Math.pow(1 + realReturn, -retirementYears)) / realReturn
     }
     
-    // Future value of existing savings at retirement
     const existing = existingSavings ? Number(existingSavings) : 0
     const epf = epfContribution ? Number(epfContribution) : 0
     const accumulatedSavings = existing * Math.pow(1 + returnRate / 100, years)
     
-    // Monthly EPF contribution compounded at EPF rate (approx 8.1%)
     const epfRate = 0.081 / 12
     const totalEpfMonths = years * 12
     const accumulatedEpf = epf > 0
       ? epf * ((Math.pow(1 + epfRate, totalEpfMonths) - 1) / epfRate) * (1 + epfRate)
       : 0
 
-    // Base corpus needed for inflation-adjusted retirement income
     const baseCorpusNeeded = futExpense * 12 * annuityFactor
     const netCorpusNeeded = Math.max(baseCorpusNeeded - accumulatedSavings - accumulatedEpf, 0)
     setRequiredCorpus(baseCorpusNeeded)
 
-    // Calculate required monthly savings (SIP)
     const monthlyRate = returnRate / 12 / 100
     const totalMonths = years * 12
     let sipFactor = totalMonths
@@ -153,23 +150,63 @@ function RetirementCalcContent() {
 
   const totalSipPaid = monthlySip * 12 * yearsToRetire
 
-  const breakdownRows = hasCalculated ? [
+  const visibleRows = [
     { label: 'Current Monthly Expenses', value: `₹${Math.round(monthlyExpense).toLocaleString('en-IN')}` },
-    { label: 'Inflation Adjusted Monthly Expenses', value: `₹${Math.round(futureExpense).toLocaleString('en-IN')}` },
-    { label: 'Total Retirement Corpus Required', value: `₹${Math.round(requiredCorpus).toLocaleString('en-IN')}`, isTotal: true },
-    { label: 'Required Monthly SIP Savings', value: `₹${Math.round(monthlySip).toLocaleString('en-IN')}/month`, isTotal: true },
-    { label: 'Accumulated EPF & Savings Payout', value: `₹${Math.round((requiredCorpus - (monthlySip * ((((Math.pow(1 + (returnRate / 12 / 100), yearsToRetire * 12) - 1) / (returnRate / 12 / 100)) * (1 + (returnRate / 12 / 100))))))).toLocaleString('en-IN')}` }
-  ] : []
+    { label: 'Expected Retirement Age', value: `${retirementAge} Years` },
+    { label: 'Inflation Adjusted Expenses', value: `₹${Math.round(futureExpense).toLocaleString('en-IN')}/mo`, isTotal: true },
+  ]
 
-  const bars = hasCalculated ? [
-    { label: 'Your savings path (Total SIP Paid)', value: totalSipPaid, max: requiredCorpus, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalSipPaid).toLocaleString('en-IN')}` },
-    { label: 'Retirement need (Target Corpus)', value: requiredCorpus, max: requiredCorpus, colorClass: 'bg-emerald-500', displayValue: `₹${Math.round(requiredCorpus).toLocaleString('en-IN')}` }
-  ] : []
+  const gatedRows = [
+    { label: 'Required Target Corpus', value: `₹${Math.round(requiredCorpus).toLocaleString('en-IN')}`, isTotal: true },
+    { label: 'Expected Inflation Rate', value: `${inflation}% p.a.` },
+    { label: 'Expected Return rate on SIP', value: `${returnRate}% p.a.` },
+    { label: 'Monthly Savings Needed (SIP)', value: `₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo`, isTotal: true },
+  ]
 
   const msg = hasCalculated ? `Namaste Ajay ji, I used your retirement calculator.
-Current age ${age}, retire at ${retirementAge}, current expense ₹${(monthlyExpense).toLocaleString('en-IN')}/mo. Target corpus ₹${Math.round(requiredCorpus).toLocaleString('en-IN')}, requires SIP ₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo.
-Can we discuss pension plans?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+Current age: ${age}
+Retire at: ${retirementAge}
+Current expense: ₹${(monthlyExpense).toLocaleString('en-IN')}/mo
+Required corpus: ₹${Math.round(requiredCorpus).toLocaleString('en-IN')}
+Suggested monthly SIP: ₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo.
+Can we discuss my retirement plan options?` : ''
+
+  const crossLinks = [
+    {
+      label: 'Explore retirement pension options →',
+      href: '/services/retirement',
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss timeline with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this planner results →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Retirement Planner Result',
+            text: `Calculated my retirement SIP target: ₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo to get ₹${Math.round(requiredCorpus).toLocaleString('en-IN')} corpus.`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Calculated my retirement SIP target: ₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo to get ₹${Math.round(requiredCorpus).toLocaleString('en-IN')} corpus. Try here: ${window.location.href}`)
+          alert('Link copied!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
+
+  const bars = [
+    { label: 'Total savings path (Total SIP Paid)', value: totalSipPaid, max: requiredCorpus, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalSipPaid).toLocaleString('en-IN')}` },
+    { label: 'Retirement target corpus', value: requiredCorpus, max: requiredCorpus, colorClass: 'bg-emerald-500', displayValue: `₹${Math.round(requiredCorpus).toLocaleString('en-IN')}` }
+  ]
 
   return (
     <CalculatorShell
@@ -178,7 +215,7 @@ Can we discuss pension plans?` : ''
       infoTooltip="Calculate how much you need to save monthly to accumulate a corpus that can sustain your current lifestyle during retirement, adjusted for inflation and investment returns."
       faq={RETIREMENT_FAQ}
       age={age}
-      sa={Math.round(requiredCorpus / 10)} // proxy sum assured
+      sa={Math.round(requiredCorpus / 10)}
       term={retirementAge - age}
       hasCalculated={hasCalculated}
       onCalculate={handleCalculate}
@@ -215,13 +252,13 @@ Can we discuss pension plans?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <SliderField
                   label="Expected Inflation Rate"
                   value={inflation}
@@ -252,24 +289,24 @@ Can we discuss pension plans?` : ''
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Existing Savings Corpus (₹)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">Existing Savings Corpus (₹)</label>
                   <input
                     type="number"
                     value={existingSavings}
                     onChange={(e) => { setExistingSavings(e.target.value); setHasCalculated(false) }}
                     placeholder="Enter total investments, mutual funds, FDs"
-                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Monthly EPF Contribution (₹)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">Monthly EPF Contribution (₹)</label>
                   <input
                     type="number"
                     value={epfContribution}
                     onChange={(e) => { setEpfContribution(e.target.value); setHasCalculated(false) }}
                     placeholder="Enter employee + employer monthly EPF"
-                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                   />
                 </div>
               </div>
@@ -279,38 +316,50 @@ Can we discuss pension plans?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${Math.round(monthlySip).toLocaleString('en-IN')}/month`}
-              label="Required Monthly SIP Savings"
-              subtext={`To build a corpus of ₹${Math.round(requiredCorpus).toLocaleString('en-IN')} by age ${retirementAge}`}
-              type="neutral"
-              inlineLinkText="Explore pension plans → Retirement Services"
-              inlineLinkHref="/services/retirement"
-              insightText={`Today's ₹${Math.round(monthlyExpense).toLocaleString('en-IN')}/month becomes ₹${Math.round(futureExpense).toLocaleString('en-IN')}/month in ${yearsToRetire} years. Start with ₹${Math.round(monthlySip).toLocaleString('en-IN')}/month today — the earlier, the less you need.`}
-              InsightIcon={Sun}
-              rawValue={monthlySip}
-              valueSuffix="/month"
-              shareText={`I calculated my retirement SIP on Poddar Wealth: target corpus ₹${Math.round(requiredCorpus).toLocaleString('en-IN')}, requires SIP ₹${Math.round(monthlySip).toLocaleString('en-IN')}/month. Try it: poddarwealth.com/calculators/retirement`}
-            />
-
-            <LeadCapture
-              calculatorId="retirement"
-              inputs={{ age, monthlyExpense, retirementAge, inflation, returnRate, existingSavings, epfContribution, lifeExpectancy }}
-              result={{ corpus: requiredCorpus, monthlySip }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} bars={bars} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+          <ResultPanel
+            value={`₹${Math.round(monthlySip).toLocaleString('en-IN')}/mo`}
+            rawValue={monthlySip}
+            valueSuffix="/mo"
+            label="Required Monthly SIP"
+            contextText={`Retire at ${retirementAge} · Expenses: ₹${monthlyExpense.toLocaleString('en-IN')}/mo`}
+            humanLineText={`Target Corpus: ₹${Math.round(requiredCorpus).toLocaleString('en-IN')} by age ${retirementAge}`}
+            HumanLineIcon={Sun}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`Today's ₹${Math.round(monthlyExpense).toLocaleString('en-IN')}/month becomes ₹${Math.round(futureExpense).toLocaleString('en-IN')}/month in ${yearsToRetire} years. Start with ₹${Math.round(monthlySip).toLocaleString('en-IN')}/month today — the earlier you start, the less you need to save.`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="retirement"
+            inputs={{ age, monthlyExpense, retirementAge, inflation, returnRate, existingSavings, epfContribution, lifeExpectancy }}
+            whatsappMessage={msg}
+          >
+            {/* CSS-based comparison bars */}
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
+              <h4 className="text-[10px] uppercase tracking-wider text-gray-400 font-bold select-none">
+                Savings vs Required Corpus
+              </h4>
+              {bars.map((bar, idx) => {
+                const pct = Math.max(5, (bar.value / bar.max) * 100)
+                return (
+                  <div key={idx} className="space-y-1 animate-fadeIn">
+                    <div className="flex justify-between items-center text-[10px] text-gray-500">
+                      <span>{bar.label}</span>
+                      <span className="font-semibold text-gray-950">{bar.displayValue}</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${
+                          bar.colorClass === 'bg-blue-500' ? 'bg-[#0f1225]' : 'bg-emerald-600'
+                        }`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </ResultPanel>
         )
       }
       resultRef={resultRef}
@@ -322,7 +371,7 @@ export default function RetirementCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <RetirementCalcContent />

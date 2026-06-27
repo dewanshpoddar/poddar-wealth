@@ -1,17 +1,15 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Landmark, ShieldCheck } from 'lucide-react'
+import { Landmark, MessageCircle, Share2, TrendingUp, ShieldCheck } from 'lucide-react'
 import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -60,6 +58,7 @@ function getGsvFactor(yearsPaid: number): number {
 
 function LoanCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
@@ -79,6 +78,7 @@ function LoanCalcContent() {
   const [maxLoan, setMaxLoan] = useState<number>(0)
   const [annualInterest, setAnnualInterest] = useState<number>(0)
   const [monthlyInterest, setMonthlyInterest] = useState<number>(0)
+  const [isUnlocked, setIsUnlocked] = useState(false)
   
   // Repayment projection
   const [interest1yr, setInterest1yr] = useState<number>(0)
@@ -97,10 +97,15 @@ function LoanCalcContent() {
     const sessionInputs = getSharedInputs()
     if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
     if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
+
+    // Check session for phone auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const handleCalculate = () => {
-    // 1. Estimate annual premium
     const selectedPlan = PLANS.find(p => p.planNo === planNo)
     let annualPremium = 0
     if (selectedPlan) {
@@ -114,7 +119,6 @@ function LoanCalcContent() {
 
     const totalPaidSum = annualPremium * yearsPaid
 
-    // 2. Surrender value (needed as base for loan)
     const gsvFactor = getGsvFactor(yearsPaid)
     const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
     const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
@@ -128,18 +132,14 @@ function LoanCalcContent() {
     const finalSurrender = Math.max(gsv, ssv)
     setSurrenderValue(finalSurrender)
 
-    // 3. Max loan = 90% of surrender value
     const loanLimit = Math.round(finalSurrender * 0.90)
     setMaxLoan(loanLimit)
 
-    // 4. Interest rates (LIC policy loan rate is ~9.5% p.a. compounded half-yearly)
     const rate = 0.095
     const annInterest = Math.round(loanLimit * rate)
     setAnnualInterest(annInterest)
     setMonthlyInterest(Math.round(annInterest / 12))
 
-    // Compound interest projections (compounded half-yearly)
-    // Formula: A = P(1 + r/2)^(2t), Interest = A - P
     const getCompoundInterest = (years: number) => {
       const totalAmount = loanLimit * Math.pow(1 + rate / 2, 2 * years)
       return Math.round(totalAmount - loanLimit)
@@ -171,21 +171,59 @@ function LoanCalcContent() {
     setHasCalculated(false)
   }
 
-  const breakdownRows = hasCalculated ? [
-    { label: 'Estimated Cash Surrender Value', value: `₹${surrenderValue.toLocaleString('en-IN')}` },
+  const visibleRows = [
+    { label: 'Accrued Policy Surrender Value', value: `₹${surrenderValue.toLocaleString('en-IN')}` },
     { label: 'Loan Limit (% of Surrender Value)', value: '90.0%' },
     { label: 'Maximum Loan Eligible', value: `₹${maxLoan.toLocaleString('en-IN')}`, isTotal: true },
+  ]
+
+  const gatedRows = [
     { label: 'Annual Interest Rate', value: '9.5% p.a.' },
     { label: 'Year 1 Interest Paid', value: `₹${interest1yr.toLocaleString('en-IN')}` },
     { label: 'Year 3 Compound Interest Accrued', value: `₹${interest3yr.toLocaleString('en-IN')}` },
     { label: 'Year 5 Compound Interest Accrued', value: `₹${interest5yr.toLocaleString('en-IN')}` },
-  ] : []
+  ]
 
   const plan = PLANS.find(p => p.planNo === planNo)
   const msg = hasCalculated ? `Namaste Ajay ji, I checked policy loan eligibility.
-₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), paid for ${yearsPaid}/${term}yr. Surrender value ₹${Math.round(surrenderValue).toLocaleString('en-IN')} → eligible loan ₹${Math.round(maxLoan).toLocaleString('en-IN')}.
-How can I apply for this policy loan?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
+Plan: ${plan?.name} (Plan ${planNo})
+Years paid: ${yearsPaid}/${term}
+Surrender value: ₹${Math.round(surrenderValue).toLocaleString('en-IN')}
+Eligible loan limit: ₹${Math.round(maxLoan).toLocaleString('en-IN')}.
+How can I apply for this loan?` : ''
+
+  const crossLinks = [
+    {
+      label: 'Compare: surrendering gives cash but you lose cover →',
+      href: `/calculators/surrender-value?sa=${sa}&term=${term}`,
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Apply for loan with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this loan calculation →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Policy Loan Calculator Result',
+            text: `Calculated my LIC policy loan limit: max loan ₹${maxLoan.toLocaleString('en-IN')} on ₹${Math.round(sa).toLocaleString('en-IN')} cover.`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Calculated my LIC policy loan limit: max loan ₹${maxLoan.toLocaleString('en-IN')} on ₹${Math.round(sa).toLocaleString('en-IN')} cover. Try here: ${window.location.href}`)
+          alert('Copied link!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
 
   return (
     <CalculatorShell
@@ -201,11 +239,11 @@ How can I apply for this policy loan?` : ''
       formFields={
         <>
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Select LIC Plan</label>
             <select
               value={planNo}
               onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
               {majorPlans.map(plan => (
                 <option key={plan.planNo} value={plan.planNo}>
@@ -245,13 +283,13 @@ How can I apply for this policy loan?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <SliderField
                   label="Average Annual Bonus Rate"
                   value={bonusRate}
@@ -267,59 +305,48 @@ How can I apply for this policy loan?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${maxLoan.toLocaleString('en-IN')}`}
-              label="Maximum Loan Eligible"
-              subtext={`Interest starts at ~₹${monthlyInterest}/month (9.5% p.a.)`}
-              type="positive"
-              inlineLinkText="Compare: surrendering gives ₹ more but you lose cover →"
-              inlineLinkHref={`/calculators/surrender-value?age=${searchParams.get('age') || 30}&sa=${sa}&term=${term}`}
-              insightText={`Get ₹${maxLoan.toLocaleString('en-IN')} today. Your policy, cover, and maturity all stay intact. Repay interest/principal anytime before maturity.`}
-              InsightIcon={Landmark}
-              rawValue={maxLoan}
-              shareText={`I calculated my LIC policy loan limit on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${yearsPaid}/${term}yr paid → loan capacity ₹${maxLoan.toLocaleString('en-IN')}. Try it: poddarwealth.com/calculators/loan`}
-            >
-              <div className="mt-4 p-4 rounded-xl bg-white/70 border border-emerald-200/50 text-xs text-gray-800 space-y-2">
-                <div className="font-semibold text-gray-900 border-b border-emerald-200/40 pb-1 text-sm">
-                  Interest Accrual Projection:
+          <ResultPanel
+            value={`₹${maxLoan.toLocaleString('en-IN')}`}
+            rawValue={maxLoan}
+            label="Maximum Loan Eligible"
+            contextText={`${plan?.name} (Plan ${planNo}) · ₹${(sa / 100000).toFixed(0)}L SA · Paid ${yearsPaid}/${term} yrs`}
+            humanLineText={`Interest starts at ~₹${monthlyInterest}/month (9.5% p.a.)`}
+            HumanLineIcon={Landmark}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`Get ₹${maxLoan.toLocaleString('en-IN')} today. Your policy, cover, and maturity all stay intact. Repay interest/principal anytime before maturity.`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="loan"
+            inputs={{ planNo, sa, term, yearsPaid, bonusRate }}
+            whatsappMessage={msg}
+          >
+            {/* Interest compound projection details inside children when unlocked */}
+            {isUnlocked && (
+              <div className="mt-4 p-4 rounded-xl bg-white border border-gray-100 text-xs text-gray-800 space-y-2 animate-fadeIn">
+                <div className="font-semibold text-gray-900 border-b border-gray-50 pb-1 text-xs">
+                  Interest Accrual Projections (9.5% p.a. compounded half-yearly):
                 </div>
-                <div className="flex justify-between items-center text-xs">
+                <div className="flex justify-between items-center">
                   <span>Interest after 1 Year:</span>
-                  <span className="font-bold">₹{interest1yr.toLocaleString('en-IN')}</span>
+                  <span className="font-semibold text-gray-900">₹{interest1yr.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between items-center text-xs">
+                <div className="flex justify-between items-center">
                   <span>Interest after 3 Years:</span>
-                  <span className="font-bold">₹{interest3yr.toLocaleString('en-IN')}</span>
+                  <span className="font-semibold text-gray-900">₹{interest3yr.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between items-center text-xs">
+                <div className="flex justify-between items-center">
                   <span>Interest after 5 Years:</span>
-                  <span className="font-bold">₹{interest5yr.toLocaleString('en-IN')}</span>
+                  <span className="font-semibold text-gray-900">₹{interest5yr.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="pt-1.5 border-t border-emerald-200/40 text-[10px] text-gray-500 flex items-center gap-1">
+                <div className="pt-1.5 border-t border-gray-50 text-[10px] text-gray-400 flex items-center gap-1 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Borrowing keeps your ₹{sa.toLocaleString('en-IN')} life cover active.</span>
+                  <span>Borrowing keeps your life insurance policy active.</span>
                 </div>
               </div>
-            </ResultCard>
-
-            <LeadCapture
-              calculatorId="loan"
-              inputs={{ planNo, sa, term, yearsPaid, bonusRate }}
-              result={{ maxLoan, surrenderValue }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+            )}
+          </ResultPanel>
         )
       }
       resultRef={resultRef}
@@ -331,7 +358,7 @@ export default function LoanCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <LoanCalcContent />

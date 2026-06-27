@@ -1,16 +1,14 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ShieldAlert, ShieldCheck, Download, Award, TrendingUp } from 'lucide-react'
+import { Award, ShieldAlert, ShieldCheck, Download, MessageCircle, Share2, TrendingUp } from 'lucide-react'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const incomeOptions = [
   { label: '₹1.8L', value: 180000 },
@@ -57,13 +55,6 @@ function getGrade(score: number): string {
   return 'D'
 }
 
-function getGradeColor(grade: string): string {
-  if (grade === 'A+' || grade === 'A') return 'text-emerald-600'
-  if (grade === 'B+') return 'text-blue-600'
-  if (grade === 'C') return 'text-amber-600'
-  return 'text-red-500'
-}
-
 function PolicyHealthCalcContent() {
   const searchParams = useSearchParams()
   const { lang } = useLang()
@@ -87,6 +78,7 @@ function PolicyHealthCalcContent() {
   const [totalScore, setTotalScore] = useState<number>(0)
   const [grade, setGrade] = useState<string>('B+')
   const [downloading, setDownloading] = useState<boolean>(false)
+  const [isUnlocked, setIsUnlocked] = useState(false)
 
   const [coverageScore, setCoverageScore] = useState<number>(0)
   const [affordabilityScore, setAffordabilityScore] = useState<number>(0)
@@ -114,6 +106,12 @@ function PolicyHealthCalcContent() {
     if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
     if (!qSa && sessionInputs.sumAssured) setTotalCover(String(sessionInputs.sumAssured))
     if (sessionInputs.annualIncome) setAnnualIncome(sessionInputs.annualIncome)
+
+    // Check session for phone auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const handleCalculate = () => {
@@ -208,13 +206,11 @@ function PolicyHealthCalcContent() {
     setDependentScore(depScore)
     setDependentComment(depComment)
 
-    // Calculate final score & grade
     const finalScore = covScore + affScore + matScore + protScore + depScore
     setTotalScore(finalScore)
     const gr = getGrade(finalScore)
     setGrade(gr)
 
-    // Find top improvement suggestion
     let suggestion = ''
     if (!hasHealth) {
       suggestion = 'Adding a ₹5L family health floater will protect you from hospital bills and lift your score to A!'
@@ -293,19 +289,56 @@ function PolicyHealthCalcContent() {
     setHasCalculated(false)
   }
 
-  const breakdownRows = hasCalculated ? [
+  const visibleRows = [
+    { label: 'Annual Income', value: `₹${annualIncome.toLocaleString('en-IN')}` },
+    { label: 'Total Current Coverage', value: `₹${(totalCover ? Number(totalCover) : 0).toLocaleString('en-IN')}` },
+    { label: 'Total Portfolio Score', value: `${totalScore}/100`, isTotal: true },
+  ]
+
+  const gatedRows = [
     { label: 'Coverage Adequacy (max 35)', value: `${coverageScore}/35` },
     { label: 'Premium Affordability (max 20)', value: `${affordabilityScore}/20` },
     { label: 'Maturity Progress (max 15)', value: `${maturityScore}/15` },
     { label: 'Protection Mix (max 20)', value: `${protectionScore}/20` },
     { label: 'Dependent Coverage (max 10)', value: `${dependentScore}/10` },
-    { label: 'Total Portfolio Health Score', value: `${totalScore}/100`, isTotal: true },
-  ] : []
+  ]
 
-  const msg = hasCalculated ? `Namaste Ajay ji, I checked my Policy Health Score.
-My score is ${grade} (${totalScore}/100). Gaps: ${topImprovement}.
-Can you suggest how I can improve my portfolio?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+  const msg = hasCalculated ? `Namaste Ajay ji, I checked my Policy Health Score on Poddar Wealth.
+My score is ${grade} (${totalScore}/100).
+Gaps & Suggestions: ${topImprovement}
+Can you suggest options to optimize my insurance portfolio?` : ''
+
+  const crossLinks = [
+    {
+      label: 'Get details on Term Life security plans →',
+      href: '/services/term-life',
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss health audit details with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share portfolio score →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Policy Health Score Audit',
+            text: `My insurance portfolio health score is ${grade} (${totalScore}/100). Try check yours:`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`My insurance portfolio health score is ${grade} (${totalScore}/100). Check yours: ${window.location.href}`)
+          alert('Copied link!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
 
   return (
     <CalculatorShell
@@ -332,13 +365,13 @@ Can you suggest how I can improve my portfolio?` : ''
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Total Life Coverage (Sum Assured) (₹)</label>
+            <label className="block text-xs font-semibold text-gray-700 mb-1.5">Total Life Coverage (Sum Assured) (₹)</label>
             <input
               type="number"
               value={totalCover}
               onChange={(e) => { setTotalCover(e.target.value); setHasCalculated(false) }}
               placeholder="Enter total sum assured of all current policies"
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
             />
           </div>
 
@@ -367,21 +400,21 @@ Can you suggest how I can improve my portfolio?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Total Annual Premiums Paid (₹)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1.5">Total Annual Premiums Paid (₹)</label>
                   <input
                     type="number"
                     value={premiumAmount}
                     onChange={(e) => { setPremiumAmount(e.target.value); setHasCalculated(false) }}
                     placeholder="Enter total annual premium paid across policies"
-                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+                    className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
                   />
                 </div>
 
@@ -418,124 +451,114 @@ Can you suggest how I can improve my portfolio?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`${grade} (${totalScore}/100)`}
-              label="Portfolio Health Score"
-              subtext={totalScore >= 80 ? 'Good coverage foundation!' : 'Portfolio needs improvement!'}
-              type={totalScore >= 80 ? 'positive' : totalScore >= 65 ? 'neutral' : 'caution'}
-              inlineLinkText="Get term insurance → /services/term-life"
-              inlineLinkHref="/services/term-life"
-              insightText={`Your biggest improvement area: ${topImprovement}`}
-              InsightIcon={totalScore >= 80 ? ShieldCheck : ShieldAlert}
-              rawValue={totalScore}
-              isCurrency={false}
-              valueSuffix="/100"
-              shareText={`I checked my insurance policy health score on Poddar Wealth: Score ${totalScore}/100 (${grade}). Try it: poddarwealth.com/calculators/policy-health`}
-              celebrationText={totalScore >= 80 ? (lang === 'hi' ? '🏆 शीर्ष 20% — आप अधिकांश से बेहतर कर रहे हैं!' : "🏆 Top 20% — you're doing better than most!") : totalScore < 50 ? (lang === 'hi' ? '📈 अच्छी शुरुआत — छोटे बदलाव बड़ा अंतर लाते हैं' : "📈 Good start — small improvements make a big difference") : undefined}
-              CelebrationIcon={totalScore >= 80 ? Award : TrendingUp}
-            >
-              {/* Progress bars inside the result card */}
-              <div className="mt-4 space-y-3 p-4 rounded-xl bg-white/70 border border-gray-200/50">
+          <ResultPanel
+            value={`${grade} (${totalScore}/100)`}
+            rawValue={totalScore}
+            isCurrency={false}
+            valueSuffix="/100"
+            label="Portfolio Health Score"
+            contextText={`Income: ₹${annualIncome.toLocaleString('en-IN')}/yr · Policies: ${policiesCount} · Age: ${age}`}
+            humanLineText={`Grade: ${grade} — ${totalScore >= 80 ? 'Good coverage foundation!' : 'Portfolio needs improvement!'}`}
+            HumanLineIcon={Award}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`Your biggest improvement area: ${topImprovement}`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="health"
+            inputs={{ annualIncome, totalCover, hasHealth, hasTerm, policiesCount, premiumAmount, age, dependents, policyYear }}
+            whatsappMessage={msg}
+          >
+            {/* Audited progress dimensions visible when unlocked */}
+            {isUnlocked && (
+              <div className="mt-4 space-y-3.5 p-4 rounded-xl bg-white border border-gray-100 text-xs text-gray-800 animate-fadeIn">
+                <div className="font-semibold text-gray-900 border-b border-gray-50 pb-1.5 text-xs">
+                  Detailed Dimension Scores:
+                </div>
+                
                 <div>
-                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                  <div className="flex justify-between text-xs font-medium text-gray-700 mb-1">
                     <span>Coverage Adequacy</span>
                     <span>{coverageScore}/35</span>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${coverageScore >= 25 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      className={`h-full rounded-full ${coverageScore >= 25 ? 'bg-emerald-600' : 'bg-amber-500'}`}
                       style={{ width: `${(coverageScore / 35) * 100}%` }}
                     />
                   </div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{coverageComment}</div>
+                  <div className="text-[10px] text-gray-500 mt-1 leading-relaxed">{coverageComment}</div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                  <div className="flex justify-between text-xs font-medium text-gray-700 mb-1">
                     <span>Premium Affordability</span>
                     <span>{affordabilityScore}/20</span>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${affordabilityScore >= 15 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      className={`h-full rounded-full ${affordabilityScore >= 15 ? 'bg-emerald-600' : 'bg-amber-500'}`}
                       style={{ width: `${(affordabilityScore / 20) * 100}%` }}
                     />
                   </div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{affordabilityComment}</div>
+                  <div className="text-[10px] text-gray-500 mt-1 leading-relaxed">{affordabilityComment}</div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                  <div className="flex justify-between text-xs font-medium text-gray-700 mb-1">
                     <span>Policy Maturity Progress</span>
                     <span>{maturityScore}/15</span>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${maturityScore >= 10 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      className={`h-full rounded-full ${maturityScore >= 10 ? 'bg-emerald-600' : 'bg-amber-500'}`}
                       style={{ width: `${(maturityScore / 15) * 100}%` }}
                     />
                   </div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{maturityComment}</div>
+                  <div className="text-[10px] text-gray-500 mt-1 leading-relaxed">{maturityComment}</div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                  <div className="flex justify-between text-xs font-medium text-gray-700 mb-1">
                     <span>Protection Mix</span>
                     <span>{protectionScore}/20</span>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${protectionScore === 20 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      className={`h-full rounded-full ${protectionScore === 20 ? 'bg-emerald-600' : 'bg-amber-500'}`}
                       style={{ width: `${(protectionScore / 20) * 100}%` }}
                     />
                   </div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{protectionComment}</div>
+                  <div className="text-[10px] text-gray-500 mt-1 leading-relaxed">{protectionComment}</div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
+                  <div className="flex justify-between text-xs font-medium text-gray-700 mb-1">
                     <span>Dependent Coverage</span>
                     <span>{dependentScore}/10</span>
                   </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${dependentScore >= 7 ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                      className={`h-full rounded-full ${dependentScore >= 7 ? 'bg-emerald-600' : 'bg-amber-500'}`}
                       style={{ width: `${(dependentScore / 10) * 100}%` }}
                     />
                   </div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{dependentComment}</div>
+                  <div className="text-[10px] text-gray-500 mt-1 leading-relaxed">{dependentComment}</div>
                 </div>
 
-                {/* PDF Download Action Button */}
+                {/* Report Download PDF button */}
                 <button
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="w-full flex items-center justify-center gap-1.5 h-10 border border-blue-200 hover:border-blue-300 text-blue-600 bg-blue-50/50 hover:bg-blue-50 text-xs font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50 mt-3"
+                  className="w-full flex items-center justify-center gap-1.5 h-10 border border-blue-200 hover:border-blue-300 text-blue-600 bg-blue-50/50 hover:bg-blue-50 text-[11px] font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50 mt-3"
                 >
-                  <Download className="w-4 h-4" />
-                  {downloading ? 'Downloading...' : 'Download Full Report (PDF)'}
+                  <Download className="w-3.5 h-3.5" />
+                  {downloading ? 'Generating PDF...' : 'Download Full PDF Report'}
                 </button>
               </div>
-            </ResultCard>
-
-            <LeadCapture
-              calculatorId="policy-health"
-              inputs={{ annualIncome, totalCover, hasHealth, hasTerm, policiesCount, premiumAmount, age, dependents, policyYear }}
-              result={{ score: totalScore, grade }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+            )}
+          </ResultPanel>
         )
       }
       resultRef={resultRef}
@@ -547,7 +570,7 @@ export default function PolicyHealthCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <PolicyHealthCalcContent />

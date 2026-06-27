@@ -1,17 +1,15 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { AlertTriangle, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, MessageCircle, Share2, TrendingUp, ShieldCheck } from 'lucide-react'
 import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -60,6 +58,7 @@ function getGsvFactor(yearsPaid: number): number {
 
 function SurrenderCalcContent() {
   const searchParams = useSearchParams()
+  const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
@@ -82,6 +81,7 @@ function SurrenderCalcContent() {
   const [surrenderValue, setSurrenderValue] = useState<number>(0)
   const [lossAmount, setLossAmount] = useState<number>(0)
   const [lossPercent, setLossPercent] = useState<number>(0)
+  const [isUnlocked, setIsUnlocked] = useState(false)
   
   // Alternatives inline calculations
   const [loanAmount, setLoanAmount] = useState<number>(0)
@@ -90,7 +90,6 @@ function SurrenderCalcContent() {
 
   // Parse URL query params & session storage pre-fill
   useEffect(() => {
-    const qAge = searchParams.get('age')
     const qSa = searchParams.get('sa')
     const qTerm = searchParams.get('term')
 
@@ -101,18 +100,22 @@ function SurrenderCalcContent() {
     const sessionInputs = getSharedInputs()
     if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
     if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
+
+    // Check if session has phone auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const selectedPlan = PLANS.find(p => p.planNo === planNo)
 
   const handleCalculate = () => {
-    // 1. Determine annual premium
     let annualPremium = 0
     if (annualPremiumInput && !isNaN(Number(annualPremiumInput)) && Number(annualPremiumInput) > 0) {
       annualPremium = Number(annualPremiumInput)
     } else {
       if (selectedPlan) {
-        // Assume age 30 for baseline rate lookup if not in query
         const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
         const ppt = getPPT(selectedPlan, term, baselineAge)
         const premRes = calculatePremium({ planNo, sa, age: baselineAge, term, ppt, mode: 'yearly' })
@@ -125,23 +128,19 @@ function SurrenderCalcContent() {
     const totalPaidSum = annualPremium * yearsPaid
     setTotalPaid(totalPaidSum)
 
-    // 2. GSV calculation: GSV = total_premiums_paid * GSV_factor
     const gsvFactor = getGsvFactor(yearsPaid)
-    // GSV excludes first year premium in traditional calculations
     const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
     const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
     setGsvVal(gsv)
 
-    // 3. SSV calculation: SSV = (Paid-up SA + Accrued Bonus) * SSV_factor
     const paidUpSA = Math.round(sa * (yearsPaid / term))
     const accruedBonus = Math.round((bonusRate * sa / 1000) * yearsPaid)
     
     const remainingTerm = term - yearsPaid
-    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035)) // LIC SSV factor proxy
+    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035))
     const ssv = Math.round((paidUpSA + accruedBonus) * ssvFactor)
     setSsvVal(ssv)
 
-    // 4. Max Surrender Value
     const finalSurrender = Math.max(gsv, ssv)
     setSurrenderValue(finalSurrender)
 
@@ -149,7 +148,6 @@ function SurrenderCalcContent() {
     setLossAmount(loss)
     setLossPercent(Math.round((loss / totalPaidSum) * 100))
 
-    // Alternatives Calculated Inline
     setLoanAmount(Math.round(finalSurrender * 0.90))
     setReducedSA(paidUpSA)
     setReducedMaturity(paidUpSA + accruedBonus)
@@ -177,24 +175,66 @@ function SurrenderCalcContent() {
     setHasCalculated(false)
   }
 
-  const breakdownRows = hasCalculated ? [
+  const visibleRows = [
     { label: 'Total Premiums Paid', value: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Paid Years / Policy Term', value: `${yearsPaid} / ${term} Years` },
+    { label: 'Estimated Surrender Payout', value: `₹${surrenderValue.toLocaleString('en-IN')}`, isTotal: true },
+  ]
+
+  const gatedRows = [
     { label: 'Guaranteed Surrender Value (GSV)', value: `₹${gsvVal.toLocaleString('en-IN')}` },
     { label: 'Special Surrender Value (SSV)', value: `₹${ssvVal.toLocaleString('en-IN')}` },
-    { label: 'Final Cash Surrender Value', value: `₹${surrenderValue.toLocaleString('en-IN')}`, isTotal: true },
-    { label: 'Net Loss on Surrender', value: `₹${lossAmount.toLocaleString('en-IN')} (${lossPercent}%)`, isTotal: true }
-  ] : []
-
-  const bars = hasCalculated ? [
-    { label: 'Total premiums paid', value: totalPaid, max: totalPaid, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
-    { label: 'Surrender value cash payout', value: surrenderValue, max: totalPaid, colorClass: 'bg-amber-400', displayValue: `₹${Math.round(surrenderValue).toLocaleString('en-IN')}` }
-  ] : []
+    { label: 'Net Loss on Surrender', value: `₹${lossAmount.toLocaleString('en-IN')} (${lossPercent}%)`, isTotal: true },
+    { label: 'Available Policy Loan (90%)', value: `₹${loanAmount.toLocaleString('en-IN')}` },
+    { label: 'Reduced Paid-up sum assured', value: `₹${reducedSA.toLocaleString('en-IN')}` },
+  ]
 
   const plan = PLANS.find(p => p.planNo === planNo)
   const msg = hasCalculated ? `Namaste Ajay ji, I checked the surrender value of my LIC policy.
-₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name} (Plan ${planNo}), paid for ${yearsPaid}/${term}yr. Total paid ₹${Math.round(totalPaid).toLocaleString('en-IN')} → surrender cash ₹${Math.round(surrenderValue).toLocaleString('en-IN')}.
+Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
+Plan: ${plan?.name} (Plan ${planNo})
+Years paid: ${yearsPaid}/${term}
+Total paid: ₹${Math.round(totalPaid).toLocaleString('en-IN')}
+Surrender value: ₹${Math.round(surrenderValue).toLocaleString('en-IN')}
+Loss: ₹${Math.round(lossAmount).toLocaleString('en-IN')}
 Should I surrender or take a policy loan?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+
+  const crossLinks = [
+    {
+      label: 'Check Policy Loan alternatives →',
+      href: `/calculators/loan?sa=${sa}&term=${term}`,
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss options with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this calculation →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Surrender Value Calculator Result',
+            text: `Estimated surrender value of my LIC policy: ₹${surrenderValue.toLocaleString('en-IN')} (loss: ₹${lossAmount.toLocaleString('en-IN')}).`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Estimated surrender value of my LIC policy: ₹${surrenderValue.toLocaleString('en-IN')} (loss: ₹${lossAmount.toLocaleString('en-IN')}). Try it: ${window.location.href}`)
+          alert('Copied link!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ]
+
+  const bars = [
+    { label: 'Total premiums paid', value: totalPaid, max: totalPaid, colorClass: 'bg-blue-500', displayValue: `₹${Math.round(totalPaid).toLocaleString('en-IN')}` },
+    { label: 'Surrender value cash payout', value: surrenderValue, max: totalPaid, colorClass: 'bg-amber-400', displayValue: `₹${Math.round(surrenderValue).toLocaleString('en-IN')}` }
+  ]
 
   return (
     <CalculatorShell
@@ -210,11 +250,11 @@ Should I surrender or take a policy loan?` : ''
       formFields={
         <>
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Select LIC Plan</label>
             <select
               value={planNo}
               onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
               {majorPlans.map(plan => (
                 <option key={plan.planNo} value={plan.planNo}>
@@ -251,13 +291,13 @@ Should I surrender or take a policy loan?` : ''
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Annual Premium Paid (Optional)</label>
+            <label className="block text-xs font-semibold text-gray-700 mb-1.5">Annual Premium Paid (Optional)</label>
             <input
               type="number"
               value={annualPremiumInput}
               onChange={(e) => { setAnnualPremiumInput(e.target.value); setHasCalculated(false) }}
               placeholder="Will auto-estimate if left blank"
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900"
             />
           </div>
 
@@ -265,13 +305,13 @@ Should I surrender or take a policy loan?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <SliderField
                   label="Average Annual Bonus Rate"
                   value={bonusRate}
@@ -287,60 +327,75 @@ Should I surrender or take a policy loan?` : ''
       }
       resultPanel={
         hasCalculated && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${surrenderValue.toLocaleString('en-IN')}`}
-              label="Estimated Cash Surrender Value"
-              subtext={`You paid ₹${Math.round(totalPaid).toLocaleString('en-IN')}. Net loss of ₹${lossAmount.toLocaleString('en-IN')} (${lossPercent}%)`}
-              type="caution"
-              insightText={`Surrendering costs ₹${lossAmount.toLocaleString('en-IN')}. A policy loan gives ₹${loanAmount.toLocaleString('en-IN')} NOW while keeping your full ₹${sa.toLocaleString('en-IN')} cover. Better deal.`}
-              InsightIcon={AlertTriangle}
-              rawValue={surrenderValue}
-              shareText={`I calculated my LIC policy surrender value on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${plan?.name}, ${yearsPaid}/${term}yr paid → surrender cash value ₹${surrenderValue.toLocaleString('en-IN')} (loss: ₹${lossAmount.toLocaleString('en-IN')}). Try it: poddarwealth.com/calculators/surrender-value`}
-            >
-              {/* Calculated alternatives display panel */}
-              <div className="mt-4 p-4 rounded-xl bg-white/70 border border-amber-200/50 text-xs text-gray-800 space-y-3">
-                <div className="font-semibold text-gray-900 border-b border-amber-200/40 pb-1 text-sm">
-                  Before you surrender, compare:
-                </div>
-                <div>
-                  <div className="font-bold flex items-center gap-1">
-                    <span>💰 Policy Loan:</span>
-                    <span className="text-emerald-700">Get ₹{loanAmount.toLocaleString('en-IN')} now</span>
+          <ResultPanel
+            value={`₹${surrenderValue.toLocaleString('en-IN')}`}
+            rawValue={surrenderValue}
+            label="Estimated Surrender Value"
+            contextText={`${plan?.name} (Plan ${planNo}) · ₹${(sa / 100000).toFixed(0)}L SA · Paid ${yearsPaid}/${term} yrs`}
+            humanLineText={`You paid ₹${Math.round(totalPaid).toLocaleString('en-IN')} → Payout: ₹${surrenderValue.toLocaleString('en-IN')}`}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`Surrendering costs ₹${lossAmount.toLocaleString('en-IN')} in lost premiums. A policy loan gives ₹${loanAmount.toLocaleString('en-IN')} cash immediately while keeping your full ₹${sa.toLocaleString('en-IN')} life cover.`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="surrender"
+            inputs={{ planNo, sa, term, yearsPaid, annualPremiumInput, bonusRate }}
+            whatsappMessage={msg}
+          >
+            {/* CSS-based bars */}
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
+              <h4 className="text-[10px] uppercase tracking-wider text-gray-400 font-bold select-none">
+                Surrender Value Payout vs Paid Premiums
+              </h4>
+              {bars.map((bar, idx) => {
+                const pct = Math.max(5, (bar.value / bar.max) * 100)
+                return (
+                  <div key={idx} className="space-y-1 animate-fadeIn">
+                    <div className="flex justify-between items-center text-[10px] text-gray-500">
+                      <span>{bar.label}</span>
+                      <span className="font-semibold text-gray-950">{bar.displayValue}</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${
+                          bar.colorClass === 'bg-blue-500' ? 'bg-[#0f1225]' : 'bg-[#d97706]'
+                        }`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="text-gray-500 mt-0.5">Keep your ₹{sa.toLocaleString('en-IN')} cover + full maturity benefits.</div>
+                )
+              })}
+            </div>
+
+            {/* Unlocked alternatives display block */}
+            {isUnlocked && (
+              <div className="mt-4 p-4 rounded-xl bg-amber-50/30 border border-amber-200/50 text-xs text-gray-800 space-y-3 animate-fadeIn">
+                <div className="font-semibold text-gray-900 border-b border-amber-200/30 pb-1 text-xs">
+                  Compare surrendering with alternative options:
                 </div>
                 <div>
                   <div className="font-bold flex items-center gap-1">
-                    <span>📋 Reduced Paid-up:</span>
+                    <span>💰 Option A — Policy Loan:</span>
+                    <span className="text-emerald-700">Get ₹{loanAmount.toLocaleString('en-IN')} cash now</span>
+                  </div>
+                  <div className="text-gray-500 mt-0.5">Retain your full ₹{sa.toLocaleString('en-IN')} life coverage and maturity benefits.</div>
+                </div>
+                <div>
+                  <div className="font-bold flex items-center gap-1">
+                    <span>📋 Option B — Reduced Paid-up:</span>
                     <span className="text-blue-700">Stop premiums, keep ₹{reducedSA.toLocaleString('en-IN')} cover</span>
                   </div>
-                  <div className="text-gray-500 mt-0.5">Maturity value is preserved at a reduced ₹{reducedMaturity.toLocaleString('en-IN')}.</div>
+                  <div className="text-gray-500 mt-0.5">Policy maturity value is preserved at a lower ₹{reducedMaturity.toLocaleString('en-IN')}.</div>
                 </div>
-                <div className="pt-1.5 border-t border-amber-200/40 text-[10px] text-gray-500 flex items-center gap-1">
+                <div className="pt-1.5 border-t border-amber-200/30 text-[10px] text-gray-400 flex items-center gap-1 font-medium">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                  <span>Talk to Ajay ji before making any decision.</span>
+                  <span>Talk to Ajay ji before surrendering or stopping payments.</span>
                 </div>
               </div>
-            </ResultCard>
-
-            <LeadCapture
-              calculatorId="surrender-value"
-              inputs={{ planNo, sa, term, yearsPaid, annualPremiumInput, bonusRate }}
-              result={{ surrenderValue, loss: lossAmount, loanAlternative: loanAmount }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} bars={bars} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+            )}
+          </ResultPanel>
         )
       }
       resultRef={resultRef}
@@ -352,7 +407,7 @@ export default function SurrenderValueCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <SurrenderCalcContent />

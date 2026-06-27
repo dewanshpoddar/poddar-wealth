@@ -1,17 +1,15 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { AlertTriangle, ShieldCheck, Shield, Coffee, Target } from 'lucide-react'
+import { Coffee, TrendingUp, MessageCircle, Share2, Shield } from 'lucide-react'
 import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
-import ResultCard from '@/components/calculators/ResultCard'
-import ResultBreakdown from '@/components/calculators/ResultBreakdown'
-import ActionBar from '@/components/calculators/ActionBar'
-import LeadCapture from '@/components/calculators/LeadCapture'
-import { getSharedInputs, updateSession, addResult } from '@/lib/calculator-session'
+import ResultPanel from '@/components/calculators/ResultPanel'
+import { getSharedInputs, updateSession, addResult, getLeadInfo } from '@/lib/calculator-session'
 import { useLang } from '@/lib/LangContext'
+import { ADVISOR_PHONE } from '@/lib/constants'
 
 const saOptions = [
   { label: '₹3L', value: 300000 },
@@ -65,7 +63,7 @@ function PremiumCalcContent() {
   const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
-  // Filter out discontinuted/withdrawn plans
+  // Filter out discontinued/withdrawn plans
   const activePlans = PLANS.filter(p => p.status !== 'withdrawn')
 
   const [planNo, setPlanNo] = useState<number>(915)
@@ -79,9 +77,10 @@ function PremiumCalcContent() {
   const [gender, setGender] = useState<'male'|'female'>('male')
   const [smoker, setSmoker] = useState<boolean>(false)
 
-  // Result state
+  // Calculation State
   const [hasCalculated, setHasCalculated] = useState(false)
   const [premResult, setPremResult] = useState<any | null>(null)
+  const [isUnlocked, setIsUnlocked] = useState(false)
 
   // Parse URL query params & session storage pre-fill
   useEffect(() => {
@@ -98,6 +97,12 @@ function PremiumCalcContent() {
     if (!qAge && sessionInputs.age) setAge(sessionInputs.age)
     if (!qSa && sessionInputs.sumAssured) setSa(sessionInputs.sumAssured)
     if (!qTerm && sessionInputs.policyTerm) setTerm(sessionInputs.policyTerm)
+
+    // Check if phone exists in session for auto-unlock
+    const lead = getLeadInfo()
+    if (lead && lead.phone) {
+      setIsUnlocked(true)
+    }
   }, [searchParams])
 
   const selectedPlan = PLANS.find(p => p.planNo === planNo)
@@ -122,21 +127,9 @@ function PremiumCalcContent() {
     setPremResult(res)
     setHasCalculated(true)
 
-    // Save to session
+    // Save inputs/results to session
     updateSession({ age, sumAssured: sa, policyTerm: term })
     addResult('premium', { amount: res ? res.yearlyYear1 : sa * 0.05, plan: selectedPlan.name, frequency: mode })
-  }
-
-  const handleReset = () => {
-    setPlanNo(915)
-    setSa(1000000)
-    setAge(30)
-    setTerm(20)
-    setMode('yearly')
-    setGender('male')
-    setSmoker(false)
-    setPremResult(null)
-    setHasCalculated(false)
   }
 
   // Pre-calculated values for UI display
@@ -160,18 +153,65 @@ function PremiumCalcContent() {
 
   const dailyEquivalent = premResult ? Math.round(premResult.yearlyYear1 / 365) : 0
 
-  const breakdownRows = premResult ? [
+  const visibleRows = premResult ? [
+    { label: 'Sum Assured', value: `₹${Math.round(sa).toLocaleString('en-IN')}` },
+    { label: 'Policy Term', value: `${term} Years` },
+    { label: 'Premium Mode', value: mode.charAt(0).toUpperCase() + mode.slice(1) },
     { label: 'Base Tabular Premium', value: `₹${Math.round(premResult.netPremium).toLocaleString('en-IN')}` },
     { label: 'GST (First Year)', value: `₹${Math.round(premResult.gstYear1).toLocaleString('en-IN')}` },
     { label: 'First Year Premium', value: `₹${Math.round(premResult.yearlyYear1).toLocaleString('en-IN')}`, isTotal: true },
+  ] : []
+
+  const gatedRows = premResult ? [
     { label: 'Subsequent Years Premium (incl. GST)', value: `₹${Math.round(premResult.yearlyYear2plus).toLocaleString('en-IN')}` },
     { label: 'Total Premiums Paid Over Term', value: `₹${Math.round(premResult.totalPaid).toLocaleString('en-IN')}`, isTotal: true },
   ] : []
 
-  const msg = premResult && selectedPlan ? `Namaste Ajay ji, I used your premium calculator.
-₹${Math.round(sa).toLocaleString('en-IN')} cover, ${selectedPlan.name} (Plan ${planNo}), age ${age}, term ${term}yr → ₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel}.
-Can you suggest the best plan?` : ''
-  const whatsappUrl = `https://wa.me/919415313434?text=${encodeURIComponent(msg)}`
+  const msg = premResult && selectedPlan 
+    ? `Namaste Ajay ji, I calculated my LIC premium.
+Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
+Plan: ${selectedPlan.name} (Plan ${planNo})
+Age: ${age}
+Term: ${term} Years
+Premium: ₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel} (₹${dailyEquivalent}/day).
+Can you suggest the best configuration?` 
+    : ''
+
+  const crossLinks = premResult ? [
+    {
+      label: 'See what this grows to at maturity →',
+      href: `/calculators/maturity?age=${age}&sa=${sa}&term=${term}`,
+      colorClass: 'text-[#d97706] hover:text-amber-700',
+      icon: TrendingUp
+    },
+    {
+      label: 'Discuss options with Ajay ji →',
+      href: `https://wa.me/91${ADVISOR_PHONE}?text=${encodeURIComponent(msg)}`,
+      colorClass: 'text-[#059669] hover:text-emerald-700',
+      icon: MessageCircle
+    },
+    {
+      label: 'Share this result →',
+      onClick: () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'LIC Premium Calculator Result',
+            text: `Calculated my LIC premium: ₹${Math.round(sa).toLocaleString('en-IN')} cover, term ${term}yr → ₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel}.`,
+            url: window.location.href
+          }).catch(console.error)
+        } else {
+          navigator.clipboard.writeText(`Calculated my LIC premium: ₹${Math.round(sa).toLocaleString('en-IN')} cover, term ${term}yr → ₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel}. Try it here: ${window.location.href}`)
+          alert('Link copied to clipboard!')
+        }
+      },
+      colorClass: 'text-gray-500 hover:text-gray-700',
+      icon: Share2
+    }
+  ] : []
+
+  const formattedValStr = premResult 
+    ? `₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel}` 
+    : ''
 
   return (
     <CalculatorShell
@@ -188,11 +228,11 @@ Can you suggest the best plan?` : ''
       formFields={
         <>
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1.5 block">Select LIC Plan</label>
+            <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Select LIC Plan</label>
             <select
               value={planNo}
               onChange={(e) => handlePlanChange(Number(e.target.value))}
-              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-base text-gray-900 bg-white"
+              className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
               {activePlans.map(plan => (
                 <option key={plan.planNo} value={plan.planNo}>
@@ -232,13 +272,13 @@ Can you suggest the best plan?` : ''
             <button
               type="button"
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-sm text-blue-600 font-semibold cursor-pointer"
+              className="text-xs text-blue-600 font-semibold cursor-pointer select-none"
             >
               {showAdvanced ? 'Advanced options ▴' : 'Advanced options ▾'}
             </button>
 
             {showAdvanced && (
-              <div className="mt-4 space-y-5 border-t border-gray-100 pt-4 animate-fadeIn">
+              <div className="mt-4 space-y-4 border-t border-gray-100 pt-4 animate-fadeIn">
                 <QuickPick
                   label="Premium Mode"
                   value={mode}
@@ -254,7 +294,7 @@ Can you suggest the best plan?` : ''
                 />
 
                 <QuickPick
-                  label="Smoker"
+                  label="Smoker Status"
                   value={smoker}
                   onChange={(val) => { setSmoker(val as any); setHasCalculated(false) }}
                   options={smokerOptions}
@@ -266,40 +306,24 @@ Can you suggest the best plan?` : ''
       }
       resultPanel={
         premResult && (
-          <div className="space-y-4">
-            <ResultCard
-              value={`₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel}`}
-              label="Estimated premium"
-              subtext={`₹${dailyEquivalent} per day — less than your chai`}
-              type="neutral"
-              inlineLinkText="See what this grows to → Maturity Calculator"
-              inlineLinkHref={`/calculators/maturity?age=${age}&sa=${sa}&term=${term}`}
-              insightText={`For ₹${dailyEquivalent}/day, your family gets ₹${Math.round(sa).toLocaleString('en-IN')} protection plus maturity benefits. Talk to Ajay ji to finalize →`}
-              InsightIcon={Shield}
-              rawValue={displayAmount}
-              valueSuffix={`/${modeLabel}`}
-              shareText={`I calculated my LIC premium on Poddar Wealth: ₹${Math.round(sa).toLocaleString('en-IN')} cover, ${selectedPlan?.name}, ${term}yr → ₹${Math.round(displayAmount).toLocaleString('en-IN')}/${modeLabel} (₹${dailyEquivalent}/day). Try it: poddarwealth.com/calculators/premium`}
-              celebrationText={dailyEquivalent < 50 ? (lang === 'hi' ? '☕ आपके दैनिक चाय खर्च से भी कम!' : '☕ Less than your daily chai!') : dailyEquivalent < 100 ? (lang === 'hi' ? '🎯 यह बहुत ही किफायती है' : "🎯 That's very affordable") : undefined}
-              CelebrationIcon={dailyEquivalent < 50 ? Coffee : Target}
-            />
-
-            <LeadCapture
-              calculatorId="premium"
-              inputs={{ planNo, sa, age, term, mode, gender, smoker }}
-              result={{ premium: displayAmount }}
-              hasCalculated={hasCalculated}
-              whatsappMessage={msg}
-              onReset={handleReset}
-            />
-
-            <ResultBreakdown rows={breakdownRows} />
-
-            <ActionBar
-              whatsappUrl={whatsappUrl}
-              onReset={handleReset}
-              resultRef={resultRef}
-            />
-          </div>
+          <ResultPanel
+            value={formattedValStr}
+            rawValue={displayAmount}
+            valueSuffix={`/${modeLabel}`}
+            label="Estimated premium"
+            contextText={`${selectedPlan?.name} (Plan ${planNo}) · ₹${(sa / 100000).toFixed(0)}L SA · ${term}yr term`}
+            humanLineText={`₹${dailyEquivalent}/day — less than your daily chai`}
+            HumanLineIcon={Coffee}
+            visibleRows={visibleRows}
+            gatedRows={gatedRows}
+            insightText={`For ₹${dailyEquivalent}/day, you protect your family with ₹${Math.round(sa).toLocaleString('en-IN')} coverage plus receive standard maturity returns.`}
+            crossLinks={crossLinks}
+            isUnlocked={isUnlocked}
+            onUnlock={(ph) => setIsUnlocked(true)}
+            calculatorName="premium"
+            inputs={{ planNo, sa, age, term, mode, gender, smoker }}
+            whatsappMessage={msg}
+          />
         )
       }
       resultRef={resultRef}
@@ -311,7 +335,7 @@ export default function PremiumCalculatorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0f1225]"></div>
       </div>
     }>
       <PremiumCalcContent />

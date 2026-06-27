@@ -46,7 +46,7 @@ export default function SliderField({
           {/* Custom track & fill */}
           <div className="absolute left-0 right-0 h-1.5 rounded-full bg-gray-200 pointer-events-none">
             <div
-              className="h-full rounded-full bg-blue-500"
+              className="h-full rounded-full bg-[#0f1225]"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -64,7 +64,7 @@ export default function SliderField({
 
           {/* Visual thumb overlaying the real input position */}
           <div
-            className="absolute w-5 h-5 rounded-full bg-white border-2 border-blue-500 shadow-sm -translate-x-1/2 pointer-events-none"
+            className="absolute w-5 h-5 rounded-full bg-white border-2 border-[#0f1225] shadow-sm -translate-x-1/2 pointer-events-none"
             style={{ left: `${percentage}%` }}
           />
         </div>
