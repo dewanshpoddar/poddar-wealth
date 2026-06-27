@@ -223,114 +223,110 @@ export default function CalculatorShell({
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* ── DYNAMIC HEADER CARD BANNER (FLOAT ON GRAY BODY) ── */}
-      <div className="max-w-6xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
-        <header 
-          className="relative text-white overflow-hidden rounded-2xl pb-6 transition-all duration-500 bg-cover bg-center bg-no-repeat shadow-md border border-white/[0.08]"
-          style={{
-            backgroundImage: `linear-gradient(135deg, #0f1225 25%, rgba(15, 18, 37, 0.75) 70%, rgba(15, 18, 37, 0.3) 100%), url(${bgImage})`
-          }}
-        >
-          {/* Style injection for animations and custom golden scrollbars */}
-          <style dangerouslySetInnerHTML={{ __html: `
-            @keyframes bgZoom {
-              from {
-                opacity: 0.15;
-                transform: scale(1.04);
-              }
-              to {
-                opacity: 1;
-                transform: scale(1);
-              }
+      {/* ── DYNAMIC FULL-WIDTH DARK HEADER SECTION ── */}
+      <header 
+        className="relative text-white overflow-hidden pb-1 transition-all duration-500 bg-cover bg-no-repeat animate-bgZoom"
+        style={{
+          backgroundImage: `linear-gradient(to right, #0f1225 25%, rgba(15, 18, 37, 0.45) 60%, rgba(15, 18, 37, 0.12) 100%), url(${bgImage})`,
+          backgroundPosition: '85% 35%' // Positions the focus point of the WebP family image in the visible region
+        }}
+      >
+        {/* Style injection for animations and custom golden scrollbars */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes bgZoom {
+            from {
+              opacity: 0.15;
+              transform: scale(1.04);
             }
-            .animate-bgZoom {
-              animation: bgZoom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            to {
+              opacity: 1;
+              transform: scale(1);
             }
-            .scrollbar-gold::-webkit-scrollbar {
-              height: 3px;
-            }
-            .scrollbar-gold::-webkit-scrollbar-track {
-              background: rgba(255, 255, 255, 0.02);
-              border-radius: 4px;
-            }
-            .scrollbar-gold::-webkit-scrollbar-thumb {
-              background: rgba(217, 119, 6, 0.4);
-              border-radius: 4px;
-            }
-            .scrollbar-gold::-webkit-scrollbar-thumb:hover {
-              background: rgba(217, 119, 6, 0.7);
-            }
-          ` }} />
+          }
+          .animate-bgZoom {
+            animation: bgZoom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          .scrollbar-gold::-webkit-scrollbar {
+            height: 3px;
+          }
+          .scrollbar-gold::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+          }
+          .scrollbar-gold::-webkit-scrollbar-thumb {
+            background: rgba(217, 119, 6, 0.45);
+            border-radius: 4px;
+          }
+          .scrollbar-gold::-webkit-scrollbar-thumb:hover {
+            background: rgba(217, 119, 6, 0.7);
+          }
+          .tab-glow {
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.15);
+          }
+        ` }} />
 
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 pt-3">
-            {/* Brand Bar */}
-            <div className="flex justify-between items-center py-3.5 border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-[#d97706] rounded-lg flex items-center justify-center font-bold text-sm tracking-tight text-white select-none">
-                  PW
-                </div>
-                <span className="text-[10px] tracking-[0.1em] text-white/30 font-semibold uppercase">
-                  Tools & Calculators
-                </span>
-              </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 pt-3">
+          {/* Top Bar: Title Sub & Trust Counter */}
+          <div className="flex justify-between items-center py-3 border-b border-white/5">
+            <span className="text-[10px] tracking-[0.15em] text-white/30 font-bold uppercase">
+              Tools & Calculators
+            </span>
 
-              {/* Avatar stack + counter */}
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-1.5 select-none">
-                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
-                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
-                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
-                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-purple-500 to-purple-300" />
-                </div>
-                <span className="text-xs text-white/50 font-medium">
-                  {counter.toLocaleString('en-IN')} used this month
-                </span>
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-1.5 select-none">
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
+                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
               </div>
+              <span className="text-xs text-white/50 font-medium">
+                {counter.toLocaleString('en-IN')} used this month
+              </span>
+            </div>
+          </div>
+
+          {/* Hero Row: Split into Title & Glass Badges on Desktop */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 py-2">
+            {/* Left side: title and word swapper */}
+            <div className="flex-1">
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
+                Know your numbers. Then{' '}
+                <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                  {WORDS[wordIdx]}
+                </span>
+                .
+              </h2>
             </div>
 
-            {/* Hero Row: Split into Title & Glass Badges on Desktop */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 py-2">
-              {/* Left side: title and word swapper */}
-              <div className="flex-1">
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
+            {/* Right side: Glassmorphic stats badges (stacked vertically to prevent wrap-breaking) */}
+            <div className="hidden lg:flex flex-col gap-2.5 shrink-0 w-72">
+              <div className="bg-white/[0.06] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.1] transition-all duration-300 hover:scale-[1.02]">
+                <div className="p-2 rounded-lg bg-amber-500/15 text-amber-400">
+                  <ShieldCheck size={18} />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
-                  Know your numbers. Then{' '}
-                  <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-                    {WORDS[wordIdx]}
-                  </span>
-                  .
-                </h2>
+                <div>
+                  <div className="text-[13px] font-bold text-white tracking-tight">15+ Free Tools</div>
+                  <div className="text-[10px] text-white/40">Secure & Government backed</div>
+                </div>
               </div>
 
-              {/* Right side: Glassmorphic stats badges */}
-              <div className="hidden lg:flex flex-row gap-3.5 shrink-0 max-w-md">
-                <div className="bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.08] transition-all duration-300 hover:scale-[1.02]">
-                  <div className="p-2 rounded-lg bg-amber-500/15 text-amber-400">
-                    <ShieldCheck size={18} />
-                  </div>
-                  <div>
-                    <div className="text-[13px] font-bold text-white tracking-tight">15+ Free Tools</div>
-                    <div className="text-[10px] text-white/40">Secure & Government backed</div>
-                  </div>
+              <div className="bg-white/[0.06] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.1] transition-all duration-300 hover:scale-[1.02]">
+                <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400">
+                  <Trophy size={18} />
                 </div>
-
-                <div className="bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.08] transition-all duration-300 hover:scale-[1.02]">
-                  <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400">
-                    <Trophy size={18} />
-                  </div>
-                  <div>
-                    <div className="text-[13px] font-bold text-white tracking-tight">31+ Yrs Trust</div>
-                    <div className="text-[10px] text-white/40">Million Dollar Round Table</div>
-                  </div>
+                <div>
+                  <div className="text-[13px] font-bold text-white tracking-tight">31+ Yrs Trust</div>
+                  <div className="text-[10px] text-white/40">Million Dollar Round Table</div>
                 </div>
               </div>
             </div>
+          </div>
 
           {/* Category Tabs */}
           <div className="flex border-b border-white/10 select-none overflow-x-auto scrollbar-gold pb-1.5">
@@ -341,10 +337,10 @@ export default function CalculatorShell({
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id as any)}
-                    className={`pb-3 text-[10px] tracking-wider font-semibold border-b transition-colors cursor-pointer uppercase ${
+                    className={`pb-2.5 pt-1 px-4 text-[10px] tracking-wider font-semibold border-b-2 transition-all duration-300 cursor-pointer uppercase ${
                       isActive
-                        ? 'text-amber-400 border-amber-400/80 font-bold'
-                        : 'text-white/25 border-transparent hover:text-white/50'
+                        ? 'text-amber-400 border-amber-400 font-bold tab-glow'
+                        : 'text-white/40 border-transparent hover:text-white/85 hover:border-white/10'
                     }`}
                   >
                     {getCategoryLabel(cat.id)}
@@ -354,8 +350,8 @@ export default function CalculatorShell({
             </nav>
           </div>
 
-          {/* Tool Tabs */}
-          <div className="flex gap-2 overflow-x-auto py-1 scrollbar-gold snap-x select-none pb-1.5">
+          {/* Tool Tabs pills (highly readable glass buttons) */}
+          <div className="flex gap-2.5 overflow-x-auto py-2.5 scrollbar-gold snap-x select-none pb-1.5">
             {TOOLS_BY_CATEGORY[activeCategory].map((tool) => {
               const isActive = tool.id === activeTabId
               const isPlaceholder = tool.isPlaceholder
@@ -363,7 +359,11 @@ export default function CalculatorShell({
               const content = (
                 <span className="flex items-center gap-1.5">
                   <span>{tool.label}</span>
-                  {tool.isHot && <span className="w-1 h-1 rounded-full bg-orange-500 animate-pulse" />}
+                  {tool.isHot && (
+                    <span className="bg-amber-500 text-[#0f1225] text-[8px] px-1 py-0.2 rounded-full font-bold ml-1 animate-pulse shrink-0">
+                      HOT
+                    </span>
+                  )}
                 </span>
               )
 
@@ -372,7 +372,7 @@ export default function CalculatorShell({
                   <button
                     key={tool.id}
                     onClick={() => handlePlaceholderClick(tool.label)}
-                    className="flex-shrink-0 px-3.5 py-1.5 rounded-xl border border-white/5 text-[11px] text-white/30 hover:text-white/50 cursor-pointer snap-start transition-colors"
+                    className="flex-shrink-0 px-4 py-2 rounded-xl border border-white/5 text-[11px] text-white/30 hover:text-white/50 cursor-pointer snap-start transition-colors bg-white/[0.02]"
                   >
                     {content}
                   </button>
@@ -383,10 +383,10 @@ export default function CalculatorShell({
                 <Link
                   key={tool.id}
                   href={`${tool.path}${queryString}`}
-                  className={`flex-shrink-0 px-3.5 py-1.5 rounded-xl text-[11px] font-medium border snap-start transition-all duration-200 ${
+                  className={`flex-shrink-0 px-4 py-2 rounded-xl text-[11px] font-medium border snap-start transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] ${
                     isActive
-                      ? 'bg-amber-500/10 border-amber-500/20 text-amber-400 font-semibold'
-                      : 'border-transparent text-white/40 hover:text-white/70'
+                      ? 'bg-amber-500 text-[#0f1225] border-amber-500 font-bold shadow-md shadow-amber-500/10'
+                      : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white hover:border-white/20'
                   }`}
                 >
                   {content}
@@ -396,10 +396,16 @@ export default function CalculatorShell({
           </div>
         </div>
       </header>
+
+      {/* SVG Wave separator with subpixel line bleed fixes */}
+      <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-1.5 select-none pointer-events-none">
+        <svg className="relative block w-full h-[24px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
+          <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" fill="#f9fafb"></path>
+        </svg>
       </div>
 
-      {/* ── LIGHT BODY CONTAINER ── */}
-      <main className="py-6 px-4 sm:px-6 lg:px-8">
+      {/* ── LIGHT BODY CONTAINER (bg-gray-50) ── */}
+      <main className="bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Social Proof centered line */}
           {socialProofText && (
