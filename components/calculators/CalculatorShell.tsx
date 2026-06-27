@@ -13,7 +13,9 @@ import {
   Users,
   Compass,
   CheckCircle,
-  FileText
+  FileText,
+  Trophy,
+  ShieldCheck
 } from 'lucide-react'
 
 import { useLang } from '@/lib/LangContext'
@@ -220,60 +222,118 @@ export default function CalculatorShell({
   const TabIcon = ICON_MAP[activeTabId as keyof typeof ICON_MAP] || Shield
 
   return (
-    <>
-      {/* ── DARK HEADER SECTION ── */}
-      <header 
-        className="relative text-white overflow-hidden pb-6 transition-all duration-500 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `linear-gradient(135deg, #0f1225 25%, rgba(15, 18, 37, 0.7) 70%, rgba(15, 18, 37, 0.3) 100%), url(${bgImage})`
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5">
-          {/* Brand Bar */}
-          <div className="flex justify-between items-center py-3.5 border-b border-white/5">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-[#d97706] rounded-lg flex items-center justify-center font-bold text-sm tracking-tight text-white select-none">
-                PW
+    <div className="bg-gray-50 min-h-screen">
+      {/* ── DYNAMIC HEADER CARD BANNER (FLOAT ON GRAY BODY) ── */}
+      <div className="max-w-6xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+        <header 
+          className="relative text-white overflow-hidden rounded-2xl pb-6 transition-all duration-500 bg-cover bg-center bg-no-repeat shadow-md border border-white/[0.08]"
+          style={{
+            backgroundImage: `linear-gradient(135deg, #0f1225 25%, rgba(15, 18, 37, 0.75) 70%, rgba(15, 18, 37, 0.3) 100%), url(${bgImage})`
+          }}
+        >
+          {/* Style injection for animations and custom golden scrollbars */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes bgZoom {
+              from {
+                opacity: 0.15;
+                transform: scale(1.04);
+              }
+              to {
+                opacity: 1;
+                transform: scale(1);
+              }
+            }
+            .animate-bgZoom {
+              animation: bgZoom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            .scrollbar-gold::-webkit-scrollbar {
+              height: 3px;
+            }
+            .scrollbar-gold::-webkit-scrollbar-track {
+              background: rgba(255, 255, 255, 0.02);
+              border-radius: 4px;
+            }
+            .scrollbar-gold::-webkit-scrollbar-thumb {
+              background: rgba(217, 119, 6, 0.4);
+              border-radius: 4px;
+            }
+            .scrollbar-gold::-webkit-scrollbar-thumb:hover {
+              background: rgba(217, 119, 6, 0.7);
+            }
+          ` }} />
+
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 pt-3">
+            {/* Brand Bar */}
+            <div className="flex justify-between items-center py-3.5 border-b border-white/5">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 bg-[#d97706] rounded-lg flex items-center justify-center font-bold text-sm tracking-tight text-white select-none">
+                  PW
+                </div>
+                <span className="text-[10px] tracking-[0.1em] text-white/30 font-semibold uppercase">
+                  Tools & Calculators
+                </span>
               </div>
-              <span className="text-[10px] tracking-[0.1em] text-white/30 font-semibold uppercase">
-                Tools & Calculators
-              </span>
+
+              {/* Avatar stack + counter */}
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-1.5 select-none">
+                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
+                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
+                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
+                  <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-purple-500 to-purple-300" />
+                </div>
+                <span className="text-xs text-white/50 font-medium">
+                  {counter.toLocaleString('en-IN')} used this month
+                </span>
+              </div>
             </div>
 
-            {/* Avatar stack + counter */}
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-1.5 select-none">
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-purple-500 to-purple-300" />
+            {/* Hero Row: Split into Title & Glass Badges on Desktop */}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 py-2">
+              {/* Left side: title and word swapper */}
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
+                  Know your numbers. Then{' '}
+                  <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                    {WORDS[wordIdx]}
+                  </span>
+                  .
+                </h2>
               </div>
-              <span className="text-xs text-white/50 font-medium">
-                {counter.toLocaleString('en-IN')} used this month
-              </span>
-            </div>
-          </div>
 
-          {/* Hero Line */}
-          <div className="py-2">
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 mb-2">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-              </span>
-              <span className="text-[9px] font-bold text-amber-400 tracking-wider uppercase">Live Now</span>
+              {/* Right side: Glassmorphic stats badges */}
+              <div className="hidden lg:flex flex-row gap-3.5 shrink-0 max-w-md">
+                <div className="bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.08] transition-all duration-300 hover:scale-[1.02]">
+                  <div className="p-2 rounded-lg bg-amber-500/15 text-amber-400">
+                    <ShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-bold text-white tracking-tight">15+ Free Tools</div>
+                    <div className="text-[10px] text-white/40">Secure & Government backed</div>
+                  </div>
+                </div>
+
+                <div className="bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-lg hover:bg-white/[0.08] transition-all duration-300 hover:scale-[1.02]">
+                  <div className="p-2 rounded-lg bg-blue-500/15 text-blue-400">
+                    <Trophy size={18} />
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-bold text-white tracking-tight">31+ Yrs Trust</div>
+                    <div className="text-[10px] text-white/40">Million Dollar Round Table</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
-              Know your numbers. Then{' '}
-              <span className={`inline-block transition-all duration-300 font-serif italic text-amber-400 font-bold ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-                {WORDS[wordIdx]}
-              </span>
-              .
-            </h2>
-          </div>
 
           {/* Category Tabs */}
-          <div className="flex border-b border-white/10 select-none overflow-x-auto scrollbar-none">
+          <div className="flex border-b border-white/10 select-none overflow-x-auto scrollbar-gold pb-1.5">
             <nav className="flex space-x-6 -mb-px flex-shrink-0">
               {CATEGORIES.map((cat) => {
                 const isActive = cat.id === activeCategory
@@ -295,7 +355,7 @@ export default function CalculatorShell({
           </div>
 
           {/* Tool Tabs */}
-          <div className="flex gap-2 overflow-x-auto py-1 scrollbar-none snap-x select-none">
+          <div className="flex gap-2 overflow-x-auto py-1 scrollbar-gold snap-x select-none pb-1.5">
             {TOOLS_BY_CATEGORY[activeCategory].map((tool) => {
               const isActive = tool.id === activeTabId
               const isPlaceholder = tool.isPlaceholder
@@ -336,16 +396,10 @@ export default function CalculatorShell({
           </div>
         </div>
       </header>
-
-      {/* SVG Wave separator */}
-      <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-px select-none">
-        <svg className="relative block w-full h-[18px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,0 C150,90 350,120 600,100 C850,80 1050,90 1200,120 L1200,120 L0,120 Z" fill="#f9fafb"></path>
-        </svg>
       </div>
 
-      {/* ── LIGHT BODY CONTAINER (bg-gray-50) ── */}
-      <main className="bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+      {/* ── LIGHT BODY CONTAINER ── */}
+      <main className="py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Social Proof centered line */}
           {socialProofText && (
@@ -447,6 +501,6 @@ export default function CalculatorShell({
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
