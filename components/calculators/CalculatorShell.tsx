@@ -227,8 +227,8 @@ export default function CalculatorShell({
       <header 
         className="relative text-white overflow-hidden pb-1 transition-all duration-500 bg-cover bg-no-repeat animate-bgZoom"
         style={{
-          backgroundImage: `linear-gradient(to right, #0f1225 25%, rgba(15, 18, 37, 0.45) 60%, rgba(15, 18, 37, 0.12) 100%), url(${bgImage})`,
-          backgroundPosition: '85% 35%' // Positions the focus point of the WebP family image in the visible region
+          backgroundImage: `linear-gradient(to right, #0f1225 15%, rgba(15, 18, 37, 0.4) 55%, rgba(15, 18, 37, 0.05) 85%, transparent 100%), url(${bgImage})`,
+          backgroundPosition: '85% 35%' // Shifts focus point of background image for maximum visibility and sharpness
         }}
       >
         {/* Style injection for animations and custom golden scrollbars */}
@@ -274,9 +274,9 @@ export default function CalculatorShell({
 
             <div className="flex items-center gap-2">
               <div className="flex -space-x-1.5 select-none">
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-amber-500 to-amber-300" />
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-blue-500 to-blue-300" />
-                <span className="inline-flex h-5 w-5 rounded-full ring-2 ring-[#0f1225] bg-gradient-to-tr from-emerald-500 to-emerald-300" />
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=60&h=60" className="inline-block h-5 w-5 rounded-full ring-2 ring-[#0f1225] object-cover" alt="" />
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=60&h=60" className="inline-block h-5 w-5 rounded-full ring-2 ring-[#0f1225] object-cover" alt="" />
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=60&h=60" className="inline-block h-5 w-5 rounded-full ring-2 ring-[#0f1225] object-cover" alt="" />
               </div>
               <span className="text-xs text-white/50 font-medium">
                 {counter.toLocaleString('en-IN')} used this month
@@ -302,6 +302,10 @@ export default function CalculatorShell({
                 </span>
                 .
               </h2>
+              {/* Utilizing empty space with a warm, subtle, premium trust tagline */}
+              <p className="text-[11px] text-white/35 italic font-medium max-w-xs sm:max-w-sm mt-1.5 select-none leading-relaxed">
+                "31 years of showing up, not just selling." — Mr. Ajay Kumar Poddar (MDRT USA Member)
+              </p>
             </div>
 
             {/* Right side: Glassmorphic stats badges (stacked vertically to prevent wrap-breaking) */}
@@ -397,10 +401,22 @@ export default function CalculatorShell({
         </div>
       </header>
 
-      {/* SVG Wave separator with subpixel line bleed fixes */}
+      {/* SVG Wave separator with slim gold crescent line and subpixel fixes */}
       <div className="w-full overflow-hidden leading-none bg-[#0f1225] -mt-1.5 select-none pointer-events-none">
-        <svg className="relative block w-full h-[24px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
-          <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" fill="#f9fafb"></path>
+        <svg className="relative block w-full h-[26px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ transform: 'scale(1.02)' }}>
+          {/* Gold Crescent Curve Line */}
+          <path 
+            d="M0,0 C300,105 900,105 1200,0" 
+            fill="none" 
+            stroke="#fbbf24" 
+            strokeWidth="3.5"
+            opacity="0.8"
+          />
+          {/* Symmetrical Wave Fill matching the light gray body */}
+          <path 
+            d="M0,3 C300,108 900,108 1200,3 L1200,120 L0,120 Z" 
+            fill="#f9fafb" 
+          />
         </svg>
       </div>
 
