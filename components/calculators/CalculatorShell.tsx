@@ -67,9 +67,9 @@ const TOOLS_BY_CATEGORY: Record<'insurance' | 'planning' | 'analysis', ToolItem[
   ],
   analysis: [
     { id: 'health', label: 'Health score', path: '/calculators/policy-health', isHot: true },
-    { id: 'policy-analyzer', label: 'Policy analyzer', path: '#coming-soon', isPlaceholder: true },
-    { id: 'plan-compare', label: 'Plan compare', path: '#coming-soon', isPlaceholder: true },
-    { id: 'nav-tracker', label: 'NAV tracker', path: '#coming-soon', isPlaceholder: true },
+    { id: 'policy-analyzer', label: 'Policy analyzer', path: '/analyzers/policy-document' },
+    { id: 'plan-compare', label: 'Plan compare', path: '/compare' },
+    { id: 'nav-tracker', label: 'NAV tracker', path: '/nav-tracker' },
   ],
 }
 
@@ -115,11 +115,14 @@ export default function CalculatorShell({
   const BG_IMAGE_MAP: Record<string, string> = {
     premium: '/assets/hero-family.webp',
     maturity: '/assets/hero-marriage.webp',
-    coverage: '/assets/hero-family.webp',
+    coverage: '/assets/hero-coverage.png',
     retirement: '/assets/hero-retirement.webp',
-    surrender: '/assets/hero-family.webp',
+    surrender: '/assets/hero-surrender.png',
     loan: '/assets/hero-education.webp',
     health: '/assets/hero-health.webp',
+    'policy-analyzer': '/assets/hero-analyzer.png',
+    'plan-compare': '/assets/hero-compare.png',
+    'nav-tracker': '/assets/hero-nav.png',
   }
 
   const bgImage = BG_IMAGE_MAP[activeTabId] || '/assets/hero-family.webp'
@@ -226,9 +229,9 @@ export default function CalculatorShell({
   const TabIcon = ICON_MAP[activeTabId as keyof typeof ICON_MAP] || Shield
 
   const GLOW_COLORS = {
-    insurance: 'bg-emerald-500/10',
-    planning: 'bg-amber-500/10',
-    analysis: 'bg-blue-500/10'
+    insurance: 'bg-emerald-500/20',
+    planning: 'bg-amber-500/20',
+    analysis: 'bg-blue-500/20'
   }
   const activeGlow = GLOW_COLORS[activeCategory as keyof typeof GLOW_COLORS] || 'bg-amber-500/10'
 
@@ -248,7 +251,7 @@ export default function CalculatorShell({
     <div className="bg-gray-50 min-h-screen">
       {/* ── DYNAMIC FULL-WIDTH DARK HEADER SECTION ── */}
       <header 
-        className="relative text-white overflow-hidden pb-10 md:pb-14 transition-all duration-500 bg-cover bg-no-repeat rounded-b-[36px] md:rounded-b-[48px] shadow-lg border-b border-white/[0.08]"
+        className="relative text-white overflow-hidden pb-14 md:pb-18 transition-all duration-500 bg-cover bg-no-repeat rounded-b-[36px] md:rounded-b-[48px] shadow-lg border-b border-white/[0.08]"
         style={{
           backgroundImage: `linear-gradient(to right, #0f1225 15%, rgba(15, 18, 37, 0.45) 55%, rgba(15, 18, 37, 0.05) 85%, transparent 100%), url(${bgImage})`,
           backgroundPosition: '85% 35%' // Fixed high-vibrancy focus alignment
@@ -340,7 +343,7 @@ export default function CalculatorShell({
                     className={`pb-2.5 pt-1 px-4 text-[10px] tracking-wider font-semibold border-b-2 transition-all duration-300 cursor-pointer uppercase ${
                       isActive
                         ? 'text-amber-400 border-amber-400 font-bold tab-glow'
-                        : 'text-white/40 border-transparent hover:text-white/85 hover:border-white/10'
+                        : 'text-white/60 border-transparent hover:text-white hover:border-white/20'
                     }`}
                   >
                     {getCategoryLabel(cat.id)}
@@ -446,13 +449,7 @@ export default function CalculatorShell({
             </p>
           </div>
 
-          {/* Social Proof centered line */}
-          {socialProofText && (
-            <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400 select-none animate-fadeIn">
-              <Users className="w-3.5 h-3.5 text-gray-400" />
-              <span>{socialProofText}</span>
-            </div>
-          )}
+
 
           {/* Form / Result columns wrapper */}
           <div className="flex flex-col lg:flex-row gap-6 items-start justify-center">
@@ -460,6 +457,13 @@ export default function CalculatorShell({
             <div className={`w-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
               hasCalculated ? 'lg:w-[42%] flex-shrink-0' : 'max-w-md'
             }`}>
+              {/* Connected Social Proof Badge Badge directly above form card */}
+              {socialProofText && (
+                <div className="flex items-center gap-2 text-[10px] text-gray-500 select-none animate-fadeIn bg-white border border-gray-100 rounded-full px-3.5 py-1.5 w-fit mx-auto mb-3 shadow-sm">
+                  <Users className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+                  <span className="font-semibold">{socialProofText}</span>
+                </div>
+              )}
               <CalculatorForm
                 title={title}
                 icon={TabIcon}
