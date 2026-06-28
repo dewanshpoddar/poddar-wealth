@@ -45,6 +45,16 @@ const nextConfig = {
         destination: 'https://www.poddarwealth.com/:path*',
         permanent: true,
       },
+      {
+        source: '/compare',
+        destination: '/calculators/plan-compare',
+        permanent: true,
+      },
+      {
+        source: '/analyzers/policy-document',
+        destination: '/calculators/policy-analyzer',
+        permanent: true,
+      },
     ]
   },
 

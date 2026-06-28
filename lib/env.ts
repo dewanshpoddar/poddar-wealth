@@ -1,7 +1,5 @@
-function requireEnv(key: string): string {
-  const val = process.env[key]
-  if (!val) throw new Error(`Missing required env var: ${key}`)
-  return val
+function getEnv(key: string, defaultValue: string = ''): string {
+  return process.env[key] || defaultValue
 }
 
 function getGroqKey(): string {
@@ -15,8 +13,9 @@ function getGroqKey(): string {
 export const env = {
   GROQ_API_KEY:              getGroqKey(),
   GROQ_MODEL:                process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile',
-  CRON_SECRET:               requireEnv('CRON_SECRET'),
-  GOOGLE_SHEETS_WEBHOOK_URL: requireEnv('GOOGLE_SHEETS_WEBHOOK_URL'),
+  CRON_SECRET:               getEnv('CRON_SECRET'),
+  GOOGLE_SHEETS_WEBHOOK_URL: getEnv('GOOGLE_SHEETS_WEBHOOK_URL'),
   ADMIN_SHEETS_WEBHOOK_URL:  process.env.ADMIN_SHEETS_WEBHOOK_URL ?? '',
   GEMINI_API_KEY:            process.env.GEMINI_API_KEY ?? '',
 }
+

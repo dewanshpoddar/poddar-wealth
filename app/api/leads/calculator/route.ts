@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { clean as c, isValidPhone as ivp, appendToCsv as acsv, pushToSheets as pts } from '@/lib/server-utils'
+import { clean as c, isValidPhone as ivp, appendToCsv as acsv, pushToSheets as pts, validateParams, type ValidationSchema } from '@/lib/server-utils'
 import { adminNotify } from '@/lib/admin-notify'
 import { logger } from '@/lib/logger'
 import { checkRateLimit } from '@/lib/rate-limit'
@@ -100,36 +100,36 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const {
-    phone, name, email, dob, calculator,
-    inputs, result, timestamp, source, utm,
-  } = data as {
-    phone?: string
-    name?: string
-    email?: string
-    dob?: string
-    calculator?: string
+  const rawData = data as {
     inputs?: Record<string, unknown>
     result?: Record<string, unknown>
-    timestamp?: string
-    source?: string
     utm?: Record<string, string>
   }
+  const { inputs, result, utm } = rawData
 
-  // Validate phone
-  if (!phone || !ivp(phone)) {
-    return NextResponse.json({ success: false, error: 'Invalid phone number' }, { status: 400 })
+  const leadSchema: ValidationSchema = {
+    phone: { type: 'string', required: true, regex: /^[6-9]\d{9}$/ },
+    name: { type: 'string', required: false },
+    email: { type: 'string', required: false, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+    dob: { type: 'string', required: false },
+    calculator: { type: 'string', required: true, enum: CALCULATOR_SLUGS as unknown as string[] },
+    source: { type: 'string', required: false },
+    timestamp: { type: 'string', required: false },
   }
 
-  // Validate email if provided
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ success: false, error: 'Invalid email address' }, { status: 400 })
+  const validation = validateParams(data, leadSchema)
+  if (!validation.success) {
+    return NextResponse.json({ success: false, error: validation.error }, { status: 400 })
   }
 
-  // Validate calculator slug
-  if (!calculator || !CALCULATOR_SLUGS.includes(calculator as CalcSlug)) {
-    return NextResponse.json({ success: false, error: 'Unknown calculator type' }, { status: 400 })
-  }
+  const validated = validation.data
+  const phone = validated.phone
+  const name = validated.name
+  const email = validated.email
+  const dob = validated.dob
+  const calculator = validated.calculator
+  const source = validated.source
+  const timestamp = validated.timestamp
 
   const cleanPhone = c(phone, 10)
 

@@ -78,3 +78,70 @@ export async function pushToSheets(
     }).catch(() => {})
   }
 }
+
+export interface ValidationRule {
+  type: 'string' | 'number' | 'boolean'
+  required?: boolean
+  min?: number
+  max?: number
+  regex?: RegExp
+  enum?: string[]
+}
+
+export interface ValidationSchema {
+  [key: string]: ValidationRule
+}
+
+/**
+ * Validates request parameters against a lightweight schema.
+ * Replaces heavy external libraries like zod/yup for standard API routes.
+ */
+export function validateParams(
+  data: any,
+  schema: ValidationSchema,
+): { success: true; data: any } | { success: false; error: string } {
+  if (!data || typeof data !== 'object') {
+    return { success: false, error: 'Request body must be a valid JSON object' }
+  }
+
+  const result: any = {}
+  
+  for (const [key, rule] of Object.entries(schema)) {
+    const val = data[key]
+    
+    if (val === undefined || val === null || val === '') {
+      if (rule.required) {
+        return { success: false, error: `Missing required field: ${key}` }
+      }
+      continue
+    }
+
+    if (rule.type === 'number') {
+      const num = Number(val)
+      if (isNaN(num)) {
+        return { success: false, error: `Field "${key}" must be a number` }
+      }
+      if (rule.min !== undefined && num < rule.min) {
+        return { success: false, error: `Field "${key}" must be at least ${rule.min}` }
+      }
+      if (rule.max !== undefined && num > rule.max) {
+        return { success: false, error: `Field "${key}" must be at most ${rule.max}` }
+      }
+      result[key] = num
+    } else if (rule.type === 'string') {
+      const str = String(val).trim()
+      if (rule.regex && !rule.regex.test(str)) {
+        return { success: false, error: `Field "${key}" is invalid` }
+      }
+      if (rule.enum && !rule.enum.includes(str)) {
+        return { success: false, error: `Field "${key}" must be one of: ${rule.enum.join(', ')}` }
+      }
+      result[key] = str
+    } else if (rule.type === 'boolean') {
+      result[key] = String(val) === 'true' || val === true
+    }
+  }
+
+  return { success: true, data: result }
+}
+

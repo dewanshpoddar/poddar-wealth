@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { adminNotify } from '@/lib/admin-notify'
-import { clean, isValidPhone, appendToCsv, pushToSheets } from '@/lib/server-utils'
+import { clean, isValidPhone, appendToCsv, pushToSheets, validateParams, type ValidationSchema } from '@/lib/server-utils'
 import { logger } from '@/lib/logger'
 import { leadStats } from '@/lib/lead-stats'
 import { checkRateLimit } from '@/lib/rate-limit'
@@ -73,21 +73,54 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    const { name, mobile, email, wantTo, iAm, intent, city, profession, experience, message,
-            pageUrl, language, utmSource, utmMedium, utmCampaign, referralCode } = data as Record<string, string>
+    const rawData = data as Record<string, string>
 
     // Also check referral cookie from request headers
     const cookieHeader = request.headers.get('cookie') ?? ''
     const refCookieMatch = cookieHeader.match(/(?:^|;\s*)pw_ref=([^;]+)/)
-    const resolvedReferral = clean(referralCode ?? refCookieMatch?.[1] ?? '', 20)
+    const resolvedReferral = clean(rawData.referralCode ?? refCookieMatch?.[1] ?? '', 20)
 
-    // Validate required fields
-    if (!name || clean(name, 100).length < 2) {
-      return NextResponse.json({ error: 'Invalid name' }, { status: 400 })
+    const leadSchema: ValidationSchema = {
+      name: { type: 'string', required: true },
+      mobile: { type: 'string', required: true, regex: /^[6-9]\d{9}$/ },
+      email: { type: 'string', required: false, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+      wantTo: { type: 'string', required: false },
+      iAm: { type: 'string', required: false },
+      intent: { type: 'string', required: false },
+      city: { type: 'string', required: false },
+      profession: { type: 'string', required: false },
+      experience: { type: 'string', required: false },
+      message: { type: 'string', required: false },
+      pageUrl: { type: 'string', required: false },
+      language: { type: 'string', required: false },
+      utmSource: { type: 'string', required: false },
+      utmMedium: { type: 'string', required: false },
+      utmCampaign: { type: 'string', required: false },
+      referralCode: { type: 'string', required: false },
     }
-    if (!mobile || !isValidPhone(mobile)) {
-      return NextResponse.json({ error: 'Invalid mobile number — must be 10 digits' }, { status: 400 })
+
+    const validation = validateParams(data, leadSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
     }
+
+    const validated = validation.data
+    const name = validated.name
+    const mobile = validated.mobile
+    const email = validated.email
+    const wantTo = validated.wantTo
+    const iAm = validated.iAm
+    const intent = validated.intent
+    const city = validated.city
+    const profession = validated.profession
+    const experience = validated.experience
+    const message = validated.message
+    const pageUrl = validated.pageUrl
+    const language = validated.language
+    const utmSource = validated.utmSource
+    const utmMedium = validated.utmMedium
+    const utmCampaign = validated.utmCampaign
+    const referralCode = validated.referralCode
 
     // Deduplication — silent success to prevent form retry loops
     const cleanMobile = clean(mobile, 10)
