@@ -30,14 +30,11 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Analysis calculator — all plans including withdrawn
+    // Analysis calculator — all plans including withdrawn; plan optional (use fallback logic if missing)
     const allPlans = getAllPlans()
     const plan = allPlans.find(p => p.planNo === Number(planNo))
-    if (!plan) {
-      return NextResponse.json({ error: 'Plan not found' }, { status: 404 })
-    }
 
-    const minYears = plan.surrenderAfterYears ?? 3
+    const minYears = plan?.surrenderAfterYears ?? 3
     if (yearsCompleted < minYears) {
       return NextResponse.json(
         { error: `This plan requires at least ${minYears} years of premiums before surrender is allowed` },
@@ -52,7 +49,7 @@ export async function POST(req: NextRequest) {
     let gsvFactor: number
     let rateSource: 'brochure' | 'estimated'
 
-    if (plan.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
+    if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
       gsvFactor = interpolateGSV(plan.gsvFactors, yearsCompleted) / 100
       rateSource = 'brochure'
     } else {
@@ -71,8 +68,6 @@ export async function POST(req: NextRequest) {
     // Loss calculation
     const lossOnSurrender = premiumsPaidTotal - payable
     const remainingYears = term - yearsCompleted
-    const futureValue = sa * 1.5 // rough 50% bonus if held to maturity
-    const holdBenefit = futureValue - premiumsPaidTotal
 
     // IRR if surrendered now (simple approximation)
     const irrIfSurrendered =
@@ -90,8 +85,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      planNo: plan.planNo,
-      planName: plan.name,
+      planNo: Number(planNo),
+      planName: plan?.name ?? `Plan ${planNo}`,
       premiumsPaidTotal,
       gsv,
       ssvEstimate,

@@ -20,11 +20,9 @@ export async function POST(req: NextRequest) {
 
     const allPlans = getAllPlans()
     const plan = allPlans.find(p => p.planNo === Number(planNo))
-    if (!plan) {
-      return NextResponse.json({ error: 'Plan not found' }, { status: 404 })
-    }
+    // plan optional — fall back gracefully if not in KB
 
-    const minYears = plan.surrenderAfterYears ?? 3
+    const minYears = plan?.surrenderAfterYears ?? 3
     if (yearsCompleted < minYears) {
       return NextResponse.json(
         { error: `Policy must be in force for at least ${minYears} years to convert to paid-up` },
@@ -41,7 +39,7 @@ export async function POST(req: NextRequest) {
     // Vested bonuses accrued up to paid-up date
     let vestedBonuses = 0
     const bonusData = BONUS_RATES_2026[Number(planNo)]
-    const bonusRatePer1000 = plan.bonusRateFY25 ?? bonusData?.srb ?? bonusData?.ga ?? null
+    const bonusRatePer1000 = plan?.bonusRateFY25 ?? bonusData?.srb ?? bonusData?.ga ?? null
     if (bonusRatePer1000 !== null) {
       vestedBonuses = Math.round((bonusRatePer1000 * sa / 1000) * yearsCompleted)
     }
@@ -53,8 +51,8 @@ export async function POST(req: NextRequest) {
     const maturityPaidUp = paidUpSA + vestedBonuses
 
     return NextResponse.json({
-      planNo: plan.planNo,
-      planName: plan.name,
+      planNo: Number(planNo),
+      planName: plan?.name ?? `Plan ${planNo}`,
       originalSA: sa,
       paidUpSA,
       yearsRatio: Math.round(yearsRatio * 100),

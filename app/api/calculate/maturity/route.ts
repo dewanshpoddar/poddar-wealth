@@ -15,19 +15,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'planNo, sa, term are required' }, { status: 400 })
     }
 
+    // KB lookup optional — fall back to BONUS_RATES_2026 if plan not in KB
     const activePlans = getActivePlans()
     const plan = activePlans.find(p => p.planNo === Number(planNo))
-    if (!plan) {
-      return NextResponse.json({ error: 'Plan not found or not currently active' }, { status: 404 })
-    }
 
-    // Use bonus rate from lic-kb-live.json if present, fall back to BONUS_RATES_2026
-    let bonusRatePer1000: number | null = plan.bonusRateFY25
-    let fabRatePer1000: number | null = plan.fabRate
-    let bonusSource: 'live_kb' | 'estimated' = 'live_kb'
+    let bonusRatePer1000: number | null = plan?.bonusRateFY25 ?? null
+    let fabRatePer1000: number | null = plan?.fabRate ?? null
+    let bonusSource: 'live_kb' | 'estimated' = plan ? 'live_kb' : 'estimated'
 
     if (bonusRatePer1000 === null) {
-      const legacy = BONUS_RATES_2026[Number(planNo)]
+      const legacy = BONUS_RATES_2026?.[Number(planNo)]
       if (legacy) {
         bonusRatePer1000 = legacy.srb ?? legacy.ga ?? null
         fabRatePer1000 = legacy.fab ?? null
@@ -48,8 +45,8 @@ export async function POST(req: NextRequest) {
     const totalMaturity = sa + totalSRB + fabEstimate
 
     return NextResponse.json({
-      planNo: plan.planNo,
-      planName: plan.name,
+      planNo: Number(planNo),
+      planName: plan?.name ?? `Plan ${planNo}`,
       basicSA: sa,
       totalSRB,
       fabEstimate,

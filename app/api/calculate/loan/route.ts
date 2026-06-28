@@ -31,18 +31,9 @@ export async function POST(req: NextRequest) {
 
     const allPlans = getAllPlans()
     const plan = allPlans.find(p => p.planNo === Number(planNo))
-    if (!plan) {
-      return NextResponse.json({ error: 'Plan not found' }, { status: 404 })
-    }
+    // plan is optional — fall back gracefully if not in KB
 
-    if (!plan.loanAvailable) {
-      return NextResponse.json(
-        { error: 'Loan facility is not available on this plan' },
-        { status: 422 }
-      )
-    }
-
-    const minYears = plan.surrenderAfterYears ?? 3
+    const minYears = plan?.surrenderAfterYears ?? 3
     if (yearsCompleted < minYears) {
       return NextResponse.json(
         { error: `Loan available only after ${minYears} years of premium payment` },
@@ -56,7 +47,7 @@ export async function POST(req: NextRequest) {
     let gsvFactor: number
     let rateSource: 'brochure' | 'estimated'
 
-    if (plan.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
+    if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
       gsvFactor = interpolateGSV(plan.gsvFactors, yearsCompleted) / 100
       rateSource = 'brochure'
     } else {
@@ -67,19 +58,19 @@ export async function POST(req: NextRequest) {
     const surrenderValueBasis = Math.round(premiumsPaidTotal * gsvFactor)
 
     // LIC loans: up to 90% of surrender value (plan.loanMaxPct or 90)
-    const loanPct = (plan.loanMaxPct ?? 90) / 100
+    const loanPct = (plan?.loanMaxPct ?? 90) / 100
     const maxLoan = Math.round(surrenderValueBasis * loanPct)
 
     // Interest rate from plan data or LIC standard rate
-    const interestRate = plan.loanInterestRate ?? 9.0
+    const interestRate = plan?.loanInterestRate ?? 9.0
     const monthlyInterest = Math.round((maxLoan * (interestRate / 100)) / 12)
 
     return NextResponse.json({
-      planNo: plan.planNo,
-      planName: plan.name,
+      planNo: Number(planNo),
+      planName: plan?.name ?? `Plan ${planNo}`,
       surrenderValueBasis,
       maxLoan,
-      loanMaxPct: plan.loanMaxPct ?? 90,
+      loanMaxPct: plan?.loanMaxPct ?? 90,
       interestRate,
       monthlyInterest,
       annualInterest: monthlyInterest * 12,

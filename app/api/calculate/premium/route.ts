@@ -15,37 +15,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'planNo, age, term, sa are required' }, { status: 400 })
     }
 
-    // Validate: decision calculator — active plans only
-    const activePlans = getActivePlans()
-    const plan = activePlans.find(p => p.planNo === Number(planNo))
-    if (!plan) {
-      return NextResponse.json({ error: 'Plan not found or not currently active' }, { status: 404 })
-    }
-
-    // Validate eligibility
-    if (plan.minAge !== null && age < plan.minAge) {
-      return NextResponse.json({ error: `Minimum entry age for this plan is ${plan.minAge}` }, { status: 422 })
-    }
-    if (plan.maxAge !== null && age > plan.maxAge) {
-      return NextResponse.json({ error: `Maximum entry age for this plan is ${plan.maxAge}` }, { status: 422 })
-    }
-
-    // Compute PPT from legacy JS (handles all ppt variants)
+    // Look up in legacy JS first (always available, 123 plans)
     const legacyPlan = PLANS.find((p: { planNo: number }) => p.planNo === Number(planNo))
     if (!legacyPlan) {
-      return NextResponse.json({ error: 'Plan not found in rate table' }, { status: 404 })
+      return NextResponse.json({ error: 'Plan not found' }, { status: 404 })
     }
-    const ppt = getPPT(legacyPlan!, term, age)
+    const ppt = getPPT(legacyPlan, term, age)
+
+    // Try KB for bilinear interpolation; fall back to legacy sparse table
+    const activePlans = getActivePlans()
+    const plan = activePlans.find(p => p.planNo === Number(planNo))
 
     let rate: number
     let rateSource: 'brochure' | 'estimated'
 
-    // Try bilinear interpolation from lic-kb-live.json tabular rates
-    if (plan.tabularRates && Object.keys(plan.tabularRates).length > 0) {
+    if (plan?.tabularRates && Object.keys(plan.tabularRates).length > 0) {
       rate = interpolateRate(plan.tabularRates, age, term)
       rateSource = 'brochure'
     } else {
-      // Fall back to sparse table nearest-neighbour from lic-plans-data.js
       rate = getTabularRate(Number(planNo), age, term)
       rateSource = 'estimated'
     }
@@ -53,8 +40,9 @@ export async function POST(req: NextRequest) {
     let basePremium = (rate * sa) / 1000
 
     // Adjustments
-    if (smoker && plan.category === 'term') basePremium *= 1.25
-    if (gender === 'female' && plan.category === 'term') basePremium *= 0.925
+    const category = plan?.category ?? (legacyPlan as any).category ?? ''
+    if (smoker && category === 'term') basePremium *= 1.25
+    if (gender === 'female' && category === 'term') basePremium *= 0.925
 
     const modeRebatePct: number = MODE_REBATE[mode] || 0
     const modeRebateAmt = basePremium * modeRebatePct
@@ -63,7 +51,7 @@ export async function POST(req: NextRequest) {
     const netPremium = basePremium - modeRebateAmt - saRebateAmt
 
     // GST
-    const gstCategory = (legacyPlan as { gstCategory?: string })?.gstCategory ?? 'endowment'
+    const gstCategory = (legacyPlan as any)?.gstCategory ?? 'endowment'
     const gstRules: { year1: number; year2plus?: number } =
       GST_RULES[gstCategory] || GST_RULES.endowment
     const gst1 = netPremium * gstRules.year1
@@ -79,8 +67,8 @@ export async function POST(req: NextRequest) {
     const totalPaid = yearlyYear1 + yearlyYear2 * (ppt - 1)
 
     return NextResponse.json({
-      planNo: plan.planNo,
-      planName: plan.name,
+      planNo: Number(planNo),
+      planName: plan?.name ?? (legacyPlan as any).name,
       basePremium: Math.round(basePremium),
       modeRebate: Math.round(modeRebateAmt),
       modeRebatePct: modeRebatePct * 100,
