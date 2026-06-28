@@ -65,7 +65,7 @@ function PremiumCalcContent() {
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   // Filter out discontinued/withdrawn plans
-  const activePlans = PLANS.filter(p => p.status !== 'withdrawn')
+  const activePlans = PLANS.filter((p: any) => p.status !== 'withdrawn')
 
   const [planNo, setPlanNo] = useState<number>(915)
   const [sa, setSa] = useState<number>(1000000)
@@ -108,12 +108,12 @@ function PremiumCalcContent() {
     }
   }, [searchParams])
 
-  const selectedPlan = PLANS.find(p => p.planNo === planNo)
+  const selectedPlan = PLANS.find((p: any) => p.planNo === planNo)
 
   const handlePlanChange = (num: number) => {
     setPlanNo(num)
     setHasCalculated(false)
-    const newPlan = PLANS.find(p => p.planNo === num)
+    const newPlan = PLANS.find((p: any) => p.planNo === num)
     if (newPlan) {
       if (newPlan.minSA && sa < newPlan.minSA) setSa(newPlan.minSA)
       if (newPlan.minAge && age < newPlan.minAge) setAge(newPlan.minAge)
@@ -251,7 +251,7 @@ Can you suggest the best configuration?`
               onChange={(e) => handlePlanChange(Number(e.target.value))}
               className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
-              {activePlans.map(plan => (
+              {activePlans.map((plan: any) => (
                 <option key={plan.planNo} value={plan.planNo}>
                   Plan {plan.planNo} - {plan.name}
                 </option>

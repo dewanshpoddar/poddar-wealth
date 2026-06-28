@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getActivePlans } from '@/lib/lic-engine/plan-loader'
 import { interpolateRate } from '@/lib/lic-engine/interpolate'
-import licData from '@/lib/lic-plans-data.js'
-const { GST_RULES, MODE_REBATE, SA_REBATE, getTabularRate, getPPT, PLANS } = licData as any
+import { GST_RULES, MODE_REBATE, SA_REBATE, getTabularRate, getPPT, PLANS } from '@/lib/lic-plans-data.js'
 
 const DISCLAIMER =
   'Premium figures are indicative. Actual premium may vary. Please verify with an authorised LIC agent. IRDAI Reg No: ...'

@@ -77,4 +77,19 @@ export declare function getPPT(plan: LICPlan, term: number, age: number): number
 export declare function getTabularRate(planNo: number, age: number, term: number): number
 export declare function advisePlans(params: AdvisePlansParams): LICPlan[]
 
-export default PLANS
+declare const _default: {
+  PLANS: LICPlan[]
+  RIDERS: Record<string, any>
+  GST_RULES: Record<string, { year1: number; year2plus?: number }>
+  MODE_REBATE: Record<string, number>
+  SA_REBATE: (sa: number) => number
+  BONUS_RATES_2026: Record<number, { srb?: number; ga?: number; fab?: number }>
+  TABULAR_RATES: Record<number, Record<number, Record<number, number>>>
+  calculatePremium: (params: CalculatePremiumParams) => PremiumResult
+  calculateMaturity: (params: any) => any
+  generateBenefitTable: (params: any) => BenefitRow[]
+  getPPT: (plan: LICPlan, term: number, age: number) => number
+  getTabularRate: (planNo: number, age: number, term: number) => number
+  advisePlans: (params: AdvisePlansParams) => LICPlan[]
+}
+export default _default

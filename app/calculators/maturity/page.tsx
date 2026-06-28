@@ -48,7 +48,7 @@ function MaturityCalcContent() {
   const resultRef = useRef<HTMLDivElement | null>(null)
 
   // Endowment and Money-back plans eligible for maturity calculations
-  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
+  const majorPlans = PLANS.filter((p: any) => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
 
   const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 915)
   const [sa, setSa] = useState<number>(1000000)
@@ -98,7 +98,7 @@ function MaturityCalcContent() {
   const handlePlanChange = (num: number) => {
     setPlanNo(num)
     setHasCalculated(false)
-    const newPlan = PLANS.find(p => p.planNo === num)
+    const newPlan = PLANS.find((p: any) => p.planNo === num)
     if (newPlan) {
       if (newPlan.minSA && sa < newPlan.minSA) setSa(newPlan.minSA)
       if (newPlan.minAge && age < newPlan.minAge) setAge(newPlan.minAge)
@@ -191,7 +191,7 @@ function MaturityCalcContent() {
     { label: 'Equivalent FD rate (taxable)', value: `${(effectiveReturn * 1.3).toFixed(1)}% p.a.` },
   ]
 
-  const plan = PLANS.find(p => p.planNo === planNo)
+  const plan = PLANS.find((p: any) => p.planNo === planNo)
   const msg = hasCalculated ? `Namaste Ajay ji, I calculated my LIC policy maturity.
 Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
 Plan: ${plan?.name} (Plan ${planNo})
@@ -250,7 +250,7 @@ Can you suggest how to optimize my returns?` : ''
       term={term}
       hasCalculated={hasCalculated}
       onCalculate={handleCalculate}
-      calculateButtonText="Calculate Maturity Amount"
+      calculateButtonText={isCalculating ? 'Calculating...' : 'Calculate Maturity Amount'}
       formFields={
         <>
           <div>
@@ -260,7 +260,7 @@ Can you suggest how to optimize my returns?` : ''
               onChange={(e) => handlePlanChange(Number(e.target.value))}
               className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
-              {majorPlans.map(plan => (
+              {majorPlans.map((plan: any) => (
                 <option key={plan.planNo} value={plan.planNo}>
                   Plan {plan.planNo} - {plan.name}
                 </option>

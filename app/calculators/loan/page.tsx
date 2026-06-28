@@ -3,7 +3,7 @@ import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Landmark, MessageCircle, Share2, TrendingUp, ShieldCheck } from 'lucide-react'
 import licData from '@/lib/lic-plans-data.js'
-const { PLANS, calculatePremium, getPPT } = licData as any
+const { PLANS } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
@@ -42,27 +42,14 @@ const LOAN_FAQ = [
   }
 ]
 
-function getGsvFactor(yearsPaid: number): number {
-  if (yearsPaid < 2) return 0
-  if (yearsPaid === 2) return 0.30
-  if (yearsPaid === 3) return 0.30
-  if (yearsPaid <= 6) return 0.50
-  if (yearsPaid === 7 || yearsPaid === 8) return 0.55
-  if (yearsPaid === 9) return 0.60
-  if (yearsPaid === 10) return 0.65
-  if (yearsPaid === 11) return 0.70
-  if (yearsPaid === 12) return 0.75
-  if (yearsPaid === 13) return 0.80
-  if (yearsPaid === 14) return 0.85
-  return 0.90
-}
+
 
 function LoanCalcContent() {
   const searchParams = useSearchParams()
   const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
-  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
+  const majorPlans = PLANS.filter((p: any) => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
 
   const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
   const [sa, setSa] = useState<number>(1000000)
@@ -75,6 +62,8 @@ function LoanCalcContent() {
 
   // Calculation Results
   const [hasCalculated, setHasCalculated] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const [calcError, setCalcError] = useState<string | null>(null)
   const [surrenderValue, setSurrenderValue] = useState<number>(0)
   const [maxLoan, setMaxLoan] = useState<number>(0)
   const [annualInterest, setAnnualInterest] = useState<number>(0)
@@ -106,54 +95,49 @@ function LoanCalcContent() {
     }
   }, [searchParams])
 
-  const handleCalculate = () => {
-    const selectedPlan = PLANS.find(p => p.planNo === planNo)
-    let annualPremium = 0
-    if (selectedPlan) {
+  const handleCalculate = async () => {
+    setIsCalculating(true)
+    setCalcError(null)
+    try {
       const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
-      const ppt = getPPT(selectedPlan, term, baselineAge)
-      const premRes = calculatePremium({ planNo, sa, age: baselineAge, term, ppt, mode: 'yearly' })
-      annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
-    } else {
-      annualPremium = sa * 0.05
+
+      // Estimate annual premium for the loan API
+      const premRes = await fetch('/api/calculate/premium', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planNo, sa, age: baselineAge, term, mode: 'yearly' }),
+      })
+      const premData = premRes.ok ? await premRes.json() : null
+      const annualPremium = premData?.yearlyYear1 ?? sa * 0.05
+
+      const res = await fetch('/api/calculate/loan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planNo, sa, annualPremium, yearsCompleted: yearsPaid, ppt: term, term }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setCalcError(data.error || 'Calculation failed'); return }
+
+      setSurrenderValue(data.surrenderValueBasis)
+      setMaxLoan(data.maxLoan)
+      setAnnualInterest(data.annualInterest)
+      setMonthlyInterest(data.monthlyInterest)
+
+      const rate = (data.interestRate ?? 9.5) / 100
+      const getCompoundInterest = (years: number) =>
+        Math.round(data.maxLoan * Math.pow(1 + rate / 2, 2 * years) - data.maxLoan)
+      setInterest1yr(getCompoundInterest(1))
+      setInterest3yr(getCompoundInterest(3))
+      setInterest5yr(getCompoundInterest(5))
+      setHasCalculated(true)
+
+      updateSession({ sumAssured: sa, policyTerm: term })
+      addResult('loan', { maxLoan: data.maxLoan, surrenderValue: data.surrenderValueBasis })
+    } catch {
+      setCalcError('Network error. Please try again.')
+    } finally {
+      setIsCalculating(false)
     }
-
-    const totalPaidSum = annualPremium * yearsPaid
-
-    const gsvFactor = getGsvFactor(yearsPaid)
-    const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
-    const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
-
-    const paidUpSA = Math.round(sa * (yearsPaid / term))
-    const accruedBonus = Math.round((bonusRate * sa / 1000) * yearsPaid)
-    const remainingTerm = term - yearsPaid
-    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035))
-    const ssv = Math.round((paidUpSA + accruedBonus) * ssvFactor)
-
-    const finalSurrender = Math.max(gsv, ssv)
-    setSurrenderValue(finalSurrender)
-
-    const loanLimit = Math.round(finalSurrender * 0.90)
-    setMaxLoan(loanLimit)
-
-    const rate = 0.095
-    const annInterest = Math.round(loanLimit * rate)
-    setAnnualInterest(annInterest)
-    setMonthlyInterest(Math.round(annInterest / 12))
-
-    const getCompoundInterest = (years: number) => {
-      const totalAmount = loanLimit * Math.pow(1 + rate / 2, 2 * years)
-      return Math.round(totalAmount - loanLimit)
-    }
-
-    setInterest1yr(getCompoundInterest(1))
-    setInterest3yr(getCompoundInterest(3))
-    setInterest5yr(getCompoundInterest(5))
-    setHasCalculated(true)
-
-    // Save to session
-    updateSession({ sumAssured: sa, policyTerm: term })
-    addResult('loan', { maxLoan: loanLimit, surrenderValue: finalSurrender })
   }
 
   const handleReset = () => {
@@ -185,7 +169,7 @@ function LoanCalcContent() {
     { label: 'Year 5 Compound Interest Accrued', value: `₹${interest5yr.toLocaleString('en-IN')}` },
   ]
 
-  const plan = PLANS.find(p => p.planNo === planNo)
+  const plan = PLANS.find((p: any) => p.planNo === planNo)
   const msg = hasCalculated ? `Namaste Ajay ji, I checked policy loan eligibility.
 Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
 Plan: ${plan?.name} (Plan ${planNo})
@@ -236,7 +220,7 @@ How can I apply for this loan?` : ''
       term={term}
       hasCalculated={hasCalculated}
       onCalculate={handleCalculate}
-      calculateButtonText="Calculate Loan Limit"
+      calculateButtonText={isCalculating ? 'Calculating...' : 'Calculate Loan Limit'}
       formFields={
         <>
           <div>
@@ -246,7 +230,7 @@ How can I apply for this loan?` : ''
               onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
               className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
-              {majorPlans.map(plan => (
+              {majorPlans.map((plan: any) => (
                 <option key={plan.planNo} value={plan.planNo}>
                   Plan {plan.planNo} - {plan.name}
                 </option>

@@ -48,7 +48,7 @@ function SurrenderCalcContent() {
   const { lang } = useLang()
   const resultRef = useRef<HTMLDivElement | null>(null)
 
-  const majorPlans = PLANS.filter(p => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
+  const majorPlans = PLANS.filter((p: any) => p.status !== 'withdrawn' && ['endowment', 'moneyback', 'wholelife', 'child'].includes(p.category || ''))
 
   const [planNo, setPlanNo] = useState<number>(majorPlans[0]?.planNo || 715)
   const [sa, setSa] = useState<number>(1000000)
@@ -175,7 +175,7 @@ function SurrenderCalcContent() {
     { label: 'Reduced Paid-up sum assured', value: `₹${reducedSA.toLocaleString('en-IN')}` },
   ]
 
-  const plan = PLANS.find(p => p.planNo === planNo)
+  const plan = PLANS.find((p: any) => p.planNo === planNo)
   const msg = hasCalculated ? `Namaste Ajay ji, I checked the surrender value of my LIC policy.
 Sum Assured: ₹${Math.round(sa).toLocaleString('en-IN')}
 Plan: ${plan?.name} (Plan ${planNo})
@@ -242,7 +242,7 @@ Should I surrender or take a policy loan?` : ''
               onChange={(e) => { setPlanNo(Number(e.target.value)); setHasCalculated(false) }}
               className="w-full h-11 px-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-xs font-medium text-gray-900 bg-white"
             >
-              {majorPlans.map(plan => (
+              {majorPlans.map((plan: any) => (
                 <option key={plan.planNo} value={plan.planNo}>
                   Plan {plan.planNo} - {plan.name}
                 </option>
