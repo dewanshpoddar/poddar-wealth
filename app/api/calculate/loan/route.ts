@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAllPlans } from '@/lib/lic-engine/plan-loader'
+import { getPlanByNo } from '@/lib/lic-engine/plan-loader'
 import { interpolateGSV } from '@/lib/lic-engine/interpolate'
 
 import { validateParams, type ValidationSchema } from '@/lib/server-utils'
@@ -44,8 +44,7 @@ export async function POST(req: NextRequest) {
 
     const { planNo, sa, annualPremium, yearsCompleted, ppt, term } = validation.data
 
-    const allPlans = getAllPlans()
-    const plan = allPlans.find(p => p.planNo === Number(planNo))
+    const plan = await getPlanByNo(Number(planNo))
     // plan is optional — fall back gracefully if not in KB
 
     const minYears = plan?.surrenderAfterYears ?? 3

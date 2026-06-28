@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getActivePlans } from '@/lib/lic-engine/plan-loader'
+import { getPlanByNo } from '@/lib/lic-engine/plan-loader'
 import { interpolateRate } from '@/lib/lic-engine/interpolate'
 import { GST_RULES, MODE_REBATE, SA_REBATE, getTabularRate, getPPT, PLANS } from '@/lib/lic-plans-data.js'
 
@@ -41,9 +41,8 @@ export async function POST(req: NextRequest) {
     }
     const ppt = getPPT(legacyPlan, term, age)
 
-    // Try KB for bilinear interpolation; fall back to legacy sparse table
-    const activePlans = getActivePlans()
-    const plan = activePlans.find(p => p.planNo === Number(planNo))
+    // Supabase → KB fallback for bilinear interpolation
+    const plan = await getPlanByNo(Number(planNo))
 
     let rate: number
     let rateSource: 'brochure' | 'estimated'

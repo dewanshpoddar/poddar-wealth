@@ -1,13 +1,87 @@
 /**
- * Loads lic-kb-live.json once at module level (server-side singleton).
+ * Plan data layer — Supabase primary, lic-kb-live.json fallback.
  * Decision calculators call getActivePlans() — forward-looking, buy decisions.
  * Analysis calculators call getAllPlans() — backward-looking, existing policies.
  */
 import fs from 'fs'
 import path from 'path'
+import { createClient } from '@supabase/supabase-js'
 import type { LicPlanRecord } from './types'
 
 const KB_PATH = path.join(process.cwd(), 'lib/data/lic-kb-live.json')
+
+// ─── Supabase client (server-side only) ──────────────────────────────────────
+
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) return null
+  return createClient(url, key)
+}
+
+// ─── Supabase row shape (matches lic_plans table columns) ────────────────────
+
+interface DBPlan {
+  plan_no: number | null
+  name: string
+  uin: string | null
+  status: string
+  category: string | null
+  min_age: number | null
+  max_age: number | null
+  min_sa: number | null
+  max_sa: number | null
+  premium_type: string | null
+  death_formula: string | null
+  maturity_formula: string | null
+  survival_benefit: string | null
+  bonus_rate_fy25: number | null
+  fab_rate: number | null
+  gsv_start_year: number | null
+  gsv_formula: string | null
+  loan_max_pct: number | null
+  loan_interest_rate: number | null
+  gst_first_yr_pct: number | null
+  gst_renewal_pct: number | null
+  brochure_url: string | null
+  superseded_by_uin: string | null
+}
+
+function normaliseFromDB(row: DBPlan): NormalisedPlan {
+  return {
+    planNo: row.plan_no,
+    name: row.name,
+    uin: row.uin,
+    status: row.status === 'active' ? 'Active' : 'Withdrawn',
+    category: row.category ?? '',
+    minAge: row.min_age,
+    maxAge: row.max_age,
+    minSA: row.min_sa,
+    maxSA: row.max_sa,
+    policyTermOptions: null,
+    ppt: row.premium_type,
+    deathBenefitFormula: row.death_formula,
+    maturityBenefitFormula: row.maturity_formula,
+    survivalBenefit: row.survival_benefit,
+    bonusRateFY25: row.bonus_rate_fy25,
+    fabRate: row.fab_rate,
+    surrenderAfterYears: row.gsv_start_year,
+    gsvFormula: row.gsv_formula,
+    loanAvailable: (row.loan_max_pct ?? 0) > 0,
+    loanMaxPct: row.loan_max_pct,
+    loanInterestRate: row.loan_interest_rate,
+    gstYear1Pct: row.gst_first_yr_pct,
+    gstYear2Pct: row.gst_renewal_pct,
+    saRebate: null,
+    brochureUrl: row.brochure_url,
+    tabularRates: null,
+    gsvFactors: null,
+    supersedingUIN: row.superseded_by_uin,
+    raw: row as unknown as LicPlanRecord,
+  }
+}
+
+// ─── JSON fallback (lic-kb-live.json) ────────────────────────────────────────
 
 let _plans: LicPlanRecord[] = []
 let _loaded = false
@@ -116,25 +190,67 @@ function normalise(p: LicPlanRecord): NormalisedPlan {
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /** All 399 plans — use for analysis calculators (surrender, loan, paid-up) */
-export function getAllPlans(): NormalisedPlan[] {
+export async function getAllPlans(): Promise<NormalisedPlan[]> {
+  const sb = getSupabase()
+  if (sb) {
+    const { data, error } = await sb.from('lic_plans').select('*').order('plan_no')
+    if (!error && data?.length) return data.map(normaliseFromDB)
+    console.warn('[plan-loader] Supabase getAllPlans failed, falling back to JSON:', error?.message)
+  }
   return loadPlans().map(normalise)
 }
 
 /** Active plans only — use for decision calculators (premium, maturity, recommend) */
-export function getActivePlans(): NormalisedPlan[] {
-  return loadPlans()
-    .filter(p => p.Status === 'Active')
-    .map(normalise)
+export async function getActivePlans(): Promise<NormalisedPlan[]> {
+  const sb = getSupabase()
+  if (sb) {
+    const { data, error } = await sb
+      .from('lic_plans')
+      .select('*')
+      .eq('status', 'active')
+      .order('plan_no')
+    if (!error && data?.length) return data.map(normaliseFromDB)
+    console.warn('[plan-loader] Supabase getActivePlans failed, falling back to JSON:', error?.message)
+  }
+  return loadPlans().filter(p => p.Status === 'Active').map(normalise)
 }
 
-/** Lookup by plan number — searches all 399 plans including withdrawn */
-export function getPlanByNo(planNo: number): NormalisedPlan | null {
+/** Lookup by plan number — current version, searches all 399 plans including withdrawn */
+export async function getPlanByNo(planNo: number): Promise<NormalisedPlan | null> {
+  const sb = getSupabase()
+  if (sb) {
+    // Prefer is_current_version; fall back to any row with this plan_no
+    const { data, error } = await sb
+      .from('lic_plans')
+      .select('*')
+      .eq('plan_no', planNo)
+      .order('is_current_version', { ascending: false })
+      .limit(1)
+    if (!error && data?.length) return normaliseFromDB(data[0])
+    if (error) console.warn('[plan-loader] Supabase getPlanByNo failed, falling back to JSON:', error.message)
+  }
   const all = loadPlans()
-  // Prefer active version if multiple exist
   const matches = all.filter(p => parsePlanNo(p) === planNo)
   if (!matches.length) return null
   const active = matches.find(p => p.Status === 'Active')
   return normalise(active ?? matches[0])
+}
+
+/** Lookup by UIN — for specific version lookups (e.g. existing policyholder on V02) */
+export async function getPlanByUIN(uin: string): Promise<NormalisedPlan | null> {
+  const sb = getSupabase()
+  if (sb) {
+    const { data, error } = await sb
+      .from('lic_plans')
+      .select('*')
+      .eq('uin', uin)
+      .limit(1)
+    if (!error && data?.length) return normaliseFromDB(data[0])
+    if (error) console.warn('[plan-loader] Supabase getPlanByUIN failed, falling back to JSON:', error.message)
+  }
+  const all = loadPlans()
+  const match = all.find(p => p.UIN === uin)
+  return match ? normalise(match) : null
 }
 
 /** Stats for health checks and admin dashboard */

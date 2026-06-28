@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getActivePlans } from '@/lib/lic-engine/plan-loader'
+import { getPlanByNo } from '@/lib/lic-engine/plan-loader'
 import licData from '@/lib/lic-plans-data.js'
 const { BONUS_RATES_2026 } = (licData as any) ?? {}
 
@@ -31,8 +31,7 @@ export async function POST(req: NextRequest) {
     const { planNo, sa, term } = validation.data
 
     // KB lookup optional — fall back to BONUS_RATES_2026 if plan not in KB
-    const activePlans = getActivePlans()
-    const plan = activePlans.find(p => p.planNo === Number(planNo))
+    const plan = await getPlanByNo(Number(planNo))
 
     let bonusRatePer1000: number | null = plan?.bonusRateFY25 ?? null
     let fabRatePer1000: number | null = plan?.fabRate ?? null
