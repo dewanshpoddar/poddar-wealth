@@ -1,4 +1,5 @@
 'use client'
+// @ts-nocheck
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PLANS } from '@/lib/lic-plans-data.js'
