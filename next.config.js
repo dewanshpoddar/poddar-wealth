@@ -55,6 +55,11 @@ const nextConfig = {
         destination: '/calculators/policy-analyzer',
         permanent: true,
       },
+      {
+        source: '/services/health',
+        destination: '/services/health-insurance',
+        permanent: true,
+      },
     ]
   },
 
