@@ -3,20 +3,34 @@ import { getAllPlans } from '@/lib/lic-engine/plan-loader'
 import licData from '@/lib/lic-plans-data.js'
 const { BONUS_RATES_2026 } = (licData as any) ?? {}
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Paid-up values are indicative. Actual paid-up benefits depend on LIC assessment at time of request. Future bonus accrual stops on paid-up conversion.'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { planNo, sa, yearsCompleted, ppt, term } = body
-
-    if (!planNo || !sa || !yearsCompleted || !term) {
-      return NextResponse.json(
-        { error: 'planNo, sa, yearsCompleted, term are required' },
-        { status: 400 }
-      )
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
+
+    const paidUpSchema: ValidationSchema = {
+      planNo: { type: 'number', required: true, min: 1, max: 2000 },
+      sa: { type: 'number', required: true, min: 1000 },
+      yearsCompleted: { type: 'number', required: true, min: 0, max: 100 },
+      ppt: { type: 'number', required: false, min: 1, max: 100 },
+      term: { type: 'number', required: true, min: 1, max: 100 },
+    }
+
+    const validation = validateParams(body, paidUpSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
+    const { planNo, sa, yearsCompleted, ppt, term } = validation.data
 
     const allPlans = getAllPlans()
     const plan = allPlans.find(p => p.planNo === Number(planNo))

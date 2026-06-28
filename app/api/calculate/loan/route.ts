@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAllPlans } from '@/lib/lic-engine/plan-loader'
 import { interpolateGSV } from '@/lib/lic-engine/interpolate'
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Loan eligibility is indicative. Actual loan amount depends on surrender value at time of application. Interest is charged at LIC declared rate.'
 
@@ -19,15 +21,28 @@ function fallbackGsvPct(policyYear: number): number {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { planNo, sa, annualPremium, yearsCompleted, ppt, term } = body
-
-    if (!planNo || !sa || !annualPremium || !yearsCompleted || !term) {
-      return NextResponse.json(
-        { error: 'planNo, sa, annualPremium, yearsCompleted, term are required' },
-        { status: 400 }
-      )
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
+
+    const loanSchema: ValidationSchema = {
+      planNo: { type: 'number', required: true, min: 1, max: 2000 },
+      sa: { type: 'number', required: true, min: 1000 },
+      annualPremium: { type: 'number', required: true, min: 100 },
+      yearsCompleted: { type: 'number', required: true, min: 0, max: 100 },
+      ppt: { type: 'number', required: false, min: 1, max: 100 },
+      term: { type: 'number', required: true, min: 1, max: 100 },
+    }
+
+    const validation = validateParams(body, loanSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
+    const { planNo, sa, annualPremium, yearsCompleted, ppt, term } = validation.data
 
     const allPlans = getAllPlans()
     const plan = allPlans.find(p => p.planNo === Number(planNo))

@@ -1,11 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Retirement projections use assumed growth rates and are not guaranteed. Actual returns depend on investment performance and prevailing bonus rates.'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
+    const retirementSchema: ValidationSchema = {
+      currentAge: { type: 'number', required: true, min: 0, max: 120 },
+      retirementAge: { type: 'number', required: false, min: 18, max: 120 },
+      monthlyExpenses: { type: 'number', required: true, min: 100 },
+      inflationRate: { type: 'number', required: false, min: 0, max: 100 },
+      expectedReturn: { type: 'number', required: false, min: 0, max: 100 },
+      existingCorpus: { type: 'number', required: false, min: 0 },
+      monthlyInvestment: { type: 'number', required: false, min: 0 },
+    }
+
+    const validation = validateParams(body, retirementSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
     const {
       currentAge,
       retirementAge = 60,
@@ -14,11 +37,7 @@ export async function POST(req: NextRequest) {
       expectedReturn = 7,
       existingCorpus = 0,
       monthlyInvestment = 0,
-    } = body
-
-    if (!currentAge || !monthlyExpenses) {
-      return NextResponse.json({ error: 'currentAge and monthlyExpenses are required' }, { status: 400 })
-    }
+    } = validation.data
 
     const yearsToRetire = Math.max(Number(retirementAge) - Number(currentAge), 1)
     const lifeExpectancy = 80

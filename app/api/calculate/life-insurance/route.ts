@@ -1,11 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Coverage need is an estimate using the Human Life Value (HLV) method. Actual requirement may vary. This is not a recommendation to purchase any specific policy.'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
+    const lifeInsuranceSchema: ValidationSchema = {
+      monthlyIncome: { type: 'number', required: true, min: 100 },
+      age: { type: 'number', required: true, min: 18, max: 120 },
+      dependents: { type: 'number', required: false, min: 0, max: 20 },
+      method: { type: 'string', required: false, enum: ['simple', 'hlv'] },
+      existingCover: { type: 'number', required: false, min: 0 },
+      outstandingLoans: { type: 'number', required: false, min: 0 },
+      educationFund: { type: 'number', required: false, min: 0 },
+      spouseWorking: { type: 'boolean', required: false },
+    }
+
+    const validation = validateParams(body, lifeInsuranceSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
     const {
       monthlyIncome,
       age,
@@ -15,11 +39,7 @@ export async function POST(req: NextRequest) {
       outstandingLoans = 0,
       educationFund = 0,
       spouseWorking = false,
-    } = body
-
-    if (!monthlyIncome || !age) {
-      return NextResponse.json({ error: 'monthlyIncome and age are required' }, { status: 400 })
-    }
+    } = validation.data
 
     const annualIncome = monthlyIncome * 12
     const loans = Number(outstandingLoans)

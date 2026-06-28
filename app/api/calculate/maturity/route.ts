@@ -3,17 +3,32 @@ import { getActivePlans } from '@/lib/lic-engine/plan-loader'
 import licData from '@/lib/lic-plans-data.js'
 const { BONUS_RATES_2026 } = (licData as any) ?? {}
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Maturity projections are indicative and based on current bonus rates declared by LIC. Actual bonus declarations may vary each year. Not a guaranteed return.'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { planNo, sa, term } = body
-
-    if (!planNo || !sa || !term) {
-      return NextResponse.json({ error: 'planNo, sa, term are required' }, { status: 400 })
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
+
+    const maturitySchema: ValidationSchema = {
+      planNo: { type: 'number', required: true, min: 1, max: 2000 },
+      sa: { type: 'number', required: true, min: 1000 },
+      term: { type: 'number', required: true, min: 1, max: 100 },
+    }
+
+    const validation = validateParams(body, maturitySchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
+    const { planNo, sa, term } = validation.data
 
     // KB lookup optional — fall back to BONUS_RATES_2026 if plan not in KB
     const activePlans = getActivePlans()

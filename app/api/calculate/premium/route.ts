@@ -3,17 +3,36 @@ import { getActivePlans } from '@/lib/lic-engine/plan-loader'
 import { interpolateRate } from '@/lib/lic-engine/interpolate'
 import { GST_RULES, MODE_REBATE, SA_REBATE, getTabularRate, getPPT, PLANS } from '@/lib/lic-plans-data.js'
 
+import { validateParams, type ValidationSchema } from '@/lib/server-utils'
+
 const DISCLAIMER =
   'Premium figures are indicative. Actual premium may vary. Please verify with an authorised LIC agent. IRDAI Reg No: ...'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { planNo, age, term, sa, mode = 'yearly', smoker = false, gender = 'male' } = body
-
-    if (!planNo || !age || !term || !sa) {
-      return NextResponse.json({ error: 'planNo, age, term, sa are required' }, { status: 400 })
+    let body: any
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
+
+    const premiumSchema: ValidationSchema = {
+      planNo: { type: 'number', required: true, min: 1, max: 2000 },
+      age: { type: 'number', required: true, min: 0, max: 120 },
+      term: { type: 'number', required: true, min: 1, max: 100 },
+      sa: { type: 'number', required: true, min: 1000 },
+      mode: { type: 'string', required: false, enum: ['yearly', 'halfyearly', 'quarterly', 'monthly'] },
+      smoker: { type: 'boolean', required: false },
+      gender: { type: 'string', required: false, enum: ['male', 'female'] }
+    }
+
+    const validation = validateParams(body, premiumSchema)
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
+    }
+
+    const { planNo, age, term, sa, mode = 'yearly', smoker = false, gender = 'male' } = validation.data
 
     // Look up in legacy JS first (always available, 123 plans)
     const legacyPlan = PLANS.find((p: { planNo: number }) => p.planNo === Number(planNo))
