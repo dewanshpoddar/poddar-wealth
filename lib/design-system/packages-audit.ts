@@ -331,7 +331,7 @@ export const INSTALLED = {
   '@fontsource/dm-serif-display': '✅ Just installed',
   '@fontsource/playfair-display': '✅ Just installed',
   '@fontsource/lora': '✅ Just installed',
-  '@fontsource-variable/dm-mono': '✅ Just installed',
+  '@fontsource/dm-mono': '✅ Just installed (fixed weight, not variable)',
   '@fontsource-variable/jetbrains-mono': '✅ Just installed',
   '@fontsource-variable/fira-code': '✅ Just installed',
 

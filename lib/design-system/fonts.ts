@@ -160,12 +160,12 @@
  * MONOSPACE FONTS (use for numbers, financial data, code)
  * ═══════════════════════════════════════════════════════════════════
  *
- * 17. DM MONO — @fontsource-variable/dm-mono
+ * 17. DM MONO — @fontsource/dm-mono  (NOT variable — fixed weight only)
  *     Style: Clean, slightly humanist mono. Part of the DM type family.
  *     Best for: Premium amount displays, financial tables
- *     Variable font: YES
- *     Import: import '@fontsource-variable/dm-mono/index.css'
- *     CSS: font-family: 'DM Mono Variable', monospace;
+ *     Variable font: NO — use weight 400 or 500
+ *     Import: import '@fontsource/dm-mono/400.css'
+ *     CSS: font-family: 'DM Mono', monospace;
  *
  * 18. JETBRAINS MONO — @fontsource-variable/jetbrains-mono
  *     Style: Developer's choice. Highly legible, distinctive ligatures.
