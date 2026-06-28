@@ -4,13 +4,12 @@ import { useState, useMemo, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
-import licData from '@/lib/lic-plans-data.js'
-const { PLANS } = licData as any
 import { openLeadPopup } from '@/lib/events'
+import { PLANS } from '@/lib/lic-plans-data.js'
 import { Scale, Phone, Calculator, X, Check, ChevronRight } from 'lucide-react'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
 
-const activePlans = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
+const activePlans = Array.isArray(PLANS) ? (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn') : []
 
 const CATEGORY_LABEL: Record<string, string> = {
   endowment: 'Endowment', moneyback: 'Money Back', wholelife: 'Whole Life',

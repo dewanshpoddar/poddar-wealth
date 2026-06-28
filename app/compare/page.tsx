@@ -5,12 +5,11 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
-import licData from '@/lib/lic-plans-data.js'
-const { PLANS } = licData as any
 import { openLeadPopup } from '@/lib/events'
+import { PLANS } from '@/lib/lic-plans-data.js'
 import { Scale, Phone, Calculator, X, Check } from 'lucide-react'
 
-const activePlans = (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn')
+const activePlans: any[] = Array.isArray(PLANS) ? (PLANS as any[]).filter((p: any) => p.status !== 'withdrawn') : []
 
 const CATEGORY_LABEL: Record<string, string> = {
   endowment: 'Endowment', moneyback: 'Money Back', wholelife: 'Whole Life',

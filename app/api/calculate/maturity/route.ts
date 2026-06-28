@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getActivePlans } from '@/lib/lic-engine/plan-loader'
 import licData from '@/lib/lic-plans-data.js'
-const { BONUS_RATES_2026 } = licData as any
+const { BONUS_RATES_2026 } = (licData as any) ?? {}
 
 const DISCLAIMER =
   'Maturity projections are indicative and based on current bonus rates declared by LIC. Actual bonus declarations may vary each year. Not a guaranteed return.'

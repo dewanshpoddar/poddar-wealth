@@ -1,9 +1,8 @@
 'use client'
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { PLANS } from '@/lib/lic-plans-data.js'
 import { TrendingUp, Coffee, MessageCircle, Share2 } from 'lucide-react'
-import licData from '@/lib/lic-plans-data.js'
-const { PLANS } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllPlans } from '@/lib/lic-engine/plan-loader'
 import licData from '@/lib/lic-plans-data.js'
-const { BONUS_RATES_2026 } = licData as any
+const { BONUS_RATES_2026 } = (licData as any) ?? {}
 
 const DISCLAIMER =
   'Paid-up values are indicative. Actual paid-up benefits depend on LIC assessment at time of request. Future bonus accrual stops on paid-up conversion.'
