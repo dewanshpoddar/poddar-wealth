@@ -7,7 +7,8 @@ import {
 } from 'lucide-react'
 import { fmt, fmtSA } from '@/lib/format'
 import { MODE_LABEL, SA_PRESETS } from '@/lib/constants'
-import { RIDERS } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { RIDERS } = licData as any
 import { openLeadPopup } from '@/lib/events'
 import { trackEvent } from '@/lib/analytics'
 import { CAT_AVATAR_COLOR } from './calc-constants'

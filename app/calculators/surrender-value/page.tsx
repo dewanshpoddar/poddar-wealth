@@ -2,7 +2,8 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { AlertTriangle, MessageCircle, Share2, TrendingUp, ShieldCheck } from 'lucide-react'
-import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { PLANS } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
@@ -41,20 +42,6 @@ const SURRENDER_FAQ = [
   }
 ]
 
-function getGsvFactor(yearsPaid: number): number {
-  if (yearsPaid < 2) return 0
-  if (yearsPaid === 2) return 0.30
-  if (yearsPaid === 3) return 0.30
-  if (yearsPaid <= 6) return 0.50
-  if (yearsPaid === 7 || yearsPaid === 8) return 0.55
-  if (yearsPaid === 9) return 0.60
-  if (yearsPaid === 10) return 0.65
-  if (yearsPaid === 11) return 0.70
-  if (yearsPaid === 12) return 0.75
-  if (yearsPaid === 13) return 0.80
-  if (yearsPaid === 14) return 0.85
-  return 0.90
-}
 
 function SurrenderCalcContent() {
   const searchParams = useSearchParams()
@@ -75,6 +62,8 @@ function SurrenderCalcContent() {
 
   // Calculation Results
   const [hasCalculated, setHasCalculated] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const [calcError, setCalcError] = useState<string | null>(null)
   const [totalPaid, setTotalPaid] = useState<number>(0)
   const [gsvVal, setGsvVal] = useState<number>(0)
   const [ssvVal, setSsvVal] = useState<number>(0)
@@ -108,54 +97,51 @@ function SurrenderCalcContent() {
     }
   }, [searchParams])
 
-  const selectedPlan = PLANS.find(p => p.planNo === planNo)
-
-  const handleCalculate = () => {
-    let annualPremium = 0
-    if (annualPremiumInput && !isNaN(Number(annualPremiumInput)) && Number(annualPremiumInput) > 0) {
-      annualPremium = Number(annualPremiumInput)
-    } else {
-      if (selectedPlan) {
-        const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
-        const ppt = getPPT(selectedPlan, term, baselineAge)
-        const premRes = calculatePremium({ planNo, sa, age: baselineAge, term, ppt, mode: 'yearly' })
-        annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
+  const handleCalculate = async () => {
+    setIsCalculating(true)
+    setCalcError(null)
+    try {
+      // Resolve annual premium — use input or fetch from premium API
+      let annualPremium = 0
+      if (annualPremiumInput && Number(annualPremiumInput) > 0) {
+        annualPremium = Number(annualPremiumInput)
       } else {
-        annualPremium = sa * 0.05
+        const baselineAge = searchParams.get('age') ? Number(searchParams.get('age')) : 30
+        const premRes = await fetch('/api/calculate/premium', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ planNo, sa, age: baselineAge, term, mode: 'yearly' }),
+        })
+        const premData = premRes.ok ? await premRes.json() : null
+        annualPremium = premData?.yearlyYear1 ?? sa * 0.05
       }
+
+      const res = await fetch('/api/calculate/surrender', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planNo, sa, annualPremium, yearsCompleted: yearsPaid, ppt: term, term }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setCalcError(data.error || 'Calculation failed'); return }
+
+      setTotalPaid(data.premiumsPaidTotal)
+      setGsvVal(data.gsv)
+      setSsvVal(data.ssvEstimate)
+      setSurrenderValue(data.payable)
+      setLossAmount(data.lossOnSurrender)
+      setLossPercent(Math.round((data.lossOnSurrender / data.premiumsPaidTotal) * 100))
+      setLoanAmount(Math.round(data.payable * 0.90))
+      setReducedSA(Math.round(sa * (yearsPaid / term)))
+      setReducedMaturity(Math.round(sa * (yearsPaid / term)) + Math.round((bonusRate * sa / 1000) * yearsPaid))
+      setHasCalculated(true)
+
+      updateSession({ sumAssured: sa, policyTerm: term })
+      addResult('surrender', { value: data.payable, loss: data.lossOnSurrender, loanAlternative: Math.round(data.payable * 0.90) })
+    } catch {
+      setCalcError('Network error. Please try again.')
+    } finally {
+      setIsCalculating(false)
     }
-
-    const totalPaidSum = annualPremium * yearsPaid
-    setTotalPaid(totalPaidSum)
-
-    const gsvFactor = getGsvFactor(yearsPaid)
-    const eligiblePremsForGsv = Math.max(totalPaidSum - annualPremium, 0)
-    const gsv = Math.round(eligiblePremsForGsv * gsvFactor)
-    setGsvVal(gsv)
-
-    const paidUpSA = Math.round(sa * (yearsPaid / term))
-    const accruedBonus = Math.round((bonusRate * sa / 1000) * yearsPaid)
-    
-    const remainingTerm = term - yearsPaid
-    const ssvFactor = Math.max(0.1, 0.9 - (remainingTerm * 0.035))
-    const ssv = Math.round((paidUpSA + accruedBonus) * ssvFactor)
-    setSsvVal(ssv)
-
-    const finalSurrender = Math.max(gsv, ssv)
-    setSurrenderValue(finalSurrender)
-
-    const loss = totalPaidSum - finalSurrender
-    setLossAmount(loss)
-    setLossPercent(Math.round((loss / totalPaidSum) * 100))
-
-    setLoanAmount(Math.round(finalSurrender * 0.90))
-    setReducedSA(paidUpSA)
-    setReducedMaturity(paidUpSA + accruedBonus)
-    setHasCalculated(true)
-
-    // Save to session
-    updateSession({ sumAssured: sa, policyTerm: term })
-    addResult('surrender', { value: finalSurrender, loss, loanAlternative: Math.round(finalSurrender * 0.90) })
   }
 
   const handleReset = () => {
@@ -246,7 +232,7 @@ Should I surrender or take a policy loan?` : ''
       term={term}
       hasCalculated={hasCalculated}
       onCalculate={handleCalculate}
-      calculateButtonText="Calculate Surrender Value"
+      calculateButtonText={isCalculating ? 'Calculating...' : 'Calculate Surrender Value'}
       formFields={
         <>
           <div>

@@ -2,7 +2,8 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Landmark, MessageCircle, Share2, TrendingUp, ShieldCheck } from 'lucide-react'
-import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { PLANS, calculatePremium, getPPT } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'

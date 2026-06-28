@@ -64,13 +64,17 @@ export interface AdvisePlansParams {
 
 export declare const PLANS: LICPlan[]
 export declare const RIDERS: Record<string, any>
-export declare const GST_RULES: Record<string, { year1: number; year2plus: number }>
+export declare const GST_RULES: Record<string, { year1: number; year2plus?: number }>
 export declare const MODE_REBATE: Record<string, number>
+export declare const SA_REBATE: (sa: number) => number
+export declare const BONUS_RATES_2026: Record<number, { srb?: number; ga?: number; fab?: number }>
+export declare const TABULAR_RATES: Record<number, Record<number, Record<number, number>>>
 
 export declare function calculatePremium(params: CalculatePremiumParams): PremiumResult
 export declare function calculateMaturity(params: any): any
 export declare function generateBenefitTable(params: any): BenefitRow[]
 export declare function getPPT(plan: LICPlan, term: number, age: number): number
+export declare function getTabularRate(planNo: number, age: number, term: number): number
 export declare function advisePlans(params: AdvisePlansParams): LICPlan[]
 
 export default PLANS

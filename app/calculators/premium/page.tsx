@@ -2,7 +2,8 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Coffee, TrendingUp, MessageCircle, Share2, Shield } from 'lucide-react'
-import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { PLANS } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
@@ -80,6 +81,8 @@ function PremiumCalcContent() {
   // Calculation State
   const [hasCalculated, setHasCalculated] = useState(false)
   const [premResult, setPremResult] = useState<any | null>(null)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const [calcError, setCalcError] = useState<string | null>(null)
   const [isUnlocked, setIsUnlocked] = useState(false)
 
   // Parse URL query params & session storage pre-fill
@@ -120,16 +123,27 @@ function PremiumCalcContent() {
     }
   }
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (!selectedPlan) return
-    const ppt = getPPT(selectedPlan, term, age)
-    const res = calculatePremium({ planNo, sa, age, term, ppt, mode, smoker, gender })
-    setPremResult(res)
-    setHasCalculated(true)
-
-    // Save inputs/results to session
-    updateSession({ age, sumAssured: sa, policyTerm: term })
-    addResult('premium', { amount: res ? res.yearlyYear1 : sa * 0.05, plan: selectedPlan.name, frequency: mode })
+    setIsCalculating(true)
+    setCalcError(null)
+    try {
+      const res = await fetch('/api/calculate/premium', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planNo, sa, age, term, mode, smoker, gender }),
+      })
+      const data = await res.json()
+      if (!res.ok) { setCalcError(data.error || 'Calculation failed'); return }
+      setPremResult(data)
+      setHasCalculated(true)
+      updateSession({ age, sumAssured: sa, policyTerm: term })
+      addResult('premium', { amount: data.yearlyYear1, plan: selectedPlan.name, frequency: mode })
+    } catch {
+      setCalcError('Network error. Please try again.')
+    } finally {
+      setIsCalculating(false)
+    }
   }
 
   // Pre-calculated values for UI display
@@ -224,9 +238,12 @@ Can you suggest the best configuration?`
       term={term}
       hasCalculated={hasCalculated}
       onCalculate={handleCalculate}
-      calculateButtonText="Calculate Premium"
+      calculateButtonText={isCalculating ? 'Calculating...' : 'Calculate Premium'}
       formFields={
         <>
+          {calcError && (
+            <div className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{calcError}</div>
+          )}
           <div>
             <label className="text-xs font-semibold text-gray-700 mb-1.5 block">Select LIC Plan</label>
             <select

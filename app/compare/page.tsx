@@ -5,7 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useLang } from '@/lib/LangContext'
 import { trackEvent } from '@/lib/analytics'
-import { PLANS } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { PLANS } = licData as any
 import { openLeadPopup } from '@/lib/events'
 import { Scale, Phone, Calculator, X, Check } from 'lucide-react'
 

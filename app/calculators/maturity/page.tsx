@@ -2,7 +2,8 @@
 import React, { Suspense, useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TrendingUp, Coffee, MessageCircle, Share2 } from 'lucide-react'
-import { PLANS, calculatePremium, getPPT } from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { PLANS } = licData as any
 import QuickPick from '@/components/ui/QuickPick'
 import SliderField from '@/components/ui/SliderField'
 import CalculatorShell from '@/components/calculators/CalculatorShell'
@@ -62,6 +63,8 @@ function MaturityCalcContent() {
 
   // Result state
   const [hasCalculated, setHasCalculated] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const [calcError, setCalcError] = useState<string | null>(null)
   const [maturityVal, setMaturityVal] = useState<number>(0)
   const [totalPaid, setTotalPaid] = useState<number>(0)
   const [accruedBonus, setAccruedBonus] = useState<number>(0)
@@ -92,8 +95,6 @@ function MaturityCalcContent() {
     }
   }, [searchParams])
 
-  const selectedPlan = PLANS.find(p => p.planNo === planNo)
-
   const handlePlanChange = (num: number) => {
     setPlanNo(num)
     setHasCalculated(false)
@@ -107,44 +108,57 @@ function MaturityCalcContent() {
     }
   }
 
-  const handleCalculate = () => {
-    // 1. Calculate accrued bonus
-    const bonus = Math.round(bonusRate * (sa / 1000) * term)
-    
-    // 2. Calculate FAB (if included)
-    const fab = includeFAB
-      ? (term >= 15 ? Math.round(sa * 0.05) : term >= 10 ? Math.round(sa * 0.03) : 0)
-      : 0
-    
-    const mat = sa + bonus + fab
+  const handleCalculate = async () => {
+    setIsCalculating(true)
+    setCalcError(null)
+    try {
+      // Fetch maturity + premium in parallel
+      const [matRes, premRes] = await Promise.all([
+        fetch('/api/calculate/maturity', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ planNo, sa, term }),
+        }),
+        customPremium && Number(customPremium) > 0
+          ? Promise.resolve(null)
+          : fetch('/api/calculate/premium', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ planNo, sa, age, term, mode: 'yearly' }),
+            }),
+      ])
 
-    // 3. Estimate annual premium
-    let annualPremium = 0
-    if (customPremium && !isNaN(Number(customPremium)) && Number(customPremium) > 0) {
-      annualPremium = Number(customPremium)
-    } else {
-      if (selectedPlan) {
-        const ppt = getPPT(selectedPlan, term, age)
-        const premRes = calculatePremium({ planNo, sa, age, term, ppt, mode: 'yearly' })
-        annualPremium = premRes ? premRes.yearlyYear1 : sa * 0.05
-      } else {
-        annualPremium = sa * 0.05
-      }
+      const matData = await matRes.json()
+      if (!matRes.ok) { setCalcError(matData.error || 'Maturity calculation failed'); return }
+
+      const premData = premRes ? await premRes.json() : null
+
+      const bonus = matData.totalSRB
+      const fab = includeFAB ? matData.fabEstimate : 0
+      const annualPremium =
+        customPremium && Number(customPremium) > 0
+          ? Number(customPremium)
+          : (premData?.yearlyYear1 ?? sa * 0.05)
+
+      const totalPremPaid = annualPremium * term
+      const adjustedMat = bonus + sa + (includeFAB ? fab : 0)
+      const cagr = totalPremPaid > 0 ? ((Math.pow(adjustedMat / totalPremPaid, 1 / term) - 1) * 100) : 0
+
+      setBonusRate(matData.bonusRateUsed ?? bonusRate)
+      setMaturityVal(adjustedMat)
+      setTotalPaid(totalPremPaid)
+      setAccruedBonus(bonus)
+      setFabVal(fab)
+      setEffectiveReturn(Number(cagr.toFixed(2)))
+      setHasCalculated(true)
+
+      updateSession({ age, sumAssured: sa, policyTerm: term })
+      addResult('maturity', { value: adjustedMat, totalPaid: totalPremPaid, netGain: adjustedMat - totalPremPaid })
+    } catch {
+      setCalcError('Network error. Please try again.')
+    } finally {
+      setIsCalculating(false)
     }
-
-    const totalPremPaid = annualPremium * term
-    const cagr = totalPremPaid > 0 ? ((Math.pow(mat / totalPremPaid, 1 / term) - 1) * 100) : 0
-
-    setMaturityVal(mat)
-    setTotalPaid(totalPremPaid)
-    setAccruedBonus(bonus)
-    setFabVal(fab)
-    setEffectiveReturn(Number(cagr.toFixed(2)))
-    setHasCalculated(true)
-
-    // Save to session
-    updateSession({ age, sumAssured: sa, policyTerm: term })
-    addResult('maturity', { value: mat, totalPaid: totalPremPaid, netGain: mat - totalPremPaid })
   }
 
   const handleReset = () => {
