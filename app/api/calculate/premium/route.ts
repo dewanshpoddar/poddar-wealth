@@ -1,14 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getActivePlans } from '@/lib/lic-engine/plan-loader'
 import { interpolateRate } from '@/lib/lic-engine/interpolate'
-import {
-  GST_RULES,
-  MODE_REBATE,
-  SA_REBATE,
-  getTabularRate,
-  getPPT,
-  PLANS,
-} from '@/lib/lic-plans-data.js'
+import licData from '@/lib/lic-plans-data.js'
+const { GST_RULES, MODE_REBATE, SA_REBATE, getTabularRate, getPPT, PLANS } = licData as any
 
 const DISCLAIMER =
   'Premium figures are indicative. Actual premium may vary. Please verify with an authorised LIC agent. IRDAI Reg No: ...'
@@ -39,7 +33,10 @@ export async function POST(req: NextRequest) {
 
     // Compute PPT from legacy JS (handles all ppt variants)
     const legacyPlan = PLANS.find((p: { planNo: number }) => p.planNo === Number(planNo))
-    const ppt = getPPT(legacyPlan, term, age)
+    if (!legacyPlan) {
+      return NextResponse.json({ error: 'Plan not found in rate table' }, { status: 404 })
+    }
+    const ppt = getPPT(legacyPlan!, term, age)
 
     let rate: number
     let rateSource: 'brochure' | 'estimated'
