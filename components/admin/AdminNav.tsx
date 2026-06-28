@@ -17,17 +17,21 @@ import {
   X,
   Shield,
   Terminal,
-  Eye
+  Eye,
+  BookOpen,
+  GitMerge,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/admin/architecture', icon: Map, label: 'Architecture' },
-  { href: '/admin/docs', icon: FileText, label: 'Docs' },
+  { href: '/admin/data-updates', icon: GitMerge, label: 'Data Pipeline' },
+  { href: '/admin/brochures', icon: BookOpen, label: 'Brochures' },
   { href: '/admin/leads', icon: Users, label: 'Leads' },
   { href: '/admin/referrals', icon: Gift, label: 'Referrals' },
   { href: '/admin/seo', icon: Search, label: 'SEO' },
   { href: '/admin/ab', icon: FlaskConical, label: 'A/B Tests' },
+  { href: '/admin/architecture', icon: Map, label: 'Architecture' },
+  { href: '/admin/docs', icon: FileText, label: 'Docs' },
 ]
 
 type AdminRole = 'admin' | 'developer' | 'viewer'

@@ -34,6 +34,8 @@ const ICON_MAP = {
   surrender: Scale,
   loan: HandCoins,
   health: HeartPulse,
+  'policy-analyzer': FileText,
+  'plan-compare': Scale,
 }
 
 const CATEGORIES = [
@@ -67,8 +69,8 @@ const TOOLS_BY_CATEGORY: Record<'insurance' | 'planning' | 'analysis', ToolItem[
   ],
   analysis: [
     { id: 'health', label: 'Health score', path: '/calculators/policy-health', isHot: true },
-    { id: 'policy-analyzer', label: 'Policy analyzer', path: '/analyzers/policy-document' },
-    { id: 'plan-compare', label: 'Plan compare', path: '/compare' },
+    { id: 'policy-analyzer', label: 'Policy analyzer', path: '/calculators/policy-analyzer' },
+    { id: 'plan-compare', label: 'Plan compare', path: '/calculators/plan-compare' },
     { id: 'nav-tracker', label: 'NAV tracker', path: '/nav-tracker' },
   ],
 }
@@ -114,7 +116,7 @@ export default function CalculatorShell({
   // Map of calculator background images
   const BG_IMAGE_MAP: Record<string, string> = {
     premium: '/assets/hero-family.webp',
-    maturity: '/assets/hero-marriage.webp',
+    maturity: '/assets/hero-maturity.png',
     coverage: '/assets/hero-coverage.png',
     retirement: '/assets/hero-retirement.webp',
     surrender: '/assets/hero-surrender.png',
@@ -148,7 +150,7 @@ export default function CalculatorShell({
       setActiveCategory('insurance')
     } else if (['retirement'].includes(activeTabId)) {
       setActiveCategory('planning')
-    } else if (['health'].includes(activeTabId)) {
+    } else if (['health', 'policy-analyzer', 'plan-compare'].includes(activeTabId)) {
       setActiveCategory('analysis')
     }
   }, [activeTabId])
@@ -235,13 +237,18 @@ export default function CalculatorShell({
   }
   const activeGlow = GLOW_COLORS[activeCategory as keyof typeof GLOW_COLORS] || 'bg-amber-500/10'
 
-  // Dynamic taglines mapping based on the active tab calculator
   const getDynamicTagline = () => {
     if (['premium', 'life-insurance', 'coverage'].includes(activeTabId)) {
       return 'Protect what matters most. With 31 years of insurance advisory trust.'
     }
     if (activeTabId === 'retirement') {
       return 'Plan your golden years. With India\'s trusted retirement planners.'
+    }
+    if (activeTabId === 'policy-analyzer') {
+      return 'Understand your policy terms instantly. Secure AI-powered summary.'
+    }
+    if (activeTabId === 'plan-compare') {
+      return 'Compare LIC plans side-by-side. Make data-driven choices.'
     }
     return 'Maximize your policy value. With expert, unbiased mathematical analysis.'
   }
@@ -375,7 +382,7 @@ export default function CalculatorShell({
                   <button
                     key={tool.id}
                     onClick={() => handlePlaceholderClick(tool.label)}
-                    className="flex-shrink-0 px-4 py-2 rounded-xl border border-white/5 text-[11px] text-white/30 hover:text-white/50 cursor-pointer snap-start transition-colors bg-white/[0.02]"
+                    className="flex-shrink-0 px-4 py-2 rounded-xl border border-white/10 text-[11px] text-white/65 hover:text-white hover:border-white/20 hover:bg-white/10 cursor-pointer snap-start transition-colors bg-white/5"
                   >
                     {content}
                   </button>
@@ -389,7 +396,7 @@ export default function CalculatorShell({
                   className={`flex-shrink-0 px-4 py-2 rounded-xl text-[11px] font-medium border snap-start transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] ${
                     isActive
                       ? 'bg-amber-500 text-[#0f1225] border-amber-500 font-bold shadow-md shadow-amber-500/10'
-                      : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:text-white hover:border-white/20'
+                      : 'bg-white/5 border-white/10 text-white/78 hover:bg-white/10 hover:text-white hover:border-white/20'
                   }`}
                 >
                   {content}

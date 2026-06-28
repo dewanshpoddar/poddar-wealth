@@ -32,7 +32,9 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
     pathname === '/admin/architecture' ||
     pathname === '/admin/docs' ||
     pathname === '/admin/seo' ||
-    pathname === '/admin/ab';
+    pathname === '/admin/ab' ||
+    pathname?.startsWith('/admin/data-updates') ||
+    pathname?.startsWith('/admin/brochures');
 
   const hasAccess = () => {
     if (!authenticated) return false;
