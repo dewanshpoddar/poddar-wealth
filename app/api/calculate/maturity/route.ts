@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     let bonusRatePer1000: number | null = plan?.bonusRateFY25 ?? null
     let fabRatePer1000: number | null = plan?.fabRate ?? null
-    let bonusSource: 'live_kb' | 'estimated' = plan ? 'live_kb' : 'estimated'
+    let rateSource: 'supabase' | 'estimated' = plan ? 'supabase' : 'estimated'
 
     if (bonusRatePer1000 === null) {
       const legacy = BONUS_RATES_2026?.[Number(planNo)]
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         bonusRatePer1000 = legacy.srb ?? legacy.ga ?? null
         fabRatePer1000 = legacy.fab ?? null
       }
-      bonusSource = 'estimated'
+      rateSource = 'estimated'
     }
 
     let totalSRB = 0
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       totalMaturity,
       years: term,
       bonusRateUsed: bonusRatePer1000 ?? 0,
-      bonusSource,
+      rateSource,
       disclaimer: DISCLAIMER,
     })
   } catch (err) {

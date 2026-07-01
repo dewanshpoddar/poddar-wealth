@@ -45,14 +45,20 @@ export async function POST(req: NextRequest) {
     const plan = await getPlanByNo(Number(planNo))
 
     let rate: number
-    let rateSource: 'brochure' | 'estimated'
+    let rateSource: 'brochure' | 'interpolated' | 'estimated'
 
     if (plan?.tabularRates && Object.keys(plan.tabularRates).length > 0) {
-      rate = interpolateRate(plan.tabularRates, age, term)
-      rateSource = 'brochure'
+      const exactRate = plan.tabularRates[age]?.[term]
+      if (exactRate !== undefined) {
+        rate = exactRate
+        rateSource = 'brochure'       // exact match from approved PDF
+      } else {
+        rate = interpolateRate(plan.tabularRates, age, term)
+        rateSource = 'interpolated'   // bilinear interp from approved PDF rates
+      }
     } else {
       rate = getTabularRate(Number(planNo), age, term)
-      rateSource = 'estimated'
+      rateSource = 'estimated'        // legacy rate table, no approved brochure
     }
 
     let basePremium = (rate * sa) / 1000

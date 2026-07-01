@@ -47,7 +47,7 @@ interface DBPlan {
   superseded_by_uin: string | null
 }
 
-function normaliseFromDB(row: DBPlan): NormalisedPlan {
+function normaliseFromDB(row: DBPlan & { id?: number }): NormalisedPlan {
   return {
     planNo: row.plan_no,
     name: row.name,
@@ -74,11 +74,47 @@ function normaliseFromDB(row: DBPlan): NormalisedPlan {
     gstYear2Pct: row.gst_renewal_pct,
     saRebate: null,
     brochureUrl: row.brochure_url,
-    tabularRates: null,
+    tabularRates: null, // populated by enrichWithBrochureRates() when approved rates exist
     gsvFactors: null,
     supersedingUIN: row.superseded_by_uin,
     raw: row as unknown as LicPlanRecord,
+    _dbId: row.id,
   }
+}
+
+/**
+ * Fetches approved premium rates from lic_premium_rates and populates
+ * plan.tabularRates in-place. No-ops silently when no approved brochure exists.
+ */
+async function enrichWithBrochureRates(
+  plan: NormalisedPlan,
+  sb: ReturnType<typeof getSupabase>
+): Promise<void> {
+  if (!sb || !(plan as NormalisedPlan & { _dbId?: number })._dbId) return
+  const dbId = (plan as NormalisedPlan & { _dbId: number })._dbId
+
+  const { data: approved } = await sb
+    .from('lic_brochures')
+    .select('id')
+    .eq('plan_id', dbId)
+    .eq('status', 'approved')
+    .limit(1)
+
+  if (!approved?.length) return
+
+  const { data: rates, error } = await sb
+    .from('lic_premium_rates')
+    .select('age, term, rate_per_1000')
+    .eq('plan_id', dbId)
+
+  if (error || !rates?.length) return
+
+  const grid: Record<number, Record<number, number>> = {}
+  for (const r of rates) {
+    grid[r.age] = grid[r.age] ?? {}
+    grid[r.age][r.term] = Number(r.rate_per_1000)
+  }
+  if (Object.keys(grid).length) plan.tabularRates = grid
 }
 
 // ─── JSON fallback (lic-kb-live.json) ────────────────────────────────────────
@@ -143,6 +179,7 @@ export interface NormalisedPlan {
   gsvFactors: Record<number, number> | null
   supersedingUIN: string | null
   raw: LicPlanRecord               // full original record
+  _dbId?: number                   // internal Supabase row id — not for external use
 }
 
 function normalise(p: LicPlanRecord): NormalisedPlan {
@@ -215,18 +252,21 @@ export async function getActivePlans(): Promise<NormalisedPlan[]> {
   return loadPlans().filter(p => p.Status === 'Active').map(normalise)
 }
 
-/** Lookup by plan number — current version, searches all 399 plans including withdrawn */
+/** Lookup by plan number — current version, enriched with approved brochure rates */
 export async function getPlanByNo(planNo: number): Promise<NormalisedPlan | null> {
   const sb = getSupabase()
   if (sb) {
-    // Prefer is_current_version; fall back to any row with this plan_no
     const { data, error } = await sb
       .from('lic_plans')
       .select('*')
       .eq('plan_no', planNo)
       .order('is_current_version', { ascending: false })
       .limit(1)
-    if (!error && data?.length) return normaliseFromDB(data[0])
+    if (!error && data?.length) {
+      const plan = normaliseFromDB(data[0])
+      await enrichWithBrochureRates(plan, sb)
+      return plan
+    }
     if (error) console.warn('[plan-loader] Supabase getPlanByNo failed, falling back to JSON:', error.message)
   }
   const all = loadPlans()
