@@ -293,6 +293,60 @@ export async function getPlanByUIN(uin: string): Promise<NormalisedPlan | null> 
   return match ? normalise(match) : null
 }
 
+/**
+ * Looks up GSV factors for a specific plan + term from lic_gsv_factors.
+ * Returns a policy_year→gsv_pct grid for the given term (or nearest term),
+ * plus the data source. Falls back to empty when no approved data exists.
+ */
+export async function lookupGsvFactors(
+  planDbId: number | undefined,
+  term: number,
+): Promise<{ grid: Record<number, number>; source: 'brochure' | 'interpolated' | 'estimated' }> {
+  const sb = getSupabase()
+  if (!sb || !planDbId) return { grid: {}, source: 'estimated' }
+
+  // Confirm approved brochure exists
+  const { data: approved } = await sb
+    .from('lic_brochures')
+    .select('id')
+    .eq('plan_id', planDbId)
+    .eq('status', 'approved')
+    .limit(1)
+
+  if (!approved?.length) return { grid: {}, source: 'estimated' }
+
+  // Try exact term match first
+  const { data: exact } = await sb
+    .from('lic_gsv_factors')
+    .select('policy_year, gsv_pct')
+    .eq('plan_id', planDbId)
+    .eq('term', term)
+
+  if (exact?.length) {
+    const grid: Record<number, number> = {}
+    for (const r of exact) grid[r.policy_year] = Number(r.gsv_pct)
+    return { grid, source: 'brochure' }
+  }
+
+  // No exact term — find nearest term with data
+  const { data: allRows } = await sb
+    .from('lic_gsv_factors')
+    .select('policy_year, gsv_pct, term')
+    .eq('plan_id', planDbId)
+    .order('term', { ascending: true })
+
+  if (!allRows?.length) return { grid: {}, source: 'estimated' }
+
+  // Pick the term closest to requested
+  const terms = [...new Set(allRows.map(r => r.term as number))]
+  const closestTerm = terms.reduce((a, b) => Math.abs(b - term) < Math.abs(a - term) ? b : a)
+  const grid: Record<number, number> = {}
+  for (const r of allRows.filter(r => r.term === closestTerm)) {
+    grid[r.policy_year] = Number(r.gsv_pct)
+  }
+  return { grid, source: 'interpolated' }
+}
+
 /** Stats for health checks and admin dashboard */
 export function getPlanStats() {
   const all = loadPlans()

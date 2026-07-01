@@ -83,9 +83,28 @@ export async function POST(req: NextRequest) {
     const { error: rateErr } = await sb
       .from('lic_premium_rates')
       .upsert(rateRows, { onConflict: 'plan_id,age,term' })
-    if (rateErr) {
-      console.error('[brochures/extract] rate upsert error:', rateErr.message)
+    if (rateErr) console.error('[brochures/extract] rate upsert error:', rateErr.message)
+  }
+
+  // Upsert GSV factors into lic_gsv_factors (term-aware)
+  const gsvRows: { plan_id: number; plan_no: number; policy_year: number; term: number; gsv_pct: number; source: string }[] = []
+  const src = parsed.source === 'llm' ? 'brochure_llm' : 'brochure'
+  for (const [termStr, yearMap] of Object.entries(parsed.gsvByTerm)) {
+    for (const [yearStr, pct] of Object.entries(yearMap)) {
+      gsvRows.push({ plan_id: brochureRow.plan_id, plan_no: brochureRow.plan_no, policy_year: parseInt(yearStr), term: parseInt(termStr), gsv_pct: pct, source: src })
     }
+  }
+  // Also persist term-agnostic factors with term=0 as a sentinel
+  if (gsvRows.length === 0) {
+    for (const [yearStr, pct] of Object.entries(parsed.gsvFactors)) {
+      gsvRows.push({ plan_id: brochureRow.plan_id, plan_no: brochureRow.plan_no, policy_year: parseInt(yearStr), term: 0, gsv_pct: pct, source: src })
+    }
+  }
+  if (gsvRows.length > 0) {
+    const { error: gsvErr } = await sb
+      .from('lic_gsv_factors')
+      .upsert(gsvRows, { onConflict: 'plan_id,policy_year,term' })
+    if (gsvErr) console.error('[brochures/extract] gsv upsert error:', gsvErr.message)
   }
 
   // Update brochure status to extracted

@@ -82,6 +82,8 @@ export interface PremiumResult {
   gst?: number
   totalPayable?: number
   isUlip?: boolean
+  rateSource?: 'brochure' | 'interpolated' | 'estimated'
+  ppt?: number
 }
 
 export interface MaturityResult {

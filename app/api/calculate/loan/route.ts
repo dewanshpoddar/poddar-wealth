@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getPlanByNo } from '@/lib/lic-engine/plan-loader'
+import { getPlanByNo, lookupGsvFactors } from '@/lib/lic-engine/plan-loader'
 import { interpolateGSV } from '@/lib/lic-engine/interpolate'
 
 import { validateParams, type ValidationSchema } from '@/lib/server-utils'
@@ -42,10 +42,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: validation.error }, { status: 400 })
     }
 
-    const { planNo, sa, annualPremium, yearsCompleted, ppt, term } = validation.data
+    const { planNo, annualPremium, yearsCompleted, ppt, term } = validation.data
 
     const plan = await getPlanByNo(Number(planNo))
-    // plan is optional — fall back gracefully if not in KB
 
     const minYears = plan?.surrenderAfterYears ?? 3
     if (yearsCompleted < minYears) {
@@ -59,9 +58,15 @@ export async function POST(req: NextRequest) {
     const premiumsPaidTotal = annualPremium * premiumsPaidYears
 
     let gsvFactor: number
-    let rateSource: 'brochure' | 'estimated'
+    let rateSource: 'brochure' | 'interpolated' | 'estimated'
 
-    if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
+    const planDbId = (plan as (typeof plan & { _dbId?: number }) | null)?._dbId
+    const { grid: gsvGrid, source: gsvSource } = await lookupGsvFactors(planDbId, term)
+
+    if (Object.keys(gsvGrid).length > 0) {
+      gsvFactor = interpolateGSV(gsvGrid, yearsCompleted) / 100
+      rateSource = gsvSource
+    } else if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
       gsvFactor = interpolateGSV(plan.gsvFactors, yearsCompleted) / 100
       rateSource = 'brochure'
     } else {

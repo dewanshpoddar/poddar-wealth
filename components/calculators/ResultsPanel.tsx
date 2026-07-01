@@ -261,6 +261,26 @@ export default function ResultsPanel({
                               </span>
                             </div>
                           )}
+                          {/* Rate source badge */}
+                          {premResult.rateSource && (
+                            <div className="mt-2 flex justify-center">
+                              {premResult.rateSource === 'brochure' && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+                                  <CheckCircle2 size={10} /> Brochure-verified
+                                </span>
+                              )}
+                              {premResult.rateSource === 'interpolated' && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                                  ≈ Interpolated from brochure
+                                </span>
+                              )}
+                              {premResult.rateSource === 'estimated' && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-medium text-gray-500 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded-full">
+                                  ~ Estimated
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                       )
                     })()}

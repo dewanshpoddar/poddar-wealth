@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getPlanByNo } from '@/lib/lic-engine/plan-loader'
+import { getPlanByNo, lookupGsvFactors } from '@/lib/lic-engine/plan-loader'
 import { interpolateGSV } from '@/lib/lic-engine/interpolate'
 import { validateParams, type ValidationSchema } from '@/lib/server-utils'
 
@@ -58,11 +58,17 @@ export async function POST(req: NextRequest) {
     const premiumsPaidYears = Math.min(yearsCompleted, ppt ?? term)
     const premiumsPaidTotal = annualPremium * premiumsPaidYears
 
-    // GSV calculation
+    // GSV calculation — brochure (exact) → interpolated → estimated
     let gsvFactor: number
-    let rateSource: 'brochure' | 'estimated'
+    let rateSource: 'brochure' | 'interpolated' | 'estimated'
 
-    if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
+    const planDbId = (plan as (typeof plan & { _dbId?: number }) | null)?._dbId
+    const { grid: gsvGrid, source: gsvSource } = await lookupGsvFactors(planDbId, term)
+
+    if (Object.keys(gsvGrid).length > 0) {
+      gsvFactor = interpolateGSV(gsvGrid, yearsCompleted) / 100
+      rateSource = gsvSource
+    } else if (plan?.gsvFactors && Object.keys(plan.gsvFactors).length > 0) {
       gsvFactor = interpolateGSV(plan.gsvFactors, yearsCompleted) / 100
       rateSource = 'brochure'
     } else {
