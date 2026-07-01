@@ -131,6 +131,7 @@ export async function POST(req: NextRequest) {
     source: parsed.source,
     rowCount: parsed.rowCount,
     ratesInserted: rateRows.length,
+    gsvRowsInserted: gsvRows.length,
     gsvFactors: parsed.gsvFactors,
     preview: Object.entries(parsed.rates).slice(0, 3).map(([age, terms]) => ({ age, terms })),
   })

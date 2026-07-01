@@ -1,257 +1,339 @@
 /**
- * LIC brochure PDF parser.
- * Stage 1: regex rule-based extraction of premium rate tables + GSV factor tables.
- * Stage 2: if <5 rows found for premium rates, Groq LLM fallback with raw PDF text.
+ * LIC brochure PDF parser — structured JSON extraction (pdf2json).
+ *
+ * Extracts two data types from LIC sales brochures:
+ *   1. Illustration rates: "Sample Illustrative Premium" table → 3-4 age×term anchor points
+ *   2. GSV factors: Guaranteed Surrender Value tables → full term×policyYear grid
+ *
+ * Note: LIC sales brochures do NOT contain full age×term premium rate grids.
+ * Those are in separate LIC Agent Rate Books (future data source).
+ * The illustration table gives 3-4 anchor points usable for bilinear interpolation.
  */
 import type { TabularRateGrid, GSVFactorGrid } from '@/lib/lic-engine/types'
 
 export interface ParsedBrochure {
-  rates: TabularRateGrid           // age → { term → ratePerThousand }
-  gsvByTerm: Record<number, GSVFactorGrid>  // term → { policyYear → gsvPercent }
-  gsvFactors: GSVFactorGrid        // legacy: policyYear → gsvPercent (term-agnostic best guess)
+  rates: TabularRateGrid                        // age → { term → ratePerThousand }
+  gsvByTerm: Record<number, GSVFactorGrid>      // term → { policyYear → gsvPercent }
+  gsvFactors: GSVFactorGrid                     // term-agnostic fallback
   source: 'rule' | 'llm' | 'empty'
   rowCount: number
   rawText: string
 }
 
-// ── PDF text extraction (pdf2json — pure Node.js, no DOM) ────────────────────
+// ── pdf2json types ─────────────────────────────────────────────────────────────
 
-async function extractTextFromPdf(buffer: Buffer): Promise<string> {
-  const PDFParser = (await import('pdf2json')).default as unknown as new (ctx?: null, verbosity?: number) => {
-    on(event: 'pdfParser_dataError', cb: (err: { parserError: Error }) => void): void
-    on(event: 'pdfParser_dataReady', cb: () => void): void
-    parseBuffer(buf: Buffer): void
-    getRawTextContent(): string
+interface PDFTextItem {
+  x: number
+  y: number
+  R?: Array<{ T: string }>
+}
+
+interface PDFPage {
+  Texts?: PDFTextItem[]
+}
+
+interface PDFData {
+  Pages?: PDFPage[]
+}
+
+interface PDFParserInstance {
+  on(event: 'pdfParser_dataError', cb: (err: { parserError: Error }) => void): void
+  on(event: 'pdfParser_dataReady', cb: () => void): void
+  parseBuffer(buf: Buffer): void
+  getRawTextContent(): string
+  data?: PDFData
+}
+
+// ── Row reconstruction helpers ─────────────────────────────────────────────────
+
+type RowMap = Record<number, Array<{ x: number; str: string }>>
+
+function buildRowMap(page: PDFPage): RowMap {
+  const rows: RowMap = {}
+  for (const text of (page.Texts ?? [])) {
+    const y = Math.round(text.y * 2) / 2  // 0.5-unit Y buckets
+    const str = (text.R ?? []).map(r => {
+      try { return decodeURIComponent(r.T) } catch { return r.T }
+    }).join('').trim()
+    if (!str) continue
+    ;(rows[y] = rows[y] ?? []).push({ x: text.x, str })
   }
+  for (const row of Object.values(rows)) row.sort((a, b) => a.x - b.x)
+  return rows
+}
+
+function yKeys(rows: RowMap): number[] {
+  return Object.keys(rows).map(Number).sort((a, b) => a - b)
+}
+
+function lineTokens(rows: RowMap, y: number): string[] {
+  return (rows[y] ?? []).map(i => i.str).filter(Boolean)
+}
+
+// Strip commas from Indian number format: "16,229" → "16229"
+function parseIndianNumber(s: string): number {
+  return parseFloat(s.replace(/,/g, ''))
+}
+
+// ── PDF text extraction ────────────────────────────────────────────────────────
+
+async function loadPDFPages(buffer: Buffer): Promise<PDFPage[]> {
+  const PDFParser = (await import('pdf2json')).default as unknown as new (ctx?: null, verbosity?: number) => PDFParserInstance
   return new Promise((resolve, reject) => {
     const parser = new PDFParser(null, 1)
     parser.on('pdfParser_dataError', ({ parserError }) => reject(parserError))
-    parser.on('pdfParser_dataReady', () => {
-      try {
-        // getRawTextContent returns URL-encoded text separated by \r\n
-        const raw = parser.getRawTextContent()
-        // Decode percent-encoded characters (pdf2json encodes spaces as %20, etc.)
-        const decoded = raw.split(/\r?\n/).map(l => {
-          try { return decodeURIComponent(l) } catch { return l }
-        }).join('\n')
-        resolve(decoded)
-      } catch (e) {
-        reject(e)
-      }
-    })
+    parser.on('pdfParser_dataReady', () => resolve(parser.data?.Pages ?? []))
     parser.parseBuffer(buffer)
   })
 }
 
-export async function parseBrochurePdf(url: string): Promise<ParsedBrochure> {
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
-  if (!res.ok) throw new Error(`PDF fetch failed: ${res.status} ${url}`)
-
-  const buffer = Buffer.from(await res.arrayBuffer())
-  const rawText = await extractTextFromPdf(buffer)
-
-  // Stage 1 — rule-based
-  const rates      = extractPremiumRates(rawText)
-  const gsvByTerm  = extractGsvByTerm(rawText)
-  const gsvFactors = extractGsvFactors(rawText)  // term-agnostic fallback
-  const rowCount   = countRateRows(rates)
-
-  if (rowCount >= 5) {
-    return { rates, gsvByTerm, gsvFactors, source: 'rule', rowCount, rawText }
-  }
-
-  // Stage 2 — Groq LLM fallback (truncate text to ~6000 chars to fit context)
-  const truncated = rawText.slice(0, 6000)
-  const llmResult = await llmExtract(truncated)
-  const llmRows   = countRateRows(llmResult.rates)
-
-  return {
-    rates:      llmRows > 0 ? llmResult.rates : rates,
-    gsvByTerm:  Object.keys(llmResult.gsvByTerm ?? {}).length > 0 ? llmResult.gsvByTerm : gsvByTerm,
-    gsvFactors: Object.keys(llmResult.gsvFactors).length > 0 ? llmResult.gsvFactors : gsvFactors,
-    source:     llmRows > 0 ? 'llm' : 'empty',
-    rowCount:   Math.max(rowCount, llmRows),
-    rawText,
-  }
-}
-
-// ── Stage 1: regex extraction ─────────────────────────────────────────────────
-
-function countRateRows(rates: TabularRateGrid): number {
-  return Object.values(rates).reduce((sum, terms) => sum + Object.keys(terms).length, 0)
-}
+// ── 1. Illustration table extraction ──────────────────────────────────────────
 
 /**
- * Extracts premium rate tables from LIC brochure text.
- * LIC tables typically look like:
- *   Age  10yrs  15yrs  20yrs  25yrs  30yrs
- *   18   55.60  40.30  32.10  27.80  24.50
- *   25   58.90  43.20  34.50  29.60  25.90
+ * Finds "Sample Illustrative Premium" tables in LIC brochures.
+ * These show annual premiums (in ₹) for a stated SA at 3-4 ages × 3-4 terms.
+ * Converts to rate_per_1000 = premium / (SA / 1000).
+ *
+ * Example (Plan 715):
+ *   SA = ₹2,00,000
+ *   AGE  15    25    35
+ *   20   16229  9339  6517
+ *   → rate[20][15] = 16229/200 = 81.145
  */
-function extractPremiumRates(text: string): TabularRateGrid {
+function extractIllustrationRates(pages: PDFPage[]): TabularRateGrid {
   const rates: TabularRateGrid = {}
 
-  // Normalize whitespace
-  const lines = text.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(Boolean)
+  for (const page of pages) {
+    const rows = buildRowMap(page)
+    const ys = yKeys(rows)
 
-  // Detect header row: a row with "Age" followed by year numbers or term numbers
-  // Pattern: "Age  10  15  20  25  30" or "Age  10 Years  15 Years  20 Years"
-  const headerPattern = /^Age\b(.+)/i
-  const termFromHeaderPattern = /(\d{1,2})\s*(?:yrs?|years?)?/gi
+    for (let i = 0; i < ys.length; i++) {
+      const tokens = lineTokens(rows, ys[i])
+      const line = tokens.join(' ')
 
-  let headerTerms: number[] = []
-  let inTable = false
-  let consecutiveMisses = 0
+      // Look for header row containing "AGE" and policy term numbers
+      const hasAge = /\bAGE\b/i.test(line)
+      if (!hasAge) continue
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
+      // Extract term numbers from this header row
+      const termNums = tokens
+        .filter(t => /^\d{1,2}$/.test(t))
+        .map(Number)
+        .filter(n => n >= 5 && n <= 40)
+      if (termNums.length < 2) continue
 
-    if (!inTable) {
-      const headerMatch = headerPattern.exec(line)
-      if (headerMatch) {
-        const terms: number[] = []
-        let m: RegExpExecArray | null
-        while ((m = termFromHeaderPattern.exec(headerMatch[1])) !== null) {
-          const t = parseInt(m[1])
-          if (t >= 5 && t <= 40) terms.push(t)
-        }
-        termFromHeaderPattern.lastIndex = 0
-        if (terms.length >= 2) {
-          headerTerms = terms
-          inTable = true
-          consecutiveMisses = 0
+      // Find SA amount: scan up to 8 lines above for currency text
+      let saAmount = 0
+      for (let j = Math.max(0, i - 8); j < i; j++) {
+        const ctx = lineTokens(rows, ys[j]).join(' ')
+        // Match "2 lakh", "₹2,00,000", "200000", etc.
+        const laMatch = ctx.match(/(\d+(?:\.\d+)?)\s*lakh/i)
+        if (laMatch) { saAmount = parseFloat(laMatch[1]) * 100000; break }
+        const crMatch = ctx.match(/₹?\s*([\d,]+)\s*(?:\/\s*-)?/)
+        if (crMatch) {
+          const v = parseIndianNumber(crMatch[1])
+          if (v >= 50000 && v <= 50000000) { saAmount = v; break }
         }
       }
-      continue
-    }
+      if (saAmount === 0) saAmount = 200000  // default 2L if not found
 
-    // In table: expect "age rate1 rate2 rate3..."
-    const nums = line.match(/\d+\.?\d*/g)?.map(Number)
-    if (!nums || nums.length < 2) {
-      consecutiveMisses++
-      if (consecutiveMisses > 4) { inTable = false; headerTerms = [] }
-      continue
-    }
+      const divisor = saAmount / 1000  // convert to per-₹1000 rate
 
-    const age = nums[0]
-    if (age < 0 || age > 75) { consecutiveMisses++; continue }
+      // Parse data rows below the header
+      let misses = 0
+      for (let j = i + 1; j < ys.length && misses < 4; j++) {
+        const dataTokens = lineTokens(rows, ys[j])
+        if (dataTokens.length < 2) { misses++; continue }
 
-    const rateValues = nums.slice(1)
-    if (rateValues.length < headerTerms.length) { consecutiveMisses++; continue }
+        const age = parseInt(dataTokens[0])
+        if (age < 18 || age > 70) { misses++; continue }
 
-    // Rates are per ₹1000 SA — sanity check: should be between 10 and 200
-    if (rateValues.some(r => r < 5 || r > 500)) { consecutiveMisses++; continue }
+        // Parse premium values (may be comma-formatted like "16,229" or split across tokens)
+        // Collect all numeric tokens after the age
+        const premTokens = dataTokens.slice(1).filter(t => /^[\d,]+$/.test(t))
+        if (premTokens.length < 1) { misses++; continue }
 
-    consecutiveMisses = 0
-    rates[age] = rates[age] ?? {}
-    headerTerms.forEach((term, idx) => {
-      if (rateValues[idx] !== undefined) {
-        rates[age][term] = rateValues[idx]
+        const premiums = premTokens.map(parseIndianNumber)
+        // Validate: premiums should be > 0 and reasonable (100 – 500000 range per ₹1000)
+        const valid = premiums.every(p => p > 0 && p < 10000000)
+        if (!valid) { misses++; continue }
+
+        misses = 0
+        rates[age] = rates[age] ?? {}
+        termNums.forEach((term, idx) => {
+          if (premiums[idx] !== undefined && premiums[idx] > 0) {
+            rates[age][term] = Math.round((premiums[idx] / divisor) * 1000) / 1000
+          }
+        })
       }
-    })
+
+      // Found at least one row — no need to scan more pages
+      if (Object.keys(rates).length > 0) return rates
+    }
   }
 
   return rates
 }
 
+// ── 2. GSV factor extraction ───────────────────────────────────────────────────
+
 /**
- * Extract GSV factors keyed by term.
- * LIC brochures sometimes have multi-column GSV tables:
- *   Policy Year  Term 16  Term 21  Term 25
- *   3            30.00    30.00    30.00
- *   5            50.00    50.00    50.00
- * Returns { term → { policyYear → gsvPct } }
+ * Extracts GSV factor tables from LIC brochures.
+ *
+ * LIC brochure GSV tables have this structure:
+ *   - Rows indexed by Policy Term (e.g., 35, 34, ..., 15) — leftmost column
+ *   - Columns indexed by Policy Year (1, 2, 3, ...) — found as footer row
+ *   - Cell values are percentages (e.g., "51.11%", "30.00%")
+ *
+ * Returns: { term → { policyYear → gsvPct } }
+ *
+ * Detects pages where majority of text items are percentage values.
  */
-function extractGsvByTerm(text: string): Record<number, GSVFactorGrid> {
+function extractGsvStructured(pages: PDFPage[]): Record<number, GSVFactorGrid> {
   const result: Record<number, GSVFactorGrid> = {}
-  const lines = text.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(Boolean)
 
-  // Find GSV header row with term columns
-  const termHeaderPattern = /policy\s*year|gsv|surrender\s*value/i
-  const termColPattern = /(?:term\s+)?(\d{1,2})\s*(?:yrs?|years?)?/gi
+  for (const page of pages) {
+    const rows = buildRowMap(page)
+    const ys = yKeys(rows)
 
-  let headerTerms: number[] = []
-  let inGsvTable = false
-  let misses = 0
+    // Count percentage items to identify GSV table pages
+    const allTokens = ys.flatMap(y => lineTokens(rows, y))
+    const pctCount = allTokens.filter(t => /^\d{1,3}\.\d+%$/.test(t)).length
+    if (pctCount < 10) continue  // not a GSV page
 
-  for (const line of lines) {
-    if (!inGsvTable) {
-      if (termHeaderPattern.test(line)) {
-        const terms: number[] = []
-        let m: RegExpExecArray | null
-        while ((m = termColPattern.exec(line)) !== null) {
-          const t = parseInt(m[1])
-          if (t >= 5 && t <= 40) terms.push(t)
-        }
-        termColPattern.lastIndex = 0
-        if (terms.length >= 1) { headerTerms = terms; inGsvTable = true; misses = 0 }
+    // Find policy year header row (contains sequential small integers like 1 2 3 4...)
+    let colYears: number[] = []
+    for (const y of ys) {
+      const nums = lineTokens(rows, y)
+        .filter(t => /^\d{1,2}$/.test(t))
+        .map(Number)
+        .filter(n => n >= 1 && n <= 40)
+      // Header should have sequential years starting near 1
+      if (nums.length >= 5 && nums[0] <= 3) {
+        colYears = [...(colYears.length ? colYears : []), ...nums]
       }
-      continue
+    }
+    // Deduplicate and sort
+    colYears = [...new Set(colYears)].sort((a, b) => a - b)
+    if (colYears.length === 0) {
+      // Fallback: policy years are positional 1..N
+      colYears = Array.from({ length: 35 }, (_, i) => i + 1)
     }
 
-    const nums = line.match(/\d+\.?\d*/g)?.map(Number)
-    if (!nums || nums.length < 2) { if (++misses > 3) { inGsvTable = false; headerTerms = [] } ; continue }
+    // Extract data rows: first token is policy term (integer 10-40), rest are pct values
+    for (const y of ys) {
+      const tokens = lineTokens(rows, y)
+      if (tokens.length < 2) continue
 
-    const yr  = nums[0]
-    const pcts = nums.slice(1)
-    if (yr < 1 || yr > 35) { misses++; continue }
-    if (pcts.some(p => p < 5 || p > 100)) { misses++; continue }
+      const term = parseInt(tokens[0])
+      if (isNaN(term) || term < 10 || term > 40) continue
 
-    misses = 0
-    headerTerms.forEach((term, idx) => {
-      if (pcts[idx] !== undefined) {
-        result[term] = result[term] ?? {}
-        result[term][yr] = pcts[idx]
-      }
-    })
+      const pcts = tokens.slice(1)
+        .filter(t => /^\d{1,3}\.?\d*%?$/.test(t))
+        .map(t => parseFloat(t.replace('%', '')))
+        .filter(p => !isNaN(p) && p >= 0 && p <= 100)
+
+      if (pcts.length < 2) continue
+
+      result[term] = result[term] ?? {}
+      pcts.forEach((pct, idx) => {
+        const yr = colYears[idx] ?? (idx + 1)
+        result[term][yr] = pct
+      })
+    }
   }
 
   return result
 }
 
 /**
- * Extract GSV factors without term dimension (best-effort, term-agnostic).
- * Used as fallback when term-aware extraction finds nothing.
+ * Term-agnostic GSV fallback: flatten gsvByTerm by averaging across terms,
+ * or fall back to a minimal scan of any percentage-followed-by-year pattern.
  */
-function extractGsvFactors(text: string): GSVFactorGrid {
-  const gsv: GSVFactorGrid = {}
-  const gsvPattern = /\b(\d{1,2})\s+(\d{2,3}(?:\.\d+)?)\s*%?/g
-  const lines = text.split('\n')
-
-  for (const line of lines) {
-    if (!/gsv|guaranteed\s*surrender|surrender\s*value/i.test(line)) continue
-    let m: RegExpExecArray | null
-    while ((m = gsvPattern.exec(line)) !== null) {
-      const yr  = parseInt(m[1])
-      const pct = parseFloat(m[2])
-      if (yr >= 3 && yr <= 30 && pct >= 20 && pct <= 100) gsv[yr] = pct
+function flattenGsvFactors(gsvByTerm: Record<number, GSVFactorGrid>): GSVFactorGrid {
+  const merged: Record<number, number[]> = {}
+  for (const yearMap of Object.values(gsvByTerm)) {
+    for (const [yr, pct] of Object.entries(yearMap)) {
+      const y = Number(yr)
+      ;(merged[y] = merged[y] ?? []).push(pct)
     }
-    gsvPattern.lastIndex = 0
   }
-
-  return gsv
+  const result: GSVFactorGrid = {}
+  for (const [yr, pcts] of Object.entries(merged)) {
+    result[Number(yr)] = Math.round((pcts.reduce((s, p) => s + p, 0) / pcts.length) * 100) / 100
+  }
+  return result
 }
 
-// ── Stage 2: Groq LLM fallback ────────────────────────────────────────────────
+// ── Main export ────────────────────────────────────────────────────────────────
 
-async function llmExtract(pdfText: string): Promise<{ rates: TabularRateGrid; gsvFactors: GSVFactorGrid; gsvByTerm: Record<number, GSVFactorGrid> }> {
+export async function parseBrochurePdf(url: string): Promise<ParsedBrochure> {
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
+  if (!res.ok) throw new Error(`PDF fetch failed: ${res.status} ${url}`)
+
+  const buffer = Buffer.from(await res.arrayBuffer())
+  const pages = await loadPDFPages(buffer)
+
+  // Raw text for LLM fallback (getRawTextContent via re-parse)
+  const rawText = pages
+    .flatMap(p => (p.Texts ?? []).map(t =>
+      (t.R ?? []).map(r => { try { return decodeURIComponent(r.T) } catch { return r.T } }).join('')
+    ))
+    .join(' ')
+    .slice(0, 8000)
+
+  // Stage 1 — structured extraction
+  const rates     = extractIllustrationRates(pages)
+  const gsvByTerm = extractGsvStructured(pages)
+  const gsvFactors = flattenGsvFactors(gsvByTerm)
+
+  const rateRows = Object.values(rates).reduce((s, t) => s + Object.keys(t).length, 0)
+  const gsvRows  = Object.values(gsvByTerm).reduce((s, y) => s + Object.keys(y).length, 0)
+  const rowCount = rateRows + gsvRows
+
+  if (rowCount >= 3) {
+    return { rates, gsvByTerm, gsvFactors, source: 'rule', rowCount, rawText }
+  }
+
+  // Stage 2 — Groq LLM fallback
+  const llmResult = await llmExtract(rawText)
+  const llmRateRows = Object.values(llmResult.rates).reduce((s, t) => s + Object.keys(t).length, 0)
+  const llmGsvRows  = Object.values(llmResult.gsvByTerm ?? {}).reduce((s, y) => s + Object.keys(y).length, 0)
+  const llmTotal = llmRateRows + llmGsvRows
+
+  if (llmTotal > 0) {
+    const merged = {
+      rates:      llmRateRows > 0 ? llmResult.rates : rates,
+      gsvByTerm:  llmGsvRows  > 0 ? (llmResult.gsvByTerm ?? {}) : gsvByTerm,
+      gsvFactors: Object.keys(llmResult.gsvFactors).length > 0 ? llmResult.gsvFactors : gsvFactors,
+    }
+    return { ...merged, source: 'llm', rowCount: Math.max(rowCount, llmTotal), rawText }
+  }
+
+  return { rates, gsvByTerm, gsvFactors, source: 'empty', rowCount, rawText }
+}
+
+// ── Groq LLM fallback ─────────────────────────────────────────────────────────
+
+async function llmExtract(pdfText: string): Promise<{
+  rates: TabularRateGrid
+  gsvFactors: GSVFactorGrid
+  gsvByTerm: Record<number, GSVFactorGrid>
+}> {
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) return { rates: {}, gsvFactors: {}, gsvByTerm: {} }
 
-  const prompt = `You are parsing a LIC India insurance brochure. Extract the premium rate table and GSV factor table.
+  const prompt = `You are parsing a LIC India insurance brochure. Extract:
+1. "Sample Illustrative Premium" table: age × term → annual premium (in ₹). Note the SA amount stated.
+   Convert to rate_per_1000 = premium / (SA / 1000).
+2. GSV factor table: policy term × policy year → surrender value percentage.
 
-Return ONLY a valid JSON object (no markdown, no explanation):
+Return ONLY valid JSON:
 {
   "rates": { "<age>": { "<term>": <ratePerThousand> } },
   "gsvByTerm": { "<term>": { "<policyYear>": <gsvPercent> } },
   "gsvFactors": { "<policyYear>": <gsvPercent> }
 }
-
-Where:
-- rates: age → policy term → premium rate per ₹1000 SA (e.g. 42.5)
-- gsvByTerm: policy term → policy year → GSV% (use when GSV table has multiple term columns)
-- gsvFactors: policy year → GSV% (use when GSV table has no term column, or as fallback)
-- Return empty objects {} for any section not found in the PDF
 
 PDF text:
 ${pdfText}`
@@ -268,10 +350,18 @@ ${pdfText}`
       }),
     })
     if (!res.ok) return { rates: {}, gsvFactors: {}, gsvByTerm: {} }
-    const data = await res.json() as { choices: { message: { content: string } }[] }
+    const data = await res.json() as { choices: Array<{ message: { content: string } }> }
     const content = data.choices[0]?.message?.content?.trim() ?? ''
-    const json = JSON.parse(content) as { rates?: TabularRateGrid; gsvFactors?: GSVFactorGrid; gsvByTerm?: Record<number, GSVFactorGrid> }
-    return { rates: json.rates ?? {}, gsvFactors: json.gsvFactors ?? {}, gsvByTerm: json.gsvByTerm ?? {} }
+    const json = JSON.parse(content) as {
+      rates?: TabularRateGrid
+      gsvFactors?: GSVFactorGrid
+      gsvByTerm?: Record<number, GSVFactorGrid>
+    }
+    return {
+      rates:      json.rates      ?? {},
+      gsvFactors: json.gsvFactors ?? {},
+      gsvByTerm:  json.gsvByTerm  ?? {},
+    }
   } catch {
     return { rates: {}, gsvFactors: {}, gsvByTerm: {} }
   }
