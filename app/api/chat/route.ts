@@ -4,6 +4,7 @@ import { LIC_PLANS_CONTEXT } from '@/lib/lic-plans-context'
 import { env } from '@/lib/env'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
+import { TOOL_DEFINITIONS, executeTool } from '@/lib/chat-tools'
 
 const MAX_INPUT_CHARS = 500
 const GROQ_MODEL = process.env.GROQ_MODEL || env.GROQ_MODEL || 'llama-3.3-70b-versatile'
@@ -49,6 +50,15 @@ Formatting & Readability Rules:
 - Use bold markers (**like this**) to highlight core terms, numbers (e.g. **₹50 Lakh**), plan names, or headers.
 - Keep the language clean and readable. Do not merge words.
 
+Calculator tools available:
+- Use **calculate_premium** when user asks for premium amount (needs: plan, age, sum assured, term)
+- Use **calculate_maturity** when user asks what they'll get at maturity (needs: plan, SA, term)
+- Use **calculate_surrender** when user asks about surrendering a policy
+- Use **calculate_loan** when user asks about taking loan against policy
+- Use **get_plan_info** when user asks about plan features, eligibility, loan provisions
+- Use **find_plan** FIRST when user mentions a plan by name only (e.g. "Jeevan Anand", "Jeevan Labh") to resolve plan_no before running other tools
+- Do NOT call tools for generic questions — only when calculation intent + plan details are present
+
 Few-shot examples of your style:
 
 User: term insurance kya hai
@@ -58,7 +68,7 @@ Poddar Ji: "Term insurance ek **pure protection plan** hai bhai. Isme aapko koi 
 - **Kam Premium**: Savings segment na hone ki wajah se premium kaafi sasta hota hai.
 
 **Practical Example**:
-- Ek 30-year-old healthy person **₹1 Crore cover** le sakta hai roughly **₹7,000 - 9,000 yearly** premium par (**LIC Jeevan Amar** plan).
+- Ek 30-year-old healthy person **₹1 Crore** ka cover le sakta hai kaafi affordable premium mein (**LIC Jeevan Amar** ya **LIC Tech Term** plan). Exact premium ke liye apni age aur SA batao — main calculate kar deta hun.
 - Coverage term kam-se-kam 35 saal hona chahiye, taaki bacche settle ho jaayein aur home loan clear ho sake.
 
 Exact details ke liye Ajay sir se call par baat karein: 9415313434."
@@ -66,18 +76,14 @@ Exact details ke liye Ajay sir se call par baat karein: 9415313434."
 User: mujhe 20 saal baad 50 lakh chahiye
 Poddar Ji: "Bahut badhiya goal hai! **₹50 Lakh in 20 years** target karne ke liye hum teen approaches le sakte hain:
 
-1. **LIC Jeevan Labh (936)**:
-   - **Type**: Endowment / Savings Plan.
-   - **Calculation**: Agar aap **₹20 Lakh Sum Assured** lete hain, toh monthly premium roughly **₹5,500 - 6,500** aayega.
-   - **Maturity Payout**: Base SA + accrued bonus mila kar maturity target **₹40 - 50 Lakh** tak touch kar sakta hai.
+1. **LIC Jeevan Labh**: Endowment/Savings Plan — SA + accrued bonuses pe strong maturity returns. Apni age aur budget batao, main exact premium calculate kar deta hun.
 
-2. **LIC New Endowment (914)**:
-   - Approachable endowment plan with consistent bonus rates.
+2. **LIC New Endowment**: Consistent bonus history wala plan, moderate premium.
 
 3. **Mix Approach (Recommended)**:
-   - **₹25 Lakh Term Plan** (cheap protection) + **₹25 Lakh Endowment** (savings accumulation) for balanced coverage.
+   - **Term Plan** (cheap protection) + **Endowment** (savings accumulation) for balanced coverage.
 
-Exact calculation aapke precise age and budget par depend karegi. Ajay sir se call par align karein: 9415313434."
+Apni **age aur monthly budget** batao — main real numbers nikaal deta hun!"
 
 ${LIC_PLANS_CONTEXT}`
 }
@@ -170,15 +176,46 @@ export async function POST(req: NextRequest) {
       { role: 'user', content: safeContent },
     ]
 
-    // Retry once on 429 rate-limit with 2s back-off
+    // ── Pass 1: non-streaming tool resolution ─────────────────────────────────
+    let finalMessages: Groq.Chat.ChatCompletionMessageParam[] = groqMessages
+    let toolUsed: string | null = null
+    try {
+      console.log('[D3:pass1] sending tool pass, user:', safeContent.slice(0, 80))
+      const toolPass = await groq.chat.completions.create(
+        { model: GROQ_MODEL, messages: groqMessages, tools: TOOL_DEFINITIONS, tool_choice: 'auto', max_tokens: 300 },
+        { timeout: 8000 }
+      )
+      const choice = toolPass.choices[0]
+      console.log('[D3:pass1] finish_reason:', choice?.finish_reason, '| tool_calls:', choice?.message?.tool_calls?.length ?? 0)
+      if (choice?.finish_reason === 'tool_calls' && choice.message?.tool_calls?.length) {
+        const toolCall = choice.message.tool_calls[0] // max 1 per turn
+        toolUsed = toolCall.function.name
+        let toolArgs: Record<string, unknown> = {}
+        try { toolArgs = JSON.parse(toolCall.function.arguments) } catch { /* malformed args */ }
+        console.log('[D3:pass1] executing tool:', toolUsed, 'args:', JSON.stringify(toolArgs))
+        const toolResult = await executeTool(toolCall.function.name, toolArgs)
+        console.log('[D3:pass1] tool result (first 200 chars):', toolResult.slice(0, 200))
+        finalMessages = [
+          ...groqMessages,
+          { role: 'assistant', content: null, tool_calls: choice.message.tool_calls } as unknown as Groq.Chat.ChatCompletionMessageParam,
+          { role: 'tool', tool_call_id: toolCall.id, content: toolResult } as unknown as Groq.Chat.ChatCompletionMessageParam,
+        ]
+      }
+    } catch (e: unknown) {
+      // Tool pass failed — fall through to direct streaming without tools
+      console.error('[D3:pass1] FAILED:', e instanceof Error ? e.message : String(e))
+    }
+    console.log('[D3:pass2] streaming with tool context:', toolUsed ? `yes (${toolUsed})` : 'no')
+
+    // ── Pass 2: streaming reply (with or without tool context) ────────────────
     let stream
     try {
-      stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true }, { timeout: 8000 })
+      stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: finalMessages, stream: true }, { timeout: 8000 })
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : ''
       if (msg.includes('429')) {
         await new Promise(r => setTimeout(r, 2000))
-        stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: groqMessages, stream: true }, { timeout: 8000 })
+        stream = await groq.chat.completions.create({ model: GROQ_MODEL, messages: finalMessages, stream: true }, { timeout: 8000 })
       } else {
         throw e
       }
@@ -202,7 +239,6 @@ export async function POST(req: NextRequest) {
           return
         }
 
-        // If the model returned nothing, send a graceful fallback
         if (!fullReply) {
           const fallback = 'Yeh sawaal thoda sensitive lag raha hai — main insurance ke baare mein hi baat kar sakta hun. Koi LIC ya health plan ke baare mein puchiye, ya Ajay sir se directly baat karein: 9415313434.'
           fullReply = fallback
