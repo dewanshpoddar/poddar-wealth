@@ -14,17 +14,41 @@ export interface ParsedBrochure {
   rawText: string
 }
 
-// ── PDF text extraction ───────────────────────────────────────────────────────
+// ── PDF text extraction (pdf2json — pure Node.js, no DOM) ────────────────────
+
+async function extractTextFromPdf(buffer: Buffer): Promise<string> {
+  const PDFParser = (await import('pdf2json')).default as unknown as new (ctx?: null, verbosity?: number) => {
+    on(event: 'pdfParser_dataError', cb: (err: { parserError: Error }) => void): void
+    on(event: 'pdfParser_dataReady', cb: () => void): void
+    parseBuffer(buf: Buffer): void
+    getRawTextContent(): string
+  }
+  return new Promise((resolve, reject) => {
+    const parser = new PDFParser(null, 1)
+    parser.on('pdfParser_dataError', ({ parserError }) => reject(parserError))
+    parser.on('pdfParser_dataReady', () => {
+      try {
+        // getRawTextContent returns URL-encoded text separated by \r\n
+        const raw = parser.getRawTextContent()
+        // Decode percent-encoded characters (pdf2json encodes spaces as %20, etc.)
+        const decoded = raw.split(/\r?\n/).map(l => {
+          try { return decodeURIComponent(l) } catch { return l }
+        }).join('\n')
+        resolve(decoded)
+      } catch (e) {
+        reject(e)
+      }
+    })
+    parser.parseBuffer(buffer)
+  })
+}
 
 export async function parseBrochurePdf(url: string): Promise<ParsedBrochure> {
   const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
   if (!res.ok) throw new Error(`PDF fetch failed: ${res.status} ${url}`)
 
-  const buffer = await res.arrayBuffer()
-  const pdfMod   = await import('pdf-parse')
-  const pdfParse = (pdfMod as unknown as { default: (buf: Buffer) => Promise<{ text: string }> }).default ?? pdfMod
-  const parsed   = await (pdfParse as (buf: Buffer) => Promise<{ text: string }>)(Buffer.from(buffer))
-  const rawText  = parsed.text ?? ''
+  const buffer = Buffer.from(await res.arrayBuffer())
+  const rawText = await extractTextFromPdf(buffer)
 
   // Stage 1 — rule-based
   const rates      = extractPremiumRates(rawText)
