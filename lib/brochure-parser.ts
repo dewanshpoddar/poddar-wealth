@@ -90,15 +90,32 @@ async function loadPDFPages(buffer: Buffer): Promise<PDFPage[]> {
 // ── 1. Illustration table extraction ──────────────────────────────────────────
 
 /**
+ * Parses term numbers from a token list, handling two formats:
+ *   Format A (Plan 715): plain integers   "15  25  35"
+ *   Format B (Plan 736): term(ppt) pairs  "16 (10)  21 (15)  25 (16)"
+ * Returns only the policy term (first number), filtering 5–40.
+ */
+function parseTermsFromTokens(tokens: string[]): number[] {
+  const terms: number[] = []
+  for (const t of tokens) {
+    // Strip trailing parenthetical: "16(10)" or "21 (15)" → "16"
+    const clean = t.replace(/\(\d+\).*$/, '').trim()
+    if (/^\d{1,2}$/.test(clean)) {
+      const n = parseInt(clean)
+      if (n >= 5 && n <= 40) terms.push(n)
+    }
+  }
+  return terms
+}
+
+/**
  * Finds "Sample Illustrative Premium" tables in LIC brochures.
- * These show annual premiums (in ₹) for a stated SA at 3-4 ages × 3-4 terms.
- * Converts to rate_per_1000 = premium / (SA / 1000).
+ * Converts premium amounts to rate_per_1000 = premium / (SA / 1000).
  *
- * Example (Plan 715):
- *   SA = ₹2,00,000
- *   AGE  15    25    35
- *   20   16229  9339  6517
- *   → rate[20][15] = 16229/200 = 81.145
+ * Handles two header layouts:
+ *   Plan 715: "AGE  15  25  35"  (terms on same line as AGE)
+ *   Plan 736: "Age  Policy Term/PPT..."  then "16 (10)  21 (15)  25 (16)"
+ *             (terms on a separate row 1-3 lines below AGE)
  */
 function extractIllustrationRates(pages: PDFPage[]): TabularRateGrid {
   const rates: TabularRateGrid = {}
@@ -111,52 +128,65 @@ function extractIllustrationRates(pages: PDFPage[]): TabularRateGrid {
       const tokens = lineTokens(rows, ys[i])
       const line = tokens.join(' ')
 
-      // Look for header row containing "AGE" and policy term numbers
-      const hasAge = /\bAGE\b/i.test(line)
-      if (!hasAge) continue
+      if (!/\bAGE\b/i.test(line)) continue
 
-      // Extract term numbers from this header row
-      const termNums = tokens
-        .filter(t => /^\d{1,2}$/.test(t))
-        .map(Number)
-        .filter(n => n >= 5 && n <= 40)
+      // Try terms on same line first (Plan 715 format)
+      let termNums = parseTermsFromTokens(tokens)
+
+      // If not found, scan next 3 rows for a term header line (Plan 736 format)
+      let termRowOffset = 0
+      if (termNums.length < 2) {
+        for (let k = 1; k <= 3 && i + k < ys.length; k++) {
+          const nextTokens = lineTokens(rows, ys[i + k])
+          const candidate = parseTermsFromTokens(nextTokens)
+          if (candidate.length >= 2) {
+            termNums = candidate
+            termRowOffset = k
+            break
+          }
+        }
+      }
       if (termNums.length < 2) continue
 
       // Find SA amount: scan up to 8 lines above for currency text
       let saAmount = 0
       for (let j = Math.max(0, i - 8); j < i; j++) {
         const ctx = lineTokens(rows, ys[j]).join(' ')
-        // Match "2 lakh", "₹2,00,000", "200000", etc.
         const laMatch = ctx.match(/(\d+(?:\.\d+)?)\s*lakh/i)
         if (laMatch) { saAmount = parseFloat(laMatch[1]) * 100000; break }
-        const crMatch = ctx.match(/₹?\s*([\d,]+)\s*(?:\/\s*-)?/)
+        const crMatch = ctx.match(/Rs\.?\s*([\d,]+)/i)
         if (crMatch) {
           const v = parseIndianNumber(crMatch[1])
           if (v >= 50000 && v <= 50000000) { saAmount = v; break }
         }
       }
-      if (saAmount === 0) saAmount = 200000  // default 2L if not found
+      // Also check the AGE line itself and nearby lines for SA
+      if (saAmount === 0) {
+        for (let j = i; j <= Math.min(i + termRowOffset + 1, ys.length - 1); j++) {
+          const ctx = lineTokens(rows, ys[j]).join(' ')
+          const laMatch = ctx.match(/(\d+(?:\.\d+)?)\s*lakh/i)
+          if (laMatch) { saAmount = parseFloat(laMatch[1]) * 100000; break }
+        }
+      }
+      if (saAmount === 0) saAmount = 200000  // default 2L
 
-      const divisor = saAmount / 1000  // convert to per-₹1000 rate
+      const divisor = saAmount / 1000
 
-      // Parse data rows below the header
+      // Data rows start after the term header row
+      const dataStart = i + termRowOffset + 1
       let misses = 0
-      for (let j = i + 1; j < ys.length && misses < 4; j++) {
+      for (let j = dataStart; j < ys.length && misses < 4; j++) {
         const dataTokens = lineTokens(rows, ys[j])
         if (dataTokens.length < 2) { misses++; continue }
 
         const age = parseInt(dataTokens[0])
-        if (age < 18 || age > 70) { misses++; continue }
+        if (age < 8 || age > 70) { misses++; continue }
 
-        // Parse premium values (may be comma-formatted like "16,229" or split across tokens)
-        // Collect all numeric tokens after the age
         const premTokens = dataTokens.slice(1).filter(t => /^[\d,]+$/.test(t))
         if (premTokens.length < 1) { misses++; continue }
 
         const premiums = premTokens.map(parseIndianNumber)
-        // Validate: premiums should be > 0 and reasonable (100 – 500000 range per ₹1000)
-        const valid = premiums.every(p => p > 0 && p < 10000000)
-        if (!valid) { misses++; continue }
+        if (premiums.some(p => p <= 0 || p >= 10000000)) { misses++; continue }
 
         misses = 0
         rates[age] = rates[age] ?? {}
@@ -167,7 +197,6 @@ function extractIllustrationRates(pages: PDFPage[]): TabularRateGrid {
         })
       }
 
-      // Found at least one row — no need to scan more pages
       if (Object.keys(rates).length > 0) return rates
     }
   }
@@ -178,49 +207,113 @@ function extractIllustrationRates(pages: PDFPage[]): TabularRateGrid {
 // ── 2. GSV factor extraction ───────────────────────────────────────────────────
 
 /**
- * Extracts GSV factor tables from LIC brochures.
+ * LIC brochures use two GSV table orientations:
  *
- * LIC brochure GSV tables have this structure:
- *   - Rows indexed by Policy Term (e.g., 35, 34, ..., 15) — leftmost column
- *   - Columns indexed by Policy Year (1, 2, 3, ...) — found as footer row
- *   - Cell values are percentages (e.g., "51.11%", "30.00%")
+ * Format A — Plan 715 style (term-as-row, year-as-column):
+ *   Rows:    Policy Term (35, 34, ..., 15) — left column
+ *   Columns: Policy Year (1, 2, ..., 35)   — footer row below data
+ *   → many rows, many columns, triangular shape
  *
- * Returns: { term → { policyYear → gsvPct } }
+ * Format B — Plan 736 style (year-as-row, term-as-column):
+ *   Header:  "16 (10)  21 (15)  25 (16)"  — terms above data
+ *   Rows:    Policy Year (1, 2, ..., 25)   — left column
+ *   Columns: Policy Term (16, 21, 25)
+ *   → few columns, clean rectangle
  *
- * Detects pages where majority of text items are percentage values.
+ * Both return { term → { policyYear → gsvPct } }
  */
 function extractGsvStructured(pages: PDFPage[]): Record<number, GSVFactorGrid> {
+  // Try Format B first (more common in recent LIC brochures)
+  const formatB = extractGsvFormatB(pages)
+  if (Object.keys(formatB).length > 0) return formatB
+
+  // Fall back to Format A
+  return extractGsvFormatA(pages)
+}
+
+/** Format B: header row has terms, data rows have year → pct values */
+function extractGsvFormatB(pages: PDFPage[]): Record<number, GSVFactorGrid> {
   const result: Record<number, GSVFactorGrid> = {}
 
   for (const page of pages) {
     const rows = buildRowMap(page)
     const ys = yKeys(rows)
 
-    // Count percentage items to identify GSV table pages
     const allTokens = ys.flatMap(y => lineTokens(rows, y))
     const pctCount = allTokens.filter(t => /^\d{1,3}\.\d+%$/.test(t)).length
-    if (pctCount < 10) continue  // not a GSV page
+    if (pctCount < 5) continue
 
-    // Find policy year header row (contains sequential small integers like 1 2 3 4...)
+    // Find header row: contains 2-5 terms in range 10-40
+    // Handles "16 (10)  21 (15)  25 (16)" — parseTermsFromTokens strips the (PPT)
+    for (let i = 0; i < ys.length; i++) {
+      const headerTokens = lineTokens(rows, ys[i])
+      const colTerms = parseTermsFromTokens(headerTokens)
+      if (colTerms.length < 2 || colTerms.length > 8) continue
+      // All terms must be >= 10 to distinguish from policy years
+      if (colTerms.some(t => t < 10)) continue
+
+      // Scan rows below: first token = policy year (1-40), rest = pct values
+      let hits = 0
+      for (let j = i + 1; j < ys.length; j++) {
+        const dataTokens = lineTokens(rows, ys[j])
+        if (dataTokens.length < 2) continue
+
+        const yr = parseInt(dataTokens[0])
+        if (isNaN(yr) || yr < 1 || yr > 40) continue
+
+        const pcts = dataTokens.slice(1)
+          .filter(t => /^\d{1,3}\.?\d*%?$/.test(t))
+          .map(t => parseFloat(t.replace('%', '')))
+          .filter(p => !isNaN(p) && p >= 0 && p <= 100)
+
+        if (pcts.length < 1) continue
+
+        hits++
+        colTerms.forEach((term, idx) => {
+          if (pcts[idx] !== undefined) {
+            result[term] = result[term] ?? {}
+            result[term][yr] = pcts[idx]
+          }
+        })
+      }
+
+      if (hits >= 3) return result  // found a valid table on this page
+      // Reset if this header didn't pan out
+      for (const t of colTerms) delete result[t]
+    }
+  }
+
+  return result
+}
+
+/** Format A: footer row has years, data rows have term → pct values */
+function extractGsvFormatA(pages: PDFPage[]): Record<number, GSVFactorGrid> {
+  const result: Record<number, GSVFactorGrid> = {}
+
+  for (const page of pages) {
+    const rows = buildRowMap(page)
+    const ys = yKeys(rows)
+
+    const allTokens = ys.flatMap(y => lineTokens(rows, y))
+    const pctCount = allTokens.filter(t => /^\d{1,3}\.\d+%$/.test(t)).length
+    if (pctCount < 10) continue
+
+    // Find footer row: sequential small integers starting near 1 (policy years)
     let colYears: number[] = []
     for (const y of ys) {
       const nums = lineTokens(rows, y)
         .filter(t => /^\d{1,2}$/.test(t))
         .map(Number)
         .filter(n => n >= 1 && n <= 40)
-      // Header should have sequential years starting near 1
       if (nums.length >= 5 && nums[0] <= 3) {
-        colYears = [...(colYears.length ? colYears : []), ...nums]
+        colYears = [...new Set([...colYears, ...nums])].sort((a, b) => a - b)
       }
     }
-    // Deduplicate and sort
-    colYears = [...new Set(colYears)].sort((a, b) => a - b)
     if (colYears.length === 0) {
-      // Fallback: policy years are positional 1..N
       colYears = Array.from({ length: 35 }, (_, i) => i + 1)
     }
 
-    // Extract data rows: first token is policy term (integer 10-40), rest are pct values
+    // Data rows: first token is policy term (10-40), rest are pct values
     for (const y of ys) {
       const tokens = lineTokens(rows, y)
       if (tokens.length < 2) continue
